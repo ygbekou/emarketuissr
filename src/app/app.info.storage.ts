@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { AdminPanelServiceService } from './AdminPanel/Service/AdminPanelService.service';
-import { TaxClass } from './app.models';
+import { TaxClass, Language, StockStatus } from './app.models';
 
 
 @Injectable()
@@ -10,8 +10,9 @@ export class AppInfoStorage {
   public CURRENCY_MASK_INTEGER;
   public CURRENCY_MASK_DECIMAL; 
   public CURRENCY_FORMAT;
-  languages: any = ['EN', 'FR'];
+  public languages: any = [];
   public taxClasses: any = [];
+  public stockStatuses: any = [];
 
   constructor(
     public translate: TranslateService,
@@ -19,6 +20,7 @@ export class AppInfoStorage {
   ) {
 
     this.updateInfo();
+    this.getAll();
   }
 
   getAll() {
@@ -27,7 +29,21 @@ export class AppInfoStorage {
       .subscribe((data: TaxClass[]) => {
         this.taxClasses = data;
       }, error => console.log(error),
-        () => console.log('Get Section complete'));
+        () => console.log('Get Tax Classes complete'));
+
+    
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
+      .subscribe((data: Language[]) => {
+        this.languages = data;
+      }, error => console.log(error),
+        () => console.log('Get Languages complete'));
+
+
+    this.appService.getAllByCriteria('com.softenza.emarket.model.StockStatus', parameters)
+      .subscribe((data: StockStatus[]) => {
+        this.stockStatuses = data;
+      }, error => console.log(error),
+        () => console.log('Get Stock Statuses complete'));
   }
 
   updateInfo() {

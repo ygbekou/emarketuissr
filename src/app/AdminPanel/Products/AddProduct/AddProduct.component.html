@@ -120,12 +120,72 @@
             </div>
             <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>{{'COMMON.USER_TYPE' | translate }}</mat-label>
-                  <mat-select placeholder="{{'COMMON.USER_TYPE' | translate }}" id="userGroup" name="userGroup" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
+                  <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
                      <mat-option *ngFor="let taxClass of appInfoStorage.taxClasses" [value]="taxClass.id">
                         {{taxClass.title}}
                      </mat-option>
                   </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="product.quantity" name="quantity" #quantity="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="product.minimum" name="minimum" #minimum="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-label> {{'COMMON.SUBTRACT_STOCK' | translate}}</mat-label><br/>
+               <mat-radio-group class="form-control" id="subtract" [(ngModel)]="product.subtract" name="subtract" #subtract="ngModel">
+                  <mat-radio-button class="mr-2" value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+               </mat-radio-group>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}" id="stockStatusId" name="stockStatusId" [(ngModel)]="product.stockStatusId" #stockStatusId="ngModel">
+                     <mat-option *ngFor="let stockStatus of appInfoStorage.stockStatuses" [value]="stockStatus.id">
+                        {{stockStatus.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-label> {{'COMMON.REQUIRES_SHIPPING' | translate}}</mat-label><br/>
+               <mat-radio-group class="form-control" id="shipping" [(ngModel)]="product.shipping" name="shipping" #shipping="ngModel">
+                  <mat-radio-button class="mr-2" value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+               </mat-radio-group>
+            </div>
+            
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100"> 
+                  <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br/>
+                  <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable" [(ngModel)]="product.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-label> {{'COMMON.DIMENSIONS' | translate}}</mat-label><br/>
+               <mat-form-field appearance="outline" class="w-30">
+                  <mat-label> {{'COMMON.LENGTH' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.length" name="length" #length="ngModel">
+               </mat-form-field>
+               <mat-form-field appearance="outline" class="w-30">
+                  <mat-label> {{'COMMON.WIDTH' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.width" name="width" #width="ngModel">
+               </mat-form-field>
+               <mat-form-field appearance="outline" class="w-30">
+                  <mat-label> {{'COMMON.WEIGHT' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.weight" name="weight" #weight="ngModel">
                </mat-form-field>
             </div>
          </div>

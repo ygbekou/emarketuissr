@@ -38,6 +38,24 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin-panel',
+    name: 'System',
+    type: 'sub',
+    icon: 'shopping_cart',
+    children: [
+      {
+        state: 'localisation',
+        name: 'Localisation',
+        type: 'sub',
+        icon: 'shopping_cart',
+        children: [
+          {state: 'languages', name: 'Languages', type : 'link'}
+        ]
+      },
+      {state: 'product-add', name: 'Product Add', type : 'link'}
+    ]
+  },
+  {
     state: 'admin-panel/account/profile',
     name: 'Profile',
     type: 'link',

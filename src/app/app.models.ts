@@ -145,7 +145,14 @@ export class AuthToken {
 
 export class TaxClass {
   id: number;
-  
+  title: string;
+  description: string;
+}
+
+export class StockStatus {
+  id: number;
+  name: string;
+  languageId: number;
 }
 
 export class Product {
@@ -194,6 +201,17 @@ export class ProductDescription {
   metaKeyword: string;
 }
 
+
+export class Language {
+  id: number;
+  name: string;
+  code: string;
+  locale: string;
+  image: string;
+  directory: string;
+  sortOrder: number;
+  status: number;
+}
 
 export class Company {
   id: number;

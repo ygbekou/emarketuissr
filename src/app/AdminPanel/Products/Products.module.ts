@@ -19,7 +19,9 @@ import { MatSidenavModule,
          MatSortModule,         
          MatCheckboxModule,
          MatTabsModule,
-         MatGridListModule
+         MatGridListModule,
+         MatRadioModule,
+         MatDatepickerModule
 		 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,7 +47,9 @@ import { ProductsRoutes} from './Products.routing';
       MatOptionModule,
       MatFormFieldModule,
       MatInputModule,
+      MatDatepickerModule,
       MatTableModule,
+      MatRadioModule,
       MatDividerModule,
       MatListModule, 
       RouterModule.forChild(ProductsRoutes),
