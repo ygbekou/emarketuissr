@@ -1,114 +1,135 @@
-<form [formGroup]="form">
-   <div class="product-detail-page section-gap" *ngFor="let detailData of data">
-      <div class="container">
-         <div fxLayout='row wrap' fxLayoutAlign="center center" class="col-gap">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=90 fxFlex.lg="80" fxFlex.xl="90">
-               <div fxLayout='row wrap' class="col-gap position-relative">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
-                     <div fxLayout='row wrap'>
-                        <div fxFlex.xs="15" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                           <div class="product-detail-image-gallery pr-4">
-                              <mat-grid-list cols="1" rowHeight="1:1" gutterSize="20px">
-                                 <mat-grid-tile *ngFor="let img of detailData.image_gallery; let i=index">
-                                    <div class="product-image-gallery-item add-icon">
-                                       <a id="{{i}}_img" class="p-link" [ngClass]="{ 'border-active': i === 0 }" href="javascript:void(0)" (mouseenter)="getImagePath(img, i)">
-                                       <img [src]="img" alt="" width="100" height="100">
-                                       </a>
-                                       <button class="add-btn" md-mini-fab type="button">
-                                          <label for="fileToUpload">
-                                             <mat-icon>add</mat-icon>
-                                          </label>
-                                       </button>
-                                       <!-- add-btn -->
-                                       <input mat id="fileToUpload" type="file" accept="image/*" style="display:none;">
-                                    </div>
-                                 </mat-grid-tile>
-                              </mat-grid-list>
-                           </div>
-                           <!-- product-detail-image-gallery -->
-                        </div>
-                        <div fxFlex.xs="85" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85" class="relative" *ngIf="mainImgPath">
-                           <embryo-ImgZoom 
-                              [imgSrc]="mainImgPath" 
-                              imgStyle="width:auto; height:auto;" 
-                              resultStyle="background-repeat: no-repeat; z-index: 2; position:absolute;
-                              -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-                              box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); top: 0;left: 100%;"
-                              lensStyle="width:100px; height:100px"
-                              containerStyle="">
-                           </embryo-ImgZoom>
-                        </div>
-                        <!-- relative -->
-                     </div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+   <mat-tab-group>
+      <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+         <mat-tab-group>
+            <mat-tab *ngFor="let pd of product.productDescriptions" label="{{pd.name}}">
+               <div fxLayout="row wrap">
+                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label> {{'COMMON.PRODUCT_NAME' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="productName" [(ngModel)]="pd.name" name="productName"
+                           #productName="ngModel" required>
+                        <mat-error *ngIf="f.submitted && productName.invalid" severity="error">
+                           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                        </mat-error>
+                     </mat-form-field>
                   </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
-                     <div class="product-detail-content ml-3">
-                        <a class="primary-color font-medium" href="javascript:void(0)" routerLink="/admin-panel/products">Back to Product</a>
-                        <h3 class="add-text"><input matInput formControlName="name" type="text" value="Add product Name"></h3>
-                        <div class="product-detail-price">
-                           <h4 class="accent-color add-text"><input matInput  formControlName="price" type="text" value="Add Price"></h4>
-                        </div>
-                        <ul class="no-style mb-4">
-                           <li class="add-text" fxLayout="row wrap" fxLayoutAlign="start start">
-                              <span class="font-medium"> Availablity </span>: 
-                              <input class="ml-2" matInput  formControlName="availablity" type="text">
-                           </li>
-                           <li class="add-text" fxLayout="row wrap" fxLayoutAlign="start start">
-                              <span class="font-medium">Product Code </span>: 
-                              <input class="ml-2" matInput formControlName="product_code" type="text">
-                           </li>
-                           <li class="add-text" fxLayout="row wrap" fxLayoutAlign="start start">
-                              <span class="font-medium">Tags</span>: 
-                              <input class="ml-2" matInput formControlName="tags" type="text">
-                           </li>
-                        </ul>
-                        <div class="short-des">
-                           <p class="add-text"><textarea matInput formControlName="description" value="Add Description"></textarea></p>
-                        </div>
-                        <div class="bullets-points add-text">
-                           <div class="font-medium">Featured points :</div>
-                           <p><input matInput formControlName="features" type="text" value="Add features"></p>
-                        </div>
-                        <div class="mb-3 select-group">
-                           <ng-container *ngIf="detailData.type == 'men' || detailData.type == 'women'">
-                              <div class="add-text add-check mb-3">
-                                 <div class="font-medium mb-2">Color Varients :</div>
-                                 <ng-container *ngFor="let color of colorsArray">
-                                    <mat-checkbox class="mr-3">{{color}}</mat-checkbox>
-                                 </ng-container>
-                              </div>
-                              <div class="add-text add-check mb-3">
-                                 <div class="font-medium mb-2">Size Varients :</div>
-                                 <ng-container *ngFor = "let size of sizeArray">
-                                    <mat-checkbox class="mr-3">{{size}}</mat-checkbox>
-                                 </ng-container>
-                              </div>
-                           </ng-container>
-                           <mat-form-field class="add-text edit-check mb-3">
-                              <div class="font-medium mb-2">Total Products :</div>
-                              <ng-container>
-                                 <input type="number" matInput value="5"> 
-                              </ng-container>
-                           </mat-form-field>
-                        </div>
-                        <div class="mb-5 detail-btns">
-                           <button mat-raised-button color="accent" class="button-lg mr-3">Create</button>
-                           <button class="button-lg" mat-raised-button>Discard</button>
-                        </div>
-                        <div fxLayoutAlign="start center">
-                           <div class="mr-3"> <span>Share Now</span></div>
-                           <div class="detail-product-share">
-                              <embryo-SocialShare></embryo-SocialShare>
-                           </div>
-                           <!-- detail-product-share -->
-                        </div>
-                     </div>
-                     <!-- product-detail-content -->
+
+                  <div fxLayout="row wrap">
+                     <mat-label> {{'COMMON.DESCRIPTION' | translate}}</mat-label>
+                     <quill-editor class="form-control" id="description" [(ngModel)]="pd.description" name="description" 
+                        #description="ngModel" required></quill-editor>
+                     <mat-error *ngIf="f.submitted && description.invalid" severity="error">
+                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                     </mat-error>
+                  </div>
+
+                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label> {{'COMMON.META_TAG_TITLE' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="metaTitle" [(ngModel)]="pd.metaTitle" name="metaTitle"
+                           #metaTitle="ngModel">
+                     </mat-form-field>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label> {{'COMMON.META_TAG_DESCRIPTION' | translate}}</mat-label>
+                        <textarea matInput rows="4" cols="50" class="form-control" id="metaDescription" [(ngModel)]="pd.metaDescription" name="metaDescription"
+                           #metaDescription="ngModel"></textarea>
+                     </mat-form-field>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label> {{'COMMON.META_KEYWORDS' | translate}}</mat-label>
+                        <textarea matInput rows="4" cols="50" class="form-control" id="metaKeyword" [(ngModel)]="pd.metaKeyword" name="metaKeyword"
+                           #metaKeyword="ngModel"></textarea>
+                     </mat-form-field>
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="1000" class="p-3">
+                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label> {{'COMMON.PRODUCT_TAGS' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="tag" [(ngModel)]="pd.tag" name="tag"
+                           #tag="ngModel">
+                     </mat-form-field>
                   </div>
                </div>
+            </mat-tab>
+         </mat-tab-group>
+      </mat-tab>
+
+      <mat-tab label="{{'COMMON.DATA' | translate}}">
+         <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
+                     #model="ngModel" required>
+                  <mat-error *ngIf="f.submitted && model.invalid" severity="error">
+                     {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                  </mat-error>
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.SKU' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="sku" [(ngModel)]="product.sku" name="sku" #sku="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.UPC' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="upc" [(ngModel)]="product.upc" name="upc" #upc="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.EAN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="ean" [(ngModel)]="product.ean" name="ean" #ean="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.JAN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="jan" [(ngModel)]="product.jan" name="jan" #jan="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.ISBN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="isbn" [(ngModel)]="product.isbn" name="isbn" #isbn="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.MPN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="mpn" [(ngModel)]="product.mpn" name="mpn" #mpn="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.LOCATION' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="location" [(ngModel)]="product.location" name="location" #location="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price" name="price" #price="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>{{'COMMON.USER_TYPE' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.USER_TYPE' | translate }}" id="userGroup" name="userGroup" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
+                     <mat-option *ngFor="let taxClass of appInfoStorage.taxClasses" [value]="taxClass.id">
+                        {{taxClass.title}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
             </div>
          </div>
-      </div>
-   </div>
-   <!-- product-detail-page -->
+      </mat-tab>
+   </mat-tab-group>
 </form>
+ 

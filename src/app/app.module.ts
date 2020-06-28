@@ -72,6 +72,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AdminPanelModule } from './AdminPanel/admin-panel.module';
+import { TokenStorage } from './AdminPanel/Service/token.storage';
+import { AppInfoStorage } from './app.info.storage';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -156,6 +158,8 @@ export function createTranslateLoader(http: HttpClient) {
       AdminPanelModule
   ],
    providers: [
+      TokenStorage,
+      AppInfoStorage,
       MenuItems,
       EmbryoService,
       {
