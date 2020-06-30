@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-HomeThree',
@@ -86,14 +86,14 @@ export class HomeThreeComponent implements OnInit {
       ]
    };
 
-   constructor(public embryoService : EmbryoService) { }
+   constructor(public appService : AppService) { }
 
    ngOnInit() {
       this.getProducts();
    }
 
    public getProducts() {
-      this.embryoService.getProducts().valueChanges()
+      this.appService.getProducts().valueChanges()
          .subscribe(res => this.getProductsResponse(res));
    }
 
@@ -154,11 +154,11 @@ export class HomeThreeComponent implements OnInit {
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
    public addToWishlist(value) {
-      this.embryoService.addToWishlist(value);
+      this.appService.addToWishlist(value);
    }
 
 }

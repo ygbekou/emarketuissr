@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-HomeTwo',
@@ -11,7 +11,7 @@ export class HomeTwoComponent implements OnInit {
    topProducts             : any;
    lighteningDealsProducts : any;
    
-   constructor(public embryoService : EmbryoService) { }
+   constructor(public appService : AppService) { }
 
    ngOnInit() {
       this.lighteningDeals();
@@ -19,7 +19,7 @@ export class HomeTwoComponent implements OnInit {
    }
 
    public lighteningDeals() {
-      this.embryoService.getProducts().valueChanges()
+      this.appService.getProducts().valueChanges()
          .subscribe(res => this.getLighteningDealsResponse(res));
    }
 
@@ -39,7 +39,7 @@ export class HomeTwoComponent implements OnInit {
    }
 
    public getProducts() {
-      this.embryoService.getProducts().valueChanges()
+      this.appService.getProducts().valueChanges()
          .subscribe(res => this.getProductsResponse(res));
    }
 
@@ -50,7 +50,7 @@ export class HomeTwoComponent implements OnInit {
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
 }

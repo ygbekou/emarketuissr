@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,8 +11,8 @@ export class ContactComponent implements OnInit {
    contactInfo  : any;
    emailPattern : any = /\S+@\S+\.\S+/;
 
-   constructor(public embryoService : EmbryoService) {
-      this.embryoService.getContactInfo().valueChanges().subscribe(res => {this.contactInfo = res});
+   constructor(public appService : AppService) {
+      this.appService.getContactInfo().valueChanges().subscribe(res => {this.contactInfo = res});
    }
 
    ngOnInit() {

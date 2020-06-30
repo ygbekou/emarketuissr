@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'embryo-FixedHeader',
@@ -8,14 +8,14 @@ import { EmbryoService } from '../../../Services/Embryo.service';
 })
 export class FixedHeaderComponent implements OnInit {
 
-  constructor(private embryoService : EmbryoService) { }
+  constructor(private appService : AppService) { }
 
   ngOnInit() {
   }
 
   public toggleSidebar()
    {
-      this.embryoService.sidenavOpen = !this.embryoService.sidenavOpen;
+      this.appService.sidenavOpen = !this.appService.sidenavOpen;
    }
 
 }

@@ -53,7 +53,7 @@ export class EditProfileComponent implements OnInit {
     */
    submitProfileInfo() {
       if (this.info.valid) {
-         this.router.navigate(['/admin-panel/account/profile']).then(() => {
+         this.router.navigate(['/admin/account/profile']).then(() => {
             this.toastyService.success(this.toastOption);
          });
       } else {

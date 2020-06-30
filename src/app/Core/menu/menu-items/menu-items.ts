@@ -303,7 +303,7 @@ const HeaderOneItems= [
     icon: 'perm_contact_calendar'
   },
   {
-    state:'admin-panel',
+    state:'admin',
     name:"ADMIN PANEL",
     type:"link",
     icon: 'perm_identity'

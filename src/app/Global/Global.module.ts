@@ -1,36 +1,38 @@
-import { NgModule }   from '@angular/core'; 
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule }   from '@angular/common';
-import { MatButtonModule, 
-         MatBadgeModule,
-         MatCardModule, 
-         MatMenuModule, 
-         MatToolbarModule, 
-         MatIconModule, 
-         MatInputModule, 
-         MatDatepickerModule, 
-         MatNativeDateModule, 
-         MatProgressSpinnerModule,
-         MatTableModule, 
-         MatExpansionModule, 
-         MatSelectModule,
-         MatSnackBarModule, 
-         MatTooltipModule, 
-         MatChipsModule, 
-         MatListModule, 
-         MatSidenavModule, 
-         MatTabsModule, 
-         MatProgressBarModule,
-         MatCheckboxModule,
-         MatSliderModule,
-         MatRadioModule,
-         MatDialogModule,
-         MatGridListModule
+import { CommonModule } from '@angular/common';
+import {
+   MatButtonModule,
+   MatBadgeModule,
+   MatCardModule,
+   MatMenuModule,
+   MatToolbarModule,
+   MatIconModule,
+   MatInputModule,
+   MatDatepickerModule,
+   MatNativeDateModule,
+   MatProgressSpinnerModule,
+   MatTableModule,
+   MatExpansionModule,
+   MatSelectModule,
+   MatSnackBarModule,
+   MatTooltipModule,
+   MatChipsModule,
+   MatListModule,
+   MatSidenavModule,
+   MatTabsModule,
+   MatProgressBarModule,
+   MatCheckboxModule,
+   MatSliderModule,
+   MatRadioModule,
+   MatDialogModule,
+   MatGridListModule,
+   MatSlideToggleModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BarRatingModule } from "ngx-bar-rating";
 import { AgmCoreModule } from '@agm/core';
-import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 import { BrandslogoComponent } from './BrandsLogo/BrandsLogo.component';
@@ -73,6 +75,7 @@ import { CTASingleBannerComponent } from './CallToAction/CTA-SingleBanner/CTA-Si
 import { DownloadAppSectionComponent } from './DownloadAppSection/DownloadAppSection.component';
 import { HomePageThreeSliderComponent } from './Slider/HomePageThreeSlider/HomePageThreeSlider.component';
 import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -80,25 +83,25 @@ import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.comp
       CommonModule,
       RouterModule,
       MatBadgeModule,
-      MatButtonModule, 
+      MatButtonModule,
       FlexLayoutModule,
-      MatCardModule, 
-      MatMenuModule, 
-      MatToolbarModule, 
-      MatIconModule, 
-      MatInputModule, 
-      MatDatepickerModule, 
-      MatNativeDateModule, 
+      MatCardModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatIconModule,
+      MatInputModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
       MatProgressSpinnerModule,
-      MatTableModule, 
-      MatExpansionModule, 
-      MatSelectModule, 
-      MatSnackBarModule, 
-      MatTooltipModule, 
-      MatChipsModule, 
-      MatListModule, 
-      MatSidenavModule, 
-      MatTabsModule, 
+      MatTableModule,
+      MatExpansionModule,
+      MatSelectModule,
+      MatSnackBarModule,
+      MatTooltipModule,
+      MatChipsModule,
+      MatListModule,
+      MatSidenavModule,
+      MatTabsModule,
       MatProgressBarModule,
       MatCheckboxModule,
       MatSliderModule,
@@ -106,6 +109,8 @@ import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.comp
       MatDialogModule,
       MatGridListModule,
       BarRatingModule,
+      MatSlideToggleModule,
+      TranslateModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyC9PnuRk42kbCPMOvsfHpn40r5SoyN38zI',
          libraries: ['places']
@@ -196,9 +201,9 @@ import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.comp
       HomePageThreeSliderComponent,
       NewProductsCardComponent
    ],
-   entryComponents : [
+   entryComponents: [
       ReviewPopupComponent,
       ConfirmationPopupComponent
    ]
 })
-export class GlobalModule {}
+export class GlobalModule { }

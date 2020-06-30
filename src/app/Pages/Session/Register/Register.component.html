@@ -9,30 +9,89 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
             <mat-card class="register-form form-margin">
-              <h4>Enter your details</h4>
-              <form>
-                <div class="mb-4">
-                  <mat-form-field class="w-100">
-                    <input matInput type="text" placeholder="First Name" required>
-                  </mat-form-field>
-                  <mat-form-field class="w-100">
-                    <input matInput type="text" placeholder="Last Name" required>
-                  </mat-form-field>
-                  <mat-form-field class="w-100">
-                    <input matInput type="email" placeholder="Email" required>
-                  </mat-form-field>
-                  <mat-form-field class="w-100">
-                    <input matInput type="password" placeholder="Enter Password" required>
-                  </mat-form-field>
+              <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
+                <h4 class="uppercase">{{'COMMON.REGISTRATION' | translate }}</h4>
+                <a mat-button routerLink="/login" color="accent"
+                  class="w-100">{{'COMMON.NOTNEW_SIGN_IN' | translate }}</a>
+              </div>
+              <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
+                <mat-form-field appearance="outline" class="w-100 mt-2">
+                  <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                  <mat-label>{{'COMMON.FIRST_NAME' | translate }}</mat-label>
+                  <input matInput placeholder="{{'COMMON.FIRST_NAME' | translate }}" formControlName="firstName"
+                    required>
+                  <mat-error *ngIf="registerForm.controls.firstName.errors?.required">
+                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 mt-2">
+                  <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                  <mat-label>{{'COMMON.LAST_NAME' | translate }}</mat-label>
+                  <input matInput placeholder="{{'COMMON.LAST_NAME' | translate }}" formControlName="lastName" required>
+                  <mat-error *ngIf="registerForm.controls.lastName.errors?.required">
+                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field> 
+                <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                  <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
+                  <input matInput placeholder="Email" formControlName="email" required>
+                  <mat-error *ngIf="registerForm.controls.email.errors?.required">
+                    {{'VALIDATION.EMAIL_REQUIRED' | translate }}</mat-error>
+                  <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">
+                    {{'VALIDATION.EMAIL_INVALID' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+                  <mat-label>{{'COMMON.PASSWORD' | translate }}</mat-label>
+                  <input matInput placeholder="Password" formControlName="password" type="password" minlength="6"
+                    required [type]="hide ? 'password' : 'text'">
+                  <mat-error *ngIf="registerForm.controls.password.errors?.required">
+                    {{'VALIDATION.PASSWORD_REQUIRED' | translate }}
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">
+                    {{'VALIDATION.MINIMUM_LENGTH' | translate }} 6</mat-error>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-100 mt-1">
+                  <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+                  <mat-label>{{'COMMON.CONFIRM_PASSWORD' | translate }}</mat-label>
+                  <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"
+                    required [type]="hide ? 'password' : 'text'">
+                  <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.required">
+                    {{'VALIDATION.FIELD_REQUIRED' | translate }}</mat-error>
+                  <mat-error *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')">
+                    {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}</mat-error>
+                  <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </mat-form-field>
+                <mat-radio-group formControlName="sex" class="my-3">
+                  <mat-radio-button value="F">
+                    {{'COMMON.MALE' | translate }}
+                  </mat-radio-button>
+                  <mat-radio-button value="M">
+                    {{'COMMON.FEMALE' | translate }}
+                  </mat-radio-button>
+                </mat-radio-group>
+                <div class="text-center mt-2">
+                  <button mat-raised-button color="accent" class="uppercase" type="submit">
+                    {{'COMMON.REGISTER' | translate }}
+                  </button>
                 </div>
-                <div class="mb-4">
-                  <mat-form-field class="w-100">
-                    <input matInput type="password" placeholder="Retype Password" required>
-                  </mat-form-field>
+                <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
+                  <a mat-button color="accent" class="w-100">{{error}}</a>
                 </div>
-                <button color="accent" class="button-lg mb-3" mat-raised-button>Submit</button>
-              <div> Already have account? then <a class="accent-color" [routerLink]="['/session/signin']">Sign In</a></div>
               </form>
+              <div class="divider mt-4"></div>
+              <mat-card-actions fxLayoutAlign="center center" class="text-center">
+                <small class="my-3">{{'MESSAGE.AGREEMENT' | translate }} <a mat-button routerLink="/terms-conditions"
+                    color="primary" class="mx-2">{{'COMMON.TERMS_CONDITIONS' | translate }}</a>
+                </small>
+              </mat-card-actions>
             </mat-card>
           </div>
         </div>

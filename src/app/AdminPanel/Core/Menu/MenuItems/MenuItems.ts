@@ -16,47 +16,47 @@ export interface Menu {
 
 const MENUITEMS = [
   {
-    state: 'admin-panel/reports',
+    state: 'admin/reports',
     name: 'Reports',
     type: 'link',
     icon: 'poll'
   },
   {
-    state: 'admin-panel/invoices',
+    state: 'admin/invoices',
     name: 'Invoices',
     type: 'link',
     icon: 'recent_actors'
   },
   {
-    state: 'admin-panel',
+    state: 'admin',
     name: 'Products',
     type: 'sub',
     icon: 'shopping_cart',
     children: [
-      {state: 'products', name: 'Products',type : 'link'},
-      {state: 'product-add', name: 'Product Add',type : 'link'}
+      { state: 'categories', name: 'Categories', type: 'link' },
+      { state: 'products', name: 'Products', type: 'link' },
+      { state: 'product-add', name: 'Product Add', type: 'link' }
     ]
   },
   {
-    state: 'admin-panel',
+    state: 'admin/system',
     name: 'System',
     type: 'sub',
     icon: 'shopping_cart',
     children: [
-      {
-        state: 'localisation',
-        name: 'Localisation',
-        type: 'sub',
-        icon: 'shopping_cart',
-        children: [
-          {state: 'languages', name: 'Languages', type : 'link'}
-        ]
-      },
-      {state: 'product-add', name: 'Product Add', type : 'link'}
+      { state: 'languages', name: 'Languages', type: 'link' },
+      { state: 'currencies', name: 'Currencies', type: 'link' },
+      { state: 'stockStatuses', name: 'Stock Statutes', type: 'link' },
+      { state: 'orderStatuses', name: 'Order Statutes', type: 'link' },
+      { state: 'returnStatuses', name: 'Return Statutes', type: 'link' },
+      { state: 'returnReasons', name: 'Return Reasons', type: 'link' },
+      { state: 'returnActions', name: 'Return Actions', type: 'link' },
+      { state: 'countries', name: 'Countries', type: 'link' },
+      { state: 'returnReasons', name: 'Return Reasons', type: 'link' }
     ]
   },
   {
-    state: 'admin-panel/account/profile',
+    state: 'admin/account/profile',
     name: 'Profile',
     type: 'link',
     icon: 'account_circle'

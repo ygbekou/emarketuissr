@@ -4,16 +4,16 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
 import * as screenfull from 'screenfull';
 import { MatDialogRef, MatDialog, MatBottomSheet, MatSnackBar } from '@angular/material';
-import { DeleteListDialogComponent} from '../Widget/PopUp/DeleteListDialog/DeleteListDialog.component';
+import { DeleteListDialogComponent } from '../Widget/PopUp/DeleteListDialog/DeleteListDialog.component';
 import { SeeListDialogComponent } from '../Widget/PopUp/SeeListDialog/SeeListDialog.component';
 import { AddNewUserComponent } from '../Widget/PopUp/AddNewUser/AddNewUser.component';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from "@angular/fire/database";
-import { TokenStorage } from './token.storage';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from "@angular/fire/database"; 
 import { catchError } from 'rxjs/operators';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
 import { Constants } from 'src/app/app.constants';
 import { SearchAttribute, AuthToken, GenericResponse } from 'src/app/app.models';
+import { TokenStorage } from 'src/app/token.storage';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +21,18 @@ import { SearchAttribute, AuthToken, GenericResponse } from 'src/app/app.models'
 
 export class AdminPanelServiceService {
 
-	sidenavOpen 	 : boolean = true;
-	sidenavMode 	 : string = "side";
-	chatSideBarOpen : boolean = true;
-	editProductData : any;
-	products  : AngularFireObject<any>;
-	headers: any;
+  sidenavOpen: boolean = true;
+  sidenavMode: string = "side";
+  chatSideBarOpen: boolean = true;
+  editProductData: any;
+  products: AngularFireObject<any>;
+  headers: any;
 
 
-	constructor(public http: HttpClient,
-		private dialog: MatDialog,
-		private db: AngularFireDatabase,
-		private tokenStorage: TokenStorage) {
+  constructor(public http: HttpClient,
+    private dialog: MatDialog,
+    private db: AngularFireDatabase,
+    private tokenStorage: TokenStorage) {
     this.headers = new HttpHeaders();
     if (this.tokenStorage.hasToken()) {
       this.headers = this.headers.set('Authorization', 'Bearer ' + this.tokenStorage.getToken());
@@ -45,70 +45,70 @@ export class AdminPanelServiceService {
 		---------- Pop Up Function ----------
 	*/
 
-	//deleteDiaglog function is used to open the Delete Dialog Component. 
-	deleteDialog(data:string){
-		let dialogRef : MatDialogRef<DeleteListDialogComponent>;
-		dialogRef = this.dialog.open(DeleteListDialogComponent);
-		dialogRef.componentInstance.data = data;
-		
-		return dialogRef.afterClosed();
-	}
+  //deleteDiaglog function is used to open the Delete Dialog Component. 
+  deleteDialog(data: string) {
+    let dialogRef: MatDialogRef<DeleteListDialogComponent>;
+    dialogRef = this.dialog.open(DeleteListDialogComponent);
+    dialogRef.componentInstance.data = data;
 
-	//getProducts method is used to get the products.
-   public getProducts() {
-      this.products = this.db.object("products");
-      return this.products;
-   }
+    return dialogRef.afterClosed();
+  }
 
-	//getTableTabContent method is used to get the transcation table data.
-	getTableTabContent() {
-		let tableContent : any;
-		tableContent = this.db.object("transcationTable");
-		return tableContent;
-	}
+  //getProducts method is used to get the products.
+  public getProducts() {
+    this.products = this.db.object("products");
+    return this.products;
+  }
 
-	//getBuySellChartData method is used to get the buy and sell chart data.
-	getBuySellChartContent() {
-		let buySellChart : any;
-		buySellChart = this.db.list("buySellChartData");
-		return buySellChart;
-	}
+  //getTableTabContent method is used to get the transcation table data.
+  getTableTabContent() {
+    let tableContent: any;
+    tableContent = this.db.object("transcationTable");
+    return tableContent;
+  }
 
-	//getInvoiceContent method is used to get the Invoice table data.
-	getInvoiceContent() {
-		let invoiceList : any;
-		invoiceList = this.db.list("invoiceData");
-		return invoiceList;
-	}
+  //getBuySellChartData method is used to get the buy and sell chart data.
+  getBuySellChartContent() {
+    let buySellChart: any;
+    buySellChart = this.db.list("buySellChartData");
+    return buySellChart;
+  }
 
-	//getCollaborationContent method is used to get the Collaboration table data.
-	getCollaborationContent () {
-		let collaboration : any;
-		collaboration = this.db.list("collaborationData");
-		return collaboration;
-	}
+  //getInvoiceContent method is used to get the Invoice table data.
+  getInvoiceContent() {
+    let invoiceList: any;
+    invoiceList = this.db.list("invoiceData");
+    return invoiceList;
+  }
 
-	//seeList function is used to open the see Dialog Component.
-	seeList(){
-		let dialogRef : MatDialogRef<SeeListDialogComponent>;
-		dialogRef = this.dialog.open(SeeListDialogComponent);
-	}	
+  //getCollaborationContent method is used to get the Collaboration table data.
+  getCollaborationContent() {
+    let collaboration: any;
+    collaboration = this.db.list("collaborationData");
+    return collaboration;
+  }
 
-	//addNewUserDialog function is used to open Add new user Dialog Component. 
-	addNewUserDialog(){
-		let dialogRef : MatDialogRef<AddNewUserComponent>;
-		dialogRef = this.dialog.open(AddNewUserComponent);
-		
-		return dialogRef.afterClosed();
-	}
+  //seeList function is used to open the see Dialog Component.
+  seeList() {
+    let dialogRef: MatDialogRef<SeeListDialogComponent>;
+    dialogRef = this.dialog.open(SeeListDialogComponent);
+  }
 
+  //addNewUserDialog function is used to open Add new user Dialog Component. 
+  addNewUserDialog() {
+    let dialogRef: MatDialogRef<AddNewUserComponent>;
+    dialogRef = this.dialog.open(AddNewUserComponent);
 
+    return dialogRef.afterClosed();
+  }
 
 
 
 
 
-	public getAll = (entityClass: string): Observable<any[]> => {
+
+
+  public getAll = (entityClass: string): Observable<any[]> => {
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/all';
     return this.http.get<any>(actionUrl, { headers: this.headers })
       .pipe(catchError(this.handleError));

@@ -6,7 +6,7 @@
           <div class="mb-3"> <i class="material-icons">
               shopping_cart
             </i></div>
-          <h5 *ngIf="(embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0); else elseCartBlock;">You have {{embryoService.localStorageCartProducts.length}} items in your cart</h5>
+          <h5 *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseCartBlock;">You have {{appService.localStorageCartProducts.length}} items in your cart</h5>
           <ng-template #elseCartBlock>
               <div class="section-gap-lg text-center">
                   <div class="mb-4">
@@ -18,8 +18,8 @@
           </ng-template>
         </div>
 
-        <div class="side-cart-wrapper" *ngIf="embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0">
-          <div class="side-cart-list px-3" *ngFor="let product of embryoService.localStorageCartProducts">
+        <div class="side-cart-wrapper" *ngIf="appService.localStorageCartProducts && appService.localStorageCartProducts.length>0">
+          <div class="side-cart-list px-3" *ngFor="let product of appService.localStorageCartProducts">
             <div fxLayoutAlign="center center">
                 <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                 <img [src]="product?.image" width="80" alt="cart img">
@@ -29,13 +29,13 @@
                 <p class="mb-0">
                   <span>{{product?.quantity}}</span>
                  </p>
-                <p class="font-bold">{{calculateProductSinglePrice(product, product?.quantity) | currency:embryoService?.currency}}</p>
+                <p class="font-bold">{{calculateProductSinglePrice(product, product?.quantity) | currency:appService?.currency}}</p>
               </div>
               <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="side-cart-actions text-center px-2">
                 <a href="javascript:void(0)" (click)="removeProduct(product)"><i class="material-icons">
                     remove_shopping_cart
                   </i></a>
-                <a [routerLink]="['/cart']" (click)="embryoService.paymentSidenavOpen=false"><i class="material-icons">
+                <a [routerLink]="['/cart']" (click)="appService.paymentSidenavOpen=false"><i class="material-icons">
                     edit
                   </i></a>
               </div>
@@ -44,18 +44,18 @@
           </div>
           <div class="px-3 text-right">
             <div>
-              <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}
+              <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:appService?.currency}}
             </div>
             <div>
-              <p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}
+              <p>Shipping</p><span fxFlex></span> {{appService.shipping | currency:appService?.currency}}
             </div>
             <div>
-              <p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}
+              <p>Tax(GST)</p><span fxFlex></span> {{appService.tax | currency:appService?.currency}}
             </div>
             <hr class="spacer">
             <div class="mb-4">
               <h4>Total</h4><span fxFlex></span>
-              <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
+              <h4> {{getTotalPrice() | currency:appService?.currency}}</h4>
             </div>
           </div>
         </div>

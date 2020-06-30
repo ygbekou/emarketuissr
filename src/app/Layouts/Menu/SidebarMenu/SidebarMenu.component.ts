@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
 
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'embryo-SidebarMenu',
@@ -27,7 +27,7 @@ export class SideBarMenuComponent implements OnInit {
    @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
 
    constructor(public router: Router, 
-               public embryoService: EmbryoService, 
+               public appService: AppService, 
                public translate: TranslateService) {
 
       if (this.depth === undefined) {
@@ -45,7 +45,7 @@ export class SideBarMenuComponent implements OnInit {
          } else {
             this.router.navigate([item.state],{ queryParams:{ category: item.queryState }});
          }
-         this.embryoService.sidenavOpen = false;
+         this.appService.sidenavOpen = false;
       }
       if (item.children && item.children.length) {
          this.expanded = !this.expanded;

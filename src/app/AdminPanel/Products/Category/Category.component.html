@@ -1,0 +1,253 @@
+<mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
+  <mat-tab label="{{'COMMON.SECTION' | translate}}">
+    <form name="form" (ngSubmit)="f.form.valid && saveSection()" #f="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
+          <a (click)="clear()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+          </a>
+          <br />
+          <a mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
+            <img [src]="flag.image" width="18">
+            <span fxShow="false" fxShow.gt-md class="uppercase flag-name">{{flag.name}}</span>
+            <mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+          </a>
+          <mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-menu-panel">
+            <span (mouseleave)="langMenuTrigger.closeMenu()">
+              <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+                <img [src]="flag.image" width="18" class="mat-elevation-z1"><span class="flag-name">{{flag.name}}</span>
+              </button>
+            </span>
+          </mat-menu>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.RANK' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="rank" [(ngModel)]="section.rank" name="rank"
+              #rank="ngModel"> 
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
+            </mat-label>
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="section.name" name="name"
+              #name="ngModel" required>
+            <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-slide-toggle [(ngModel)]="section.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="section.showInMenu" name="showInMenu" #showInMenu="ngModel" class="my-2">
+            {{ 'COMMON.SHOW_IN_MENU' | translate }}
+          </mat-slide-toggle>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
+            </mat-label>
+            <input matInput type="text" class="form-control" id="title" [(ngModel)]="section.title" name="title"
+              #title="ngModel" required>
+            <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100" *ngIf="section.showInMenu">
+            <mat-label>Menu</mat-label>
+            <mat-select placeholder="Menu" id="menu" name="menu" [(ngModel)]="section.menu" #menu="ngModel">
+              <mat-option *ngFor="let menu of menus" [value]="menu.name">
+                {{menu.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" class="px-2">
+          <mat-label>{{'COMMON.DESCRIPTION' | translate}}<font color="red">*</font>
+          </mat-label>
+          <quill-editor id="description" name="description" [(ngModel)]="section.description" #description="ngModel">
+          </quill-editor>
+        </div>
+
+        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
+            </span> </p>
+          <input-file [(ngModel)]="sectionImages" name="sectionImage" #sectionImage="ngModel" fileLimit="1"
+            fileAccept="image/*">
+          </input-file>
+
+          <div class="logo">
+            <img [src]="'assets/images/sections/'+section.id+'/'+section.picture" [style.width.px]="150"
+              class="d-block">
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+
+  <mat-tab label="{{'COMMON.SECTION_ITEM' | translate}}" *ngIf="section.id>0">
+
+    <mat-tab-group [(selectedIndex)]="selectedTab">
+      <mat-tab label="{{'COMMON.LIST' | translate}}">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+            <a (click)="addSectionItem()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+            </a>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let sectionItem"> {{sectionItem.id}} </td>
+            </ng-container>
+
+            <!-- Image Column -->
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef> {{'COMMON.ICON' | translate}} </th>
+              <td mat-cell *matCellDef="let sectionItem">
+                <mat-icon color="primary" class="mat-icon-xsm">{{sectionItem.picture}}</mat-icon>
+              </td>
+            </ng-container>
+
+            <!-- Published Column -->
+            <ng-container matColumnDef="lang">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Language </th>
+              <td mat-cell *matCellDef="let sectionItem"> {{sectionItem.language}} </td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.TITLE' | translate}} </th>
+              <td mat-cell *matCellDef="let sectionItem"> {{sectionItem.title}}</td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let sectionItem">
+                <a (click)="edit(sectionItem)" mat-icon-button color="primary"
+                  matTooltip="{{'COMMON.EDIT' | translate}}">
+                  <mat-icon>edit</mat-icon>
+                </a>
+                &nbsp;&nbsp;
+                <button mat-icon-button color="warn" (click)="remove(sectionItem)"
+                  matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let sectionItem; columns: displayedColumns;">
+            </tr>
+          </table>
+          <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+      </mat-tab>
+      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+        <form name="fform" (ngSubmit)="ff.form.valid && saveSectionItem()" #ff="ngForm" validate>
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
+                </mat-label>
+                <input matInput type="text" class="form-control" id="title2" [(ngModel)]="sectionItem.title"
+                  name="title2" #title2="ngModel" required>
+                <mat-error *ngIf="ff.submitted && title2.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> {{'COMMON.NAME' | translate}}
+                </mat-label>
+                <input matInput type="text" class="form-control" id="title3" [(ngModel)]="sectionItem.name"
+                  name="title3" #title3="ngModel">
+              </mat-form-field>
+
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+              <mat-form-field>
+                <mat-label>Ico</mat-label>
+                <mat-select placeholder="Select Icon..." [(ngModel)]="sectionItem.picture" name="icon">
+                  <mat-option *ngFor="let icon of icons" [value]="icon">
+                    <mat-icon color="primary" class="mat-icon-xsm">{{icon}}</mat-icon> {{icon}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br />
+              <mat-slide-toggle [(ngModel)]="sectionItem.status" name="status2" #status2="ngModel" class="my-2">
+                {{ 'COMMON.ENABLE' | translate }}
+              </mat-slide-toggle>
+              <br />
+              <!--
+              <mat-slide-toggle [(ngModel)]="sectionItem.showInMenu" name="showInMenu2" #showInMenu2="ngModel"
+                class="my-2">
+                {{ 'COMMON.SHOW_IN_MENU' | translate }}
+              </mat-slide-toggle>     
+              -->
+                        <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.RANK' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="rank2" [(ngModel)]="sectionItem.rank" name="rank2"
+              #rank2="ngModel"> 
+          </mat-form-field>         
+            </div>
+            <div fxFlex="100" class="px-2">
+              <mat-label>{{'COMMON.SUMMARY' | translate}}<font color="red">*</font>
+              </mat-label>
+              <quill-editor id="summary" name="summary" [(ngModel)]="sectionItem.summary" #summary="ngModel">
+              </quill-editor>
+            </div>
+            <div fxFlex="100" class="px-2">
+              <mat-label>{{'COMMON.DESCRIPTION' | translate}}<font color="red">*</font>
+              </mat-label>
+              <quill-editor id="description2" name="description2" [(ngModel)]="sectionItem.description"
+                #description2="ngModel">
+              </quill-editor>
+            </div>
+          </div>
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+              <div class="text-center mt-2">
+                <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                  <mat-icon>save</mat-icon>
+                </button> </div>
+              <div class="text-center mt-2" *ngIf="messages">
+                <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-tab>
+</mat-tab-group>

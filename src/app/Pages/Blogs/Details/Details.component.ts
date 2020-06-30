@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 import { FormControl, FormGroup, FormBuilder,FormArray, Validators } from '@angular/forms';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-Details',
@@ -16,7 +16,7 @@ export class DetailsComponent implements OnInit {
    blogId      : any;
    emailPattern : any = /\S+@\S+\.\S+/;
 
-   constructor(public embryoService : EmbryoService,
+   constructor(public appService : AppService,
               private route: ActivatedRoute,
               private router: Router,
               private formGroup : FormBuilder) {
@@ -38,7 +38,7 @@ export class DetailsComponent implements OnInit {
 
    public getBlodDetails() {
       this.blogId = (this.blogId) ? this.blogId : 1;
-      this.embryoService.getBlogList().valueChanges().
+      this.appService.getBlogList().valueChanges().
         subscribe(res => {this.getBlogDetailsResponse(res)});
    }
 

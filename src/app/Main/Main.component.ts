@@ -3,7 +3,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Observable, of as observableOf, interval ,  Subscription } from 'rxjs';
 import { map, take, delay, withLatestFrom, finalize, tap } from 'rxjs/operators';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { EmbryoService } from '../Services/Embryo.service';
+import { AppService } from '../Services/app.service';
 import { MenuItems } from '../Core/menu/menu-items/menu-items';
 import { Directionality } from '@angular/cdk/bidi';
 import { MediaChange } from '@angular/flex-layout';
@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
    currentUrl : any; 
 
    constructor(private loader : LoadingBarService,
-               public embryoService : EmbryoService, 
+               public appService : AppService, 
                public menuItems: MenuItems,
                dir: Directionality,
                public translate: TranslateService,
@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
          { name: 'description', content: 'Embryo is an E-Commerce angular 7 based template with material design. It also comes with Angular cli. Now you have all the power to maintain your ecommerce site. Responsive design gives your user to use in any modern devices. Clean Code gives you the power to customize the code as per as your requirments. Embryo has all the basics functionality which is required in ecommerce site. Rtl design makes the multi-language support with more easy way.' }
       ]);
 
-      if(this.embryoService.isDirectionRtl) {
+      if(this.appService.isDirectionRtl) {
          this.isRtl = 'rtl';
       } else {
          this.isRtl = 'ltr';
@@ -55,7 +55,7 @@ export class MainComponent implements OnInit {
 
    ngOnInit() {
       this.startTimer(); 
-      document.getElementById('html').classList.remove("admin-panel");
+      document.getElementById('html').classList.remove("admin");
       document.getElementById('html').classList.add("user-end");
    }
 
@@ -72,20 +72,20 @@ export class MainComponent implements OnInit {
    }
 
    public hideSideNav() {
-      this.embryoService.sidenavOpen = false;
+      this.appService.sidenavOpen = false;
    }
 
    public changeDirection() {
       if(this.isRtl == "rtl") {
          this.isRtl = "ltr";
-         this.embryoService.isDirectionRtl = false;
+         this.appService.isDirectionRtl = false;
       } else {
          this.isRtl = "rtl"
-         this.embryoService.isDirectionRtl = true;
+         this.appService.isDirectionRtl = true;
       }
 
-      this.embryoService.featuredProductsSelectedTab = 0;
-      this.embryoService.newArrivalSelectedTab = 0;
+      this.appService.featuredProductsSelectedTab = 0;
+      this.appService.newArrivalSelectedTab = 0;
    }
 
    /**

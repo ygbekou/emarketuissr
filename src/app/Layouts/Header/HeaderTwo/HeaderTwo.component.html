@@ -16,9 +16,9 @@
          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
        <span fxFlex></span>
            <div class="list-flex user-tool">
-             <embryo-HeaderCart [currency]="embryoService?.currency" [cartProducts]="embryoService?.localStorageCartProducts" [count]="embryoService?.navbarCartCount" (removeProductData)="openConfirmationPopup($event)"></embryo-HeaderCart>
+             <embryo-HeaderCart [currency]="appService?.currency" [cartProducts]="appService?.localStorageCartProducts" [count]="appService?.navbarCartCount" (removeProductData)="openConfirmationPopup($event)"></embryo-HeaderCart>
  
-             <embryo-WishList [currency]="embryoService?.currency" [wishListProducts]="embryoService?.localStorageWishlist" [count]="embryoService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)" (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
+             <embryo-WishList [currency]="appService?.currency" [wishListProducts]="appService?.localStorageWishlist" [count]="appService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)" (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
              <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
            </div>
          </div>

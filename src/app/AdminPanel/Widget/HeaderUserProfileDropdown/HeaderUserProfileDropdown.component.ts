@@ -16,7 +16,7 @@ export class HeaderUserProfileDropdownComponent implements OnInit {
 
 	//log out method 
 	logOut(){
-		document.getElementById('html').classList.remove("admin-panel");
+		document.getElementById('html').classList.remove("admin");
 		this.router.navigate(['/session/signin']);
 	}
 }

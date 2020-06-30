@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-PrivacyPolicy',
@@ -10,10 +10,10 @@ export class PrivacyPolicyComponent implements OnInit {
 
    privacyPolicyData : any;
 
-   constructor(public embryoService : EmbryoService) { }
+   constructor(public appService : AppService) { }
 
    ngOnInit() {
-      this.embryoService.getPrivacyPolicy().valueChanges().subscribe(res => {this.privacyPolicyData = res});
+      this.appService.getPrivacyPolicy().valueChanges().subscribe(res => {this.privacyPolicyData = res});
    }
 
 }

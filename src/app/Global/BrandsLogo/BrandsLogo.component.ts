@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import { EmbryoService } from '../../Services/Embryo.service';
+import { AppService } from '../../Services/app.service';
 
 @Component({
   selector: 'embryo-BrandsLogo',
@@ -45,7 +45,7 @@ export class BrandslogoComponent implements OnInit, OnChanges {
 
    ]
 
-   constructor(public embryoService : EmbryoService) { }
+   constructor(public appService : AppService) { }
 
    ngOnInit() {
    }

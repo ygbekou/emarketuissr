@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
 
-import { EmbryoService } from '../../Services/Embryo.service';
+import { AppService } from '../../Services/app.service';
 
 @Component({
   selector: 'embryo-Cart',
@@ -16,7 +16,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    quantityArray  : number[] = [1,2,3,4,5,6,7,8,9,10];
    popupResponse  : any;
 
-   constructor(public embryoService : EmbryoService, 
+   constructor(public appService : AppService, 
                private router: Router,
                private loadingBar: LoadingBarService,
                private cdRef : ChangeDetectorRef) {
@@ -31,7 +31,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
 
    public removeProduct(value:any) {
       let message = "Are you sure you want to delete this product?";
-      this.embryoService.confirmationPopup(message).
+      this.appService.confirmationPopup(message).
          subscribe(res => {this.popupResponse = res},
                    err => console.log(err),
                    ()  => this.getPopupResponse(this.popupResponse, value)
@@ -40,7 +40,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
 
    public getPopupResponse(response, value) {
       if(response){
-         this.embryoService.removeLocalCartProduct(value);
+         this.appService.removeLocalCartProduct(value);
       }
    }
 
@@ -53,8 +53,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
 
    public calculateTotalPrice() {
       let subtotal = 0;
-      if(this.embryoService.localStorageCartProducts && this.embryoService.localStorageCartProducts.length>0) {
-         for(let product of this.embryoService.localStorageCartProducts) {
+      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
+         for(let product of this.appService.localStorageCartProducts) {
             subtotal += (product.price *product.quantity);
          }
          return subtotal;
@@ -65,11 +65,11 @@ export class CartComponent implements OnInit, AfterViewChecked {
 
    public getTotalPrice() {
       let total = 0;
-      if(this.embryoService.localStorageCartProducts && this.embryoService.localStorageCartProducts.length>0) {
-         for(let product of this.embryoService.localStorageCartProducts) {
+      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
+         for(let product of this.appService.localStorageCartProducts) {
             total += (product.price*product.quantity);
          }
-         total += (this.embryoService.shipping+this.embryoService.tax);
+         total += (this.appService.shipping+this.appService.tax);
          return total;
       }
 
@@ -78,7 +78,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
    public updateLocalCartProduct() {
-      this.embryoService.updateAllLocalCartProduct(this.embryoService.localStorageCartProducts);
+      this.appService.updateAllLocalCartProduct(this.appService.localStorageCartProducts);
       this.router.navigate(['/checkout'])
    }
 

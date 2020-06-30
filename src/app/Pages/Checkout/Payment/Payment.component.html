@@ -1,10 +1,10 @@
 <embryo-PageTitle heading="Payment Information"></embryo-PageTitle>
 
-<div class="inner-container section-gap" *ngIf="(embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0); else elseBlock">
+<div class="inner-container section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
    <div class="checkout-option">
     <div class="container">
     <div class="view-cart text-right mb-5">
-      <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail : {{getCartProducts() | currency:embryoService?.currency}}</button>
+      <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail : {{getCartProducts() | currency:appService?.currency}}</button>
     </div>
       <mat-accordion class="mat-ex-wrapper">
         <form card container=".card-container" [formGroup] = "paymentFormOne">
