@@ -399,3 +399,9 @@ export class GenericResponse {
   result: string;
   message: string;
 }
+
+export class GenericVO {
+  id: number;
+  name: string;
+  languageId: number;
+}

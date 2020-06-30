@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AppInfoStorage } from 'src/app/app.info.storage';
-import { Product, ProductDescription } from 'src/app/app.models';
+import { Product, ProductDescription, Language } from 'src/app/app.models';
+import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
 
 @Component({
 	selector: 'app-add-product',
@@ -37,7 +38,7 @@ export class AddProductComponent implements OnInit {
 
    constructor(public formBuilder: FormBuilder,
       protected translate: TranslateService,
-      public appInfoStorage: AppInfoStorage) { }
+      public appService: AdminPanelServiceService) { }
 
 	ngOnInit() {
 
@@ -53,12 +54,20 @@ export class AddProductComponent implements OnInit {
       });
 
       this.product = new Product();
-      this.appInfoStorage.languages.forEach(lang => {
-         let pd = new ProductDescription();
-         pd.name = lang;
-         this.product.productDescriptions.push(pd);
-      });
-      
+
+      // this.appService.getAllByCriteria('com.softenza.emarket.model.Language', [])
+      // .subscribe((data: Language[]) => {
+       
+        for (var lang of this.appService.appInfoStorage.languages) {
+            let pd = new ProductDescription();
+            pd.name = lang.name;
+            this.product.productDescriptions.push(pd);
+            
+         }
+      // }, error => console.log(error),
+      //   () => console.log('Get Languages complete'));
+
+
    }
 
    /**

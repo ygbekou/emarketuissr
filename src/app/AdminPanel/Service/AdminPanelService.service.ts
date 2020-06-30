@@ -13,7 +13,9 @@ import { catchError } from 'rxjs/operators';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
 import { Constants } from 'src/app/app.constants';
-import { SearchAttribute, AuthToken, GenericResponse } from 'src/app/app.models';
+import { SearchAttribute, AuthToken, GenericResponse, Language, TaxClass, StockStatus, GenericVO } from 'src/app/app.models';
+import { AppInfoStorage } from 'src/app/app.info.storage';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -26,19 +28,25 @@ export class AdminPanelServiceService {
 	chatSideBarOpen : boolean = true;
 	editProductData : any;
 	products  : AngularFireObject<any>;
-	headers: any;
+  headers: any;
+  
+  appInfoStorage: AppInfoStorage;
 
 
 	constructor(public http: HttpClient,
 		private dialog: MatDialog,
 		private db: AngularFireDatabase,
-		private tokenStorage: TokenStorage) {
+    private tokenStorage: TokenStorage,
+    private translate: TranslateService) {
     this.headers = new HttpHeaders();
     if (this.tokenStorage.hasToken()) {
       this.headers = this.headers.set('Authorization', 'Bearer ' + this.tokenStorage.getToken());
     }
     this.headers = this.headers.set('Content-Type', 'application/json');
     this.headers = this.headers.set('Accept', 'application/json');
+
+    this.appInfoStorage = new AppInfoStorage(translate);
+
   }
 
 	/*
@@ -101,11 +109,6 @@ export class AdminPanelServiceService {
 		
 		return dialogRef.afterClosed();
 	}
-
-
-
-
-
 
 
 	public getAll = (entityClass: string): Observable<any[]> => {
@@ -209,6 +212,12 @@ export class AdminPanelServiceService {
       .pipe(catchError(this.handleError));
   }
 
+  public getCachedReferences = (elementType: string): Observable<any> => {
+    const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
+    return this.http.get(actionUrl, { headers: this.headers })
+      .pipe(catchError(this.handleError));
+  }
+
   public delete = (id: number, entityClass: string): Observable<GenericResponse> => {
     const actionUrl = Constants.apiServer + '/service/' + entityClass + '/delete/' + id;
     return this.http.get<GenericResponse>(actionUrl, { headers: this.headers })
@@ -226,6 +235,47 @@ export class AdminPanelServiceService {
     return this.http.post<any>(actionUrl, vo, { headers: this.headers })
       .pipe(catchError(this.handleError));
   }
+
+  public getCacheData() {
+    const parameters: string[] = [];
+    this.getAllByCriteria('com.softenza.emarket.model.TaxClass', parameters)
+      .subscribe((data: TaxClass[]) => {
+        this.appInfoStorage.taxClasses = data;
+      }, error => console.log(error),
+        () => console.log('Get Tax Classes complete'));
+
+    
+    this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
+      .subscribe((data: Language[]) => {
+        this.appInfoStorage.languages = data;
+      }, error => console.log(error),
+        () => console.log('Get Languages complete'));
+
+
+    this.getAllByCriteria('com.softenza.emarket.model.StockStatus', parameters)
+      .subscribe((data: StockStatus[]) => {
+        this.appInfoStorage.stockStatuses = data;
+      }, error => console.log(error),
+        () => console.log('Get Stock Statuses complete'));
+
+    this.getCachedReferences('lengthclass')
+      .subscribe((data: GenericVO[]) => {
+        this.appInfoStorage.lengthClasses = data;
+      }, error => console.log(error),
+        () => console.log('Get lengthclass complete'));
+
+     this.getCachedReferences('weightclass')
+      .subscribe((data: GenericVO[]) => {
+        this.appInfoStorage.weightClasses = data;
+      }, error => console.log(error),
+        () => console.log('Get weightclass complete'));
+  }
+
+
+
+
+
+
 
   // Error handling
   handleError(error) {
