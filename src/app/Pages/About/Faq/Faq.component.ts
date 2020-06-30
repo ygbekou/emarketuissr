@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-Faq',
@@ -10,10 +10,10 @@ export class FaqComponent implements OnInit {
 
    faqData : any 
 
-   constructor(public embryoService : EmbryoService) { }
+   constructor(public appService : AppService) { }
 
    ngOnInit() {
-      this.embryoService.getFaq().valueChanges().subscribe(res => {this.faqData = res});
+      this.appService.getFaq().valueChanges().subscribe(res => {this.faqData = res});
    }
 
 }

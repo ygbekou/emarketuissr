@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-DetailPage',
@@ -17,7 +17,7 @@ export class DetailPageComponent implements OnInit {
 
    constructor(private route: ActivatedRoute,
               private router: Router,
-              public embryoService: EmbryoService) {
+              public appService: AppService) {
       
    }
 
@@ -30,7 +30,7 @@ export class DetailPageComponent implements OnInit {
    }
 
    public getData() {
-      this.embryoService.getProducts().valueChanges().subscribe(res => this.checkResponse(res));
+      this.appService.getProducts().valueChanges().subscribe(res => this.checkResponse(res));
    }
 
    public checkResponse(response) {
@@ -46,11 +46,11 @@ export class DetailPageComponent implements OnInit {
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
    public addToWishList(value) {
-      this.embryoService.addToWishlist(value);
+      this.appService.addToWishlist(value);
    }
 
 }

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'signIn',
+  selector: 'sign-in',
   templateUrl: './SignIn.component.html',
   styleUrls: ['./SignIn.component.scss']
 })
 export class SignInComponent implements OnInit {
 
-  constructor() { }
+  constructor(public translate: TranslateService) { }
 
   ngOnInit() {
   }

@@ -8,7 +8,6 @@ import { DeleteListDialogComponent} from '../Widget/PopUp/DeleteListDialog/Delet
 import { SeeListDialogComponent } from '../Widget/PopUp/SeeListDialog/SeeListDialog.component';
 import { AddNewUserComponent } from '../Widget/PopUp/AddNewUser/AddNewUser.component';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from "@angular/fire/database";
-import { TokenStorage } from './token.storage';
 import { catchError } from 'rxjs/operators';
 import { User } from 'firebase';
 import { throwError } from 'rxjs';
@@ -16,6 +15,7 @@ import { Constants } from 'src/app/app.constants';
 import { SearchAttribute, AuthToken, GenericResponse, Language, TaxClass, StockStatus, GenericVO } from 'src/app/app.models';
 import { AppInfoStorage } from 'src/app/app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
+import { TokenStorage } from 'src/app/token.storage';
 
 @Injectable({
   providedIn: 'root'

@@ -1,33 +1,34 @@
-import { BrowserModule} from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
-import { HttpClientModule, HttpClient} from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, 
-         MatCardModule, 
-         MatMenuModule, 
-         MatToolbarModule, 
-         MatIconModule, 
-         MatInputModule, 
-         MatDatepickerModule, 
-         MatNativeDateModule, 
-         MatProgressSpinnerModule,
-         MatTableModule, 
-         MatExpansionModule, 
-         MatSelectModule,
-         MatSnackBarModule, 
-         MatTooltipModule, 
-         MatChipsModule, 
-         MatListModule, 
-         MatSidenavModule, 
-         MatTabsModule, 
-         MatProgressBarModule,
-         MatCheckboxModule,
-         MatSliderModule,
-         MatRadioModule,
-         MatDialogModule,
-         MatGridListModule
+import {
+   MatButtonModule,
+   MatCardModule,
+   MatMenuModule,
+   MatToolbarModule,
+   MatIconModule,
+   MatInputModule,
+   MatDatepickerModule,
+   MatNativeDateModule,
+   MatProgressSpinnerModule,
+   MatTableModule,
+   MatExpansionModule,
+   MatSelectModule,
+   MatSnackBarModule,
+   MatTooltipModule,
+   MatChipsModule,
+   MatListModule,
+   MatSidenavModule,
+   MatTabsModule,
+   MatProgressBarModule,
+   MatCheckboxModule,
+   MatSliderModule,
+   MatRadioModule,
+   MatDialogModule,
+   MatGridListModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -49,7 +50,7 @@ import { GlobalModule } from './Global/Global.module';
 import { TemplatesModule } from './Templates/Templates.module';
 import { MenuItems } from './Core/menu/menu-items/menu-items';
 
-import { EmbryoService } from './Services/Embryo.service';
+import { AppService } from './Services/app.service';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './Main/Main.component';
@@ -72,12 +73,12 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AdminPanelModule } from './AdminPanel/admin-panel.module';
-import { TokenStorage } from './AdminPanel/Service/token.storage';
 import { AppInfoStorage } from './app.info.storage';
+import { TokenStorage } from './token.storage';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
+   suppressScrollX: true
 };
 
 /********** Custom option for ngx-translate ******/
@@ -105,30 +106,30 @@ export function createTranslateLoader(http: HttpClient) {
       FixedHeaderComponent
    ],
    imports: [
-      BrowserModule.withServerTransition({appId: 'embryo-seo-pre'}),
+      BrowserModule.withServerTransition({ appId: 'embryo-seo-pre' }),
       BrowserAnimationsModule,
-      RouterModule.forRoot(AppRoutes, {onSameUrlNavigation: 'reload'}),
+      RouterModule.forRoot(AppRoutes, { onSameUrlNavigation: 'reload' }),
       GlobalModule,
       TemplatesModule,
-      MatButtonModule, 
+      MatButtonModule,
       FlexLayoutModule,
-      MatCardModule, 
-      MatMenuModule, 
-      MatToolbarModule, 
-      MatIconModule, 
-      MatInputModule, 
-      MatDatepickerModule, 
-      MatNativeDateModule, 
+      MatCardModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatIconModule,
+      MatInputModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
       MatProgressSpinnerModule,
-      MatTableModule, 
-      MatExpansionModule, 
-      MatSelectModule, 
-      MatSnackBarModule, 
-      MatTooltipModule, 
-      MatChipsModule, 
-      MatListModule, 
-      MatSidenavModule, 
-      MatTabsModule, 
+      MatTableModule,
+      MatExpansionModule,
+      MatSelectModule,
+      MatSnackBarModule,
+      MatTooltipModule,
+      MatChipsModule,
+      MatListModule,
+      MatSidenavModule,
+      MatTabsModule,
       MatProgressBarModule,
       MatCheckboxModule,
       MatSliderModule,
@@ -156,18 +157,18 @@ export function createTranslateLoader(http: HttpClient) {
       PerfectScrollbarModule,
       DeviceDetectorModule.forRoot(),
       AdminPanelModule
-  ],
+   ],
    providers: [
       TokenStorage,
       AppInfoStorage,
       MenuItems,
-      EmbryoService,
+      AppService,
       {
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
       }
    ],
-   exports : [
+   exports: [
       RouterModule,
       ToastaModule
    ],

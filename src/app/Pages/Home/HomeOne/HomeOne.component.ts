@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked} from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { ChangeDetectorRef } from '@angular/core';
 
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-homeone',
@@ -85,14 +85,14 @@ export class HomeoneComponent implements OnInit, AfterViewChecked{
       ]
    };
 
-   constructor(public embryoService: EmbryoService,
+   constructor(public appService: AppService,
                private cdRef : ChangeDetectorRef) {
       this.getFeaturedProducts();
       this.getBlogList();
       this.getProductRevies();
 
-      this.embryoService.featuredProductsSelectedTab = 0;
-      this.embryoService.newArrivalSelectedTab = 0;
+      this.appService.featuredProductsSelectedTab = 0;
+      this.appService.newArrivalSelectedTab = 0;
    }
 
    ngOnInit() {
@@ -103,23 +103,23 @@ export class HomeoneComponent implements OnInit, AfterViewChecked{
    }
 
    public getFeaturedProducts() {
-      this.embryoService.getProducts().valueChanges().subscribe(res => {this.productsArray = res});
+      this.appService.getProducts().valueChanges().subscribe(res => {this.productsArray = res});
    }
 
    public getBlogList() {
-      this.embryoService.getBlogList().valueChanges().subscribe(res => {this.blogList = res});
+      this.appService.getBlogList().valueChanges().subscribe(res => {this.blogList = res});
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
    public getProductRevies() {
-      this.embryoService.getProductReviews().valueChanges().subscribe(res => {this.productReviews = res});
+      this.appService.getProductReviews().valueChanges().subscribe(res => {this.productReviews = res});
    }
 
    public addToWishlist(value) {
-      this.embryoService.addToWishlist(value);
+      this.appService.addToWishlist(value);
    }
 
    public onFeaturedSelectedTab(tabIndex) {

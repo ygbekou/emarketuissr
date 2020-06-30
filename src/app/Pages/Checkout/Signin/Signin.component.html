@@ -1,18 +1,18 @@
   
 <embryo-PageTitle heading="Checkout"></embryo-PageTitle>
 
-<div class="bg-white shop-by-category section-gap" *ngIf="(embryoService.localStorageCartProducts && embryoService.localStorageCartProducts.length>0); else elseBlock">
+<div class="bg-white shop-by-category section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
   <div class="checkout-option">
     <div class="container">
       <div class="view-cart text-right mb-5">
         <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail :
-          {{getCartProducts() | currency:embryoService?.currency}}</button>
+          {{getCartProducts() | currency:appService?.currency}}</button>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
           <mat-card>
             <h4>User Sign In</h4>
-           <embryo-SignIn></embryo-SignIn>
+           <app-sign-in></app-sign-in>
           </mat-card>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">

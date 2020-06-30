@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-FinalReceipt',
@@ -14,7 +14,7 @@ export class FinalReceiptComponent implements OnInit {
    userDetails  : any;
    todayDate    : any = new Date();
 
-   constructor(public embryoService: EmbryoService, public router: Router) {
+   constructor(public appService: AppService, public router: Router) {
       this.getDeliveryDate();
       this.userDetails = JSON.parse(localStorage.getItem("user"));
    }
@@ -38,8 +38,8 @@ export class FinalReceiptComponent implements OnInit {
 
    public calculateTotalPrice() {
       let subtotal = 0;
-      if(this.embryoService.buyUserCartProducts && this.embryoService.buyUserCartProducts.length>0) {
-         for(let product of this.embryoService.buyUserCartProducts) {
+      if(this.appService.buyUserCartProducts && this.appService.buyUserCartProducts.length>0) {
+         for(let product of this.appService.buyUserCartProducts) {
             if(!product.quantity){
                product.quantity = 1;
             }
@@ -52,21 +52,21 @@ export class FinalReceiptComponent implements OnInit {
 
    public getTotalPrice() {
       let total = 0;
-      if(this.embryoService.buyUserCartProducts && this.embryoService.buyUserCartProducts.length>0) {
-         for(let product of this.embryoService.buyUserCartProducts) {
+      if(this.appService.buyUserCartProducts && this.appService.buyUserCartProducts.length>0) {
+         for(let product of this.appService.buyUserCartProducts) {
             if(!product.quantity){
                product.quantity = 1;
             }
             total += (product.price*product.quantity);
          }
-         total += (this.embryoService.shipping+this.embryoService.tax);
+         total += (this.appService.shipping+this.appService.tax);
          return total;
       }
       return total;
    }
 
    public goToHome() {
-      this.embryoService.removeBuyProducts();
+      this.appService.removeBuyProducts();
       this.router.navigate(['/']);
    }
 

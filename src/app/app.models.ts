@@ -211,6 +211,7 @@ export class Language {
   directory: string;
   sortOrder: number;
   status: number;
+  type = 'Language';
 }
 
 export class Company {

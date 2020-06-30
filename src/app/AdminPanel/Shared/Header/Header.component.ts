@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-header-component',
@@ -10,7 +10,7 @@ import { EmbryoService } from '../../../Services/Embryo.service';
 export class AdminHeaderComponent implements OnInit {
 
 	constructor(private coreService : AdminPanelServiceService,
-               public embryoService: EmbryoService) { }
+               public appService: AppService) { }
 
 	ngOnInit() {
 	}
@@ -23,7 +23,7 @@ export class AdminHeaderComponent implements OnInit {
    }
 
    public selectedLanguage(value) {
-      this.embryoService.language = value;
+      this.appService.language = value;
    }
 
 }

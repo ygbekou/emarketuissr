@@ -1,7 +1,7 @@
 
 <embryo-PageTitle heading="Payment Confirmation"></embryo-PageTitle>
 
-<div class="inner-container" *ngIf="(embryoService.buyUserCartProducts && embryoService.buyUserCartProducts.length>0); else elseBlock">
+<div class="inner-container" *ngIf="(appService.buyUserCartProducts && appService.buyUserCartProducts.length>0); else elseBlock">
   <div class="bg-white final-receipt-page section-gap" *ngIf="userDetails">
     <div class="final-receipt">
       <div class="container">
@@ -21,7 +21,7 @@
                     <h6>Summery</h6>
                     <p class="mb-1">Order ID: 2563883628932</p>
                     <p class="mb-1">Order Date: {{todayDate | date:'MMMM d, y'}} </p>
-                    <p class="mb-1">Order Total: {{getTotalPrice() | currency:embryoService?.currency}}</p>
+                    <p class="mb-1">Order Total: {{getTotalPrice() | currency:appService?.currency}}</p>
                   </div>
                   <div class="pb-4" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                     <h6>Ship To</h6>
@@ -37,7 +37,7 @@
                   <h3>{{deliveryDate | date:'MMMM d, y'}}</h3>
                 </div>
                 <h4 class="pt-5">Your Ordered Details</h4>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" class="col-gap" *ngFor="let product of embryoService.buyUserCartProducts">
+                <div fxLayout="row wrap" fxLayoutAlign="start center" class="col-gap" *ngFor="let product of appService.buyUserCartProducts">
                   <div fxFlex.xs="20" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                     <img width="100" [src]="product?.image" alt="cart Image">
                   </div>
@@ -52,24 +52,24 @@
                   </div>
                   <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                     <h6>Price</h6>
-                    <p>{{ calculateProductSinglePrice(product, product?.quantity) | currency:embryoService?.currency}}</p>
+                    <p>{{ calculateProductSinglePrice(product, product?.quantity) | currency:appService?.currency}}</p>
                   </div>
                 </div>
                 <hr class="dark-border spacer">
                 <div class="text-right ">
                   <div>
-                    <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:embryoService?.currency}}
+                    <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:appService?.currency}}
                   </div>
                   <div>
-                    <p>Shipping</p><span fxFlex></span> {{embryoService.shipping | currency:embryoService?.currency}}
+                    <p>Shipping</p><span fxFlex></span> {{appService.shipping | currency:appService?.currency}}
                   </div>
                   <div>
-                    <p>Tax(GST)</p><span fxFlex></span> {{embryoService.tax | currency:embryoService?.currency}}
+                    <p>Tax(GST)</p><span fxFlex></span> {{appService.tax | currency:appService?.currency}}
                   </div>
                   <hr class="spacer">
                   <div class="mb-4">
                     <h4>Total</h4><span fxFlex></span>
-                    <h4> {{getTotalPrice() | currency:embryoService?.currency}}</h4>
+                    <h4> {{getTotalPrice() | currency:appService?.currency}}</h4>
                   </div>
                 </div>
               </div>

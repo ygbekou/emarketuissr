@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class AboutUsComponent implements OnInit {
    aboutInfo         : any;
 
 
-   constructor(private embryoService : EmbryoService) { }
+   constructor(private appService : AppService) { }
 
    ngOnInit() {
       this.getAboutInfo();
@@ -25,19 +25,19 @@ export class AboutUsComponent implements OnInit {
    }
 
    public getAboutInfo() {
-      this.embryoService.getAboutInfo().valueChanges().subscribe(res => {this.aboutInfo = res});
+      this.appService.getAboutInfo().valueChanges().subscribe(res => {this.aboutInfo = res});
    }
 
    public getMissionVision() {
-      this.embryoService.getMissionVision().valueChanges().subscribe(res => {this.missionVisionData = res});
+      this.appService.getMissionVision().valueChanges().subscribe(res => {this.missionVisionData = res});
    }
 
    public getTeamData() {
-      this.embryoService.getTeam().valueChanges().subscribe(res => {this.teamData = res});
+      this.appService.getTeam().valueChanges().subscribe(res => {this.teamData = res});
    }
 
    public getTestimonialData() {
-      this.embryoService.getTestimonial().valueChanges().subscribe(res => {this.testimonialData = res});
+      this.appService.getTestimonial().valueChanges().subscribe(res => {this.testimonialData = res});
    }
 }
 

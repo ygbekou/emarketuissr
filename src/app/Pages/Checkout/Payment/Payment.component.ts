@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder,FormArray, Validators } from '@angular/forms';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -67,11 +67,11 @@ export class PaymentComponent implements OnInit, AfterViewInit{
 
    paymentFormOne   : FormGroup;
 
-   constructor(public embryoService : EmbryoService, 
+   constructor(public appService : AppService, 
                private formGroup : FormBuilder,
                public router: Router) {
 
-      this.embryoService.removeBuyProducts();
+      this.appService.removeBuyProducts();
    }
 
    ngOnInit() {
@@ -125,19 +125,19 @@ export class PaymentComponent implements OnInit, AfterViewInit{
    }
 
    public toggleRightSidenav() {
-      this.embryoService.paymentSidenavOpen = !this.embryoService.paymentSidenavOpen;
+      this.appService.paymentSidenavOpen = !this.appService.paymentSidenavOpen;
    }
 
    public getCartProducts() {
       let total = 0;
-      if(this.embryoService.localStorageCartProducts && this.embryoService.localStorageCartProducts.length>0) {
-         for(let product of this.embryoService.localStorageCartProducts) {
+      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
+         for(let product of this.appService.localStorageCartProducts) {
             if(!product.quantity){
                product.quantity = 1;
             }
             total += (product.price*product.quantity);
          }
-         total += (this.embryoService.shipping+this.embryoService.tax);
+         total += (this.appService.shipping+this.appService.tax);
          return total;
       } 
       return total; 
@@ -201,7 +201,7 @@ export class PaymentComponent implements OnInit, AfterViewInit{
    public finalStep() {
       let paymentGroup = <FormGroup>(this.paymentFormOne.controls['payment']);
       if(paymentGroup.valid) {
-         this.embryoService.addBuyUserDetails(this.paymentFormOne.value);
+         this.appService.addBuyUserDetails(this.paymentFormOne.value);
          this.router.navigate(['/checkout/final-receipt']);
       } else {
          for (let i in paymentGroup.controls) {

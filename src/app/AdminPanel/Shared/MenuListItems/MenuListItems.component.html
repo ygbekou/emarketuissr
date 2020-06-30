@@ -4,7 +4,7 @@
          <a menuToggle class="relative" mat-ripple [routerLink]="['/'+menuitem.state]" routerLinkActive="active-link" *ngIf="menuitem.type === 'link'">
          <mat-icon>{{ menuitem.icon }}</mat-icon>
          <span>{{ menuitem.name | translate }}</span>
-         <ng-container *ngIf="menuitem.label">
+         <ng-container *ngIf="menuitem.label"> 
             <span class="sidebar-label">{{ menuitem.label}}</span>
          </ng-container>
          </a>

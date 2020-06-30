@@ -3,9 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdminPanelServiceService } from './AdminPanel/Service/AdminPanelService.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+   selector: 'app-root',
+   templateUrl: './app.component.html',
+   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 
-import {EmbryoService } from '../../Services/Embryo.service';
+import {AppService } from '../../Services/app.service';
 
 @Component({
   selector: 'embryo-ShopDetails',
@@ -23,9 +23,9 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
    constructor(private route: ActivatedRoute,
                private router: Router, 
-               public embryoService : EmbryoService
+               public appService : AppService
                ) {
-      this.embryoService.getProductReviews().valueChanges().subscribe(res => {this.productReviews = res});
+      this.appService.getProductReviews().valueChanges().subscribe(res => {this.productReviews = res});
    }
 
    ngOnInit() {
@@ -65,19 +65,19 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
         reviews = review.user_rating;
       }
 
-      this.embryoService.reviewPopup(detailData, reviews);
+      this.appService.reviewPopup(detailData, reviews);
    }
 
    public addToWishlist(value:any) {
-      this.embryoService.addToWishlist(value);
+      this.appService.addToWishlist(value);
    }
 
    public addToCart(value:any) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
    public buyNow(value:any) {
-      this.embryoService.buyNow(value);
+      this.appService.buyNow(value);
       this.router.navigate(['/checkout']);
    }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 
-import { EmbryoService } from '../../Services/Embryo.service';
+import { AppService } from '../../Services/app.service';
 
 @Component({
   selector: 'embryo-PaymentDetailSideBar',
@@ -13,7 +13,7 @@ export class PaymentDetailSideBarComponent implements OnInit {
    cartProducts  : any;
    popupResponse : any;
 
-   constructor(public embryoService: EmbryoService,
+   constructor(public appService: AppService,
                private loadingBar: LoadingBarService) { }
 
    ngOnInit() {
@@ -21,8 +21,8 @@ export class PaymentDetailSideBarComponent implements OnInit {
 
    public calculateTotalPrice() {
       let subtotal = 0;
-      if(this.embryoService.localStorageCartProducts && this.embryoService.localStorageCartProducts.length>0) {
-         for(let product of this.embryoService.localStorageCartProducts) {
+      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
+         for(let product of this.appService.localStorageCartProducts) {
             subtotal += (product.price *product.quantity) ;
          }
       }
@@ -31,7 +31,7 @@ export class PaymentDetailSideBarComponent implements OnInit {
 
    public removeProduct(value) {
       let message = "Are you sure you want to delete this product?";
-      this.embryoService.confirmationPopup(message).
+      this.appService.confirmationPopup(message).
          subscribe(res => {this.popupResponse = res},
                    err => console.log(err),
                    ()  => this.getPopupResponse(this.popupResponse, value)
@@ -40,8 +40,8 @@ export class PaymentDetailSideBarComponent implements OnInit {
 
    public getPopupResponse(response, value) {
       if(response){
-         this.embryoService.removeLocalCartProduct(value);
-         this.embryoService.paymentSidenavOpen = false;
+         this.appService.removeLocalCartProduct(value);
+         this.appService.paymentSidenavOpen = false;
       }
    }
 
@@ -54,11 +54,11 @@ export class PaymentDetailSideBarComponent implements OnInit {
 
    public getTotalPrice() {
       let total = 0;
-      if(this.embryoService.localStorageCartProducts && this.embryoService.localStorageCartProducts.length>0) {
-         for(let product of this.embryoService.localStorageCartProducts) {
+      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
+         for(let product of this.appService.localStorageCartProducts) {
             total += (product.price*product.quantity);
          }
-         total += (this.embryoService.shipping+this.embryoService.tax);
+         total += (this.appService.shipping+this.appService.tax);
       }
       return total;
    }

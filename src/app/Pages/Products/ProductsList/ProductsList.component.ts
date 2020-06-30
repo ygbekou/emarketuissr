@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute, Params }   from '@angular/router';
 import { Observable ,  Subscription } from 'rxjs';
 
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-ProductsList',
@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit {
    
    constructor(private route: ActivatedRoute,
                private router: Router, 
-               public embryoService : EmbryoService,
+               public appService : AppService,
                ) {
    }
 
@@ -66,11 +66,11 @@ export class ProductsListComponent implements OnInit {
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value);
+      this.appService.addToCart(value);
    }
 
    public addToWishList(value) {
-      this.embryoService.addToWishlist(value);
+      this.appService.addToWishlist(value);
    }
    
    public transformHits(hits) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'HeaderThree',
@@ -13,14 +13,14 @@ export class HeaderThreeComponent implements OnInit {
    popupResponse    : any;
    wishlistProducts : any;
 
-   constructor(public embryoService: EmbryoService) { }
+   constructor(public appService: AppService) { }
 
    ngOnInit() {
    }
 
    public toggleSidebar()
    {
-      this.embryoService.sidenavOpen = !this.embryoService.sidenavOpen;
+      this.appService.sidenavOpen = !this.appService.sidenavOpen;
    }
 
    public toggleSearch() {
@@ -29,7 +29,7 @@ export class HeaderThreeComponent implements OnInit {
 
    public openConfirmationPopup(value:any) {
       let message = "Are you sure you want to delete this product?";
-      this.embryoService.confirmationPopup(message).
+      this.appService.confirmationPopup(message).
          subscribe(res => {this.popupResponse = res},
                    err => console.log(err),
                    ()  => this.getPopupResponse(this.popupResponse, value, 'cart')
@@ -39,20 +39,20 @@ export class HeaderThreeComponent implements OnInit {
    public getPopupResponse(response:any, value:any, type) {
       if(response) {
          if(type == 'cart'){
-            this.embryoService.removeLocalCartProduct(value);
+            this.appService.removeLocalCartProduct(value);
          } else {
-            this.embryoService.removeLocalWishlistProduct(value);
+            this.appService.removeLocalWishlistProduct(value);
          }
       }
    }
 
    public addAllWishlistToCart(values:any) {
-      this.embryoService.addAllWishListToCart(values);
+      this.appService.addAllWishListToCart(values);
    } 
 
    public openWishlistConfirmationPopup(value:any) {
       let message = "Are you sure you want to add all products?";
-      this.embryoService.confirmationPopup(message).
+      this.appService.confirmationPopup(message).
          subscribe(res => {this.popupResponse = res},
                    err => console.log(err),
                    ()  => this.getPopupResponse(this.popupResponse, value, 'wishlist')
@@ -60,15 +60,15 @@ export class HeaderThreeComponent implements OnInit {
    }
 
    public selectedCurrency(value) {
-      this.embryoService.currency = value;
+      this.appService.currency = value;
    }
 
    public selectedLanguage(value) {
-      this.embryoService.language = value;
+      this.appService.language = value;
    }
 
    public addToCart(value) {
-      this.embryoService.addToCart(value, 'wishlist');
+      this.appService.addToCart(value, 'wishlist');
    }
 
 }

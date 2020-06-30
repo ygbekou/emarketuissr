@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbryoService } from '../../../Services/Embryo.service';
+import { AppService } from '../../../Services/app.service';
 
 @Component({
   selector: 'app-TermAndCondition',
@@ -10,10 +10,10 @@ export class TermAndConditionComponent implements OnInit {
 
    termContions : any ;
 
-   constructor(public embryoService: EmbryoService) { }
+   constructor(public appService: AppService) { }
 
    ngOnInit() {
-      this.embryoService.getTermCondition().valueChanges().subscribe(res => {this.termContions = res});
+      this.appService.getTermCondition().valueChanges().subscribe(res => {this.termContions = res});
    }
 
 }

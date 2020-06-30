@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthToken } from 'src/app/app.models';
-
+import { AuthToken } from './app.models';
 
 @Injectable()
 export class TokenStorage {

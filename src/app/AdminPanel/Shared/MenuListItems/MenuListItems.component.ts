@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminMenuItems } from '../../Core/Menu/MenuItems/MenuItems';
-import { Router,ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -12,9 +12,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class MenuListItemsComponent implements OnInit {
 
 	constructor(public menuItems: AdminMenuItems,
-				private router :Router,
-                private activatedRoute: ActivatedRoute,
-                public translate : TranslateService ) { }
+		private router: Router,
+		private activatedRoute: ActivatedRoute,
+		public translate: TranslateService) { }
 
 	ngOnInit() {
 	}

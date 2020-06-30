@@ -75,7 +75,7 @@
             <ais-hits [transformItems]="transformHits">
               <ng-template let-hits="hits" let-results="results">
                 <ng-container *ngIf="(hits && hits.length>0); else errorBlock">
-                  <embryo-ProductGrid [currency]="embryoService?.currency" [products]="hits" (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true> 
+                  <embryo-ProductGrid [currency]="appService?.currency" [products]="hits" (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true> 
                   </embryo-ProductGrid>
                 </ng-container>
                 <ng-template #errorBlock>
