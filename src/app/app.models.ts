@@ -187,6 +187,8 @@ export class Product {
   width: number;
 
   productDescriptions: ProductDescription[] = [];
+
+  type: 'Product';
 }
 
 export class ProductDescription {

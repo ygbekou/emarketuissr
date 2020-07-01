@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppInfoStorage } from 'src/app/app.info.storage';
 import { Product, ProductDescription, Language } from 'src/app/app.models';
 import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
    selector: 'app-add-product',
@@ -39,7 +40,7 @@ export class AddProductComponent implements OnInit {
 
    constructor(public formBuilder: FormBuilder,
       protected translate: TranslateService,
-      public appService: AdminPanelServiceService) { }
+      public appService: AppService) { }
 
    ngOnInit() {
 
