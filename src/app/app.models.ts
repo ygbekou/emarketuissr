@@ -406,3 +406,31 @@ export class GenericVO {
   name: string;
   languageId: number;
 }
+
+export class Category {
+  id: number;
+  catColumn: number;
+  sortOrder: number;
+  status: number;
+  image: string;
+  parent: Category;
+  top: number;
+  type = 'Category';
+  language: any;
+  showInMenu: number;
+}
+export class CategoryDescription {
+  id: number;
+  category: Category;
+  language: Language;
+  name: string;
+  description: string;
+  tag: string;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeyword: string;
+  type = 'CategoryDescription';
+  status: number;
+  showInMenu: number;
+}
+

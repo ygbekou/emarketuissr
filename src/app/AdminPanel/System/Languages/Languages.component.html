@@ -1,3 +1,9 @@
+<a mat-button [routerLink]="['/admin/system']">{{'COMMON.SYSTEM' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/system/language']">
+  <h5>{{'COMMON.LANGUAGE' | translate}}</h5>
+</a>
 <mat-tab-group [(selectedIndex)]="selectedTab">
   <mat-tab label="{{'COMMON.LIST' | translate}}">
     <div fxLayout="row wrap">
@@ -24,7 +30,7 @@
 
         <!-- Image Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef  mat-sort-header> {{'COMMON.NAME' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
           <td mat-cell *matCellDef="let language"> {{language.name}}
           </td>
         </ng-container>
