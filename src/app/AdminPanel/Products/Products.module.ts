@@ -39,9 +39,10 @@ import { ProductsComponent } from './Products/Products.component';
 import { ProductsRoutes } from './Products.routing';
 import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
+import { ProductDescriptionComponent } from './ProductDescription/ProductDescription.component';
 
 @NgModule({
-  declarations: [ProductsComponent, EditProductComponent, AddProductComponent,
+  declarations: [ProductsComponent, EditProductComponent, AddProductComponent, ProductDescriptionComponent,
     CategoryComponent, CategoriesComponent],
   imports: [
     CommonModule,
