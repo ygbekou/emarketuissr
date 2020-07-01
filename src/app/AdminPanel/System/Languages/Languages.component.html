@@ -1,8 +1,9 @@
-<a mat-button routerLink=".">{{'COMMON.SYSTEM' | translate}}
- <mat-icon>navigate_next</mat-icon>
+<a mat-button [routerLink]="['/admin/system']">{{'COMMON.SYSTEM' | translate}}
+  <mat-icon>navigate_next</mat-icon>
 </a>
-<a mat-button color="accent" routerLink="."><h5>{{'COMMON.LANGUAGE' | translate}}</h5></a>
-
+<a mat-button color="accent" [routerLink]="['/admin/system/language']">
+  <h5>{{'COMMON.LANGUAGE' | translate}}</h5>
+</a>
 <mat-tab-group [(selectedIndex)]="selectedTab">
   <mat-tab label="{{'COMMON.LIST' | translate}}">
     <div fxLayout="row wrap">

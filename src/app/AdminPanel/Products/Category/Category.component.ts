@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Section, SectionItem } from 'src/app/app.models';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
+import { Category, CategoryDescription, Language } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
@@ -15,53 +12,38 @@ import { AppService } from 'src/app/Services/app.service';
 })
 export class CategoryComponent implements OnInit {
   displayedColumns: string[] = ['id', 'image', 'title', 'lang', 'actions'];
-  dataSource: MatTableDataSource<SectionItem>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  section: Section = new Section();
-  menus = [{ name: 'SERVICES' }, { name: 'EXPERTISE' }];
-  sectionItem: SectionItem = new SectionItem();
-  public flags = [
-    { name: 'Francais', image: 'assets/images/flags/fr.svg', code: 'fr' },
-    { name: 'English', image: 'assets/images/flags/gb.svg', code: 'en' }
-  ];
+  category: Category = new Category();
+  catDesc: CategoryDescription = new CategoryDescription();
+  catDescs: CategoryDescription[] = [];
   formData = new FormData();
-  flag: any;
-  sectionImages: any;
+  categoryImages: any;
   messages = '';
+  lang = 'fr';
   selectedTab = 1;
   selectedMainTabIndex = 1;
-  icons: string[] = ['build', 'add', 'add_circle', 'cancel', 'trending_up', 'business',
-    'school', 'record_voice_over', 'search', 'dashboard', 'radio', 'touch_app', 'movie',
-    'person', 'people', 'addchart', 'extension', 'language', 'psychology', 'wb_sunny', 'highlight',
-    'thumbs_up_down', 'share', 'public', 'science', 'self_improvement', 'model_training',
-    'headset', 'hearing', 'headset_mic', 'biotech', 'miscellaneous_services', 'analytics'];
   constructor(public appService: AppService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService) { }
-
   ngOnInit() {
     this.setLang();
     this.activatedRoute.params.subscribe(params => {
       if (params.id == 0) {
-        this.section = new Section();
-        this.section.language = this.flag.code;
-        this.sectionItem = new SectionItem();
-        this.dataSource = new MatTableDataSource();
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.category = new Category();
+        this.category.parent = new Category();
+        this.catDesc = new CategoryDescription();
+        this.catDesc.category = this.category;
+        this.catDesc.language = new Language();
       } else {
         this.getAll(params.id);
-        this.getSection(params.id);
+        this.getCategory(params.id);
       }
     });
   }
-  public changeLang(flag) {
-    this.flag = flag;
-    if (this.section === null) {
-      this.section = new Section();
+  public changeLang(lang: Language) {
+    if (this.category === null) {
+      this.category = new Category();
     }
-    this.section.language = flag.code;
+    this.category.language = lang;
   }
 
   setLang() {
@@ -79,11 +61,7 @@ export class CategoryComponent implements OnInit {
       lang = 'fr';
       console.log('Using default lang=fr');
     }
-    if (lang === 'fr') {
-      this.flag = this.flags[0];
-    } else {
-      this.flag = this.flags[1];
-    }
+    this.lang = lang;
   }
 
   onMainTabChanged($event) {
@@ -93,33 +71,25 @@ export class CategoryComponent implements OnInit {
       this.selectedTab = 0;
     }
   }
-  getAll(sectionId: number) {
+  getAll(categoryId: number) {
     const parameters: string[] = [];
-    if (sectionId != null) {
-      parameters.push('e.section.id = |sectionId|' + sectionId + '|Long');
+    if (categoryId != null) {
+      parameters.push('e.category.id = |categoryId|' + categoryId + '|Long');
     }
-    this.appService.getAllByCriteria('com.wack.model.website.SectionItem', parameters)
-      .subscribe((data: SectionItem[]) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    this.appService.getAllByCriteria('com.softenza.emarket.CategoryDescription', parameters)
+      .subscribe((data: CategoryDescription[]) => {
+        this.catDescs = data;
       },
         error => console.log(error),
-        () => console.log('Get all Section Item complete'));
+        () => console.log('Get all Category Item complete'));
   }
 
-  public remove(section: SectionItem) {
+  public remove(category: CategoryDescription) {
     this.messages = '';
-    this.appService.delete(section.id, 'com.wack.model.website.SectionItem')
+    this.appService.delete(category.id, 'com.softenza.emarket.CategoryDescription')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(section);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<SectionItem>(this.dataSource.data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }
+
         } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
           this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
             this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
@@ -132,24 +102,13 @@ export class CategoryComponent implements OnInit {
       });
   }
 
-  public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
-  getSection(sectionId: number) {
-    if (sectionId > 0)
-      this.appService.getOne(sectionId, 'com.wack.model.website.Section')
+  getCategory(categoryId: number) {
+    if (categoryId > 0) {
+      this.appService.getOne(categoryId, 'com.softenza.emarket.Category')
         .subscribe(result => {
           if (result.id > 0) {
-            this.section = result;
-            if (this.section.language === 'fr') {
-              this.flag = this.flags[0];
-            } else {
-              this.flag = this.flags[1];
-            }
+            this.category = result;
           } else {
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
 
@@ -158,41 +117,36 @@ export class CategoryComponent implements OnInit {
             });
           }
         });
+    }
   }
 
   clear() {
-    this.section = new Section();
-    this.section.language = this.flag.code;
-    this.sectionItem = new SectionItem();
-    this.dataSource = new MatTableDataSource();
+    this.category = new Category();
+    this.category.language = new Language();
+    this.catDesc = new CategoryDescription();
   }
 
-  addSectionItem() {
+  addCategoryItem() {
     this.selectedTab = 1;
-    this.sectionItem = new SectionItem();
+    this.catDesc = new CategoryDescription();
   }
-  saveSection() {
+  saveCategory() {
     this.messages = '';
     try {
       let nbFiles = 0;
-      for (const img of this.sectionImages) {
+      for (const img of this.categoryImages) {
         nbFiles++;
         this.formData.append('file[]', img.file, 'picture.jpg');
       }
-      console.log('Lang == ' + this.section.language);
-      if (this.section.language == null || this.section.language == '' ||
-        this.section.language == 'undefined') {
-        this.section.language = this.flag.code;
-      }
-      this.section.status = (this.section.status == null || this.section.status.toString() === 'false') ? 0 : 1;
-      this.section.showInMenu = (this.section.showInMenu == null || this.section.showInMenu.toString() === 'false') ? 0 : 1;
 
-      if (this.sectionImages.length > 0) {
-        this.appService.saveWithFile(this.section, 'Section', this.formData, 'saveWithFile')
+      this.category.status = (this.category.status == null || this.category.status.toString() === 'false') ? 0 : 1;
+
+      if (this.categoryImages.length > 0) {
+        this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
               console.log('saveWithFile');
-              this.section = result;
+              this.category = result;
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
               });
@@ -203,10 +157,10 @@ export class CategoryComponent implements OnInit {
             }
           });
       } else {
-        this.appService.save(this.section, 'Section')
+        this.appService.save(this.category, 'Category')
           .subscribe(result => {
             if (result.id > 0) {
-              this.section = result;
+              this.category = result;
               console.log('Saved');
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
@@ -224,31 +178,22 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  edit(si: SectionItem) {
-    this.sectionItem = si;
+  edit(si: CategoryDescription) {
+    this.catDesc = si;
     this.selectedTab = 1;
   }
-  saveSectionItem() {
+  saveCategoryItem() {
     this.messages = '';
     try {
       this.messages = '';
-      this.sectionItem.section = this.section;
-      this.sectionItem.language = this.section.language;
-      const index: number = this.dataSource.data.indexOf(this.sectionItem);
-      this.sectionItem.status = (this.sectionItem.status == null || this.sectionItem.status.toString() === 'false') ? 0 : 1;
-      this.sectionItem.showInMenu = (this.sectionItem.showInMenu == null || this.sectionItem.showInMenu.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.sectionItem, 'SectionItem')
+      this.catDesc.category = this.category;
+      this.catDesc.status = (this.catDesc.status == null || this.catDesc.status.toString() === 'false') ? 0 : 1;
+      this.appService.save(this.catDesc, 'CategoryDescription')
         .subscribe(result => {
           if (result.id > 0) {
-            this.sectionItem = new SectionItem();
+            this.catDesc = new CategoryDescription();
             this.selectedTab = 0;
-            if (index !== -1) {
-              this.dataSource.data.splice(index, 1);
-            }
-            this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<SectionItem>(this.dataSource.data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
               this.messages = res['MESSAGE.SAVE_SUCCESS'];
             });

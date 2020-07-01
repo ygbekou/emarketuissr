@@ -1,11 +1,19 @@
+<a mat-button [routerLink]="['/admin/products']">{{'COMMON.PRODUCT' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/categories']">
+  <h5>{{'COMMON.CATEGORY' | translate}}</h5>
+</a>
 <div fxLayout="row wrap">
   <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
     <mat-form-field appearance="outline" class="w-100">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
     </mat-form-field>
   </div>
   <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
-    <a [routerLink]="['/account/sections', 0]" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+    <a [routerLink]="['/admin/categories', 0]" mat-icon-button color="primary"
+      matTooltip="{{'COMMON.ADD' | translate}}">
       <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
     </a>
   </div>
@@ -21,50 +29,53 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let section"> {{section.id}} </td>
+      <td mat-cell *matCellDef="let catDesc"> {{catDesc.id}} </td>
     </ng-container>
 
     <!-- Image Column -->
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef> Image </th>
-      <td mat-cell *matCellDef="let section"><img [src]="'assets/images/sections/'+section.id+'/'+section.picture"
+      <td mat-cell *matCellDef="let catDesc"><img [src]="'assets/images/categories/'+catDesc.id+'/'+catDesc.picture"
           [style.width.px]="50" class="d-block"></td>
-    </ng-container>
-
-    <!-- Published Column -->
-    <ng-container matColumnDef="lang">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Language </th>
-      <td mat-cell *matCellDef="let section"> {{section.language}} </td>
     </ng-container>
 
     <!-- Title Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
-      <td mat-cell *matCellDef="let section"> {{section.name}} </td>
+      <td mat-cell *matCellDef="let catDesc"> {{catDesc.name}} </td>
+    </ng-container>
+
+    <!-- Published Column -->
+    <ng-container matColumnDef="sortOrder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SORT_ORDER' | translate}} </th>
+      <td mat-cell *matCellDef="let catDesc"> {{catDesc.sortOrder}} </td>
     </ng-container>
 
     <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.TITLE' | translate}} </th>
-      <td mat-cell *matCellDef="let section"> {{section.title}} </td>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+      <td mat-cell *matCellDef="let catDesc">
+        {{catDesc.status===1?('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}} </td>
     </ng-container>
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
-      <td mat-cell *matCellDef="let section">
-        <a [routerLink]="['/account/sections', section.id]" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+      <td mat-cell *matCellDef="let catDesc">
+        <a [routerLink]="['/account/sections', catDesc.id]" mat-icon-button color="primary"
+          matTooltip="{{'COMMON.EDIT' | translate}}">
           <mat-icon>edit</mat-icon>
         </a>
         &nbsp;&nbsp;
-        <button mat-icon-button color="warn" (click)="remove(section)" matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+        <button mat-icon-button color="warn" (click)="remove(catDesc)" matTooltip="{{'COMMON.DELETE' | translate}}"
+          class="remove">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let section; columns: displayedColumns;">
+    <tr mat-row *matRowDef="let catDesc; columns: displayedColumns;">
     </tr>
   </table>
   <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
