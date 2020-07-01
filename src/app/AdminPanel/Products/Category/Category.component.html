@@ -1,6 +1,13 @@
 <mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
-  <mat-tab label="{{'COMMON.SECTION' | translate}}">
+  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+
+    <mat-tab-group [(selectedIndex)]="selectedTab">
+      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+        
+      </mat-tab>
+    </mat-tab-group>
     <form name="form" (ngSubmit)="f.form.valid && saveCategory()" #f="ngForm" validate>
+
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
@@ -27,6 +34,7 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <!--
         <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
           <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
             </span> </p>
@@ -38,6 +46,7 @@
               class="d-block">
           </div>
         </div>
+        -->
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
@@ -53,51 +62,48 @@
       </div>
     </form>
   </mat-tab>
-  <mat-tab label="{{'COMMON.SECTION_ITEM' | translate}}" *ngIf="category.id>0">
-    <mat-tab-group [(selectedIndex)]="selectedTab">
-      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
-        <form name="fform" (ngSubmit)="ff.form.valid && saveCategoryItem()" #ff="ngForm" validate>
-          <div fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
-                </mat-label>
-                <input matInput type="text" class="form-control" id="title2" [(ngModel)]="catDesc.name" name="title2"
-                  #title2="ngModel" required>
-                <mat-error *ngIf="ff.submitted && title2.invalid" severity="error">
-                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                </mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label> {{'COMMON.NAME' | translate}}
-                </mat-label>
-                <input matInput type="text" class="form-control" id="title3" [(ngModel)]="catDesc.metaDescription"
-                  name="title3" #title3="ngModel">
-              </mat-form-field>
-            </div>
-            <div fxFlex="100" class="px-2">
-              <mat-label>{{'COMMON.SUMMARY' | translate}}<font color="red">*</font>
-              </mat-label>
-              <!--
+  <mat-tab label="{{'COMMON.DATA' | translate}}">
+
+    <form name="fform" (ngSubmit)="ff.form.valid && saveCategoryItem()" #ff="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
+            </mat-label>
+            <input matInput type="text" class="form-control" id="title2" [(ngModel)]="catDesc.name" name="title2"
+              #title2="ngModel" required>
+            <mat-error *ngIf="ff.submitted && title2.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="title3" [(ngModel)]="catDesc.metaDescription"
+              name="title3" #title3="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" class="px-2">
+          <mat-label>{{'COMMON.SUMMARY' | translate}}<font color="red">*</font>
+          </mat-label>
+          <!--
               <quill-editor id="summary" name="summary" [(ngModel)]="catDesc.description" #summary="ngModel">
               </quill-editor>
               -->
-            </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
           </div>
-          <div fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-              <div class="text-center mt-2">
-                <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-                  <mat-icon>save</mat-icon>
-                </button> </div>
-              <div class="text-center mt-2" *ngIf="messages">
-                <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-              </div>
-            </div>
-          </div>
-        </form>
-      </mat-tab>
-    </mat-tab-group>
+        </div>
+      </div>
+    </form>
   </mat-tab>
 </mat-tab-group>
