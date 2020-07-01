@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AdminPanelServiceService } from './AdminPanel/Service/AdminPanelService.service';
+import { AppService } from './Services/app.service';
 
 @Component({
    selector: 'app-root',
@@ -10,7 +11,7 @@ import { AdminPanelServiceService } from './AdminPanel/Service/AdminPanelService
 export class AppComponent {
 
    constructor(translate: TranslateService,
-      private appService: AdminPanelServiceService) {
+      private appService: AppService) {
       translate.addLangs(['en', 'fr']);
       translate.setDefaultLang('en');
       translate.use('en');
