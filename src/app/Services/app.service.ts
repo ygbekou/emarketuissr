@@ -567,7 +567,7 @@ export class AppService {
       }, error => console.log(error),
         () => console.log('Get Tax Classes complete'));
 
-    
+
     this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
       .subscribe((data: Language[]) => {
         this.appInfoStorage.languages = data;

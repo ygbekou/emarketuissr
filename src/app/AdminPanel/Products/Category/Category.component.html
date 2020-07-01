@@ -1,70 +1,5 @@
 <mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
-  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
-
-    <mat-tab-group [(selectedIndex)]="selectedTab">
-      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
-
-        
-      </mat-tab>
-    </mat-tab-group>
-    <form name="form" (ngSubmit)="f.form.valid && saveCategory()" #f="ngForm" validate>
-
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
-            </mat-label>
-            <input matInput type="text" class="form-control" id="name" [(ngModel)]="category.catColumn" name="name"
-              #name="ngModel" required>
-            <mat-error *ngIf="f.submitted && name.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-          <mat-slide-toggle [(ngModel)]="category.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.ENABLE' | translate }}
-          </mat-slide-toggle>
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
-            </mat-label>
-            <input matInput type="text" class="form-control" id="title" [(ngModel)]="category.sortOrder" name="title"
-              #title="ngModel" required>
-            <mat-error *ngIf="f.submitted && name.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <!--
-        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
-          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
-            </span> </p>
-          <input-file [(ngModel)]="categoryImages" name="categoryImage" #categoryImage="ngModel" fileLimit="1"
-            fileAccept="image/*">
-          </input-file>
-          <div class="logo">
-            <img [src]="'assets/images/categories/'+category.id+'/'+category.image" [style.width.px]="150"
-              class="d-block">
-          </div>
-        </div>
-        -->
-      </div>
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-          <div class="text-center mt-2">
-            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-              <mat-icon>save</mat-icon>
-            </button> </div>
-          <div class="text-center mt-2" *ngIf="messages">
-            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-          </div>
-        </div>
-      </div>
-    </form>
-  </mat-tab>
-  <mat-tab label="{{'COMMON.DATA' | translate}}">
-
+   <mat-tab label="{{'COMMON.DATA' | translate}}">
     <form name="fform" (ngSubmit)="ff.form.valid && saveCategoryItem()" #ff="ngForm" validate>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
@@ -107,4 +42,66 @@
       </div>
     </form>
   </mat-tab>
+
+  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+    <form name="form" (ngSubmit)="f.form.valid && saveCategory()" #f="ngForm" validate>
+      <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onMainTabChanged($event)">
+        <mat-tab label="{{lang.name}}" *ngFor="let lang of appService.appInfoStorage.languages">
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
+                </mat-label>
+                <input matInput type="text" class="form-control" id="name" [(ngModel)]="category.catColumn" name="name"
+                  #name="ngModel" required>
+                <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-slide-toggle [(ngModel)]="category.status" name="status" #status="ngModel" class="my-2">
+                {{ 'COMMON.ENABLE' | translate }}
+              </mat-slide-toggle>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label> {{'COMMON.TITLE' | translate}}<font color="red">*</font>
+                </mat-label>
+                <input matInput type="text" class="form-control" id="title" [(ngModel)]="category.sortOrder"
+                  name="title" #title="ngModel" required>
+                <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!--
+        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
+            </span> </p>
+          <input-file [(ngModel)]="categoryImages" name="categoryImage" #categoryImage="ngModel" fileLimit="1"
+            fileAccept="image/*">
+          </input-file>
+          <div class="logo">
+            <img [src]="'assets/images/categories/'+category.id+'/'+category.image" [style.width.px]="150"
+              class="d-block">
+          </div>
+        </div>
+        -->
+          </div>
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+              <div class="text-center mt-2">
+                <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                  <mat-icon>save</mat-icon>
+                </button> </div>
+              <div class="text-center mt-2" *ngIf="messages">
+                <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </mat-tab>
+
 </mat-tab-group>
