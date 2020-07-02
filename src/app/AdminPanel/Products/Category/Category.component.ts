@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Category, CategoryDescription, Language } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
@@ -16,32 +15,31 @@ export class CategoryComponent implements OnInit {
   catDesc: CategoryDescription = new CategoryDescription();
   catDescs: CategoryDescription[] = [];
   formData = new FormData();
-  categoryImages: any;
+  categoryImages: any[] = [];
   messages = '';
   lang = 'fr';
-  selectedTab = 1;
-  selectedMainTabIndex = 1;
+  selectedTab = 0;
+  selectedMainTabIndex = 0;
   constructor(public appService: AppService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService) { }
   ngOnInit() {
-    this.setLang();
     this.activatedRoute.params.subscribe(params => {
       if (params.id == 0) {
-        this.category = new Category();
-        this.category.parent = new Category();
-        this.catDesc = new CategoryDescription();
-        this.catDesc.category = this.category;
-        this.catDesc.language = new Language();
+        this.clear();
       } else {
         this.getAll(params.id);
         this.getCategory(params.id);
       }
     });
   }
-  
 
-  onMainTabChanged($event) {
+  clear() {
+    this.category = new Category();
+    this.catDescs = [];
+    this.refreshLangObjects();
+  }
+  onMainTabChanged() {
     console.log('Selectd main = ' + this.selectedMainTabIndex);
     this.messages = '';
     if (this.selectedMainTabIndex === 1) {
@@ -51,14 +49,44 @@ export class CategoryComponent implements OnInit {
   getAll(categoryId: number) {
     const parameters: string[] = [];
     if (categoryId != null) {
-      parameters.push('e.category.id = |categoryId|' + categoryId + '|Long');
+      parameters.push('e.category.id = |categoryId|' + categoryId + '|Integer');
     }
     this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters)
       .subscribe((data: CategoryDescription[]) => {
         this.catDescs = data;
+        this.refreshLangObjects();
       },
         error => console.log(error),
         () => console.log('Get all Category Item complete'));
+  }
+
+  refreshLangObjects() {
+    let first = true;
+    this.appService.appInfoStorage.languages.forEach(language => {
+      console.log('Refresh = ' + language.name);
+      let found = false;
+      this.catDescs.forEach(aCatDesc => {
+        if (aCatDesc.language.code === language.code) {
+          found = true;
+          if (first) {
+            this.catDesc = aCatDesc;
+            console.log(this.catDesc);
+            first = false;
+          }
+        }
+      });
+      if (!found) {
+        const a = new CategoryDescription();
+        a.language = language;
+        a.category = this.category;
+        this.catDescs.push(a);
+        if (first) {
+          this.catDesc = a;
+          first = false;
+        }
+      }
+    });
+    console.log(this.catDescs);
   }
 
   public remove(category: CategoryDescription) {
@@ -87,26 +115,24 @@ export class CategoryComponent implements OnInit {
           if (result.id > 0) {
             this.category = result;
           } else {
+            this.category = new Category();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-
               this.messages = res['MESSAGE.READ_FAILED'];
-
             });
           }
         });
     }
   }
 
-  clear() {
-    this.category = new Category();
-    this.category.language = new Language();
-    this.catDesc = new CategoryDescription();
+  onLangChanged(event) {
+    console.log('Selected lang =' + event.tab.textLabel);
+    this.catDescs.forEach(aCatDesc => {
+      if (aCatDesc.language.name === event.tab.textLabel) {
+        this.catDesc = aCatDesc;
+      }
+    });
   }
 
-  addCategoryItem() {
-    this.selectedTab = 1;
-    this.catDesc = new CategoryDescription();
-  }
   saveCategory() {
     this.messages = '';
     try {
@@ -117,13 +143,16 @@ export class CategoryComponent implements OnInit {
       }
 
       this.category.status = (this.category.status == null || this.category.status.toString() === 'false') ? 0 : 1;
-
+      this.category.top = (this.category.top == null || this.category.top.toString() === 'false') ? 0 : 1;
+      console.log(this.category);
       if (this.categoryImages.length > 0) {
         this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
           .subscribe(result => {
             if (result.id > 0) {
               console.log('saveWithFile');
               this.category = result;
+              this.saveCategoryDesc();
+              this.categoryImages = [];
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
               });
@@ -138,6 +167,7 @@ export class CategoryComponent implements OnInit {
           .subscribe(result => {
             if (result.id > 0) {
               this.category = result;
+              this.saveCategoryDesc();
               console.log('Saved');
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
@@ -159,29 +189,29 @@ export class CategoryComponent implements OnInit {
     this.catDesc = si;
     this.selectedTab = 1;
   }
-  saveCategoryItem() {
+  saveCategoryDesc() {
     this.messages = '';
     try {
       this.messages = '';
       this.catDesc.category = this.category;
-      this.catDesc.status = (this.catDesc.status == null || this.catDesc.status.toString() === 'false') ? 0 : 1;
+      console.log(this.catDesc);
+      console.log(this.catDescs);
+      const index: number = this.catDescs.indexOf(this.catDesc);
       this.appService.save(this.catDesc, 'CategoryDescription')
         .subscribe(result => {
           if (result.id > 0) {
-            this.catDesc = new CategoryDescription();
-            this.selectedTab = 0;
-
+            this.catDesc = result;
+            this.catDescs.splice(index, 1);
+            this.catDescs.push(result);
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
               this.messages = res['MESSAGE.SAVE_SUCCESS'];
             });
           } else {
-            this.selectedTab = 1;
             this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
               this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
             });
           }
         });
-
     } catch (e) {
       console.log(e);
     }

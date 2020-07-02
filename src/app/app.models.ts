@@ -417,9 +417,7 @@ export class Category {
   image: string;
   parent: Category;
   top: number;
-  type = 'Category';
-  language: any;
-  showInMenu: number;
+  type = 'Category'; 
 }
 export class CategoryDescription {
   id: number;
@@ -432,7 +430,5 @@ export class CategoryDescription {
   metaDescription: string;
   metaKeyword: string;
   type = 'CategoryDescription';
-  status: number;
-  showInMenu: number;
 }
 
