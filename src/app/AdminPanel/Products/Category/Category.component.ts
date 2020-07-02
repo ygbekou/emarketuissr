@@ -39,30 +39,7 @@ export class CategoryComponent implements OnInit {
       }
     });
   }
-  public changeLang(lang: Language) {
-    if (this.category === null) {
-      this.category = new Category();
-    }
-    this.category.language = lang;
-  }
-
-  setLang() {
-    let lang = navigator.language;
-    if (lang) {
-      lang = lang.substring(0, 2);
-    }
-    if (Cookie.get('lang')) {
-      lang = Cookie.get('lang');
-      console.log('Using cookie lang=' + Cookie.get('lang'));
-    } else if (lang) {
-      console.log('Using browser lang=' + lang);
-      // this.translate.use(lang);
-    } else {
-      lang = 'fr';
-      console.log('Using default lang=fr');
-    }
-    this.lang = lang;
-  }
+  
 
   onMainTabChanged($event) {
     console.log('Selectd main = ' + this.selectedMainTabIndex);
@@ -76,7 +53,7 @@ export class CategoryComponent implements OnInit {
     if (categoryId != null) {
       parameters.push('e.category.id = |categoryId|' + categoryId + '|Long');
     }
-    this.appService.getAllByCriteria('com.softenza.emarket.CategoryDescription', parameters)
+    this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters)
       .subscribe((data: CategoryDescription[]) => {
         this.catDescs = data;
       },
@@ -86,7 +63,7 @@ export class CategoryComponent implements OnInit {
 
   public remove(category: CategoryDescription) {
     this.messages = '';
-    this.appService.delete(category.id, 'com.softenza.emarket.CategoryDescription')
+    this.appService.delete(category.id, 'com.softenza.emarket.model.CategoryDescription')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
 
@@ -105,7 +82,7 @@ export class CategoryComponent implements OnInit {
 
   getCategory(categoryId: number) {
     if (categoryId > 0) {
-      this.appService.getOne(categoryId, 'com.softenza.emarket.Category')
+      this.appService.getOne(categoryId, 'com.softenza.emarket.model.Category')
         .subscribe(result => {
           if (result.id > 0) {
             this.category = result;
