@@ -1,6 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { AdminPanelServiceService } from './AdminPanel/Service/AdminPanelService.service';
+import { Component } from '@angular/core';
 import { AppService } from './Services/app.service';
 
 @Component({
@@ -9,16 +7,7 @@ import { AppService } from './Services/app.service';
    styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-   constructor(translate: TranslateService,
-      private appService: AppService) {
-      translate.addLangs(['en', 'fr']);
-      translate.setDefaultLang('en');
-      translate.use('en');
-      // const browserLang: string = translate.getBrowserLang();
-      // translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-
-
-         this.appService.getCacheData();
+   constructor(private appService: AppService) {
+      this.appService.getCacheData();
    }
 }

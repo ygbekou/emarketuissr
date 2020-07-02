@@ -14,6 +14,7 @@ import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, 
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 interface Response {
    data: any;
@@ -45,7 +46,6 @@ export class AppService {
 
    // Custom
    private headers: HttpHeaders;
-   
    appInfoStorage: AppInfoStorage;
 
    constructor(private http: HttpClient,
@@ -75,7 +75,7 @@ export class AppService {
       // this.initCompany();
 
 
-      this.appInfoStorage = new AppInfoStorage(translate);
+      this.appInfoStorage = new AppInfoStorage(this.translate);
    }
 
    public setCartItemDefaultValue(setCartItemDefaultValue) {
@@ -554,45 +554,70 @@ export class AppService {
    }
 
    public getCachedReferences = (elementType: string): Observable<any> => {
-    const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
-    return this.http.get(actionUrl, { headers: this.headers })
-      .pipe(catchError(this.handleError));
-  }
+      const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
+      return this.http.get(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
 
    public getCacheData() {
-    const parameters: string[] = [];
-    this.getAllByCriteria('com.softenza.emarket.model.TaxClass', parameters)
-      .subscribe((data: TaxClass[]) => {
-        this.appInfoStorage.taxClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get Tax Classes complete'));
+      const parameters: string[] = [];
+      this.getAllByCriteria('com.softenza.emarket.model.TaxClass', parameters)
+         .subscribe((data: TaxClass[]) => {
+            this.appInfoStorage.taxClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get Tax Classes complete'));
 
 
-    this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
-      .subscribe((data: Language[]) => {
-        this.appInfoStorage.languages = data;
-      }, error => console.log(error),
-        () => console.log('Get Languages complete'));
+      this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
+         .subscribe((data: Language[]) => {
+            this.appInfoStorage.languages = data;
+            let lang = navigator.language;
+            if (lang) {
+               lang = lang.substring(0, 2);
+            }
+            if (Cookie.get('lang')) {
+               lang = Cookie.get('lang');
+               console.log('Using cookie lang=' + Cookie.get('lang'));
+            } else if (lang) {
+               console.log('Using browser lang=' + lang);
+               // this.translate.use(lang);
+            } else {
+               lang = 'fr';
+               console.log('Using default lang=fr');
+            }
+            data.forEach(language => {
+               this.translate.addLangs([language.code]);
+               if (language.code === lang) {
+                  this.translate.setDefaultLang(language.code);
+                  this.appInfoStorage.language = language;
+
+               }
+            });
+            console.log('Using language :' + lang);
+            this.translate.use(lang);
+
+         }, error => console.log(error),
+            () => console.log('Get Languages complete'));
 
 
-    this.getAllByCriteria('com.softenza.emarket.model.StockStatus', parameters)
-      .subscribe((data: StockStatus[]) => {
-        this.appInfoStorage.stockStatuses = data;
-      }, error => console.log(error),
-        () => console.log('Get Stock Statuses complete'));
+      this.getAllByCriteria('com.softenza.emarket.model.StockStatus', parameters)
+         .subscribe((data: StockStatus[]) => {
+            this.appInfoStorage.stockStatuses = data;
+         }, error => console.log(error),
+            () => console.log('Get Stock Statuses complete'));
 
-    this.getCachedReferences('lengthclass')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.lengthClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get lengthclass complete'));
+      this.getCachedReferences('lengthclass')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.lengthClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get lengthclass complete'));
 
-     this.getCachedReferences('weightclass')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.weightClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get weightclass complete'));
-  }
+      this.getCachedReferences('weightclass')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.weightClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get weightclass complete'));
+   }
 
 
 
@@ -610,5 +635,8 @@ export class AppService {
       return throwError(errorMessage);
    }
 
+   public changeLang(lang: Language) {
+      this.appInfoStorage.language = lang;
+   }
 
 }

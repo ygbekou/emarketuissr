@@ -30,7 +30,7 @@ export class CategoriesComponent implements OnInit {
   getAll() {
     const parameters: string[] = [];
     parameters.push('e.language.code = |langCode|' + this.lang + '|String');
-    this.appService.getAllByCriteria('com.softenza.emarket.CategoryDescription', parameters)
+    this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters)
       .subscribe((data: CategoryDescription[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -42,7 +42,7 @@ export class CategoriesComponent implements OnInit {
 
   public remove(catDesc: CategoryDescription) {
     this.messages = '';
-    this.appService.delete(catDesc.id, 'com.softenza.emarket.CategoryDescription')
+    this.appService.delete(catDesc.id, 'com.softenza.emarket.model.CategoryDescription')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           const index: number = this.dataSource.data.indexOf(catDesc);
