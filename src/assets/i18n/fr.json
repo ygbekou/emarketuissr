@@ -344,7 +344,9 @@
     "WEB_MENU": "Menu Web",
     "WEBSITE": "Site web",
     "YES": "Oui",
-    "ZIP_CODE": "Code Postal"
+    "ZIP_CODE": "Code Postal",
+		"LINKS": "Liens",
+		"MANUFACTURER": "Fabricant"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

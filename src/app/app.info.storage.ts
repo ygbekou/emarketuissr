@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppInfoStorage {
 
   public CURRENCY_MASK_INTEGER;
-  public CURRENCY_MASK_DECIMAL;
+  public CURRENCY_MASK_DECIMAL; 
   public CURRENCY_FORMAT;
   public languages: Language[] = [];
   public taxClasses: any = [];
@@ -15,26 +15,27 @@ export class AppInfoStorage {
   public weightClasses: any = [];
   public lengthClasses: any = [];
   public language: Language;
+  public manufacturers: any = [];
 
   constructor(private translate: TranslateService) {
 
     this.updateInfo();
   }
 
-
+  
   updateInfo() {
 
     this.translate.get('CURRENCY_MASK.INTEGER').subscribe(() => {
-      if (this.translate.currentLang === 'en') {
-        this.CURRENCY_MASK_INTEGER = { prefix: '', thousands: ',', precision: 0, allowNegative: false };
-        this.CURRENCY_MASK_DECIMAL = { prefix: '', thousands: ',', precision: 2, decimal: '.', allowNegative: false };
-      } else if (this.translate.currentLang === 'fr') {
-        this.CURRENCY_MASK_INTEGER = { prefix: '', thousands: ' ', precision: 0, allowNegative: false };
-        this.CURRENCY_MASK_DECIMAL = { prefix: '', thousands: ' ', precision: 2, decimal: ',', allowNegative: false };
-      }
+        if (this.translate.currentLang === 'en') {
+          this.CURRENCY_MASK_INTEGER = { prefix: '', thousands: ',', precision: 0, allowNegative: false };
+          this.CURRENCY_MASK_DECIMAL = { prefix: '', thousands: ',', precision: 2, decimal: '.', allowNegative: false };
+        } else if (this.translate.currentLang === 'fr') {
+          this.CURRENCY_MASK_INTEGER = { prefix: '', thousands: ' ', precision: 0, allowNegative: false };
+          this.CURRENCY_MASK_DECIMAL = { prefix: '', thousands: ' ', precision: 2, decimal: ',', allowNegative: false };
+        }
       this.CURRENCY_FORMAT = '| currency: \' \':\'symbol\':\'1.0-0\':\'' + this.translate.currentLang + '\'';
     });
   }
 
-
+  
 }

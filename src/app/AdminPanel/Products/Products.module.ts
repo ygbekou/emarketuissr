@@ -40,10 +40,11 @@ import { ProductsRoutes } from './Products.routing';
 import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
 import { ProductDescriptionComponent } from './ProductDescription/ProductDescription.component';
+import { ProductLinkComponent } from './ProductLink/ProductLink.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, AddProductComponent, ProductDescriptionComponent,
-    CategoryComponent, CategoriesComponent],
+    ProductLinkComponent, CategoryComponent, CategoriesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

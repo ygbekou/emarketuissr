@@ -344,7 +344,9 @@
 		"WEB_MENU": "Web Menu",
 		"WEBSITE": "Website",
 		"YES": "Yes",
-		"ZIP_CODE": "Zip Code"
+		"ZIP_CODE": "Zip Code",
+		"LINKS": "Links",
+		"MANUFACTURER": "Manufacturer"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
