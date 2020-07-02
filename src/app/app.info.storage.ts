@@ -15,6 +15,7 @@ export class AppInfoStorage {
   public stockStatuses: any = [];
   public weightClasses: any = [];
   public lengthClasses: any = [];
+  public manufacturers: any = [];
 
   constructor(
     public translate: TranslateService

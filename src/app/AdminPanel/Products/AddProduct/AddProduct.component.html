@@ -78,6 +78,16 @@
             </div>
             <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId" name="manufacturerId" [(ngModel)]="product.manufacturerId" #manufacturerId="ngModel">
+                     <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers" [value]="manufacturer.id">
+                        {{manufacturer.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-100">
                   <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
                   <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
                      <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
@@ -187,6 +197,11 @@
             </div>
          </div>
       </mat-tab>
+
+      <mat-tab label="{{'COMMON.LINKS' | translate}}">
+         <app-product-link [f]=f [product]="product" ></app-product-link>
+      </mat-tab>
+
    </mat-tab-group>
 </form>
  

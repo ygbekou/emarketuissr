@@ -60,7 +60,7 @@ export class AddProductComponent implements OnInit {
         for (var lang of this.appService.appInfoStorage.languages) {
 
             let pd = new ProductDescription();
-            pd.name = lang.name;
+            pd.languageId = lang.id;
             this.product.productDescriptions.push(pd);
 
          }

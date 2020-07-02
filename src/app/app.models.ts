@@ -170,7 +170,7 @@ export class Product {
   minimum: number;
   model: string;
   mpn: string;
-  points: number;
+  points: number = 0;
   price: number;
   quantity: number;
   shipping: number;
@@ -181,14 +181,14 @@ export class Product {
   subtract: number;
   taxClassId: number;
   upc: string;
-  viewed: number;
+  viewed: number = 0;
   weight: number;
   weightClassId: number;
   width: number;
 
   productDescriptions: ProductDescription[] = [];
 
-  type: 'Product';
+  type = 'Product';
 }
 
 export class ProductDescription {
@@ -201,6 +201,9 @@ export class ProductDescription {
   metaTitle: string;
   metaDescription: string;
   metaKeyword: string;
+
+
+  type = 'ProductDescription';
 }
 
 

@@ -592,6 +592,12 @@ export class AppService {
         this.appInfoStorage.weightClasses = data;
       }, error => console.log(error),
         () => console.log('Get weightclass complete'));
+
+      this.getCachedReferences('manufacturer')
+      .subscribe((data: GenericVO[]) => {
+        this.appInfoStorage.manufacturers = data;
+      }, error => console.log(error),
+        () => console.log('Get manufacturer complete'));
   }
 
 
