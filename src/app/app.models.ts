@@ -170,7 +170,7 @@ export class Product {
   minimum: number;
   model: string;
   mpn: string;
-  points: number = 0;
+  points = 0;
   price: number;
   quantity: number;
   shipping: number;
@@ -181,7 +181,7 @@ export class Product {
   subtract: number;
   taxClassId: number;
   upc: string;
-  viewed: number = 0;
+  viewed = 0;
   weight: number;
   weightClassId: number;
   width: number;
@@ -356,7 +356,7 @@ export class SectionItem {
 
 export class ContactUsMessage {
   id: number;
-  createDate: Date
+  createDate: Date;
   name: string;
   email: string;
   phone: string;
@@ -418,9 +418,10 @@ export class Category {
   sortOrder: number;
   status: number;
   image: string;
+  singleImage: true;
   parent: Category;
   top: number;
-  type = 'Category'; 
+  type = 'Category';
 }
 export class CategoryDescription {
   id: number;

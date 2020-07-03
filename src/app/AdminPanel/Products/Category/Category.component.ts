@@ -86,7 +86,6 @@ export class CategoryComponent implements OnInit {
         }
       }
     });
-    console.log(this.catDescs);
   }
 
   public remove(category: CategoryDescription) {
@@ -153,6 +152,7 @@ export class CategoryComponent implements OnInit {
               this.category = result;
               this.saveCategoryDesc();
               this.categoryImages = [];
+              this.formData = new FormData();
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
               });
@@ -169,6 +169,7 @@ export class CategoryComponent implements OnInit {
               this.category = result;
               this.saveCategoryDesc();
               console.log('Saved');
+              this.categoryImages = [];
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
               });
