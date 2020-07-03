@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { AppInfoStorage } from 'src/app/app.info.storage';
 import { Product, ProductDescription, Language } from 'src/app/app.models';
-import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
 	selector: 'app-product-description',
@@ -40,10 +39,12 @@ export class ProductDescriptionComponent implements OnInit {
    @Input() f: Form;
 
    productDescription: ProductDescription;
+   selectedTab = 0;
+   selectedMainTabIndex = 0;
 
    constructor(public formBuilder: FormBuilder,
       protected translate: TranslateService,
-      public appService: AdminPanelServiceService) { }
+      public appService: AppService) { }
 
 	ngOnInit() {
 
@@ -58,7 +59,7 @@ export class ProductDescriptionComponent implements OnInit {
 			features				: []
       });
 
-      this.productDescription = new ProductDescription();
+      this.productDescription = this.product.productDescriptions[0];
 
    }
 
@@ -72,32 +73,35 @@ export class ProductDescriptionComponent implements OnInit {
    }
 
 
-
+   onLangChanged(event) {
+      this.messages = '';
+    this.product.productDescriptions.forEach(prodDesc => {
+      if (prodDesc.languageName === event.tab.textLabel) {
+        this.productDescription = prodDesc;
+        return;
+      }
+    });
+   }
 
    save() {
     this.messages = '';
     try {
       this.product.status = (this.product.status == null || this.product.status.toString() === 'false') ? 0 : 1;
+      const prod = new Product();
+      prod.model = this.product.model;
+      prod.id = this.product.id;
+      this.productDescription.product = prod;
       this.appService.save(this.productDescription, 'ProductDescription')
          .subscribe(result => {
             if (result.id > 0) {
-
-               // this.language = new Language();
-               // this.selectedTab = 0;
-               // if (index !== -1) {
-               //   this.dataSource.data.splice(index, 1);
-               // }
-               // this.dataSource.data.push(result);
-               // this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
-               // this.dataSource.paginator = this.paginator;
-               // this.dataSource.sort = this.sort;
+               this.productDescription = result;
+               this.product.id = result.product.id;
                this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-               this.messages = res['MESSAGE.SAVE_SUCCESS'];
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
                });
             } else {
-               //this.selectedTab = 1;
                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-               this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+                  this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
                });
             }
         });

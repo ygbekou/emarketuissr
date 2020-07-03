@@ -570,7 +570,7 @@ export class AppService {
     
     this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
       .subscribe((data: Language[]) => {
-        this.appInfoStorage.languages = data;
+         this.appInfoStorage.languages = data;
             let lang = navigator.language;
             if (lang) {
                lang = lang.substring(0, 2);

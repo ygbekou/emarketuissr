@@ -6,7 +6,7 @@ import { AdminPanelServiceService } from '../../Service/AdminPanelService.servic
 
 @Component({
 	selector: 'app-products',
-	templateUrl: './Products.component.html',
+	templateUrl: './Products.component_old.html',
 	styleUrls: ['./Products.component.scss']
 })
 
