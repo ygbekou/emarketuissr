@@ -18,16 +18,7 @@
 
       <mat-tab label="{{'COMMON.DATA' | translate}}">
          <div fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-               <mat-form-field appearance="outline" class="w-100">
-                  <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
-                  <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
-                     #model="ngModel" required>
-                  <mat-error *ngIf="f.submitted && model.invalid" severity="error">
-                     {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                  </mat-error>
-               </mat-form-field>
-            </div>
+            
             <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                <mat-form-field appearance="outline" class="w-100">
                   <mat-label> {{'COMMON.SKU' | translate}}</mat-label>

@@ -1,56 +1,85 @@
 
 <mat-tab-group>
-   <mat-tab *ngFor="let pd of product.productDescriptions" label="{{pd.name}}">
-      <div fxLayout="row wrap">
-         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label> {{'COMMON.PRODUCT_NAME' | translate}}</mat-label>
-               <input matInput type="text" class="form-control" id="productName" [(ngModel)]="pd.name" name="productName"
-                  #productName="ngModel" required>
-               <mat-error *ngIf="f.submitted && productName.invalid" severity="error">
-                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-               </mat-error>
-            </mat-form-field>
-         </div>
-
-         <div fxLayout="row wrap">
-            <mat-label> {{'COMMON.DESCRIPTION' | translate}}</mat-label>
-            <quill-editor class="form-control" id="description" [(ngModel)]="pd.description" name="description" 
-               #description="ngModel" required></quill-editor>
-            <mat-error *ngIf="f.submitted && description.invalid" severity="error">
-               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-         </div>
-
-         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label> {{'COMMON.META_TAG_TITLE' | translate}}</mat-label>
-               <input matInput type="text" class="form-control" id="metaTitle" [(ngModel)]="pd.metaTitle" name="metaTitle"
-                  #metaTitle="ngModel">
-            </mat-form-field>
-         </div>
-         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label> {{'COMMON.META_TAG_DESCRIPTION' | translate}}</mat-label>
-               <textarea matInput rows="4" cols="50" class="form-control" id="metaDescription" [(ngModel)]="pd.metaDescription" name="metaDescription"
-                  #metaDescription="ngModel"></textarea>
-            </mat-form-field>
-         </div>
-         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label> {{'COMMON.META_KEYWORDS' | translate}}</mat-label>
-               <textarea matInput rows="4" cols="50" class="form-control" id="metaKeyword" [(ngModel)]="pd.metaKeyword" name="metaKeyword"
-                  #metaKeyword="ngModel"></textarea>
-            </mat-form-field>
-         </div>
-         <div fxFlex="100" fxFlex.gt-sm="1000" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label> {{'COMMON.PRODUCT_TAGS' | translate}}</mat-label>
-               <input matInput type="text" class="form-control" id="tag" [(ngModel)]="pd.tag" name="tag"
-                  #tag="ngModel">
-            </mat-form-field>
-         </div>
-      </div>
+   <mat-tab *ngFor="let pd of product.productDescriptions" label="{{pd.languageName}}">
+      
    </mat-tab>
 </mat-tab-group>
+
+<div fxLayout="row wrap">
+   <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+      <div class="text-center mt-2">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+         <mat-icon>save</mat-icon>
+      </button> </div>
+      <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+   </div>
+</div>
+
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
+               #model="ngModel" required>
+            <mat-error *ngIf="f.submitted && model.invalid" severity="error">
+               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+         </mat-form-field>
+      </div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.PRODUCT_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="productName" [(ngModel)]="productDescription.name" name="productName"
+               #productName="ngModel" required>
+            <mat-error *ngIf="f.submitted && productName.invalid" severity="error">
+               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+         </mat-form-field>
+      </div>
+
+      <div fxLayout="row wrap">
+         <mat-label> {{'COMMON.DESCRIPTION' | translate}}</mat-label>
+         <quill-editor class="form-control" id="description" [(ngModel)]="productDescription.description" name="description" 
+            #description="ngModel" required></quill-editor>
+         <mat-error *ngIf="f.submitted && description.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+         </mat-error>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_TAG_TITLE' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="metaTitle" [(ngModel)]="productDescription.metaTitle" name="metaTitle"
+               #metaTitle="ngModel">
+         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_TAG_DESCRIPTION' | translate}}</mat-label>
+            <textarea matInput rows="4" cols="50" class="form-control" id="metaDescription" [(ngModel)]="productDescription.metaDescription" name="metaDescription"
+               #metaDescription="ngModel"></textarea>
+         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_KEYWORDS' | translate}}</mat-label>
+            <textarea matInput rows="4" cols="50" class="form-control" id="metaKeyword" [(ngModel)]="productDescription.metaKeyword" name="metaKeyword"
+               #metaKeyword="ngModel"></textarea>
+         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="1000" class="p-3">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.PRODUCT_TAGS' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="tag" [(ngModel)]="productDescription.tag" name="tag"
+               #tag="ngModel">
+         </mat-form-field>
+      </div>
+   </div>
+</form>
       
