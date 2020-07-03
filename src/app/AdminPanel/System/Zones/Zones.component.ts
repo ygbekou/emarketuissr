@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Language } from 'src/app/app.models';
+import { Zone, Country } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,16 +7,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-languages',
-  templateUrl: './Languages.component.html',
-  styleUrls: ['./Languages.component.scss']
+  selector: 'app-zone',
+  templateUrl: './Zones.component.html',
+  styleUrls: ['./Zones.component.scss']
 })
-export class LanguagesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'code', 'sortOrder', 'actions'];
-  dataSource: MatTableDataSource<Language>;
+export class ZonesComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'code', 'country', 'actions'];
+  dataSource: MatTableDataSource<Zone>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  language: Language = new Language();
+  zone: Zone = new Zone();
+  countries: Country[] = [];
   messages = '';
   errors = '';
   selectedTab = 0;
@@ -25,29 +26,40 @@ export class LanguagesComponent implements OnInit {
 
   ngOnInit() {
     this.getAll();
+    this.getCountries();
   }
   getAll() {
     const parameters: string[] = [];
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters,' order by e.sortOrder ')
-      .subscribe((data: Language[]) => {
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
+      .subscribe((data: Zone[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all Language complete'));
+        () => console.log('Get all Zone complete'));
   }
 
-  public remove(language: Language) {
+  getCountries() {
+    const parameters: string[] = [];
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Country', parameters)
+      .subscribe((data: Country[]) => {
+        this.countries = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Countries complete'));
+  }
+
+  public remove(zone: Zone) {
     this.messages = '';
     this.errors = '';
-    this.appService.delete(language.id, 'com.softenza.emarket.model.Language')
+    this.appService.delete(zone.id, 'com.softenza.emarket.model.Zone')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(language);
+          const index: number = this.dataSource.data.indexOf(zone);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Zone>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
@@ -71,16 +83,16 @@ export class LanguagesComponent implements OnInit {
   }
 
   clear() {
-    this.language = new Language();
+    this.zone = new Zone();
     this.dataSource = new MatTableDataSource();
   }
 
   addSectionItem() {
     this.selectedTab = 1;
-    this.language = new Language();
+    this.zone = new Zone();
   }
-  edit(si: Language) {
-    this.language = si;
+  edit(si: Zone) {
+    this.zone = si;
     this.selectedTab = 1;
   }
   save() {
@@ -88,18 +100,22 @@ export class LanguagesComponent implements OnInit {
     this.errors = '';
     try {
       this.messages = '';
-      const index: number = this.dataSource.data.indexOf(this.language);
-      this.language.status = (this.language.status == null || this.language.status.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.language, 'Language')
+      console.log(this.zone);
+      const index: number = this.dataSource.data.indexOf(this.zone);
+      this.zone.status = (this.zone.status == null || this.zone.status.toString() === 'false') ? 0 : 1;
+      this.zone.postcodeRequired = (this.zone.postcodeRequired == null
+        || this.zone.postcodeRequired.toString() === 'false') ? 0 : 1;
+
+      this.appService.save(this.zone, 'Zone')
         .subscribe(result => {
           if (result.id > 0) {
-            this.language = new Language();
+            this.zone = new Zone();
             this.selectedTab = 0;
             if (index !== -1) {
               this.dataSource.data.splice(index, 1);
             }
             this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Zone>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {

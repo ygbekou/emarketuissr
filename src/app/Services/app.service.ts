@@ -4,8 +4,6 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { MatDialogRef, MatDialog, MatDialogConfig, MatSidenav } from '@angular/material';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { ToastaService, ToastaConfig, ToastOptions, ToastData } from 'ngx-toasta';
-import 'rxjs/Rx';
-
 import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.component';
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
@@ -568,7 +566,7 @@ export class AppService {
         () => console.log('Get Tax Classes complete'));
 
     
-    this.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
+    this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
       .subscribe((data: Language[]) => {
         this.appInfoStorage.languages = data;
             let lang = navigator.language;

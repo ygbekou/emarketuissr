@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
   selector: 'app-categories',
@@ -17,20 +16,19 @@ export class CategoriesComponent implements OnInit {
   dataSource: MatTableDataSource<CategoryDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  messages = '';
-  lang = 'fr';
+  messages = ''; 
   constructor(public appService: AppService,
     private translate: TranslateService) { }
 
-  ngOnInit() {
-    this.setLang();
+  ngOnInit() { 
     this.getAll();
   }
 
   getAll() {
     const parameters: string[] = [];
-    parameters.push('e.language.code = |langCode|' + this.lang + '|String');
-    this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters)
+    parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters,
+    ' order by e.category.sortOrder ')
       .subscribe((data: CategoryDescription[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -71,21 +69,4 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  setLang() {
-    let lang = navigator.language;
-    if (lang) {
-      lang = lang.substring(0, 2);
-    }
-    if (Cookie.get('lang')) {
-      lang = Cookie.get('lang');
-      console.log('Using cookie lang=' + Cookie.get('lang'));
-    } else if (lang) {
-      console.log('Using browser lang=' + lang);
-      // this.translate.use(lang);
-    } else {
-      lang = 'fr';
-      console.log('Using default lang=fr');
-    }
-    this.lang = lang;
-  }
 }

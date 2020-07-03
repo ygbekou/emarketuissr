@@ -34,9 +34,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from '../../Global/Global.module';
 import { SystemRoutes } from './System.routing';
 import { LanguagesComponent } from './Languages/Languages.component';
+import { CurrenciesComponent } from './Currencies/Currencies.component';
+import { StockStatusesComponent } from './StockStatuses/StockStatuses.component';
+import { OrderStatusesComponent } from './OrderStatuses/OrderStatuses.component';
+import { ReturnStatusesComponent } from './ReturnStatuses/ReturnStatuses.component';
+import { ReturnActionsComponent } from './ReturnActions/ReturnActions.component';
+import { ReturnReasonsComponent } from './ReturnReasons/ReturnReasons.component';
+import { CountriesComponent } from './Countries/Countries.component';
+import { ZonesComponent } from './Zones/Zones.component';
+import { GeoZonesComponent } from './GeoZones/GeoZones.component';
 
 @NgModule({
-  declarations: [LanguagesComponent],
+  declarations: [LanguagesComponent, CurrenciesComponent, OrderStatusesComponent,
+    StockStatusesComponent, ReturnStatusesComponent, ReturnActionsComponent,
+    ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

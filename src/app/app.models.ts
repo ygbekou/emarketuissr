@@ -143,17 +143,6 @@ export class AuthToken {
   homePage: string;
 }
 
-export class TaxClass {
-  id: number;
-  title: string;
-  description: string;
-}
-
-export class StockStatus {
-  id: number;
-  name: string;
-  languageId: number;
-}
 
 export class Product {
   id: number;
@@ -436,3 +425,117 @@ export class CategoryDescription {
   type = 'CategoryDescription';
 }
 
+export class Currency {
+  id: number;
+  code: string;
+  decimalPlace: number;
+  status: number;
+  symbolLeft: string;
+  symbolRight: string;
+  title: string;
+  value: number;
+  modDate: Date;
+  type = 'Currency';
+}
+
+export class StockStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'StockStatus';
+}
+
+
+export class OrderStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'OrderStatus';
+}
+
+export class ReturnStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnStatus';
+}
+
+export class ReturnReason {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnReason';
+}
+
+export class ReturnAction {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnAction';
+}
+
+export class Country {
+  id: number;
+  addressFormat: string;
+  isoCode2: string;
+  isoCode3: string;
+  name: string;
+  postcodeRequired: number;
+  status: number;
+  type = 'Country';
+}
+
+export class Zone {
+  id: number;
+  code: String;
+  country: Country;
+  name: string;
+  status: number;
+  type = 'Zone';
+}
+
+export class GeoZone {
+  id: number;
+  name: String;
+  description: string;
+  type = 'GeoZone';
+}
+
+export class ZoneToGeoZone {
+  id: number;
+  zone: Zone;
+  geoZone: GeoZone;
+  country: Country;
+  type = 'ZoneToGeoZone';
+}
+
+export class TaxClass {
+  id: number;
+  title: string;
+  description: string;
+  type = 'TaxClass';
+}
+
+export class TaxRate {
+  id: number;
+  geoZone: GeoZone;
+  name: string;
+  rate: string;
+  type: string;
+  type = 'TaxRate';
+}
+
+export class WeightClass {
+  id: number;
+  value: number;
+  type = 'WeightClass';
+}
+
+export class WeightClassDescription {
+  id: number;
+  language: Language;
+  weightClass: WeightClass;
+  title: string;
+  unit: string;
+  type = 'WeightClassDescription';
+}

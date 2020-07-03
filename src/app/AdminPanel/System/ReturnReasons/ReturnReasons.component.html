@@ -1,8 +1,8 @@
 <a mat-button [routerLink]="['/admin/system']">{{'COMMON.SYSTEM' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-<a mat-button color="accent" [routerLink]="['/admin/system/language']">
-  <h5>{{'COMMON.LANGUAGE' | translate}}</h5>
+<a mat-button color="accent" [routerLink]="['/admin/system/returnReasones']">
+  <h5>{{'COMMON.RETURN_REASON' | translate}}</h5>
 </a>
 <mat-tab-group [(selectedIndex)]="selectedTab">
   <mat-tab label="{{'COMMON.LIST' | translate}}">
@@ -25,45 +25,40 @@
         <!-- ID Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td mat-cell *matCellDef="let language"> {{language.id}} </td>
+          <td mat-cell *matCellDef="let returnReason"> {{returnReason.id}} </td>
         </ng-container>
 
         <!-- Image Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
-          <td mat-cell *matCellDef="let language"> {{language.name}}
+          <td mat-cell *matCellDef="let returnReason"> {{returnReason.name}}
           </td>
         </ng-container>
 
-        <!-- Published Column -->
-        <ng-container matColumnDef="code">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
-          <td mat-cell *matCellDef="let language"> {{language.code}} </td>
-        </ng-container>
 
         <!-- Title Column -->
-        <ng-container matColumnDef="sortOrder">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SORT_ORDER' | translate}} </th>
-          <td mat-cell *matCellDef="let language"> {{language.sortOrder}}</td>
+        <ng-container matColumnDef="language">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.LANGUAGE' | translate}} </th>
+          <td mat-cell *matCellDef="let returnReason"> {{returnReason.language.code}}</td>
         </ng-container>
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let language">
-            <a (click)="edit(language)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+          <td mat-cell *matCellDef="let returnReason">
+            <a (click)="edit(returnReason)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
               <mat-icon>edit</mat-icon>
             </a>
             &nbsp;&nbsp;
-            <button mat-icon-button color="warn" (click)="remove(language)" matTooltip="{{'COMMON.DELETE' | translate}}"
-              class="remove">
+            <button mat-icon-button color="warn" (click)="remove(returnReason)"
+              matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let language; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let returnReason; columns: displayedColumns;">
         </tr>
       </table>
       <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
@@ -74,32 +69,24 @@
   <mat-tab label="{{'COMMON.DETAILS' | translate}}">
     <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
       <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
+            <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="name" [(ngModel)]="language.name" name="name"
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="returnReason.name" name="name"
               #name="ngModel" required>
             <mat-error *ngIf="ff.submitted && name.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label> Code </mat-label>
-            <input matInput type="text" class="form-control" id="code" [(ngModel)]="language.code" name="code"
-              #code="ngModel">
-          </mat-form-field>
-
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-          <mat-slide-toggle [(ngModel)]="language.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.ENABLE' | translate }}
-          </mat-slide-toggle>
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.SORT_ORDER' | translate}}
-            </mat-label>
-            <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="language.sortOrder"
-              name="sortOrder" #rank2="ngModel">
+            <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"
+              [(ngModel)]="returnReason.language" #language="ngModel">
+              <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang">
+                {{lang.name}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
       </div>

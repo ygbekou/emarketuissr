@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Language } from 'src/app/app.models';
+import { Currency } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,16 +7,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-languages',
-  templateUrl: './Languages.component.html',
-  styleUrls: ['./Languages.component.scss']
+  selector: 'app-currencys',
+  templateUrl: './Currencies.component.html',
+  styleUrls: ['./Currencies.component.scss']
 })
-export class LanguagesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'code', 'sortOrder', 'actions'];
-  dataSource: MatTableDataSource<Language>;
+export class CurrenciesComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'title', 'code', 'value', 'modDate', 'actions'];
+  dataSource: MatTableDataSource<Currency>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  language: Language = new Language();
+  currency: Currency = new Currency();
   messages = '';
   errors = '';
   selectedTab = 0;
@@ -28,26 +28,26 @@ export class LanguagesComponent implements OnInit {
   }
   getAll() {
     const parameters: string[] = [];
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters,' order by e.sortOrder ')
-      .subscribe((data: Language[]) => {
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Currency', parameters)
+      .subscribe((data: Currency[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all Language complete'));
+        () => console.log('Get all Currency complete'));
   }
 
-  public remove(language: Language) {
+  public remove(currency: Currency) {
     this.messages = '';
     this.errors = '';
-    this.appService.delete(language.id, 'com.softenza.emarket.model.Language')
+    this.appService.delete(currency.id, 'com.softenza.emarket.model.Currency')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(language);
+          const index: number = this.dataSource.data.indexOf(currency);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Currency>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
@@ -71,16 +71,16 @@ export class LanguagesComponent implements OnInit {
   }
 
   clear() {
-    this.language = new Language();
+    this.currency = new Currency();
     this.dataSource = new MatTableDataSource();
   }
 
   addSectionItem() {
     this.selectedTab = 1;
-    this.language = new Language();
+    this.currency = new Currency();
   }
-  edit(si: Language) {
-    this.language = si;
+  edit(si: Currency) {
+    this.currency = si;
     this.selectedTab = 1;
   }
   save() {
@@ -88,18 +88,18 @@ export class LanguagesComponent implements OnInit {
     this.errors = '';
     try {
       this.messages = '';
-      const index: number = this.dataSource.data.indexOf(this.language);
-      this.language.status = (this.language.status == null || this.language.status.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.language, 'Language')
+      const index: number = this.dataSource.data.indexOf(this.currency);
+      this.currency.status = (this.currency.status == null || this.currency.status.toString() === 'false') ? 0 : 1;
+      this.appService.save(this.currency, 'Currency')
         .subscribe(result => {
           if (result.id > 0) {
-            this.language = new Language();
+            this.currency = new Currency();
             this.selectedTab = 0;
             if (index !== -1) {
               this.dataSource.data.splice(index, 1);
             }
             this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Currency>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {

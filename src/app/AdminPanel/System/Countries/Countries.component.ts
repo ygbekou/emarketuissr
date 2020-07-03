@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Language } from 'src/app/app.models';
+import { Country } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,16 +7,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-languages',
-  templateUrl: './Languages.component.html',
-  styleUrls: ['./Languages.component.scss']
+  selector: 'app-country',
+  templateUrl: './Countries.component.html',
+  styleUrls: ['./Countries.component.scss']
 })
-export class LanguagesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'code', 'sortOrder', 'actions'];
-  dataSource: MatTableDataSource<Language>;
+export class CountriesComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'isoCode2', 'isoCode3', 'actions'];
+  dataSource: MatTableDataSource<Country>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  language: Language = new Language();
+  country: Country = new Country();
   messages = '';
   errors = '';
   selectedTab = 0;
@@ -28,26 +28,26 @@ export class LanguagesComponent implements OnInit {
   }
   getAll() {
     const parameters: string[] = [];
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters,' order by e.sortOrder ')
-      .subscribe((data: Language[]) => {
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Country', parameters)
+      .subscribe((data: Country[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all Language complete'));
+        () => console.log('Get all Country complete'));
   }
 
-  public remove(language: Language) {
+  public remove(country: Country) {
     this.messages = '';
     this.errors = '';
-    this.appService.delete(language.id, 'com.softenza.emarket.model.Language')
+    this.appService.delete(country.id, 'com.softenza.emarket.model.Country')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(language);
+          const index: number = this.dataSource.data.indexOf(country);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Country>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
@@ -71,16 +71,16 @@ export class LanguagesComponent implements OnInit {
   }
 
   clear() {
-    this.language = new Language();
+    this.country = new Country();
     this.dataSource = new MatTableDataSource();
   }
 
   addSectionItem() {
     this.selectedTab = 1;
-    this.language = new Language();
+    this.country = new Country();
   }
-  edit(si: Language) {
-    this.language = si;
+  edit(si: Country) {
+    this.country = si;
     this.selectedTab = 1;
   }
   save() {
@@ -88,18 +88,22 @@ export class LanguagesComponent implements OnInit {
     this.errors = '';
     try {
       this.messages = '';
-      const index: number = this.dataSource.data.indexOf(this.language);
-      this.language.status = (this.language.status == null || this.language.status.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.language, 'Language')
+      console.log(this.country);
+      const index: number = this.dataSource.data.indexOf(this.country);
+      this.country.status = (this.country.status == null || this.country.status.toString() === 'false') ? 0 : 1;
+      this.country.postcodeRequired = (this.country.postcodeRequired == null
+        || this.country.postcodeRequired.toString() === 'false') ? 0 : 1;
+
+      this.appService.save(this.country, 'Country')
         .subscribe(result => {
           if (result.id > 0) {
-            this.language = new Language();
+            this.country = new Country();
             this.selectedTab = 0;
             if (index !== -1) {
               this.dataSource.data.splice(index, 1);
             }
             this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<Country>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
