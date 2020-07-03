@@ -28,7 +28,7 @@ export class CategoryComponent implements OnInit {
       if (params.id == 0) {
         this.clear();
       } else {
-        this.getAll(params.id);
+        this.getCatDescs(params.id);
         this.getCategory(params.id);
       }
     });
@@ -46,7 +46,7 @@ export class CategoryComponent implements OnInit {
       this.selectedTab = 0;
     }
   }
-  getAll(categoryId: number) {
+  getCatDescs(categoryId: number) {
     const parameters: string[] = [];
     if (categoryId != null) {
       parameters.push('e.category.id = |categoryId|' + categoryId + '|Integer');
@@ -86,24 +86,6 @@ export class CategoryComponent implements OnInit {
         }
       }
     });
-  }
-
-  public remove(category: CategoryDescription) {
-    this.messages = '';
-    this.appService.delete(category.id, 'com.softenza.emarket.model.CategoryDescription')
-      .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-
-        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
-          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
-          });
-        } else {
-          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.ERROR_OCCURRED'];
-          });
-        }
-      });
   }
 
 
@@ -192,11 +174,6 @@ export class CategoryComponent implements OnInit {
         console.log(e);
       }
     }
-  }
-
-  edit(si: CategoryDescription) {
-    this.catDesc = si;
-    this.selectedTab = 1;
   }
   saveCategoryDesc() {
     this.messages = '';
