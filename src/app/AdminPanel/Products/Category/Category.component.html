@@ -18,7 +18,7 @@
 
       </mat-tab>
     </mat-tab-group>
-    <form name="form" (ngSubmit)="f.form.valid && saveCategory()" #f="ngForm" validate>
+    <form name="form" (ngSubmit)="f.form.valid && saveCategory(2)" #f="ngForm" validate>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
@@ -62,12 +62,12 @@
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-          <div class="text-center mt-2">
+          <div class="text-center mt-2" fxFlex.gt-sm="25">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
               <mat-icon>save</mat-icon>
             </button> </div>
-          <div class="text-center mt-2" *ngIf="messages">
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
           </div>
         </div>
@@ -76,7 +76,7 @@
   </mat-tab>
 
   <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="category.id>0">
-    <form name="fform" (ngSubmit)="ff.form.valid && saveCategory()" #ff="ngForm" validate>
+    <form name="fform" (ngSubmit)="ff.form.valid && saveCategory(1)" #ff="ngForm" validate>
 
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
@@ -115,12 +115,12 @@
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-          <div class="text-center mt-2">
+          <div class="text-center mt-2" fxFlex.gt-sm="25">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
               <mat-icon>save</mat-icon>
             </button> </div>
-          <div class="text-center mt-2" *ngIf="messages">
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
           </div>
         </div>

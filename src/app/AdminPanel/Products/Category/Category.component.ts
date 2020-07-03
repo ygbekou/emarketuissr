@@ -132,57 +132,65 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  saveCategory() {
-    this.messages = '';
-    try {
-      let nbFiles = 0;
-      for (const img of this.categoryImages) {
-        nbFiles++;
-        this.formData.append('file[]', img.file, 'picture.jpg');
-      }
+  saveCategory(type: number) {
+    if (type === 2 && this.category.id > 0) {
+      this.saveCategoryDesc();
+    } else {
+      this.messages = '';
+      try {
+        let nbFiles = 0;
+        for (const img of this.categoryImages) {
+          nbFiles++;
+          this.formData.append('file[]', img.file, 'picture.jpg');
+        }
 
-      this.category.status = (this.category.status == null || this.category.status.toString() === 'false') ? 0 : 1;
-      this.category.top = (this.category.top == null || this.category.top.toString() === 'false') ? 0 : 1;
-      console.log(this.category);
-      if (this.categoryImages.length > 0) {
-        this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
-          .subscribe(result => {
-            if (result.id > 0) {
-              console.log('saveWithFile');
-              this.category = result;
-              this.saveCategoryDesc();
-              this.categoryImages = [];
-              this.formData = new FormData();
-              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_SUCCESS'];
-              });
-            } else {
-              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
-              });
-            }
-          });
-      } else {
-        this.appService.save(this.category, 'Category')
-          .subscribe(result => {
-            if (result.id > 0) {
-              this.category = result;
-              this.saveCategoryDesc();
-              console.log('Saved');
-              this.categoryImages = [];
-              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_SUCCESS'];
-              });
-            } else {
-              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
-              });
-            }
-          });
-      }
+        this.category.status = (this.category.status == null || this.category.status.toString() === 'false') ? 0 : 1;
+        this.category.top = (this.category.top == null || this.category.top.toString() === 'false') ? 0 : 1;
+        console.log(this.category);
+        if (this.categoryImages.length > 0) {
+          this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
+            .subscribe(result => {
+              if (result.id > 0) {
+                console.log('saveWithFile');
+                this.category = result;
+                if (type === 2) {
+                  this.saveCategoryDesc();
+                }
+                this.categoryImages = [];
+                this.formData = new FormData();
+                this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+                });
+              } else {
+                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+                });
+              }
+            });
+        } else {
+          this.appService.save(this.category, 'Category')
+            .subscribe(result => {
+              if (result.id > 0) {
+                this.category = result;
+                if (type === 2) {
+                  this.saveCategoryDesc();
+                }
+                console.log('Saved');
+                this.categoryImages = [];
+                this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+                });
+              } else {
+                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+                });
+              }
+            });
+        }
 
-    } catch (e) {
-      console.log(e);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 
