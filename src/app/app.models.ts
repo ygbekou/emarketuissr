@@ -419,11 +419,10 @@ export class Category {
   sortOrder: number;
   status: number;
   image: string;
+  singleImage: true;
   parent: Category;
   top: number;
   type = 'Category';
-  language: any;
-  showInMenu: number;
 }
 export class CategoryDescription {
   id: number;
@@ -436,7 +435,5 @@ export class CategoryDescription {
   metaDescription: string;
   metaKeyword: string;
   type = 'CategoryDescription';
-  status: number;
-  showInMenu: number;
 }
 

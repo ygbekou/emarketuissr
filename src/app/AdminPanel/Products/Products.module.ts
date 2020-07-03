@@ -27,7 +27,7 @@ import {
   MatButtonToggleModule,
   MatSlideToggleModule,
   MatToolbarModule,
-  MatTooltipModule,
+  MatTooltipModule 
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';

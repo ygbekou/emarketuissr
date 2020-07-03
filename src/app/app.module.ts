@@ -75,7 +75,10 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { AdminPanelModule } from './AdminPanel/admin-panel.module';
 import { AppInfoStorage } from './app.info.storage';
 import { TokenStorage } from './token.storage';
-
+import { InputFileConfig, InputFileModule } from 'ngx-input-file';
+const config: InputFileConfig = {
+   fileAccept: '*'
+};
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
    suppressScrollX: true
@@ -156,6 +159,7 @@ export function createTranslateLoader(http: HttpClient) {
       SlickCarouselModule,
       PerfectScrollbarModule,
       DeviceDetectorModule.forRoot(),
+      InputFileModule.forRoot(config),
       AdminPanelModule
    ],
    providers: [
