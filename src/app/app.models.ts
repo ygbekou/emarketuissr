@@ -182,8 +182,9 @@ export class Product {
 
 export class ProductDescription {
   id: number;
-  productId: number;
+  product: Product;
   languageId: number;
+  languageName: string;
   name: string;
   description: string;
   tag: string;
