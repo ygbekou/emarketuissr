@@ -29,7 +29,7 @@ export class GeoZonesComponent implements OnInit {
 
   ngOnInit() {
     this.getCountries();
-    this.getZoneToGeoZone();
+    // this.getZoneToGeoZone();
     this.getAll();
   }
 
@@ -46,14 +46,16 @@ export class GeoZonesComponent implements OnInit {
   }
 
   getZones(country: Country) {
-    const parameters: string[] = [];
-    parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
-      .subscribe((data: Zone[]) => {
-        this.zones = data;
-      },
-        error => console.log(error),
-        () => console.log('Get all GeoZone complete'));
+    if (country) {
+      const parameters: string[] = [];
+      parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
+        .subscribe((data: Zone[]) => {
+          this.zones = data;
+        },
+          error => console.log(error),
+          () => console.log('Get all GeoZone complete'));
+    }
   }
 
   getZoneToGeoZone() {

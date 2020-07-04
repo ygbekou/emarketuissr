@@ -58,7 +58,7 @@ const MENUITEMS = [
       { state: 'lengthClasses', name: 'Length classes', type: 'link' },
       { state: 'weightClasses', name: 'Weight classes', type: 'link' },
       { state: 'taxClasses', name: 'Tax classes', type: 'link' },
-      { state: 'taxRate', name: 'Tax rates', type: 'link' }
+      { state: 'taxRates', name: 'Tax rates', type: 'link' }
     ]
   },
   {

@@ -43,11 +43,19 @@ import { ReturnReasonsComponent } from './ReturnReasons/ReturnReasons.component'
 import { CountriesComponent } from './Countries/Countries.component';
 import { ZonesComponent } from './Zones/Zones.component';
 import { GeoZonesComponent } from './GeoZones/GeoZones.component';
+import { TaxRatesComponent } from './TaxRates/TaxRates.component';
+import { TaxClassesComponent } from './TaxClasses/TaxClasses.component';
+import { WeightClassComponent } from './WeightClass/WeightClass.component';
+import { WeightClassesComponent } from './WeightClasses/WeightClasses.component';
+import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
+import { LengthClassComponent } from './LengthClass/LengthClass.component';
 
 @NgModule({
   declarations: [LanguagesComponent, CurrenciesComponent, OrderStatusesComponent,
     StockStatusesComponent, ReturnStatusesComponent, ReturnActionsComponent,
-    ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent],
+    ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent,
+    TaxRatesComponent, TaxClassesComponent, WeightClassComponent, WeightClassesComponent,
+    LengthClassesComponent, LengthClassComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

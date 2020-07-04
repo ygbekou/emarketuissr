@@ -9,6 +9,12 @@ import { ReturnReasonsComponent } from './ReturnReasons/ReturnReasons.component'
 import { CountriesComponent } from './Countries/Countries.component';
 import { ZonesComponent } from './Zones/Zones.component';
 import { GeoZonesComponent } from './GeoZones/GeoZones.component';
+import { TaxRatesComponent } from './TaxRates/TaxRates.component';
+import { TaxClassesComponent } from './TaxClasses/TaxClasses.component';
+import { WeightClassComponent } from './WeightClass/WeightClass.component';
+import { WeightClassesComponent } from './WeightClasses/WeightClasses.component';
+import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
+import { LengthClassComponent } from './LengthClass/LengthClass.component';
 
 export const SystemRoutes: Routes = [
    {
@@ -58,6 +64,30 @@ export const SystemRoutes: Routes = [
          {
             path: 'geoZones',
             component: GeoZonesComponent
+         },
+         {
+            path: 'taxRates',
+            component: TaxRatesComponent
+         },
+         {
+            path: 'taxClasses',
+            component: TaxClassesComponent
+         },
+         {
+            path: 'weightClasses',
+            component: WeightClassesComponent
+         },
+         {
+            path: 'weightClasses/:id',
+            component: WeightClassComponent
+         },
+         {
+            path: 'lengthClasses',
+            component: LengthClassesComponent
+         },
+         {
+            path: 'lengthClasses/:id',
+            component: LengthClassComponent
          }
       ]
    }

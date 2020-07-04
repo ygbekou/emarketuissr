@@ -1,0 +1,76 @@
+<a mat-button [routerLink]="['/admin/system/weightClasses']">{{'COMMON.WEIGHT_CLASSES' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/system/weightClasses']">
+  <h5>{{'COMMON.WEIGHT_CLASS' | translate}}</h5>
+</a>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+    <a [routerLink]="['/admin/system/weightClasses', 0]" mat-icon-button color="primary"
+      matTooltip="{{'COMMON.ADD' | translate}}">
+      <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+    </a>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+<div class="table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let weightClassDesc"> {{weightClassDesc.id}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.TITLE' | translate}} </th>
+      <td mat-cell *matCellDef="let weightClassDesc"> {{weightClassDesc.title}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="unit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.UNIT' | translate}} </th>
+      <td mat-cell *matCellDef="let weightClassDesc"> {{weightClassDesc.unit}} </td>
+    </ng-container>
+	
+    <!-- Published Column -->
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.VALUE' | translate}} </th>
+      <td mat-cell *matCellDef="let weightClassDesc"> {{weightClassDesc.weightClass.value}} </td>
+    </ng-container>
+
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let weightClassDesc">
+        <a [routerLink]="['/admin/system/weightClasses', weightClassDesc.weightClass.id]" mat-icon-button color="primary"
+          matTooltip="{{'COMMON.EDIT' | translate}}">
+          <mat-icon>edit</mat-icon>
+        </a>
+        &nbsp;&nbsp;
+        <button mat-icon-button color="warn" (click)="remove(weightClassDesc)" matTooltip="{{'COMMON.DELETE' | translate}}"
+          class="remove">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let weightClassDesc; columns: displayedColumns;">
+    </tr>
+  </table>
+  <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

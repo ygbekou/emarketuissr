@@ -521,11 +521,21 @@ export class TaxRate {
   id: number;
   geoZone: GeoZone;
   name: string;
-  rate: string;
+  rate: number;
   taxType: string;
+  createDate: Date;
+  modDate: Date;
   type = 'TaxRate';
 }
 
+export class TaxRule {
+  id: number;
+  taxRate: TaxRate;
+  taxClass: TaxClass;
+  based: string;
+  priority: number;
+  type = 'TaxRule';
+}
 export class WeightClass {
   id: number;
   value: number;
@@ -539,4 +549,19 @@ export class WeightClassDescription {
   title: string;
   unit: string;
   type = 'WeightClassDescription';
+}
+
+export class LengthClass {
+  id: number;
+  value: number;
+  type = 'LengthClass';
+}
+
+export class LengthClassDescription {
+  id: number;
+  language: Language;
+  lengthClass: LengthClass;
+  title: string;
+  unit: string;
+  type = 'LengthClassDescription';
 }

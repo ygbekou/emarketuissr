@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Language } from 'src/app/app.models';
+import { TaxRate, GeoZone } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,47 +7,59 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-languages',
-  templateUrl: './Languages.component.html',
-  styleUrls: ['./Languages.component.scss']
+  selector: 'app-tax-rates',
+  templateUrl: './TaxRates.component.html',
+  styleUrls: ['./TaxRates.component.scss']
 })
-export class LanguagesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'code', 'sortOrder', 'actions'];
-  dataSource: MatTableDataSource<Language>;
+export class TaxRatesComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'taxType', 'rate', 'createDate', 'modDate', 'actions'];
+  dataSource: MatTableDataSource<TaxRate>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  language: Language = new Language();
+  taxRate: TaxRate = new TaxRate();
   messages = '';
   errors = '';
   selectedTab = 0;
+  geoZones: GeoZone[] = [];
   constructor(public appService: AppService,
     private translate: TranslateService) { }
 
   ngOnInit() {
+    this.getGeoZones();
     this.getAll();
   }
   getAll() {
     const parameters: string[] = [];
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
-      .subscribe((data: Language[]) => {
+    this.appService.getAllByCriteria('com.softenza.emarket.model.TaxRate', parameters)
+      .subscribe((data: TaxRate[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all Language complete'));
+        () => console.log('Get all TaxRate complete'));
   }
 
-  public remove(language: Language) {
+  getGeoZones() {
+    const parameters: string[] = [];
+    this.appService.getAllByCriteria('com.softenza.emarket.model.GeoZone', parameters)
+      .subscribe((data: GeoZone[]) => {
+        this.geoZones = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Countries complete'));
+  }
+
+  public remove(taxRate: TaxRate) {
     this.messages = '';
     this.errors = '';
-    this.appService.delete(language.id, 'com.softenza.emarket.model.Language')
+    this.appService.delete(taxRate.id, 'com.softenza.emarket.model.TaxRate')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(language);
+          const index: number = this.dataSource.data.indexOf(taxRate);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<TaxRate>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
@@ -71,16 +83,16 @@ export class LanguagesComponent implements OnInit {
   }
 
   clear() {
-    this.language = new Language();
+    this.taxRate = new TaxRate();
     this.dataSource = new MatTableDataSource();
   }
 
   addSectionItem() {
     this.selectedTab = 1;
-    this.language = new Language();
+    this.taxRate = new TaxRate();
   }
-  edit(si: Language) {
-    this.language = si;
+  edit(si: TaxRate) {
+    this.taxRate = si;
     this.selectedTab = 1;
   }
   save() {
@@ -88,18 +100,18 @@ export class LanguagesComponent implements OnInit {
     this.errors = '';
     try {
       this.messages = '';
-      const index: number = this.dataSource.data.indexOf(this.language);
-      this.language.status = (this.language.status == null || this.language.status.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.language, 'Language')
+      console.log(this.taxRate);
+      const index: number = this.dataSource.data.indexOf(this.taxRate);
+      this.appService.save(this.taxRate, 'TaxRate')
         .subscribe(result => {
           if (result.id > 0) {
-            this.language = new Language();
+            this.taxRate = new TaxRate();
             this.selectedTab = 0;
             if (index !== -1) {
               this.dataSource.data.splice(index, 1);
             }
             this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<TaxRate>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
