@@ -565,3 +565,37 @@ export class LengthClassDescription {
   unit: string;
   type = 'LengthClassDescription';
 }
+
+export class Information {
+  id: number;
+  bottom: number;
+  sortOrder: number;
+  status: number;
+  type: 'Information';
+}
+
+export class InformationDescription {
+  id: number;
+  description: string;
+  information: Information;
+  language: Language;
+  metaDescription: string;
+  metaKeyword: string;
+  metaTitle: string;
+  title: string;
+}
+
+export class Store {
+  id: number;
+  name: string;
+  sslUrl: string;
+  url: string;
+}
+
+export class SeoUrl {
+  id: number;
+  keyword: string;
+  language: string;
+  query: string;
+  store: Store;
+}
