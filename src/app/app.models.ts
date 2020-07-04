@@ -522,7 +522,7 @@ export class TaxRate {
   geoZone: GeoZone;
   name: string;
   rate: string;
-  type: string;
+  taxType: string;
   type = 'TaxRate';
 }
 

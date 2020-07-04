@@ -127,7 +127,7 @@
               <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
               <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" id="country" name="country"
                 [(ngModel)]="zoneToGeoZone.country" #country="ngModel" (selectionChange)="getZones(zoneToGeoZone.country)">
-                <mat-option *ngFor="let ctry of countries" [value]="ctry">
+                <mat-option *ngFor="let ctry of countries" [value]="ctry.id">
                   {{ctry.name}}
                 </mat-option>
               </mat-select>
@@ -142,7 +142,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Zone</mat-label>
               <mat-select placeholder="Zone" id="zone" name="zone" [(ngModel)]="zoneToGeoZone.zone" #zone="ngModel">
-                <mat-option *ngFor="let zone of zones" [value]="zone">
+                <mat-option *ngFor="let zone of zones" [value]="zone.id">
                   {{zone.code}}
                 </mat-option>
               </mat-select>

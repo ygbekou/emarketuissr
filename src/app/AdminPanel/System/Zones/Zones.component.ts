@@ -103,9 +103,6 @@ export class ZonesComponent implements OnInit {
       console.log(this.zone);
       const index: number = this.dataSource.data.indexOf(this.zone);
       this.zone.status = (this.zone.status == null || this.zone.status.toString() === 'false') ? 0 : 1;
-      this.zone.postcodeRequired = (this.zone.postcodeRequired == null
-        || this.zone.postcodeRequired.toString() === 'false') ? 0 : 1;
-
       this.appService.save(this.zone, 'Zone')
         .subscribe(result => {
           if (result.id > 0) {

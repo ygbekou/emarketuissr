@@ -70,7 +70,11 @@ export class GeoZonesComponent implements OnInit {
   }
 
   addNewZoneToGeoZone() {
-    console.log('Add new');
+    if (!this.zoneToGeoZoneDS || this.zoneToGeoZoneDS == null || !this.zoneToGeoZoneDS.data) {
+      const data: ZoneToGeoZone[] = [];
+      this.zoneToGeoZoneDS = new MatTableDataSource(data);
+      this.zoneToGeoZoneDS.data = [];
+    }
     this.zoneToGeoZoneDS.data.unshift(new ZoneToGeoZone());
     this.zoneToGeoZoneDS = new MatTableDataSource<ZoneToGeoZone>(this.zoneToGeoZoneDS.data);
     this.zoneToGeoZoneDS.paginator = this.paginator;
@@ -83,7 +87,6 @@ export class GeoZonesComponent implements OnInit {
     this.errors = '';
     if (zoneToGeoZone.country && zoneToGeoZone.zone) {
       zoneToGeoZone.geoZone = this.geoZone;
-      this.saveZoneToGeoZone(zoneToGeoZone);
       try {
         this.messages = '';
         console.log(zoneToGeoZone);
