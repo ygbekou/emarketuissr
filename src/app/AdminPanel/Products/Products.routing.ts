@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { ProductsComponent } from './Products/Products.component';
 import { EditProductComponent } from './EditProduct/EditProduct.component';
-import { AddProductComponent } from './AddProduct/AddProduct.component';
+import { ProductComponent } from './Product/Product.component';
 import { CategoriesComponent } from './Categories/Categories.component';
 import { CategoryComponent } from './Category/Category.component';
 import { InformationsComponent } from './Informations/Informations.component';
@@ -26,7 +26,7 @@ export const ProductsRoutes: Routes = [
          },
          {
             path: 'product-add',
-            component: AddProductComponent
+            component: ProductComponent
          },
          {
             path: 'products',
@@ -34,7 +34,7 @@ export const ProductsRoutes: Routes = [
          },
          {
             path: 'products/:id',
-            component: AddProductComponent
+            component: ProductComponent
          },
          {
             path: 'categories',

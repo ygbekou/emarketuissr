@@ -33,7 +33,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { EditProductComponent } from './EditProduct/EditProduct.component';
-import { AddProductComponent } from './AddProduct/AddProduct.component';
+import { ProductComponent } from './Product/Product.component'; 
 import { GlobalModule } from '../../Global/Global.module';
 import { ProductsComponent } from './Products/Products.component';
 import { ProductsRoutes } from './Products.routing';
@@ -45,7 +45,7 @@ import { InformationComponent } from './Information/Information.component';
 import { InformationsComponent } from './Informations/Informations.component';
 
 @NgModule({
-  declarations: [ProductsComponent, EditProductComponent, AddProductComponent, ProductDescriptionComponent,
+  declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent],
   imports: [
     CommonModule,

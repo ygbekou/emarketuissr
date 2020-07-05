@@ -6,24 +6,26 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { BaseComponent } from '../../baseComponent';
 
 @Component({
   selector: 'app-products',
   templateUrl: './Products.component.html',
   styleUrls: ['./Products.component.scss']
 })
-export class ProductsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'image', 'name', 'sortOrder', 'status', 'actions'];
+export class ProductsComponent extends BaseComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'image', 'name', 'model', 'price', 'quantity', 'status', 'actions'];
   dataSource: MatTableDataSource<ProductDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   messages = '';
   lang = 'fr';
   constructor(public appService: AppService,
-    private translate: TranslateService) { }
+    public translate: TranslateService) {
+      super(translate);
+    }
 
   ngOnInit() {
-    console.info(Cookie.get('lang'));
     this.setLang();
     this.getAll();
   }
@@ -72,21 +74,4 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  setLang() {
-    let lang = navigator.language;
-    if (lang) {
-      lang = lang.substring(0, 2);
-    }
-    if (Cookie.get('lang')) {
-      lang = Cookie.get('lang');
-      console.log('Using cookie lang=' + Cookie.get('lang'));
-    } else if (lang) {
-      console.log('Using browser lang=' + lang);
-      // this.translate.use(lang);
-    } else {
-      lang = 'fr';
-      console.log('Using default lang=fr');
-    }
-    this.lang = lang;
-  }
 }

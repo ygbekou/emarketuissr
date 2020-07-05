@@ -66,12 +66,13 @@
 		"TAX_CLASS": "Tax Class",
 		"MINIMUM_QUANTITY": "Minimum Quantity",
 		"SUBTRACT_STOCK": "Subtract Stock",
+		"OUT_OF_STOCK_STATUS": "Out of stock status",
 		"STOCK_STATUS": "Stock Status",
 		"REQUIRES_SHIPPING": "Requires Shipping",
 		"DATE_AVAILABLE": "Date Available",
 		"LENGTH": "Length",
 		"WIDTH": "Width",
-		"HEIGTH": "Heigth",
+		"HEIGHT": "Height",
 		"LENGTH_CLASS": "Length Class",
 		"LENGTH_CLASSES": "Length Classes",
 		"WEIGHT": "Weight",
@@ -367,7 +368,8 @@
 		"YES": "Yes",
 		"ZIP_CODE": "Zip Code",
 		"LINKS": "Links",
-		"MANUFACTURER": "Manufacturer"
+		"MANUFACTURER": "Manufacturer",
+		"DIMENSIONS": "Dimensions"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

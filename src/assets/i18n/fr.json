@@ -72,7 +72,7 @@
     "DATE_AVAILABLE": "Date de disponibilité",
     "LENGTH": "Longueur",
     "WIDTH": "Largeur",
-    "HEIGTH": "Hauteur",
+    "HEIGHT": "Hauteur",
     "LENGTH_CLASS": "Classe de longueur",
     "LENGTH_CLASSES": "Classes de longueur",
     "WEIGHT": "Poids",
@@ -367,7 +367,9 @@
     "YES": "Oui",
     "ZIP_CODE": "Code Postal",
     "LINKS": "Liens",
-    "MANUFACTURER": "Fabricant"
+    "MANUFACTURER": "Fabricant",
+		"DIMENSIONS": "Dimensions"
+
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

@@ -559,12 +559,6 @@ export class AppService {
 
    public getCacheData() {
     const parameters: string[] = [];
-    this.getAllByCriteria('com.softenza.emarket.model.TaxClass', parameters)
-      .subscribe((data: TaxClass[]) => {
-        this.appInfoStorage.taxClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get Tax Classes complete'));
-
     
     this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
       .subscribe((data: Language[]) => {
@@ -598,11 +592,17 @@ export class AppService {
         () => console.log('Get Languages complete'));
 
 
-    this.getAllByCriteria('com.softenza.emarket.model.StockStatus', parameters)
-      .subscribe((data: StockStatus[]) => {
+   this.getCachedReferences('taxclass')
+      .subscribe((data: GenericVO[]) => {
+        this.appInfoStorage.taxClasses = data;
+      }, error => console.log(error),
+        () => console.log('Get taxclass complete'));
+
+   this.getCachedReferences('stockstatus')
+      .subscribe((data: GenericVO[]) => {
         this.appInfoStorage.stockStatuses = data;
       }, error => console.log(error),
-        () => console.log('Get Stock Statuses complete'));
+        () => console.log('Get stock status complete'));
 
     this.getCachedReferences('lengthclass')
       .subscribe((data: GenericVO[]) => {

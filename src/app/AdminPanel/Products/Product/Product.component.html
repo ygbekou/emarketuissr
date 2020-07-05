@@ -94,7 +94,7 @@
                      <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
                      <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
                         <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                           {{taxClass.title}}
+                           {{taxClass.name}}
                         </mat-option>
                      </mat-select>
                   </mat-form-field>
@@ -112,11 +112,9 @@
                   </mat-form-field>
                </div>
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-label> {{'COMMON.SUBTRACT_STOCK' | translate}}</mat-label><br/>
-                  <mat-radio-group class="form-control" id="subtract" [(ngModel)]="product.subtract" name="subtract" #subtract="ngModel">
-                     <mat-radio-button class="mr-2" value="1">YES</mat-radio-button>
-                     <mat-radio-button value="0">NO</mat-radio-button>
-                  </mat-radio-group>
+                  <mat-slide-toggle [(ngModel)]="product.subtract" name="subtract" #subtract="ngModel" class="my-2">
+                     {{ 'COMMON.SUBTRACT_STOCK' | translate }}
+                  </mat-slide-toggle>
                </div>
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                   <mat-form-field appearance="outline" class="w-100">
@@ -129,11 +127,9 @@
                   </mat-form-field>
                </div>
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-label> {{'COMMON.REQUIRES_SHIPPING' | translate}}</mat-label><br/>
-                  <mat-radio-group class="form-control" id="shipping" [(ngModel)]="product.shipping" name="shipping" #shipping="ngModel">
-                     <mat-radio-button class="mr-2" value="1">YES</mat-radio-button>
-                     <mat-radio-button value="0">NO</mat-radio-button>
-                  </mat-radio-group>
+                  <mat-slide-toggle [(ngModel)]="product.shipping" name="shipping" #shipping="ngModel" class="my-2">
+                     {{ 'COMMON.REQUIRES_SHIPPING' | translate }}
+                  </mat-slide-toggle>
                </div>
                
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
@@ -186,18 +182,34 @@
                   </mat-form-field>
                </div>
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-label> {{'COMMON.STATUS' | translate}}</mat-label><br/>
-                  <mat-radio-group class="form-control" id="status" [(ngModel)]="product.status" name="status" #status="ngModel">
-                     <mat-radio-button class="mr-2" value="1">ACTIVE</mat-radio-button>
-                     <mat-radio-button value="0">INACTIVE</mat-radio-button>
-                  </mat-radio-group>
+                  <mat-slide-toggle [(ngModel)]="product.status" name="status" #status="ngModel" class="my-2">
+                     {{ 'COMMON.STATUS' | translate }}
+                  </mat-slide-toggle>
                </div>
+               
+
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                   <mat-form-field appearance="outline" class="w-30">
                      <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
                      <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="product.sortOrder" name="sortOrder" #sortOrder="ngModel">
                   </mat-form-field>
                </div>
+
+
+               <div fxLayout="row wrap">
+                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                     <div class="text-center mt-2">
+                     <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                        <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                        <mat-icon>save</mat-icon>
+                     </button> </div>
+                     <div class="text-center mt-2" *ngIf="messages">
+                     <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+                     </div>
+                  </div>
+               </div>
+
+
             </div>
          </form>
       </mat-tab>
