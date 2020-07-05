@@ -6,7 +6,7 @@ import { MainAdminPanelComponent } from './Main/Main.component';
 export const AdminPanelRoutes: Routes = [
    {
       path: 'admin',
-      redirectTo: 'admin/reports',
+      redirectTo: 'admin/admindash',
       pathMatch: 'full',
    },
    {
@@ -14,7 +14,7 @@ export const AdminPanelRoutes: Routes = [
       component: MainAdminPanelComponent,
       children: [
          {
-            path: 'reports', loadChildren: () =>
+            path: 'admindash', loadChildren: () =>
                import('./Reports/Reports.module').then(m => m.ReportsModule)
          },
          {

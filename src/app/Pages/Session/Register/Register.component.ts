@@ -58,8 +58,13 @@ export class RegisterComponent implements OnInit {
           } else {
             this.tokenStorage.saveAuthData(data);
             this.appService.updateToken();
-            console.log('Token = ' + this.tokenStorage.getToken());
-            this.router.navigate(['/admin']);
+            if (this.appService.tokenStorage.getRole() === '1') {// client
+              this.router.navigate(['/account/profile']);
+            } else if (this.appService.tokenStorage.getRole() === '2') { // seller
+              this.router.navigate(['/account/profile']);
+            } else if (this.appService.tokenStorage.getRole() === '3') { // admin
+              this.router.navigate(['/admin']);
+            }
           }
         });
     }

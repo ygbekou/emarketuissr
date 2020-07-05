@@ -3,17 +3,17 @@ import { AdminPanelServiceService } from '../../Service/AdminPanelService.servic
 import { AppService } from '../../../Services/app.service';
 
 @Component({
-  selector: 'app-header-component',
-  templateUrl: './Header.component.html',
-  styleUrls: ['./Header.component.scss']
+   selector: 'app-header-component',
+   templateUrl: './Header.component.html',
+   styleUrls: ['./Header.component.scss']
 })
 export class AdminHeaderComponent implements OnInit {
 
-	constructor(private coreService : AdminPanelServiceService,
-               public appService: AppService) { }
+   constructor(private coreService: AdminPanelServiceService,
+      public appService: AppService) { }
 
-	ngOnInit() {
-	}
+   ngOnInit() {
+   }
 
 	/**
      * toggleSidebar method is used a toggle a side nav bar.

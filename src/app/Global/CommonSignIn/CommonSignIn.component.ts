@@ -53,7 +53,13 @@ export class CommonSignInComponent implements OnInit {
               console.log('login successful');
               this.tokenStorage.saveAuthData(data);
               this.appService.updateToken();
-              this.router.navigate(['/admin']);
+              if (this.appService.tokenStorage.getRole() === '1') {// client
+                this.router.navigate(['/account/profile']);
+              } else if (this.appService.tokenStorage.getRole() === '2') { // seller
+                this.router.navigate(['/account/profile']);
+              } else if (this.appService.tokenStorage.getRole() === '3') { // admin
+                this.router.navigate(['/admin']);
+              }
               // this.router.navigate([this.tokenStorage.getHomePage()]);
             } else {
               console.log('login failed');

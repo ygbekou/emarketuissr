@@ -11,7 +11,7 @@
             <mat-card class="register-form form-margin">
               <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
                 <h4 class="uppercase">{{'COMMON.REGISTRATION' | translate }}</h4>
-                <a mat-button routerLink="/login" color="accent"
+                <a mat-button routerLink="/session/signin" color="accent"
                   class="w-100">{{'COMMON.NOTNEW_SIGN_IN' | translate }}</a>
               </div>
               <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">

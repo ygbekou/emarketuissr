@@ -19,7 +19,7 @@
              <embryo-HeaderCart [currency]="appService?.currency" [cartProducts]="appService?.localStorageCartProducts" [count]="appService?.navbarCartCount" (removeProductData)="openConfirmationPopup($event)"></embryo-HeaderCart>
  
              <embryo-WishList [currency]="appService?.currency" [wishListProducts]="appService?.localStorageWishlist" [count]="appService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)" (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
-             <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+             <app-header-user-profile></app-header-user-profile>
            </div>
          </div>
        </div>

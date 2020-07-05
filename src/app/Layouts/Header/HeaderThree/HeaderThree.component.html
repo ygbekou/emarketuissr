@@ -5,7 +5,7 @@
         <div header-v3-top-site fxFlex.md="33%" fxFlex.lg="33%" fxFlex.xl="33%">
           <div class="header-v3-top-tools">
             <span>Welcome to our store</span>
-            <embryo-LanguageDropDown class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></embryo-LanguageDropDown>
+            <app-lang class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></app-lang>
             <embryo-CurrencyDropDown [selectedValue]="appService?.currency" (selectedCurrency)="selectedCurrency($event)"></embryo-CurrencyDropDown>
           </div>
         </div>
@@ -20,7 +20,7 @@
             [count]="appService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)"
             (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
 
-          <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+          <app-header-user-profile></app-header-user-profile>
         </div>
       </div>
     </div>
