@@ -16,8 +16,8 @@ export interface Menu {
 
 const MENUITEMS = [
   {
-    state: 'admin/reports',
-    name: 'Reports',
+    state: 'admin/admindash',
+    name: 'Dashboard',
     type: 'link',
     icon: 'poll'
   },

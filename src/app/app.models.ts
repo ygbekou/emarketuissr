@@ -571,7 +571,7 @@ export class Information {
   bottom: number;
   sortOrder: number;
   status: number;
-  type: 'Information';
+  type = 'Information';
 }
 
 export class InformationDescription {
@@ -583,6 +583,7 @@ export class InformationDescription {
   metaKeyword: string;
   metaTitle: string;
   title: string;
+  type = 'InformationDescription';
 }
 
 export class Store {
@@ -590,6 +591,7 @@ export class Store {
   name: string;
   sslUrl: string;
   url: string;
+  type = 'Store';
 }
 
 export class SeoUrl {
@@ -598,4 +600,5 @@ export class SeoUrl {
   language: string;
   query: string;
   store: Store;
+  type = 'SeoUrl';
 }

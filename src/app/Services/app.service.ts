@@ -51,7 +51,7 @@ export class AppService {
       private db: AngularFireDatabase,
       private toastyService: ToastaService,
       private toastyConfig: ToastaConfig,
-      private tokenStorage: TokenStorage,
+      public tokenStorage: TokenStorage,
       private translate: TranslateService
    ) {
 
@@ -641,6 +641,7 @@ export class AppService {
 
    public changeLang(lang: Language) {
       this.appInfoStorage.language = lang;
+      this.translate.use(lang.code);
    }
 
 }

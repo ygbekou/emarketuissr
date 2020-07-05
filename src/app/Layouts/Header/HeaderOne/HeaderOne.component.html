@@ -4,7 +4,7 @@
       <div fxLayout="row wrap" fxLayout="center center">
         <div fxHide.xs="true" fxHide.sm="true" fxHide.md="true" fxFlex.md="33%" fxFlex.lg="33%" fxFlex.xl="33%">
           <div class="list-flex">
-            <embryo-LanguageDropDown class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></embryo-LanguageDropDown>
+            <app-lang class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></app-lang>
             <embryo-CurrencyDropDown [selectedValue]="appService?.currency" (selectedCurrency)="selectedCurrency($event)"></embryo-CurrencyDropDown>
           </div>
         </div>
@@ -18,7 +18,7 @@
 
             <embryo-WishList [currency]="appService?.currency" [wishListProducts]="appService?.localStorageWishlist" [count]="appService?.navbarWishlistProdCount" (removeWishListData)="openWishlistConfirmationPopup($event)" (addAllWishlistToCart)="addAllWishlistToCart($event)" (addToCart)="addToCart($event)"></embryo-WishList>
             
-            <embryo-HeaderUserProfileDropdown></embryo-HeaderUserProfileDropdown>
+            <app-header-user-profile></app-header-user-profile>
           </div>
         </div>
       </div>

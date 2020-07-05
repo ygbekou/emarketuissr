@@ -8,26 +8,26 @@ import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 
-export const UserAccountRoutes : Routes = [
+export const UserAccountRoutes: Routes = [
    {
-      path : '',
-      component : AccountComponent,
-      children: [ 
+      path: '',
+      component: AccountComponent,
+      children: [
          {
             path: 'profile',
             component: ProfileComponent
          },
-         { 
-            path: 'cards', 
-            component: CardsComponent 
+         {
+            path: 'cards',
+            component: CardsComponent
          },
-         { 
-            path: 'address', 
-            component: AddressComponent 
+         {
+            path: 'address',
+            component: AddressComponent
          },
-         { 
-            path: 'order-history', 
-            component: OrderHistoryComponent 
+         {
+            path: 'order-history',
+            component: OrderHistoryComponent
          },
          {
             path: 'profile/edit',

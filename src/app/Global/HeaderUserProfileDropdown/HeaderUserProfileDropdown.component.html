@@ -1,10 +1,34 @@
 <button mat-mini-fab class="log-in-user" [matMenuTriggerFor]="loginuser">
-  <img src="assets/images/log-in-user.jpg" width="250" height="250" alt="log-in-user">
+  <img *ngIf="!appService.tokenStorage.hasToken()||appService.tokenStorage.getPicture()==='null'"
+    src="assets/images/users/user_gray.jpg" width="250" height="250" alt="log-in-user">
+  <img *ngIf="appService.tokenStorage.hasToken()&&appService.tokenStorage.getPicture()!=='null'"
+    src="assets/images/users/{{appService.tokenStorage.getUserId()}}/{{appService.tokenStorage.getPicture()}}"
+    alt="user-image" width="50">
 </button>
+
 <mat-menu #loginuser="matMenu">
-  <button mat-menu-item fxLayoutAlign="start center" [routerLink]="['/account/profile']"><i class="material-icons mr-1">account_circle</i> <span>Profile</span>
+  <button *ngIf="appService.tokenStorage.hasToken()" mat-menu-item fxLayoutAlign="start center"
+    [routerLink]="['/account/profile']"><i class="material-icons mr-1">account_circle</i>
+    <span>{{appService.tokenStorage.getFirstName() +' '+appService.tokenStorage.getLastName()}}</span>
   </button>
-  <button mat-menu-item [routerLink]="['/account/profile']"><i class="material-icons mr-1">settings</i><span>Account</span></button>
-  <button mat-menu-item [routerLink]="['/account/profile']"> <i class="material-icons mr-1">local_post_office</i> <span>Messages</span></button>
-  <button mat-menu-item [routerLink]="['/session/signin']"><i class="material-icons mr-1">power_settings_new</i><span>Logout</span></button>
+  <button *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='1'" mat-menu-item [routerLink]="['/account/profile']"><i
+      class="material-icons mr-1">settings</i><span>{{'COMMON.CLIENT_SPACE' | translate }}</span></button>
+
+        <button *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='2'" mat-menu-item [routerLink]="['/account/profile']"><i
+      class="material-icons mr-1">settings</i><span>{{'COMMON.SELLER_SPACE' | translate }}</span></button>
+
+        <button *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='3'" mat-menu-item [routerLink]="['/admin']"><i
+      class="material-icons mr-1">settings</i><span>{{'COMMON.ADMIN_SPACE' | translate }}</span></button>
+
+
+  <button (click)="logout()" *ngIf="appService.tokenStorage.hasToken()" mat-menu-item
+    [routerLink]="['/session/signin']"><i
+      class="material-icons mr-1">power_settings_new</i><span>{{'COMMON.DISCONNECT' | translate }}</span></button>
+
+  <button *ngIf="!appService.tokenStorage.hasToken()" mat-menu-item [routerLink]="['/session/signup']"><i
+      class="material-icons mr-1">add_circle</i><span>{{'COMMON.INSCRIPTION' | translate }}</span></button>
+
+  <button *ngIf="!appService.tokenStorage.hasToken()" mat-menu-item [routerLink]="['/session/signin']"><i
+      class="material-icons mr-1">input</i><span>{{'COMMON.CONNEXION' | translate }}</span></button>
+
 </mat-menu>

@@ -8,9 +8,9 @@
 		<span fxFlex></span>
 		<div class="list-flex user-tool">
          <div class="list-flex">
-            <embryo-LanguageDropDown class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></embryo-LanguageDropDown>
+            <app-lang class="mr-3" [selectedValue]="appService?.language" (selectedLanguage)="selectedLanguage($event)"></app-lang>
          </div>
-   		<embryo-header-user-profile></embryo-header-user-profile>
+   		<admin-header-user-profile></admin-header-user-profile>
    	</div>
    </div>
 </mat-toolbar>

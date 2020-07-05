@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./Informations.component.scss']
 })
 export class InformationsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'image', 'name', 'sortOrder', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'title', 'sortOrder', 'status', 'actions'];
   dataSource: MatTableDataSource<InformationDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
