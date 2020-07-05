@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { AppInfoStorage } from 'src/app/app.info.storage';
 import { Product, ProductDescription, Language } from 'src/app/app.models';
-import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
 import { AppService } from 'src/app/Services/app.service';
+import { ActivatedRoute } from '@angular/router';
+import { ProductDescriptionComponent } from '../ProductDescription/ProductDescription.component';
 
 @Component({
    selector: 'app-add-product',
@@ -16,65 +17,64 @@ export class AddProductComponent implements OnInit {
 
    form: FormGroup;
    mainImgPath: string;
-	colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
+   colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
    sizeArray: number[] = [36, 38, 40, 42, 44, 46, 48];
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    public imagePath;
    messages = '';
 
-   'data': any = [
-      {
-         'image': 'https://via.placeholder.com/625x800',
-         'image_gallery': [
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800'
-         ]
-      }
-   ];
+   @ViewChild(ProductDescriptionComponent, {static: false}) productDescriptionView: ProductDescriptionComponent;
 
    product: Product;
 
 
-   constructor(public formBuilder: FormBuilder,
+   constructor(private activatedRoute: ActivatedRoute,
       protected translate: TranslateService,
       public appService: AppService) { }
 
    ngOnInit() {
 
-      this.mainImgPath = this.data[0].image;
-      this.form = this.formBuilder.group({
-         name					: [],
-         price 				: [],
-         availablity   		: [],
-         product_code 		: [],
-         description 		: [],
-         tags					: [],
-         features				: []
+      this.activatedRoute.params.subscribe(params => {
+        if (params.id === undefined || params.id === 0) {
+          this.clear();
+        } else {
+          this.clear();
+          this.getProductDescriptions(params.id);
+        }
       });
-
-      this.product = new Product();
-
-        for (var lang of this.appService.appInfoStorage.languages) {
-
-            let pd = new ProductDescription();
-            pd.languageId = lang.id;
-            pd.languageName = lang.name;
-            this.product.productDescriptions.push(pd);
-
-         }
 
    }
 
-   /**
-    * getImagePath is used to change the image path on click event.
-    */
-   public getImagePath(imgPath: string, index: number) {
-      document.querySelector('.border-active').classList.remove('border-active');
-      this.mainImgPath = imgPath;
-      document.getElementById(index + '_img').className += ' border-active';
+   clear() {
+     this.product = new Product();
+
+      for (const lang of this.appService.appInfoStorage.languages) {
+
+          const pd = new ProductDescription();
+          pd.language = lang;
+          this.product.productDescriptions.push(pd);
+
+        }
+   }
+
+   getProductDescriptions(productId: number) {
+      const parameters: string[] = [];
+      if (productId != null) {
+         parameters.push('e.product.id = |productId|' + productId + '|Integer');
+      }
+      this.appService.getAllByCriteria('com.softenza.emarket.model.ProductDescription', parameters)
+         .subscribe((data: ProductDescription[]) => {
+           
+          if (data !== null && data.length > 0) {
+            this.product = data[0].product;
+            this.product.productDescriptions = data;
+            this.productDescriptionView.product = this.product;
+            this.productDescriptionView.refreshLangObjects();
+            
+          }
+      },
+        error => console.log(error),
+        () => console.log('Get all Category Item complete'));
    }
 
 
@@ -82,20 +82,14 @@ export class AddProductComponent implements OnInit {
     this.messages = '';
     try {
       this.messages = '';
-      //const index: number = this.dataSource.data.indexOf(this.language);
+
+      const prod = this.product.cloneWithoutChilds(this.product);
+
       this.product.status = (this.product.status == null || this.product.status.toString() === 'false') ? 0 : 1;
-      this.appService.save(this.product, 'Product')
+      this.appService.save(prod, 'Product')
         .subscribe(result => {
           if (result.id > 0) {
-            // this.language = new Language();
-            // this.selectedTab = 0;
-            // if (index !== -1) {
-            //   this.dataSource.data.splice(index, 1);
-            // }
-            // this.dataSource.data.push(result);
-            // this.dataSource = new MatTableDataSource<Language>(this.dataSource.data);
-            // this.dataSource.paginator = this.paginator;
-            // this.dataSource.sort = this.sort;
+            this.product.copyData(result);
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
               this.messages = res['MESSAGE.SAVE_SUCCESS'];
             });

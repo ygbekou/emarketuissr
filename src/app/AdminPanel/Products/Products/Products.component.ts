@@ -1,99 +1,92 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CategoryDescription, ProductDescription } from 'src/app/app.models';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
-import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
+import { AppService } from 'src/app/Services/app.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
-	selector: 'app-products',
-	templateUrl: './Products.component_old.html',
-	styleUrls: ['./Products.component.scss']
+  selector: 'app-products',
+  templateUrl: './Products.component.html',
+  styleUrls: ['./Products.component.scss']
 })
-
 export class ProductsComponent implements OnInit {
-	
-	productsList 		      : any;
-	productsGrid 			   : any;
-	popUpDeleteUserResponse : any;
-	showType	    				: string = 'grid';
-	displayedProductColumns : string [] = ['id', 'image','name','brand','category', 'product_code', 'discount_price', 'price','action' ];
-	@ViewChild(MatPaginator,{static: false}) paginator : MatPaginator;
-	@ViewChild(MatSort,{static: false}) sort           : MatSort;
+  displayedColumns: string[] = ['id', 'image', 'name', 'sortOrder', 'status', 'actions'];
+  dataSource: MatTableDataSource<ProductDescription>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  messages = '';
+  lang = 'fr';
+  constructor(public appService: AppService,
+    private translate: TranslateService) { }
 
-	constructor(public translate : TranslateService,
-					private router : Router, 
-					private adminPanelService : AdminPanelServiceService) { }
+  ngOnInit() {
+    console.info(Cookie.get('lang'));
+    this.setLang();
+    this.getAll();
+  }
 
-	ngOnInit() {
-		this.adminPanelService.getProducts().valueChanges().subscribe(res => this.getProductResponse(res));
-	}
+  getAll() {
+    const parameters: string[] = [];
+    parameters.push('e.language.code = |langCode|' + this.lang + '|String');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.ProductDescription', parameters)
+      .subscribe((data: ProductDescription[]) => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+        error => console.log(error),
+        () => console.log('Get all ProductDescription complete'));
+  }
 
-	//getProductResponse method is used to get the response of all products.
- 	public getProductResponse(response) {
-      this.productsGrid = null;
-      let products = ((response.men.concat(response.women)).concat(response.gadgets)).concat(response.accessories);
-      this.productsGrid = products;
-   }
+  public remove(productDesc: ProductDescription) {
+    this.messages = '';
+    this.appService.delete(productDesc.id, 'com.softenza.emarket.model.ProductDescription')
+      .subscribe(resp => {
+        if (resp.result === 'SUCCESS') {
+          const index: number = this.dataSource.data.indexOf(productDesc);
+          if (index !== -1) {
+            this.dataSource.data.splice(index, 1);
+            this.dataSource = new MatTableDataSource<ProductDescription>(this.dataSource.data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          }
+        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
+          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
+            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
+            this.messages = res['MESSAGE.ERROR_OCCURRED'];
+          });
+        }
+      });
+  }
 
-  	/**
-	  * productShowType method is used to select the show type of product.
-	  */
-	productShowType(type) {
-		this.showType = type;
-		if(type == 'list'){
-			document.getElementById('list').classList.add("active");
-			document.getElementById('grid').classList.remove('active');
-			this.productsList = new MatTableDataSource(this.productsGrid);
-			setTimeout(()=>{
-				this.productsList.paginator = this.paginator;
-				this.productsList.sort = this.sort;
-			},0)
-			
-		}
-		else{
-			document.getElementById('grid').classList.add("active");
-			document.getElementById('list').classList.remove('active');
-		}
-	}
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
-	/**
-	  * onEditProduct method is used to open the edit page and edit the product.
-	  */
-	onEditProduct(data){
-		this.router.navigate(['/admin/product-edit',data.type,data.id]);
-		this.adminPanelService.editProductData = data;
-	}
-
-	/* 
-     *deleteProduct method is used to open a delete dialog.
-     */
-   deleteProduct(i){
-      this.adminPanelService.deleteDialog("Are you sure you want to delete this product permanently?").
-         subscribe( res => {this.popUpDeleteUserResponse = res},
-                    err => console.log(err),
-                    ()  => this.getDeleteResponse(this.popUpDeleteUserResponse,i))
-   }
-
-   /**
-     * getDeleteResponse method is used to delete a product from the product list.
-     */
-   getDeleteResponse(response : string,i){
-      if(response == "yes"){
-      	if(this.showType == 'grid') {
-         	this.productsGrid.splice(i,1);
-      	}else if(this.showType == 'list'){
-				this.productsList.data.splice(i,1);
-				this.productsList = new MatTableDataSource(this.productsList.data);
-      		this.productsList.paginator = this.paginator;
-      	}
-      }
-   }
-
-
-
-
-
-
-
-   
+  setLang() {
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    if (Cookie.get('lang')) {
+      lang = Cookie.get('lang');
+      console.log('Using cookie lang=' + Cookie.get('lang'));
+    } else if (lang) {
+      console.log('Using browser lang=' + lang);
+      // this.translate.use(lang);
+    } else {
+      lang = 'fr';
+      console.log('Using default lang=fr');
+    }
+    this.lang = lang;
+  }
 }

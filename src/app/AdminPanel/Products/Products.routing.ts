@@ -33,6 +33,10 @@ export const ProductsRoutes: Routes = [
             component: ProductsComponent
          },
          {
+            path: 'products/:id',
+            component: AddProductComponent
+         },
+         {
             path: 'categories',
             component: CategoriesComponent
          },

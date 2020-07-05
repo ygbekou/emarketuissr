@@ -4,10 +4,33 @@
          <app-product-description [product]="product" ></app-product-description>
       </mat-tab>
 
-      <mat-tab label="{{'COMMON.DATA' | translate}}">
+      <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="product.id > 0">
          <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
             <div fxLayout="row wrap">
-               
+               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                  <div class="text-center mt-2">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                     <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                     <mat-icon>save</mat-icon>
+                  </button> </div>
+                  <div class="text-center mt-2" *ngIf="messages">
+                  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+                  </div>
+               </div>
+            </div>
+
+            <div fxLayout="row wrap">
+               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                     <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
+                     <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
+                        #model="ngModel" required>
+                     <mat-error *ngIf="f.submitted && model.invalid" severity="error">
+                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                     </mat-error>
+                  </mat-form-field>
+               </div>
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                   <mat-form-field appearance="outline" class="w-100">
                      <mat-label> {{'COMMON.SKU' | translate}}</mat-label>
@@ -179,8 +202,8 @@
          </form>
       </mat-tab>
 
-      <mat-tab label="{{'COMMON.LINKS' | translate}}">
-         <app-product-link [f]=f [product]="product" ></app-product-link>
+      <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
+         <app-product-link [product]="product" ></app-product-link>
       </mat-tab>
 
    </mat-tab-group>
