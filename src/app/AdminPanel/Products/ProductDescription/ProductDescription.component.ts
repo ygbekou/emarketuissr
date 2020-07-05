@@ -59,7 +59,13 @@ export class ProductDescriptionComponent implements OnInit {
 			features				: []
       });
 
-      this.productDescription = this.product.productDescriptions[0];
+      // if (this.product.productDescriptions.length > 0) {
+      //    this.productDescription = this.product.productDescriptions[0];
+      // } else {
+      //    this.productDescription = new ProductDescription();
+      // }
+
+      this.refreshLangObjects();
 
    }
 
@@ -73,10 +79,27 @@ export class ProductDescriptionComponent implements OnInit {
    }
 
 
+   refreshLangObjects() {
+      let first = true;
+      this.appService.appInfoStorage.languages.forEach(language => {
+         let found = false;
+         this.product.productDescriptions.forEach(aProductDesc => {
+         if (aProductDesc.language.code === language.code) {
+            found = true;
+            if (first) {
+               this.productDescription = aProductDesc;
+               first = false;
+            }
+         }
+         });
+    });
+  }
+
+
    onLangChanged(event) {
       this.messages = '';
-    this.product.productDescriptions.forEach(prodDesc => {
-      if (prodDesc.languageName === event.tab.textLabel) {
+      this.product.productDescriptions.forEach(prodDesc => {
+      if (prodDesc.language.name === event.tab.textLabel) {
         this.productDescription = prodDesc;
         return;
       }
@@ -86,10 +109,10 @@ export class ProductDescriptionComponent implements OnInit {
    save() {
     this.messages = '';
     try {
-      this.product.status = (this.product.status == null || this.product.status.toString() === 'false') ? 0 : 1;
       const prod = new Product();
       prod.model = this.product.model;
       prod.id = this.product.id;
+      prod.status = 1;
       this.productDescription.product = prod;
       this.appService.save(this.productDescription, 'ProductDescription')
          .subscribe(result => {

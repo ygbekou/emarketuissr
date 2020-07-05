@@ -189,13 +189,24 @@ export class Product {
   productDescriptions: ProductDescription[] = [];
 
   type = 'Product';
+
+  cloneWithoutChilds(product: Product) {
+    const copy = {...product};
+    copy.productDescriptions = [];
+
+    return copy;
+  }
+
+  copyData(copyFrom: Product) {
+    this.id = copyFrom.id;
+    
+  }
 }
 
 export class ProductDescription {
   id: number;
   product: Product;
-  languageId: number;
-  languageName: string;
+  language: Language;
   name: string;
   description: string;
   tag: string;
