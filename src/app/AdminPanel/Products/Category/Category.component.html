@@ -62,13 +62,16 @@
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-          <div class="text-center mt-2" fxFlex.gt-sm="25">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
               <mat-icon>save</mat-icon>
             </button> </div>
           <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
           </div>
         </div>
       </div>
@@ -100,6 +103,16 @@
             <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="category.sortOrder"
               name="title" #sortOrder="ngModel">
           </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'COMMON.PARENT' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.CATEGORY' | translate}}" id="parent" name="parent"
+              [(ngModel)]="category.parent" #parent="ngModel">
+              <mat-option *ngFor="let cat of categories" [value]="cat.category">
+                {{cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
@@ -115,13 +128,16 @@
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-          <div class="text-center mt-2" fxFlex.gt-sm="25">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
               <mat-icon>save</mat-icon>
             </button> </div>
           <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
           </div>
         </div>
       </div>

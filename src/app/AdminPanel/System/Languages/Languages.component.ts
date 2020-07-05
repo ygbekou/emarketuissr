@@ -18,6 +18,7 @@ export class LanguagesComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   language: Language = new Language();
   messages = '';
+  errors = '';
   selectedTab = 0;
   constructor(public appService: AppService,
     private translate: TranslateService) { }
@@ -27,7 +28,7 @@ export class LanguagesComponent implements OnInit {
   }
   getAll() {
     const parameters: string[] = [];
-    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters)
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
       .subscribe((data: Language[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -39,6 +40,7 @@ export class LanguagesComponent implements OnInit {
 
   public remove(language: Language) {
     this.messages = '';
+    this.errors = '';
     this.appService.delete(language.id, 'com.softenza.emarket.model.Language')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
@@ -51,11 +53,11 @@ export class LanguagesComponent implements OnInit {
           }
         } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
           this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
+            this.errors = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
           });
         } else {
           this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.ERROR_OCCURRED'];
+            this.errors = res['MESSAGE.ERROR_OCCURRED'];
           });
         }
       });
@@ -83,6 +85,7 @@ export class LanguagesComponent implements OnInit {
   }
   save() {
     this.messages = '';
+    this.errors = '';
     try {
       this.messages = '';
       const index: number = this.dataSource.data.indexOf(this.language);
@@ -105,7 +108,7 @@ export class LanguagesComponent implements OnInit {
           } else {
             this.selectedTab = 1;
             this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-              this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+              this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
             });
           }
         });

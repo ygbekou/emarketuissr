@@ -1,0 +1,158 @@
+<a mat-button [routerLink]="['/admin/system']">{{'COMMON.SYSTEM' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/system/taxRatees']">
+  <h5>{{'COMMON.TAX_RATE' | translate}}</h5>
+</a>
+<mat-tab-group [(selectedIndex)]="selectedTab">
+  <mat-tab label="{{'COMMON.LIST' | translate}}">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+            autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+        <a (click)="addSectionItem()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+          <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.id}} </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.name}}
+          </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="rate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.RATE' | translate}}</th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.rate}}
+          </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="taxType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.taxType==='P'?('COMMON.PERCENTAGE' | translate):'COMMON.FIXED_AMOUNT' | translate}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="zone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.GEO_ZONE' | translate}}</th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.geoZone.name}}
+          </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="createDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}</th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.createDate|date:'mediumDate'}}
+          </td>
+        </ng-container>
+		
+		
+        <ng-container matColumnDef="modDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.LAST_UPDATED' | translate}}</th>
+          <td mat-cell *matCellDef="let taxRate"> {{taxRate.modDate|date:'mediumDate'}}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let taxRate">
+            <a (click)="edit(taxRate)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+            <button mat-icon-button color="warn" (click)="remove(taxRate)" matTooltip="{{'COMMON.DELETE' | translate}}"
+              class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let taxRate; columns: displayedColumns;">
+        </tr>
+      </table>
+      <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-tab>
+  <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+    <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="taxRate.name" name="name"
+              #name="ngModel" required>
+            <mat-error *ngIf="ff.submitted && name.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.RATE' | translate}} 
+            </mat-label>
+            <input matInput type="text" class="form-control" id="rate" [(ngModel)]="taxRate.rate"
+              name="rate" #rate="ngModel">
+          </mat-form-field> 
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'COMMON.GEO_ZONE' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.GEO_ZONE' | translate}}" id="geoZone" name="geoZone"
+              [(ngModel)]="taxRate.geoZone" #geoZone="ngModel">
+              <mat-option *ngFor="let ctry of geoZones" [value]="ctry">
+                {{ctry.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'COMMON.TYPE' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.TYPE' | translate}}" id="type" name="type"
+              [(ngModel)]="taxRate.taxType" #taxType="ngModel">
+              <mat-option value="P">{{'COMMON.PERCENTAGE' | translate}} </mat-option>
+			  <mat-option value="F">{{'COMMON.FIXED_AMOUNT' | translate}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

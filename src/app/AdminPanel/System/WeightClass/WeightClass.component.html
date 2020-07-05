@@ -1,0 +1,93 @@
+<a mat-button [routerLink]="['/admin/system/weightClasses']">{{'COMMON.WEIGHT_CLASSES' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="gray">
+  <h5>{{'COMMON.WEIGHT_CLASS' | translate}}</h5>
+</a>
+
+<a (click)="clear()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+</a>
+
+<mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
+
+  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+
+    <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onLangChanged($event)">
+      <mat-tab label="{{lang.name}}" *ngFor="let lang of appService.appInfoStorage.languages">
+
+      </mat-tab>
+    </mat-tab-group>
+    <form name="form" (ngSubmit)="f.form.valid && saveWeightClass(2)" #f="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.TITLE' | translate}} 
+            </mat-label>
+            <input matInput type="text" class="form-control" id="title" [(ngModel)]="weightClassDesc.title" name="title"
+              #title="ngModel" required>
+            <mat-error *ngIf="f.submitted && title.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+			<mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.UNIT' | translate}} 
+            </mat-label>
+            <input matInput type="text" class="form-control" id="unit" [(ngModel)]="weightClassDesc.unit" name="unit"
+              #unit="ngModel" required>
+            <mat-error *ngIf="f.submitted && unit.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+
+  <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="weightClass.id>0">
+    <form name="fform" (ngSubmit)="ff.form.valid && saveWeightClass(1)" #ff="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.VALUE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="value" [(ngModel)]="weightClass.value"
+              name="value" #value="ngModel">
+          </mat-form-field> 
+        </div> 
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+
+</mat-tab-group>

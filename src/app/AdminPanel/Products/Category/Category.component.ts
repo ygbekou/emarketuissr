@@ -15,8 +15,10 @@ export class CategoryComponent implements OnInit {
   catDesc: CategoryDescription = new CategoryDescription();
   catDescs: CategoryDescription[] = [];
   formData = new FormData();
+  categories: CategoryDescription[] = [];
   categoryImages: any[] = [];
   messages = '';
+  errors = '';
   lang = 'fr';
   selectedTab = 0;
   selectedMainTabIndex = 0;
@@ -24,6 +26,7 @@ export class CategoryComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService) { }
   ngOnInit() {
+    this.getAll();
     this.activatedRoute.params.subscribe(params => {
       if (params.id == 0) {
         this.clear();
@@ -32,6 +35,18 @@ export class CategoryComponent implements OnInit {
         this.getCategory(params.id);
       }
     });
+  }
+
+  getAll() {
+    const parameters: string[] = [];
+    parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters,
+      ' order by e.category.sortOrder ')
+      .subscribe((data: CategoryDescription[]) => {
+        this.categories = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all CategoryDescription complete'));
   }
 
   clear() {
@@ -119,6 +134,7 @@ export class CategoryComponent implements OnInit {
       this.saveCategoryDesc();
     } else {
       this.messages = '';
+      this.errors = '';
       try {
         let nbFiles = 0;
         for (const img of this.categoryImages) {
@@ -145,7 +161,7 @@ export class CategoryComponent implements OnInit {
                 });
               } else {
                 this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                  this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
                 });
               }
             });
@@ -164,7 +180,7 @@ export class CategoryComponent implements OnInit {
                 });
               } else {
                 this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                  this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
                 });
               }
             });
@@ -177,6 +193,7 @@ export class CategoryComponent implements OnInit {
   }
   saveCategoryDesc() {
     this.messages = '';
+    this.errors = '';
     try {
       this.messages = '';
       this.catDesc.category = this.category;
@@ -194,7 +211,7 @@ export class CategoryComponent implements OnInit {
             });
           } else {
             this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-              this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+              this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
             });
           }
         });

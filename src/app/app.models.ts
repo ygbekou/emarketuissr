@@ -143,17 +143,6 @@ export class AuthToken {
   homePage: string;
 }
 
-export class TaxClass {
-  id: number;
-  title: string;
-  description: string;
-}
-
-export class StockStatus {
-  id: number;
-  name: string;
-  languageId: number;
-}
 
 export class Product {
   id: number;
@@ -448,3 +437,176 @@ export class CategoryDescription {
   type = 'CategoryDescription';
 }
 
+export class Currency {
+  id: number;
+  code: string;
+  decimalPlace: number;
+  status: number;
+  symbolLeft: string;
+  symbolRight: string;
+  title: string;
+  value: number;
+  modDate: Date;
+  type = 'Currency';
+}
+
+export class StockStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'StockStatus';
+}
+
+
+export class OrderStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'OrderStatus';
+}
+
+export class ReturnStatus {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnStatus';
+}
+
+export class ReturnReason {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnReason';
+}
+
+export class ReturnAction {
+  id: number;
+  name: string;
+  language: Language;
+  type = 'ReturnAction';
+}
+
+export class Country {
+  id: number;
+  addressFormat: string;
+  isoCode2: string;
+  isoCode3: string;
+  name: string;
+  postcodeRequired: number;
+  status: number;
+  type = 'Country';
+}
+
+export class Zone {
+  id: number;
+  code: String;
+  country: Country;
+  name: string;
+  status: number;
+  type = 'Zone';
+}
+
+export class GeoZone {
+  id: number;
+  name: String;
+  description: string;
+  type = 'GeoZone';
+}
+
+export class ZoneToGeoZone {
+  id: number;
+  zone: Zone;
+  geoZone: GeoZone;
+  country: Country;
+  type = 'ZoneToGeoZone';
+}
+
+export class TaxClass {
+  id: number;
+  title: string;
+  description: string;
+  type = 'TaxClass';
+}
+
+export class TaxRate {
+  id: number;
+  geoZone: GeoZone;
+  name: string;
+  rate: number;
+  taxType: string;
+  createDate: Date;
+  modDate: Date;
+  type = 'TaxRate';
+}
+
+export class TaxRule {
+  id: number;
+  taxRate: TaxRate;
+  taxClass: TaxClass;
+  based: string;
+  priority: number;
+  type = 'TaxRule';
+}
+export class WeightClass {
+  id: number;
+  value: number;
+  type = 'WeightClass';
+}
+
+export class WeightClassDescription {
+  id: number;
+  language: Language;
+  weightClass: WeightClass;
+  title: string;
+  unit: string;
+  type = 'WeightClassDescription';
+}
+
+export class LengthClass {
+  id: number;
+  value: number;
+  type = 'LengthClass';
+}
+
+export class LengthClassDescription {
+  id: number;
+  language: Language;
+  lengthClass: LengthClass;
+  title: string;
+  unit: string;
+  type = 'LengthClassDescription';
+}
+
+export class Information {
+  id: number;
+  bottom: number;
+  sortOrder: number;
+  status: number;
+  type: 'Information';
+}
+
+export class InformationDescription {
+  id: number;
+  description: string;
+  information: Information;
+  language: Language;
+  metaDescription: string;
+  metaKeyword: string;
+  metaTitle: string;
+  title: string;
+}
+
+export class Store {
+  id: number;
+  name: string;
+  sslUrl: string;
+  url: string;
+}
+
+export class SeoUrl {
+  id: number;
+  keyword: string;
+  language: string;
+  query: string;
+  store: Store;
+}

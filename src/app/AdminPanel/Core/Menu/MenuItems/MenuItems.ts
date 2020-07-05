@@ -35,7 +35,8 @@ const MENUITEMS = [
     children: [
       { state: 'categories', name: 'Categories', type: 'link' },
       { state: 'products', name: 'Products', type: 'link' },
-      { state: 'product-add', name: 'Product Add', type: 'link' }
+      { state: 'product-add', name: 'Product Add', type: 'link' },
+      { state: 'information', name: 'Information', type: 'link' }
     ]
   },
   {
@@ -44,6 +45,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'shopping_cart',
     children: [
+      { state: 'stores', name: 'Stores', type: 'link' },
       { state: 'languages', name: 'Languages', type: 'link' },
       { state: 'currencies', name: 'Currencies', type: 'link' },
       { state: 'stockStatuses', name: 'Stock Statutes', type: 'link' },
@@ -52,7 +54,12 @@ const MENUITEMS = [
       { state: 'returnReasons', name: 'Return Reasons', type: 'link' },
       { state: 'returnActions', name: 'Return Actions', type: 'link' },
       { state: 'countries', name: 'Countries', type: 'link' },
-      { state: 'returnReasons', name: 'Return Reasons', type: 'link' }
+      { state: 'zones', name: 'Zones', type: 'link' },
+      { state: 'geoZones', name: 'Geo Zones', type: 'link' },
+      { state: 'lengthClasses', name: 'Length classes', type: 'link' },
+      { state: 'weightClasses', name: 'Weight classes', type: 'link' },
+      { state: 'taxClasses', name: 'Tax classes', type: 'link' },
+      { state: 'taxRates', name: 'Tax rates', type: 'link' }
     ]
   },
   {

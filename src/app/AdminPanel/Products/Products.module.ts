@@ -41,10 +41,12 @@ import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
 import { ProductDescriptionComponent } from './ProductDescription/ProductDescription.component';
 import { ProductLinkComponent } from './ProductLink/ProductLink.component';
+import { InformationComponent } from './Information/Information.component'; 
+import { InformationsComponent } from './Informations/Informations.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, AddProductComponent, ProductDescriptionComponent,
-    ProductLinkComponent, CategoryComponent, CategoriesComponent],
+    ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
