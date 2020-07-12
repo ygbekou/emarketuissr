@@ -9,6 +9,7 @@
 
 .material-icons {
 	font-size: 16px;
+	color: #ff5722;
 }
 
 .mat-tree-node,
@@ -28,8 +29,7 @@ a:hover {
 }
 
 a.tab-active {
-	background-color: #ff5722;
-	color: white;
-	padding: 3px 16px 3px 16px;
-
+	background-color: #ddd;
+	color: #111820;
+	padding: 3px 16px 3px 0px;
 }

@@ -30,20 +30,21 @@ const TREE_DATA: MenuNode[] = [
     url: '/account/buying',
     icon: '',
     children: [
+      { name: 'Overview', url: '/account/buy-overview', icon: 'dashboard'  },
       { name: 'Purchase history', url: '/account/order-history', icon: 'history'  },
-      { name: 'Open orders', url: '/account/profile', icon: 'account_circle'  },
-      { name: 'Buy again', url: '/account/profile', icon: 'account_circle'  }
+      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart'  },
+      { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart'  }
     ]
   }, {
     name: 'Selling',
     url: '/account/selling',
     icon: 'account_circle',
     children: [
-      { name: 'Sell an item', url: '/account/profile', icon: 'account_circle'  },
-      { name: 'Draft', url: '/account/profile', icon: 'account_circle'  },
-      { name: 'Active', url: '/account/profile', icon: 'account_circle'  },
-      { name: 'Sold', url: '/account/profile', icon: 'account_circle'  },
-      { name: 'Unsold', url: '/account/profile', icon: 'account_circle'  }
+      { name: 'Overview', url: '/account/sell-overview', icon: 'dashboard'  },
+      { name: 'Sell an item', url: '/account/sell-item', icon: 'store'  },
+      { name: 'Draft', url: '/account/draft-item', icon: 'restore_from_trash'  },
+      { name: 'Active', url: '/account/active-sale', icon: 'toggle_on'  },
+      { name: 'Sold', url: '/account/sold-item', icon: 'toggle_off'  }
     ]
   },
 ];
