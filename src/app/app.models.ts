@@ -180,7 +180,7 @@ export class Product {
   type = 'Product';
 
   cloneWithoutChilds(product: Product) {
-    const copy = {...product};
+    const copy = { ...product };
     copy.productDescriptions = [];
 
     return copy;
@@ -188,7 +188,6 @@ export class Product {
 
   copyData(copyFrom: Product) {
     this.id = copyFrom.id;
-    
   }
 }
 
@@ -202,8 +201,6 @@ export class ProductDescription {
   metaTitle: string;
   metaDescription: string;
   metaKeyword: string;
-
-
   type = 'ProductDescription';
 }
 

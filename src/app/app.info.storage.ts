@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppInfoStorage {
 
   public CURRENCY_MASK_INTEGER;
-  public CURRENCY_MASK_DECIMAL; 
+  public CURRENCY_MASK_DECIMAL;
   public CURRENCY_FORMAT;
   public languages: Language[] = [];
   public taxClasses: any = [];
@@ -22,9 +22,7 @@ export class AppInfoStorage {
     this.updateInfo();
   }
 
-  
   updateInfo() {
-
     this.translate.get('CURRENCY_MASK.INTEGER').subscribe(() => {
         if (this.translate.currentLang === 'en') {
           this.CURRENCY_MASK_INTEGER = { prefix: '', thousands: ',', precision: 0, allowNegative: false };
@@ -36,6 +34,4 @@ export class AppInfoStorage {
       this.CURRENCY_FORMAT = '| currency: \' \':\'symbol\':\'1.0-0\':\'' + this.translate.currentLang + '\'';
     });
   }
-
-  
 }

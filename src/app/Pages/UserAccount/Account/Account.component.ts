@@ -1,78 +1,96 @@
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { TranslateService } from '@ngx-translate/core';
 
+/**
+ * Food data with nested structure.
+ * Each node has a name and an optional list of children.
+ */
+interface MenuNode {
+  name: string;
+  url: string;
+  icon: string;
+  children?: MenuNode[];
+}
+
+const TREE_DATA: MenuNode[] = [
+  {
+    name: 'Account',
+    url: '/account/profile',
+    icon: '',
+    children: [
+      { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
+      { name: 'Addresses', url: '/account/address', icon: 'location_on'  },
+      { name: 'Saved cards', url: '/account/cards', icon: 'credit_card'  }
+    ]
+  },
+  {
+    name: 'Buying',
+    url: '/account/buying',
+    icon: '',
+    children: [
+      { name: 'Purchase history', url: '/account/order-history', icon: 'history'  },
+      { name: 'Open orders', url: '/account/profile', icon: 'account_circle'  },
+      { name: 'Buy again', url: '/account/profile', icon: 'account_circle'  }
+    ]
+  }, {
+    name: 'Selling',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Sell an item', url: '/account/profile', icon: 'account_circle'  },
+      { name: 'Draft', url: '/account/profile', icon: 'account_circle'  },
+      { name: 'Active', url: '/account/profile', icon: 'account_circle'  },
+      { name: 'Sold', url: '/account/profile', icon: 'account_circle'  },
+      { name: 'Unsold', url: '/account/profile', icon: 'account_circle'  }
+    ]
+  },
+];
+
+/** Flat node with expandable and level information */
+interface EmarketFlatNode {
+  expandable: boolean;
+  name: string;
+  url: string;
+  icon: string;
+  level: number;
+}
+
+/**
+ * @title Tree with flat nodes
+ */
 @Component({
-  selector: 'app-Account',
+  selector: 'app-account',
   templateUrl: './Account.component.html',
   styleUrls: ['./Account.component.scss']
 })
 export class AccountComponent implements OnInit {
 
 
-   menuItems = [
-    {
-      state: 'admin/admindash',
-      name: 'Dashboard',
-      type: 'link',
-      icon: 'poll'
-    },
-    {
-      state: 'admin/invoices',
-      name: 'Invoices',
-      type: 'link',
-      icon: 'recent_actors'
-    },
-    {
-      state: 'admin',
-      name: 'Products',
-      type: 'sub',
-      icon: 'shopping_cart',
-      children: [
-        { state: 'categories', name: 'Categories', type: 'link' },
-        { state: 'products', name: 'Products', type: 'link' },
-        { state: 'product-add', name: 'Product Add', type: 'link' },
-        { state: 'information', name: 'Information', type: 'link' }
-      ]
-    },
-    {
-      state: 'admin/system',
-      name: 'System',
-      type: 'sub',
-      icon: 'shopping_cart',
-      children: [
-        { state: 'stores', name: 'Stores', type: 'link' },
-        { state: 'languages', name: 'Languages', type: 'link' },
-        { state: 'currencies', name: 'Currencies', type: 'link' },
-        { state: 'stockStatuses', name: 'Stock Statutes', type: 'link' },
-        { state: 'orderStatuses', name: 'Order Statutes', type: 'link' },
-        { state: 'returnStatuses', name: 'Return Statutes', type: 'link' },
-        { state: 'returnReasons', name: 'Return Reasons', type: 'link' },
-        { state: 'returnActions', name: 'Return Actions', type: 'link' },
-        { state: 'countries', name: 'Countries', type: 'link' },
-        { state: 'zones', name: 'Zones', type: 'link' },
-        { state: 'geoZones', name: 'Geo Zones', type: 'link' },
-        { state: 'lengthClasses', name: 'Length classes', type: 'link' },
-        { state: 'weightClasses', name: 'Weight classes', type: 'link' },
-        { state: 'taxClasses', name: 'Tax classes', type: 'link' },
-        { state: 'taxRates', name: 'Tax rates', type: 'link' }
-      ]
-    },
-    {
-      state: 'admin/account/profile',
-      name: 'Profile',
-      type: 'link',
-      icon: 'account_circle'
-    },
-    {
-      state: '/home',
-      name: 'Go To Site',
-      type: 'link',
-      icon: 'home'
-    }
-  ];
-  constructor(public translate: TranslateService) { }
+  private _transformer = (node: MenuNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      url: node.url,
+      icon: node.icon,
+      level: level,
+    };
+  }
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer, node => node.level, node => node.expandable, node => node.children);
+  treeControl = new FlatTreeControl<EmarketFlatNode>(
+    node => node.level, node => node.expandable);
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+  constructor(public translate: TranslateService) {
+    this.dataSource.data = TREE_DATA;
+  }
 
   ngOnInit() {
   }
 
+  hasChild = (_: number, node: EmarketFlatNode) => node.expandable;
 }

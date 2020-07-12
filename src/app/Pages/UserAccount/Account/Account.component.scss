@@ -1,0 +1,35 @@
+.mat-tree-node {
+	display: flex;
+	align-items: center;
+	min-height: 48px;
+	flex: 1;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+.material-icons {
+	font-size: 16px;
+}
+
+.mat-tree-node,
+.mat-nested-tree-node {
+	font-weight: 400;
+	font-size: 16px;
+}
+
+a {
+	color: #767676;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #111820;
+	text-decoration-color: #ff5722;
+}
+
+a.tab-active {
+	background-color: #ff5722;
+	color: white;
+	padding: 3px 16px 3px 16px;
+
+}

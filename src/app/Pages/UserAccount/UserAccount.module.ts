@@ -27,7 +27,8 @@ import {
   MatSliderModule,
   MatRadioModule,
   MatDialogModule,
-  MatGridListModule
+  MatGridListModule,
+  MatTreeModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -74,7 +75,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    MatTreeModule
   ],
   declarations: [
     AccountComponent,

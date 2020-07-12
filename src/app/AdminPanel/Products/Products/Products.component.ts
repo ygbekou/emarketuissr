@@ -18,21 +18,19 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   dataSource: MatTableDataSource<ProductDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  messages = '';
-  lang = 'fr';
+  messages = ''; 
   constructor(public appService: AppService,
     public translate: TranslateService) {
       super(translate);
     }
 
-  ngOnInit() {
-    this.setLang();
+  ngOnInit() { 
     this.getAll();
   }
 
   getAll() {
     const parameters: string[] = [];
-    parameters.push('e.language.code = |langCode|' + this.lang + '|String');
+    parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
     this.appService.getAllByCriteria('com.softenza.emarket.model.ProductDescription', parameters)
       .subscribe((data: ProductDescription[]) => {
         this.dataSource = new MatTableDataSource(data);
