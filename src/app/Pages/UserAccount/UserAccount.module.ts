@@ -2,31 +2,33 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { MatButtonModule, 
-   MatBadgeModule,
-   MatCardModule, 
-   MatMenuModule, 
-   MatToolbarModule, 
-   MatIconModule, 
-   MatInputModule, 
-   MatDatepickerModule, 
-   MatNativeDateModule, 
-   MatProgressSpinnerModule,
-   MatTableModule, 
-   MatExpansionModule, 
-   MatSelectModule,
-   MatSnackBarModule, 
-   MatTooltipModule, 
-   MatChipsModule, 
-   MatListModule, 
-   MatSidenavModule, 
-   MatTabsModule, 
-   MatProgressBarModule,
-   MatCheckboxModule,
-   MatSliderModule,
-   MatRadioModule,
-   MatDialogModule,
-   MatGridListModule
+import {
+  MatButtonModule,
+  MatBadgeModule,
+  MatCardModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatProgressSpinnerModule,
+  MatTableModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatChipsModule,
+  MatListModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatProgressBarModule,
+  MatCheckboxModule,
+  MatSliderModule,
+  MatRadioModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatTreeModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -39,31 +41,33 @@ import { CardsComponent } from './Cards/Cards.component';
 import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputFileModule } from 'ngx-input-file';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(UserAccountRoutes),
     MatBadgeModule,
-    MatButtonModule, 
+    MatButtonModule,
     FlexLayoutModule,
-    MatCardModule, 
-    MatMenuModule, 
-    MatToolbarModule, 
-    MatIconModule, 
-    MatInputModule, 
-    MatDatepickerModule, 
-    MatNativeDateModule, 
+    MatCardModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressSpinnerModule,
-    MatTableModule, 
-    MatExpansionModule, 
-    MatSelectModule, 
-    MatSnackBarModule, 
-    MatTooltipModule, 
-    MatChipsModule, 
-    MatListModule, 
-    MatSidenavModule, 
-    MatTabsModule, 
+    MatTableModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatListModule,
+    MatSidenavModule,
+    MatTabsModule,
     MatProgressBarModule,
     MatCheckboxModule,
     MatSliderModule,
@@ -71,16 +75,19 @@ import { GridProductComponent } from './GridProduct/GridProduct.component';
     MatDialogModule,
     MatGridListModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
+    MatTreeModule,
+    InputFileModule
   ],
   declarations: [
-     AccountComponent, 
-     ProfileComponent, 
-     EditProfileComponent, 
-     CardsComponent, 
-     AddressComponent, 
-     OrderHistoryComponent,
-     GridProductComponent
-   ]
+    AccountComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    CardsComponent,
+    AddressComponent,
+    OrderHistoryComponent,
+    GridProductComponent
+  ]
 })
 export class UserAccountModule { }

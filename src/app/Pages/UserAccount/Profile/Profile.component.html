@@ -1,35 +1,35 @@
 <mat-card>
-  <h4>Profile Information</h4>
+  <h4>{{'COMMON.PROFILE_INFO'|translate}}</h4>
   <div class="pt-3">
     <div class="proflie-field mb-3">
-      <label>First Name:</label>
-      <span>John</span>
+      <label>{{'COMMON.FIRST_NAME'|translate}}:</label>
+      <span>{{user.firstName}}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>Last Name:</label>
-      <span>Doe</span>
+      <label>{{'COMMON.LAST_NAME'|translate}}:</label>
+      <span>{{user.lastName}}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>Gender:</label>
-      <span>Male</span>
+      <label>{{'COMMON.GENDER'|translate}}:</label>
+      <span>{{user.sex==='M'?('COMMON.MALE'|translate):('COMMON.FEMALE'|translate) }}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>Date of birth:</label>
-      <span>Jan,06,1979</span>
+      <label>{{'COMMON.BIRTH_DATE'|translate}}:</label>
+      <span>{{user.birthDate |date}}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>Mobile Number:</label>
-      <span>+120 256 254 125</span>
+      <label>{{'COMMON.MOBILE_PHONE'|translate}}:</label>
+      <span>{{user.mobilePhone}}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>location:</label>
-      <span>New York</span>
+      <label>{{'COMMON.HOME_PHONE'|translate}}:</label>
+      <span>{{user.homePhone}}</span>
     </div>
     <div class="proflie-field mb-3">
-      <label>E-mail id:</label>
-      <span>johnDoe@doe.com</span>
+      <label>E-mail:</label>
+      <span>{{user.email}}</span>
     </div>
-
-    <button mat-raised-button color="accent" [routerLink]="['edit']" [queryParams]="{type:'info'}">Edit</button>
+    <button mat-raised-button color="accent" [routerLink]="['edit']"
+      [queryParams]="{type:'info'}">{{'COMMON.EDIT'|translate}}</button>
   </div>
 </mat-card>

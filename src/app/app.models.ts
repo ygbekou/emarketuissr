@@ -74,46 +74,38 @@ export class UserGroup {
 
 export class User extends BaseModel {
   id: number;
+  code: string;
+  image: string;
+  ip: string;
+  salt: string;
+  userGroup: UserGroup;
   userName: string;
-  currentPassword: string;
   password: string;
+  confirmPassword: string;
   firstName: string;
   lastName: string;
   middleName: string;
+  picture: string;
   email: string;
-  picture = 'user.jpg';
   sex: string;
+  birthDate: Date;
   homePhone: string;
   mobilePhone: string;
-  address: string;
-  city: string;
-  country: string;
-  zipCode: string;
-  companyName: string;
+  status: number;
+  firstTimeLogin: string;
   facebook: string;
   twitter: string;
   linkedin: string;
   instagram: string;
   website: string;
-  birthDate: Date;
-  status: number;
-  userGroup: UserGroup;
-  receiveNewsletter: true;
+  reveivePromo: boolean;
   modifiedBy: number;
-  // Transients
-  confirmPassword: string;
-  name: string;
-  roles: Role[];
-  type = 'User';
   fileNames: string[];
-  shortResume: string;
-  resume: string;
-  employees: Employee[] = [];
+  type: 'User';
   constructor() {
     super();
     this.userGroup = new UserGroup();
   }
-
 }
 
 export class Employee {
@@ -180,7 +172,7 @@ export class Product {
   type = 'Product';
 
   cloneWithoutChilds(product: Product) {
-    const copy = {...product};
+    const copy = { ...product };
     copy.productDescriptions = [];
 
     return copy;
@@ -188,7 +180,6 @@ export class Product {
 
   copyData(copyFrom: Product) {
     this.id = copyFrom.id;
-    
   }
 }
 
@@ -202,8 +193,6 @@ export class ProductDescription {
   metaTitle: string;
   metaDescription: string;
   metaKeyword: string;
-
-
   type = 'ProductDescription';
 }
 
@@ -614,4 +603,25 @@ export class SeoUrl {
   query: string;
   store: Store;
   type = 'SeoUrl';
+}
+
+export class Customer {
+  id: number;
+}
+
+export class Address {
+  id: number;
+  address1: string;
+  address2: string;
+  city: string;
+  company: string;
+  user: User;
+  country: Country;
+  customer: Customer;
+  firstName: string;
+  lastName: string;
+  postCode: string;
+  middleName: string;
+  addressType: number;
+  zone: Zone;
 }
