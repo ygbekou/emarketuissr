@@ -423,6 +423,8 @@ export class Category {
   parent: Category;
   top: number;
   type = 'Category';
+
+  childCount: number;
 }
 export class CategoryDescription {
   id: number;

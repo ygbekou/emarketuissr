@@ -559,7 +559,7 @@ export class AppService {
 
    public getCacheData() {
     const parameters: string[] = [];
-    
+
     this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
       .subscribe((data: Language[]) => {
          this.appInfoStorage.languages = data;

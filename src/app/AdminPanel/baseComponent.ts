@@ -9,9 +9,11 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 })
 export class BaseComponent {
 
-   public messages: string;
-   public messageColor: string;
-   public hasError: boolean;
+  public messages: string;
+  public messageColor: string;
+  public hasError: boolean;
+  public lang: any;
+
 
   constructor
     (
