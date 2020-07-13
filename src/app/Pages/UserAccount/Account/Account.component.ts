@@ -2,6 +2,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { TranslateService } from '@ngx-translate/core';
+import { AppService } from 'src/app/Services/app.service';
 
 /**
  * Food data with nested structure.
@@ -14,15 +15,15 @@ interface MenuNode {
   children?: MenuNode[];
 }
 
-const TREE_DATA: MenuNode[] = [
+const TREE_DATA_EN: MenuNode[] = [
   {
     name: 'Account',
     url: '/account/profile',
     icon: '',
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
-      { name: 'Addresses', url: '/account/address', icon: 'location_on'  },
-      { name: 'Saved cards', url: '/account/cards', icon: 'credit_card'  }
+      { name: 'Addresses', url: '/account/address', icon: 'location_on' },
+      { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' }
     ]
   },
   {
@@ -30,21 +31,56 @@ const TREE_DATA: MenuNode[] = [
     url: '/account/buying',
     icon: '',
     children: [
-      { name: 'Overview', url: '/account/buy-overview', icon: 'dashboard'  },
-      { name: 'Purchase history', url: '/account/order-history', icon: 'history'  },
-      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart'  },
-      { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart'  }
+      { name: 'Purchase Overview', url: '/account/buy-overview', icon: 'dashboard' },
+      { name: 'Purchase history', url: '/account/order-history', icon: 'history' },
+      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' },
+      { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
     ]
   }, {
     name: 'Selling',
     url: '/account/selling',
     icon: 'account_circle',
     children: [
-      { name: 'Overview', url: '/account/sell-overview', icon: 'dashboard'  },
-      { name: 'Sell an item', url: '/account/sell-item', icon: 'store'  },
-      { name: 'Draft', url: '/account/draft-item', icon: 'restore_from_trash'  },
-      { name: 'Active', url: '/account/active-sale', icon: 'toggle_on'  },
-      { name: 'Sold', url: '/account/sold-item', icon: 'toggle_off'  }
+      { name: 'Sales Overview', url: '/account/sell-overview', icon: 'dashboard' },
+      { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
+      { name: 'Draft items', url: '/account/draft-item', icon: 'restore_from_trash' },
+      { name: 'Active items', url: '/account/active-sale', icon: 'toggle_on' },
+      { name: 'Sold items', url: '/account/sold-item', icon: 'toggle_off' }
+    ]
+  },
+];
+
+const TREE_DATA_FR: MenuNode[] = [
+  {
+    name: 'Compte',
+    url: '/account/profile',
+    icon: '',
+    children: [
+      { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
+      { name: 'Adresses', url: '/account/address', icon: 'location_on' },
+      { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' }
+    ]
+  },
+  {
+    name: 'Achats',
+    url: '/account/buying',
+    icon: '',
+    children: [
+      { name: 'Aperçu des achats', url: '/account/buy-overview', icon: 'dashboard' },
+      { name: 'Historique achats', url: '/account/order-history', icon: 'history' },
+      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' },
+      { name: 'Acheter encore', url: '/account/buy-again', icon: 'add_shopping_cart' }
+    ]
+  }, {
+    name: 'Ventes',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Aperçu des ventes', url: '/account/sell-overview', icon: 'dashboard' },
+      { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
+      { name: 'Brouillon', url: '/account/draft-item', icon: 'restore_from_trash' },
+      { name: 'Produits en vente', url: '/account/active-sale', icon: 'toggle_on' },
+      { name: 'Produits vendus', url: '/account/sold-item', icon: 'toggle_off' }
     ]
   },
 ];
@@ -86,8 +122,12 @@ export class AccountComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(public translate: TranslateService) {
-    this.dataSource.data = TREE_DATA;
+  constructor(public translate: TranslateService, public appService: AppService) {
+    if (appService.appInfoStorage.language.code === 'fr') {
+      this.dataSource.data = TREE_DATA_FR;
+    } else {
+      this.dataSource.data = TREE_DATA_EN;
+    }
   }
 
   ngOnInit() {

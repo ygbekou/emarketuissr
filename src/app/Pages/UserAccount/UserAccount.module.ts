@@ -42,6 +42,7 @@ import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { InputFileModule } from 'ngx-input-file';
 
 @NgModule({
   imports: [
@@ -76,7 +77,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    MatTreeModule
+    MatTreeModule,
+    InputFileModule
   ],
   declarations: [
     AccountComponent,

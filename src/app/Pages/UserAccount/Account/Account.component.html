@@ -4,12 +4,16 @@
          <div class="container">
             <div class="user-info">
                <div fxLayoutAlign="flex-start">
-                  <div class="login-user-img">
-                     <img src="assets/images/user-4.jpg" width="70" alt="Active User">
+                  <div class="login-user-img"> 
+                     <img *ngIf="!appService.tokenStorage.hasToken()||appService.tokenStorage.getPicture()==='null'"
+                        src="assets/images/users/user_blue.jpg" width="70" alt="log-in-user">
+                     <img *ngIf="appService.tokenStorage.hasToken()&&appService.tokenStorage.getPicture()!=='null'"
+                        src="assets/images/users/{{appService.tokenStorage.getUserId()}}/{{appService.tokenStorage.getPicture()}}"
+                        alt="user-image" width="70">
                   </div>
                   <div class="px-3">
-                     <h4>Hi, John Doe</h4>
-                     <div class="text-muted text-xl">johndoe@deo.com</div>
+                     <h4>{{appService.tokenStorage.getFirstName() +' '+appService.tokenStorage.getLastName()}}</h4>
+                     <div class="text-muted text-xl">{{appService.tokenStorage.getUserName()}}</div>
                   </div>
                </div>
             </div>
