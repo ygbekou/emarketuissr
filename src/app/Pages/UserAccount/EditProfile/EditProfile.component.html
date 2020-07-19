@@ -1,249 +1,350 @@
 <mat-card *ngIf="type == 'info'">
-  <form name="form" (ngSubmit)="f1.form.valid && submitProfileInfo()" #f1="ngForm" validate> 
-  <div fxLayout="row wrap" class="col-gap">
+  <form name="form" (ngSubmit)="f1.form.valid && submitProfileInfo()" #f1="ngForm" validate>
+    <div fxLayout="row wrap" class="col-gap">
 
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <div class="example-container">
-        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.ACCOUNT_DETAILS' | translate}}</h4>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="example-container">
+          <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.ACCOUNT_DETAILS' | translate}}</h4>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.FIRST_NAME' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName"
-            #firstName="ngModel" required>
-          <mat-error *ngIf="f1.submitted && firstName.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.LAST_NAME' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName"
-            #lastName="ngModel" required>
-          <mat-error *ngIf="f1.submitted && lastName.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.EMAIL' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email"
-            #email="ngModel" autocomplete="off" required email>
-          <mat-error *ngIf="f1.submitted && email.invalid && email.errors.required" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
-          <mat-error *ngIf="f1.submitted && email.invalid && email.errors.email" severity="error">
-            {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.CELL_PHONE' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="mobilePhone" [(ngModel)]="user.mobilePhone"
-            name="mobilePhone" #mobilePhone="ngModel">
-          <mat-error *ngIf="f1.submitted && mobilePhone.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.HOME_PHONE' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="phone" [(ngModel)]="user.homePhone" name="homePhone"
-            #homePhone="ngModel">
-          <mat-error *ngIf="f1.submitted && homePhone.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
-
-        <mat-radio-group id="sex" class="form-control" [(ngModel)]="user.sex" name="sex" #sex="ngModel" required>
-          <mat-radio-button value="F">
-            {{'COMMON.MALE' | translate }}
-          </mat-radio-button>
-          <mat-radio-button value="M">
-            {{'COMMON.FEMALE' | translate }}
-          </mat-radio-button>
-        </mat-radio-group>
-
-        <div ngModelGroup="passwordGroup" password-matcher #passwordGroup="ngModelGroup">
           <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
-            <input matInput type="password" class="form-control" id="password" [(ngModel)]="user.password"
-              name="password" #password="ngModel" autocomplete="off" required>
-            <mat-error *ngIf="f1.submitted && password.invalid" severity="error">
+            <mat-label> {{'COMMON.FIRST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName"
+              name="firstName" #firstName="ngModel" required>
+            <mat-error *ngIf="f1.submitted && firstName.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.CONFIRM_PASSWORD' | translate}}</mat-label>
-            <input matInput type="password" class="form-control" id="confirmPassword" [(ngModel)]="user.confirmPassword"
-              name="confirmPassword" #confirmPassword="ngModel" autocomplete="off" required>
-            <mat-error *ngIf="f1.submitted && confirmPassword.invalid" severity="error">
+            <mat-label> {{'COMMON.LAST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName"
+              #lastName="ngModel" required>
+            <mat-error *ngIf="f1.submitted && lastName.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
-          <mat-error *ngIf="passwordGroup.control?.errors" [ngStyle]="{'color': '#ff5252'}">
-            <div [hidden]="!passwordGroup.control?.errors.noMatch">Passwords do not match</div>
-          </mat-error>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.EMAIL' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email"
+              #email="ngModel" autocomplete="off" required email>
+            <mat-error *ngIf="f1.submitted && email.invalid && email.errors.required" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
+            <mat-error *ngIf="f1.submitted && email.invalid && email.errors.email" severity="error">
+              {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.CELL_PHONE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="mobilePhone" [(ngModel)]="user.mobilePhone"
+              name="mobilePhone" #mobilePhone="ngModel" required>
+            <mat-error *ngIf="f1.submitted && mobilePhone.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.HOME_PHONE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="phone" [(ngModel)]="user.homePhone" name="homePhone"
+              #homePhone="ngModel">
+            <mat-error *ngIf="f1.submitted && homePhone.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-radio-group id="sex" class="form-control" [(ngModel)]="user.sex" name="sex" #sex="ngModel" required>
+            <mat-radio-button value="F">
+              {{'COMMON.MALE' | translate }}
+            </mat-radio-button>
+            <mat-radio-button value="M">
+              {{'COMMON.FEMALE' | translate }}
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <div ngModelGroup="passwordGroup" password-matcher #passwordGroup="ngModelGroup">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
+              <input matInput type="password" class="form-control" id="password" [(ngModel)]="user.password"
+                name="password" #password="ngModel" autocomplete="off" required>
+              <mat-error *ngIf="f1.submitted && password.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.CONFIRM_PASSWORD' | translate}}</mat-label>
+              <input matInput type="password" class="form-control" id="confirmPassword"
+                [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" autocomplete="off">
+              <mat-error *ngIf="f1.submitted && confirmPassword.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-error *ngIf="passwordGroup.control?.errors" [ngStyle]="{'color': '#ff5252'}">
+              <div [hidden]="!passwordGroup.control?.errors.noMatch">Passwords do not match</div>
+            </mat-error>
+          </div>
+
+          <mat-form-field class="w-100 mb-3">
+            <input matInput [matDatepicker]="picker" placeholder="{{'COMMON.BIRTH_DATE'|translate}}"
+              [(ngModel)]="user.birthDate" name="birthDate" #birthDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+
+
         </div>
-
-        <mat-form-field class="w-100 mb-3">
-          <input matInput [matDatepicker]="picker" placeholder="{{'COMMON.BIRTH_DATE'|translate}}"
-            [(ngModel)]="user.birthDate" name="birthDate" #birthDate="ngModel">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <button mat-raised-button color="accent" (click)="submitProfileInfo()">Save</button>
-
       </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="example-container">
+          <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.SOCIAL_MEDIA' | translate}}</h4>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.FACEBOOK' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="facebook" [(ngModel)]="user.facebook" name="facebook"
+              #facebook="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.TWITTER' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="twitter" [(ngModel)]="user.twitter" name="twitter"
+              #twitter="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.LINKEDIN' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="linkedin" [(ngModel)]="user.linkedin" name="linkedin"
+              #linkedin="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.INSTAGRAM' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="instagram" [(ngModel)]="user.instagram"
+              name="instagram" #instagram="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.WEBSITE' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="website" [(ngModel)]="user.website" name="website"
+              #website="ngModel">
+          </mat-form-field>
+
+          <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+            [linkEnabled]="true">
+          </input-file>
+        </div>
+      </div>
+
     </div>
 
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <div class="example-container">
-        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.SOCIAL_MEDIA' | translate}}</h4>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.FACEBOOK' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="facebook" [(ngModel)]="user.facebook" name="facebook"
-            #facebook="ngModel">
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.TWITTER' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="twitter" [(ngModel)]="user.twitter" name="twitter"
-            #twitter="ngModel">
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.LINKEDIN' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="linkedin" [(ngModel)]="user.linkedin" name="linkedin"
-            #linkedin="ngModel">
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.INSTAGRAM' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="instagram" [(ngModel)]="user.instagram" name="instagram"
-            #instagram="ngModel">
-        </mat-form-field>
-
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.WEBSITE' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="website" [(ngModel)]="user.website" name="website"
-            #website="ngModel">
-        </mat-form-field>
-
-        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
-          [linkEnabled]="true">
-        </input-file>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+        <div class="text-left mt-2" fxFlex.gt-sm="25">
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+          </button> </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+        </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+          <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+        </div>
       </div>
     </div>
-
-  </div>
   </form>
 </mat-card>
 
 <mat-card *ngIf="type == 'address' || type == 'ship-address'">
-  <h4 *ngIf="type == 'address'"> Edit Billing Information</h4>
-  <h4 *ngIf="type == 'ship-address'"> Edit Shipping Information</h4>
-  <div fxLayout="row wrap" class="col-gap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <form [formGroup]="address">
+  <h4 *ngIf="address.addressType == 1"> {{'COMMON.SHIPPING_ADDRESS'|translate}}</h4>
+  <h4 *ngIf="address.addressType  == 2"> {{'COMMON.BILLING_ADDRESS'|translate}}</h4>
+
+  <form name="form" (ngSubmit)="f2.form.valid && submitAddress()" #f2="ngForm" validate>
+    <div fxLayout="row wrap" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <div class="example-container">
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="Address" formControlName="address">
-            <mat-error *ngIf="address.get('address').hasError('required') && address.get('address').touched">This field
-              should not be empty.</mat-error>
+            <mat-label>{{'COMMON.ADDRESS_TYPE'|translate}}</mat-label>
+            <mat-select placeholder="Type" id="addressType" name="addressType" [(ngModel)]="address.addressType"
+              #addressType="ngModel" required>
+              <mat-option *ngFor="let type of addressTypes" [value]="type.id">
+                {{type.name}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="Buiding Name" formControlName="buiding_name">
-            <mat-error *ngIf="address.get('buiding_name').hasError('required') && address.get('buiding_name').touched">
-              This field should not be empty.</mat-error>
+            <mat-label> {{'COMMON.FIRST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName"
+              name="firstName" #firstName="ngModel" required>
+            <mat-error *ngIf="f2.submitted && firstName.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="Street No." formControlName="street_no">
-            <mat-error *ngIf="address.get('street_no').hasError('required') && address.get('street_no').touched">This
-              field should not be empty.</mat-error>
+            <mat-label> {{'COMMON.MIDDLE_NAME' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="middleName" [(ngModel)]="address.middleName"
+              name="middleName" #middleName="ngModel">
           </mat-form-field>
+
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="State" formControlName="state">
-            <mat-error *ngIf="address.get('state').hasError('required') && address.get('state').touched">This field
-              should not be empty.</mat-error>
+            <mat-label> {{'COMMON.LAST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="address.lastName"
+              name="lastName" #lastName="ngModel" required>
+            <mat-error *ngIf="f2.submitted && lastName.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
+
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="Zip Code/Pin Code" formControlName="zip_code">
-            <mat-error *ngIf="address.get('zip_code').hasError('required') && address.get('zip_code').touched">This
-              field should not be empty.</mat-error>
+            <mat-label> {{'COMMON.STREET_NAME_NBR' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="address1" [(ngModel)]="address.address1"
+              name="address1" #address1="ngModel" required>
+            <mat-error *ngIf="f2.submitted && address1.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
+
           <mat-form-field class="w-100 mb-3">
-            <input matInput placeholder="Country" formControlName="country">
-            <mat-error *ngIf="address.get('country').hasError('required') && address.get('country').touched">This field
-              should not be empty.</mat-error>
+            <mat-label> {{'COMMON.APPARTMENT_BLG' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="address2" [(ngModel)]="address.address2"
+              name="address2" #address2="ngModel">
           </mat-form-field>
-          <button mat-raised-button color="accent" (click)="submitAddress()">Save</button>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.CITY' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="city" [(ngModel)]="address.city" name="city"
+              #city="ngModel" required>
+            <mat-error *ngIf="f2.submitted && city.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.POSTAL_CODE' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="postCode" [(ngModel)]="address.postCode"
+              name="postCode" #postCode="ngModel" required>
+            <mat-error *ngIf="f2.submitted && postCode.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" id="country" name="country"
+              [(ngModel)]="address.country" #country="ngModel" required (selectionChange)="getZones(address.country)">
+              <mat-option *ngFor="let ctry of countries" [value]="ctry">
+                {{ctry.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>Zone/State</mat-label>
+            <mat-select placeholder="Zone" id="zone" name="zone" [(ngModel)]="address.zone" #zone="ngModel">
+              <mat-option *ngFor="let zone of zones" [value]="zone">
+                {{zone.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
         </div>
-      </form>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile"
+        style="background-image: url(assets/images/billing-edit.png)">
+      </div>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile"
-      style="background-image: url(assets/images/billing-edit.png)">
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+        <div class="text-left mt-2" fxFlex.gt-sm="25">
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+          </button> </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+        </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+          <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </mat-card>
 
 <mat-card *ngIf="type == 'card' || type == 'add-card'">
-  <h4 *ngIf="type == 'card'"> Edit Card Information</h4>
-  <h4 *ngIf="type == 'add-card'"> Add Card Information</h4>
-  <div fxLayout="row wrap" class="col-gap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <form [formGroup]="card">
+  <h4 *ngIf="type == 'add-card'"> {{'COMMON.CARD_INFO'|translate}}</h4>
+  <form name="form" (ngSubmit)="f3.form.valid && submitCard()" #f3="ngForm" validate>
+    <div fxLayout="row wrap" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+
         <div fxLayout="row wrap" class="col-gap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
             <mat-form-field class="w-100 mb-3">
-              <input matInput placeholder="Card Number" formControlName="card_number">
-              <mat-error *ngIf="card.get('card_number').hasError('required') && card.get('card_number').touched">This
-                field should not be empty.</mat-error>
+              <input matInput placeholder="{{'COMMON.CARD_NUMBER'|translate}}"  id="cardNumber"
+                name="cardNumber" [(ngModel)]="card.cardNumber" #cardNumber="ngModel" required>
+              <mat-error *ngIf="f3.submitted && cardNumber.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
             <mat-form-field class="w-100 mb-3">
-              <input matInput placeholder="CVV" formControlName="cvv">
-              <mat-error *ngIf="card.get('cvv').hasError('required') && card.get('cvv').touched">This field should not
-                be empty.</mat-error>
+              <input matInput placeholder="CVV" id="secCode" name="secCode" [(ngModel)]="card.secCode"
+                #secCode="ngModel" required>
+              <mat-error *ngIf="f3.submitted && secCode.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <mat-form-field class="w-100 mb-3">
-              <input matInput placeholder="Name on Card" formControlName="name">
-              <mat-error *ngIf="card.get('name').hasError('required') && card.get('name').touched">This field should not
-                be empty.</mat-error>
+              <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name" name="name"
+                [(ngModel)]="card.name" #name="ngModel" required>
+              <mat-error *ngIf="f3.submitted && name.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
 
           <Label class="pl-3 text-muted">Expiry Date</Label>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <mat-form-field>
-              <mat-select placeholder="Month" formControlName="month">
-                <mat-option value="January">January</mat-option>
-                <mat-option value="February">February</mat-option>
-                <mat-option value="March">March</mat-option>
-                <mat-option value="April">April</mat-option>
-                <mat-option value="May">May</mat-option>
-                <mat-option value="June">June</mat-option>
-                <mat-option value="July">July</mat-option>
-                <mat-option value="August">August</mat-option>
-                <mat-option value="September">September</mat-option>
-                <mat-option value="October">October</mat-option>
-                <mat-option value="November">November</mat-option>
-                <mat-option value="December">December</mat-option>
+              <mat-select placeholder="{{'COMMON.MONTH'|translate}}" id="expMonth" name="expMonth"
+                [(ngModel)]="card.expMonth" #expMonth="ngModel" required>
+                <mat-option value="01">{{'DATE.1'|translate}}</mat-option>
+                <mat-option value="02">{{'DATE.2'|translate}}</mat-option>
+                <mat-option value="03">{{'DATE.3'|translate}}</mat-option>
+                <mat-option value="04">{{'DATE.4'|translate}}</mat-option>
+                <mat-option value="05">{{'DATE.5'|translate}}</mat-option>
+                <mat-option value="06">{{'DATE.6'|translate}}</mat-option>
+                <mat-option value="07">{{'DATE.7'|translate}}</mat-option>
+                <mat-option value="08">{{'DATE.8'|translate}}</mat-option>
+                <mat-option value="09">{{'DATE.9'|translate}}</mat-option>
+                <mat-option value="10">{{'DATE.10'|translate}}</mat-option>
+                <mat-option value="11">{{'DATE.11'|translate}}</mat-option>
+                <mat-option value="12">{{'DATE.12'|translate}}</mat-option>
               </mat-select>
-              <mat-error *ngIf="card.get('month').hasError('required') && card.get('month').touched">This field should
-                not be empty.</mat-error>
+              <mat-error *ngIf="f3.submitted && expMonth.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field class="mx-3">
-              <mat-select placeholder="Year" formControlName="year">
-                <mat-option value="2019">2019</mat-option>
+              <mat-select placeholder="{{'COMMON.YEAR'|translate}}" id="expYear" name="expYear"
+                [(ngModel)]="card.expYear" #expYear="ngModel" required>
                 <mat-option value="2020">2020</mat-option>
                 <mat-option value="2021">2021</mat-option>
                 <mat-option value="2022">2022</mat-option>
@@ -256,16 +357,32 @@
                 <mat-option value="2029">2029</mat-option>
                 <mat-option value="2030">2030</mat-option>
               </mat-select>
-              <mat-error *ngIf="card.get('year').hasError('required') && card.get('year').touched">This field should not
-                be empty.</mat-error>
+              <mat-error *ngIf="f3.submitted && expYear.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
             </mat-form-field>
           </div>
         </div>
-        <button mat-raised-button color="accent" (click)="submitCard()">Save</button>
-      </form>
+      </div>
+      <div *ngIf="card.cardNumber && card.cardNumber.length>0" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50"
+        fxFlex.lg="50" fxFlex.xl="50" class="edit-profile"
+        [style.background-image]="getBackground()">
+      </div>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile"
-      style="background-image: url(assets/images/card-edit.png)">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+        <div class="text-left mt-2" fxFlex.gt-sm="25">
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+          </button> </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+        </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+          <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+        </div>
+      </div>
     </div>
-  </div>
+  </form>
 </mat-card>

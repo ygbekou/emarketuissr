@@ -622,4 +622,19 @@ export class Address {
   middleName: string;
   addressType: number;
   zone: Zone;
+  type = 'Address';
+}
+
+export class CreditCard {
+  id: number;
+  name: string;
+  cardNumber: string;
+  secCode: string;
+  expMonth: string;
+  expYear: string;
+  status: number;
+  cardType: string;
+  user: User;
+  last4Digits: string;
+  type = 'CreditCard';
 }

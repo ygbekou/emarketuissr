@@ -1,30 +1,22 @@
 <mat-card>
-  <h4>Address Infomation</h4>
+
+    <div fxLayoutAlign="space-between"><h4>{{'COMMON.MY_ADDRESSES'|translate}}</h4> <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'address', adrId:0}">{{'COMMON.ADD'|translate}}</button></div>
+
   <div fxLayout="row wrap" class="col-gap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-      <h5>Billing Address</h5>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="30" fxFlex.xl="30" *ngFor="let addr of addresses">
+      <h5 *ngIf="addr.addressType===2">{{'COMMON.BILLING_ADDRESS'|translate}}</h5>
+      <h5 *ngIf="addr.addressType===1">{{'COMMON.SHIPPING_ADDRESS'|translate}}</h5>
       <div class="pt-3">
-         <address class="mb-4">
-               2735  Sherman Street<br>
-               Hodour Sheridan Plaza<br>
-               New Jersey<br>
-               Zip - 6739HG1<br>
-               USA<br>
-         </address>
-        <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'address'}">Edit</button>
-      </div>
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-      <h5>Shipping Address</h5>
-      <div class="pt-3">
-         <address class="mb-4">
-               2735  Sherman Street<br>
-               Hodour Sheridan Plaza<br>
-               New Jersey<br>
-               Zip - 6739HG1<br>
-               USA<br>
-         </address>
-        <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'ship-address'}">Edit</button>
+        <address class="mb-4">
+          <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
+          {{addr.address1}} {{addr.address2}}<br>
+          {{addr.city}}<br>
+          {{addr.postCode}}<br>
+          {{addr.zone.name}}<br>
+          {{addr.country.name}}<br>
+        </address>
+        <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+          [queryParams]="{type:'address', adrId:addr.id}">{{'COMMON.EDIT'|translate}}</button>
       </div>
     </div>
   </div>
