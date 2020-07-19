@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component} from '@angular/core';
+import { TranslateService} from '@ngx-translate/core';
 @Component({
-  template: ``,
+	template: ``,
   providers: []
 })
 export class BaseComponent {
@@ -9,6 +9,8 @@ export class BaseComponent {
   public messages: string;
   public messageColor: string;
   public hasError: boolean;
+  public lang: any;
+
 
   constructor
     (
@@ -22,19 +24,19 @@ export class BaseComponent {
       this.hasError = false;
       entityObject = result;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-        this.messages = res['MESSAGE.SAVE_SUCCESS'];
+          this.messages = res['MESSAGE.SAVE_SUCCESS'];
       });
-
+      
       if (entityObject.user && entityObject.user.birthDate != null) {
-        entityObject.user.birthDate = new Date(entityObject.user.birthDate);
+          entityObject.user.birthDate = new Date(entityObject.user.birthDate);
       }
       if (pictureUrl) {
-        pictureUrl = '';
+          pictureUrl = '';
       }
     } else {
       this.hasError = true;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS']).subscribe(res => {
-        this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '<br/>' + result.errors[0];
+          this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '<br/>' + result.errors[0];
       });
     }
   }
@@ -49,16 +51,16 @@ export class BaseComponent {
     listItems.splice(index, 1);
   }
 
-  protected processDeleteResult(result, messages) {
+    protected processDeleteResult(result, messages) {
     if (result.result === 'SUCCESS') {
-      this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
-        this.messages = res['MESSAGE.DELETE_SUCCESS'];
-      });
+        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+            this.messages = res['MESSAGE.DELETE_SUCCESS'];
+        });
     } else {
-      this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
-        messages = res['MESSAGE.DELETE_UNSUCCESS'] + ': ' + res['MESSAGE.' + result.errors[0]];
-      });
+        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
+            messages = res['MESSAGE.DELETE_UNSUCCESS'] + ': ' + res['MESSAGE.' + result.errors[0]];
+        });
     }
   }
 
-}
+    }

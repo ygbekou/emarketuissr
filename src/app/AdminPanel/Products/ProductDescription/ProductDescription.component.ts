@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Product, ProductDescription, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
@@ -12,72 +11,22 @@ import { AppService } from 'src/app/Services/app.service';
 
 export class ProductDescriptionComponent implements OnInit {
 
-   form: FormGroup;
-   mainImgPath: string;
-	colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
-   sizeArray: number[] = [36, 38, 40, 42, 44, 46, 48];
-   quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-   public imagePath;
-
    messages = '';
 
-   'data': any = [
-      {
-         'image': 'https://via.placeholder.com/625x800',
-         'image_gallery': [
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800',
-            'https://via.placeholder.com/625x800'
-         ]
-      }
-   ];
-
-
    @Input() product: Product;
-   @Input() f: Form;
 
    productDescription: ProductDescription;
    selectedTab = 0;
    selectedMainTabIndex = 0;
 
-   constructor(public formBuilder: FormBuilder,
-      protected translate: TranslateService,
+   constructor(protected translate: TranslateService,
       public appService: AppService) { }
 
 	ngOnInit() {
 
-      this.mainImgPath = this.data[0].image;
-      this.form = this.formBuilder.group({
-			name					: [],
-			price 				: [],
-			availablity   		: [],
-			product_code 		: [],
-			description 		: [],
-			tags					: [],
-			features				: []
-      });
-
-      // if (this.product.productDescriptions.length > 0) {
-      //    this.productDescription = this.product.productDescriptions[0];
-      // } else {
-      //    this.productDescription = new ProductDescription();
-      // }
-
       this.refreshLangObjects();
 
    }
-
-   /**
-    * getImagePath is used to change the image path on click event.
-    */
-   public getImagePath(imgPath: string, index: number) {
-      document.querySelector('.border-active').classList.remove('border-active');
-      this.mainImgPath = imgPath;
-      document.getElementById(index + '_img').className += ' border-active';
-   }
-
 
    refreshLangObjects() {
       let first = true;
