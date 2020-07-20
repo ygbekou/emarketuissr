@@ -8,16 +8,33 @@
         <div fxFlex.sm="60" fxHide.xs="true" fxHide.sm="true" fxFlex.md="40" fxFlex.sm.hdie fxFlex.lg="60%"
           fxFlex.xl="60%" class="align-center">
 
-          <div class="search-v2">
-            <form action="">
-              <input type="search" placeholder="Enter a keyword to search">
-              <mat-select placeholder="Type" id="addressType"  >
-                <mat-option *ngFor="let type of addressTypes" [value]="type.name">
-                  {{type.name}}
-                </mat-option>
-              </mat-select>
-            </form>
-          </div>
+          <form action="">
+            <div fxLayout="row wrap"  style="vertical-align: middle;">
+              <div fxFlex.xs="20%" fxFlex.sm="20%"  style="vertical-align: middle;" fxFlex.md="20%" fxFlex.lg="20%" fxFlex.xl="20%">
+
+                <mat-form-field appearance="fill">
+                  <mat-select [(value)]="selectedCategory"  color="accent">
+                    <mat-option [value]="cat" *ngFor="let cat of categories">{{ cat}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex.xs="60%" fxFlex.sm="60%"  style="vertical-align: middle;" fxFlex.md="60%" fxFlex.lg="60%" fxFlex.xl="70%">
+                <mat-form-field>
+                  <mat-placeholder>Chercher un produit</mat-placeholder>
+                  <input matInput type="text">
+                </mat-form-field>
+              </div>
+              <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" 
+              fxFlex.xl="15%" style="vertical-align: middle;">
+           
+                <button mat-flat-button color="accent" aria-label="search"  style="vertical-align: middle;">
+                  <mat-icon>search</mat-icon> Search
+                </button>
+              </div>
+            </div>
+          </form>
+
         </div>
         <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
           <span fxFlex></span>

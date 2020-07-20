@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'HeaderTwo',
@@ -10,13 +11,11 @@ export class HeaderTwoComponent implements OnInit {
 
    popupResponse: any;
 
-   public addressTypes = [
-      { id: 1, name: 'Shipping address' },
-      { id: 2, name: 'Billing address' }
-   ];
+   public categories = ['All Categories', 'Computers', 'Food', 'Vegetables'];
+   selectedCategory = 'All Categories';
    addressType: string;
 
-   constructor(public appService: AppService) { }
+   constructor(public appService: AppService, public translate: TranslateService) { }
 
    ngOnInit() {
    }
