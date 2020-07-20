@@ -412,7 +412,9 @@ export class Category {
   parent: Category;
   top: number;
   type = 'Category';
-
+  showInSearch: number;
+  showInMenu: number;
+  showInDropDown: number;
   childCount: number;
 }
 export class CategoryDescription {

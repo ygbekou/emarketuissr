@@ -15,27 +15,8 @@ const HeaderOneItems = [
   {
     state: "home",
     name: "HOME",
-    type: "sub",
-    icon: "home",
-    children: [
-      {
-        state: 'home',
-        name: 'HOME ONE',
-        type: 'link',
-        icon: 'home'
-      },
-      {
-        state: 'home-two',
-        name: 'HOME TWO',
-        type: 'link',
-        icon: 'home'
-      }, {
-        state: 'home-three',
-        name: 'HOME THREE',
-        type: 'link',
-        icon: 'home'
-      }
-    ]
+    type: "link",
+    icon: "home" 
   },
   {
     state: "",
