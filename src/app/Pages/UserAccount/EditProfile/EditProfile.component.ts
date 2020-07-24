@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { ToastaService, ToastaConfig, ToastOptions, ToastData } from 'ngx-toasta';
-import { User } from 'src/app/app.models';
+import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User, Address, Country, Zone, CreditCard } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
    selector: 'app-edit-profile',
@@ -13,58 +13,50 @@ import { TranslateService } from '@ngx-translate/core';
    styleUrls: ['./EditProfile.component.scss']
 })
 export class EditProfileComponent extends BaseComponent implements OnInit {
-
+   countries: Country[] = [];
+   zones: Zone[] = [];
    user: User = new User();
    messages: any;
-   error: string;
+   errors: any;
+   creditCardBackground = 'background-image: url(assets/images/cards/card-edit.png)';
+   address: Address = new Address();
+   card: CreditCard = new CreditCard();
    formData: FormData;
    picture: any[] = [];
-
-
-
+   public addressTypes = [
+      { id: 1, name: 'Shipping address' },
+      { id: 2, name: 'Billing address' }
+   ];
    type: string;
-   info: FormGroup;
-   address: FormGroup;
-   card: FormGroup;
+   cardForm: FormGroup;
 
    emailPattern: any = /\S+@\S+\.\S+/;
-   toastOption: ToastOptions = {
-      title: 'Account Information',
-      msg: 'Your account information updated successfully!',
-      showClose: true,
-      timeout: 3000,
-      theme: 'material'
-   };
-
-
 
    constructor(private route: ActivatedRoute,
       public appService: AppService,
       public translate: TranslateService,
-      private router: Router,
-      private formGroup: FormBuilder,
-      private toastyService: ToastaService) {
+      private sanitizer: DomSanitizer,
+      private formGroup: FormBuilder) {
       super(translate);
-      this.route.params.subscribe(params => {
+      this.route.params.subscribe(() => {
+         if (this.appService.appInfoStorage.language.code === 'fr') {
+            this.addressTypes = [
+               { id: 1, name: 'Adresse d\'expédition' },
+               { id: 2, name: 'Adresse de Facturation' }
+            ];
+         }
          this.route.queryParams.forEach(queryParams => {
             this.type = queryParams['type'];
+            this.getAddress(queryParams['adrId']);
+            this.getCard(queryParams['cId']);
          });
       });
    }
 
    ngOnInit() {
       this.getUser();
-
-      this.address = this.formGroup.group({
-         address: ['', [Validators.required]],
-         buiding_name: ['', [Validators.required]],
-         street_no: ['', [Validators.required]],
-         state: ['', [Validators.required]],
-         zip_code: ['', [Validators.required]],
-         country: ['', [Validators.required]]
-      });
-
-      this.card = this.formGroup.group({
+      this.getCountries();
+      this.cardForm = this.formGroup.group({
          card_number: ['', [Validators.required]],
          cvv: ['', [Validators.required]],
          name: ['', [Validators.required]],
@@ -72,7 +64,33 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          year: ['', [Validators.required]]
       });
    }
+   getBackground() {
+      this.creditCardBackground = 'background-image: url(assets/images/cards/'
+         + this.card.cardNumber.substring(0, 1) + '.png)';
+      return this.sanitizer.bypassSecurityTrustStyle(`url(${this.creditCardBackground})`);
+   }
 
+   getZones(country: Country) {
+      if (country) {
+         const parameters: string[] = [];
+         parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
+         this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
+            .subscribe((data: Zone[]) => {
+               this.zones = data;
+            },
+               error => console.log(error),
+               () => console.log('Get all GeoZone complete'));
+      }
+   }
+   getCountries() {
+      const parameters: string[] = [];
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Country', parameters)
+         .subscribe((data: Country[]) => {
+            this.countries = data;
+         },
+            error => console.log(error),
+            () => console.log('Get all Countries complete'));
+   }
    /**
     * Function is used to submit the profile info.
     * If form value is valid, redirect to profile page.
@@ -80,22 +98,49 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
    submitProfileInfo() {
       this.messages = '';
+      this.errors = '';
       this.user.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
       if (this.picture && this.picture.length > 0 && this.picture[0].file) {
          this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
       }
-
       this.appService.saveWithFile(this.user, 'User', this.formData, 'saveWithFile')
          .subscribe(data => {
-            this.processResult(data, this.user, null)
+            this.processResult(data, this.user, null);
             this.user = data;
          });
-
    }
 
+
+   getAddress(addressId: number) {
+      if (addressId > 0) {
+         const parameters: string[] = [];
+         parameters.push('e.id = |addressId|' + addressId + '|Integer');
+         this.appService.getOne(addressId, 'Address')
+            .subscribe((data: Address) => {
+               this.address = data;
+            },
+               error => console.log(error),
+               () => console.log('Get all address complete for addressId=' + addressId));
+      }
+   }
+
+   getCard(cardId: number) {
+      if (cardId > 0) {
+         const parameters: string[] = [];
+         parameters.push('e.id = |cardId|' + cardId + '|Integer');
+         this.appService.getOne(cardId, 'CreditCard')
+            .subscribe((data: CreditCard) => {
+               this.card = data;
+            },
+               error => console.log(error),
+               () => console.log('Get all CreditCard complete for CreditCard=' + cardId));
+      }
+   }
+
+
    getUser() {
-     const userId = Number(this.appService.tokenStorage.getUserId());
+      const userId = Number(this.appService.tokenStorage.getUserId());
       if (userId > 0) {
          this.appService.getOneWithChildsAndFiles(userId, 'User')
             .subscribe(result => {
@@ -107,17 +152,13 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                      const image = {
                         link: 'assets/images/users/' + userId + '/' + item,
                         preview: 'assets/images/users/' + userId + '/' + item
-                     }
+                     };
                      images.push(image);
-                  })
-
+                  });
                   this.picture = images;
-
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-
-                     this.error = res['MESSAGE.READ_FAILED'];
-
+                     this.errors = res['MESSAGE.READ_FAILED'];
                   });
                }
             });
@@ -130,15 +171,22 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
     * If form value is valid, redirect to address page.
     */
    submitAddress() {
-      if (this.address.valid) {
-         this.router.navigate(['/account/address']).then(() => {
-            this.toastyService.success(this.toastOption);
+      this.messages = '';
+      this.errors = '';
+      this.address.user = this.user;
+      console.log(this.address);
+      this.appService.save(this.address, 'Address')
+         .subscribe(result => {
+            if (result.id > 0) {
+               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+               });
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+               });
+            }
          });
-      } else {
-         for (const i in this.address.controls) {
-            this.address.controls[i].markAsTouched();
-         }
-      }
    }
 
    /**
@@ -146,15 +194,45 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
     * If form value is valid, redirect to card page.
     */
    submitCard() {
-      if (this.card.valid) {
-         this.router.navigate(['/account/card']).then(() => {
-            this.toastyService.success(this.toastOption);
+      this.messages = '';
+      this.errors = '';
+      this.card.user = this.user;
+      this.card.cardType = this.getCardType();
+      console.log(this.card);
+      if (this.card.cardType === '') {
+         this.translate.get(['MESSAGE.INVALID_CARD', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.INVALID_CARD'];
          });
       } else {
-         for (const i in this.card.controls) {
-            this.card.controls[i].markAsTouched();
+         this.appService.save(this.card, 'CreditCard')
+            .subscribe(result => {
+               if (result.id > 0) {
+                  this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                     this.messages = res['MESSAGE.SAVE_SUCCESS'];
+                  });
+               } else {
+                  this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                     this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+                  });
+               }
+            });
+      }
+   }
+
+   getCardType(): string {
+      if (this.card.cardNumber && this.card.cardNumber.length > 1) {
+         const firstDigit: string = this.card.cardNumber.substring(0, 1);
+         if (firstDigit === '3') {
+            return 'Amex';
+         } else if (firstDigit === '4') {
+            return 'Visa';
+         } else if (firstDigit === '5') {
+            return 'MasterCard';
+         } else if (firstDigit === '6') {
+            return 'Discover';
          }
       }
+      return '';
    }
 
 }

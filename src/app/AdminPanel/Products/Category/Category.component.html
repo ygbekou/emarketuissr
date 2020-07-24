@@ -22,7 +22,7 @@
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.NAME' | translate}} 
+            <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="name" [(ngModel)]="catDesc.name" name="name"
               #name="ngModel" required>
@@ -84,13 +84,30 @@
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
 
-          <mat-slide-toggle [(ngModel)]="category.top" name="status" #top="ngModel" class="my-2">
+          <mat-slide-toggle [(ngModel)]="category.top" name="top" #top="ngModel" class="my-2">
+            {{ 'COMMON.TOP_CATEGORY' | translate }}
+          </mat-slide-toggle>
+          &nbsp;&nbsp;
+          <mat-slide-toggle [(ngModel)]="category.showInMenu" name="showInMenu" #showInMenu="ngModel" class="my-2">
             {{ 'COMMON.SHOW_IN_MENU' | translate }}
+          </mat-slide-toggle>
+          <br />
+
+          <mat-slide-toggle [(ngModel)]="category.showInSearch" name="showInSearch" #showInSearch="ngModel"
+            class="my-2">
+            {{ 'COMMON.SHOW_IN_SEARCH' | translate }}
+          </mat-slide-toggle>
+          &nbsp;&nbsp;
+          <mat-slide-toggle [(ngModel)]="category.showInDropDown" name="showInDropDown" #showInDropDown="ngModel"
+            class="my-2">
+            {{ 'COMMON.SHOW_IN_DROP_DOWN' | translate }}
           </mat-slide-toggle>
           <br />
           <mat-slide-toggle [(ngModel)]="category.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
+
+
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.COLUMNS' | translate}}
             </mat-label>

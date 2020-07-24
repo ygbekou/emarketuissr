@@ -144,7 +144,16 @@ export class CategoryComponent implements OnInit {
 
         this.category.status = (this.category.status == null || this.category.status.toString() === 'false') ? 0 : 1;
         this.category.top = (this.category.top == null || this.category.top.toString() === 'false') ? 0 : 1;
-        console.log(this.category);
+
+        this.category.showInDropDown = (this.category.showInDropDown == null
+          || this.category.showInDropDown.toString() === 'false') ? 0 : 1;
+
+        this.category.showInMenu = (this.category.showInMenu == null
+          || this.category.showInMenu.toString() === 'false') ? 0 : 1;
+
+        this.category.showInSearch = (this.category.showInSearch == null
+          || this.category.showInSearch.toString() === 'false') ? 0 : 1;
+
         if (this.categoryImages.length > 0) {
           this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
             .subscribe(result => {

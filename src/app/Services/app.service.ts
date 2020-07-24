@@ -493,7 +493,6 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
-
    public authenticate = (user: User): Observable<AuthToken> => {
       const toAdd = JSON.stringify(user);
       const actionUrl = Constants.apiServer + '/service/token/authenticate';
@@ -552,10 +551,10 @@ export class AppService {
    }
 
    public getCachedReferences = (elementType: string): Observable<any> => {
-    const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
-    return this.http.get(actionUrl, { headers: this.headers })
-      .pipe(catchError(this.handleError));
-  }
+      const actionUrl = Constants.apiServer + '/service/reference/' + elementType + '/all/active';
+      return this.http.get(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
 
   public getObjects = (url: string): Observable<any[]> => {
     const actionUrl = Constants.apiServer + url;
@@ -564,11 +563,11 @@ export class AppService {
   }
 
    public getCacheData() {
-    const parameters: string[] = [];
+      const parameters: string[] = [];
 
-    this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
-      .subscribe((data: Language[]) => {
-         this.appInfoStorage.languages = data;
+      this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
+         .subscribe((data: Language[]) => {
+            this.appInfoStorage.languages = data;
             let lang = navigator.language;
             if (lang) {
                lang = lang.substring(0, 2);
@@ -594,40 +593,40 @@ export class AppService {
             console.log('Using language :' + lang);
             this.translate.use(lang);
 
-      }, error => console.log(error),
-        () => console.log('Get Languages complete'));
+         }, error => console.log(error),
+            () => console.log('Get Languages complete'));
 
 
-   this.getCachedReferences('taxclass')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.taxClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get taxclass complete'));
+      this.getCachedReferences('taxclass')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.taxClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get taxclass complete'));
 
-   this.getCachedReferences('stockstatus')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.stockStatuses = data;
-      }, error => console.log(error),
-        () => console.log('Get stock status complete'));
+      this.getCachedReferences('stockstatus')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.stockStatuses = data;
+         }, error => console.log(error),
+            () => console.log('Get stock status complete'));
 
-    this.getCachedReferences('lengthclass')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.lengthClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get lengthclass complete'));
+      this.getCachedReferences('lengthclass')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.lengthClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get lengthclass complete'));
 
-     this.getCachedReferences('weightclass')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.weightClasses = data;
-      }, error => console.log(error),
-        () => console.log('Get weightclass complete'));
+      this.getCachedReferences('weightclass')
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.weightClasses = data;
+         }, error => console.log(error),
+            () => console.log('Get weightclass complete'));
 
       this.getCachedReferences('manufacturer')
-      .subscribe((data: GenericVO[]) => {
-        this.appInfoStorage.manufacturers = data;
-      }, error => console.log(error),
-        () => console.log('Get manufacturer complete'));
-  }
+         .subscribe((data: GenericVO[]) => {
+            this.appInfoStorage.manufacturers = data;
+         }, error => console.log(error),
+            () => console.log('Get manufacturer complete'));
+   }
 
 
 

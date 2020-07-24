@@ -2,24 +2,28 @@
    <mat-sidenav-container>
       <mat-sidenav #sidenav [(opened)]="appService.sidenavOpen" class="sidebar-area" mode="over">
          <mat-nav-list>
-           <div class="close-btn-sidebar">
-             <a href="javascript:void(0)" (click)="appService.sidenavOpen = false">
-               <i class="material-icons">
-                 close
-               </i>
-             </a>
-           </div>
-           <embryo-SidebarMenu *ngFor="let item of menuItems.getMainMenu()" [item]="item"></embryo-SidebarMenu>
+            <div class="close-btn-sidebar">
+               <a href="javascript:void(0)" (click)="appService.sidenavOpen = false">
+                  <i class="material-icons">
+                     close
+                  </i>
+               </a>
+            </div>
+            <embryo-SidebarMenu *ngFor="let item of menuItems.getMainMenu()" [item]="item"></embryo-SidebarMenu>
          </mat-nav-list>
       </mat-sidenav>
-      <mat-sidenav class="em-sidebar" #paymentSidenav [(opened)]="appService.paymentSidenavOpen" position="end" mode="over" >
+      <mat-sidenav class="em-sidebar" #paymentSidenav [(opened)]="appService.paymentSidenavOpen" position="end"
+         mode="over">
          <embryo-PaymentDetailSideBar></embryo-PaymentDetailSideBar>
       </mat-sidenav>
-      <div class="rtl-layout"><a class="text-xl" href="javascript:void(0);" (click)="changeDirection()">RTL</a></div> 
-         <ngx-toasta></ngx-toasta>
+      <div class="rtl-layout"><a class="text-xl" href="javascript:void(0);" (click)="changeDirection()">RTL</a></div>
+      <ngx-toasta></ngx-toasta>
+      <!--
          <HeaderOne *ngIf="this.currentUrl != '/home-two' && this.currentUrl != '/home-three'"></HeaderOne>
-         <HeaderTwo *ngIf="this.currentUrl == '/home-two' && this.currentUrl != '/home-three'"></HeaderTwo>
-         <HeaderThree *ngIf="this.currentUrl != '/home-two' && this.currentUrl == '/home-three'"></HeaderThree>
+       <HeaderThree *ngIf="this.currentUrl != '/home-two' && this.currentUrl == '/home-three'"></HeaderThree>
+ 
+         -->
+      <HeaderTwo></HeaderTwo>
       <div class="main">
          <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>

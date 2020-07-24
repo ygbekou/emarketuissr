@@ -422,7 +422,9 @@ export class Category {
   parent: Category;
   top: number;
   type = 'Category';
-
+  showInSearch: number;
+  showInMenu: number;
+  showInDropDown: number;
   childCount: number;
 }
 export class CategoryDescription {
@@ -636,4 +638,19 @@ export class Address {
   middleName: string;
   addressType: number;
   zone: Zone;
+  type = 'Address';
+}
+
+export class CreditCard {
+  id: number;
+  name: string;
+  cardNumber: string;
+  secCode: string;
+  expMonth: string;
+  expYear: string;
+  status: number;
+  cardType: string;
+  user: User;
+  last4Digits: string;
+  type = 'CreditCard';
 }

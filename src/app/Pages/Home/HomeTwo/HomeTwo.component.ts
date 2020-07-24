@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 
 @Component({
-  selector: 'app-HomeTwo',
-  templateUrl: './HomeTwo.component.html',
-  styleUrls: ['./HomeTwo.component.scss']
+   selector: 'app-HomeTwo',
+   templateUrl: './HomeTwo.component.html',
+   styleUrls: ['./HomeTwo.component.scss']
 })
 export class HomeTwoComponent implements OnInit {
 
-   topProducts             : any;
-   lighteningDealsProducts : any;
-   
-   constructor(public appService : AppService) { }
+   topProducts: any;
+   lighteningDealsProducts: any;
+ 
+
+   constructor(public appService: AppService) { }
 
    ngOnInit() {
       this.lighteningDeals();
@@ -24,7 +25,7 @@ export class HomeTwoComponent implements OnInit {
    }
 
    public getLighteningDealsResponse(res) {
-      let productsArray : any = [];
+      let productsArray: any = [];
       this.lighteningDealsProducts = null;
       productsArray.push(this.last(res.men));
       productsArray.push(this.last(res.women));
