@@ -168,6 +168,7 @@ export class Product {
   width: number;
 
   productDescriptions: ProductDescription[] = [];
+  productToCategorys: ProductToCategory[] = [];
 
   type = 'Product';
 
@@ -196,6 +197,14 @@ export class ProductDescription {
   type = 'ProductDescription';
 }
 
+
+export class ProductToCategory {
+  id: number;
+  product: Product;
+  category: Category;
+
+  type = 'ProductToCategory';
+}
 
 export class Language {
   id: number;
@@ -404,6 +413,7 @@ export class GenericVO {
 
 export class Category {
   id: number;
+  categoryId: number;
   catColumn: number;
   sortOrder: number;
   status: number;
@@ -426,6 +436,8 @@ export class CategoryDescription {
   metaDescription: string;
   metaKeyword: string;
   type = 'CategoryDescription';
+
+  longName = '';
 }
 
 export class Currency {

@@ -376,8 +376,8 @@
     "ZIP_CODE": "Code Postal",
     "LINKS": "Liens",
     "MANUFACTURER": "Fabricant",
-		"DIMENSIONS": "Dimensions"
-
+		"DIMENSIONS": "Dimensions",
+		"SELECTED_CATEGORIES": "Categories Sélectionées"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

@@ -215,7 +215,7 @@
       </mat-tab>
 
       <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
-         <app-product-link [product]="product" ></app-product-link>
+         <app-product-link [product]="product" [productId]="product.id"></app-product-link>
       </mat-tab>
 
    </mat-tab-group>
