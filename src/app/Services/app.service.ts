@@ -586,7 +586,9 @@ export class AppService {
                this.translate.addLangs([language.code]);
                if (language.code === lang) {
                   this.translate.setDefaultLang(language.code);
+                  
                   this.appInfoStorage.language = language;
+                  console.log(this.appInfoStorage.language);
 
                }
             });
