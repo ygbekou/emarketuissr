@@ -556,6 +556,12 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+  public getObjects = (url: string): Observable<any[]> => {
+    const actionUrl = Constants.apiServer + url;
+    return this.http.get<any[]>(actionUrl, { headers: this.headers })
+      .pipe(catchError(this.handleError));
+  }
+
    public getCacheData() {
       const parameters: string[] = [];
 

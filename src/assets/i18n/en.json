@@ -392,7 +392,8 @@
 		"ZIP_CODE": "Zip Code",
 		"LINKS": "Links",
 		"MANUFACTURER": "Manufacturer",
-		"DIMENSIONS": "Dimensions"
+		"DIMENSIONS": "Dimensions",
+		"SELECTED_CATEGORIES": "Selected Categories"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

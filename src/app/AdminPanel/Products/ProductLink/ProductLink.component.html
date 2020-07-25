@@ -14,16 +14,28 @@
    
    <div fxLayout="row wrap">
       	<div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
-			<mat-form-field appearance="outline" class="w-100">
-            <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
-            <mat-select id="category" [(value)]="selectedCatDescs[indexOfelement]" 
-               (selectionChange)="categorySelected(selectedCatDesc, indexOfelement)" name="category" [(ngModel)]="categoryId" #category="ngModel">
-				<mat-option *ngFor="let category of cats" [value]="category">
-					{{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
-				</mat-option>
-				</mat-select>
-			</mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+               <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
+               <mat-select  id="category" [(ngModel)]="selectedCatDescs[indexOfelement]" [(value)]="selectedCatDescs[indexOfelement]"
+                  (selectionChange)="categorySelected(null, indexOfelement)" name="category" #category="ngModel">
+                  <mat-option *ngFor="let category of cats" [value]="category">
+                     {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
+                  </mat-option>
+               </mat-select>
+            </mat-form-field>
 		</div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-label>{{'COMMON.SELECTED_CATEGORIES' | translate }}</mat-label>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let selectedCatDesc of finalSelectedCatDescs; let indexOfelement=index;">
+         <button mat-icon-button color="warn" (click)="removeCategory(selectedCatDesc.id, indexOfelement)" 
+            matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+            <mat-icon>delete</mat-icon>
+         </button>
+         {{selectedCatDesc.longName}}
+      </div>
    </div>
 </form>
       

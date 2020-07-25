@@ -79,7 +79,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
       this.product.subtract = (this.product.subtract == null || this.product.subtract.toString() === 'false') ? 0 : 1;
    }
 
-   save() {
+  save() {
     this.messages = '';
     try {
       this.setProductToggles();
@@ -97,5 +97,5 @@ export class ProductComponent extends BaseComponent implements OnInit {
     } catch (e) {
       console.log(e);
     }
-   }
+  }
 }
