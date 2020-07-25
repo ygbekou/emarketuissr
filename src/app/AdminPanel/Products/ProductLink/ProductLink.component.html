@@ -30,7 +30,7 @@
          <mat-label>{{'COMMON.SELECTED_CATEGORIES' | translate }}</mat-label>
       </div>
       <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let selectedCatDesc of finalSelectedCatDescs; let indexOfelement=index;">
-         <button mat-icon-button color="warn" (click)="removeCategory(selectedCatDesc.id, indexOfelement)" 
+         <button mat-icon-button color="warn" (click)="removeCategory(selectedCatDesc.id, indexOfelement)" *ngIf="selectedCatDesc.action === ''"
             matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
             <mat-icon>delete</mat-icon>
          </button>

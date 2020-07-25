@@ -26,7 +26,7 @@ export class CategoriesComponent implements OnInit {
 
   getAll() {
     const parameters: string[] = [];
-    parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
+    parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters,
     ' order by e.category.sortOrder ')
       .subscribe((data: CategoryDescription[]) => {
