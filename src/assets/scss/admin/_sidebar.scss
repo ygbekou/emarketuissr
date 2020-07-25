@@ -55,9 +55,9 @@ $user-name-font-size:1rem;
          display: flex;
          flex-direction: row;
          align-items: center;
-         height: 3.25rem;
+         height: 2.25rem;
          padding: 0 1.5rem;
-         font-weight:400;
+         font-weight:100;
       }
       mat-sidenav .sidebar-panel .mat-nav-list a {
          color: #fff;
@@ -70,7 +70,7 @@ $user-name-font-size:1rem;
          transition-property: max-height;
          max-height: 0;
          a {
-            padding-left: 4rem;
+            padding-left: 2.7rem;
             margin: 0;
             padding-top:0.25rem;
             padding-bottom: 0.25rem;

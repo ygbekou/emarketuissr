@@ -1,34 +1,34 @@
 //----Header V1
 .header-v1-top {
-   background: rgba(255, 255, 255, 0.05);
-   height: 100px !important;
+  background: rgba(255, 255, 255, 0.05);
+  height: 100px !important;
 }
 
 .header-v1 .logo-site {
-   text-align: center;
+  text-align: center;
 }
 
 .header-v1-bottom {
-   text-align: center;
-   position: relative;
+  text-align: center;
+  position: relative;
 }
 
 .header-v1-bottom-inner {
-   position: relative;
+  position: relative;
 }
 
 .list-flex {
-   display: flex;
-   flex-wrap: wrap;
-   align-items: center;
-   padding: 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 8px 16px;
 }
 
 .log-in-user {
-   .mat-button-wrapper {
-      padding: 0 !important;
-      width: 100%;
-   }
+  .mat-button-wrapper {
+    padding: 0 !important;
+    width: 100%;
+  }
 
   img {
     border-radius: 100%;
@@ -36,98 +36,109 @@
 }
 
 .user-tool button {
-   margin: 0 5px;
+  margin: 0 5px;
 }
 
 menu {
   margin: 0;
 }
-.cart-menu-list{
-   position: relative;
-   &:hover{
-      .cart-menu-action{
-         opacity:1;
-         visibility: visible;
-      }
-      
-   }
+
+.cart-menu-list {
+  position: relative;
+
+  &:hover {
+    .cart-menu-action {
+      opacity: 1;
+      visibility: visible;
+    }
+
+  }
 }
 
 .cart-menu-action {
-   position: absolute;
-   display:flex;
-	background: #fff;
-	right: 15px;
-	transition: all 0.2s ease-in-out 0s;
-	opacity: 0;
-   border-radius: 5px;
-   visibility: hidden;
+  position: absolute;
+  display: flex;
+  background: #fff;
+  right: 15px;
+  transition: all 0.2s ease-in-out 0s;
+  opacity: 0;
+  border-radius: 5px;
+  visibility: hidden;
 }
 
 //----Menu
 .app-nav {
   .app-nav-list {
-      padding: 0;
-      >li {
-         display: inline-block;
-         margin: 0 10px;
-         position: relative;
-         a {
-           text-transform: uppercase;
-           font-size: 0.9rem;
-           font-weight: 500;
-           line-height: 64px;
-           padding: 0 15px;
-           display: block;
-           color: $main-nav-color;   
-         }
-         &:after {
-           content: '';
-           border-bottom: 5px;
-           width: 0;
-           transition: all 0.3s ease;
-           height: 5px;
-           left: 0;
-           right: 0;
-           background: $accent;
-           display: block;
-           position: absolute;
-           bottom: 0;
-         }
-         &:hover {
-           &:after {
-             width: 100%;
-           }
-         }
-         &:last-child{
-            background-color: $accent;
-            a{
-              color:#fff !important;
-            }
-         }
+    padding: 0;
+
+    >li {
+      display: inline-block;
+      margin: 0 10px;
+      position: relative;
+
+      a {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 64px;
+        padding: 0 15px;
+        display: block;
+        color: $main-nav-color;
       }
-      li{
-         .nav-link.menu-item-has-children{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            &:after{
-               display: inline-block;
-               width: 0;
-               height: 0;
-               margin-left: 0.255em;
-               vertical-align: 0.255em;
-               content: "";
-               border-top: 0.3em solid #000;
-               border-right: 0.3em solid transparent;
-               border-bottom: 0;
-               border-left: 0.3em solid transparent;
-               transform: rotate(-90deg);
-            }
-         }
-      }      
-   }
+
+      &:after {
+        content: '';
+        border-bottom: 5px;
+        width: 0;
+        transition: all 0.3s ease;
+        height: 5px;
+        left: 0;
+        right: 0;
+        background: $accent;
+        display: block;
+        position: absolute;
+        bottom: 0;
+      }
+
+      &:hover {
+        &:after {
+          width: 100%;
+        }
+      }
+
+      &:last-child {
+        background-color: $accent;
+
+        a {
+          color: #fff !important;
+        }
+      }
+    }
+
+    li {
+      .nav-link.menu-item-has-children {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:after {
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-left: 0.255em;
+          vertical-align: 0.255em;
+          content: "";
+          border-top: 0.3em solid #000;
+          border-right: 0.3em solid transparent;
+          border-bottom: 0;
+          border-left: 0.3em solid transparent;
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
 }
+
 //----Search Form 
 .search-box {
   position: absolute;
@@ -423,12 +434,15 @@ body .mat-menu-panel {
       padding-left: 2.5rem;
 
     }
-    input::-webkit-input-placeholder{
-      color:#fff;
-   }
-   input:-moz-placeholder {
-      color:#fff;
-   }
+
+    input::-webkit-input-placeholder {
+      color: #fff;
+    }
+
+    input:-moz-placeholder {
+      color: #fff;
+    }
+
     form {
       position: relative;
 
@@ -461,6 +475,9 @@ body .mat-menu-panel {
       padding: 0 15px;
       display: block;
       color: #000;
+      &:hover{
+        color: #ff5722;
+      }
     }
 
     .sub-menu li a {
@@ -580,11 +597,12 @@ body .mat-menu-panel {
   .header-v3-middle {
     height: 100px;
   }
-   .header-v3-top .header-v3-top-tools{
-      .mat-form-field-appearance-legacy .mat-form-field-underline{
-         bottom:0.25em;
-      }
-   }
+
+  .header-v3-top .header-v3-top-tools {
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+      bottom: 0.25em;
+    }
+  }
 
   form {
     input {
@@ -626,18 +644,19 @@ body .mat-menu-panel {
       //   padding-right: 0;
       // }
 
-      .mat-form-field-appearance-legacy .mat-form-field-wrapper{
-         padding-bottom: 0;
+      .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+        padding-bottom: 0;
       }
     }
 
     .mat-form-field-appearance-legacy .mat-form-field-underline {
       height: 0;
-      background-color:transparent;
+      background-color: transparent;
     }
+
     .mat-form-field-ripple,
-    .mat-toolbar .mat-form-field-underline{
-      background-color:transparent;
+    .mat-toolbar .mat-form-field-underline {
+      background-color: transparent;
     }
 
     .mat-form-field {
