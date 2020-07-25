@@ -57,6 +57,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
          + this.productId + '/' + this.appService.appInfoStorage.language.id)
       .subscribe((data: CategoryDescription[]) => {
          this.finalSelectedCatDescs = data;
+         this.finalSelectedCatDescs.forEach(element => {
+            element.id = element.category.id;
+         });
       },
         error => console.log(error),
         () => console.log('Get all CategoryDescription complete'));
@@ -82,8 +85,10 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
 
    removeCategory(categoryDescId: number, index: number) {
-      this.finalDeletedCatDescs.push(categoryDescId);
-      this.finalSelectedCatDescs.splice(index, 1);
+      //this.finalDeletedCatDescs.push(categoryDescId);
+      //this.finalSelectedCatDescs.splice(index, 1);
+      this.finalSelectedCatDescs[index].action = 'delete';
+
    }
 
    categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
@@ -131,9 +136,11 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
             const productToCategory = new ProductToCategory();
             productToCategory.category = new Category();
             productToCategory.category.id = element.id;
+            productToCategory.action = element.action;
 
             productToCategorys.push(productToCategory);
          });
+
 
          const product = new Product();
          product.id = this.productId;
@@ -144,6 +151,8 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
             if (result.id > 0) {
                this.product.id = result.id;
                this.processResult(result, this.product, null);
+               this.getParentCategoryDescriptions();
+               this.getProductCategoryDescriptions();
             }
         });
 

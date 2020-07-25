@@ -204,6 +204,7 @@ export class ProductToCategory {
   category: Category;
 
   type = 'ProductToCategory';
+  action = '';
 }
 
 export class Language {
@@ -438,6 +439,7 @@ export class CategoryDescription {
   metaDescription: string;
   metaKeyword: string;
   type = 'CategoryDescription';
+  action = '';
 
   longName = '';
 }
