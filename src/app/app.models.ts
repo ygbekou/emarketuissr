@@ -663,3 +663,42 @@ export class Menu {
   icon?: string;
   children?: Menu[];
 }
+
+export class Marketing {
+  id: number;
+  clicks: number;
+  code: string;
+  section: number;
+  scope: number;
+  sortOrder: number;
+  status: number;
+  image: string;
+  beginDate: Date;
+  endDate: Date;
+  type = 'Marketing';
+}
+
+export class MarketingDescription {
+  id: number;
+  language: Language;
+  name: string;
+  marketing: Marketing;
+  description: string;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeyword: string;
+  type = 'MarketingDescription';
+}
+
+export class MarketingProduct {
+  id: number;
+  product: Product;
+  store: Store;
+  marketing: Marketing;
+  clicks: number;
+  sortOrder: number;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  type = 'MarketingProduct';
+}

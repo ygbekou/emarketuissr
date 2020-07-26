@@ -545,6 +545,13 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+   public deleteMarketing = (id: number): Observable<GenericResponse> => {
+      const actionUrl = Constants.apiServer + '/service/catalog/deleteMarketing/' + id;
+      console.log(actionUrl);
+      return this.http.get<GenericResponse>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
+
    public getMenus = (id: number): Observable<Menu[]> => {
       const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + id;
       console.log(actionUrl);

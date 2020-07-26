@@ -1,0 +1,149 @@
+<a mat-button [routerLink]="['/admin/marketings']">{{'COMMON.MARKETING' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="gray">
+  <h5>{{'COMMON.MARKETING' | translate}}</h5>
+</a>
+
+<a (click)="clear()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+</a>
+
+<mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
+
+  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+
+    <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onLangChanged($event)">
+      <mat-tab label="{{lang.name}}" *ngFor="let lang of appService.appInfoStorage.languages">
+
+      </mat-tab>
+    </mat-tab-group>
+    <form name="form" (ngSubmit)="f.form.valid && saveMarketing(2)" #f="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="markDesc.name" name="name"
+              #name="ngModel" required>
+            <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_TAG_TITLE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="metaTitle" [(ngModel)]="markDesc.metaTitle"
+              name="metaTitle" #metaTitle="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_TAG_DESCRIPTION' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="metaDescription" [(ngModel)]="markDesc.metaDescription"
+              name="metaDescription" #metaDescription="ngModel">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.META_KEYWORDS' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="metaKeyword" [(ngModel)]="markDesc.metaKeyword"
+              name="metaKeyword" #metaKeyword="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div fxFlex="100" class="px-2">
+            <mat-label>{{'COMMON.DESCRIPTION' | translate}}
+            </mat-label>
+            <quill-editor id="description" name="description" [(ngModel)]="markDesc.description" #description="ngModel">
+            </quill-editor>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+
+  <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="marketing.id>0">
+    <form name="fform" (ngSubmit)="ff.form.valid && saveMarketing(1)" #ff="ngForm" validate>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+
+          <mat-slide-toggle [(ngModel)]="marketing.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+          <mat-slide-toggle [(ngModel)]="marketing.scope" name="scope" #scope="ngModel" class="my-2">
+            Global
+          </mat-slide-toggle>
+
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Code
+            </mat-label>
+            <input matInput type="text" class="form-control" id="code" [(ngModel)]="marketing.code" name="code"
+              #code="ngModel">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.SORT_ORDER' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="marketing.sortOrder"
+              name="title" #sortOrder="ngModel">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Section</mat-label>
+            <mat-select placeholder="Section" id="section" name="section" [(ngModel)]="marketing.section"
+              #section="ngModel">
+              <mat-option *ngFor="let cat of sections" [value]="cat.id">
+                {{cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
+            </span> </p>
+          <input-file [(ngModel)]="marketingImages" name="marketingImage" #marketingImage="ngModel" fileLimit="1"
+            fileAccept="image/*">
+          </input-file>
+          <div class="logo">
+            <img [src]="'assets/images/marketings/'+marketing.id+'/'+marketing.image" [style.width.px]="150"
+              class="d-block">
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+
+</mat-tab-group>
