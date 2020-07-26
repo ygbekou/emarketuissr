@@ -9,7 +9,7 @@
                   </i>
                </a>
             </div>
-            <embryo-SidebarMenu *ngFor="let item of menuItems.getMainMenu()" [item]="item"></embryo-SidebarMenu>
+            <embryo-SidebarMenu *ngFor="let item of appService.appInfoStorage.mainMenus" [item]="item"></embryo-SidebarMenu>
          </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav class="em-sidebar" #paymentSidenav [(opened)]="appService.paymentSidenavOpen" position="end"
@@ -23,7 +23,7 @@
        <HeaderThree *ngIf="this.currentUrl != '/home-two' && this.currentUrl == '/home-three'"></HeaderThree>
  
          -->
-      <HeaderTwo></HeaderTwo>
+      <header-two></header-two>
       <div class="main">
          <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>

@@ -8,6 +8,7 @@ import { AppService } from './Services/app.service';
 })
 export class AppComponent {
    constructor(private appService: AppService) {
+      console.log('In appComponent');
       this.appService.getCacheData();
    }
 }

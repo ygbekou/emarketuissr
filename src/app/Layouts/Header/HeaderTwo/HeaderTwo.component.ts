@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CategoryDescription } from 'src/app/app.models';
 
 @Component({
-   selector: 'HeaderTwo',
+   selector: 'header-two',
    templateUrl: './HeaderTwo.component.html',
    styleUrls: ['./HeaderTwo.component.scss']
 })
@@ -11,14 +12,17 @@ export class HeaderTwoComponent implements OnInit {
 
    popupResponse: any;
 
-   public categories = ['All Categories', 'Computers', 'Food', 'Vegetables'];
+   public categories: CategoryDescription[] = [];
+   // = ['All Categories', 'Computers', 'Food', 'Vegetables'];
    selectedCategory = 'All Categories';
    addressType: string;
 
    constructor(public appService: AppService, public translate: TranslateService) { }
 
-   ngOnInit() {
+   ngOnInit() { 
+
    }
+
 
    public toggleSearch() {
       document.querySelector('app-main').classList.toggle('form-open');

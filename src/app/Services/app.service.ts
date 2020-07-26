@@ -8,7 +8,7 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -538,6 +538,20 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+   public deleteCategory = (id: number): Observable<GenericResponse> => {
+      const actionUrl = Constants.apiServer + '/service/catalog/deleteCategory/' + id;
+      console.log(actionUrl);
+      return this.http.get<GenericResponse>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
+
+   public getMenus = (id: number): Observable<Menu[]> => {
+      const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + id;
+      console.log(actionUrl);
+      return this.http.get<Menu[]>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
+
    public getOneWithChildsAndFiles = (id: number, entityClass: string): Observable<any> => {
       const actionUrl = Constants.apiServer + '/service/' + entityClass + '/withChildsAndFiles/' + id;
       return this.http.get(actionUrl, { headers: this.headers })
@@ -556,11 +570,11 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
-  public getObjects = (url: string): Observable<any[]> => {
-    const actionUrl = Constants.apiServer + url;
-    return this.http.get<any[]>(actionUrl, { headers: this.headers })
-      .pipe(catchError(this.handleError));
-  }
+   public getObjects = (url: string): Observable<any[]> => {
+      const actionUrl = Constants.apiServer + url;
+      return this.http.get<any[]>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
 
    public getCacheData() {
       const parameters: string[] = [];
@@ -586,7 +600,6 @@ export class AppService {
                this.translate.addLangs([language.code]);
                if (language.code === lang) {
                   this.translate.setDefaultLang(language.code);
-                  
                   this.appInfoStorage.language = language;
                   console.log(this.appInfoStorage.language);
 
@@ -594,6 +607,14 @@ export class AppService {
             });
             console.log('Using language :' + lang);
             this.translate.use(lang);
+            this.getDropDownCategories();
+            this.getMenus(this.appInfoStorage.language.id)
+               .subscribe((menus: Menu[]) => {
+                  this.appInfoStorage.mainMenus = menus;
+                  console.log(this.appInfoStorage.mainMenus);
+               },
+                  error => console.log(error),
+                  () => console.log('Get all Main menus complete'));
 
          }, error => console.log(error),
             () => console.log('Get Languages complete'));
@@ -628,9 +649,21 @@ export class AppService {
             this.appInfoStorage.manufacturers = data;
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
+
    }
 
-
+   getDropDownCategories() {
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |langCode|' + this.appInfoStorage.language.id + '|Integer');
+      parameters.push('e.category.showInSearch = |sInS|1|Integer');
+      this.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters,
+         ' order by e.category.sortOrder ')
+         .subscribe((data: CategoryDescription[]) => {
+            this.appInfoStorage.searchCategories = data;
+         },
+            error => console.log(error),
+            () => console.log('Get all CategoryDescription complete'));
+   }
 
    // Error handling
    handleError(error) {

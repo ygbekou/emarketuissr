@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 
 @Component({
-   selector: 'app-HomeTwo',
+   selector: 'app-home-two',
    templateUrl: './HomeTwo.component.html',
    styleUrls: ['./HomeTwo.component.scss']
 })
@@ -10,8 +10,7 @@ export class HomeTwoComponent implements OnInit {
 
    topProducts: any;
    lighteningDealsProducts: any;
- 
-
+   
    constructor(public appService: AppService) { }
 
    ngOnInit() {

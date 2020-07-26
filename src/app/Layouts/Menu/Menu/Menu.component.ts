@@ -4,6 +4,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { TranslateService } from '@ngx-translate/core';
 
 import { MenuItems } from '../../../Core/menu/menu-items/menu-items';
+import { Menu } from 'src/app/app.models';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
   selector: 'embryo-Menu',
@@ -11,8 +13,8 @@ import { MenuItems } from '../../../Core/menu/menu-items/menu-items';
   styleUrls: ['./Menu.component.scss'],
   animations: [
     trigger('indicatorRotate', [
-      state('collapsed', style({transform: 'rotate(0deg)'})),
-      state('expanded', style({transform: 'rotate(180deg)'})),
+      state('collapsed', style({ transform: 'rotate(0deg)' })),
+      state('expanded', style({ transform: 'rotate(180deg)' })),
       transition('expanded <=> collapsed',
         animate('225ms cubic-bezier(0.4,0.0,0.2,1)')
       ),
@@ -21,23 +23,25 @@ import { MenuItems } from '../../../Core/menu/menu-items/menu-items';
 })
 export class MenuComponent implements OnInit {
 
-   expanded       : boolean;
+  expanded: boolean;
+  constructor(public menuItems: MenuItems,
+    public router: Router,
+    public appService: AppService,
+    public translate: TranslateService) {
+  }
 
-   constructor(public menuItems: MenuItems,public router: Router, public translate: TranslateService) {
-   }
+  ngOnInit() {
+  }
 
-   ngOnInit() {
-   }
-
-   public onItemSelected(item: any) {
-      if (item.children && item.children.length) {
-         this.expanded = !this.expanded;
-      }
-   }
+  public onItemSelected(item: any) {
+    if (item.children && item.children.length) {
+      this.expanded = !this.expanded;
+    }
+  }
 
 
-   public redirectTo(subchildState){
-      this.router.navigate([subchildState.state],{ queryParams:{ category: subchildState.queryState }});
-   }
+  public redirectTo(subchildState) {
+    this.router.navigate([subchildState.state], { queryParams: { category: subchildState.queryState } });
+  }
 
 }

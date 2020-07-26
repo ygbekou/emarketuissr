@@ -40,7 +40,7 @@ export class CategoriesComponent implements OnInit {
 
   public remove(catDesc: CategoryDescription) {
     this.messages = '';
-    this.appService.delete(catDesc.id, 'com.softenza.emarket.model.CategoryDescription')
+    this.appService.deleteCategory(catDesc.category.id)
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           const index: number = this.dataSource.data.indexOf(catDesc);
