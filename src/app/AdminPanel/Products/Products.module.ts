@@ -27,7 +27,8 @@ import {
   MatButtonToggleModule,
   MatSlideToggleModule,
   MatToolbarModule,
-  MatTooltipModule 
+  MatTooltipModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -78,6 +79,7 @@ import { InformationsComponent } from './Informations/Informations.component';
     MatToolbarModule,
     MatTooltipModule,
     MatInputModule,
+    MatAutocompleteModule,
     InputFileModule,
     QuillModule.forRoot({
       theme: 'snow',

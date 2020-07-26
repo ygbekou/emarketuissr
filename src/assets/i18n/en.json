@@ -393,7 +393,8 @@
 		"LINKS": "Links",
 		"MANUFACTURER": "Manufacturer",
 		"DIMENSIONS": "Dimensions",
-		"SELECTED_CATEGORIES": "Selected Categories"
+		"SELECTED_CATEGORIES": "Selected Categories",
+		"SELECTED_RELATED_PRODUCTS": "Selected Related Products"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

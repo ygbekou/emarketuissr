@@ -207,6 +207,15 @@ export class ProductToCategory {
   action = '';
 }
 
+export class ProductRelated {
+  id: number;
+  product: Product;
+  related: Product;
+
+  type = 'ProductRelated';
+  action = '';
+}
+
 export class Language {
   id: number;
   name: string;

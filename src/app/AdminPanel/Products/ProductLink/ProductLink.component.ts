@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Form } from '@angular/forms';
+import { Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, CategoryDescription, ProductToCategory, Category } from 'src/app/app.models';
-import { AdminPanelServiceService } from '../../Service/AdminPanelService.service';
+import { Product, CategoryDescription, ProductToCategory, Category, ProductDescription, ProductRelated } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-product-link',
@@ -27,6 +27,14 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
    messages: string;
 
 
+   options = ['One', 'Two'];
+   filteredOptions: Observable<string[]>;
+   currentOption: string;
+
+   relatedProductOptions: ProductDescription[];
+   filteredRelatedProductOptions: Observable<ProductDescription[]>;
+   selectedRelatedProduct: ProductDescription;
+   finalSelectedRelatedProdDescs: ProductDescription[] = [];
 
    constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -48,6 +56,37 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
       this.getParentCategoryDescriptions();
       this.getProductCategoryDescriptions();
+      this.getRelatedProducts();
+      this.getProductRelatedDescriptions();
+   }
+
+   filterStates(val: string) {
+      if (val) {
+         const filterValue = val.toLowerCase();
+         return this.options.filter(state => state.toLowerCase().startsWith(filterValue));
+      }
+      return this.options;
+   }
+
+   filterRelatedProducts(val) {
+      if (val) {
+         const filterValue = typeof val === 'string' ?  val.toLowerCase() : val.name;
+         return this.relatedProductOptions.filter(prodDesc => prodDesc.name.toLowerCase().startsWith(filterValue));
+      }
+      return this.relatedProductOptions;
+   }
+
+   getProductRelatedDescriptions() {
+       this.appService.getObjects('/service/catalog/productrelateddescriptions/'
+         + this.productId + '/' + this.appService.appInfoStorage.language.id)
+      .subscribe((data: ProductDescription[]) => {
+         this.finalSelectedRelatedProdDescs = data;
+         this.finalSelectedRelatedProdDescs.forEach(element => {
+            element.id = element.product.id;
+         });
+      },
+        error => console.log(error),
+        () => console.log('Get all ProductDescription complete'));
    }
 
    getProductCategoryDescriptions() {
@@ -63,6 +102,18 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       },
         error => console.log(error),
         () => console.log('Get all CategoryDescription complete'));
+   }
+
+   getRelatedProducts() {
+      this.depth = 0;
+      this.categories = [];
+       this.appService.getObjects('/service/catalog/relatedproducts/' + this.appService.appInfoStorage.language.id
+            + '/' + this.productId)
+      .subscribe((data: ProductDescription[]) => {
+         this.relatedProductOptions = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all ProductDescription complete'));
    }
 
    getParentCategoryDescriptions() {
@@ -85,10 +136,61 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
 
    removeCategory(categoryDescId: number, index: number) {
-      //this.finalDeletedCatDescs.push(categoryDescId);
-      //this.finalSelectedCatDescs.splice(index, 1);
+      this.finalDeletedCatDescs.push(categoryDescId);
       this.finalSelectedCatDescs[index].action = 'delete';
 
+      let ptc = new ProductToCategory();
+      ptc.category = this.finalSelectedCatDescs[index].category;
+      ptc.product = new Product()
+      ptc.product.id = this.productId;
+
+      this.appService.saveWithUrl('/service/crud/ProductToCategory/delete/', ptc)
+         .subscribe((data: ProductToCategory[]) => {
+            this.processDeleteResult(data, this.messages);
+            this.finalSelectedCatDescs.splice(index, 1);
+         },
+         error => console.log(error),
+         () => console.log('Delete of selected category complete'));
+   }
+
+   removeRelatedProduct(selectedProductDesc: ProductDescription, index: number) {
+      
+      let pr = new ProductRelated();
+      pr.related = new Product();
+      pr.related.id = this.finalSelectedRelatedProdDescs[index].product.id;
+      pr.product = new Product()
+      pr.product.id = this.productId;
+      alert('here')
+
+      this.appService.saveWithUrl('/service/crud/ProductRelated/delete/', pr)
+         .subscribe((data: ProductToCategory[]) => {
+            this.processDeleteResult(data, this.messages)
+            this.finalSelectedRelatedProdDescs.splice(index, 1);
+         },
+         error => console.log(error),
+         () => console.log('Delete of selected related product complete'));
+   }
+
+   addCategory(indexOfElement: number, index: number) {
+
+      let ptc = new ProductToCategory();
+      ptc.category = this.finalSelectedCatDescs[index].category;
+      ptc.product = new Product()
+      ptc.product.id = this.productId;
+
+      this.appService.saveWithUrl('/service/crud/ProductToCategory/save/', ptc)
+         .subscribe((data: ProductToCategory[]) => {
+            this.processResult(data, ptc, null);
+            
+
+            const name = this.finalSelectedCatDescs[index].name;
+            this.finalSelectedCatDescs[index].name = '';
+            for (const catIndex in this.selectedCatDescs) {
+               this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') + this.selectedCatDescs[catIndex].name;
+            }
+         },
+         error => console.log(error),
+         () => console.log('Delete of selected category complete'));
    }
 
    categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
@@ -115,15 +217,30 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       } else {
          const index = this.finalSelectedCatDescs.length;
          this.finalSelectedCatDescs[index] = new CategoryDescription();
+         this.finalSelectedCatDescs[index].category = this.selectedCatDescs[indexOfElement].category;
          this.finalSelectedCatDescs[index].id = this.selectedCatDescs[indexOfElement].category.id;
          this.finalSelectedCatDescs[index].name = this.selectedCatDescs[indexOfElement].name;
 
-         const name = this.finalSelectedCatDescs[index].name;
-         this.finalSelectedCatDescs[index].name = '';
-         for (const catIndex in this.selectedCatDescs) {
-            this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') + this.selectedCatDescs[catIndex].name;
-         }
+         this.addCategory(indexOfElement, index);
       }
+   }
+
+
+   relatedSelected(selectedProdDesc: ProductDescription) {
+
+      let pr = new ProductRelated();
+      pr.related = selectedProdDesc.product;
+      pr.product = new Product()
+      pr.product.id = this.productId;
+
+      this.appService.saveWithUrl('/service/crud/ProductRelated/save/', pr)
+         .subscribe((data: ProductRelated[]) => {
+            this.processResult(data, pr, null);
+            this.finalSelectedRelatedProdDescs.push(selectedProdDesc);
+         },
+         error => console.log(error),
+         () => console.log('Delete of selected related product complete'));
+      
    }
 
 
