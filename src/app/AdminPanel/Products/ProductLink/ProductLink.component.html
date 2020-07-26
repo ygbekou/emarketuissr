@@ -37,5 +37,41 @@
          {{selectedCatDesc.longName}}
       </div>
    </div>
+
+
+   <div fxLayout="row wrap">
+      	
+      <mat-form-field appearance="outline" class="w-100">
+         <mat-label>{{'COMMON.RELATED_PRODUCT' | translate }}</mat-label>
+         <input type="text"
+            placeholder="Pick one"
+            aria-label="Number"
+            name="currentOption"
+            matInput
+            [(ngModel)]="currentOption"
+            [matAutocomplete]="auto"
+            (ngModelChange)="filteredRelatedProductOptions = filterRelatedProducts(currentOption)">
+         <mat-autocomplete  id="relatedProduct" #auto="matAutocomplete" [(ngModel)]="selectedRelatedProduct" >
+            <mat-option *ngFor="let option of filteredRelatedProductOptions" (onSelectionChange)="relatedSelected(option)"
+                [value]="option.name">
+               {{option.name}}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+		
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <mat-label>{{'COMMON.SELECTED_RELATED_PRODUCTS' | translate }}</mat-label>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let selectedProdDesc of finalSelectedRelatedProdDescs; 
+         let indexOfelement=index;">
+         <button mat-icon-button color="warn" (click)="removeRelatedProduct(selectedProdDesc, indexOfelement)" 
+            matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+            <mat-icon>delete</mat-icon>
+         </button>
+         {{selectedProdDesc.name}}
+      </div>
+   </div>
 </form>
       
