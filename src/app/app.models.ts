@@ -449,7 +449,6 @@ export class CategoryDescription {
   metaKeyword: string;
   type = 'CategoryDescription';
   action = '';
-
   longName = '';
 }
 
@@ -664,4 +663,12 @@ export class CreditCard {
   user: User;
   last4Digits: string;
   type = 'CreditCard';
+}
+
+export class Menu {
+  state: string;
+  name?: string;
+  type?: string;
+  icon?: string;
+  children?: Menu[];
 }

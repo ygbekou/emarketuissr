@@ -105,7 +105,12 @@ $user-name-font-size:1rem;
       .mat-nav-list .mat-list-item-content:hover,
       .mat-nav-list .mat-list-item-content.mat-list-item-focus,
       .active-link {
-         background-color: rgba(14, 27, 121, .7);
+          background-color: rgba(14, 27, 121, .7);
+         /* background-color:#ff5722;
+         color:white;
+         &:hover{
+            color:black;
+         } */
       }
       .sidebar-panel .material-icons {
          font-size: 1.4rem;

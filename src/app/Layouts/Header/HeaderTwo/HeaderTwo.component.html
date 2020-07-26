@@ -9,26 +9,29 @@
           fxFlex.xl="60%" class="align-center">
 
           <form action="">
-            <div fxLayout="row wrap"  style="align-items: baseline;">
-              <div fxFlex.xs="20%" fxFlex.sm="20%"  style="vertical-align: middle;" fxFlex.md="20%" fxFlex.lg="20%" fxFlex.xl="20%">
+            <div fxLayout="row wrap" style="align-items: baseline;">
+              <div fxFlex.xs="20%" fxFlex.sm="20%" style="vertical-align: middle;" fxFlex.md="20%" fxFlex.lg="20%"
+                fxFlex.xl="20%">
 
                 <mat-form-field appearance="fill">
-                  <mat-select [(value)]="selectedCategory"  color="accent">
-                    <mat-option [value]="cat" *ngFor="let cat of categories">{{ cat}}
+                  <mat-select [(value)]="appService.appInfoStorage.searchCategories[0]" color="accent">
+                    <mat-option [value]="cat" *ngFor="let cat of appService.appInfoStorage.searchCategories">
+                      {{ cat.name}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div fxFlex.xs="60%" fxFlex.sm="60%"  style="vertical-align: middle;" fxFlex.md="60%" fxFlex.lg="60%" fxFlex.xl="70%">
+              <div fxFlex.xs="60%" fxFlex.sm="60%" style="vertical-align: middle;" fxFlex.md="60%" fxFlex.lg="60%"
+                fxFlex.xl="70%">
                 <mat-form-field>
                   <mat-placeholder>Chercher un produit</mat-placeholder>
                   <input matInput type="text">
                 </mat-form-field>
               </div>
-              <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" 
-              fxFlex.xl="15%" style="vertical-align: middle;">
-           
-                <button mat-flat-button color="primary" aria-label="search"  style="vertical-align: middle;">
+              <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" fxFlex.xl="15%"
+                style="vertical-align: middle;">
+
+                <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;">
                   <mat-icon>search</mat-icon> Search
                 </button>
               </div>
@@ -56,7 +59,6 @@
     <div class="container">
       <div class="header-v2-bottom-inner">
         <embryo-Menu></embryo-Menu>
-
       </div>
     </div>
   </mat-toolbar-row>
