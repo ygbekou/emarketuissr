@@ -16,11 +16,11 @@ export class MarketingsComponent implements OnInit {
   dataSource: MatTableDataSource<MarketingDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  messages = ''; 
+  messages = '';
   constructor(public appService: AppService,
     private translate: TranslateService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getAll();
   }
 
@@ -40,7 +40,7 @@ export class MarketingsComponent implements OnInit {
 
   public remove(catDesc: MarketingDescription) {
     this.messages = '';
-    this.appService.deleteMarketing(catDesc.category.id)
+    this.appService.deleteMarketing(catDesc.marketing.id)
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           const index: number = this.dataSource.data.indexOf(catDesc);
