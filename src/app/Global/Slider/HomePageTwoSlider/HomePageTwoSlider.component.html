@@ -1,10 +1,10 @@
 <div class="section-gap pt-3 pb-0">
 <ngx-slick-carousel class="carousel home-2-slider" [config]="slideConfig">
-  <div ngxSlickItem *ngFor="let slide of slides">
+  <div ngxSlickItem *ngFor="let slide of marketings">
     <div class="relative">
-      <img [src]="slide.img" alt="" width="100%">
+      <img [src]="'assets/images/marketings/'+slide.marketing.id+'/'+slide.marketing.image" alt="" width="100%">
       <div class="home-2-slider-content">
-        <div [innerHTML]="slide?.content"></div>
+        <div [innerHTML]="slide?.description"></div>
         <button color="accent" mat-raised-button [routerLink]="['/products']">Shop Now</button>
       </div>
    </div>

@@ -24,6 +24,7 @@ export class MarketingComponent implements OnInit {
   messages = '';
   errors = '';
   lang = 'fr';
+  picker: any;
   selectedTab = 0;
   selectedMainTabIndex = 0;
   constructor(public appService: AppService,

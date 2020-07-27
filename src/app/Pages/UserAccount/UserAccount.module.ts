@@ -28,7 +28,8 @@ import {
   MatRadioModule,
   MatDialogModule,
   MatGridListModule,
-  MatTreeModule
+  MatTreeModule,
+  MatSlideToggleModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,11 +39,13 @@ import { AccountComponent } from './Account/Account.component';
 import { ProfileComponent } from './Profile/Profile.component';
 import { EditProfileComponent } from './EditProfile/EditProfile.component';
 import { CardsComponent } from './Cards/Cards.component';
+import { StoresComponent } from './Stores/Stores.component';
 import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputFileModule } from 'ngx-input-file';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -78,13 +81,37 @@ import { InputFileModule } from 'ngx-input-file';
     ReactiveFormsModule,
     TranslateModule,
     MatTreeModule,
-    InputFileModule
+    MatSlideToggleModule,
+    InputFileModule,
+    QuillModule.forRoot({
+      theme: 'snow',
+      modules: {
+        syntax: false,
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],
+          [{ header: 1 }, { header: 2 }],               // custom button values
+          [{ list: 'ordered'}, { list: 'bullet' }],
+          [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
+          [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
+          [{ direction: 'rtl' }],                       // text direction
+          [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ color: [] }, { background: [] }],          // dropdown with defaults from theme
+          [{ font: [] }],
+          [{ align: [] }],
+          ['clean'],                                         // remove formatting button
+          ['link', 'image', 'newsVideo']                         // link and image, newsVideo
+        ]
+      }
+    })
   ],
   declarations: [
     AccountComponent,
     ProfileComponent,
     EditProfileComponent,
     CardsComponent,
+    StoresComponent,
     AddressComponent,
     OrderHistoryComponent,
     GridProductComponent

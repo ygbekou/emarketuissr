@@ -2,36 +2,38 @@
    <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
          <div class="text-center mt-2">
-         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-            <mat-icon>save</mat-icon>
-         </button> </div>
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+               <mat-icon>save</mat-icon>
+            </button> </div>
          <div class="text-center mt-2" *ngIf="messages">
-         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
          </div>
       </div>
    </div>
-   
+
    <div fxLayout="row wrap">
-      	<div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
-               <mat-select  id="category" [(ngModel)]="selectedCatDescs[indexOfelement]" [(value)]="selectedCatDescs[indexOfelement]"
-                  (selectionChange)="categorySelected(null, indexOfelement)" name="category" #category="ngModel">
-                  <mat-option *ngFor="let category of cats" [value]="category">
-                     {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
-                  </mat-option>
-               </mat-select>
-            </mat-form-field>
-		</div>
+      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
+            <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
+               [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(null, indexOfelement)"
+               name="category" #category="ngModel">
+               <mat-option *ngFor="let category of cats" [value]="category">
+                  {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
+               </mat-option>
+            </mat-select>
+         </mat-form-field>
+      </div>
    </div>
    <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
          <mat-label>{{'COMMON.SELECTED_CATEGORIES' | translate }}</mat-label>
       </div>
-      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let selectedCatDesc of finalSelectedCatDescs; let indexOfelement=index;">
-         <button mat-icon-button color="warn" (click)="removeCategory(selectedCatDesc.id, indexOfelement)" *ngIf="selectedCatDesc.action === ''"
-            matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3"
+         *ngFor="let selectedCatDesc of finalSelectedCatDescs; let indexOfelement=index;">
+         <button mat-icon-button color="warn" (click)="removeCategory(selectedCatDesc.id, indexOfelement)"
+            *ngIf="selectedCatDesc.action === ''" matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
             <mat-icon>delete</mat-icon>
          </button>
          {{selectedCatDesc.longName}}
@@ -40,25 +42,20 @@
 
 
    <div fxLayout="row wrap">
-      	
+
       <mat-form-field appearance="outline" class="w-100">
          <mat-label>{{'COMMON.RELATED_PRODUCT' | translate }}</mat-label>
-         <input type="text"
-            placeholder="Pick one"
-            aria-label="Number"
-            name="currentOption"
-            matInput
-            [(ngModel)]="currentOption"
-            [matAutocomplete]="auto"
+         <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput
+            [(ngModel)]="currentOption" [matAutocomplete]="auto"
             (ngModelChange)="filteredRelatedProductOptions = filterRelatedProducts(currentOption)">
-         <mat-autocomplete  id="relatedProduct" #auto="matAutocomplete" [(ngModel)]="selectedRelatedProduct" >
-            <mat-option *ngFor="let option of filteredRelatedProductOptions" (onSelectionChange)="relatedSelected(option)"
-                [value]="option.name">
+         <mat-autocomplete id="relatedProduct" #auto="matAutocomplete" [(ngModel)]="selectedRelatedProduct">
+            <mat-option *ngFor="let option of filteredRelatedProductOptions"
+               (onSelectionChange)="relatedSelected(option)" [value]="option.name">
                {{option.name}}
             </mat-option>
          </mat-autocomplete>
       </mat-form-field>
-		
+
    </div>
    <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
@@ -66,7 +63,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let selectedProdDesc of finalSelectedRelatedProdDescs; 
          let indexOfelement=index;">
-         <button mat-icon-button color="warn" (click)="removeRelatedProduct(selectedProdDesc, indexOfelement)" 
+         <button mat-icon-button color="warn" (click)="removeRelatedProduct(selectedProdDesc, indexOfelement)"
             matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
             <mat-icon>delete</mat-icon>
          </button>
@@ -74,4 +71,3 @@
       </div>
    </div>
 </form>
-      

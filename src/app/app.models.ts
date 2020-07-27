@@ -615,6 +615,15 @@ export class InformationDescription {
 export class Store {
   id: number;
   name: string;
+  owner: User;
+  address: Address;
+  email: string;
+  image: string;
+  phone: string;
+  status: number;
+  fileNames: string[];
+  modifiedBy: number;
+  description: string;
   sslUrl: string;
   url: string;
   type = 'Store';

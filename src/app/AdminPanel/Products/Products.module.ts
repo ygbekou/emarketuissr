@@ -23,11 +23,13 @@ import {
   MatTabsModule,
   MatGridListModule,
   MatRadioModule,
-  MatDatepickerModule,
   MatButtonToggleModule,
   MatSlideToggleModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatAutocompleteModule,
+  MatTooltipModule,
+  MatDatepickerModule, 
+  MatNativeDateModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -49,7 +51,7 @@ import { MarketingsComponent } from './Marketings/Marketings.component';
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-  MarketingComponent, MarketingsComponent],
+    MarketingComponent, MarketingsComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -81,7 +83,10 @@ import { MarketingsComponent } from './Marketings/Marketings.component';
     MatToolbarModule,
     MatTooltipModule,
     MatInputModule,
+    MatAutocompleteModule,
     InputFileModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {

@@ -82,16 +82,32 @@
     <form name="fform" (ngSubmit)="ff.form.valid && saveMarketing(1)" #ff="ngForm" validate>
 
       <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
           <mat-slide-toggle [(ngModel)]="marketing.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
           <mat-slide-toggle [(ngModel)]="marketing.scope" name="scope" #scope="ngModel" class="my-2">
             Global
           </mat-slide-toggle>
-
-
+          <br />
+          <mat-form-field appearance="fill">
+            <mat-label>{{'COMMON.START_DATE'|translate}}</mat-label>
+            <input matInput id="beginDate" [(ngModel)]="marketing.beginDate"
+            [matDatepicker]="beginDate"
+             name="beginDate" #beginDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
+            <mat-datepicker #beginDate></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{'COMMON.END_DATE'|translate}}</mat-label>
+            <input matInput id="endDate" [(ngModel)]="marketing.endDate" 
+            [matDatepicker]="endDate"
+            name="endDate" #endDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> Code
             </mat-label>
@@ -104,7 +120,6 @@
             <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="marketing.sortOrder"
               name="title" #sortOrder="ngModel">
           </mat-form-field>
-
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Section</mat-label>
             <mat-select placeholder="Section" id="section" name="section" [(ngModel)]="marketing.section"
@@ -114,14 +129,15 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
           <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}
             </span> </p>
           <input-file [(ngModel)]="marketingImages" name="marketingImage" #marketingImage="ngModel" fileLimit="1"
             fileAccept="image/*">
           </input-file>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
           <div class="logo">
             <img [src]="'assets/images/marketings/'+marketing.id+'/'+marketing.image" [style.width.px]="150"
               class="d-block">

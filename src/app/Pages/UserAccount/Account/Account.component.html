@@ -4,7 +4,7 @@
          <div class="container">
             <div class="user-info">
                <div fxLayoutAlign="flex-start">
-                  <div class="login-user-img"> 
+                  <div class="login-user-img">
                      <img *ngIf="!appService.tokenStorage.hasToken()||appService.tokenStorage.getPicture()==='null'"
                         src="assets/images/users/user_blue.jpg" width="70" alt="log-in-user">
                      <img *ngIf="appService.tokenStorage.hasToken()&&appService.tokenStorage.getPicture()!=='null'"
