@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { NgAisModule } from 'angular-instantsearch';
 import {
   MatButtonModule,
   MatBadgeModule,
@@ -29,7 +29,8 @@ import {
   MatDialogModule,
   MatGridListModule,
   MatTreeModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatStepperModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,6 +47,8 @@ import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputFileModule } from 'ngx-input-file';
 import { QuillModule } from 'ngx-quill';
+import { SellProductComponent } from './SellProduct/SellProduct.component';
+import { TemplatesModule } from 'src/app/Templates/Templates.module';
 
 @NgModule({
   imports: [
@@ -83,6 +86,9 @@ import { QuillModule } from 'ngx-quill';
     MatTreeModule,
     MatSlideToggleModule,
     InputFileModule,
+    NgAisModule,
+    MatStepperModule,
+    TemplatesModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
@@ -114,7 +120,8 @@ import { QuillModule } from 'ngx-quill';
     StoresComponent,
     AddressComponent,
     OrderHistoryComponent,
-    GridProductComponent
+    GridProductComponent,
+    SellProductComponent
   ]
 })
 export class UserAccountModule { }
