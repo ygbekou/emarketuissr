@@ -166,7 +166,9 @@ export class Product {
   weight: number;
   weightClassId: number;
   width: number;
-
+  modifiedBy: number;
+  fileNames: string[];
+  productVideos: ProductVideo[] = [];
   productDescriptions: ProductDescription[] = [];
   productToCategorys: ProductToCategory[] = [];
 
@@ -615,6 +617,15 @@ export class InformationDescription {
 export class Store {
   id: number;
   name: string;
+  owner: User;
+  address: Address;
+  email: string;
+  image: string;
+  phone: string;
+  status: number;
+  fileNames: string[];
+  modifiedBy: number;
+  description: string;
   sslUrl: string;
   url: string;
   type = 'Store';
@@ -671,6 +682,61 @@ export class Menu {
   type?: string;
   icon?: string;
   children?: Menu[];
+}
+
+export class Marketing {
+  id: number;
+  clicks: number;
+  code: string;
+  section: number;
+  scope: number;
+  sortOrder: number;
+  status: number;
+  image: string;
+  beginDate: Date;
+  endDate: Date;
+  type = 'Marketing';
+}
+
+export class MarketingDescription {
+  id: number;
+  language: Language;
+  name: string;
+  marketing: Marketing;
+  description: string;
+  metaTitle: string;
+  metaDescription: string;
+  metaKeyword: string;
+  type = 'MarketingDescription';
+}
+
+export class MarketingProduct {
+  id: number;
+  product: Product;
+  store: Store;
+  marketing: Marketing;
+  clicks: number;
+  sortOrder: number;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  type = 'MarketingProduct';
+}
+
+export class ProductVideo {
+  id: number;
+  product: Product;
+  name: string;
+  link: string;
+  embedVideo: any;
+  status: number;
+  type = 'ProductVideo';
+  modifiedBy: number;
+  modDate: Date;
+  constructor() {
+    this.modifiedBy = 1;
+    this.modDate = new Date();
+  }
 }
 
 export class AttributeGroup {

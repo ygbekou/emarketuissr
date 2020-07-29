@@ -7,9 +7,9 @@ import { BaseComponent } from '../../baseComponent';
 import { Observable } from 'rxjs';
 
 @Component({
-	selector: 'app-product-link',
-	templateUrl: './ProductLink.component.html',
-	styleUrls: ['./ProductLink.component.scss']
+   selector: 'app-product-link',
+   templateUrl: './ProductLink.component.html',
+   styleUrls: ['./ProductLink.component.scss']
 })
 
 export class ProductLinkComponent extends BaseComponent implements OnInit {
@@ -37,9 +37,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
    finalSelectedRelatedProdDescs: ProductDescription[] = [];
 
    constructor(public appService: AppService,
-    public translate: TranslateService) {
+      public translate: TranslateService) {
       super(translate);
-    }
+   }
 
    ngOnInit() {
 
@@ -51,7 +51,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       }
 
       setTimeout(() => {
-          this.categories.splice(1);
+         this.categories.splice(1);
       }, 1000);
 
       this.getParentCategoryDescriptions();
@@ -70,68 +70,68 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
    filterRelatedProducts(val) {
       if (val) {
-         const filterValue = typeof val === 'string' ?  val.toLowerCase() : val.name;
+         const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name;
          return this.relatedProductOptions.filter(prodDesc => prodDesc.name.toLowerCase().startsWith(filterValue));
       }
       return this.relatedProductOptions;
    }
 
    getProductRelatedDescriptions() {
-       this.appService.getObjects('/service/catalog/productrelateddescriptions/'
+      this.appService.getObjects('/service/catalog/productrelateddescriptions/'
          + this.productId + '/' + this.appService.appInfoStorage.language.id)
-      .subscribe((data: ProductDescription[]) => {
-         this.finalSelectedRelatedProdDescs = data;
-         this.finalSelectedRelatedProdDescs.forEach(element => {
-            element.id = element.product.id;
-         });
-      },
-        error => console.log(error),
-        () => console.log('Get all ProductDescription complete'));
+         .subscribe((data: ProductDescription[]) => {
+            this.finalSelectedRelatedProdDescs = data;
+            this.finalSelectedRelatedProdDescs.forEach(element => {
+               element.id = element.product.id;
+            });
+         },
+            error => console.log(error),
+            () => console.log('Get all ProductDescription complete'));
    }
 
    getProductCategoryDescriptions() {
       this.depth = 0;
       this.categories = [];
-       this.appService.getObjects('/service/catalog/productcategorydescriptions/'
+      this.appService.getObjects('/service/catalog/productcategorydescriptions/'
          + this.productId + '/' + this.appService.appInfoStorage.language.id)
-      .subscribe((data: CategoryDescription[]) => {
-         this.finalSelectedCatDescs = data;
-         this.finalSelectedCatDescs.forEach(element => {
-            element.id = element.category.id;
-         });
-      },
-        error => console.log(error),
-        () => console.log('Get all CategoryDescription complete'));
+         .subscribe((data: CategoryDescription[]) => {
+            this.finalSelectedCatDescs = data;
+            this.finalSelectedCatDescs.forEach(element => {
+               element.id = element.category.id;
+            });
+         },
+            error => console.log(error),
+            () => console.log('Get all CategoryDescription complete'));
    }
 
    getRelatedProducts() {
       this.depth = 0;
       this.categories = [];
-       this.appService.getObjects('/service/catalog/relatedproducts/' + this.appService.appInfoStorage.language.id
-            + '/' + this.productId)
-      .subscribe((data: ProductDescription[]) => {
-         this.relatedProductOptions = data;
-      },
-        error => console.log(error),
-        () => console.log('Get all ProductDescription complete'));
+      this.appService.getObjects('/service/catalog/relatedproducts/' + this.appService.appInfoStorage.language.id
+         + '/' + this.productId)
+         .subscribe((data: ProductDescription[]) => {
+            this.relatedProductOptions = data;
+         },
+            error => console.log(error),
+            () => console.log('Get all ProductDescription complete'));
    }
 
    getParentCategoryDescriptions() {
       this.depth = 0;
       this.categories = [];
-       this.appService.getObjects('/service/catalog/categorydescriptions/'
+      this.appService.getObjects('/service/catalog/categorydescriptions/'
          + this.appService.appInfoStorage.language.id + '/' + this.productId)
-      .subscribe((data: CategoryDescription[]) => {
-         this.categories[this.depth] = data;
-         this.depth++;
-         this.categories[this.depth] = [];
+         .subscribe((data: CategoryDescription[]) => {
+            this.categories[this.depth] = data;
+            this.depth++;
+            this.categories[this.depth] = [];
 
-         setTimeout(() => {
-            this.categories.splice(this.depth);
-         }, 5);
-      },
-        error => console.log(error),
-        () => console.log('Get all CategoryDescription complete'));
+            setTimeout(() => {
+               this.categories.splice(this.depth);
+            }, 5);
+         },
+            error => console.log(error),
+            () => console.log('Get all CategoryDescription complete'));
    }
 
 
@@ -139,9 +139,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       this.finalDeletedCatDescs.push(categoryDescId);
       this.finalSelectedCatDescs[index].action = 'delete';
 
-      let ptc = new ProductToCategory();
+      const ptc = new ProductToCategory();
       ptc.category = this.finalSelectedCatDescs[index].category;
-      ptc.product = new Product()
+      ptc.product = new Product();
       ptc.product.id = this.productId;
 
       this.appService.saveWithUrl('/service/crud/ProductToCategory/delete/', ptc)
@@ -149,39 +149,39 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
             this.processDeleteResult(data, this.messages);
             this.finalSelectedCatDescs.splice(index, 1);
          },
-         error => console.log(error),
-         () => console.log('Delete of selected category complete'));
+            error => console.log(error),
+            () => console.log('Delete of selected category complete'));
    }
 
    removeRelatedProduct(selectedProductDesc: ProductDescription, index: number) {
-      
-      let pr = new ProductRelated();
+
+      const pr = new ProductRelated();
       pr.related = new Product();
       pr.related.id = this.finalSelectedRelatedProdDescs[index].product.id;
-      pr.product = new Product()
+      pr.product = new Product();
       pr.product.id = this.productId;
-      alert('here')
+      alert('here');
 
       this.appService.saveWithUrl('/service/crud/ProductRelated/delete/', pr)
          .subscribe((data: ProductToCategory[]) => {
-            this.processDeleteResult(data, this.messages)
+            this.processDeleteResult(data, this.messages);
             this.finalSelectedRelatedProdDescs.splice(index, 1);
          },
-         error => console.log(error),
-         () => console.log('Delete of selected related product complete'));
+            error => console.log(error),
+            () => console.log('Delete of selected related product complete'));
    }
 
    addCategory(indexOfElement: number, index: number) {
 
-      let ptc = new ProductToCategory();
+      const ptc = new ProductToCategory();
       ptc.category = this.finalSelectedCatDescs[index].category;
-      ptc.product = new Product()
+      ptc.product = new Product();
       ptc.product.id = this.productId;
 
       this.appService.saveWithUrl('/service/crud/ProductToCategory/save/', ptc)
          .subscribe((data: ProductToCategory[]) => {
             this.processResult(data, ptc, null);
-            
+
 
             const name = this.finalSelectedCatDescs[index].name;
             this.finalSelectedCatDescs[index].name = '';
@@ -189,8 +189,8 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
                this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') + this.selectedCatDescs[catIndex].name;
             }
          },
-         error => console.log(error),
-         () => console.log('Delete of selected category complete'));
+            error => console.log(error),
+            () => console.log('Delete of selected category complete'));
    }
 
    categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
@@ -203,17 +203,17 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       if (this.selectedCatDescs[indexOfElement].category.childCount > 0) {
          this.appService.getObjects('/service/catalog/categorydescriptions/' + this.appService.appInfoStorage.language.id
             + '/' + this.selectedCatDescs[indexOfElement].category.id + '/' + this.productId)
-         .subscribe((data: CategoryDescription[]) => {
-            this.categories[this.depth] = data;
-            this.depth++;
-            this.categories[this.depth] = [];
+            .subscribe((data: CategoryDescription[]) => {
+               this.categories[this.depth] = data;
+               this.depth++;
+               this.categories[this.depth] = [];
 
-            setTimeout(() => {
-               this.categories.splice(this.depth);
-            }, 5);
-         },
-         error => console.log(error),
-         () => console.log('Get all CategoryDescription complete'));
+               setTimeout(() => {
+                  this.categories.splice(this.depth);
+               }, 5);
+            },
+               error => console.log(error),
+               () => console.log('Get all CategoryDescription complete'));
       } else {
          const index = this.finalSelectedCatDescs.length;
          this.finalSelectedCatDescs[index] = new CategoryDescription();
@@ -228,9 +228,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
    relatedSelected(selectedProdDesc: ProductDescription) {
 
-      let pr = new ProductRelated();
+      const pr = new ProductRelated();
       pr.related = selectedProdDesc.product;
-      pr.product = new Product()
+      pr.product = new Product();
       pr.product.id = this.productId;
 
       this.appService.saveWithUrl('/service/crud/ProductRelated/save/', pr)
@@ -238,9 +238,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
             this.processResult(data, pr, null);
             this.finalSelectedRelatedProdDescs.push(selectedProdDesc);
          },
-         error => console.log(error),
-         () => console.log('Delete of selected related product complete'));
-      
+            error => console.log(error),
+            () => console.log('Delete of selected related product complete'));
+
    }
 
 
@@ -265,16 +265,16 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
          this.appService.save(product, 'Product')
             .subscribe(result => {
-            if (result.id > 0) {
-               this.product.id = result.id;
-               this.processResult(result, this.product, null);
-               this.getParentCategoryDescriptions();
-               this.getProductCategoryDescriptions();
-            }
-        });
+               if (result.id > 0) {
+                  this.product.id = result.id;
+                  this.processResult(result, this.product, null);
+                  this.getParentCategoryDescriptions();
+                  this.getProductCategoryDescriptions();
+               }
+            });
 
-    } catch (e) {
-      console.log(e);
-    }
+      } catch (e) {
+         console.log(e);
+      }
    }
 }

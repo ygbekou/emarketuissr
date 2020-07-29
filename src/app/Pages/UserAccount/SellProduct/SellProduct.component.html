@@ -1,0 +1,120 @@
+<mat-card>
+  <div fxLayoutAlign="space-between">
+    <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
+  </div>
+
+  <div fxLayout="row wrap" class="col-gap">
+
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step>
+        <ng-template matStepLabel>Select Store</ng-template>
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+            *ngFor="let store of stores">
+            <mat-card>
+              <mat-card-header>
+                <div mat-card-avatar>
+                  <img src="assets/images/stores/{{store.id}}/{{store.image}}">
+                </div>
+                <mat-card-title>{{store.name}}</mat-card-title>
+                <mat-card-subtitle *ngIf="store.address">{{store.address.city +', '+store.address.country.name}}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="pt-3">
+                  <div class="saved-card-box text-xl mb-4">
+                    <div [innerHTML]="store?.description"></div>
+                  </div>
+                </div>
+
+                <div fxLayout="row wrap" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                    <button mat-raised-button color="primary" (click)="selectedStore=store;stepper.selectedIndex=1;">
+                      <mat-icon>done</mat-icon>
+                      {{'COMMON.SELECT'|translate}}
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Select category</ng-template>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
+              <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
+                [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(null, indexOfelement)"
+                name="category" #category="ngModel">
+                <mat-option *ngFor="let category of cats" [value]="category">
+                  {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Select Product</ng-template>
+        <!-- Products with free api key  -->
+        <ais-instantsearch [config]="{
+          appId: 'latency',
+          apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
+          indexName: 'ikea'
+        }">
+          <div fxLayout="row wrap" class="col-gap">
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+              class="algolia-main-list">
+
+
+              <ais-search-box placeholder="Search a product"></ais-search-box>
+
+              <ais-stats></ais-stats>
+              <ais-panel header="Sort by">
+                <ais-sort-by [items]="[
+                {name: 'ikea', label: 'Featured'},
+                {name: 'ikea_price_asc', label: 'Price asc.'},
+                {name: 'ikea_price_desc', label: 'Price desc.'}
+              ]
+              ">
+                </ais-sort-by>
+              </ais-panel>
+              <ais-hits-per-page [items]="[
+                { value: 3, label: '3 per page' },
+                { value: 6, label: '6 per page' },
+                { value: 12, label: '12 per page', default:true}
+             ]"></ais-hits-per-page>
+              <ais-hits [transformItems]="transformHits">
+                <ng-template let-hits="hits" let-results="results">
+                  <ng-container *ngIf="(hits && hits.length>0); else errorBlock">
+                    <embryo-ProductGrid [currency]="appService?.currency" [products]="hits"
+                      (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true>
+                    </embryo-ProductGrid>
+                  </ng-container>
+                  <ng-template #errorBlock>
+                    No Product Found.
+                  </ng-template>
+                </ng-template>
+              </ais-hits>
+              <ais-pagination></ais-pagination>
+            </div>
+          </div>
+        </ais-instantsearch>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Sell product</ng-template>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+
+
+
+  </div>
+
+</mat-card>

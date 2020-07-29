@@ -18,11 +18,7 @@
       </mat-sidenav>
       <div class="rtl-layout"><a class="text-xl" href="javascript:void(0);" (click)="changeDirection()">RTL</a></div>
       <ngx-toasta></ngx-toasta>
-      <!--
-         <HeaderOne *ngIf="this.currentUrl != '/home-two' && this.currentUrl != '/home-three'"></HeaderOne>
-       <HeaderThree *ngIf="this.currentUrl != '/home-two' && this.currentUrl == '/home-three'"></HeaderThree>
- 
-         -->
+  
       <header-two></header-two>
       <div class="main">
          <router-outlet (activate)="onActivate($event)"></router-outlet>

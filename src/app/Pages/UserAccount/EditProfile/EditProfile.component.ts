@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, Address, Country, Zone, CreditCard } from 'src/app/app.models';
+import { User, Address, Country, Zone, CreditCard, Store } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,6 +23,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    card: CreditCard = new CreditCard();
    formData: FormData;
    picture: any[] = [];
+   addresses: Address[] = [];
+   store: Store = new Store();
    public addressTypes = [
       { id: 1, name: 'Shipping address' },
       { id: 2, name: 'Billing address' }
@@ -49,6 +51,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
             this.type = queryParams['type'];
             this.getAddress(queryParams['adrId']);
             this.getCard(queryParams['cId']);
+            this.getStore(queryParams['sId']);
          });
       });
    }
@@ -56,6 +59,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    ngOnInit() {
       this.getUser();
       this.getCountries();
+      this.getAddresses();
       this.cardForm = this.formGroup.group({
          card_number: ['', [Validators.required]],
          cvv: ['', [Validators.required]],
@@ -64,6 +68,21 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          year: ['', [Validators.required]]
       });
    }
+
+   getAddresses() {
+      const userId = Number(this.appService.tokenStorage.getUserId());
+      if (userId > 0) {
+         const parameters: string[] = [];
+         parameters.push('e.user.id = |userId|' + userId + '|Integer');
+         this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
+            .subscribe((data: Address[]) => {
+               this.addresses = data;
+            },
+               error => console.log(error),
+               () => console.log('Get all addresses complete for userId=' + userId));
+      }
+   }
+
    getBackground() {
       this.creditCardBackground = 'background-image: url(assets/images/cards/'
          + this.card.cardNumber.substring(0, 1) + '.png)';
@@ -112,6 +131,27 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    }
 
 
+   submitStoreInfo() {
+      this.messages = '';
+      this.errors = '';
+      this.store.status = (this.store.status == null
+         || this.store.status.toString() === 'false'
+         || this.store.status.toString() === '0') ? 0 : 1;
+      this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
+      this.store.owner = this.user;
+      console.log(this.store);
+      this.formData = new FormData();
+      if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+         this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+      }
+      this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
+         .subscribe(data => {
+            this.processResult(data, this.store, null);
+            this.store = data;
+         });
+   }
+
+
    getAddress(addressId: number) {
       if (addressId > 0) {
          const parameters: string[] = [];
@@ -135,6 +175,31 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
             },
                error => console.log(error),
                () => console.log('Get all CreditCard complete for CreditCard=' + cardId));
+      }
+   }
+
+
+   getStore(storeId: number) {
+      if (storeId > 0) {
+         this.appService.getOneWithChildsAndFiles(storeId, 'Store')
+            .subscribe(result => {
+               if (result.id > 0) {
+                  this.store = result;
+                  const images: any[] = [];
+                  this.store.fileNames.forEach(item => {
+                     const image = {
+                        link: 'assets/images/stores/' + this.store.id + '/' + item,
+                        preview: 'assets/images/stores/' + this.store.id + '/' + item
+                     };
+                     images.push(image);
+                  });
+                  this.picture = images;
+               } else {
+                  this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                     this.errors = res['MESSAGE.READ_FAILED'];
+                  });
+               }
+            });
       }
    }
 

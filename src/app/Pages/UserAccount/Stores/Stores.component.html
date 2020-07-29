@@ -1,0 +1,39 @@
+<mat-card>
+  <div fxLayoutAlign="space-between">
+    <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
+      [routerLink]="['/account/profile/edit']"
+      [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
+  </div>
+
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngFor="let store of stores">
+      <mat-card>  
+        <mat-card-header>
+          <div mat-card-avatar>
+            <img src="assets/images/stores/{{store.id}}/{{store.image}}">
+          </div>
+        <mat-card-title>{{store.name}}</mat-card-title>
+          <mat-card-subtitle *ngIf="store.address">{{store.address.city +', '+store.address.country.name}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="pt-3">
+            <div class="saved-card-box text-xl mb-4">
+             <div [innerHTML]="store?.description"></div>
+            </div>
+          </div>
+
+          <div fxLayout="row wrap" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
+                [queryParams]="{type:'store', sId:store.id}">{{'COMMON.EDIT'|translate}}</button>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <button mat-raised-button color="accent" (click)="delete(store.id)">{{'COMMON.DELETE'|translate}}</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+</mat-card>

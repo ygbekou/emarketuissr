@@ -1,0 +1,57 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+               <mat-icon>save</mat-icon>
+            </button> </div>
+         <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+         </div>
+      </div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}</span><span
+               class="text-muted mx-3">(max: 8 images)</span></p>
+         <input-file [(ngModel)]="files" name="gallery" #gallery="ngModel" fileLimit="8" fileAccept="image/*"
+            [linkEnabled]="false" multiple>
+         </input-file>
+      </div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.VIDEO' | translate}}</span><span
+               class="text-muted mx-3">(Link to
+               .mp4)</span></p>
+         <button type="button" mat-icon-button color="primary" (click)="addProductVideo()"
+            matTooltip="Add New ProductVideo" matTooltipPosition="after">
+            <mat-icon>add_circle</mat-icon>
+         </button>
+      </div>
+      <div id="productVideos" fxFlex="100" fxLayout="row wrap">
+         <div *ngFor="let productVideo of product.productVideos; let i = index;" fxFlex="100" class="step-section">
+            <div fxFlex="4" class="fw-500 text-center pt-3">{{i+1}}.</div>
+            <div fxFlex="90" fxLayout="row wrap">
+               <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="40" class="px-2">
+                  <mat-label>{{'COMMON.NAME' | translate}}</mat-label>
+                  <input matInput placeholder="{{'COMMON.NAME' | translate}}" [(ngModel)]="productVideo.name"
+                     name="productVideoName + {{i}}" autocomplete="off">
+               </mat-form-field>
+               <mat-form-field appearance="outline" fxFlex="100" fxFlex.gt-xs="60" class="px-2">
+                  <mat-label>{{'COMMON.LINK' | translate}}</mat-label>
+                  <input matInput placeholder="{{'COMMON.LINK_TO_VIDEO' | translate}}" [(ngModel)]="productVideo.link"
+                     name="productVideoLink + {{i}}" autocomplete="off">
+               </mat-form-field>
+            </div>
+            <div fxFlex="6" class="text-center pt-2">
+               <button type="button" mat-icon-button color="warn" (click)="deleteProductVideo(productVideo.id, i)"
+                  matTooltip="{{'COMMON.DELETE' | translate}}">
+                  <mat-icon color="accent">cancel</mat-icon>
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>

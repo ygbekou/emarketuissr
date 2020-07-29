@@ -1,222 +1,258 @@
-   
-   <mat-tab-group>
-      <mat-tab label="{{'COMMON.GENERAL' | translate}}">
-         <app-product-description [product]="product" ></app-product-description>
-      </mat-tab>
+<mat-tab-group>
+   <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+      <app-product-description [product]="product"></app-product-description>
+   </mat-tab>
 
-      <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="product.id > 0">
-         <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+   <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="product.id > 0">
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 
-            <div fxLayout="row wrap">
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <div class="text-center mt-2">
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <div class="text-center mt-2">
                   <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
                      <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                      <mat-icon>save</mat-icon>
                   </button> </div>
-                  <div class="text-center mt-2" *ngIf="messages">
+               <div class="text-center mt-2" *ngIf="messages">
                   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-                  </div>
                </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
+                     #model="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.SKU' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="sku" [(ngModel)]="product.sku" name="sku"
+                     #sku="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.UPC' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="upc" [(ngModel)]="product.upc" name="upc"
+                     #upc="ngModel">
+               </mat-form-field>
+            </div>
+
+         </div>
+
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.EAN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="ean" [(ngModel)]="product.ean" name="ean"
+                     #ean="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.JAN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="jan" [(ngModel)]="product.jan" name="jan"
+                     #jan="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.ISBN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="isbn" [(ngModel)]="product.isbn" name="isbn"
+                     #isbn="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.MPN' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="mpn" [(ngModel)]="product.mpn" name="mpn"
+                     #mpn="ngModel">
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.LOCATION' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="location" [(ngModel)]="product.location"
+                     name="location" #location="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price" name="price"
+                     #price="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId"
+                     name="manufacturerId" [(ngModel)]="product.manufacturerId" #manufacturerId="ngModel">
+                     <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers"
+                        [value]="manufacturer.id">
+                        {{manufacturer.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
+                     [(ngModel)]="product.taxClassId" #taxClass="ngModel">
+                     <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
+                        {{taxClass.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="product.quantity"
+                     name="quantity" #quantity="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="product.minimum"
+                     name="minimum" #minimum="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-slide-toggle [(ngModel)]="product.subtract" name="subtract" #subtract="ngModel" class="my-2">
+                  {{ 'COMMON.SUBTRACT_STOCK' | translate }}
+               </mat-slide-toggle>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}" id="stockStatusId"
+                     name="stockStatusId" [(ngModel)]="product.stockStatusId" #stockStatusId="ngModel">
+                     <mat-option *ngFor="let stockStatus of appService.appInfoStorage.stockStatuses"
+                        [value]="stockStatus.id">
+                        {{stockStatus.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br />
+                  <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable"
+                     [(ngModel)]="product.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3">
+               <mat-label> {{'COMMON.DIMENSIONS' | translate}}</mat-label><br />
+               <mat-form-field class="w-30">
+                  <mat-label> {{'COMMON.LENGTH' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.length" name="length"
+                     #length="ngModel">
+               </mat-form-field>
+               <mat-form-field class="w-30">
+                  <mat-label> {{'COMMON.WIDTH' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.width" name="width"
+                     #width="ngModel">
+               </mat-form-field>
+               <mat-form-field class="w-30">
+                  <mat-label> {{'COMMON.HEIGHT' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="" [(ngModel)]="product.height" name="height"
+                     #height="ngModel">
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-slide-toggle [(ngModel)]="product.shipping" name="shipping" #shipping="ngModel" class="my-2">
+                  {{ 'COMMON.REQUIRES_SHIPPING' | translate }}
+               </mat-slide-toggle>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.LENGTH_CLASS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.LENGTH_CLASS' | translate }}" id="lengthClassId"
+                     name="lengthClassId" [(ngModel)]="product.lengthClassId" #lengthClassId="ngModel">
+                     <mat-option *ngFor="let lengthClass of appService.appInfoStorage.lengthClasses"
+                        [value]="lengthClass.id">
+                        {{lengthClass.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-30">
+                  <mat-label> {{'COMMON.WEIGHT' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="weight" [(ngModel)]="product.weight"
+                     name="weight" #weight="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.WEIGHT_CLASS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.WEIGHT_CLASS' | translate }}" id="weightClassId"
+                     name="weightClassId" [(ngModel)]="product.weightClassId" #weightClassId="ngModel">
+                     <mat-option *ngFor="let weightClass of appService.appInfoStorage.weightClasses"
+                        [value]="weightClass.id">
+                        {{weightClass.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-slide-toggle [(ngModel)]="product.status" name="status" #status="ngModel" class="my-2">
+                  {{ 'COMMON.STATUS' | translate }}
+               </mat-slide-toggle>
+            </div>
+
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-30">
+                  <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="product.sortOrder"
+                     name="sortOrder" #sortOrder="ngModel">
+               </mat-form-field>
             </div>
 
             <div fxLayout="row wrap">
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.MODEL' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="model" [(ngModel)]="product.model" name="model"
-                        #model="ngModel" required>
-                     <mat-error *ngIf="f.submitted && model.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                     </mat-error>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.SKU' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="sku" [(ngModel)]="product.sku" name="sku" #sku="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.UPC' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="upc" [(ngModel)]="product.upc" name="upc" #upc="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.EAN' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="ean" [(ngModel)]="product.ean" name="ean" #ean="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.JAN' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="jan" [(ngModel)]="product.jan" name="jan" #jan="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.ISBN' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="isbn" [(ngModel)]="product.isbn" name="isbn" #isbn="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.MPN' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="mpn" [(ngModel)]="product.mpn" name="mpn" #mpn="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.LOCATION' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="location" [(ngModel)]="product.location" name="location" #location="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price" name="price" #price="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
-                     <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId" name="manufacturerId" [(ngModel)]="product.manufacturerId" #manufacturerId="ngModel">
-                        <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers" [value]="manufacturer.id">
-                           {{manufacturer.name}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
-                     <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass" [(ngModel)]="product.taxClassId" #taxClass="ngModel">
-                        <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                           {{taxClass.name}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="product.quantity" name="quantity" #quantity="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="product.minimum" name="minimum" #minimum="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-slide-toggle [(ngModel)]="product.subtract" name="subtract" #subtract="ngModel" class="my-2">
-                     {{ 'COMMON.SUBTRACT_STOCK' | translate }}
-                  </mat-slide-toggle>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label>{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}</mat-label>
-                     <mat-select placeholder="{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}" id="stockStatusId" name="stockStatusId" [(ngModel)]="product.stockStatusId" #stockStatusId="ngModel">
-                        <mat-option *ngFor="let stockStatus of appService.appInfoStorage.stockStatuses" [value]="stockStatus.id">
-                           {{stockStatus.name}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-slide-toggle [(ngModel)]="product.shipping" name="shipping" #shipping="ngModel" class="my-2">
-                     {{ 'COMMON.REQUIRES_SHIPPING' | translate }}
-                  </mat-slide-toggle>
-               </div>
-               
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100"> 
-                     <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br/>
-                     <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable" [(ngModel)]="product.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
-                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                     <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-label> {{'COMMON.DIMENSIONS' | translate}}</mat-label><br/>
-                  <mat-form-field appearance="outline" class="w-30">
-                     <mat-label> {{'COMMON.LENGTH' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="" [(ngModel)]="product.length" name="length" #length="ngModel">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="w-30">
-                     <mat-label> {{'COMMON.WIDTH' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="" [(ngModel)]="product.width" name="width" #width="ngModel">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" class="w-30">
-                     <mat-label> {{'COMMON.HEIGHT' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="" [(ngModel)]="product.height" name="height" #height="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label>{{'COMMON.LENGTH_CLASS' | translate }}</mat-label>
-                     <mat-select placeholder="{{'COMMON.LENGTH_CLASS' | translate }}" id="lengthClassId" name="lengthClassId" [(ngModel)]="product.lengthClassId" #lengthClassId="ngModel">
-                        <mat-option *ngFor="let lengthClass of appService.appInfoStorage.lengthClasses" [value]="lengthClass.id">
-                           {{lengthClass.name}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-30">
-                     <mat-label> {{'COMMON.WEIGHT' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="weight" [(ngModel)]="product.weight" name="weight" #weight="ngModel">
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-100">
-                     <mat-label>{{'COMMON.WEIGHT_CLASS' | translate }}</mat-label>
-                     <mat-select placeholder="{{'COMMON.WEIGHT_CLASS' | translate }}" id="weightClassId" name="weightClassId" [(ngModel)]="product.weightClassId" #weightClassId="ngModel">
-                        <mat-option *ngFor="let weightClass of appService.appInfoStorage.weightClasses" [value]="weightClass.id">
-                           {{weightClass.name}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </div>
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-slide-toggle [(ngModel)]="product.status" name="status" #status="ngModel" class="my-2">
-                     {{ 'COMMON.STATUS' | translate }}
-                  </mat-slide-toggle>
-               </div>
-               
-
-               <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                  <mat-form-field appearance="outline" class="w-30">
-                     <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
-                     <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="product.sortOrder" name="sortOrder" #sortOrder="ngModel">
-                  </mat-form-field>
-               </div>
-
-
-               <div fxLayout="row wrap">
-                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                     <div class="text-center mt-2">
-                     <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                  <div class="text-center mt-2">
+                     <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                        type="submit">
                         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                         <mat-icon>save</mat-icon>
                      </button> </div>
-                     <div class="text-center mt-2" *ngIf="messages">
+                  <div class="text-center mt-2" *ngIf="messages">
                      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-                     </div>
                   </div>
                </div>
-
-
             </div>
-         </form>
-      </mat-tab>
 
-      <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
-         <app-product-link [product]="product" [productId]="product.id"></app-product-link>
-      </mat-tab>
+         </div>
+      </form>
+   </mat-tab>
 
-   </mat-tab-group>
- 
+   <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
+      <app-product-link [product]="product" [productId]="product.id"></app-product-link>
+   </mat-tab>
+
+   <mat-tab label="{{'COMMON.MEDIA' | translate}}" *ngIf="product.id > 0">
+      <app-product-images [product]="product" [productId]="product.id"></app-product-images>
+   </mat-tab>
+
+</mat-tab-group>

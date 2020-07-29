@@ -6,6 +6,8 @@ import { CategoriesComponent } from './Categories/Categories.component';
 import { CategoryComponent } from './Category/Category.component';
 import { InformationsComponent } from './Informations/Informations.component';
 import { InformationComponent } from './Information/Information.component';
+import { MarketingsComponent } from './Marketings/Marketings.component';
+import { MarketingComponent } from './Marketing/Marketing.component';
 import { AttributeGroupComponent } from './AttributeGroup/AttributeGroup.component';
 import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
 import { AttributeComponent } from './Attribute/Attribute.component';
@@ -58,6 +60,14 @@ export const ProductsRoutes: Routes = [
          {
             path: 'categories/:id',
             component: CategoryComponent
+         },
+         {
+            path: 'marketings',
+            component: MarketingsComponent
+         },
+         {
+            path: 'marketings/:id',
+            component: MarketingComponent
          },
          {
             path: 'information',

@@ -1,30 +1,31 @@
-import { NgModule }       from '@angular/core'; 
-import { RouterModule }   from '@angular/router';
-import { CommonModule }   from '@angular/common';
-import { MatButtonModule, 
-         MatCardModule, 
-         MatMenuModule, 
-         MatToolbarModule, 
-         MatIconModule, 
-         MatInputModule, 
-         MatDatepickerModule, 
-         MatNativeDateModule, 
-         MatProgressSpinnerModule,
-         MatTableModule, 
-         MatExpansionModule, 
-         MatSelectModule,
-         MatSnackBarModule, 
-         MatTooltipModule, 
-         MatChipsModule, 
-         MatListModule, 
-         MatSidenavModule, 
-         MatTabsModule, 
-         MatProgressBarModule,
-         MatCheckboxModule,
-         MatSliderModule,
-         MatRadioModule,
-         MatDialogModule,
-         MatGridListModule
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import {
+   MatButtonModule,
+   MatCardModule,
+   MatMenuModule,
+   MatToolbarModule,
+   MatIconModule,
+   MatInputModule,
+   MatDatepickerModule,
+   MatNativeDateModule,
+   MatProgressSpinnerModule,
+   MatTableModule,
+   MatExpansionModule,
+   MatSelectModule,
+   MatSnackBarModule,
+   MatTooltipModule,
+   MatChipsModule,
+   MatListModule,
+   MatSidenavModule,
+   MatTabsModule,
+   MatProgressBarModule,
+   MatCheckboxModule,
+   MatSliderModule,
+   MatRadioModule,
+   MatDialogModule,
+   MatGridListModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -38,25 +39,25 @@ import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
    imports: [
       CommonModule,
       RouterModule,
-      MatButtonModule, 
+      MatButtonModule,
       FlexLayoutModule,
-      MatCardModule, 
-      MatMenuModule, 
-      MatToolbarModule, 
-      MatIconModule, 
-      MatInputModule, 
-      MatDatepickerModule, 
-      MatNativeDateModule, 
+      MatCardModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatIconModule,
+      MatInputModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
       MatProgressSpinnerModule,
-      MatTableModule, 
-      MatExpansionModule, 
-      MatSelectModule, 
-      MatSnackBarModule, 
-      MatTooltipModule, 
-      MatChipsModule, 
-      MatListModule, 
-      MatSidenavModule, 
-      MatTabsModule, 
+      MatTableModule,
+      MatExpansionModule,
+      MatSelectModule,
+      MatSnackBarModule,
+      MatTooltipModule,
+      MatChipsModule,
+      MatListModule,
+      MatSidenavModule,
+      MatTabsModule,
       MatProgressBarModule,
       MatCheckboxModule,
       MatSliderModule,
@@ -78,4 +79,4 @@ import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
       ShopDetailsComponent
    ]
 })
-export class TemplatesModule {}
+export class TemplatesModule { }

@@ -23,12 +23,13 @@ import {
   MatTabsModule,
   MatGridListModule,
   MatRadioModule,
-  MatDatepickerModule,
   MatButtonToggleModule,
   MatSlideToggleModule,
   MatToolbarModule,
+  MatAutocompleteModule,
   MatTooltipModule,
-  MatAutocompleteModule
+  MatDatepickerModule, 
+  MatNativeDateModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,6 +45,9 @@ import { ProductDescriptionComponent } from './ProductDescription/ProductDescrip
 import { ProductLinkComponent } from './ProductLink/ProductLink.component';
 import { InformationComponent } from './Information/Information.component'; 
 import { InformationsComponent } from './Informations/Informations.component';
+import { MarketingComponent } from './Marketing/Marketing.component';
+import { MarketingsComponent } from './Marketings/Marketings.component';
+import { ProductImagesComponent } from './ProductImages/ProductImages.component';
 import { AttributeGroupComponent } from './AttributeGroup/AttributeGroup.component';
 import { AttributeGroupDescriptionComponent } from './AttributeGroup/AttributeGroupDescription.component';
 import { AttributeComponent } from './Attribute/Attribute.component';
@@ -54,8 +58,9 @@ import { AttributesComponent } from './Attributes/Attributes.component';
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-  AttributeGroupComponent, AttributeGroupDescriptionComponent, AttributeComponent, AttributeDescriptionComponent,
-AttributeGroupsComponent, AttributesComponent],
+    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, 
+    AttributeGroupDescriptionComponent, AttributeComponent, AttributeDescriptionComponent,
+    AttributeGroupsComponent, AttributesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -89,6 +94,8 @@ AttributeGroupsComponent, AttributesComponent],
     MatInputModule,
     MatAutocompleteModule,
     InputFileModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
