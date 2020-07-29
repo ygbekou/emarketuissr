@@ -66,9 +66,10 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             this.formData.append('file[]', this.files[i].file, 'picture.' + this.files[i].file.name);
          }
       }
-
+      product.productVideos = this.product.productVideos;
       if (this.files.length > 0) {
-         console.log(this.product);
+         console.log(product);
+
          this.appService.saveWithFile(product, 'Product', this.formData, 'saveWithFile')
             .subscribe(result => {
                if (result.id > 0) {
