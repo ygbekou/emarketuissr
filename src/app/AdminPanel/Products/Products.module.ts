@@ -47,11 +47,12 @@ import { InformationComponent } from './Information/Information.component';
 import { InformationsComponent } from './Informations/Informations.component';
 import { MarketingComponent } from './Marketing/Marketing.component';
 import { MarketingsComponent } from './Marketings/Marketings.component';
+import { ProductImagesComponent } from './ProductImages/ProductImages.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-    MarketingComponent, MarketingsComponent],
+    MarketingComponent, MarketingsComponent, ProductImagesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
