@@ -6,6 +6,9 @@ import { CategoriesComponent } from './Categories/Categories.component';
 import { CategoryComponent } from './Category/Category.component';
 import { InformationsComponent } from './Informations/Informations.component';
 import { InformationComponent } from './Information/Information.component';
+import { AttributeGroupComponent } from './AttributeGroup/AttributeGroup.component';
+import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
+import { AttributeComponent } from './Attribute/Attribute.component';
 
 export const ProductsRoutes: Routes = [
    {
@@ -16,6 +19,18 @@ export const ProductsRoutes: Routes = [
    {
       path: '',
       children: [
+          {
+            path: 'attributes',
+            component: AttributeGroupsComponent
+         },
+         {
+            path: 'attribute-group/:id',
+            component: AttributeGroupComponent
+         },
+{
+            path: 'attribute/:id',
+            component: AttributeComponent
+         },
          {
             path: 'product-edit',
             component: EditProductComponent

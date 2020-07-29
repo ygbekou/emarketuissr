@@ -44,10 +44,18 @@ import { ProductDescriptionComponent } from './ProductDescription/ProductDescrip
 import { ProductLinkComponent } from './ProductLink/ProductLink.component';
 import { InformationComponent } from './Information/Information.component'; 
 import { InformationsComponent } from './Informations/Informations.component';
+import { AttributeGroupComponent } from './AttributeGroup/AttributeGroup.component';
+import { AttributeGroupDescriptionComponent } from './AttributeGroup/AttributeGroupDescription.component';
+import { AttributeComponent } from './Attribute/Attribute.component';
+import { AttributeDescriptionComponent } from './Attribute/AttributeDescription.component';
+import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
+import { AttributesComponent } from './Attributes/Attributes.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
-    ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent],
+    ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
+  AttributeGroupComponent, AttributeGroupDescriptionComponent, AttributeComponent, AttributeDescriptionComponent,
+AttributeGroupsComponent, AttributesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

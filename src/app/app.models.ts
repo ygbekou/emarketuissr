@@ -672,3 +672,41 @@ export class Menu {
   icon?: string;
   children?: Menu[];
 }
+
+export class AttributeGroup {
+  id: number;
+  sortOrder = 0;
+
+  attributeGroupDescriptions: AttributeGroupDescription[] = [];
+
+  type = 'AttributeGroup';
+}
+
+export class AttributeGroupDescription {
+  id: number;
+  attributeGroup: AttributeGroup;
+  language: Language;
+  name: string;
+
+  type = 'AttributeGroupDescription';
+}
+
+export class Attribute {
+  id: number;
+  attributeGroup: AttributeGroup;
+  sortOrder = 0;
+
+  attributeDescriptions: AttributeDescription[] = [];
+
+  type = 'Attribute';
+}
+
+export class AttributeDescription {
+  id: number;
+  attribute: Attribute;
+  language: Language;
+  name: string;
+  attributeGroupName: string;
+
+  type = 'AttributeDescription';
+}

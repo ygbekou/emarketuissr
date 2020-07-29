@@ -19,6 +19,8 @@ export class AppInfoStorage {
   public mainMenus: Menu[] = [];
   public footerMenus: Menu[] = [];
   public manufacturers: any = [];
+  public attributeGroups: any = [];
+
 
   constructor(private translate: TranslateService) {
 
@@ -36,5 +38,10 @@ export class AppInfoStorage {
       }
       this.CURRENCY_FORMAT = '| currency: \' \':\'symbol\':\'1.0-0\':\'' + this.translate.currentLang + '\'';
     });
+  }
+
+
+  filterAttributeGroups(languageId: number) {
+    return this.attributeGroups.filter((item) => item.language.id === languageId);
   }
 }
