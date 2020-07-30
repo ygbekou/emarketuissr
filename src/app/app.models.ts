@@ -152,6 +152,7 @@ export class Product {
   model: string;
   mpn: string;
   points = 0;
+  singleImage: false;
   price: number;
   quantity: number;
   shipping: number;

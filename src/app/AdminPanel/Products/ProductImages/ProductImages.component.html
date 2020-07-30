@@ -12,8 +12,17 @@
       </div>
    </div>
    <div fxLayout="row wrap">
+      <div  fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.MAIN_PICTURE' | translate}}</span><span
+               class="text-muted mx-3">(max: 1 image)</span></p>
+         <input-file [(ngModel)]="mainFiles" name="gallery1" #gallery1="ngModel" fileLimit="1" fileAccept="image/*"
+            [linkEnabled]="false" multiple>
+         </input-file>
+      </div> 
+   </div>
+   <div fxLayout="row wrap">
       <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
-         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.PICTURE' | translate}}</span><span
+         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.OTHER_PICTURES' | translate}}</span><span
                class="text-muted mx-3">(max: 8 images)</span></p>
          <input-file [(ngModel)]="files" name="gallery" #gallery="ngModel" fileLimit="8" fileAccept="image/*"
             [linkEnabled]="false" multiple>

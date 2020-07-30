@@ -20,6 +20,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
    messages: string;
    formData: FormData;
    files: any[];
+   mainFiles: any[];
    picture: any;
 
    constructor(public appService: AppService,
@@ -38,12 +39,23 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
                this.product = result;
                console.log(result);
                const images: any[] = [];
-               this.product.fileNames.forEach(item => {
-                  const image = {
-                     link: 'assets/images/products/' + this.productId + '/' + item,
-                     preview: 'assets/images/products/' + this.productId + '/' + item
+               this.mainFiles = [];
+               this.files = [];
+               this.product.fileNames.forEach(item => { 
+                  if (item === this.product.image) {
+                     this.mainFiles.push(
+                        {
+                           link: 'assets/images/products/' + this.productId + '/' + item,
+                           preview: 'assets/images/products/' + this.productId + '/' + item
+                        }
+                     )
+                  } else {
+                     const image = {
+                        link: 'assets/images/products/' + this.productId + '/' + item,
+                        preview: 'assets/images/products/' + this.productId + '/' + item
+                     }
+                     images.push(image);
                   }
-                  images.push(image);
                })
                this.files = images;
             } else {
@@ -65,8 +77,14 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
          if (this.files[i].file) {
             this.formData.append('file[]', this.files[i].file, 'picture.' + this.files[i].file.name);
          }
+      } 
+      for (let i = 0; i < this.mainFiles.length; i++) {
+         if (this.mainFiles[i].file) { 
+            this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
+         }
       }
       product.productVideos = this.product.productVideos;
+      product.singleImage = false;
       if (this.files.length > 0) {
          console.log(product);
 
