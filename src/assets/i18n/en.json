@@ -401,7 +401,9 @@
 		"DIMENSIONS": "Dimensions",
 		"SELECTED_CATEGORIES": "Selected Categories",
 		"SELECTED_RELATED_PRODUCTS": "Selected Related Products",
-		"RELATED_PRODUCT": "Related Product"
+		"RELATED_PRODUCT": "Related Product",
+		"ATTRIBUTE_GROUP": "Attribute Group",
+		"ATTRIBUTE": "Attribute"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

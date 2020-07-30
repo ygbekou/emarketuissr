@@ -37,6 +37,7 @@ const MENUITEMS = [
       { state: 'products', name: 'Products', type: 'link' },
       { state: 'product-add', name: 'Product Add', type: 'link' },
       { state: 'marketings', name: 'Marketing', type: 'link' },
+      { state: 'attributes', name: 'Attributes', type: 'link' },
       { state: 'information', name: 'Information', type: 'link' }
     ]
   },

@@ -627,6 +627,13 @@ export class AppService {
             () => console.log('Get Languages complete'));
 
 
+      this.getAllByCriteria('AttributeGroupDescription', parameters, ' order by e.attributeGroup.sortOrder ')
+         .subscribe((data: any[]) => {
+            this.appInfoStorage.attributeGroups = data;
+         }, error => console.log(error),
+            () => console.log('Get AttibuteGroup complete'));
+
+
       this.getCachedReferences('taxclass')
          .subscribe((data: GenericVO[]) => {
             this.appInfoStorage.taxClasses = data;

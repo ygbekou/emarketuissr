@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper } from '@angular/material';
 
-@Component({
+@Component({ 
   selector: 'app-sell-product',
   templateUrl: './SellProduct.component.html',
   styleUrls: ['./SellProduct.component.scss']

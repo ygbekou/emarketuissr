@@ -400,7 +400,9 @@
 		"DIMENSIONS": "Dimensions",
     "SELECTED_CATEGORIES": "Categories Sélectionées",
     "SELECTED_RELATED_PRODUCTS": "Produits connetéss sélectionnés",
-		"RELATED_PRODUCT": "Produit connetéss sélectionnés"
+    "RELATED_PRODUCT": "Produit connetéss sélectionnés",
+    "ATTRIBUTE_GROUP": "Groupe Attributs",
+		"ATTRIBUTE": "Attribut"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
