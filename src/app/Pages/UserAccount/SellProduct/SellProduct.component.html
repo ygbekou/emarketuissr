@@ -70,10 +70,7 @@
 
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
               class="algolia-main-list">
-
-
               <ais-search-box placeholder="Search a product"></ais-search-box>
-
               <ais-stats></ais-stats>
               <ais-panel header="Sort by">
                 <ais-sort-by [items]="[
@@ -90,10 +87,10 @@
                 { value: 12, label: '12 per page', default:true}
              ]"></ais-hits-per-page>
               <ais-hits [transformItems]="transformHits">
-                <ng-template let-hits="hits" let-results="results">
-                  <ng-container *ngIf="(hits && hits.length>0); else errorBlock">
-                    <embryo-ProductGrid [currency]="appService?.currency" [products]="hits"
-                      (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true>
+                <ng-template let-hits="products" let-results="results">
+                  <ng-container *ngIf="(products && products.length>0); else errorBlock">
+                    <embryo-ProductGrid [currency]="appService?.currency" [products]="products"
+                      (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree="true">
                     </embryo-ProductGrid>
                   </ng-container>
                   <ng-template #errorBlock>
@@ -112,9 +109,5 @@
       </mat-step>
 
     </mat-horizontal-stepper>
-
-
-
   </div>
-
 </mat-card>

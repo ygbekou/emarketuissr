@@ -1,27 +1,27 @@
-import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'embryo-ProductGrid',
-  templateUrl: './ProductGrid.component.html',
-  styleUrls: ['./ProductGrid.component.scss']
+   selector: 'embryo-ProductGrid',
+   templateUrl: './ProductGrid.component.html',
+   styleUrls: ['./ProductGrid.component.scss']
 })
 export class ProductGridComponent implements OnInit {
 
-   @Input() products : any ;
+   @Input() products: any;
 
-   @Input() currency : string;
+   @Input() currency: string;
 
-   @Input() gridLength : any;
+   @Input() gridLength: any;
 
-   @Input() gridThree : boolean = false;
+   @Input() gridThree: boolean = false;
 
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
    @Output() addToWishList: EventEmitter<any> = new EventEmitter();
 
    loaded = false;
-   lg     = 25;
-   xl     = 25;
+   lg = 25;
+   xl = 25;
 
    trackByObjectID(index, hit) {
       return hit.objectID;
@@ -31,13 +31,13 @@ export class ProductGridComponent implements OnInit {
 
    ngOnInit() {
 
-      if(this.gridThree) {
+      if (this.gridThree) {
          this.lg = 33;
          this.xl = 33;
       }
    }
 
-   public addToCartProduct(value:any) {
+   public addToCartProduct(value: any) {
       this.addToCart.emit(value);
    }
 
@@ -45,8 +45,8 @@ export class ProductGridComponent implements OnInit {
       this.loaded = true;
    }
 
-   public productAddToWishlist(value:any, parentClass) {
-      if(!(document.getElementById(parentClass).classList.contains('wishlist-active'))){
+   public productAddToWishlist(value: any, parentClass) {
+      if (!(document.getElementById(parentClass).classList.contains('wishlist-active'))) {
          let element = document.getElementById(parentClass).className += " wishlist-active";
       }
       this.addToWishList.emit(value);

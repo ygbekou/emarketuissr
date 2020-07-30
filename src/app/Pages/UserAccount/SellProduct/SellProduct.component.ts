@@ -153,7 +153,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     console.log(this.selectedStore);
     console.log(this.appService.appInfoStorage.language);
     this.appService.getObjects('/service/catalog/getProductsForCategoryForSale/' + this.appService.appInfoStorage.language.id
-      + '/' + cat.id + '/' + this.selectedStore.id)
+      + '/' + cat.category.id + '/' + this.selectedStore.id)
       .subscribe((data: ProductDescription[]) => {
         this.products = data;
         this.stepper.selectedIndex = 2;

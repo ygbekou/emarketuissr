@@ -261,6 +261,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
          const product = new Product();
          product.id = this.productId;
+         product.image = this.product.image;
          product.productToCategorys = productToCategorys;
 
          this.appService.save(product, 'Product')

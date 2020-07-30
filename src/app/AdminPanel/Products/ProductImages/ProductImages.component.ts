@@ -41,7 +41,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
                const images: any[] = [];
                this.mainFiles = [];
                this.files = [];
-               this.product.fileNames.forEach(item => { 
+               this.product.fileNames.forEach(item => {
                   if (item === this.product.image) {
                      this.mainFiles.push(
                         {
@@ -77,9 +77,9 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
          if (this.files[i].file) {
             this.formData.append('file[]', this.files[i].file, 'picture.' + this.files[i].file.name);
          }
-      } 
+      }
       for (let i = 0; i < this.mainFiles.length; i++) {
-         if (this.mainFiles[i].file) { 
+         if (this.mainFiles[i].file) {
             this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
          }
       }
