@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store } from 'src/app/app.models';
+import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store, Pagination } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
-@Component({ 
+@Component({
   selector: 'app-sell-product',
   templateUrl: './SellProduct.component.html',
   styleUrls: ['./SellProduct.component.scss']
@@ -29,6 +30,26 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   currentOption: string;
   products: ProductDescription[] = [];
   stores: Store[] = [];
+  dataSource: MatTableDataSource<ProductDescription>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+
+  @ViewChild('sidenav') sidenav: any;
+  public sidenavOpen = true;
+  public psConfig: PerfectScrollbarConfigInterface = {
+    wheelPropagation: true
+  };
+  public viewType = 'grid';
+  public viewCol = 33.3;
+  public count = 6;
+  public searchFields: any;
+  public removedSearchField: string;
+  public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
+  public message: string;
+  public watcher: Subscription;
+
+
   constructor(public appService: AppService,
     public translate: TranslateService) {
     super(translate);
@@ -157,12 +178,21 @@ export class SellProductComponent extends BaseComponent implements OnInit {
       .subscribe((data: ProductDescription[]) => {
         this.products = data;
         this.stepper.selectedIndex = 2;
-        console.log(this.products);
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
         error => console.log(error),
         () => console.log('Get all getProductsForCategoryForSale complete'));
   }
 
+
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   save() {
     this.messages = '';
     try {
@@ -212,4 +242,34 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     });
     return hits;
   }
+
+  public changeCount(count) {
+    this.count = count;
+    // this.newses.length = 0;
+    this.resetPagination();
+    // this.getNews();
+  }
+  public changeSorting(sort) {
+    this.sort = sort;
+    // this.getNews();
+  }
+  public changeViewType(obj) {
+    this.viewType = obj.viewType;
+    this.viewCol = obj.viewCol;
+  }
+
+
+  public onPageChange(e) {
+    this.pagination.page = e.pageIndex + 1;
+    // this.getNews();
+    window.scrollTo(0, 0);
+  }
+
+    public resetPagination() {
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
+  }
+
 }

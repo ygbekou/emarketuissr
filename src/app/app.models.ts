@@ -178,6 +178,8 @@ export class Product {
   cloneWithoutChilds(product: Product) {
     const copy = { ...product };
     copy.productDescriptions = [];
+    copy.productVideos = [];
+    copy.productToCategorys = [];
 
     return copy;
   }

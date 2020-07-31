@@ -67,9 +67,13 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
    }
 
    save() {
-      const product = new Product();
+      console.log(this.product);
+      const product = { ...this.product };
+      product.productDescriptions = [];
+      product.productVideos = [];
+      product.productToCategorys = [];
       product.id = this.productId;
-      this.product.modifiedBy = +this.appService.tokenStorage.getUserId();
+      product.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
 
       // tslint:disable-next-line: prefer-for-of
@@ -83,6 +87,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
          }
       }
+
       product.productVideos = this.product.productVideos;
       product.singleImage = false;
       if (this.files.length > 0) {
@@ -92,7 +97,8 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             .subscribe(result => {
                if (result.id > 0) {
                   console.log('saveWithFile');
-                  this.product = result;
+                  this.product.productVideos = result.productVideos;
+                  this.product.image = result.image;
                   this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                      this.messages = res['MESSAGE.SAVE_SUCCESS'];
                   });

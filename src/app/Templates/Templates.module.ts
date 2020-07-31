@@ -34,6 +34,8 @@ import { ProductGridComponent } from './Grid/ProductGrid/ProductGrid.component';
 import { Grid3Component } from './Grid/Grid3/Grid3.component';
 import { ReviewComponent } from './Review/Review.component';
 import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
+import { ProductsToolbarComponent } from './products-toolbar/products-toolbar.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
    imports: [
@@ -64,19 +66,22 @@ import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
       MatRadioModule,
       MatDialogModule,
       MatGridListModule,
+      TranslateModule,
       GlobalModule
    ],
    declarations: [
       ProductGridComponent,
       Grid3Component,
       ReviewComponent,
-      ShopDetailsComponent
+      ShopDetailsComponent,
+      ProductsToolbarComponent
    ],
    exports: [
       ProductGridComponent,
       Grid3Component,
       ReviewComponent,
-      ShopDetailsComponent
+      ShopDetailsComponent,
+      ProductsToolbarComponent
    ]
 })
 export class TemplatesModule { }
