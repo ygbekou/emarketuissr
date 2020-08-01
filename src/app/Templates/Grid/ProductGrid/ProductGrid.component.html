@@ -1,35 +1,12 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="products && products.length > 0">
-   <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="{{lg}}" fxFlex.xl="{{xl}}"
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{viewCol}}" fxFlex.lg="{{viewCol}}" fxFlex.xl="{{viewCol}}"
       *ngFor="let prd of products; let i=index; trackBy: trackByObjectID">
-      <mat-card class="product-card" *ngIf="gridLength && (i<gridLength)">
-         <a class="p-link" [routerLink]="['/products', prd.prd.product?.id]">
-            <img width="626" height="800" mat-card-image [src]="prd.prd.product?.image" alt="Photo of a Shiba Inu">
-         </a>
-         <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist">
-            <a (click)="productAddToWishlist(prd.product, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
-         </div>
-         <mat-card-content class="product-content relative">
-            <h5><a [routerLink]="['/products', prd.prd.product?.id]" class="title-link">{{prd?.name}}</a> </h5>
-            <div>
-               <div fxFlex fxLayoutAlign="space-between">
-                  <h6 class="accent-color">{{prd.prd.product?.price | currency: currency}}</h6>
-                  <div class="rating-star">
-                     <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
-                  </div>
-               </div>
-            </div>
-            <div class="m-icon" *ngIf="checkCartAlready(prd.product)">
-               <embryo-AddToCardButton [product]="prd.product" (addToCart)="addToCartProduct($event)">
-               </embryo-AddToCardButton>
-            </div>
-            <div class="m-icon" *ngIf="!checkCartAlready(prd.product)">
-               <button mat-fab [routerLink]="['/products',  prd.prd.product?.id]"><i
-                     class="material-icons">remove_red_eye</i> </button>
-            </div>
-         </mat-card-content>
-      </mat-card>
+      
+       <embryo-ShopDetails [currency]="currency" [detailData]="prd"
+       *ngIf="viewType==='list'"></embryo-ShopDetails>
+
       <!-- Multiple show products grid -->
-      <mat-card class="product-card" *ngIf="!gridLength">
+      <mat-card class="product-card" *ngIf="viewType==='grid'">
          <a class="p-link" *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.type, prd.product?.id]">
             <img width="626" height="800" mat-card-image
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">

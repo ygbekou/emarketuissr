@@ -12,6 +12,8 @@ export class ProductGridComponent implements OnInit {
    @Input() currency: string;
 
    @Input() gridLength: any;
+   @Input() viewType: any;
+   @Input() viewCol: any;
 
    @Input() gridThree: boolean = false;
 

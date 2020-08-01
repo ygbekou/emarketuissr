@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params }   from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 
 @Component({
-  selector: 'app-DetailPage',
-  templateUrl: './DetailPage.component.html',
-  styleUrls: ['./DetailPage.component.scss']
+   selector: 'app-DetailPage',
+   templateUrl: './DetailPage.component.html',
+   styleUrls: ['./DetailPage.component.scss']
 })
 export class DetailPageComponent implements OnInit {
 
-   id                : any;
-   type              : any;
-   apiResponse       : any;
-   singleProductData : any;
-   productsList      : any;
+   id: any;
+   type: any;
+   apiResponse: any;
+   singleProductData: any;
+   productsList: any;
 
    constructor(private route: ActivatedRoute,
-              private router: Router,
-              public appService: AppService) {
-      
+      private router: Router,
+      public appService: AppService) {
+
    }
 
    ngOnInit() {
@@ -36,9 +36,8 @@ export class DetailPageComponent implements OnInit {
    public checkResponse(response) {
       this.productsList = null;
       this.productsList = response[this.type];
-      for(let data of this.productsList)
-      {
-         if(data.id == this.id) {
+      for (let data of this.productsList) {
+         if (data.id == this.id) {
             this.singleProductData = data;
             break;
          }

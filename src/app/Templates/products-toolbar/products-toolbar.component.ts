@@ -23,7 +23,7 @@ export class ProductsToolbarComponent implements OnInit {
 
   public viewType: string = 'grid';
   public viewCol: number = 25;
-  public counts = [6, 12, 18, 24, 36];
+  public counts = [1, 6, 12, 18, 24, 36];
   public count: any;
   public sortings = [
     { code: 'priceasc', name: 'Prix ascendant' },
@@ -74,10 +74,5 @@ export class ProductsToolbarComponent implements OnInit {
     this.onSearchClick.emit(values);
   }
 
-  public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+
 }

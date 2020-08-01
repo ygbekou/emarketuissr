@@ -63,14 +63,15 @@
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
               (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
-              (onChangeSorting)="changeSorting($event)" (onSearchClick)="searchClicked($event)"
-              (onChangeViewType)="changeViewType($event)">
+              (onSearchClick)="searchClicked($event)"
+              (onChangeSorting)="changeSorting($event)" (onChangeViewType)="changeViewType($event)">
             </app-products-toolbar>
-          </div>
+          </div> 
         </div>
         <div fxLayout="row wrap">
           <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
+              [viewType]="viewType" [viewCol]="viewCol"
               (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>
