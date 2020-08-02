@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar'; 
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({
   selector: 'app-sell-product',
@@ -17,8 +17,8 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('sidenav') sidenav: any;
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('sidenav', { static: false }) sidenav: any;
+  @ViewChild('stepper', { static: false }) stepper: MatStepper;
   categories: CategoryDescription[][] = [];
   categoryId = 0;
   productId = 0;
