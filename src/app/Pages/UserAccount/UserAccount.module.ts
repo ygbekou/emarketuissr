@@ -30,7 +30,8 @@ import {
   MatGridListModule,
   MatTreeModule,
   MatSlideToggleModule,
-  MatStepperModule
+  MatStepperModule,
+  MatPaginatorModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -89,6 +90,7 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
     NgAisModule,
     MatStepperModule,
     TemplatesModule,
+    MatPaginatorModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
@@ -97,9 +99,9 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
           ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
           ['blockquote', 'code-block'],
           [{ header: 1 }, { header: 2 }],               // custom button values
-          [{ list: 'ordered'}, { list: 'bullet' }],
-          [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
-          [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }],      // superscript/subscript
+          [{ indent: '-1' }, { indent: '+1' }],          // outdent/indent
           [{ direction: 'rtl' }],                       // text direction
           [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
           [{ header: [1, 2, 3, 4, 5, 6, false] }],

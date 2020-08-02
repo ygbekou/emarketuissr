@@ -181,8 +181,6 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       this.appService.saveWithUrl('/service/crud/ProductToCategory/save/', ptc)
          .subscribe((data: ProductToCategory[]) => {
             this.processResult(data, ptc, null);
-
-
             const name = this.finalSelectedCatDescs[index].name;
             this.finalSelectedCatDescs[index].name = '';
             for (const catIndex in this.selectedCatDescs) {
@@ -259,10 +257,9 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
          });
 
 
-         const product = new Product();
+         const product = this.product.cloneWithoutChilds(this.product);
          product.id = this.productId;
          product.productToCategorys = productToCategorys;
-
          this.appService.save(product, 'Product')
             .subscribe(result => {
                if (result.id > 0) {

@@ -28,7 +28,8 @@ import {
    MatSliderModule,
    MatRadioModule,
    MatDialogModule,
-   MatGridListModule
+   MatGridListModule,
+   MatPaginatorModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
@@ -149,6 +150,7 @@ export function createTranslateLoader(http: HttpClient) {
       AngularFireDatabaseModule,
       ToastaModule.forRoot(),
       BidiModule,
+      MatPaginatorModule,
       TranslateModule.forRoot({
          loader: {
             provide: TranslateLoader,

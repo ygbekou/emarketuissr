@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store } from 'src/app/app.models';
+import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store, Pagination } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({ 
   selector: 'app-sell-product',
@@ -13,6 +15,10 @@ import { MatStepper } from '@angular/material';
 })
 export class SellProductComponent extends BaseComponent implements OnInit {
 
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('sidenav') sidenav: any;
+  @ViewChild('stepper') stepper: MatStepper;
   categories: CategoryDescription[][] = [];
   categoryId = 0; 
   productId = 0;
@@ -29,9 +35,41 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   currentOption: string;
   products: ProductDescription[] = [];
   stores: Store[] = [];
+  dataSource: MatTableDataSource<ProductDescription>;
+
+  public sidenavOpen = true;
+  public psConfig: PerfectScrollbarConfigInterface = {
+    wheelPropagation: true
+  };
+  public viewType = 'grid';
+  public viewCol = 33.3;
+  public count = 6;
+  public searchFields: any;
+  public removedSearchField: string;
+  public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
+  public message: string;
+  public watcher: Subscription;
+
+
   constructor(public appService: AppService,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    public mediaObserver: MediaObserver) {
     super(translate);
+    this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
+      if (change.mqAlias === 'xs') {
+        this.sidenavOpen = false;
+        this.viewCol = 100;
+      } else if (change.mqAlias === 'sm') {
+        this.sidenavOpen = false;
+        this.viewCol = 50;
+      } else if (change.mqAlias === 'md') {
+        this.viewCol = 50;
+        this.sidenavOpen = true;
+      } else {
+        this.viewCol = 33.3;
+        this.sidenavOpen = true;
+  }
+    });
   }
 
   ngOnInit() {
@@ -90,7 +128,6 @@ export class SellProductComponent extends BaseComponent implements OnInit {
         this.categories[this.depth] = data;
         this.depth++;
         this.categories[this.depth] = [];
-
         setTimeout(() => {
           this.categories.splice(this.depth);
         }, 5);
@@ -110,7 +147,6 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/crud/ProductToCategory/save/', ptc)
       .subscribe((data: ProductToCategory[]) => {
         this.processResult(data, ptc, null);
-
 
         const name = this.finalSelectedCatDescs[index].name;
         this.finalSelectedCatDescs[index].name = '';
@@ -153,16 +189,36 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     console.log(this.selectedStore);
     console.log(this.appService.appInfoStorage.language);
     this.appService.getObjects('/service/catalog/getProductsForCategoryForSale/' + this.appService.appInfoStorage.language.id
-      + '/' + cat.id + '/' + this.selectedStore.id)
+      + '/' + cat.category.id + '/' + this.selectedStore.id)
       .subscribe((data: ProductDescription[]) => {
         this.products = data;
         this.stepper.selectedIndex = 2;
-        console.log(this.products);
+        const result = this.filterData(data);
+        if (result.data.length === 0) {
+          // this.properties.length = 0;
+          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+            this.message = res['MESSAGE.NO_RESULT_FOUND'];
+          });
+        }
+        this.dataSource = new MatTableDataSource(result.data);
+        // console.log('These are the products');
+        // console.log(this.dataSource.filteredData);
+        this.pagination = result.pagination;
+        this.message = null;
+
       },
         error => console.log(error),
         () => console.log('Get all getProductsForCategoryForSale complete'));
   }
 
+
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   save() {
     this.messages = '';
     try {
@@ -212,4 +268,62 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     });
     return hits;
   }
+
+  public changeCount(count) {
+    this.count = count;
+    // this.products.length = 0;
+    this.resetPagination();
+    this.filterProducts();
+}
+  public changeSorting(sort) {
+    this.sort = sort;
+    this.filterProducts();
+  }
+  public changeViewType(obj) {
+    if (obj.viewType === 'list') {
+      this.changeCount(1);
+    } else if (this.count === 1) {
+      this.changeCount(6);
+    }
+    this.viewType = obj.viewType;
+    this.viewCol = obj.viewCol;
+  }
+
+
+  public onPageChange(e) {
+    this.pagination.page = e.pageIndex + 1;
+    this.filterProducts();
+    window.scrollTo(0, 0);
+  }
+
+  public resetPagination() {
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
+  }
+
+  public filterProducts() {
+    const result = this.filterData(this.products);
+    if (result.data.length === 0) {
+      // this.properties.length = 0;
+      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+        this.message = res['MESSAGE.NO_RESULT_FOUND'];
+      });
+    }
+    this.dataSource = new MatTableDataSource(result.data);
+    this.pagination = result.pagination;
+    this.message = null;
+  }
+
+
+  public filterData(data) {
+    return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
+  }
+
+  public searchClicked(data: string) {
+    this.applyFilter(data);
+  }
+
 }

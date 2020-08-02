@@ -152,6 +152,7 @@ export class Product {
   model: string;
   mpn: string;
   points = 0;
+  singleImage: false;
   price: number;
   quantity: number;
   shipping: number;
@@ -177,6 +178,8 @@ export class Product {
   cloneWithoutChilds(product: Product) {
     const copy = { ...product };
     copy.productDescriptions = [];
+    copy.productVideos = [];
+    copy.productToCategorys = [];
 
     return copy;
   }

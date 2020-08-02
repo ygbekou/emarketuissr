@@ -1,0 +1,55 @@
+<div fxLayout="row wrap">
+   
+   <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+      <button type="button" mat-icon-button color="primary" (click)="addAttribute()"
+         matTooltip="Assign New Attribute" matTooltipPosition="after">
+         <mat-icon>add_circle</mat-icon>
+      </button>
+   </div>
+
+   <div id="productAttributes1" fxFlex="100" fxLayout="row wrap" *ngIf="productAttributes !== undefined">
+      <div fxFlex="4" class="text-center">Id</div>
+      <div fxFlex="40" class="text-center">{{'COMMON.ATTRIBUTE' | translate}}</div>
+      <div fxFlex="3" class="text-center"></div>
+      <div fxFlex="47" class="text-center">{{'COMMON.DESCRIPTION' | translate}}</div>
+      <div fxFlex="6" class="text-center">Actions</div>
+      <div *ngFor="let productAttribute of productAttributes; let i = index;" fxFlex="100" class="step-section">
+         <form name="form" (ngSubmit)="f.form.valid && saveProductAttribute(productAttribute, i)" #f="ngForm" validate>
+            <div fxFlex="4" class="fw-500 text-center pt-3">{{productAttribute.id}}.</div>
+            <div fxFlex="36" fxLayout="row wrap">
+               <mat-form-field appearance="outline" class="w-100">
+                  <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
+                     [(ngModel)]="productAttribute.attributeName" required
+                     (ngModelChange)="filteredAttributeOptions = filterAttributes(currentOption)">
+                  <mat-autocomplete id="attribute" #auto="matAutocomplete" >
+                     <mat-option *ngFor="let option of filteredAttributeOptions" 
+                        (onSelectionChange)="productAttribute.attribute = option.attribute; 
+                        productAttribute.language = option.language" 
+                        [value]="option.name">
+                        {{option.name}}
+                     </mat-option>
+                  </mat-autocomplete>
+               </mat-form-field>
+            </div>
+            <div fxFlex="3" fxLayout="row wrap"></div>
+            <div fxFlex="47" fxLayout="row wrap">
+               <mat-form-field appearance="outline" class="w-100">
+                  <input type="text" appearance="outline" matInput rows="2" cols="50" id="description"
+                     name="description" [(ngModel)]="productAttribute.text"  required>
+               </mat-form-field>
+            </div>
+            <div fxFlex="10" class="text-center pt-2">
+               
+               <button mat-icon-button color="primary" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit" class="remove">
+                  <mat-icon>save</mat-icon>
+               </button>
+
+               <button mat-icon-button color="warn" (click)="deleteProductAttribute(productAttribute, i)" matTooltip="{{'COMMON.DELETE' | translate}}"
+                  class="remove">
+                  <mat-icon>delete</mat-icon>
+               </button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

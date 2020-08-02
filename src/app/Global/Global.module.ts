@@ -77,7 +77,6 @@ import { HomePageThreeSliderComponent } from './Slider/HomePageThreeSlider/HomeP
 import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-
 @NgModule({
    imports: [
       CommonModule,
