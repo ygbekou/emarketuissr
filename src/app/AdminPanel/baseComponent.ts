@@ -52,7 +52,7 @@ export class BaseComponent {
   }
 
     protected processDeleteResult(result, messages) {
-    if (result.errors === null || result.errors.length > 0) {
+    if (result.errors === undefined || result.errors === null || result.errors.length > 0) {
         this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
             this.messages = res['MESSAGE.DELETE_SUCCESS'];
         });

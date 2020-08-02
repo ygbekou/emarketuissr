@@ -199,6 +199,22 @@ export class ProductDescription {
   type = 'ProductDescription';
 }
 
+export class ProductAttribute {
+  id: number;
+  product: Product;
+  language: Language;
+  attribute: Attribute;
+  text: string;
+  attributeName: string;
+
+  type = 'ProductAttribute';
+
+  constructor() {
+    this.product = new Product();
+    this.attribute = new Attribute();
+    this.language = new Language();
+  }
+}
 
 export class ProductToCategory {
   id: number;
@@ -772,6 +788,7 @@ export class AttributeDescription {
   attribute: Attribute;
   language: Language;
   name: string;
+  text: string;
   attributeGroupName: string;
 
   type = 'AttributeDescription';

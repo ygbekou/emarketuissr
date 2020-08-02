@@ -255,4 +255,8 @@
       <app-product-images [product]="product" [productId]="product.id"></app-product-images>
    </mat-tab>
 
+   <mat-tab label="{{'COMMON.ATTRIBUTE' | translate}}" *ngIf="product.id > 0">
+      <app-product-attributes [product]="product" [productId]="product.id"></app-product-attributes>
+   </mat-tab>
+
 </mat-tab-group>

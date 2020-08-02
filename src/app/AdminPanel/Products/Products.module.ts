@@ -54,13 +54,14 @@ import { AttributeComponent } from './Attribute/Attribute.component';
 import { AttributeDescriptionComponent } from './Attribute/AttributeDescription.component';
 import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
 import { AttributesComponent } from './Attributes/Attributes.component';
+import { ProductAttributesComponent } from './ProductAttribute/ProductAttributes.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
     MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, 
     AttributeGroupDescriptionComponent, AttributeComponent, AttributeDescriptionComponent,
-    AttributeGroupsComponent, AttributesComponent],
+    AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

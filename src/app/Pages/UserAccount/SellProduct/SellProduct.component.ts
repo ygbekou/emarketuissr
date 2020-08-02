@@ -14,7 +14,7 @@ import { MatStepper } from '@angular/material';
 export class SellProductComponent extends BaseComponent implements OnInit {
 
   categories: CategoryDescription[][] = [];
-  categoryId = 0;
+  categoryId = 0; 
   productId = 0;
   finalSelectedCatDescs: CategoryDescription[] = [];
   finalDeletedCatDescs: number[] = [];
@@ -22,7 +22,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   depth = 0;
   messages: string;
   product: Product = new Product();
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('stepper', {static: false}) stepper: MatStepper;
   selectedStore: Store = new Store();
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
