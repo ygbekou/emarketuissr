@@ -3,11 +3,18 @@
     <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
   </div>
 
-  <div fxLayout="row wrap" class="col-gap">
+  <div fxLayout="row wrap" class="col-gap"> 
 
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step>
-        <ng-template matStepLabel>Select Store</ng-template>
+        <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+            *ngIf="!stores || stores.length===0">
+            <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+              [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+          </div>
+        </div>
         <div fxLayout="row wrap" class="col-gap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
             *ngFor="let store of stores">
@@ -26,7 +33,6 @@
                     <div [innerHTML]="store?.description"></div>
                   </div>
                 </div>
-
                 <div fxLayout="row wrap" class="col-gap">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                     <button mat-raised-button color="primary" (click)="selectedStore=store;stepper.selectedIndex=1;">
@@ -41,7 +47,7 @@
         </div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Select category</ng-template>
+        <ng-template matStepLabel>{{'COMMON.SELECT_CATEGORY'|translate}}</ng-template>
         <div fxLayout="row wrap">
           <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
             <mat-form-field appearance="outline" class="w-100">
@@ -58,30 +64,51 @@
         </div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Select Product</ng-template>
-        <div fxLayout="row wrap">
+        <ng-template matStepLabel>{{'COMMON.SELECT_PRODUCT'|translate}}</ng-template>
+        <div fxLayout="row wrap" *ngIf="!products || products.length===0">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+              {{'COMMON.NO_PRODUCT_FOUND'|translate}}
+            </mat-chip>
+          </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
               (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
-              (onSearchClick)="searchClicked($event)"
-              (onChangeSorting)="changeSorting($event)" (onChangeViewType)="changeViewType($event)">
+              (onSearchClick)="searchClicked($event)" (onChangeSorting)="changeSorting($event)"
+              (onChangeViewType)="changeViewType($event)">
             </app-products-toolbar>
-          </div> 
+          </div>
         </div>
-        <div fxLayout="row wrap">
+        <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
-              [viewType]="viewType" [viewCol]="viewCol"
-              (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree="true">
+              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
+              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>
         </div>
-        <mat-paginator [length]="pagination?.total" [pageSize]="pagination?.perPage" (page)="onPageChange($event)"
-          class="w-100 mat-elevation-z1">
+        <mat-paginator *ngIf="products && products.length>0" [length]="pagination?.total"
+          [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
         </mat-paginator>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Sell product</ng-template>
+        <ng-template matStepLabel>{{'COMMON.SELL_PRODUCT'|translate}}</ng-template>
+        <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+              {{'COMMON.SELECT_PRODUCT'|translate}}
+            </mat-chip>
+          </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="productDesc.id>0">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <embryo-ShopDetails [currency]="appService?.currency" [detailData]="productDesc" [fromPage]="'sellP'"
+              *ngIf="viewType==='list'" (sellProduct)="selectForSaleProduct(productDesc)">
+            </embryo-ShopDetails>
+          </div>
+        </div>
       </mat-step>
     </mat-horizontal-stepper>
   </div>

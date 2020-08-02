@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AppService } from '../../Services/app.service';
+import { ProductDescription } from 'src/app/app.models';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -10,9 +11,11 @@ import { AppService } from '../../Services/app.service';
 })
 export class ShopDetailsComponent implements OnInit, OnChanges {
 
-   @Input() detailData: any;
+   @Input() detailData: ProductDescription;
    @Input() currency: string;
-
+   @Input() fromPage: string;
+   @Output() sellProduct: EventEmitter<any> = new EventEmitter();
+   @Output() selectProduct: EventEmitter<any> = new EventEmitter();
    mainImgPath: string;
    totalPrice: any;
    type: any;
@@ -25,10 +28,14 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       private router: Router,
       public appService: AppService
    ) {
+      console.log('constructor called');
+      console.log(this.detailData);
       this.appService.getProductReviews().valueChanges().subscribe(res => { this.productReviews = res });
    }
 
    ngOnInit() {
+      console.log('ngOnInit called');
+      console.log(this.detailData);
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
 
@@ -39,6 +46,8 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges() {
+      console.log('ngOnChanges called');
+      console.log(this.detailData);
       this.mainImgPath = null;
       this.totalPrice = null;
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
@@ -79,6 +88,14 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    public buyNow(value: any) {
       this.appService.buyNow(value);
       this.router.navigate(['/checkout']);
+   }
+
+   public selectForSaleProduct(product: any) {
+      this.selectProduct.emit(product);
+   }
+
+   public submitProductForSale(product: any) {
+      this.sellProduct.emit(product);
    }
 
 }
