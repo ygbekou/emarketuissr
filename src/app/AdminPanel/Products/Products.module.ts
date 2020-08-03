@@ -55,13 +55,18 @@ import { AttributeDescriptionComponent } from './Attribute/AttributeDescription.
 import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
 import { AttributesComponent } from './Attributes/Attributes.component';
 import { ProductAttributesComponent } from './ProductAttribute/ProductAttributes.component';
+import { OptionsComponent } from './Options/Options.component';
+import { OptionComponent } from './Option/Option.component';
+import { OptionDescriptionComponent } from './Option/OptionDescription.component';
+import { OptionValuesComponent } from './OptionValues/OptionValues.component';
+import { OptionValueComponent } from './OptionValue/OptionValue.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, 
-    AttributeGroupDescriptionComponent, AttributeComponent, AttributeDescriptionComponent,
-    AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent],
+    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent, 
+    AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent, 
+    OptionsComponent, OptionComponent, OptionDescriptionComponent, OptionValuesComponent, OptionValueComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

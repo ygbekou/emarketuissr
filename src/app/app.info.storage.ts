@@ -20,6 +20,7 @@ export class AppInfoStorage {
   public footerMenus: Menu[] = [];
   public manufacturers: any = [];
   public attributeGroups: any = [];
+  public optionTypes: any = ['Select', 'Radio', 'Checkbox'];
 
 
   constructor(private translate: TranslateService) {

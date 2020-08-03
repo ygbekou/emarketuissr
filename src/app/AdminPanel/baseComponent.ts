@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
+import { MatTableDataSource } from '@angular/material';
 @Component({
 	template: ``,
   providers: []
@@ -10,6 +11,9 @@ export class BaseComponent {
   public messageColor: string;
   public hasError: boolean;
   public lang: any;
+  dataSource: any;
+  paginator: any;
+  sort: any;
 
 
   constructor
@@ -51,7 +55,7 @@ export class BaseComponent {
     listItems.splice(index, 1);
   }
 
-    protected processDeleteResult(result, messages) {
+  protected processDeleteResult(result, messages) {
     if (result.errors === undefined || result.errors === null || result.errors.length > 0) {
         this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
             this.messages = res['MESSAGE.DELETE_SUCCESS'];
@@ -63,4 +67,25 @@ export class BaseComponent {
     }
   }
 
+
+  protected processDataSourceDeleteResult(resp, messages, object, dataSource) {
+    if (resp.result === 'SUCCESS') {
+      const index: number = dataSource.data.indexOf(object);
+      if (index !== -1) {
+        dataSource.data.splice(index, 1);
+        dataSource = new MatTableDataSource<any>(this.dataSource.data);
+        dataSource.paginator = this.paginator;
+        dataSource.sort = this.sort;
+      }
+    } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
+      this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
+        this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
+      });
+    } else {
+      this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
+        this.messages = res['MESSAGE.ERROR_OCCURRED'];
+      });
     }
+  }
+
+}

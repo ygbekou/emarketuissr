@@ -1,0 +1,68 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+      <button mat-icon-button color="primary" (click)="optionValueView.clear()" 
+         matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
+         <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+      </button>
+  </div>
+</div>
+
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+<app-option-value [option]="option" [optionId]="optionId"></app-option-value>
+
+<div class="table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let optionValueDesc"> {{optionValueDesc.optionValue.id}} </td>
+    </ng-container>
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let optionValueDesc"><img [src]="'assets/images/optionvalues/' + optionValueDesc.optionValue.id + '/' + optionValueDesc.optionValue.image"
+          [style.width.px]="50" class="d-block"></td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let optionValueDesc"> {{optionValueDesc.name}} </td>
+    </ng-container>
+
+
+    <!-- Published Column -->
+    <ng-container matColumnDef="sortOrder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SORT_ORDER' | translate}} </th>
+      <td mat-cell *matCellDef="let optionValueDesc"> {{optionValueDesc.optionValue.sortOrder}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let optionValueDesc; let i = index;">
+        <button mat-icon-button color="primary" (click)="optionValueView.getOptionValueDescriptions(optionValueDesc.optionValue.id)" 
+         matTooltip="{{'COMMON.EDIT' | translate}}"
+          class="remove">
+          <mat-icon>edit</mat-icon>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-icon-button color="warn" (click)="deleteOptionValue(optionValueDesc.optionValue, i)" matTooltip="{{'COMMON.DELETE' | translate}}"
+          class="remove">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let optionValue; columns: displayedColumns;">
+    </tr>
+  </table>
+  <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
