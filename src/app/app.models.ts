@@ -168,6 +168,8 @@ export class Product {
   weightClassId: number;
   width: number;
   modifiedBy: number;
+  rating: number;
+  ratingCount: number;
   fileNames: string[];
   productVideos: ProductVideo[] = [];
   productDescriptions: ProductDescription[] = [];
@@ -195,6 +197,8 @@ export class ProductDescription {
   language: Language;
   name: string;
   description: string;
+  shortDescription: string;
+  mediumDescription: string;
   tag: string;
   metaTitle: string;
   metaDescription: string;

@@ -741,19 +741,22 @@ export class AppService {
                });
                console.log('Which one? views');
                break;
-            case 'pricedasc':
+            case 'pricedesc':
                data = data.sort((a, b) => {
                   if (a.product.price < b.product.price) {
+                     // console.log(a.product.price + '-1-' + a.product.price);
                      return 1;
                   }
                   if (a.product.price > b.product.price) {
+                      // console.log(a.product.price + '- -1 -' + a.product.price);
                      return -1;
                   }
+                  // console.log(a.product.price + '-0-' + a.product.price);
                   return 0;
                });
                console.log('Which one? price asc');
                break;
-            case 'pricedasc':
+            case 'priceasc':
                data = data.sort((a, b) => {
                   if (a.product.price > b.product.price) {
                      return 1;
@@ -766,6 +769,7 @@ export class AppService {
                console.log('Which one? price asc');
                break;
             default:
+               console.log('Which one? Default');
                break;
          }
       }

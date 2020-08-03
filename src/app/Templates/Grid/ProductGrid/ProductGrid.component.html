@@ -1,9 +1,10 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="products && products.length > 0">
    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{viewCol}}" fxFlex.lg="{{viewCol}}" fxFlex.xl="{{viewCol}}"
       *ngFor="let prd of products; let i=index; trackBy: trackByObjectID">
-      
-       <embryo-ShopDetails [currency]="currency" [detailData]="prd"
-       *ngIf="viewType==='list'"></embryo-ShopDetails>
+
+      <embryo-ShopDetails [currency]="currency" [detailData]="prd" [fromPage]="fromPage" *ngIf="viewType==='list'"
+         (selectProduct)="selectForSaleProduct(prd)">
+      </embryo-ShopDetails>
 
       <!-- Multiple show products grid -->
       <mat-card class="product-card" *ngIf="viewType==='grid'">
@@ -16,7 +17,7 @@
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image"
                [ngClass]="{ transparent: !loaded }" (load)="onLoad()" alt="Photo">
          </a>
-         <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist">
+         <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist" *ngIf="fromPage==='buy'">
             <a (click)="productAddToWishlist(prd.product, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
          </div>
          <mat-card-content class="product-content relative">
@@ -32,13 +33,18 @@
                   </div>
                </div>
             </div>
-            <div class="m-icon" *ngIf="checkCartAlready(prd.product)">
+            <div class="m-icon" *ngIf="checkCartAlready(prd.product)  && fromPage==='buy'">
                <embryo-AddToCardButton [product]="prd.product" (addToCart)="addToCartProduct($event)">
                </embryo-AddToCardButton>
             </div>
+            <div class="m-icon" *ngIf="fromPage==='sell'">
+               <ng-container *ngIf="prd">
+                  <button mat-fab (click)="selectForSaleProduct(prd)"><i class="material-icons"> check_box
+                     </i></button>
+               </ng-container>
+            </div>
             <div class="m-icon" *ngIf="!checkCartAlready(prd.product)">
-               <button mat-fab *ngIf="prd.product?.id"
-                  [routerLink]="['/products', prd.product?.id]"><i
+               <button mat-fab *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.id]"><i
                      class="material-icons">remove_red_eye</i> </button>
                <button mat-fab *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"><i
                      class="material-icons">remove_red_eye</i> </button>

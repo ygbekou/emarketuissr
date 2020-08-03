@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store, Pagination } from 'src/app/app.models';
+import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
-@Component({ 
+@Component({
   selector: 'app-sell-product',
   templateUrl: './SellProduct.component.html',
   styleUrls: ['./SellProduct.component.scss']
@@ -17,10 +17,10 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('sidenav') sidenav: any;
-  @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('sidenav', { static: false }) sidenav: any;
+  @ViewChild('stepper', { static: false }) stepper: MatStepper;
   categories: CategoryDescription[][] = [];
-  categoryId = 0; 
+  categoryId = 0;
   productId = 0;
   finalSelectedCatDescs: CategoryDescription[] = [];
   finalDeletedCatDescs: number[] = [];
@@ -28,7 +28,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   depth = 0;
   messages: string;
   product: Product = new Product();
-  @ViewChild('stepper', {static: false}) stepper: MatStepper;
+  productDesc: ProductDescription = new ProductDescription();
   selectedStore: Store = new Store();
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
@@ -68,7 +68,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
       } else {
         this.viewCol = 33.3;
         this.sidenavOpen = true;
-  }
+      }
     });
   }
 
@@ -137,7 +137,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   }
 
 
-  addCategory(indexOfElement: number, index: number) {
+  addCategory(index: number) {
 
     const ptc = new ProductToCategory();
     ptc.category = this.finalSelectedCatDescs[index].category;
@@ -148,7 +148,6 @@ export class SellProductComponent extends BaseComponent implements OnInit {
       .subscribe((data: ProductToCategory[]) => {
         this.processResult(data, ptc, null);
 
-        const name = this.finalSelectedCatDescs[index].name;
         this.finalSelectedCatDescs[index].name = '';
         for (const catIndex in this.selectedCatDescs) {
           this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') + this.selectedCatDescs[catIndex].name;
@@ -158,13 +157,15 @@ export class SellProductComponent extends BaseComponent implements OnInit {
         () => console.log('Delete of selected category complete'));
   }
 
-  categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
+  categorySelected(indexOfElement: number) {
 
     const indexIncrement = indexOfElement + 1;
     this.categories.splice(indexIncrement);
     this.selectedCatDescs.splice(indexIncrement);
     this.depth = indexIncrement;
-
+    console.log(this.selectedCatDescs);
+    console.log(indexOfElement);
+    console.log(this.selectedCatDescs[indexOfElement]);
     if (this.selectedCatDescs[indexOfElement].category.childCount > 0) {
       this.appService.getObjects('/service/catalog/categorydescriptions/' + this.appService.appInfoStorage.language.id
         + '/' + this.selectedCatDescs[indexOfElement].category.id + '/' + this.productId)
@@ -274,7 +275,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     // this.products.length = 0;
     this.resetPagination();
     this.filterProducts();
-}
+  }
   public changeSorting(sort) {
     this.sort = sort;
     this.filterProducts();
@@ -293,7 +294,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public onPageChange(e) {
     this.pagination.page = e.pageIndex + 1;
     this.filterProducts();
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }
 
   public resetPagination() {
@@ -324,6 +325,13 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   public searchClicked(data: string) {
     this.applyFilter(data);
+  }
+
+  selectForSaleProduct($event) {
+    console.log('selectForSaleProduct');
+    this.productDesc = $event;
+    console.log(this.productDesc);
+    this.stepper.selectedIndex = 3;
   }
 
 }

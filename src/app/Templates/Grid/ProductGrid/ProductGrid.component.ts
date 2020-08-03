@@ -10,10 +10,11 @@ export class ProductGridComponent implements OnInit {
    @Input() products: any;
 
    @Input() currency: string;
-
+   @Input() fromPage: string;
    @Input() gridLength: any;
    @Input() viewType: any;
    @Input() viewCol: any;
+   @Output() selectProduct: EventEmitter<any> = new EventEmitter();
 
    @Input() gridThree: boolean = false;
 
@@ -37,6 +38,12 @@ export class ProductGridComponent implements OnInit {
          this.lg = 33;
          this.xl = 33;
       }
+   }
+
+   public selectForSaleProduct(product: any) {
+      console.log('sale button clicked');
+      console.log(product);
+      this.selectProduct.emit(product);
    }
 
    public addToCartProduct(value: any) {
