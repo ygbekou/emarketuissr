@@ -800,3 +800,46 @@ export class AttributeDescription {
 
   type = 'AttributeDescription';
 }
+
+export class Options {
+  id: number;
+  optionType: string;
+  sortOrder = 0;
+
+  optionDescriptions: OptionDescription[] = [];
+
+  type = 'Option';
+}
+
+export class OptionDescription {
+  id: number;
+  option: Options;
+  language: Language;
+  name: string;
+
+  type = 'OptionDescription';
+}
+
+export class OptionValue {
+  id: number;
+  option: Options;
+  image: string;
+  sortOrder = 0;
+
+  // Transient
+  imageFiles: any[];
+
+  optionValueDescriptions: OptionValueDescription[] = [];
+
+  type = 'OptionValue';
+}
+
+export class OptionValueDescription {
+  id: number;
+  option: Options;
+  optionValue: OptionValue;
+  language: Language;
+  name: string;
+
+  type = 'OptionValueDescription';
+}

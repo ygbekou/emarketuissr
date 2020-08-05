@@ -40,12 +40,12 @@
             </div>
             <div fxFlex="10" class="text-center pt-2">
                
-               <button mat-icon-button color="primary" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit" class="remove">
+               <button mat-icon-button color="primary" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit">
                   <mat-icon>save</mat-icon>
                </button>
 
-               <button mat-icon-button color="warn" (click)="deleteProductAttribute(productAttribute, i)" matTooltip="{{'COMMON.DELETE' | translate}}"
-                  class="remove">
+               <button mat-icon-button color="warn" matTooltip="{{'COMMON.DELETE' | translate}}"
+                  (click)="deleteProductAttribute(productAttribute, i)" class="remove">
                   <mat-icon>delete</mat-icon>
                </button>
             </div>

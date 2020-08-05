@@ -11,6 +11,8 @@ import { MarketingComponent } from './Marketing/Marketing.component';
 import { AttributeGroupComponent } from './AttributeGroup/AttributeGroup.component';
 import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.component';
 import { AttributeComponent } from './Attribute/Attribute.component';
+import { OptionsComponent } from './Options/Options.component';
+import { OptionComponent } from './Option/Option.component';
 
 export const ProductsRoutes: Routes = [
    {
@@ -76,6 +78,14 @@ export const ProductsRoutes: Routes = [
          {
             path: 'information/:id',
             component: InformationComponent
+         },
+         {
+            path: 'options',
+            component: OptionsComponent
+         },
+         {
+            path: 'option/:id',
+            component: OptionComponent
          }
       ]
    }

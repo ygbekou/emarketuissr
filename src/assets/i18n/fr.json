@@ -408,7 +408,9 @@
     "SELECTED_RELATED_PRODUCTS": "Produits connetéss sélectionnés",
     "RELATED_PRODUCT": "Produit connetéss sélectionnés",
     "ATTRIBUTE_GROUP": "Groupe Attributs",
-		"ATTRIBUTE": "Attribut"
+		"ATTRIBUTE": "Attribut",
+		"ASSIGN_NEW_ATTRIBUTE": "Assigner Nouveau Attribut",
+		"OPTION_VALUES": "Valeurs d'option"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
