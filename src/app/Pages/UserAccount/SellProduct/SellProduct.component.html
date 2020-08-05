@@ -3,7 +3,7 @@
     <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
   </div>
 
-  <div fxLayout="row wrap" class="col-gap"> 
+  <div fxLayout="row wrap" class="col-gap">
 
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step>
@@ -102,11 +102,100 @@
             </mat-chip>
           </div>
         </div>
-        <div fxLayout="row wrap" *ngIf="productDesc.id>0">
-          <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <embryo-ShopDetails  [currency]="appService?.currency" [detailData]="this.productDesc" [fromPage]="'sellP'"
-              *ngIf="viewType==='list'" (sellProduct)="selectForSaleProduct(productDesc)">
-            </embryo-ShopDetails>
+        <div fxLayout='row wrap' class="col-gap position-relative" *ngIf="productDesc">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="relative"
+            *ngIf="productDesc.product.image">
+            <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <form name="form" (ngSubmit)="f1.form.valid && sell()" #f1="ngForm" validate>
+              <div class="product-detail-content">
+                <h3>{{productDesc?.name}}</h3>
+                <div class="product-detail-price">
+                  <h4 class="accent-color">{{productDesc.product.price | currency:appService?.currency}} </h4>
+                </div>
+                <div class="short-des" [innerHTML]="productDesc?.shortDescription"></div>
+
+                <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
+                      <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price"
+                        name="price" #price="ngModel">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
+                      <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
+                        [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
+                        <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
+                          {{taxClass.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
+                      <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
+                        name="quantity" #quantity="ngModel">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
+                      <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
+                        name="minimum" #minimum="ngModel">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="row wrap">
+
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br />
+                      <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable"
+                        [(ngModel)]="productStore.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label>{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}</mat-label>
+                      <mat-select placeholder="{{'COMMON.OUT_OF_STOCK_STATUS' | translate }}" id="stockStatusId"
+                        name="stockStatusId" [(ngModel)]="productStore.stockStatusId" #stockStatusId="ngModel">
+                        <mat-option *ngFor="let stockStatus of appService.appInfoStorage.stockStatuses"
+                          [value]="stockStatus.id">
+                          {{stockStatus.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-slide-toggle [(ngModel)]="productStore.status" name="status" #status="ngModel" class="my-2">
+                      {{ 'COMMON.STATUS' | translate }}
+                    </mat-slide-toggle>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-30">
+                      <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
+                      <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="productStore.sortOrder"
+                        name="sortOrder" #sortOrder="ngModel">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="mb-5 detail-btns">
+                  <button mat-raised-button color="accent" class="button-lg mr-3">
+                    {{'COMMON.SELL_PRODUCT'|translate}}</button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </mat-step>

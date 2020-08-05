@@ -36,7 +36,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   products: ProductDescription[] = [];
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescription>;
-
+  productStore: ProductToStore = new ProductToStore();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation: true
@@ -333,6 +333,10 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     console.log(this.productDesc);
     this.stepper.selectedIndex = 3;
     this.setProduct.emit(this.productDesc);
+  }
+
+  sell() {
+
   }
 
 }
