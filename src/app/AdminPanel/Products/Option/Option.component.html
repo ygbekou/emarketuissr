@@ -1,0 +1,52 @@
+<mat-tab-group>
+   <mat-tab label="{{'COMMON.GENERAL' | translate}}" *ngIf="option.id > 0">
+      <app-option-description [option]="option" ></app-option-description>
+   </mat-tab>
+
+   <mat-tab label="{{'COMMON.DATA' | translate}}">
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+         <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <div class="text-center mt-2">
+               <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                  <mat-icon>save</mat-icon>
+               </button> </div>
+               <div class="text-center mt-2" *ngIf="messages">
+               <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+               </div>
+            </div>
+         </div>
+         
+         <div fxLayout="row wrap">
+         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+            <mat-form-field class="w-100">
+               <mat-label>{{'COMMON.TYPE' | translate }}</mat-label>
+               <mat-select placeholder="{{'COMMON.TYPE' | translate }}" id="optionType"
+                  name="optionType" [(ngModel)]="option.optionType" #optionType="ngModel">
+                  <mat-option *ngFor="let optionType of appService.appInfoStorage.optionTypes"
+                     [value]="optionType">
+                     {{optionType}}
+                  </mat-option>
+               </mat-select>
+            </mat-form-field>
+         </div>
+         </div>
+         <div fxLayout="row wrap">
+         <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+               <mat-form-field appearance="outline" class="w-30">
+                  <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="option.sortOrder" name="sortOrder" #sortOrder="ngModel">
+               </mat-form-field>
+            </div>
+         </div>
+         </div>
+      </form>
+   </mat-tab>
+
+   <mat-tab label="{{'COMMON.OPTION_VALUES' | translate}}" *ngIf="option.id > 0">
+      <app-option-values [option]="option" [optionId]="option.id"></app-option-values>
+   </mat-tab>
+</mat-tab-group>

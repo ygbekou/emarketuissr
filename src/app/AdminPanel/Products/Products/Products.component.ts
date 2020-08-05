@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CategoryDescription, ProductDescription } from 'src/app/app.models';
+import { ProductDescription } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BaseComponent } from '../../baseComponent';
 
 @Component({

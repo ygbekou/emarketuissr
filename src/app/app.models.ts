@@ -843,3 +843,22 @@ export class OptionValueDescription {
 
   type = 'OptionValueDescription';
 }
+
+
+export class ProductOption {
+  id: number;
+  product: Product;
+  language: Language;
+  option: Options;
+  required: number;
+  value: string;
+  optionName: string;
+
+  type = 'ProductOption';
+
+  constructor() {
+    this.product = new Product();
+    this.option = new Options();
+    this.language = new Language();
+  }
+}

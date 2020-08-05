@@ -1,0 +1,30 @@
+<div fxLayout="row wrap">
+   
+   <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+      <button type="button" mat-icon-button color="primary" (click)="addAttribute()"
+         matTooltip="Assign New Attribute" matTooltipPosition="after">
+         <mat-icon>add_circle</mat-icon>
+      </button>
+   </div>
+
+   <div id="productOptions" fxFlex="100" fxLayout="row wrap" *ngIf="productOptions !== undefined">
+      <div *ngFor="let productOption of productOptions; let i = index;" fxFlex="100" class="step-section">
+         <div fxFlex="4" class="fw-500 text-center pt-3">{{productAttribute.id}}.</div>
+            <div fxFlex="36" fxLayout="row wrap">
+               <mat-form-field appearance="outline" class="w-100">
+                  <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
+                     [(ngModel)]="productOption.optionName" required
+                     (ngModelChange)="filteredOptionOptions = filterOptions(currentOption)">
+                  <mat-autocomplete id="option1" #auto="matAutocomplete" >
+                     <mat-option *ngFor="let option of filteredOptionOptions" 
+                        (onSelectionChange)="productOption.option = option.option; 
+                        productOption.language = option.language" 
+                        [value]="option.name">
+                        {{option.name}}
+                     </mat-option>
+                  </mat-autocomplete>
+               </mat-form-field>
+            </div>
+         </div>
+   </div>
+</div>
