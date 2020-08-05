@@ -743,6 +743,7 @@ export class MarketingProduct {
   status: number;
   beginDate: Date;
   endDate: Date;
+  modifiedBy: number;
   type = 'MarketingProduct';
 }
 
@@ -879,4 +880,4 @@ export class ProductOption {
     this.option = new Options();
     this.language = new Language();
   }
-}
+} 
