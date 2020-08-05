@@ -9,6 +9,7 @@ import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { StoresComponent } from './Stores/Stores.component';
 import { SellProductComponent } from './SellProduct/SellProduct.component';
+import { MyProductsComponent } from './MyProducts/MyProducts.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -46,7 +47,11 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sell-item',
             component: SellProductComponent
+         },
+         {
+            path: 'my-items',
+            component: MyProductsComponent
          }
       ]
    }
-]
+];

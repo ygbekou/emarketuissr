@@ -9,11 +9,11 @@ import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({
-  selector: 'app-sell-product',
-  templateUrl: './SellProduct.component.html',
-  styleUrls: ['./SellProduct.component.scss']
+  selector: 'app-my-products',
+  templateUrl: './MyProducts.component.html',
+  styleUrls: ['./MyProducts.component.scss']
 })
-export class SellProductComponent extends BaseComponent implements OnInit {
+export class MyProductsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -49,7 +49,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
   public message: string;
   public errors: string;
-  public watcher: Subscription; 
+  public watcher: Subscription;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -87,24 +87,12 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       this.categories.splice(1);
     }, 1000);
-
-    this.getParentCategoryDescriptions();
-    this.getProductCategoryDescriptions();
   }
 
-  getProductCategoryDescriptions() {
-    this.depth = 0;
-    this.categories = [];
-    this.appService.getObjects('/service/catalog/productcategorydescriptions/'
-      + this.productId + '/' + this.appService.appInfoStorage.language.id)
-      .subscribe((data: CategoryDescription[]) => {
-        this.finalSelectedCatDescs = data;
-        this.finalSelectedCatDescs.forEach(element => {
-          element.id = element.category.id;
-        });
-      },
-        error => console.log(error),
-        () => console.log('Get all CategoryDescription complete'));
+  getStoreProducts(store: Store) {
+    this.selectedStore = store;
+    this.stepper.selectedIndex = 1;
+    this.getProducts(store);
   }
 
   getStores() {
@@ -115,62 +103,25 @@ export class SellProductComponent extends BaseComponent implements OnInit {
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
         .subscribe((data: Store[]) => {
           this.stores = data;
+          if (this.stores.length > 0) {
+            this.selectedStore = this.stores[0];
+            this.getProducts(this.stores[0]);
+          }
         },
           error => console.log(error),
           () => console.log('Get all Store complete for userId=' + userId));
     }
   }
-  getParentCategoryDescriptions() {
-    this.depth = 0;
-    this.categories = [];
-    this.appService.getObjects('/service/catalog/categorydescriptions/'
-      + this.appService.appInfoStorage.language.id + '/' + this.productId)
-      .subscribe((data: CategoryDescription[]) => {
-        this.categories[this.depth] = data;
-        this.depth++;
-        this.categories[this.depth] = [];
-        setTimeout(() => {
-          this.categories.splice(this.depth);
-        }, 5);
-      },
-        error => console.log(error),
-        () => console.log('Get all CategoryDescription complete'));
-  }
 
-  categorySelected(indexOfElement: number) {
-    const indexIncrement = indexOfElement + 1;
-    this.categories.splice(indexIncrement);
-    this.selectedCatDescs.splice(indexIncrement);
-    this.depth = indexIncrement;
-
-    if (this.selectedCatDescs[indexOfElement].category.childCount > 0) {
-      this.appService.getObjects('/service/catalog/categorydescriptions/' + this.appService.appInfoStorage.language.id
-        + '/' + this.selectedCatDescs[indexOfElement].category.id + '/' + this.productId)
-        .subscribe((data: CategoryDescription[]) => {
-          this.categories[this.depth] = data;
-          this.depth++;
-          this.categories[this.depth] = [];
-
-          setTimeout(() => {
-            this.categories.splice(this.depth);
-          }, 5);
-        },
-          error => console.log(error),
-          () => console.log('Get all CategoryDescription complete'));
-    } else {
-      this.getProducts(this.selectedCatDescs[indexOfElement]);
-    }
-  }
-
-  getProducts(cat: CategoryDescription) {
-    console.log(cat);
+  getProducts(store: Store) {
+    console.log(store);
     console.log(this.selectedStore);
     console.log(this.appService.appInfoStorage.language);
-    this.appService.getObjects('/service/catalog/getProductsForCategoryForSale/' + this.appService.appInfoStorage.language.id
-      + '/' + cat.category.id + '/' + this.selectedStore.id)
+    this.appService.getObjects('/service/catalog/getMyProductsOnSale/' + this.appService.appInfoStorage.language.id
+      + '/' + store.id)
       .subscribe((data: ProductDescription[]) => {
         this.products = data;
-        this.stepper.selectedIndex = 2;
+        this.stepper.selectedIndex = 1;
         const result = this.filterData(data);
         if (result.data.length === 0) {
           // this.properties.length = 0;
@@ -276,8 +227,20 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   selectForSaleProduct($event) {
     this.productDesc = $event;
-    this.productStore = new ProductToStore();
-    this.stepper.selectedIndex = 3;
+    const parameters: string[] = [];
+    parameters.push('e.store.id = |stId|' + this.selectedStore.id + '|Integer');
+    parameters.push('e.product.id = |prdId|' + this.productDesc.product.id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.ProductToStore', parameters)
+      .subscribe((data: ProductToStore[]) => {
+        if (data.length > 0) {
+          this.productStore = data[0];
+        } else {
+          this.productStore = new ProductToStore();
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
+    this.stepper.selectedIndex = 2;
   }
 
   sell() {

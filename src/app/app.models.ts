@@ -857,6 +857,7 @@ export class ProductToStore {
   stockStatusId: number;
   taxClassId: number;
   viewed: number;
+  modifiedBy: number;
   dateAvailable: Date;
   type = 'ProductToStore';
 }

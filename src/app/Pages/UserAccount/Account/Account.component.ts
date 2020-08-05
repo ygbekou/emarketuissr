@@ -33,8 +33,8 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Purchase Overview', url: '/account/buy-overview', icon: 'dashboard' },
       { name: 'Purchase history', url: '/account/order-history', icon: 'history' },
-      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' },
-      { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
+      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' }
+     // { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
     ]
   }, {
     name: 'Selling',
@@ -44,9 +44,9 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales Overview', url: '/account/sell-overview', icon: 'dashboard' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
-      { name: 'Draft items', url: '/account/draft-item', icon: 'restore_from_trash' },
-      { name: 'Active items', url: '/account/active-sale', icon: 'toggle_on' },
-      { name: 'Sold items', url: '/account/sold-item', icon: 'toggle_off' }
+      // { name: 'Draft items', url: '/account/draft-item', icon: 'restore_from_trash' },
+      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
+      // { name: 'Sold items', url: '/account/sold-item', icon: 'toggle_off' }
     ]
   },
 ];
@@ -69,8 +69,8 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Aperçu des achats', url: '/account/buy-overview', icon: 'dashboard' },
       { name: 'Historique achats', url: '/account/order-history', icon: 'history' },
-      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' },
-      { name: 'Acheter encore', url: '/account/buy-again', icon: 'add_shopping_cart' }
+      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' }
+      // { name: 'Acheter encore', url: '/account/buy-again', icon: 'add_shopping_cart' }
     ]
   }, {
     name: 'Ventes',
@@ -81,8 +81,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Aperçu des ventes', url: '/account/sell-overview', icon: 'dashboard' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
       // { name: 'Brouillon', url: '/account/draft-item', icon: 'restore_from_trash' },
-      { name: 'Produits en vente', url: '/account/active-sale', icon: 'toggle_on' },
-      { name: 'Produits vendus', url: '/account/sold-item', icon: 'toggle_off' }
+      { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' }
+      // { name: 'Produits vendus', url: '/account/sold-item', icon: 'toggle_off' }
     ]
   },
 ];

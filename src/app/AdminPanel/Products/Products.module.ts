@@ -28,14 +28,14 @@ import {
   MatToolbarModule,
   MatAutocompleteModule,
   MatTooltipModule,
-  MatDatepickerModule, 
+  MatDatepickerModule,
   MatNativeDateModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { EditProductComponent } from './EditProduct/EditProduct.component';
-import { ProductComponent } from './Product/Product.component'; 
+import { ProductComponent } from './Product/Product.component';
 import { GlobalModule } from '../../Global/Global.module';
 import { ProductsComponent } from './Products/Products.component';
 import { ProductsRoutes } from './Products.routing';
@@ -43,7 +43,7 @@ import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
 import { ProductDescriptionComponent } from './ProductDescription/ProductDescription.component';
 import { ProductLinkComponent } from './ProductLink/ProductLink.component';
-import { InformationComponent } from './Information/Information.component'; 
+import { InformationComponent } from './Information/Information.component';
 import { InformationsComponent } from './Informations/Informations.component';
 import { MarketingComponent } from './Marketing/Marketing.component';
 import { MarketingsComponent } from './Marketings/Marketings.component';
@@ -65,8 +65,8 @@ import { ProductOptionsComponent } from './ProductOptions/ProductOptions.compone
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent, 
-    AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent, 
+    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
+    AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
     OptionsComponent, OptionComponent, OptionDescriptionComponent, OptionValuesComponent, OptionValueComponent, ProductOptionsComponent],
   imports: [
     CommonModule,

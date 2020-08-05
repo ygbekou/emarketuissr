@@ -50,6 +50,7 @@ import { InputFileModule } from 'ngx-input-file';
 import { QuillModule } from 'ngx-quill';
 import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
+import { MyProductsComponent } from './MyProducts/MyProducts.component';
 
 @NgModule({
   imports: [
@@ -123,7 +124,8 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
     AddressComponent,
     OrderHistoryComponent,
     GridProductComponent,
-    SellProductComponent
+    SellProductComponent,
+    MyProductsComponent
   ]
 })
 export class UserAccountModule { }
