@@ -104,7 +104,7 @@
         </div>
         <div fxLayout="row wrap" *ngIf="productDesc.id>0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <embryo-ShopDetails [currency]="appService?.currency" [detailData]="productDesc" [fromPage]="'sellP'"
+            <embryo-ShopDetails  [currency]="appService?.currency" [detailData]="this.productDesc" [fromPage]="'sellP'"
               *ngIf="viewType==='list'" (sellProduct)="selectForSaleProduct(productDesc)">
             </embryo-ShopDetails>
           </div>
