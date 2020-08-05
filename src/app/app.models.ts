@@ -844,6 +844,23 @@ export class OptionValueDescription {
   type = 'OptionValueDescription';
 }
 
+export class ProductToStore {
+  id: number;
+  product: Product;
+  store: Store;
+  minimum: number;
+  points: number;
+  price: number;
+  quantity: number;
+  sortOrder: number;
+  status: number;
+  stockStatusId: number;
+  taxClassId: number;
+  viewed: number;
+  dateAvailable: Date;
+  type = 'ProductToStore';
+}
+
 
 export class ProductOption {
   id: number;

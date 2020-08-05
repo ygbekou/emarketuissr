@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { CreditCard, CategoryDescription, ProductDescription, Product, ProductToCategory, ProductRelated, Category, Store, Pagination, ProductToStore } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -36,7 +36,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   products: ProductDescription[] = [];
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescription>;
-
+  productStore: ProductToStore = new ProductToStore();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation: true
@@ -50,6 +50,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public message: string;
   public watcher: Subscription;
 
+  @Output() setProduct: EventEmitter<any> = new EventEmitter();
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -137,7 +138,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   }
 
 
-  addCategory(index: number) {
+  addCategory(indexOfElement: number, index: number) {
 
     const ptc = new ProductToCategory();
     ptc.category = this.finalSelectedCatDescs[index].category;
@@ -148,6 +149,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
       .subscribe((data: ProductToCategory[]) => {
         this.processResult(data, ptc, null);
 
+        const name = this.finalSelectedCatDescs[index].name;
         this.finalSelectedCatDescs[index].name = '';
         for (const catIndex in this.selectedCatDescs) {
           this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') + this.selectedCatDescs[catIndex].name;
@@ -157,15 +159,12 @@ export class SellProductComponent extends BaseComponent implements OnInit {
         () => console.log('Delete of selected category complete'));
   }
 
-  categorySelected(indexOfElement: number) {
-
+  categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
     const indexIncrement = indexOfElement + 1;
     this.categories.splice(indexIncrement);
     this.selectedCatDescs.splice(indexIncrement);
     this.depth = indexIncrement;
-    console.log(this.selectedCatDescs);
-    console.log(indexOfElement);
-    console.log(this.selectedCatDescs[indexOfElement]);
+
     if (this.selectedCatDescs[indexOfElement].category.childCount > 0) {
       this.appService.getObjects('/service/catalog/categorydescriptions/' + this.appService.appInfoStorage.language.id
         + '/' + this.selectedCatDescs[indexOfElement].category.id + '/' + this.productId)
@@ -329,9 +328,15 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   selectForSaleProduct($event) {
     console.log('selectForSaleProduct');
+    this.productDesc = null;
     this.productDesc = $event;
     console.log(this.productDesc);
     this.stepper.selectedIndex = 3;
+    this.setProduct.emit(this.productDesc);
+  }
+
+  sell() {
+
   }
 
 }
