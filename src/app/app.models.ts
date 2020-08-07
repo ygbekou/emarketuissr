@@ -865,17 +865,45 @@ export class ProductToStore {
 export class ProductOption {
   id: number;
   product: Product;
-  language: Language;
   option: Options;
   required: number;
   value: string;
   optionName: string;
+
+  valueDate: Date;
+
+  productOptionValues: ProductOptionValue[]
 
   type = 'ProductOption';
 
   constructor() {
     this.product = new Product();
     this.option = new Options();
-    this.language = new Language();
+    this.required = 0;
+  }
+}
+
+export class ProductOptionValue {
+  id: number;
+  product: Product;
+  option: Options;
+  productOption: ProductOption;
+  optionValue: OptionValue;
+  points: number;
+  pointsPrefix: string;
+  price: number;
+  pricePrefix: string;
+  weight: number;
+  weightPrefix: string;
+  quantity: number;
+  subtract: number;
+
+  type = 'ProductOptionValue';
+
+  constructor() {
+    this.product = new Product();
+    this.option = new Options();
+    this.optionValue = new OptionValue();
+    this.productOption = new ProductOption();
   }
 }

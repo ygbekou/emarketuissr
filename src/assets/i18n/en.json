@@ -410,7 +410,14 @@
 		"ATTRIBUTE_GROUP": "Attribute Group",
 		"ATTRIBUTE": "Attribute",
 		"OPTION_VALUES": "Option Values",
-		"ASSIGN_NEW_ATTRIBUTE": "Assign New Attribute"
+		"OPTION_VALUE": "Option Value",
+		"ASSIGN_NEW_ATTRIBUTE": "Assign New Attribute",
+		"OPTION": "Option",
+		"POINTS": "Points",
+		"REQUIRED": "Required",
+		"PRICE_PREFIX": "Price Prefix",
+		"POINTS_PREFIX": "Points Prefix",
+		"WEIGHT_PREFIX": "Weight Prefix"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

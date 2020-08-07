@@ -1,30 +1,218 @@
-<div fxLayout="row wrap">
-   
-   <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
-      <button type="button" mat-icon-button color="primary" (click)="addAttribute()"
-         matTooltip="Assign New Attribute" matTooltipPosition="after">
-         <mat-icon>add_circle</mat-icon>
-      </button>
-   </div>
+<div fxLayout="row">
+   <div fxFlex="20">
+      <div *ngFor="let productOption of productOptions; let i = index;" class="step-section">
+         <div style="background-color: lightblue">
+            <button mat-icon-button color="warn" (click)="deleteProductOption(productOption, i)"
+               matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+               <mat-icon>delete</mat-icon>
+            </button>
+            <a (click)="getProductOption(productOption.id)" mat-icon-button color="primary" matTooltip="{{productOption.optionName}}">
+               {{productOption.optionName}}
+            </a>
+         </div>
+      </div>
 
-   <div id="productOptions" fxFlex="100" fxLayout="row wrap" *ngIf="productOptions !== undefined">
-      <div *ngFor="let productOption of productOptions; let i = index;" fxFlex="100" class="step-section">
-         <div fxFlex="4" class="fw-500 text-center pt-3">{{productAttribute.id}}.</div>
-            <div fxFlex="36" fxLayout="row wrap">
-               <mat-form-field appearance="outline" class="w-100">
-                  <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
-                     [(ngModel)]="productOption.optionName" required
-                     (ngModelChange)="filteredOptionOptions = filterOptions(currentOption)">
-                  <mat-autocomplete id="option1" #auto="matAutocomplete" >
-                     <mat-option *ngFor="let option of filteredOptionOptions" 
-                        (onSelectionChange)="productOption.option = option.option; 
-                        productOption.language = option.language" 
-                        [value]="option.name">
-                        {{option.name}}
-                     </mat-option>
-                  </mat-autocomplete>
-               </mat-form-field>
+      
+      <mat-form-field appearance="outline" class="w-100">
+         <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
+            [(ngModel)]="currentOption" required
+            (ngModelChange)="filteredOptionOptions = filterOptions(currentOption)">
+         <mat-autocomplete id="option1" #auto="matAutocomplete" >
+            <mat-option *ngFor="let option of filteredOptionOptions" 
+               (onSelectionChange)="saveProductOption(option)" 
+               [value]="option.name">
+               {{option.name}}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+
+   </div> 
+
+   <div fxFlex="5"></div>
+
+   <div fxFlex="75">
+      <div fxLayout="row">
+
+         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+            <div class="text-center mt-2">
+               <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="saveProductOption2()">
+                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                  <mat-icon>save</mat-icon>
+               </button> </div>
+            <div class="text-center mt-2" *ngIf="messages">
+               <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
             </div>
          </div>
+
+         <mat-slide-toggle [(ngModel)]="productOption.required" name="required" #required="ngModel" class="my-2">
+            {{ 'COMMON.REQUIRED' | translate }}
+         </mat-slide-toggle>
+      </div>
+
+      <div fxLayout="row">
+         <div fxFlex="50" *ngIf="isTextOption()">
+            <mat-form-field class="w-100">
+               <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
+               <input matInput type="text" class="form-control" id="value" [(ngModel)]="productOption.value" name="value" #value="ngModel">
+            </mat-form-field>
+         </div>
+
+         <div fxFlex="50" *ngIf="isTextAreaOption()">
+            <mat-form-field class="w-100">
+               <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
+               <textarea matInput type="text" class="form-control" id="value" [(ngModel)]="productOption.value" name="value" 
+                  #value="ngModel" rows="10">
+            </textarea>
+            </mat-form-field>
+         </div>
+
+         <div fxFlex="50" *ngIf="isDateOption()">
+            <mat-form-field class="w-100">
+               <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
+               <input matInput [matDatepicker]="picker" class="form-control" id="value"
+                  [(ngModel)]="productOption.valueDate" name="value" #value="ngModel">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+               <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+         </div>
+
+         <div fxFlex="50" *ngIf="isDateTimeOption()">
+            
+               <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
+               
+
+               <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime"
+placeholder="Date" show-todays-date="" min-date="date" ng-model="dateTime" class=" md-input"
+readonly="readonly">
+           
+         </div>
+         
+      </div>
+      
+      <br/>
+      <br/>
+
+      
+      <div fxLayout="row">
+         <div fxFlex="100" class="text-center font-bold" *ngIf="isSelectOption()"><h5>{{'COMMON.OPTION_VALUES' | translate}}</h5></div>
+      </div>
+      <br/>
+      <div fxLayout="row">
+         <div fxFlex="100">
+            <div id="productOptionValues" fxFlex="100" fxLayout="row wrap" *ngIf="isSelectOption()">
+               <div fxFlex="15" class="text-center"><h6>{{'COMMON.OPTION_VALUE' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="15" class="text-center"><h6>{{'COMMON.QUANTITY' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="10" class="text-center"><h6>{{'COMMON.SUBTRACT_STOCK' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="10" class="text-center"><h6>{{'COMMON.PRICE' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="10" class="text-center"><h6>{{'COMMON.POINTS' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="10" class="text-center"><h6>{{'COMMON.WEIGHT' | translate}}</h6></div>
+               <div fxFlex="3" class="text-center"></div>
+               <div fxFlex="6" class="text-center"><h6>Actions</h6></div>
+               <div *ngFor="let productOptionValue of productOptionValues; let i = index;" fxFlex="100" class="step-section">
+                  <form name="form" (ngSubmit)="f.form.valid && saveProductOptionValue(productOptionValue, i)" #f="ngForm" validate>
+                     <div fxFlex="15" fxLayout="row wrap">
+                        <mat-form-field class="w-100">
+                           <mat-select placeholder="{{'COMMON.OPTION_VALUE' | translate }}" id="optionValueId"
+                              name="optionValueId" [(ngModel)]="productOptionValue.optionValue.id" #optionValueId="ngModel">
+                              <mat-option *ngFor="let optionValue of optionValues"
+                                 [value]="optionValue.id">
+                                 {{optionValue.name}}
+                              </mat-option>
+                           </mat-select>
+                        </mat-form-field>
+                     </div>
+                     <div fxFlex="3" class="text-center"></div>
+                     <div fxFlex="15" fxLayout="row wrap">
+                        <mat-form-field class="w-100">
+                           <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productOptionValue.quantity" 
+                              name="quantity" #quantity="ngModel">
+                        </mat-form-field>
+                     </div>
+                     <div fxFlex="3" class="text-center"></div>
+                     <div fxFlex="10" fxLayout="row wrap">
+                        <mat-slide-toggle [(ngModel)]="productOptionValue.subtract" name="subtract" #subtract="ngModel" class="my-2">
+                           
+                        </mat-slide-toggle>
+                     </div>
+                     <div fxFlex="3" class="text-center"></div>
+                     <div fxFlex="10" fxLayout="row wrap">
+                        <mat-form-field class="w-100">
+                           <mat-label>{{'COMMON.PRICE_PREFIX' | translate }}</mat-label>
+                           <mat-select placeholder="{{'COMMON.PRICE_PREFIX' | translate }}" id="pricePrefix"
+                              name="pricePrefix" [(ngModel)]="productOptionValue.pricePrefix" #pricePrefix="ngModel">
+                              <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
+                                 [value]="optionPrefix">
+                                 {{optionPrefix}}
+                              </mat-option>
+                           </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100">
+                           <input matInput type="text" class="form-control" id="price" [(ngModel)]="productOptionValue.price" 
+                              name="price" #price="ngModel">
+                        </mat-form-field>
+                     </div>
+                     <div fxFlex="3" class="text-center"></div>
+                     <div fxFlex="10" fxLayout="row wrap">
+                        <mat-form-field class="w-100">
+                           <mat-label>{{'COMMON.POINTS_PREFIX' | translate }}</mat-label>
+                           <mat-select placeholder="{{'COMMON.POINTS_PREFIX' | translate }}" id="pointsPrefix"
+                              name="pointsPrefix" [(ngModel)]="productOptionValue.pointsPrefix" #pointsPrefix="ngModel">
+                              <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
+                                 [value]="optionPrefix">
+                                 {{optionPrefix}}
+                              </mat-option>
+                           </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100">
+                           <input matInput type="text" class="form-control" id="points" [(ngModel)]="productOptionValue.points" 
+                              name="points" #points="ngModel">
+                        </mat-form-field>
+                     </div>
+                     <div fxFlex="3" class="text-center"></div>
+                     <div fxFlex="10" fxLayout="row wrap">
+                        <mat-form-field class="w-100">
+                           <mat-label>{{'COMMON.WEIGHT_PREFIX' | translate }}</mat-label>
+                           <mat-select placeholder="{{'COMMON.WEIGHTS_PREFIX' | translate }}" id="weightsPrefix"
+                              name="weightsPrefix" [(ngModel)]="productOptionValue.weightPrefix" #weightsPrefix="ngModel">
+                              <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
+                                 [value]="optionPrefix">
+                                 {{optionPrefix}}
+                              </mat-option>
+                           </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100">
+                           <input matInput type="text" class="form-control" id="weights" [(ngModel)]="productOptionValue.weight" 
+                              name="weights" #weights="ngModel">
+                        </mat-form-field>
+                     </div>
+                     <div fxFlex="10" class="text-center pt-2">
+                        
+                        <button mat-icon-button color="primary" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit">
+                           <mat-icon>save</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="warn" matTooltip="{{'COMMON.DELETE' | translate}}"
+                           (click)="deleteProductOptionValue(productOptionValue, i)" class="remove">
+                           <mat-icon>delete</mat-icon>
+                        </button>
+                     </div>
+                  </form>
+                  <br/>
+               </div>
+               <br/>
+            </div>
+         </div>
+
+      </div>
+
    </div>
+   
 </div>
