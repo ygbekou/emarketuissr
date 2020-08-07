@@ -38,7 +38,7 @@
 
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <button mat-raised-button color="accent" (click)="selectedStore=store;stepper.selectedIndex=1;">
+                    <button mat-raised-button color="accent" (click)="getStoreProducts(store)">
                       <mat-icon>done</mat-icon>
                       {{'COMMON.SELECT'|translate}}
                     </button>
@@ -48,26 +48,9 @@
             </mat-card>
           </div>
         </div>
-      </mat-step>
+      </mat-step> 
       <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_CATEGORY'|translate}}</ng-template>
-        <div fxLayout="row wrap">
-          <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
-              <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
-                [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(null, indexOfelement)"
-                name="category" #category="ngModel">
-                <mat-option *ngFor="let category of cats" [value]="category">
-                  {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_PRODUCT'|translate}}</ng-template>
+        <ng-template matStepLabel>{{'COMMON.MY_PRODUCTS'|translate}}</ng-template>
         <div fxLayout="row wrap" *ngIf="!products || products.length===0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
@@ -97,7 +80,7 @@
         </mat-paginator>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELL_PRODUCT'|translate}}</ng-template>
+        <ng-template matStepLabel>{{'COMMON.CHANGE_PRODUCT'|translate}}</ng-template>
         <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
@@ -149,7 +132,7 @@
                       <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
                       <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
                         name="quantity" #quantity="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                               <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                         {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                       </mat-error>
                     </mat-form-field>
@@ -159,7 +142,7 @@
                       <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
                       <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
                         name="minimum" #minimum="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                               <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                         {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                       </mat-error>
                     </mat-form-field>

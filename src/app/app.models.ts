@@ -743,6 +743,7 @@ export class MarketingProduct {
   status: number;
   beginDate: Date;
   endDate: Date;
+  modifiedBy: number;
   type = 'MarketingProduct';
 }
 
@@ -857,6 +858,7 @@ export class ProductToStore {
   stockStatusId: number;
   taxClassId: number;
   viewed: number;
+  modifiedBy: number;
   dateAvailable: Date;
   type = 'ProductToStore';
 }
@@ -906,4 +908,4 @@ export class ProductOptionValue {
     this.optionValue = new OptionValue();
     this.productOption = new ProductOption();
   }
-}
+} 

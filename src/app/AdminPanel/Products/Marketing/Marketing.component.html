@@ -21,7 +21,7 @@
     <form name="form" (ngSubmit)="f.form.valid && saveMarketing(2)" #f="ngForm" validate>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="name" [(ngModel)]="markDesc.name" name="name"
@@ -30,7 +30,7 @@
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> {{'COMMON.META_TAG_TITLE' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="metaTitle" [(ngModel)]="markDesc.metaTitle"
@@ -38,13 +38,13 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> {{'COMMON.META_TAG_DESCRIPTION' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="metaDescription" [(ngModel)]="markDesc.metaDescription"
               name="metaDescription" #metaDescription="ngModel">
           </mat-form-field>
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> {{'COMMON.META_KEYWORDS' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="metaKeyword" [(ngModel)]="markDesc.metaKeyword"
@@ -92,35 +92,33 @@
           <br />
           <mat-form-field appearance="fill">
             <mat-label>{{'COMMON.START_DATE'|translate}}</mat-label>
-            <input matInput id="beginDate" [(ngModel)]="marketing.beginDate"
-            [matDatepicker]="beginDate"
-             name="beginDate" #beginDate="ngModel">
+            <input matInput id="beginDate" [(ngModel)]="marketing.beginDate" [matDatepicker]="beginDate"
+              name="beginDate" #beginDate="ngModel">
             <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
             <mat-datepicker #beginDate></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{'COMMON.END_DATE'|translate}}</mat-label>
-            <input matInput id="endDate" [(ngModel)]="marketing.endDate" 
-            [matDatepicker]="endDate"
-            name="endDate" #endDate="ngModel">
+            <input matInput id="endDate" [(ngModel)]="marketing.endDate" [matDatepicker]="endDate" name="endDate"
+              #endDate="ngModel">
             <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
             <mat-datepicker #endDate></mat-datepicker>
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> Code
             </mat-label>
             <input matInput type="text" class="form-control" id="code" [(ngModel)]="marketing.code" name="code"
               #code="ngModel">
           </mat-form-field>
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label> {{'COMMON.SORT_ORDER' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="marketing.sortOrder"
               name="title" #sortOrder="ngModel">
           </mat-form-field>
-          <mat-form-field appearance="outline" class="w-100">
+          <mat-form-field class="w-100">
             <mat-label>Section</mat-label>
             <mat-select placeholder="Section" id="section" name="section" [(ngModel)]="marketing.section"
               #section="ngModel">
@@ -160,6 +158,10 @@
         </div>
       </div>
     </form>
+  </mat-tab>
+
+  <mat-tab  label="{{'COMMON.PRODUCT' | translate}}s" *ngIf="marketing.id>0">
+    <app-market-product [marketing]="marketing"></app-market-product>
   </mat-tab>
 
 </mat-tab-group>

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, Marketing, MarketingProduct } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -9,12 +9,13 @@ import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 @Component({
-  selector: 'app-sell-product',
-  templateUrl: './SellProduct.component.html',
-  styleUrls: ['./SellProduct.component.scss']
+  selector: 'app-market-product',
+  templateUrl: './MarketingProduct.component.html',
+  styleUrls: ['./MarketingProduct.component.scss']
 })
-export class SellProductComponent extends BaseComponent implements OnInit {
+export class MarketingProductComponent extends BaseComponent implements OnInit {
 
+  @Input() marketing: Marketing;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('sidenav', { static: false }) sidenav: any;
@@ -34,9 +35,12 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   currentOption: string;
   products: ProductDescription[] = [];
+  selectedProducts: ProductDescription[] = [];
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescription>;
+  dataSource2: MatTableDataSource<ProductDescription>;
   productStore: ProductToStore = new ProductToStore();
+  marketingProduct: MarketingProduct = new MarketingProduct();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation: true
@@ -47,9 +51,10 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public searchFields: any;
   public removedSearchField: string;
   public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
+  public pagination2: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
   public message: string;
   public errors: string;
-  public watcher: Subscription; 
+  public watcher: Subscription;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -90,6 +95,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
     this.getParentCategoryDescriptions();
     this.getProductCategoryDescriptions();
+    this.getSelectedProducts();
   }
 
   getProductCategoryDescriptions() {
@@ -111,7 +117,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     const userId = Number(this.appService.tokenStorage.getUserId());
     if (userId > 0) {
       const parameters: string[] = [];
-      parameters.push('e.owner.id = |userId|' + userId + '|Integer');
+      // parameters.push('e.owner.id = |userId|' + userId + '|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
         .subscribe((data: Store[]) => {
           this.stores = data;
@@ -166,12 +172,12 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     console.log(cat);
     console.log(this.selectedStore);
     console.log(this.appService.appInfoStorage.language);
-    this.appService.getObjects('/service/catalog/getProductsForCategoryForSale/' + this.appService.appInfoStorage.language.id
+    this.appService.getObjects('/service/catalog/getProductsForMarketing/' + this.appService.appInfoStorage.language.id
       + '/' + cat.category.id + '/' + this.selectedStore.id)
       .subscribe((data: ProductDescription[]) => {
         this.products = data;
         this.stepper.selectedIndex = 2;
-        const result = this.filterData(data);
+        const result = this.filterData(data, 1);
         if (result.data.length === 0) {
           // this.properties.length = 0;
           this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -190,12 +196,45 @@ export class SellProductComponent extends BaseComponent implements OnInit {
         () => console.log('Get all getProductsForCategoryForSale complete'));
   }
 
+  getSelectedProducts() {
+    console.log(this.selectedStore);
+    console.log(this.appService.appInfoStorage.language);
+    this.appService.getObjects('/service/catalog/getProductsOnMarketing/' + this.appService.appInfoStorage.language.id
+      + '/' + this.marketing.id)
+      .subscribe((data: ProductDescription[]) => {
+        this.selectedProducts = data;
+        const result = this.filterData(data, 2);
+        if (result.data.length === 0) {
+          // this.properties.length = 0;
+          this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
+          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+            this.message = res['MESSAGE.NO_RESULT_FOUND'];
+          });
+        }
+        this.dataSource2 = new MatTableDataSource(result.data);
+        this.pagination2 = result.pagination;
+        this.message = null;
 
-  public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+      },
+        error => console.log(error),
+        () => console.log('Get all getProductsForCategoryForSale complete'));
+  }
+
+
+
+  public applyFilter(filterValue: string, opt: number) {
+    if (opt === 1) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    } else {
+      this.dataSource2.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource2.paginator) {
+        this.dataSource2.paginator.firstPage();
+      }
     }
+
   }
 
   public addToCart(value) {
@@ -217,30 +256,35 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     return hits;
   }
 
-  public changeCount(count) {
+  public changeCount(count, opt: number) {
     this.count = count;
     // this.products.length = 0;
     this.resetPagination();
-    this.filterProducts();
+    this.filterProducts(opt);
   }
-  public changeSorting(sort) {
+  public changeSorting(sort, opt: number) {
     this.sort = sort;
-    this.filterProducts();
+    this.filterProducts(opt);
   }
-  public changeViewType(obj) {
+  public changeViewType(obj, opt: number) {
     if (obj.viewType === 'list') {
-      this.changeCount(1);
+      this.changeCount(1, opt);
     } else if (this.count === 1) {
-      this.changeCount(6);
+      this.changeCount(6, opt);
     }
     this.viewType = obj.viewType;
     this.viewCol = obj.viewCol;
   }
 
 
-  public onPageChange(e) {
-    this.pagination.page = e.pageIndex + 1;
-    this.filterProducts();
+  public onPageChange(e, opt: number) {
+    if (opt === 1) {
+      this.pagination.page = e.pageIndex + 1;
+    } else {
+      this.pagination2.page = e.pageIndex + 1;
+    }
+
+    this.filterProducts(opt);
     // window.scrollTo(0, 0);
   }
 
@@ -251,45 +295,62 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
   }
 
-  public filterProducts() {
-    const result = this.filterData(this.products);
+  public filterProducts(opt: number) {
+    const result = this.filterData(this.products, opt);
     if (result.data.length === 0) {
       // this.properties.length = 0;
-      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      if (opt === 1) {
+        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      } else {
+        this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
+      }
+
       this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
         this.message = res['MESSAGE.NO_RESULT_FOUND'];
       });
     }
-    this.dataSource = new MatTableDataSource(result.data);
-    this.pagination = result.pagination;
+    if (opt === 1) {
+      this.dataSource = new MatTableDataSource(result.data);
+      this.pagination = result.pagination;
+    } else {
+      this.dataSource2 = new MatTableDataSource(result.data);
+      this.pagination2 = result.pagination;
+    }
+
     this.message = null;
   }
 
 
-  public filterData(data) {
-    return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
+  public filterData(data, opt: number) {
+    if (opt === 1) {
+      return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
+
+    } else {
+      return this.appService.filterData(data, this.searchFields, this.sort, this.pagination2.page, this.pagination2.perPage);
+    }
   }
 
-  public searchClicked(data: string) {
-    this.applyFilter(data);
+  public searchClicked(data: string, opt: number) {
+    this.applyFilter(data, opt);
   }
 
-  selectForSaleProduct($event) {
+  selectForMarketing($event) {
     this.productDesc = $event;
-    this.productStore = new ProductToStore();
+    this.marketingProduct = new MarketingProduct();
     this.stepper.selectedIndex = 3;
   }
 
   sell() {
     this.messages = '';
     this.errors = '';
-    this.productStore.product = this.productDesc.product;
-    this.productStore.store = this.selectedStore;
-    this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
-    this.productStore.status = (this.productStore.status == null
-      || this.productStore.status.toString() === 'false'
-      || this.productStore.status.toString() === '0') ? 0 : 1;
-    this.appService.save(this.productStore, 'ProductStore')
+    this.marketingProduct.product = this.productDesc.product;
+    this.marketingProduct.store = this.selectedStore;
+    this.marketingProduct.marketing = this.marketing;
+    this.marketingProduct.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.marketingProduct.status = (this.marketingProduct.status == null
+      || this.marketingProduct.status.toString() === 'false'
+      || this.marketingProduct.status.toString() === '0') ? 0 : 1;
+    this.appService.save(this.marketingProduct, 'MarketingProduct')
       .subscribe(result => {
         if (result.id > 0) {
           if (result.id > 0) {
@@ -303,7 +364,6 @@ export class SellProductComponent extends BaseComponent implements OnInit {
           }
         }
       });
-
   }
 
 }

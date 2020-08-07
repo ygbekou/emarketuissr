@@ -2,9 +2,7 @@
   <div fxLayoutAlign="space-between">
     <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
   </div>
-
   <div fxLayout="row wrap" class="col-gap">
-
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
@@ -35,7 +33,6 @@
                 </div>
                 <div fxLayout="row wrap" class="col-gap">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                     <button mat-raised-button color="accent" (click)="selectedStore=store;stepper.selectedIndex=1;">
@@ -78,9 +75,9 @@
         <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
-              (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
-              (onSearchClick)="searchClicked($event)" (onChangeSorting)="changeSorting($event)"
-              (onChangeViewType)="changeViewType($event)">
+              (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event,1)"
+              (onSearchClick)="searchClicked($event,1)" (onChangeSorting)="changeSorting($event,1)"
+              (onChangeViewType)="changeViewType($event,1)">
             </app-products-toolbar>
           </div>
         </div>
@@ -88,7 +85,7 @@
           <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
               [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
-              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+              (addToWishList)="addToWishList($event)" (selectProduct)="selectForMarketing($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>
         </div>
@@ -96,8 +93,9 @@
           [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
         </mat-paginator>
       </mat-step>
+
       <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELL_PRODUCT'|translate}}</ng-template>
+        <ng-template matStepLabel>{{'COMMON.MARKET_PRODUCT'|translate}}</ng-template>
         <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
@@ -119,82 +117,38 @@
                     {{productDesc.product.price | currency:appService?.currency}} </h4>
                 </div>
                 <div class="short-des" [innerHTML]="productDesc?.shortDescription"></div>
-
                 <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price"
-                        name="price" #price="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
+                  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>{{'COMMON.START_DATE'|translate}}</mat-label>
+                      <input matInput id="beginDate" [(ngModel)]="marketingProduct.beginDate" [matDatepicker]="beginDate"
+                        name="beginDate" #beginDate="ngModel">
+                      <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
+                      <mat-datepicker #beginDate></mat-datepicker>
                     </mat-form-field>
                   </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
-                      <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
-                        [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
-                        <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                          {{taxClass.name}}
-                        </mat-option>
-                      </mat-select>
+                  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                    <mat-form-field appearance="fill">
+                      <mat-label>{{'COMMON.END_DATE'|translate}}</mat-label>
+                      <input matInput id="endDate" [(ngModel)]="marketingProduct.endDate" [matDatepicker]="endDate"
+                        name="endDate" #endDate="ngModel">
+                      <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                      <mat-datepicker #endDate></mat-datepicker>
                     </mat-form-field>
                   </div>
                 </div>
                 <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
-                        name="quantity" #quantity="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
-                        name="minimum" #minimum="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br />
-                      <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable"
-                        [(ngModel)]="productStore.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-slide-toggle [(ngModel)]="productStore.status" name="status" #status="ngModel" class="my-2">
-                      {{ (productStore.status?'COMMON.ENABLED':'COMMON.DISABLED') | translate }}
+                  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                    <mat-slide-toggle [(ngModel)]="marketingProduct.status" name="status" #status="ngModel" class="my-2">
+                      {{ 'COMMON.ENABLE' | translate }}
                     </mat-slide-toggle>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-30">
-                      <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="sortOrder"
-                        [(ngModel)]="productStore.sortOrder" name="sortOrder" #sortOrder="ngModel">
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-30">
-                      <mat-label> Points</mat-label>
-                      <input matInput type="text" class="form-control" id="points" [(ngModel)]="productStore.points"
-                        name="points" #points="ngModel">
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{'COMMON.SORT_ORDER' | translate}}
+                      </mat-label>
+                      <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="marketingProduct.sortOrder"
+                        name="title" #sortOrder="ngModel">
                     </mat-form-field>
                   </div>
                 </div>
@@ -203,7 +157,7 @@
                     <div class="text-left mt-2" fxFlex.gt-sm="25">
                       <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"
                         type="submit">
-                        <span class="mx-1 uppercase"> {{'COMMON.SELL_PRODUCT'|translate}}</span>
+                        <span class="mx-1 uppercase"> {{'COMMON.SAVE'|translate}}</span>
                         <mat-icon>save</mat-icon>
                       </button> </div>
                     <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
@@ -218,6 +172,36 @@
             </form>
           </div>
         </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>{{'COMMON.SELECTED_PRODUCTS'|translate}}</ng-template>
+        <div fxLayout="row wrap" *ngIf="!selectedProducts || selectedProducts.length===0">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+              {{'COMMON.NO_PRODUCT_FOUND'|translate}}
+            </mat-chip>
+          </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="selectedProducts && selectedProducts.length>0">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource2"
+              (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event,2)"
+              (onSearchClick)="searchClicked($event,2)" (onChangeSorting)="changeSorting($event,2)"
+              (onChangeViewType)="changeViewType($event,2)">
+            </app-products-toolbar>
+          </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="selectedProducts && selectedProducts.length>0">
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+            <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource2.filteredData"
+              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
+              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+            </embryo-ProductGrid>
+          </div>
+        </div>
+        <mat-paginator *ngIf="selectedProducts && selectedProducts.length>0" [length]="pagination2?.total"
+          [pageSize]="pagination2?.perPage" (page)="onPageChange($event, 2)" class="w-100 mat-elevation-z1">
+        </mat-paginator>
       </mat-step>
     </mat-horizontal-stepper>
   </div>

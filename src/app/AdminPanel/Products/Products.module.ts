@@ -28,14 +28,15 @@ import {
   MatToolbarModule,
   MatAutocompleteModule,
   MatTooltipModule,
-  MatDatepickerModule, 
+  MatDatepickerModule,
   MatNativeDateModule,
+  MatStepperModule,
+  MatChipsModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { EditProductComponent } from './EditProduct/EditProduct.component';
-import { ProductComponent } from './Product/Product.component'; 
+import { ProductComponent } from './Product/Product.component';
 import { GlobalModule } from '../../Global/Global.module';
 import { ProductsComponent } from './Products/Products.component';
 import { ProductsRoutes } from './Products.routing';
@@ -43,7 +44,7 @@ import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
 import { ProductDescriptionComponent } from './ProductDescription/ProductDescription.component';
 import { ProductLinkComponent } from './ProductLink/ProductLink.component';
-import { InformationComponent } from './Information/Information.component'; 
+import { InformationComponent } from './Information/Information.component';
 import { InformationsComponent } from './Informations/Informations.component';
 import { MarketingComponent } from './Marketing/Marketing.component';
 import { MarketingsComponent } from './Marketings/Marketings.component';
@@ -61,13 +62,17 @@ import { OptionDescriptionComponent } from './Option/OptionDescription.component
 import { OptionValuesComponent } from './OptionValues/OptionValues.component';
 import { OptionValueComponent } from './OptionValue/OptionValue.component';
 import { ProductOptionsComponent } from './ProductOptions/ProductOptions.component';
+import { MarketingProductComponent } from './MarketingProduct/MarketingProduct.component';
+import { TemplatesModule } from 'src/app/Templates/Templates.module';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
-    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent, 
-    AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent, 
-    OptionsComponent, OptionComponent, OptionDescriptionComponent, OptionValuesComponent, OptionValueComponent, ProductOptionsComponent],
+    MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
+    AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
+    OptionsComponent, OptionComponent, OptionDescriptionComponent,
+    OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,
+    MarketingProductComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -103,6 +108,9 @@ import { ProductOptionsComponent } from './ProductOptions/ProductOptions.compone
     InputFileModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatStepperModule,
+    TemplatesModule,
+    MatChipsModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
