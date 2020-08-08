@@ -31,7 +31,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatStepperModule,
-  MatChipsModule
+  MatChipsModule,
+  MatBadgeModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -111,6 +112,7 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
     MatStepperModule,
     TemplatesModule,
     MatChipsModule,
+    MatBadgeModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {

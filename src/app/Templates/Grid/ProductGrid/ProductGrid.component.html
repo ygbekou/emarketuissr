@@ -43,6 +43,12 @@
                      </i></button>
                </ng-container>
             </div>
+                        <div class="m-icon" *ngIf="fromPage==='marketing'">
+               <ng-container *ngIf="prd">
+                  <button mat-fab (click)="removeProductFromList(prd)"><i class="material-icons"> delete_sweep
+                     </i></button>
+               </ng-container>
+            </div>
             <div class="m-icon" *ngIf="!checkCartAlready(prd.product)">
                <button mat-fab *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.id]"><i
                      class="material-icons">remove_red_eye</i> </button>
