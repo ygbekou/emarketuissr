@@ -192,6 +192,9 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       pov.subtract = (pov.subtract == null
       || pov.subtract.toString() === 'false'
       || pov.subtract.toString() === '0') ? 0 : 1;
+
+      pov.productOption = this.productOption;
+
       this.appService.saveWithUrl('/service/crud/ProductOptionValue/save/', pov)
          .subscribe((data: ProductOption) => {
             this.processResult(data, this.productOption, null);
