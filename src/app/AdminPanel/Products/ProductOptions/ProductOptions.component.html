@@ -214,7 +214,7 @@
                      </div>
                      <div fxFlex="10" class="text-center pt-2">
                         
-                        <button mat-icon-button color="primary" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit">
+                        <button mat-icon-button color="primary" [disabled]="!f.dirty" matTooltip="{{'COMMON.SAVE' | translate}}" type="submit">
                            <mat-icon>save</mat-icon>
                         </button>
 
