@@ -873,6 +873,8 @@ export class ProductOption {
   optionName: string;
 
   valueDate: Date;
+  timeMinute: number;
+  timeHour: number;
 
   productOptionValues: ProductOptionValue[]
 

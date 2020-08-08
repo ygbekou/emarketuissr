@@ -60,6 +60,10 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             data.forEach(element => {
                this.addOption(element);
             });
+
+            if (data.length > 0) {
+               this.getProductOption(data[0].id);
+            }
          },
             error => console.log(error),
             () => console.log('Get product selected OptionDescription complete'));
@@ -85,8 +89,9 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       this.appService.saveWithUrl('/service/crud/ProductOption/save/', productOption)
          .subscribe((data: ProductOption) => {
             this.processResult(data, this.productOption, null);
-            //this.productOptions[i].id = data.id;
-            this.productOptions.push(productOption);
+            productOption.optionName = optDesc.name;
+            productOption.id = data.id;
+            this.addOption(productOption);
          },
             error => console.log(error),
             () => console.log('Save selected product option complete'));
@@ -102,6 +107,11 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       if (this.isDateOption()) {
          this.productOption.value = this.productOption.valueDate.toLocaleDateString();
       }
+     
+      if (this.isTimeOption()) {
+         this.productOption.value = this.productOption.timeHour + ':' + this.productOption.timeMinute;
+      }
+
       this.appService.saveWithUrl('/service/crud/ProductOption/save/', this.productOption)
          .subscribe((data: ProductOption) => {
             this.processResult(data, this.productOption, null);
@@ -111,6 +121,13 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
 
    }
 
+   public get dateTimeLocal(): string {
+    return this.productOption.value;
+  }
+
+  public set dateTimeLocal(v: string) {
+    this.productOption.value = v;
+  }
 
 
     public addOption(productOption: ProductOption): void {
@@ -123,7 +140,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
          prOpt = new ProductOption();
          prOpt.product.id = this.productId;
       }
-      this.productOptions.unshift(productOption !== undefined ? productOption : prOpt);
+      this.productOptions.push(productOption !== undefined ? productOption : prOpt);
    }
 
    public deleteProductOption(productOption: ProductOption, index: number) {
@@ -154,6 +171,12 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             if (this.isDateOption()) {
                this.productOption.valueDate = new Date(this.productOption.value);
             }
+
+            if (this.isTimeOption()) {
+               this.productOption.timeHour = +this.productOption.value.split(':')[0];
+               this.productOption.timeMinute = +this.productOption.value.split(':')[1];
+            }
+
           } else {
             this.productOption = new ProductOption();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -224,7 +247,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
   }
 
   isTimeOption() {
-     return this.productOption.option.optionType === 'Date';
+     return this.productOption.option.optionType === 'Time';
   }
 
   isDateTimeOption() {
@@ -239,6 +262,14 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
      return this.productOption.option.optionType === 'Date';
   }
 
+  isCheckboxOption() {
+     return this.productOption.option.optionType === 'Checkbox';
+  }
+
+  isSelectableOption() {
+     return this.isSelectOption() || this.isRadioOption() || this.isCheckboxOption();
+  }
+  
   getOptionValues() {
     const parameters: string[] = [];
     parameters.push('e.language.id = |languageId|' + this.appService.appInfoStorage.language.id + '|Integer');
@@ -257,4 +288,12 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
         () => console.log('Get OptionValueDescription Items for Option complete'));
   }
 
+
+  getStyle(productOption: ProductOption) {
+    if (productOption.id === this.productOption.id) {
+       return {'background-color': '#8AACB8'};
+    } else {
+      return {'background-color': '#ADD8E6'};
+    }
+  }
 }

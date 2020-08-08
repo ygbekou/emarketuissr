@@ -1,7 +1,7 @@
 <div fxLayout="row">
    <div fxFlex="20">
       <div *ngFor="let productOption of productOptions; let i = index;" class="step-section">
-         <div style="background-color: lightblue">
+         <div [ngStyle]="getStyle(productOption)">
             <button mat-icon-button color="warn" (click)="deleteProductOption(productOption, i)"
                matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
                <mat-icon>delete</mat-icon>
@@ -44,6 +44,7 @@
             </div>
          </div>
 
+         {{productOption.optionName}}
          <mat-slide-toggle [(ngModel)]="productOption.required" name="required" #required="ngModel" class="my-2">
             {{ 'COMMON.REQUIRED' | translate }}
          </mat-slide-toggle>
@@ -77,14 +78,28 @@
          </div>
 
          <div fxFlex="50" *ngIf="isDateTimeOption()">
-            
+            <mat-form-field class="w-100">
                <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
-               
+               <input matInput type="datetime-local" class="form-control" id="value"
+                  [(ngModel)]="dateTimeLocal" name="value" #value="ngModel">
 
-               <input mdc-datetime-picker="" date="true" time="true" type="text" id="datetime"
-placeholder="Date" show-todays-date="" min-date="date" ng-model="dateTime" class=" md-input"
-readonly="readonly">
-           
+            </mat-form-field>
+         </div>
+
+         <div fxFlex="50" *ngIf="isTimeOption()">
+            <mat-form-field class="w-100">
+               <mat-label> {{'COMMON.HOUR' | translate}}</mat-label>
+               <input matInput class="form-control" id="timeHour"
+                  [(ngModel)]="productOption.timeHour" name="timeHour" #timeHour="ngModel">
+            </mat-form-field>
+
+            <mat-form-field class="w-100">
+               <mat-label> {{'COMMON.MINUTE' | translate}}</mat-label>
+               <input matInput class="form-control" id="timeMinute"
+                  [(ngModel)]="productOption.timeMinute" name="timeMinute" #timeMinute="ngModel">
+
+            </mat-form-field>
+   
          </div>
          
       </div>
@@ -93,13 +108,17 @@ readonly="readonly">
       <br/>
 
       
-      <div fxLayout="row">
-         <div fxFlex="100" class="text-center font-bold" *ngIf="isSelectOption()"><h5>{{'COMMON.OPTION_VALUES' | translate}}</h5></div>
+      <div fxLayout="row" *ngIf="isSelectableOption()">
+         <button type="button" mat-icon-button color="primary" (click)="addProductOptionValue()"
+            matTooltip="Add value" matTooltipPosition="after">
+            <mat-icon>add_circle</mat-icon>
+         </button>
+         <div fxFlex="100" class="text-center font-bold"><h5>{{'COMMON.OPTION_VALUES' | translate}}</h5></div>
       </div>
       <br/>
       <div fxLayout="row">
          <div fxFlex="100">
-            <div id="productOptionValues" fxFlex="100" fxLayout="row wrap" *ngIf="isSelectOption()">
+            <div id="productOptionValues" fxFlex="100" fxLayout="row wrap" *ngIf="isSelectableOption()">
                <div fxFlex="15" class="text-center"><h6>{{'COMMON.OPTION_VALUE' | translate}}</h6></div>
                <div fxFlex="3" class="text-center"></div>
                <div fxFlex="15" class="text-center"><h6>{{'COMMON.QUANTITY' | translate}}</h6></div>
