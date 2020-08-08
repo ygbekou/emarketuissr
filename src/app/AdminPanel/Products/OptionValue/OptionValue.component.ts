@@ -83,7 +83,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
                   }
                 );
             }
-          }
+          } 
       },
         error => console.log(error),
         () => console.log('Get all Option value Desc complete'));
@@ -134,6 +134,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
       const optValue = new OptionValue();
       optValue.id = this.optionValue.id;
       this.optionValueDescription.optionValue = optValue;
+      console.info(this.optionValueDescription);
       this.appService.save(this.optionValueDescription, 'OptionValueDescription')
          .subscribe(result => {
             if (result.id > 0) {

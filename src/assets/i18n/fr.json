@@ -416,8 +416,15 @@
     "RELATED_PRODUCT": "Produit connetéss sélectionnés",
     "ATTRIBUTE_GROUP": "Groupe Attributs",
 		"ATTRIBUTE": "Attribut",
-		"ASSIGN_NEW_ATTRIBUTE": "Assigner Nouveau Attribut",
-		"OPTION_VALUES": "Valeurs d'option"
+    "OPTION_VALUES": "Valeurs d'option",
+    "OPTION_VALUE": "Option Value",
+    "ASSIGN_NEW_ATTRIBUTE": "Assigner Nouveau Attribut",
+		"OPTION": "Option",
+		"POINTS": "Points",
+    "REQUIRED": "Obligatoire",
+    "PRICE_PREFIX": "Price Prefix",
+    "POINTS_PREFIX": "Points Prefix",
+    "WEIGHT_PREFIX": "Weight Prefix"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
