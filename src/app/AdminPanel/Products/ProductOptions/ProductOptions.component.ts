@@ -262,7 +262,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
   }
 
   isRadioOption() {
-     return this.productOption.option.optionType === 'Date';
+     return this.productOption.option.optionType === 'Radio';
   }
 
   isCheckboxOption() {
