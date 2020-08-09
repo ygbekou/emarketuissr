@@ -17,7 +17,10 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
 
   @Input() marketing: Marketing;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator2: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort2: MatSort;
+
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
   categories: CategoryDescription[][] = [];
@@ -197,12 +200,13 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    console.log(this.selectedStore);
-    console.log(this.appService.appInfoStorage.language);
+    // console.log(this.selectedStore);
+    // console.log(this.appService.appInfoStorage.language);
     this.appService.getObjects('/service/catalog/getProductsOnMarketing/' + this.appService.appInfoStorage.language.id
       + '/' + this.marketing.id)
       .subscribe((data: ProductDescription[]) => {
         this.selectedProducts = data;
+        // console.log(data);
         const result = this.filterData(data, 2);
         if (result.data.length === 0) {
           // this.properties.length = 0;
@@ -211,6 +215,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
             this.message = res['MESSAGE.NO_RESULT_FOUND'];
           });
         }
+        console.log(result.data);
         this.dataSource2 = new MatTableDataSource(result.data);
         this.pagination2 = result.pagination;
         this.message = null;
@@ -259,11 +264,15 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   public changeCount(count, opt: number) {
     this.count = count;
     // this.products.length = 0;
-    this.resetPagination();
+    this.resetPagination(opt);
     this.filterProducts(opt);
   }
   public changeSorting(sort, opt: number) {
-    this.sort = sort;
+    if (opt === 1) {
+      this.sort = sort;
+    } else {
+      this.sort2 = sort;
+    }
     this.filterProducts(opt);
   }
   public changeViewType(obj, opt: number) {
@@ -288,11 +297,20 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     // window.scrollTo(0, 0);
   }
 
-  public resetPagination() {
-    if (this.paginator) {
-      this.paginator.pageIndex = 0;
+  public resetPagination(opt: number) {
+    if (opt === 1) {
+      if (this.paginator) {
+        this.paginator.pageIndex = 0;
+      }
+      this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
+
+    } else {
+      if (this.paginator2) {
+        this.paginator2.pageIndex = 0;
+      }
+      this.pagination2 = new Pagination(1, this.count, null, null, this.pagination2.total, this.pagination2.totalPages);
+
     }
-    this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
   }
 
   public filterProducts(opt: number) {
@@ -326,7 +344,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
       return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
 
     } else {
-      return this.appService.filterData(data, this.searchFields, this.sort, this.pagination2.page, this.pagination2.perPage);
+      return this.appService.filterData(data, this.searchFields, this.sort2, this.pagination2.page, this.pagination2.perPage);
     }
   }
 
@@ -338,6 +356,11 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     this.productDesc = $event;
     this.marketingProduct = new MarketingProduct();
     this.stepper.selectedIndex = 3;
+  }
+
+  removeProduct($event) {
+    console.log($event);
+    this.getSelectedProducts();
   }
 
   sell() {

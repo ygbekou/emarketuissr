@@ -3,7 +3,7 @@
     <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
   </div>
   <div fxLayout="row wrap" class="col-gap">
-    <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-horizontal-stepper [linear]="false" #stepper>
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
         <div fxLayout="row wrap" class="col-gap">
@@ -64,11 +64,14 @@
         </div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_PRODUCT'|translate}}</ng-template>
+        <ng-template matStepLabel> 
+          <span matBadge="{{products?.length}}"
+            matBadgeOverlap="false">{{'COMMON.SELECT_PRODUCT'|translate}}</span>
+        </ng-template>
         <div fxLayout="row wrap" *ngIf="!products || products.length===0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'COMMON.NO_PRODUCT_FOUND'|translate}}
+              {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
             </mat-chip>
           </div>
         </div>
@@ -108,7 +111,8 @@
             *ngIf="productDesc.product && productDesc.product.image">
             <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
           </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+           *ngIf="productDesc.id>0" >
             <form name="form" (ngSubmit)="f.form.valid && sell()" #f="ngForm" validate>
               <div class="product-detail-content">
                 <h3>{{productDesc?.name}}</h3>
@@ -121,8 +125,8 @@
                   <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
                     <mat-form-field appearance="fill">
                       <mat-label>{{'COMMON.START_DATE'|translate}}</mat-label>
-                      <input matInput id="beginDate" [(ngModel)]="marketingProduct.beginDate" [matDatepicker]="beginDate"
-                        name="beginDate" #beginDate="ngModel">
+                      <input matInput id="beginDate" [(ngModel)]="marketingProduct.beginDate"
+                        [matDatepicker]="beginDate" name="beginDate" #beginDate="ngModel">
                       <mat-datepicker-toggle matSuffix [for]="beginDate"></mat-datepicker-toggle>
                       <mat-datepicker #beginDate></mat-datepicker>
                     </mat-form-field>
@@ -139,16 +143,17 @@
                 </div>
                 <div fxLayout="row wrap">
                   <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-                    <mat-slide-toggle [(ngModel)]="marketingProduct.status" name="status" #status="ngModel" class="my-2">
+                    <mat-slide-toggle [(ngModel)]="marketingProduct.status" name="status" #status="ngModel"
+                      class="my-2">
                       {{ 'COMMON.ENABLE' | translate }}
                     </mat-slide-toggle>
-                    </div>
-                    <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                  </div>
+                  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
                     <mat-form-field class="w-100">
                       <mat-label> {{'COMMON.SORT_ORDER' | translate}}
                       </mat-label>
-                      <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="marketingProduct.sortOrder"
-                        name="title" #sortOrder="ngModel">
+                      <input matInput type="text" class="form-control" id="sortOrder"
+                        [(ngModel)]="marketingProduct.sortOrder" name="title" #sortOrder="ngModel">
                     </mat-form-field>
                   </div>
                 </div>
@@ -174,11 +179,14 @@
         </div>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECTED_PRODUCTS'|translate}}</ng-template>
+        <ng-template matStepLabel>
+          <span matBadge="{{selectedProducts?.length}}"
+            matBadgeOverlap="false">{{'COMMON.SELECTED_PRODUCTS'|translate}}</span>
+        </ng-template>
         <div fxLayout="row wrap" *ngIf="!selectedProducts || selectedProducts.length===0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'COMMON.NO_PRODUCT_FOUND'|translate}}
+              {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
             </mat-chip>
           </div>
         </div>
@@ -192,10 +200,11 @@
           </div>
         </div>
         <div fxLayout="row wrap" *ngIf="selectedProducts && selectedProducts.length>0">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource2">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource2.filteredData"
-              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
-              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'marketing'" (addToCart)="addToCart($event)"
+              (removeProduct)="removeProduct($event)"
+              (addToWishList)="addToWishList($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>
         </div>

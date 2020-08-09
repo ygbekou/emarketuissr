@@ -15,7 +15,7 @@ export class ProductGridComponent implements OnInit {
    @Input() viewType: any;
    @Input() viewCol: any;
    @Output() selectProduct: EventEmitter<any> = new EventEmitter();
-
+   @Output() removeProduct: EventEmitter<any> = new EventEmitter();
    @Input() gridThree: boolean = false;
 
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
@@ -41,9 +41,11 @@ export class ProductGridComponent implements OnInit {
    }
 
    public selectForSaleProduct(product: any) {
-      console.log('sale button clicked');
-      console.log(product);
       this.selectProduct.emit(product);
+   }
+
+   public removeProductFromList(product: any) {
+      this.removeProduct.emit(product);
    }
 
    public addToCartProduct(value: any) {
