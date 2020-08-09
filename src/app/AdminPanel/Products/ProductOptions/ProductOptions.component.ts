@@ -92,6 +92,13 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             productOption.optionName = optDesc.name;
             productOption.id = data.id;
             this.addOption(productOption);
+
+            // Removing the just saved option from dropdown
+            const index = this.optionOptions.findIndex(x => x.id === optDesc.id);
+            this.optionOptions.splice(index, 1);
+            this.currentOption = '';
+
+            this.getProductOption(data.id);
          },
             error => console.log(error),
             () => console.log('Save selected product option complete'));
@@ -131,6 +138,8 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
 
 
     public addOption(productOption: ProductOption): void {
+      
+      this.messages = '';
       if (!this.productOptions || this.productOptions === null ) {
          this.productOptions = [];
       }
