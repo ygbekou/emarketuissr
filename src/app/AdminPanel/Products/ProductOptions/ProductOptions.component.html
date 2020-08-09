@@ -31,13 +31,13 @@
    <div fxFlex="5"></div>
 
    <div fxFlex="75">
-      <form name="form" (ngSubmit)="f.form.valid && saveProductOption2()" #f="ngForm" validate>
+      <form name="poForm" (ngSubmit)="poForm.form.valid && saveProductOption2()" #poForm="ngForm" validate>
          <div fxLayout="row">
 
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
                <div class="text-center mt-2">
                   <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit" 
-                     *ngIf="productOption.id > 0" [disabled]="!f.dirty">
+                     *ngIf="productOption.id > 0" [disabled]="!poForm.dirty">
                      <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                      <mat-icon>save</mat-icon>
                   </button> </div>

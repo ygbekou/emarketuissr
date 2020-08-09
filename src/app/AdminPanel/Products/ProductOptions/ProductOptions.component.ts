@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Form } from '@angular/forms';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Form, NgForm } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Product, OptionDescription, ProductOption, Options, ProductOptionValue, OptionValueDescription, OptionValue } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
@@ -16,7 +16,6 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
 
    @Input() product: Product;
    @Input() productId: number;
-   @Input() f: Form;
 
    messages: string;
    currentOption: string;
@@ -232,6 +231,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    }
 
    public addProductOptionValue(productOptionValue: ProductOptionValue): void {
+      this.messages = '';
       if (!this.productOptionValues || this.productOptionValues === null ) {
          this.productOptionValues = [];
       }
