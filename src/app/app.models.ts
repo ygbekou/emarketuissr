@@ -857,6 +857,7 @@ export class ProductToStore {
   status: number;
   stockStatusId: number;
   taxClassId: number;
+  promo: number;
   viewed: number;
   modifiedBy: number;
   dateAvailable: Date;
@@ -910,4 +911,60 @@ export class ProductOptionValue {
     this.optionValue = new OptionValue();
     this.productOption = new ProductOption();
   }
-} 
+}
+
+export class ProductVO {
+  prodId: number;
+  dateAvailable: number;
+  ean: string;
+  height: number;
+  image: string;
+  isbn: string;
+  jan: string;
+  length: number;
+  lengthClassId: number;
+  location: string;
+  manufacturerId: number;
+  minimum: number;
+  model: string;
+  mpn: string;
+  promo: number;
+  points: number;
+  price: number;
+  quantity: number;
+  shipping: number;
+  sku: string;
+  sortOrder: number;
+  status: number;
+  stockStatusId: number;
+  subtract: number;
+  taxClassId: number;
+  upc: number;
+  viewed: number;
+  weight: number;
+  weightClassId: number;
+  width: number;
+  viewCount: number;
+  ratingCount: number;
+  rating: number;
+  description: string;
+  metaDescription: string;
+  metaKeyword: string;
+  metaTitle: string;
+  name: string;
+  tag: string;
+  storeId: number;
+  storeName: string;
+  sold: number;
+  ptsId: number;
+  pQuantity: number;
+  pStockStatusId: number;
+  pPrice: number;
+  pPoints: number;
+  pTaxClassId: number;
+  pSold: number;
+  pPromo: number;
+  pStatus: number;
+  pMinimum: number;
+  pSortOrder: number;
+}

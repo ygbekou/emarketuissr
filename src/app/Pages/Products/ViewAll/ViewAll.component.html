@@ -1,0 +1,96 @@
+<div class="section-gap pb-0" *ngIf="marketings">
+   <div class="container">
+      <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
+         <mat-toolbar-row>
+            <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+               <div class="block-title" Flex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <h2 class="text-inverse mb-0 text-xxl">Lightening Deals</h2>
+               </div>
+               <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                  <mat-form-field class="w-100">
+                     <input matInput (keyup)="searchClicked($event.target.value)"
+                        placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+                  </mat-form-field>
+               </div>
+               <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                  <!-- <span *ngIf="isHomePage"> -->
+                  <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+                     Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+                  </a>
+                  <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
+                     <span (mouseleave)="countsMenuTrigger.closeMenu()">
+                        <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
+                           <span>{{count}}</span>
+                        </button>
+                     </span>
+                  </mat-menu>
+                  <!-- </span>        -->
+
+                  <button mat-icon-button (click)="viewCol = 50">
+                     <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
+                        <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
+                     </svg>
+                  </button>
+                  <button mat-icon-button fxShow="false" fxShow.gt-md (click)="viewCol = 33.3">
+                     <mat-icon>view_module</mat-icon>
+                  </button>
+
+                  <button fxShow="false" fxShow.gt-md mat-icon-button (click)="viewCol = 25">
+                     <mat-icon>view_comfy</mat-icon>
+                  </button>
+               </div>
+
+            </div>
+         </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="shop-card-gap px-4" *ngIf="dataSource && (sectionId==1||sectionId==3)">
+         <div fxLayout="row wrap" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{viewCol}}" fxFlex.lg="{{viewCol}}" fxFlex.xl="{{viewCol}}"
+               *ngFor="let slide of dataSource.filteredData">
+
+               <mat-card class="box-shadow-md p-4" *ngIf="sectionId==3">
+                  <a href="javascript:void(0)">
+                     <img [src]="'assets/images/marketings/'+slide.marketing.id+'/'+slide.marketing.image"
+                        alt="Product">
+                  </a>
+                  <mat-card-content class="pt-3">
+                     <h5><a [routerLink]="['/products']"> {{slide.name}}</a></h5>
+                     <div [innerHTML]="slide?.description | safehtml"></div>
+                  </mat-card-content>
+               </mat-card>
+
+               <mat-card class="box-shadow-md p-4" *ngIf="sectionId==1">
+                  <div class="relative">
+                     <img [src]="'assets/images/marketings/'+slide.marketing.id+'/'+slide.marketing.image" alt=""
+                        width="100%">
+                     <div class="home-2-slider-content">
+                        <div [innerHTML]="slide?.description| safehtml"></div>
+                        <button color="accent" mat-raised-button [routerLink]="['/products']">Shop Now</button>
+                     </div>
+                  </div>
+               </mat-card>
+
+            </div>
+         </div>
+      </div>
+
+
+      <div class="section-gap pb-0 pt-5 image-group" *ngIf="dataSource && sectionId==2">
+         <div class="container">
+            <div fxLayout="row wrap" class="col-gap">
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{viewCol}}" fxFlex.lg="{{viewCol}}"
+                  fxFlex.xl="{{viewCol}}" *ngFor="let card of dataSource.filteredData">
+                  <a [routerLink]="[card.marketing.id]"> <img
+                        [src]="'assets/images/marketings/'+card.marketing.id+'/'+card.marketing.image" alt=""></a>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div fxLayout="row wrap" class="col-gap">
+         <mat-paginator *ngIf="marketings && marketings.length>0" [length]="pagination?.total"
+            [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
+         </mat-paginator>
+      </div>
+   </div>
+</div>

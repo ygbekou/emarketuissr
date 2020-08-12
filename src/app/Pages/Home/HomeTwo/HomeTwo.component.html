@@ -1,9 +1,16 @@
 <embryo-HomePageTwoSlider [isRTL]="appService.isDirectionRtl"></embryo-HomePageTwoSlider>
+<div class="container">
+   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:1}">Show All</a>
+</div>
+
 
 <embryo-CtaGroup></embryo-CtaGroup>
+<div class="container">
+   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:2}">Show All</a>
+</div>
 
-<embryo-LighteningDeals *ngIf="lighteningDealsProducts" [lighteningDeals]="lighteningDealsProducts">
-</embryo-LighteningDeals>
+<embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
+</embryo-lightening-deals>
 
 <embryo-TopProducts *ngIf="topProducts" [products]="topProducts" [currency]="appService?.currency"
    (addToCart)="addToCart($event)"></embryo-TopProducts>

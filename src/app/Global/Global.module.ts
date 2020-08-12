@@ -30,7 +30,7 @@ import {
    MatSlideToggleModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BarRatingModule } from "ngx-bar-rating";
+import { BarRatingModule } from 'ngx-bar-rating';
 import { AgmCoreModule } from '@agm/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -76,6 +76,7 @@ import { DownloadAppSectionComponent } from './DownloadAppSection/DownloadAppSec
 import { HomePageThreeSliderComponent } from './Slider/HomePageThreeSlider/HomePageThreeSlider.component';
 import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
    imports: [
@@ -110,6 +111,7 @@ import { TranslateModule } from '@ngx-translate/core';
       BarRatingModule,
       MatSlideToggleModule,
       TranslateModule,
+      PipesModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyC9PnuRk42kbCPMOvsfHpn40r5SoyN38zI',
          libraries: ['places']
