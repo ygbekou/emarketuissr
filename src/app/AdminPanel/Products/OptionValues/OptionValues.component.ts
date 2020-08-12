@@ -72,4 +72,18 @@ export class OptionValuesComponent extends BaseComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  onOptionValueSave($event) {
+      const optionValue = $event;
+
+      optionValue.optionValueDescriptions.forEach(element => {
+         if (element.language.id === this.appService.appInfoStorage.language.id) {
+            optionValue.optionValueDescriptions[0].optionValue = optionValue;
+            this.dataSource.data.push(optionValue.optionValueDescriptions[0]);
+            this.dataSource = new MatTableDataSource(this.dataSource.data);
+         }
+      });
+      
+      
+	}
 }

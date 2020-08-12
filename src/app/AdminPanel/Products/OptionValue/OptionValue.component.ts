@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Options, OptionDescription, OptionValue, OptionValueDescription } from 'src/app/app.models';
+import { Options, OptionValue, OptionValueDescription, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
@@ -18,6 +18,8 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
    optionValueDescription: OptionValueDescription;
    @Input() option: Options;
    @Input() optionId: number;
+
+   @Output() optionValueSaveEvent = new EventEmitter<OptionValue>();
 
    formData: FormData;
 
@@ -60,8 +62,6 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
       }
    }
 
-   
-
    getOptionValueDescriptions(optionValueId: number) {
       const parameters: string[] = [];
       if (optionValueId != null) {
@@ -90,13 +90,24 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
    }
 
 
+  cleanOptionValueDescriptions(optionValue: OptionValue) {
+    optionValue.optionValueDescriptions.forEach(element => {
+       element.option = undefined;
+       const language = element.language;
+       element.language = new Language();
+       element.language.id = language.id;
+       element.option = new Options();
+       element.option.id = this.optionId;
+    });
+  }
+
   save() {
     this.messages = '';
     const opt = {...this.optionValue};
-    opt.optionValueDescriptions = [];
     opt.option = new Options();
     opt.option.id = this.optionId;
 
+    this.cleanOptionValueDescriptions(opt);
 
     this.formData = new FormData();
 
@@ -114,6 +125,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
         if (result.id > 0) {
           this.optionValue.id = result.id;
           this.processResult(result, this.optionValue, null);
+          this.optionValueSaveEvent.emit(this.optionValue);
         }
       });
     } else {
@@ -122,6 +134,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
             if (result.id > 0) {
               this.optionValue.id = result.id;
               this.processResult(result, this.optionValue, null);
+              this.optionValueSaveEvent.emit(this.optionValue);
             }
           });
     }
@@ -134,7 +147,6 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
       const optValue = new OptionValue();
       optValue.id = this.optionValue.id;
       this.optionValueDescription.optionValue = optValue;
-      console.info(this.optionValueDescription);
       this.appService.save(this.optionValueDescription, 'OptionValueDescription')
          .subscribe(result => {
             if (result.id > 0) {

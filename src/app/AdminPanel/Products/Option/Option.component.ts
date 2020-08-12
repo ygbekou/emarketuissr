@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Options, OptionDescription } from 'src/app/app.models';
+import { Options, OptionDescription, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
@@ -64,7 +64,7 @@ export class OptionComponent extends BaseComponent implements OnInit {
          .subscribe((data: OptionDescription[]) => {
 
           if (data !== null && data.length > 0) {
-            console.info(data[0]);
+            console.info(data);
             this.option = data[0].option;
             this.option.optionDescriptions = data;
           }
@@ -73,12 +73,21 @@ export class OptionComponent extends BaseComponent implements OnInit {
         () => console.log('Get all Option Desc complete'));
    }
 
+   cleanOptionDescriptions(option: Options) {
+     option.optionDescriptions.forEach(element => {
+       element.option = undefined;
+       const language = element.language;
+       element.language = new Language();
+       element.language.id = language.id;
+     })
+   }
 
   save() {
     this.messages = '';
     try {
       const opt = {...this.option};
-      opt.optionDescriptions = [];
+      this.cleanOptionDescriptions(opt);
+      //opt.optionDescriptions = [];
 
       this.appService.save(opt, 'Option')
         .subscribe(result => {
