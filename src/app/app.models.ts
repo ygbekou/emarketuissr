@@ -967,4 +967,5 @@ export class ProductVO {
   pStatus: number;
   pMinimum: number;
   pSortOrder: number;
+  category: string;
 }

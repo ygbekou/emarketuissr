@@ -23,7 +23,7 @@
             <button *ngIf="product.status == 1" mat-raised-button class="button-grey" [routerLink]="['/cart']">View Cart</button>
           </mat-card-content>
           <div class="offer-badge">
-            <mat-chip color="accent" selected>20% off</mat-chip>
+            <mat-chip color="accent" selected>{{product.promo}}% off</mat-chip>
           </div>
         </mat-card>
       </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { MarketingDescription, Language } from 'src/app/app.models';
+import { MarketingDescription, Language, ProductVO } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
@@ -10,7 +10,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 })
 export class HomeTwoComponent implements OnInit {
 
-   topProducts: any;
+   topProducts: ProductVO[] = [];
    lighteningDealsProducts: any;
    marketings: MarketingDescription[] = [];
 
@@ -18,14 +18,8 @@ export class HomeTwoComponent implements OnInit {
 
    ngOnInit() {
       this.lighteningDeals();
-      this.getProducts();
+      // this.getProducts();
    }
-
-   /* 
-   public lighteningDeals() {
-      this.appService.getProducts().valueChanges()
-         .subscribe(res => this.getLighteningDealsResponse(res));
-   } */
 
    public lighteningDeals() {
       const parameters: string[] = [];
@@ -49,6 +43,7 @@ export class HomeTwoComponent implements OnInit {
             data.forEach(language => {
                if (language.code === lang) {
                   this.getSliders(language.id);
+                  this.getProductsOnSale(language.id);
                }
             });
 
@@ -59,8 +54,8 @@ export class HomeTwoComponent implements OnInit {
       const parameters: string[] = [];
       parameters.push('e.language.id = |langCode|' + langId + '|Integer');
       parameters.push('e.marketing.section = |sInS|3|Integer');
-       parameters.push('e.marketing.status = |stta|1|Integer');
-       parameters.push('e.marketing.sortOrder <= |sOrd|8|Integer');
+      parameters.push('e.marketing.status = |stta|1|Integer');
+      parameters.push('e.marketing.sortOrder <= |sOrd|8|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters,
          ' order by e.marketing.sortOrder')
          .subscribe((data: MarketingDescription[]) => {
@@ -70,6 +65,35 @@ export class HomeTwoComponent implements OnInit {
             error => console.log(error),
             () => console.log('Get all MarketingDescription complete'));
    }
+
+   getProductsOnSale(langId: number) {
+      this.topProducts = [];
+
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |langCode|' + langId + '|Integer');
+      parameters.push('e.marketing.section = |sInS|4|Integer');
+      parameters.push('e.marketing.status = |stta|1|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters,
+         ' order by e.marketing.sortOrder')
+         .subscribe((data: MarketingDescription[]) => {
+            // console.log(data);
+            if (data && data.length > 0) {
+               this.appService.getObjects('/service/catalog/getProductsOnSale/' +
+                  langId + '/0/' + data[0].marketing.id)
+                  .subscribe((data2: ProductVO[]) => {
+                     this.topProducts = data2;
+                     // console.log(this.topProducts);
+                  },
+                     error => console.log(error),
+                     () => console.log('Get all getProductsOnSale complete'));
+
+            }
+         },
+            error => console.log(error),
+            () => console.log('Get  MarketingDescription complete'));
+
+   }
+
 
 
    public getLighteningDealsResponse(res) {

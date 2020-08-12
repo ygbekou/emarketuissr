@@ -19,6 +19,7 @@ export class TopProductsComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
+      console.log(this.products);
       if (this.products) {
          this.randomSortProducts = this.products.sort(() => Math.random() - 0.5);
       }
