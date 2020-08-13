@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { MarketingDescription, Language, ProductVO } from 'src/app/app.models';
+import { MarketingDescription, Language, ProductDescVO } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'app-home-two',
@@ -10,11 +11,11 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 })
 export class HomeTwoComponent implements OnInit {
 
-   topProducts: ProductVO[] = [];
+   topProducts: ProductDescVO[] = [];
    lighteningDealsProducts: any;
    marketings: MarketingDescription[] = [];
 
-   constructor(public appService: AppService) { }
+   constructor(public appService: AppService, public translate: TranslateService) { }
 
    ngOnInit() {
       this.lighteningDeals();
@@ -68,7 +69,6 @@ export class HomeTwoComponent implements OnInit {
 
    getProductsOnSale(langId: number) {
       this.topProducts = [];
-
       const parameters: string[] = [];
       parameters.push('e.language.id = |langCode|' + langId + '|Integer');
       parameters.push('e.marketing.section = |sInS|4|Integer');
@@ -80,7 +80,7 @@ export class HomeTwoComponent implements OnInit {
             if (data && data.length > 0) {
                this.appService.getObjects('/service/catalog/getProductsOnSale/' +
                   langId + '/0/' + data[0].marketing.id)
-                  .subscribe((data2: ProductVO[]) => {
+                  .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);
                   },

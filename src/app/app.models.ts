@@ -913,8 +913,21 @@ export class ProductOptionValue {
   }
 }
 
+export class ProductDescVO {
+  id: number;
+  product: ProductVO;
+  description: string;
+  metaDescription: string;
+  metaKeyword: string;
+  metaTitle: string;
+  name: string;
+  tag: string;
+  shortDescription: string;
+  mediumDescription: string;
+  category: string;
+}
 export class ProductVO {
-  prodId: number;
+  id: number;
   dateAvailable: number;
   ean: string;
   height: number;
@@ -947,12 +960,6 @@ export class ProductVO {
   viewCount: number;
   ratingCount: number;
   rating: number;
-  description: string;
-  metaDescription: string;
-  metaKeyword: string;
-  metaTitle: string;
-  name: string;
-  tag: string;
   storeId: number;
   storeName: string;
   sold: number;
@@ -967,5 +974,5 @@ export class ProductVO {
   pStatus: number;
   pMinimum: number;
   pSortOrder: number;
-  category: string;
+
 }

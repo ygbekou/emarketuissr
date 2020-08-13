@@ -48,7 +48,7 @@
             </mat-card>
           </div>
         </div>
-      </mat-step> 
+      </mat-step>
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.MY_PRODUCTS'|translate}}</ng-template>
         <div fxLayout="row wrap" *ngIf="!products || products.length===0">
@@ -107,7 +107,7 @@
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
                     <mat-form-field class="w-100">
                       <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price"
+                      <input matInput type="text" class="form-control" id="price" [(ngModel)]="productStore.price"
                         name="price" #price="ngModel" required>
                       <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                         {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -132,7 +132,7 @@
                       <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
                       <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
                         name="quantity" #quantity="ngModel" required>
-                               <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                         {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                       </mat-error>
                     </mat-form-field>
@@ -142,7 +142,7 @@
                       <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
                       <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
                         name="minimum" #minimum="ngModel" required>
-                               <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                         {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                       </mat-error>
                     </mat-form-field>
@@ -179,6 +179,18 @@
                       <input matInput type="text" class="form-control" id="points" [(ngModel)]="productStore.points"
                         name="points" #points="ngModel">
                     </mat-form-field>
+                  </div>
+                </div>
+                <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-30">
+                      <mat-label>Pourcentage rabais</mat-label>
+                      <input matInput type="text" class="form-control" id="promo"
+                        [(ngModel)]="productStore.promo" name="promo" #promo="ngModel">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    
                   </div>
                 </div>
                 <div fxLayout="row wrap">

@@ -1,12 +1,14 @@
 <embryo-HomePageTwoSlider [isRTL]="appService.isDirectionRtl"></embryo-HomePageTwoSlider>
 <div class="container">
-   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:1}">Show All</a>
+   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:1}">
+   {{'COMMON.SHOW_ALL'|translate}}</a>
 </div>
 
 
 <embryo-CtaGroup></embryo-CtaGroup>
 <div class="container">
-   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:2}">Show All</a>
+   <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:2}">
+   {{'COMMON.SHOW_ALL'|translate}}</a>
 </div>
 
 <embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
@@ -18,15 +20,11 @@
    <div class="container">
       <div fxLayoutAlign="space-between" class="w-100">
          <div class="block-title mb-4">
-            <h3>Top Brands</h3>
+            <h3>{{'COMMON.TOP_SHOPS'|translate}}</h3>
          </div>
       </div>
       <embryo-BrandsLogo [isRTL]="appService.isDirectionRtl"></embryo-BrandsLogo>
    </div>
 </div>
-<div class="section-gap pb-0">
-   <!--
-  <embryo-SubscribeTwo></embryo-SubscribeTwo>
-      -->
-
+<div class="section-gap pb-0"> 
 </div>

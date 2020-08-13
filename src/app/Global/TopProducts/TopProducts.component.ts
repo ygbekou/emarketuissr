@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AppService } from 'src/app/Services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'embryo-TopProducts',
@@ -16,7 +18,7 @@ export class TopProductsComponent implements OnInit {
    gridLength = 4;
    randomSortProducts: any;
 
-   constructor() { }
+   constructor(public appService: AppService, public translate: TranslateService) { }
 
    ngOnInit() {
       console.log(this.products);
