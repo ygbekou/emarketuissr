@@ -199,6 +199,18 @@
                   </div>
                 </div>
                 <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-30">
+                      <mat-label>Pourcentage rabais</mat-label>
+                      <input matInput type="text" class="form-control" id="promo" [(ngModel)]="productStore.promo"
+                        name="promo" #promo="ngModel">
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+
+                  </div>
+                </div>
+                <div fxLayout="row wrap">
                   <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                     <div class="text-left mt-2" fxFlex.gt-sm="25">
                       <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"

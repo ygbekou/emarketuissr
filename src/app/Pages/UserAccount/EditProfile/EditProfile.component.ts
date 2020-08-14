@@ -186,13 +186,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                if (result.id > 0) {
                   this.store = result;
                   const images: any[] = [];
-                  this.store.fileNames.forEach(item => {
-                     const image = {
-                        link: 'assets/images/stores/' + this.store.id + '/' + item,
-                        preview: 'assets/images/stores/' + this.store.id + '/' + item
-                     };
-                     images.push(image);
-                  });
+                  const image = {
+                     link: 'assets/images/stores/' + this.store.id + '/' + this.store.image,
+                     preview: 'assets/images/stores/' + this.store.id + '/' + this.store.image
+                  };
+                  images.push(image);
                   this.picture = images;
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, Marketing, MarketingProduct } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { CategoryDescription, ProductDescVO, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -31,17 +31,16 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   selectedCatDescs: CategoryDescription[] = [];
   depth = 0;
   messages: string;
-  product: Product = new Product();
-  productDesc: ProductDescription = new ProductDescription();
+  prodDescVO: ProductDescVO = new ProductDescVO();
   selectedStore: Store = new Store();
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
   currentOption: string;
-  products: ProductDescription[] = [];
-  selectedProducts: ProductDescription[] = [];
+  products: ProductDescVO[] = [];
+  selectedProducts: ProductDescVO[] = [];
   stores: Store[] = [];
-  dataSource: MatTableDataSource<ProductDescription>;
-  dataSource2: MatTableDataSource<ProductDescription>;
+  dataSource: MatTableDataSource<ProductDescVO>;
+  dataSource2: MatTableDataSource<ProductDescVO>;
   productStore: ProductToStore = new ProductToStore();
   marketingProduct: MarketingProduct = new MarketingProduct();
   public sidenavOpen = true;
@@ -63,7 +62,6 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     public translate: TranslateService,
     public mediaObserver: MediaObserver) {
     super(translate);
-    this.productDesc.product = new Product();
     this.watcher = mediaObserver.media$.subscribe((change: MediaChange) => {
       if (change.mqAlias === 'xs') {
         this.sidenavOpen = false;
@@ -84,8 +82,6 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   ngOnInit() {
 
     this.getStores();
-
-    this.product = new Product();
 
     for (let counter = 0; counter < 10; counter++) {
       console.log('for loop executed : ' + counter);
@@ -172,12 +168,12 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getProducts(cat: CategoryDescription) {
-    console.log(cat);
-    console.log(this.selectedStore);
-    console.log(this.appService.appInfoStorage.language);
+    // console.log(cat);
+    // console.log(this.selectedStore);
+    // console.log(this.appService.appInfoStorage.language);
     this.appService.getObjects('/service/catalog/getProductsForMarketing/' + this.appService.appInfoStorage.language.id
       + '/' + cat.category.id + '/' + this.selectedStore.id)
-      .subscribe((data: ProductDescription[]) => {
+      .subscribe((data: ProductDescVO[]) => {
         this.products = data;
         this.stepper.selectedIndex = 2;
         const result = this.filterData(data, 1);
@@ -200,11 +196,9 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    // console.log(this.selectedStore);
-    // console.log(this.appService.appInfoStorage.language);
-    this.appService.getObjects('/service/catalog/getProductsOnMarketing/' + this.appService.appInfoStorage.language.id
-      + '/' + this.marketing.id)
-      .subscribe((data: ProductDescription[]) => {
+    this.appService.getObjects('/service/catalog/getProductsOnSale/' +
+      this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id)
+      .subscribe((data: ProductDescVO[]) => {
         this.selectedProducts = data;
         // console.log(data);
         const result = this.filterData(data, 2);
@@ -219,10 +213,9 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
         this.dataSource2 = new MatTableDataSource(result.data);
         this.pagination2 = result.pagination;
         this.message = null;
-
       },
         error => console.log(error),
-        () => console.log('Get all getProductsForCategoryForSale complete'));
+        () => console.log('Get all getProductsOnSale complete'));
   }
 
 
@@ -353,20 +346,26 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   selectForMarketing($event) {
-    this.productDesc = $event;
+    this.prodDescVO = $event;
     this.marketingProduct = new MarketingProduct();
     this.stepper.selectedIndex = 3;
   }
 
   removeProduct($event) {
     console.log($event);
-    this.getSelectedProducts();
+    this.appService.delete($event.product.ptsId, 'com.softenza.emarket.model.MarketingProduct')
+      .subscribe(resp => {
+        if (resp.result === 'SUCCESS') {
+          this.getSelectedProducts();
+        }
+      });
   }
 
   sell() {
     this.messages = '';
     this.errors = '';
-    this.marketingProduct.product = this.productDesc.product;
+    this.marketingProduct.product = new Product();
+    this.marketingProduct.product.id = this.prodDescVO.product.id;
     this.marketingProduct.store = this.selectedStore;
     this.marketingProduct.marketing = this.marketing;
     this.marketingProduct.modifiedBy = +this.appService.tokenStorage.getUserId();
@@ -377,6 +376,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
       .subscribe(result => {
         if (result.id > 0) {
           if (result.id > 0) {
+            this.selectedProducts.push(this.prodDescVO);
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
               this.messages = res['MESSAGE.SAVE_SUCCESS'];
             });

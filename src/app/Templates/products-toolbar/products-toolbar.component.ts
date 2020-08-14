@@ -14,6 +14,7 @@ import { ProductDescription } from 'src/app/app.models';
 export class ProductsToolbarComponent implements OnInit {
   @Input() isHomePage: boolean = false;
   @Input() showSidenavToggle: boolean = false;
+  @Input() color: string ;
   @Input() dataSource: MatTableDataSource<ProductDescription>;
   @Output() onSidenavToggle: EventEmitter<any> = new EventEmitter<any>();
   @Output() onChangeCount: EventEmitter<any> = new EventEmitter<any>();

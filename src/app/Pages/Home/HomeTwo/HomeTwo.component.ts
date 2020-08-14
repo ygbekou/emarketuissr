@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
+import { MarketingDescription, Language, ProductDescVO } from 'src/app/app.models';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'app-home-two',
@@ -8,20 +11,90 @@ import { AppService } from '../../../Services/app.service';
 })
 export class HomeTwoComponent implements OnInit {
 
-   topProducts: any;
+   topProducts: ProductDescVO[] = [];
    lighteningDealsProducts: any;
-   
-   constructor(public appService: AppService) { }
+   marketings: MarketingDescription[] = [];
+
+   constructor(public appService: AppService, public translate: TranslateService) { }
 
    ngOnInit() {
       this.lighteningDeals();
-      this.getProducts();
+      // this.getProducts();
    }
 
    public lighteningDeals() {
-      this.appService.getProducts().valueChanges()
-         .subscribe(res => this.getLighteningDealsResponse(res));
+      const parameters: string[] = [];
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Language',
+         parameters, ' order by e.sortOrder ')
+         .subscribe((data: Language[]) => {
+            let lang = navigator.language;
+            if (lang) {
+               lang = lang.substring(0, 2);
+            }
+            if (Cookie.get('lang')) {
+               lang = Cookie.get('lang');
+               console.log('Using cookie lang=' + Cookie.get('lang'));
+            } else if (lang) {
+               console.log('Using browser lang=' + lang);
+               // this.translate.use(lang);
+            } else {
+               lang = 'fr';
+               console.log('Using default lang=fr');
+            }
+            data.forEach(language => {
+               if (language.code === lang) {
+                  this.getSliders(language.id);
+                  this.getProductsOnSale(language.id);
+               }
+            });
+
+         }, error => console.log(error),
+            () => console.log('Get Languages complete'));
    }
+   getSliders(langId: number) {
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |langCode|' + langId + '|Integer');
+      parameters.push('e.marketing.section = |sInS|3|Integer');
+      parameters.push('e.marketing.status = |stta|1|Integer');
+      parameters.push('e.marketing.sortOrder <= |sOrd|8|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters,
+         ' order by e.marketing.sortOrder')
+         .subscribe((data: MarketingDescription[]) => {
+            this.marketings = data;
+            console.log(this.marketings);
+         },
+            error => console.log(error),
+            () => console.log('Get all MarketingDescription complete'));
+   }
+
+   getProductsOnSale(langId: number) {
+      this.topProducts = [];
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |langCode|' + langId + '|Integer');
+      parameters.push('e.marketing.section = |sInS|4|Integer');
+      parameters.push('e.marketing.status = |stta|1|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters,
+         ' order by e.marketing.sortOrder')
+         .subscribe((data: MarketingDescription[]) => {
+            // console.log(data);
+            if (data && data.length > 0) {
+               this.appService.getObjects('/service/catalog/getProductsOnSale/' +
+                  langId + '/0/' + data[0].marketing.id)
+                  .subscribe((data2: ProductDescVO[]) => {
+                     this.topProducts = data2;
+                     // console.log(this.topProducts);
+                  },
+                     error => console.log(error),
+                     () => console.log('Get all getProductsOnSale complete'));
+
+            }
+         },
+            error => console.log(error),
+            () => console.log('Get  MarketingDescription complete'));
+
+   }
+
+
 
    public getLighteningDealsResponse(res) {
       let productsArray: any = [];

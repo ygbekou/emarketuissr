@@ -99,28 +99,28 @@
 
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.MARKET_PRODUCT'|translate}}</ng-template>
-        <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
+        <div fxLayout="row wrap" *ngIf="!(prodDescVO.id>0)">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
             <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
               {{'COMMON.SELECT_PRODUCT'|translate}}
             </mat-chip>
           </div>
         </div>
-        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="productDesc">
+        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="prodDescVO">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="relative"
-            *ngIf="productDesc.product && productDesc.product.image">
-            <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
+            *ngIf="prodDescVO.product && prodDescVO.product.image">
+            <img [src]="'assets/images/products/' + this.prodDescVO.product.id + '/' + prodDescVO.product.image" />
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-           *ngIf="productDesc.id>0" >
+           *ngIf="prodDescVO.id>0" >
             <form name="form" (ngSubmit)="f.form.valid && sell()" #f="ngForm" validate>
               <div class="product-detail-content">
-                <h3>{{productDesc?.name}}</h3>
+                <h3>{{prodDescVO?.name}}</h3>
                 <div class="product-detail-price">
                   {{'COMMON.SUGESTED_PRICE'|translate}} : <h4 class="accent-color">
-                    {{productDesc.product.price | currency:appService?.currency}} </h4>
+                    {{prodDescVO.product.price | currency:appService?.currency}} </h4>
                 </div>
-                <div class="short-des" [innerHTML]="productDesc?.shortDescription"></div>
+                <div class="short-des" [innerHTML]="prodDescVO?.shortDescription"></div>
                 <div fxLayout="row wrap">
                   <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
                     <mat-form-field appearance="fill">
