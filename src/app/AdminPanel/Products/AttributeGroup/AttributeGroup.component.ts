@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { AttributeGroup, AttributeGroupDescription } from 'src/app/app.models';
+import { AttributeGroup, AttributeGroupDescription, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
@@ -74,11 +74,23 @@ export class AttributeGroupComponent extends BaseComponent implements OnInit {
    }
 
 
+  cleanAttributeGroupDescriptions(attributeGroup: AttributeGroup) {
+    attributeGroup.attributeGroupDescriptions.forEach(element => {
+      element.attributeGroup = undefined;
+      element.parentEntities = [];
+      const language = element.language;
+      element.language = new Language();
+      element.language.id = language.id;
+    });
+  }
+
   save() {
     this.messages = '';
     try {
       const ag = {...this.attributeGroup};
-      ag.attributeGroupDescriptions = [];
+      this.cleanAttributeGroupDescriptions(ag);
+
+      console.info(ag);
 
       this.appService.save(ag, 'AttributeGroup')
         .subscribe(result => {

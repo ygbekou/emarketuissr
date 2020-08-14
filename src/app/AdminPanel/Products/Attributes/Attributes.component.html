@@ -1,23 +1,5 @@
-<a mat-button [routerLink]="['/admin/attributeGroups']">{{'COMMON.ATTRIBUTE_GROUP' | translate}}
-  <mat-icon>navigate_next</mat-icon>
-</a>
-<a mat-button color="accent" [routerLink]="['/admin/attributes']">
-  <h5>{{'COMMON.ATTRIBUTE' | translate}}</h5>
-</a>
-<div fxLayout="row wrap">
-  <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
-    <mat-form-field appearance="outline" class="w-100">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
-        autocomplete="off">
-    </mat-form-field>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
-    <a [routerLink]="['/admin/attribute', 0]" mat-icon-button color="primary"
-      matTooltip="{{'COMMON.ADD' | translate}}">
-      <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-    </a>
-  </div>
-</div>
+<app-attribute [attributeGroup]="attributeGroup" [attributeGroupId]="attributeGroup.id" (attributeSaveEvent)="onAttributeSave($event)"></app-attribute>
+
 <div class="text-center mt-2" *ngIf="messages">
   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
 </div>
@@ -39,10 +21,10 @@
     </ng-container>
 
     <!-- Title Column -->
-    <ng-container matColumnDef="attributeGroupName">
+    <!-- <ng-container matColumnDef="attributeGroupName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Group Name </th>
       <td mat-cell *matCellDef="let attributeDesc"> {{attributeDesc.attributeGroupName}} </td>
-    </ng-container>
+    </ng-container> -->
 
     <!-- Title Column -->
     <ng-container matColumnDef="sortOrder">
@@ -54,10 +36,11 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let attributeDesc">
-        <a [routerLink]="['/admin/attribute', attributeDesc.attribute.id]" mat-icon-button color="primary"
-          matTooltip="{{'COMMON.EDIT' | translate}}">
+        <button mat-icon-button color="primary" (click)="attributeView.getAttributeDescriptions(attributeDesc.attribute.id)" 
+         matTooltip="{{'COMMON.EDIT' | translate}}"
+          class="remove">
           <mat-icon>edit</mat-icon>
-        </a>
+        </button>
         &nbsp;&nbsp;
         <button mat-icon-button color="warn" (click)="remove(attributeDesc)" matTooltip="{{'COMMON.DELETE' | translate}}"
           class="remove">

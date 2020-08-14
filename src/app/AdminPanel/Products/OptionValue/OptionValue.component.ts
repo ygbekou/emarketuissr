@@ -83,7 +83,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
                   }
                 );
             }
-          } 
+          }
       },
         error => console.log(error),
         () => console.log('Get all Option value Desc complete'));

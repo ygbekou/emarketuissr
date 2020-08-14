@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Attribute, AttributeDescription, AttributeGroup } from 'src/app/app.models';
+import { Attribute, AttributeDescription, AttributeGroup, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
@@ -19,6 +19,10 @@ export class AttributeComponent extends BaseComponent implements OnInit {
    @ViewChild(AttributeDescriptionComponent, {static: false}) attributeDescriptionView: AttributeDescriptionComponent;
 
    attribute: Attribute;
+
+  @Input() attributeGroup: AttributeGroup;
+  @Input() attributeGroupId: number;
+  @Output() attributeSaveEvent = new EventEmitter<Attribute>();
 
 
    constructor(
@@ -46,6 +50,7 @@ export class AttributeComponent extends BaseComponent implements OnInit {
    clear() {
      this.attribute = new Attribute();
         this.attribute.attributeGroup = new AttributeGroup();
+        this.attribute.attributeGroup.id = this.attributeGroup.id;
 
       for (const lang of this.appService.appInfoStorage.languages) {
 
@@ -54,6 +59,12 @@ export class AttributeComponent extends BaseComponent implements OnInit {
         this.attribute.attributeDescriptions.push(ad);
 
       }
+
+      this.attributeGroup.attributeGroupDescriptions.forEach(element => {
+        if (element.language.id === this.appService.appInfoStorage.language.id) {
+          this.attributeGroup.attributeGroupName = element.name;
+        }
+      });
    }
 
    getAttributeDescriptions(attributeId: number) {
@@ -65,12 +76,8 @@ export class AttributeComponent extends BaseComponent implements OnInit {
          .subscribe((data: AttributeDescription[]) => {
 
           if (data !== null && data.length > 0) {
-            console.info(data[0]);
             this.attribute = data[0].attribute;
             this.attribute.attributeDescriptions = data;
-            //this.attributeDescriptionView.attribute = this.attribute;
-            //this.attributeDescriptionView.refreshLangObjects();
-
           }
       },
         error => console.log(error),
@@ -78,17 +85,26 @@ export class AttributeComponent extends BaseComponent implements OnInit {
    }
 
 
+  cleanAttributeDescriptions(attribute: Attribute) {
+    attribute.attributeDescriptions.forEach(element => {
+       element.attribute = undefined;
+       const language = element.language;
+       element.language = new Language();
+       element.language.id = language.id;    });
+  }
+
   save() {
     this.messages = '';
     try {
       const attr = {...this.attribute};
-      attr.attributeDescriptions = [];
+      this.cleanAttributeDescriptions(attr);
 
       this.appService.save(attr, 'Attribute')
         .subscribe(result => {
           if (result.id > 0) {
             this.attribute.id = result.id;
             this.processResult(result, this.attribute, null);
+            this.attributeSaveEvent.emit(this.attribute);
           }
         });
 
