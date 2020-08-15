@@ -83,7 +83,6 @@ export class OptionValuesComponent extends BaseComponent implements OnInit {
             this.dataSource = new MatTableDataSource(this.dataSource.data);
          }
       });
-      
-      
-	}
+   }
+
 }

@@ -35,7 +35,6 @@ const MENUITEMS = [
     children: [
       { state: 'categories', name: 'Categories', type: 'link' },
       { state: 'products', name: 'Products', type: 'link' },
-      { state: 'product-add', name: 'Product Add', type: 'link' },
       { state: 'marketings', name: 'Marketing', type: 'link' },
       { state: 'attributes', name: 'Attributes', type: 'link' },
       { state: 'options', name: 'Options', type: 'link' },

@@ -726,6 +726,7 @@ export class AttributeGroup {
   id: number;
   sortOrder = 0;
 
+  attributeGroupName: string;
   attributeGroupDescriptions: AttributeGroupDescription[] = [];
 
   type = 'AttributeGroup';
@@ -737,6 +738,7 @@ export class AttributeGroupDescription {
   language: Language;
   name: string;
 
+  parentEntities: [];
   type = 'AttributeGroupDescription';
 }
 

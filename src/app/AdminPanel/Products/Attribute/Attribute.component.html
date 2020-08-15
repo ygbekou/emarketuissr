@@ -1,51 +1,47 @@
-<mat-tab-group>
-   <mat-tab label="{{'COMMON.GENERAL' | translate}}" *ngIf="attribute.id > 0">
-      <app-attribute-description [attribute]="attribute" ></app-attribute-description>
-   </mat-tab>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 
-   <mat-tab label="{{'COMMON.DATA' | translate}}">
-      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+         <button mat-icon-button color="primary" (click)="clear()" type="button"
+            matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
+            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+         </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+         <div class="text-center mt-2">
+         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+         </button> </div>
+         <div class="text-center mt-2" *ngIf="messages">
+         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+         </div>
+      </div>
+   </div>
+   
+   <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="60" fxFlex.xl="50" class="p-9">
+        
+         <mat-label>{{'COMMON.ATTRIBUTE_GROUP' | translate }}</mat-label><br/>
+         <mat-label>{{attributeGroup.attributeGroupName}}</mat-label>
+        
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="50" class="p-9">
+         <mat-form-field appearance="outline" class="w-30">
+            <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="attribute.sortOrder" name="sortOrder" #sortOrder="ngModel">
+         </mat-form-field>
+      </div>
 
-         <div fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-               <div class="text-center mt-2">
-               <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                  <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-                  <mat-icon>save</mat-icon>
-               </button> </div>
-               <div class="text-center mt-2" *ngIf="messages">
-               <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-               </div>
-            </div>
-         </div>
-         
-         <div fxLayout="row wrap">
-         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-form-field appearance="outline" class="w-100">
-               <mat-label>{{'COMMON.ATTRIBUTE_GROUP' | translate }}</mat-label>
-               <mat-select placeholder="{{'COMMON.ATTRIBUTE_GROUP' | translate }}" id="attributeGroupId" name="attributeGroupId" 
-                  [(ngModel)]="attribute.attributeGroup.id" #manufacturerId="ngModel">
-                  <mat-option *ngFor="let attributeGroupDesc of appService.appInfoStorage.filterAttributeGroups(
-                     appService.appInfoStorage.language.id
-                  )" 
-                     [value]="attributeGroupDesc.attributeGroup.id">
-                     {{attributeGroupDesc.name}}
-                  </mat-option>
-               </mat-select>
-            </mat-form-field>
-         </div>
-         </div>
-         <div fxLayout="row wrap">
-         <div fxLayout="row wrap">
-            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-               <mat-form-field appearance="outline" class="w-30">
-                  <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
-                  <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="attribute.sortOrder" name="sortOrder" #sortOrder="ngModel">
-               </mat-form-field>
-            </div>
-         </div>
-         </div>
-      </form>
-   </mat-tab>
-
-</mat-tab-group>
+   </div>
+   <div fxLayout="row">
+      <div fxFlex="25" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+         <mat-form-field appearance="outline" class="w-100" >
+            <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
+            <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="attribute.attributeDescriptions[i].name" 
+               name="name{{i}}">
+         </mat-form-field>
+         <div fxFlex="5"></div>
+      </div>
+   </div>
+</form>

@@ -1,8 +1,4 @@
 <mat-tab-group>
-   <mat-tab label="{{'COMMON.GENERAL' | translate}}">
-      <app-attributegroup-description [attributeGroup]="attributeGroup" ></app-attributegroup-description>
-   </mat-tab>
-
    <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="attributeGroup.id > 0">
       <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 
@@ -27,7 +23,21 @@
                </mat-form-field>
             </div>
          </div>
+
+         <div fxLayout="row">
+            <div fxFlex="25" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+               <mat-form-field appearance="outline" class="w-100" >
+                  <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
+                  <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="attributeGroup.attributeGroupDescriptions[i].name" 
+                     name="name{{i}}">
+               </mat-form-field>
+               <div fxFlex="5"></div>
+            </div>
+         </div>
       </form>
    </mat-tab>
 
+   <mat-tab label="{{'COMMON.ATTRIBUTES' | translate}}" *ngIf="attributeGroup.id > 0">
+      <app-attributes [attributeGroup]="attributeGroup" [attributeGroupId]="attributeGroup.id"></app-attributes>
+   </mat-tab>
 </mat-tab-group>
