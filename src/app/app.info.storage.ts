@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language, CategoryDescription, Menu } from './app.models';
+import { Language, CategoryDescription, Menu, Company } from './app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -22,6 +22,9 @@ export class AppInfoStorage {
   public attributeGroups: any = [];
   public optionTypes: any = ['Select', 'Radio', 'Checkbox', 'Text', 'Textarea', 'Date', 'Time', 'Date & Time'];
   public optionPrefixes: any = ['+', '-'];
+
+  public companies: Company[] = [];
+  public company: Company = new Company();
 
 
   constructor(private translate: TranslateService) {

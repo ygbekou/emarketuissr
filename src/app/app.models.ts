@@ -253,47 +253,6 @@ export class Language {
   type = 'Language';
 }
 
-export class Company {
-  id: number;
-  name: string;
-  description: string;
-  metaKeyword: string;
-  metaDescription: string;
-  language: string;
-  address: string;
-  country: string;
-  email: string;
-  phone: string;
-  phone2: string;
-  fax: string;
-  logo: 'logo.png';
-  favicon = 'favicon.ico';
-  backgroundSlider: string;
-  bannerContentHeader: string;
-  bannerContentParagraph: string;
-  copyright: string;
-  twitterApi: string;
-  googleMap: string;
-  facebookUrl: string;
-  twitterUrl: string;
-  linkedInUrl: string;
-  instagramUrl: string;
-  googlePlusUrl: string;
-  footerParagraph1: string;
-  footerParagraph2: string;
-  footerParagraph3: string;
-  fromEmail: string;
-  toEmail: string;
-  status = 0;
-  fixedMenu: number;
-  leftToRight: number;
-  headerTextPosition: number;
-  headerImageType: string;
-  themeColor: string;
-  type = 'Company';
-  modifiedBy: number;
-}
-
 export class Setting {
   fixedMenu: number;
   leftToRight: number;
@@ -974,5 +933,73 @@ export class ProductVO {
   pStatus: number;
   pMinimum: number;
   pSortOrder: number;
+}
 
+export class Company {
+  id: number;
+  name: string;
+  description: string;
+  metaKeyword: string;
+  metaDescription: string;
+  language: string;
+  address: string;
+  country: string;
+  email: string;
+  phone: string;
+  phone2: string;
+  fax: string;
+  logo: 'logo.png';
+  favicon = 'favicon.ico';
+  backgroundSlider: string;
+  bannerContentHeader: string;
+  bannerContentParagraph: string;
+  copyright: string;
+  twitterApi: string;
+  googleMap: string;
+  facebookUrl: string;
+  twitterUrl: string;
+  linkedInUrl: string;
+  instagramUrl: string;
+  googlePlusUrl: string;
+  footerParagraph1: string;
+  footerParagraph2: string;
+  footerParagraph3: string;
+  fromEmail: string;
+  toEmail: string;
+  status = 0;
+  footerType: string;
+  displayMission = false;
+  displayTestimonial = false;
+  displayServices = false;
+  displayClientLogos = false;
+  displayTeams = false;
+  displayAuthor = false;
+  displayExpertise = false;
+  displayFeatured = false;
+  displayBlogs = false;
+  displayShortLang = false;
+  displayToolbar = false;
+  displayFooterContact = false;
+  displayFeaturedBlogs = false;
+  fixedMenu: number;
+  leftToRight: number;
+  headerTextPosition: number;
+  headerImageType: string;
+  themeColor: string;
+  type = 'Company';
+  modifiedBy: number;
+}
+
+export class CompanyLocation {
+  id: number;
+  address: string;
+  comment: string;
+  fax: string;
+  geocode: string;
+  rank: number;
+  image: string;
+  name: string;
+  open: string;
+  telephone: string;
+  type = 'Location';
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { CategoryDescription, ProductDescVO, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO } from 'src/app/app.models';
+import { CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';

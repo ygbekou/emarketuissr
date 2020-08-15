@@ -15,6 +15,7 @@ import { WeightClassComponent } from './WeightClass/WeightClass.component';
 import { WeightClassesComponent } from './WeightClasses/WeightClasses.component';
 import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
 import { LengthClassComponent } from './LengthClass/LengthClass.component';
+import { ConfigsComponent } from './configs/configs.component';
 
 export const SystemRoutes: Routes = [
    {
@@ -88,6 +89,10 @@ export const SystemRoutes: Routes = [
          {
             path: 'lengthClasses/:id',
             component: LengthClassComponent
+         },
+         {
+            path: 'configs',
+            component: ConfigsComponent
          }
       ]
    }

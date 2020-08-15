@@ -1,0 +1,131 @@
+<footer>
+    <div class="footer-v1">
+        <div class="container">
+            <div class="footer-top-v1">
+                <div class="py-5 content border-lighter">
+                    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                        <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45">
+                            <a [routerLink]="['/']" style="padding-right: 20px; padding-bottom: 0px; padding-left: 0px;"> 
+                                <img src="assets/images/company/logo.png" width="224" height="34"
+                                    alt=""> </a>
+                          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1"></p>
+                            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                                <mat-icon color="accent">mail_outline</mat-icon>
+                                <span class="mx-2">{{appService.appInfoStorage.company.email}}</span>
+                            </p>
+                            <p fxLayout="row" fxLayoutAlign="start center  text-left" class="mt-2"
+                                *ngFor="let loc of locations">
+                                <a mat-button (click)="location=loc" color="accent" class="w-100 text-left"
+                                    *ngIf="location.name!==loc.name" style="text-align: left;;padding: 0px;">
+                                    <mat-icon color="accent">location_on</mat-icon>
+                                    {{loc.name}}
+                                </a>
+                                <a mat-button (click)="location=loc" color="primary" class="w-100 text-left"
+                                    *ngIf="location.name===loc.name" style="text-align: left;;padding: 0px;">
+                                    <mat-icon color="accent">location_on</mat-icon>
+                                    {{loc.name}}
+                                </a>
+                            </p>
+                        </div>
+                        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="45" ngClass.xs="pt-5">
+                            <a mat-button color="accent" class="w-100 uppercase" style="text-align: left;padding: 0px;">
+                                <mat-icon color="accent">location_on</mat-icon>
+                                {{location.name}}
+                            </a>
+                            <div style="text-align: left; align-content: left;" [innerHTML]="location.address"></div>
+                            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                                <mat-icon color="accent">call</mat-icon>
+                                <span class="mx-2">{{location.telephone}}</span>
+                            </p>
+                        </div>
+
+                        <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5"
+                            *ngFor="let item of mainMenus">
+                            <a mat-button color="accent" class="w-100 text-left"
+                                style="text-align: left;text-transform: uppercase;"> {{item.name | translate}}
+                            </a>
+                            <span *ngFor="let subChild of item.children">
+                                <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                                    <a mat-button [routerLink]="['/'+subChild.state]"
+                                        routerLinkActive="horizontal-active-link"
+                                        [routerLinkActiveOptions]="{exact:true}">
+                                        <span>{{subChild.name | translate}}</span>
+                                    </a>
+                                </p>
+                            </span>
+                        </div>
+
+                        <div fxFlex="100" [fxFlex.gt-sm]="5" ngClass.lt-md="pt-5"
+                            style="text-align: right; align-content: right;">
+                            <a href="{{appService.appInfoStorage.company.facebookUrl}}"
+                                *ngIf="appService.appInfoStorage.company.facebookUrl" target="blank"
+                                class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M11.344,5.71c0-0.73,0.074-1.122,1.199-1.122h1.502V1.871h-2.404c-2.886,0-3.903,1.36-3.903,3.646v1.765h-1.8V10h1.8v8.128h3.601V10h2.403l0.32-2.718h-2.724L11.344,5.71z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="{{appService.appInfoStorage.company.twitterUrl}}"
+                                *ngIf="appService.appInfoStorage.company.twitterUrl" target="blank" class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M18.258,3.266c-0.693,0.405-1.46,0.698-2.277,0.857c-0.653-0.686-1.586-1.115-2.618-1.115c-1.98,0-3.586,1.581-3.586,3.53c0,0.276,0.031,0.545,0.092,0.805C6.888,7.195,4.245,5.79,2.476,3.654C2.167,4.176,1.99,4.781,1.99,5.429c0,1.224,0.633,2.305,1.596,2.938C2.999,8.349,2.445,8.19,1.961,7.925C1.96,7.94,1.96,7.954,1.96,7.97c0,1.71,1.237,3.138,2.877,3.462c-0.301,0.08-0.617,0.123-0.945,0.123c-0.23,0-0.456-0.021-0.674-0.062c0.456,1.402,1.781,2.422,3.35,2.451c-1.228,0.947-2.773,1.512-4.454,1.512c-0.291,0-0.575-0.016-0.855-0.049c1.588,1,3.473,1.586,5.498,1.586c6.598,0,10.205-5.379,10.205-10.045c0-0.153-0.003-0.305-0.01-0.456c0.7-0.499,1.308-1.12,1.789-1.827c-0.644,0.28-1.334,0.469-2.06,0.555C17.422,4.782,17.99,4.091,18.258,3.266">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="{{appService.appInfoStorage.company.googlePlusUrl}}"
+                                *ngIf="appService.appInfoStorage.company.googlePlusUrl" target="blank"
+                                class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M8.937,10.603c-0.383-0.284-0.741-0.706-0.754-0.837c0-0.223,0-0.326,0.526-0.758c0.684-0.56,1.062-1.297,1.062-2.076c0-0.672-0.188-1.273-0.512-1.71h0.286l1.58-1.196h-4.28c-1.717,0-3.222,1.348-3.222,2.885c0,1.587,1.162,2.794,2.726,2.858c-0.024,0.113-0.037,0.225-0.037,0.334c0,0.229,0.052,0.448,0.157,0.659c-1.938,0.013-3.569,1.309-3.569,2.84c0,1.375,1.571,2.373,3.735,2.373c2.338,0,3.599-1.463,3.599-2.84C10.233,11.99,9.882,11.303,8.937,10.603 M5.443,6.864C5.371,6.291,5.491,5.761,5.766,5.444c0.167-0.192,0.383-0.293,0.623-0.293l0,0h0.028c0.717,0.022,1.405,0.871,1.532,1.89c0.073,0.583-0.052,1.127-0.333,1.451c-0.167,0.192-0.378,0.293-0.64,0.292h0C6.273,8.765,5.571,7.883,5.443,6.864 M6.628,14.786c-1.066,0-1.902-0.687-1.902-1.562c0-0.803,0.978-1.508,2.093-1.508l0,0l0,0h0.029c0.241,0.003,0.474,0.04,0.695,0.109l0.221,0.158c0.567,0.405,0.866,0.634,0.956,1.003c0.022,0.097,0.033,0.194,0.033,0.291C8.752,14.278,8.038,14.786,6.628,14.786 M14.85,4.765h-1.493v2.242h-2.249v1.495h2.249v2.233h1.493V8.502h2.252V7.007H14.85V4.765z">
+                                    </path>
+                                </svg>
+                            </a>
+
+                            <a href="{{appService.appInfoStorage.company.instagramUrl}}"
+                                *ngIf="appService.appInfoStorage.company.instagramUrl" target="blank"
+                                class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M14.52,2.469H5.482c-1.664,0-3.013,1.349-3.013,3.013v9.038c0,1.662,1.349,3.012,3.013,3.012h9.038c1.662,0,3.012-1.35,3.012-3.012V5.482C17.531,3.818,16.182,2.469,14.52,2.469 M13.012,4.729h2.26v2.259h-2.26V4.729z M10,6.988c1.664,0,3.012,1.349,3.012,3.012c0,1.664-1.348,3.013-3.012,3.013c-1.664,0-3.012-1.349-3.012-3.013C6.988,8.336,8.336,6.988,10,6.988 M16.025,14.52c0,0.831-0.676,1.506-1.506,1.506H5.482c-0.831,0-1.507-0.675-1.507-1.506V9.247h1.583C5.516,9.494,5.482,9.743,5.482,10c0,2.497,2.023,4.52,4.518,4.52c2.494,0,4.52-2.022,4.52-4.52c0-0.257-0.035-0.506-0.076-0.753h1.582V14.52z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="{{appService.appInfoStorage.company.twitterApi}}"
+                                *ngIf="appService.appInfoStorage.company.twitterApi" target="blank" class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M9.426,7.625h0.271c0.596,0,1.079-0.48,1.079-1.073V4.808c0-0.593-0.483-1.073-1.079-1.073H9.426c-0.597,0-1.079,0.48-1.079,1.073v1.745C8.347,7.145,8.83,7.625,9.426,7.625 M9.156,4.741c0-0.222,0.182-0.402,0.404-0.402c0.225,0,0.405,0.18,0.405,0.402V6.62c0,0.222-0.181,0.402-0.405,0.402c-0.223,0-0.404-0.181-0.404-0.402V4.741z M12.126,7.625c0.539,0,1.013-0.47,1.013-0.47v0.403h0.81V3.735h-0.81v2.952c0,0-0.271,0.335-0.54,0.335c-0.271,0-0.271-0.202-0.271-0.202V3.735h-0.81v3.354C11.519,7.089,11.586,7.625,12.126,7.625 M6.254,7.559H7.2v-2.08l1.079-2.952H7.401L6.727,4.473L6.052,2.527H5.107l1.146,2.952V7.559z M11.586,12.003c-0.175,0-0.312,0.104-0.405,0.204v2.706c0.086,0.091,0.213,0.18,0.405,0.18c0.405,0,0.405-0.451,0.405-0.451v-2.188C11.991,12.453,11.924,12.003,11.586,12.003 M14.961,8.463c0,0-2.477-0.129-4.961-0.129c-2.475,0-4.96,0.129-4.96,0.129c-1.119,0-2.025,0.864-2.025,1.93c0,0-0.203,1.252-0.203,2.511c0,1.252,0.203,2.51,0.203,2.51c0,1.066,0.906,1.931,2.025,1.931c0,0,2.438,0.129,4.96,0.129c2.437,0,4.961-0.129,4.961-0.129c1.117,0,2.024-0.864,2.024-1.931c0,0,0.202-1.268,0.202-2.51c0-1.268-0.202-2.511-0.202-2.511C16.985,9.328,16.078,8.463,14.961,8.463 M7.065,10.651H6.052v5.085H5.107v-5.085H4.095V9.814h2.97V10.651z M9.628,15.736h-0.81v-0.386c0,0-0.472,0.45-1.012,0.45c-0.54,0-0.606-0.515-0.606-0.515v-3.991h0.809v3.733c0,0,0,0.193,0.271,0.193c0.27,0,0.54-0.322,0.54-0.322v-3.604h0.81V15.736z M12.801,14.771c0,0,0,1.03-0.742,1.03c-0.455,0-0.73-0.241-0.878-0.429v0.364h-0.876V9.814h0.876v1.92c0.135-0.142,0.464-0.439,0.878-0.439c0.54,0,0.742,0.45,0.742,1.03V14.771z M15.973,12.39v1.287h-1.688v0.965c0,0,0,0.451,0.405,0.451s0.405-0.451,0.405-0.451v-0.45h0.877v0.708c0,0-0.136,0.901-1.215,0.901c-1.08,0-1.282-0.901-1.282-0.901v-2.51c0,0,0-1.095,1.282-1.095S15.973,12.39,15.973,12.39 M14.69,12.003c-0.405,0-0.405,0.45-0.405,0.45v0.579h0.811v-0.579C15.096,12.453,15.096,12.003,14.69,12.003">
+                                    </path>
+                                </svg>
+                            </a>
+
+                            <a href="{{appService.appInfoStorage.company.linkedInUrl}}"
+                                *ngIf="appService.appInfoStorage.company.linkedInUrl" target="blank"
+                                class="social-icon">
+                                <svg class="mat-icon" viewBox="0 0 24 24"
+                                    [ngClass]="['mat-icon-' + iconSize, 'mat-'+ iconColor]">
+                                    <path
+                                        d="M19,3H5C3.895,3,3,3.895,3,5v14c0,1.105,0.895,2,2,2h14c1.105,0,2-0.895,2-2V5C21,3.895,20.105,3,19,3z M9,17H6.477v-7H9V17z M7.694,8.717c-0.771,0-1.286-0.514-1.286-1.2s0.514-1.2,1.371-1.2c0.771,0,1.286,0.514,1.286,1.2S8.551,8.717,7.694,8.717z M18,17h-2.442v-3.826c0-1.058-0.651-1.302-0.895-1.302s-1.058,0.163-1.058,1.302c0,0.163,0,3.826,0,3.826h-2.523v-7h2.523v0.977C13.93,10.407,14.581,10,15.802,10C17.023,10,18,10.977,18,13.174V17z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" class="copyright">
+                    <p ngClass.xs="mt-1">Copyright © 2020 All Rights Reserved</p>
+                    <p>Designed & Developed by <a mat-button href="http://www.softenza.com/" target="_blank">Softenza
+                            Inc.</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

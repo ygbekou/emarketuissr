@@ -49,13 +49,14 @@ import { WeightClassComponent } from './WeightClass/WeightClass.component';
 import { WeightClassesComponent } from './WeightClasses/WeightClasses.component';
 import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
 import { LengthClassComponent } from './LengthClass/LengthClass.component';
+import { ConfigsComponent } from './configs/configs.component';
 
 @NgModule({
   declarations: [LanguagesComponent, CurrenciesComponent, OrderStatusesComponent,
     StockStatusesComponent, ReturnStatusesComponent, ReturnActionsComponent,
     ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent,
     TaxRatesComponent, TaxClassesComponent, WeightClassComponent, WeightClassesComponent,
-    LengthClassesComponent, LengthClassComponent],
+    LengthClassesComponent, LengthClassComponent, ConfigsComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

@@ -2,7 +2,21 @@
 .footer-v1 {
 	background: $footer-bg;
 	color: $footer-color;
-	* {
+
+	a {
+		color: $footer-color;
+		text-align: left;
+		line-height: normal;
+		padding: 10px 20px;
+
+		&:hover {
+			color: #ff5722;
+		}
+	}
+
+	p {
 		color: $footer-color;
 	}
+
+
 }
