@@ -47,7 +47,7 @@ export class FooterComponent implements OnInit {
                 }
                 data.forEach(language => {
                     if (language.code === lang) {
-                        this.appService.getMenus(language.id)
+                        this.appService.getMenus(language.id, 2)
                             .subscribe((menus: Menu[]) => {
                                 let i = 0;
                                 menus.forEach(menu => {

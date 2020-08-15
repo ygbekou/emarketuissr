@@ -157,6 +157,10 @@ export class CategoryComponent implements OnInit {
           || this.category.showInMenu.toString() === 'false'
           || this.category.showInMenu.toString() === '0') ? 0 : 1;
 
+        this.category.showInFooter = (this.category.showInFooter == null
+          || this.category.showInFooter.toString() === 'false'
+          || this.category.showInFooter.toString() === '0') ? 0 : 1;
+
         this.category.showInSearch = (this.category.showInSearch == null
           || this.category.showInSearch.toString() === 'false'
           || this.category.showInSearch.toString() === '0') ? 0 : 1;

@@ -419,6 +419,7 @@ export class Category {
   showInSearch: number;
   showInMenu: number;
   showInDropDown: number;
+  showInFooter: number;
   childCount: number;
 }
 export class CategoryDescription {

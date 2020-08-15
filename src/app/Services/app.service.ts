@@ -552,8 +552,8 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
-   public getMenus = (id: number): Observable<Menu[]> => {
-      const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + id;
+   public getMenus = (langId: number, sectionId: number): Observable<Menu[]> => {
+      const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + langId + '/' + sectionId;
       console.log(actionUrl);
       return this.http.get<Menu[]>(actionUrl, { headers: this.headers })
          .pipe(catchError(this.handleError));
@@ -615,7 +615,7 @@ export class AppService {
             console.log('Using language :' + lang);
             this.translate.use(lang);
             this.getDropDownCategories();
-            this.getMenus(this.appInfoStorage.language.id)
+            this.getMenus(this.appInfoStorage.language.id, 1)
                .subscribe((menus: Menu[]) => {
                   this.appInfoStorage.mainMenus = menus;
                   console.log(this.appInfoStorage.mainMenus);
