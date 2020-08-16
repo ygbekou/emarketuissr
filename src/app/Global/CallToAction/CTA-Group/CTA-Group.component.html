@@ -2,7 +2,7 @@
   <div class="container">
     <div fxLayout="row wrap" class="col-gap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33" *ngFor="let card of marketings">
-        <a [routerLink]="[card.marketing.id]"> <img [src]="'assets/images/marketings/'+card.marketing.id+'/'+card.marketing.image" alt=""></a>
+        <a  [routerLink]="['/products/mak'+card.marketing.id]"> <img [src]="'assets/images/marketings/'+card.marketing.id+'/'+card.marketing.image" alt=""></a>
       </div>
     </div>
   </div>

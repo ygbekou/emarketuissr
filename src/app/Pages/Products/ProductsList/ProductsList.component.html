@@ -1,93 +1,94 @@
-<ng-container *ngIf="pageTitle">
-<embryo-PageTitle heading="{{pageTitle}}" subHeading="{{subPageTitle}}"></embryo-PageTitle>
-<div class="inner-container section-gap">
+<div class="section-gap pb-0">
   <div class="container">
-    <!-- Products with free api key  -->
-    <ais-instantsearch
-        [config]="{
-          appId: 'latency',
-          apiKey: '6be0576ff61c053d5f9a3225e2a90f76',
-          indexName: 'ikea'
-        }">
-      <div fxLayout="row wrap"  class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="25" fxFlex.xl="25">
-          <div class="mat-card mb-4">
-            <ais-search-box placeholder="Search a product"></ais-search-box>
-          </div>
-          <div class="mat-card mb-4">
-            <div class="facet-category-title">Show results for</div>
-            <ais-hierarchical-menu
-              [attributes]="['category', 'sub_category', 'sub_sub_category']"
-              [sortBy]="['name:asc']"
-            >
-            </ais-hierarchical-menu>
-          </div>
-          <div class="mat-card mb-4">
-            <ais-panel header="Categories">
-              <ais-refinement-list
-                attribute="materials"
-                operator="or"
-                limit="10"
-              >
-              </ais-refinement-list>
-            </ais-panel>
-          </div>
-          <div class="mat-card mb-4">
-              <ais-panel header="Colors">
-                <ais-refinement-list
-                  attribute="colors"
-                  operator="or"
-                  limit="10"
-                >
-                </ais-refinement-list>
-              </ais-panel>
+
+    <div fxLayout="row wrap" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+        <div class="mat-card mb-4">
+
+        </div>
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+        <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
+          <mat-toolbar-row>
+            <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+              <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                <h2 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">{{'COMMON.CATEGORY'|translate}} :
+                  {{ catDesc.name}}
+                </h2>
+                <h2 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h2>
+              </div>
+              <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                <mat-form-field class="w-100">
+                  <input matInput (keyup)="searchClicked($event.target.value)"
+                    placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+                <!-- <span *ngIf="isHomePage"> -->
+                <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+                  Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+                </a>
+                <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
+                  <span (mouseleave)="countsMenuTrigger.closeMenu()">
+                    <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
+                      <span>{{count}}</span>
+                    </button>
+                  </span>
+                </mat-menu>
+                <!-- </span>        -->
+                <button mat-icon-button (click)="viewCol = 100; viewType='list'; count=1;">
+                  <mat-icon>view_list</mat-icon>
+                </button>
+                <button mat-icon-button (click)="viewCol = 50; viewType='grid';">
+                  <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
+                    <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
+                  </svg>
+                </button>
+                <button mat-icon-button fxShow="false" fxShow.gt-md (click)="viewCol = 33.3; viewType='grid';">
+                  <mat-icon>view_module</mat-icon>
+                </button>
+
+                <button fxShow="false" fxShow.gt-md mat-icon-button (click)="viewCol = 25; viewType='grid';">
+                  <mat-icon>view_comfy</mat-icon>
+                </button>
+
+
+                <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
+                  {{sort.name}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+                </a>
+                <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
+                  <span (mouseleave)="sortMenuTrigger.closeMenu()">
+                    <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
+                      <span>{{sort.name}}</span>
+                    </button>
+                  </span>
+                </mat-menu>
+
+              </div>
+
             </div>
-            <div class="mat-card mb-4">
-              <ais-panel header="Prices">
-                <ais-range-slider attribute="price" [pips]="true" [tooltips]="true" [min]="0"></ais-range-slider>
-              </ais-panel>
-            </div>
-            <div class="mat-card mb-4">
-              <ais-panel header="CUSTOMER RATINGS"></ais-panel>
-              <ais-rating-menu attribute="rating" andUpLabel=""></ais-rating-menu>
-            </div>
-            <div class="mat-card mb-4">
-              <ais-clear-refinements buttonLabel="Clear all filters"></ais-clear-refinements>
-            </div>
-          </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="75" fxFlex.xl="75" class="algolia-main-list">
-            <ais-stats></ais-stats>
-            <ais-panel header="Sort by">
-              <ais-sort-by
-              [items]="[
-                {name: 'ikea', label: 'Featured'},
-                {name: 'ikea_price_asc', label: 'Price asc.'},
-                {name: 'ikea_price_desc', label: 'Price desc.'}
-              ]
-              ">
-              </ais-sort-by>
-            </ais-panel>
-            <ais-hits-per-page [items]="[
-                { value: 3, label: '3 per page' },
-                { value: 6, label: '6 per page' },
-                { value: 12, label: '12 per page', default:true}
-             ]"></ais-hits-per-page>
-            <ais-hits [transformItems]="transformHits">
-              <ng-template let-hits="hits" let-results="results">
-                <ng-container *ngIf="(hits && hits.length>0); else errorBlock">
-                  <embryo-ProductGrid [currency]="appService?.currency" [products]="hits" (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)" gridThree=true> 
-                  </embryo-ProductGrid>
-                </ng-container>
-                <ng-template #errorBlock>
-                  No Product Found.
-                </ng-template>
-              </ng-template> 
-            </ais-hits>
-            <ais-pagination></ais-pagination>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <div fxLayout="row wrap" *ngIf="!products || products.length===0">
+          <div fxFlex="100" class="px-2 pb-2 pt-0">
+            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+              {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
+            </mat-chip>
           </div>
         </div>
-      </ais-instantsearch>
+        <div fxLayout="row wrap" *ngIf="products && products.length>0">
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+            <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
+              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
+              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+            </embryo-ProductGrid>
+          </div>
+        </div>
+        <mat-paginator *ngIf="products && products.length>0" [length]="pagination?.total"
+          [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
+        </mat-paginator>
+      </div>
     </div>
   </div>
-</ng-container>
-
+</div>

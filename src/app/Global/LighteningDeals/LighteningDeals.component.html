@@ -20,7 +20,7 @@
               <img [src]="'assets/images/marketings/'+slide.marketing.id+'/'+slide.marketing.image" alt="Product">
             </a>
             <mat-card-content class="pt-3">
-              <h5><a [routerLink]="['/products']"> {{slide.name}}</a></h5>
+              <h5><a  [routerLink]="['/products'+'/mak'+slide.marketing.id]"> {{slide.name}}</a></h5>
               <div [innerHTML]="slide?.description | safehtml"></div>
             </mat-card-content>
           </mat-card>
