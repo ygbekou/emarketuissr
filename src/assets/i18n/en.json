@@ -425,11 +425,20 @@
 		"OPTION_VALUE": "Option Value",
 		"ASSIGN_NEW_ATTRIBUTE": "Assign New Attribute",
 		"OPTION": "Option",
+		"OPTIONS": "Options",
 		"POINTS": "Points",
 		"REQUIRED": "Required",
 		"PRICE_PREFIX": "Price Prefix",
 		"POINTS_PREFIX": "Points Prefix",
-		"WEIGHT_PREFIX": "Weight Prefix"
+		"WEIGHT_PREFIX": "Weight Prefix",
+		"DATE_ADDED": "Date Added",
+		"DATE_MODIFIED": "Date Modified",
+		"YOUR_STORE": "Your Store",
+		"ORDER": "Order",
+		"ORDER_DETAILS": "Order Details",
+		"CUSTOMER_DETAILS": "Customer Details",
+		"UNIT_PRICE": "Unit Price",
+		"REWARD_POINTS": "Reward Points"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

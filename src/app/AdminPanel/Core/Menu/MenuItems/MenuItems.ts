@@ -42,6 +42,15 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin/sales',
+    name: 'Sales',
+    type: 'sub',
+    icon: 'shopping_cart',
+    children: [
+      { state: 'orders', name: 'Orders', type: 'link' }
+    ]
+  },
+  {
     state: 'admin/system',
     name: 'System',
     type: 'sub',

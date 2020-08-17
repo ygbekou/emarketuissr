@@ -978,3 +978,85 @@ export class ProductVO {
   pSortOrder: number;
 
 }
+
+
+
+export class Order {
+  id: number;
+  acceptLanguage: string;
+  affialiateId: number;
+  comment: string;
+  commission: number;
+  currencyCode: string;
+  currencyId: number;
+  currencyValue: number;
+  customField: string;
+  customerId: number;
+  email: string;
+  fax: string;
+  firstName: string;
+  forwardedIp: string;
+  invoiceNo: number;
+  invoicePrefix: string;
+  ip: string;
+  language: Language;
+  lastName: string;
+  marketingId: number;
+  orderStatus: OrderStatus;
+  paymentAddress1: string;
+  paymentAddress2: string;
+  paymentAddressFormat: string;
+  paymentCity: string;
+  paymentCode: string;
+  paymentCompany: string;
+  paymentCountry: string;
+  paymentCountryId: string;
+  paymentCustomField: string;
+  paymentfirstName: string;
+  paymentlastName: string;
+  paymentMethod: string;
+  paymentPostcode: string;
+  paymentZone: string;
+  paymentZoneId: number;
+  shippingAddress1: string;
+  shippingAddress2: string;
+  shippingAddressFormat: string;
+  shippingCity: string;
+  shippingCode: string;
+  shippingCompany: string;
+  shippingCountry: string;
+  shippingCountryId: number;
+  shippingCustomField: string;
+  shippingfirstName: string;
+  shippinglastName: string;
+  shippingMethod: string;
+  shippingPostcode: string;
+  shippingZone: string;
+  shippingZoneId: number;
+  storeId: number;
+  storeName: string;
+  storeUrl: string;
+  telephone: string;
+  total: number;
+  tracking: string;
+  userAgent: string;
+  createDate: Date;
+  modDate: Date;
+
+  totalRewardPoints: number;
+  orderProducts: OrderProduct[] = [];
+
+}
+
+export class OrderProduct {
+  id: number;
+  model: string;
+  name: string;
+  order: Order;
+  price: number;
+  product: Product;
+  quantity: number;
+  reward: number;
+  tax: number;
+  total: number;
+}

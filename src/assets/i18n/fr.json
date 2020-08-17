@@ -424,12 +424,21 @@
     "OPTION_VALUES": "Valeurs d'option",
     "OPTION_VALUE": "Option Value",
     "ASSIGN_NEW_ATTRIBUTE": "Assigner Nouveau Attribut",
-		"OPTION": "Option",
+    "OPTION": "Option",
+    "OPTIONS": "Options",
 		"POINTS": "Points",
     "REQUIRED": "Obligatoire",
     "PRICE_PREFIX": "Price Prefix",
     "POINTS_PREFIX": "Points Prefix",
-    "WEIGHT_PREFIX": "Weight Prefix"
+    "WEIGHT_PREFIX": "Weight Prefix",
+		"DATE_ADDED": "Date d'ajout",
+		"DATE_MODIFIED": "Date de modification",
+    "YOUR_STORE": "Votre boutique",
+    "ORDER": "Achat",
+		"ORDER_DETAILS": "Détails de l'achat",
+		"CUSTOMER_DETAILS": "Détails de l'acheteur",
+		"UNIT_PRICE": "Prix Unitaire",
+		"REWARD_POINTS": "Points de r�compense"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
