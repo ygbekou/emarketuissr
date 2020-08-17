@@ -8,7 +8,7 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -552,8 +552,8 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
-   public getMenus = (id: number): Observable<Menu[]> => {
-      const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + id;
+   public getMenus = (langId: number, sectionId: number): Observable<Menu[]> => {
+      const actionUrl = Constants.apiServer + '/service/catalog/getMenus/' + langId + '/' + sectionId;
       console.log(actionUrl);
       return this.http.get<Menu[]>(actionUrl, { headers: this.headers })
          .pipe(catchError(this.handleError));
@@ -615,13 +615,27 @@ export class AppService {
             console.log('Using language :' + lang);
             this.translate.use(lang);
             this.getDropDownCategories();
-            this.getMenus(this.appInfoStorage.language.id)
+            this.getMenus(this.appInfoStorage.language.id, 1)
                .subscribe((menus: Menu[]) => {
                   this.appInfoStorage.mainMenus = menus;
                   console.log(this.appInfoStorage.mainMenus);
                },
                   error => console.log(error),
                   () => console.log('Get all Main menus complete'));
+
+            this.getAllByCriteria('Company', parameters)
+               .subscribe((data2: Company[]) => {
+                  this.appInfoStorage.companies = data2;
+                  if (data2.length > 0) {
+                     data2.forEach(aCompany => {
+                        if (lang === aCompany.language) {
+                           this.appInfoStorage.company = aCompany;
+                        }
+                     });
+                  }
+               },
+                  error => console.log(error),
+                  () => console.log('Get Company complete'));
 
          }, error => console.log(error),
             () => console.log('Get Languages complete'));
@@ -748,7 +762,7 @@ export class AppService {
                      return 1;
                   }
                   if (a.product.price > b.product.price) {
-                      // console.log(a.product.price + '- -1 -' + a.product.price);
+                     // console.log(a.product.price + '- -1 -' + a.product.price);
                      return -1;
                   }
                   // console.log(a.product.price + '-0-' + a.product.price);

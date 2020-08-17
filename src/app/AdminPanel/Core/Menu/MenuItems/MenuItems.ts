@@ -57,6 +57,7 @@ const MENUITEMS = [
     icon: 'shopping_cart',
     children: [
       { state: 'stores', name: 'Stores', type: 'link' },
+      { state: 'configs', name: 'Configuration', type: 'link' },
       { state: 'languages', name: 'Languages', type: 'link' },
       { state: 'currencies', name: 'Currencies', type: 'link' },
       { state: 'stockStatuses', name: 'Stock Statutes', type: 'link' },

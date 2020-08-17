@@ -8,11 +8,10 @@ import { MenuItems } from '../../../Core/menu/menu-items/menu-items';
   styleUrls: ['./FooterOne.component.scss']
 })
 export class FooterOneComponent implements OnInit {
+  constructor(public menuItems: MenuItems,
+  public translate: TranslateService) { }
 
-   constructor(public menuItems : MenuItems,
-               public translate: TranslateService) { }
-
-   ngOnInit() {
-   }
+  ngOnInit() {
+  }
 
 }

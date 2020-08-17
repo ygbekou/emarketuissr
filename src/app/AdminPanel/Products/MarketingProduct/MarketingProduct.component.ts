@@ -197,7 +197,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
 
   getSelectedProducts() {
     this.appService.getObjects('/service/catalog/getProductsOnSale/' +
-      this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id)
+      this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id + '/0')
       .subscribe((data: ProductDescVO[]) => {
         this.selectedProducts = data;
         // console.log(data);

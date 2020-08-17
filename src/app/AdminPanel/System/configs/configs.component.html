@@ -1,0 +1,346 @@
+<a mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
+  <img [src]="flag.image" width="18">
+  <span fxShow="false" fxShow.gt-md class="uppercase flag-name">{{flag.name}}</span>
+  <mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+</a>
+<mat-menu #langMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-menu-panel">
+  <span (mouseleave)="langMenuTrigger.closeMenu()">
+    <button mat-menu-item *ngFor="let flag of flags" (click)="changeLang(flag)">
+      <img [src]="flag.image" width="18" class="mat-elevation-z1"><span class="flag-name">{{flag.name}}</span>
+    </button>
+  </span>
+</mat-menu>
+
+<div class="table-wrapper">
+
+  <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+    <mat-tab-group [(selectedIndex)]="selectedMainTabIndex" (selectedTabChange)="onMainTabChanged($event)">
+      <mat-tab label="Essentiel">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
+              </mat-label>
+              <input matInput type="text" class="form-control" id="name" [(ngModel)]="company.name" name="name"
+                #name="ngModel" required>
+              <mat-error *ngIf="f.submitted && name.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.ADDRESS' | translate}}<font color="red">*</font>
+              </mat-label>
+              <input matInput type="text" class="form-control" id="address" [(ngModel)]="company.address" name="address"
+                #address="ngModel" required>
+              <mat-error *ngIf="f.submitted && address.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.EMAIL' | translate}}<font color="red">*</font>
+              </mat-label> <input matInput type="text" class="form-control" id="email" [(ngModel)]="company.email"
+                name="email" #email="ngModel" required>
+              <mat-error *ngIf="f.submitted && email.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.PHONE' | translate}}<font color="red">*</font>
+              </mat-label> <input matInput type="text" class="form-control" id="phone" [(ngModel)]="company.phone"
+                name="phone" #phone="ngModel" required>
+              <mat-error *ngIf="f.submitted && phone.errors && phone.invalid" severity="error" text="Phone is required">
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.PHONE' | translate}} 2
+              </mat-label> <input matInput type="text" class="form-control" id="phone2" [(ngModel)]="company.phone2"
+                name="phone2" #phone2="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.FAX' | translate}}
+              </mat-label> <input matInput type="text" class="form-control" id="fax" [(ngModel)]="company.fax"
+                name="fax" #fax="ngModel">
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxFlex="100" class="px-2">
+          <mat-label>{{'COMMON.DESCRIPTION' | translate}}<font color="red">*</font>
+          </mat-label>
+          <quill-editor id="description" name="description" [(ngModel)]="company.description" #description="ngModel">
+          </quill-editor>
+        </div>
+      </mat-tab>
+      <mat-tab label="Social Media">
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="twitterApi">Youtube</mat-label>
+              <input matInput type="text" class="form-control" id="twitterApi" [(ngModel)]="company.twitterApi"
+                name="twitterApi" #twitterApi="ngModel" name="twitterApi" #twitterApi="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="twitterUrl">{{'COMMON.TWITTER_URL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="twitterUrl" [(ngModel)]="company.twitterUrl"
+                name="twitterUrl" #twitterUrl="ngModel" name="twitterUrl" #twitterUrl="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="linkedInUrl">LinkedIn</mat-label>
+              <input matInput type="text" class="form-control" id="linkedInUrl" [(ngModel)]="company.linkedInUrl"
+                name="linkedInUrl" #linkedInUrl="ngModel" name="linkedInUrl" #linkedInUrl="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="googlePlusUrl">{{'COMMON.GOOGLE_PLUS_URL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="googlePlusUrl" [(ngModel)]="company.googlePlusUrl"
+                name="googlePlusUrl" #googlePlusUrl="ngModel" name="googlePlusUrl" #googlePlusUrl="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="facebookUrl">{{'COMMON.FACEBOOK_URL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="facebookUrl" [(ngModel)]="company.facebookUrl"
+                name="facebookUrl" #facebookUrl="ngModel" name="facebookUrl" #facebookUrl="ngModel">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="instagramUrl">{{'COMMON.INSTAGRAM_URL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="instagramUrl" [(ngModel)]="company.instagramUrl"
+                name="instagramUrl" #instagramUrl="ngModel" name="instagramUrl" #instagramUrl="ngModel">
+            </mat-form-field>
+
+
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="googleMap">{{'COMMON.GOOGLE_MAP' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="googleMap" [(ngModel)]="company.googleMap"
+                name="googleMap" #googleMap="ngModel" name="googleMap" #googleMap="ngModel">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Web site">
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="copyright">{{'COMMON.COPYRIGHT' | translate}}</mat-label>
+              <textarea matInput [(ngModel)]="company.copyright" name="copyright" #copyright="ngModel"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="bannerContentHeader">{{'COMMON.BANNER_CONTENT_PARAGRAPH' | translate}}</mat-label>
+              <textarea matInput [(ngModel)]="company.bannerContentHeader" name="bannerContentHeader"
+                #bannerContentHeader="ngModel"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="bannerContentParagraph">{{'COMMON.BANNER_CONTENT_SUFFIX' | translate}}</mat-label>
+              <textarea matInput [(ngModel)]="company.bannerContentParagraph" name="bannerContentParagraph"
+                #bannerContentParagraph="ngModel"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="footerParagraph1">{{'COMMON.FOOTER_PARAGRAPH_1' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="footerParagraph1"
+                [(ngModel)]="company.footerParagraph1" name="footerParagraph1" #footerParagraph1="ngModel">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="footerParagraph2">{{'COMMON.FOOTER_PARAGRAPH_2' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="footerParagraph2"
+                [(ngModel)]="company.footerParagraph2" name="footerParagraph2" #footerParagraph2="ngModel">
+            </mat-form-field>
+
+           </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="footerParagraph3">{{'COMMON.FOOTER_PARAGRAPH_3' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="footerParagraph3"
+                [(ngModel)]="company.footerParagraph3" name="footerParagraph3" #footerParagraph3="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="fromEmail">{{'COMMON.FROM_EMAIL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="fromEmail" [(ngModel)]="company.fromEmail"
+                name="fromEmail" #fromEmail="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="toEmail">{{'COMMON.TO_EMAIL' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="toEmail" [(ngModel)]="company.toEmail" name="toEmail"
+                #toEmail="ngModel">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="metaKeyword">{{ 'COMMON.META_KEYWORD' | translate }}</mat-label>
+              <input matInput id="metaKeyword" [(ngModel)]="company.metaKeyword" name="metaKeyword"
+                #metaKeyword="ngModel" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label for="metaDescription">{{ 'COMMON.META_DESCRIPTION' | translate }}</mat-label>
+              <textarea matInput id="metaDescription" [(ngModel)]="company.metaDescription" name="metaDescription"
+                #metaDescription="ngModel"> </textarea>
+            </mat-form-field>
+
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Images">
+        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.LOGO' | translate}}
+            </span> </p>
+          <input-file [(ngModel)]="logos" name="logo" #logo="ngModel" fileLimit="1" fileAccept="image/*">
+          </input-file>
+          <div class="logo">
+            <img src="assets/images/company/logo.png" height="37" />
+          </div>
+        </div>
+
+        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+          <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.FAVICON' | translate}}</span>
+          </p>
+          <input-file [(ngModel)]="favicons" name="favicon" #favicon="ngModel" fileLimit="1" fileAccept="image/*">
+          </input-file>
+          <div class="logo">
+            <img src="assets/images/company/favicon.ico" height="37" />
+          </div>
+        </div>
+
+      </mat-tab>
+ 
+      <mat-tab label="Location">
+        <mat-tab-group [(selectedIndex)]="selectedTab">
+          <mat-tab label="{{'COMMON.LIST' | translate}}">
+            <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keyup)="applyFilter($event.target.value)"
+                    placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+                <a (click)="addLocation()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+                  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+                </a>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                  <td mat-cell *matCellDef="let location"> {{location.id}} </td>
+                </ng-container>
+
+                <!-- Image Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Language </th>
+                  <td mat-cell *matCellDef="let location"> {{location.name}} </td>
+                </ng-container>
+
+                <!-- Published Column -->
+                <ng-container matColumnDef="telephone">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.PHONE' | translate}} </th>
+                  <td mat-cell *matCellDef="let location"> {{location.telephone}} </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef> Actions </th>
+                  <td mat-cell *matCellDef="let location">
+                    <a (click)="edit(location)" mat-icon-button color="primary"
+                      matTooltip="{{'COMMON.EDIT' | translate}}">
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                    &nbsp;&nbsp;
+                    <button mat-icon-button color="warn" (click)="remove(location)"
+                      matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let location; columns: displayedColumns;">
+                </tr>
+              </table>
+              <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}
+              </p>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+          </mat-tab>
+          <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+            <form name="fform" (ngSubmit)="ff.form.valid && saveLocation()" #ff="ngForm" validate>
+              <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.NAME' | translate}}<font color="red">*</font>
+                    </mat-label>
+                    <input matInput type="text" class="form-control" id="title2" [(ngModel)]="location.name"
+                      name="title2" #title2="ngModel" required>
+                    <mat-error *ngIf="ff.submitted && title2.invalid" severity="error">
+                      {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.PHONE' | translate}}
+                    </mat-label>
+                    <input matInput type="text" class="form-control" id="title3" [(ngModel)]="location.telephone"
+                      name="title3" #title3="ngModel">
+                  </mat-form-field>
+
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.RANK' | translate}}
+                    </mat-label>
+                    <input matInput type="text" class="form-control" id="rank2" [(ngModel)]="location.rank" name="rank2"
+                      #rank2="ngModel">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="100" class="px-2">
+                  <mat-label>{{'COMMON.ADDRESS' | translate}}<font color="red">*</font>
+                  </mat-label>
+                  <quill-editor id="summary" name="summary" [(ngModel)]="location.address" #summary="ngModel">
+                  </quill-editor>
+                </div>
+              </div>
+              <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                  <div class="text-center mt-2">
+                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                      type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                      <mat-icon>save</mat-icon>
+                    </button> </div>
+                  <div class="text-center mt-2" *ngIf="messages">
+                    <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-tab>
+        </mat-tab-group>
+
+      </mat-tab>
+    </mat-tab-group>
+    <br />
+    <div fxLayout="row wrap" *ngIf="selectedMainTabIndex!==5">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+        <div class="text-center mt-2">
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+          </button> </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>

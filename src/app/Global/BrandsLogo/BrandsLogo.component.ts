@@ -25,17 +25,14 @@ export class BrandslogoComponent implements OnInit, OnChanges {
    }
 
    getStores() {
-      const userId = Number(this.appService.tokenStorage.getUserId());
-      if (userId > 0) {
-         const parameters: string[] = [];
-         parameters.push('e.owner.id = |userId|' + userId + '|Integer');
-         this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
-            .subscribe((data: Store[]) => {
-               this.stores = data;
-            },
-               error => console.log(error),
-               () => console.log('Get all Store complete for userId=' + userId));
-      }
+      const parameters: string[] = [];
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
+         .subscribe((data: Store[]) => {
+            this.stores = data;
+         },
+            error => console.log(error),
+            () => console.log('Get Top Store complete'));
+
    }
 
    ngOnChanges() {

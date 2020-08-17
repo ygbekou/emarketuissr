@@ -10,33 +10,6 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 })
 export class CTAGroupComponent implements OnInit {
 
-   callToActionArray : any = [
-      {
-         img_path:"assets/images/mobile.jpg",
-         route :"/products/gadgets/12"
-      },
-      {
-         img_path:"assets/images/sports.jpg",
-         route :"/products/men/3"
-      },
-      {
-         img_path:"assets/images/headphone.jpg",
-         route :"/products/gadgets/11"
-      },
-      {
-         img_path:"assets/images/t-shirts.jpg",
-         route :"/products/men/5"
-      },
-      {
-         img_path:"assets/images/watch.jpg",
-         route :"/products/gadgets/14"
-      },
-      {
-         img_path:"assets/images/shoes.jpg",
-         route :"/products/men/6"
-      }
-   ]
-
    marketings: MarketingDescription[] = [];
 
    constructor(public appService: AppService) { }

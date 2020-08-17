@@ -77,6 +77,7 @@ import { AdminPanelModule } from './AdminPanel/admin-panel.module';
 import { AppInfoStorage } from './app.info.storage';
 import { TokenStorage } from './token.storage';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
+import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -107,7 +108,8 @@ export function createTranslateLoader(http: HttpClient) {
       FooterTwoComponent,
       HomeThreeComponent,
       HeaderThreeComponent,
-      FixedHeaderComponent
+      FixedHeaderComponent,
+      FooterComponent
    ],
    imports: [
       BrowserModule.withServerTransition({ appId: 'embryo-seo-pre' }),
