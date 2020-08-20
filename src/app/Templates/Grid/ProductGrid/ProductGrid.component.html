@@ -8,7 +8,7 @@
 
       <!-- Multiple show products grid -->
       <mat-card class="product-card" *ngIf="viewType==='grid'">
-         <a class="p-link" *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.type, prd.product?.id]">
+         <a class="p-link" *ngIf="prd.product?.id" [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
             <img width="626" height="800" mat-card-image
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
          </a>
@@ -21,7 +21,7 @@
             <a (click)="productAddToWishlist(prd.product, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
          </div>
          <mat-card-content class="product-content relative">
-            <h5><a *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.type, prd.product?.id]"
+            <h5><a *ngIf="prd.product?.id" [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]"
                   class="title-link">{{prd?.name}}</a> </h5>
             <h5><a *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>

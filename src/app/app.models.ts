@@ -936,6 +936,7 @@ export class ProductVO {
   pStatus: number;
   pMinimum: number;
   pSortOrder: number;
+  fileNames: string[];
 }
 
 export class Company {

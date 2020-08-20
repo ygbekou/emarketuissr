@@ -4,7 +4,7 @@
     <div fxLayout="row wrap" class="col-gap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
         <div class="mat-card mb-4">
-             <bar-rating [(rate)]="rate" max="5" readOnly="false"></bar-rating>
+            
         </div>
 
       </div>
@@ -80,7 +80,7 @@
         <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
-              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
+              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'buy'" (addToCart)="addToCart($event)"
               (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>

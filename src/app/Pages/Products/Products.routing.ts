@@ -14,7 +14,7 @@ export const ProductsRoutes: Routes = [
 		component: ViewAllComponent
 	},
 	{
-		path: 'dtl/:id',
+		path: 'dtl/:prdId/:ptsId',
 		component: DetailPageComponent
 	},
 	{

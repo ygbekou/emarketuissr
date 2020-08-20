@@ -19,7 +19,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    mainImgPath: string;
    totalPrice: any;
    type: any;
-   colorsArray: string[] = ["Red", "Blue", "Yellow", "Green"];
+   colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
    sizeArray: number[] = [36, 38, 40, 42, 44, 46, 48];
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    productReviews: any;
@@ -55,12 +55,12 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    /**
-    * getImagePath is used to change the image path on click event. 
+    * getImagePath is used to change the image path on click event.
     */
    public getImagePath(imgPath: string, index: number) {
       document.querySelector('.border-active').classList.remove('border-active');
       this.mainImgPath = imgPath;
-      document.getElementById(index + '_img').className += " border-active";
+      document.getElementById(index + '_img').className += ' border-active';
    }
 
    public calculatePrice(detailData: any, value: any) {

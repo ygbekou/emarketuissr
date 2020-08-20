@@ -54,7 +54,7 @@ export class ProductsListComponent implements OnInit {
             { code: 'pricedesc', name: 'Price descending' },
             { code: 'rating', name: 'Rating' }];
       }
-      this.sort = this.sortings[0];
+      this.sort = this.sortings[0]; 
       this.activatedRoute.params.subscribe(params => {
          console.log(params);
          console.log(params.type);
@@ -93,7 +93,7 @@ export class ProductsListComponent implements OnInit {
          this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId)
          .subscribe((data: ProductDescVO[]) => {
             this.products = data;
-            // console.log(data);
+            console.log(data);
             const result = this.filterData(data);
             if (result.data.length === 0) {
                // this.properties.length = 0;
