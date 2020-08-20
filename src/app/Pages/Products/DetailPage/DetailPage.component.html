@@ -1,16 +1,33 @@
 <ng-container *ngIf="product">
+  <!--
   <embryo-PageTitle heading="{{product.name}}"></embryo-PageTitle>
+  -->
   <div class="inner-container">
     <div class="product-detail-page">
-      <embryo-ShopDetails [currency]="appService?.currency" [detailData]="product"></embryo-ShopDetails>
+     
+      <div class="container">
+        <div fxLayout='row wrap' fxLayoutAlign="center center" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <embryo-ShopDetails [currency]="appService?.currency" [detailData]="product"></embryo-ShopDetails>
+
+          </div>
+        </div>
+      </div>
+
+
       <div class="bg-grey section-gap" *ngIf="products && products.length>0">
         <div class="container">
           <div class="block-title text-center gap">
             <h2>You Might Also Like</h2>
           </div>
-          <embryo-ProductGrid [currency]="appService?.currency" [products]="products" gridLength="4" (addToCart)="addToCart($event)" (addToWishList)="addToWishList($event)"></embryo-ProductGrid>
+
+          <embryo-ProductGrid [currency]="appService?.currency" [products]="products" [viewType]="viewType"
+            [viewCol]="viewCol" [fromPage]="'buy'" (addToCart)="addToCart($event)"
+            (addToWishList)="addToWishList($event)" gridThree="true">
+          </embryo-ProductGrid>
+
           <div class="text-center mt-4">
-            <button mat-raised-button [routerLink]="['/products', type]">Show All</button>
+            <button mat-raised-button (click)="showMore()">Show All</button>
           </div>
         </div>
       </div>
