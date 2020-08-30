@@ -16,6 +16,9 @@ export class DetailPageComponent implements OnInit {
 
    prdId = 0;
    ptsId = 0;
+   topN = 4;
+   public viewType = 'grid';
+   public viewCol = 25;
    products: ProductDescVO[] = [];
    product: ProductDescVO;
 
@@ -28,11 +31,13 @@ export class DetailPageComponent implements OnInit {
 
    ngOnInit() {
       this.activatedRoute.params.subscribe(params => {
-         // path: 'dtl/:prdId/:ptsId', 
+         // path: 'dtl/:prdId/:ptsId',
          this.prdId = params.prdId;
          this.ptsId = params.ptsId;
+         this.topN = 4;
+         /* 
          console.log(params.prdId);
-         console.log(params.ptsId);
+         console.log(params.ptsId); */
          this.getData();
       });
 
@@ -43,12 +48,27 @@ export class DetailPageComponent implements OnInit {
          langId + '/' + this.ptsId)
          .subscribe((data: ProductDescVO) => {
             this.product = data;
-            console.log(data);
+            this.getRelatedProducts(langId);
          },
             error => console.log(error),
             () => console.log('Get all getProductOnSale complete'));
    }
 
+   getRelatedProducts(langId: number) {
+      this.appService.getObjects('/service/catalog/getRelatedProductsOnSale/' +
+         langId + '/' + this.product.product.id + '/' + this.topN)
+         .subscribe((data: ProductDescVO[]) => {
+            this.products = data;
+            console.log(this.products);
+         },
+            error => console.log(error),
+            () => console.log('Get all getRelatedProductsOnSale complete'));
+   }
+
+   showMore() {
+      this.topN += 4;
+      this.getRelatedProducts(this.appService.appInfoStorage.language.id);
+   }
    public getData() {
       const parameters: string[] = [];
       this.appService.getAllByCriteria('com.softenza.emarket.model.Language',
