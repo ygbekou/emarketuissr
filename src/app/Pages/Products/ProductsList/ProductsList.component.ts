@@ -26,10 +26,11 @@ export class ProductsListComponent implements OnInit {
    products: ProductDescVO[] = [];
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
-   public errors: string;
+   public errors: string; 
    public watcher: Subscription;
    catId = 0;
    marketId = 0;
+   searchText = '0';
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
    slideConfig: any;
@@ -39,6 +40,7 @@ export class ProductsListComponent implements OnInit {
    productList: ProductListVO = new ProductListVO();
    public searchCriteria: SearchCriteria = new SearchCriteria();
 
+   
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
       { code: 'pricedesc', name: 'Prix descendant' },
@@ -65,8 +67,10 @@ export class ProductsListComponent implements OnInit {
       this.activatedRoute.params.subscribe(params => {
          console.log(params);
          console.log(params.type);
+
          this.catId = 0;
          this.marketId = 0;
+         
          if (params.type) {
             const type = params.type.substring(0, 3);
             if (type === 'cat') {
@@ -74,13 +78,31 @@ export class ProductsListComponent implements OnInit {
             } else if (type === 'mak') {
                this.marketId = params.type.substring(3);
             }
+
             if (this.catId > 0 || this.marketId > 0) {
                console.log('catId=' + this.catId + ', marketId=' + this.marketId);
                this.getData();
             }
          }
 
+      }); 
+
+
+      this.activatedRoute.queryParams.subscribe(params => {
+         
+         console.info(this.activatedRoute.queryParams);
+         this.activatedRoute.queryParams.forEach(queryParams => {
+            if (queryParams['searchText'] !== undefined) {
+               this.searchText = queryParams['searchText'];
+               this.getData();
+            }
+
+         });
+         
+
       });
+
+
 
       this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
          if (change.mqAlias === 'xs') {
@@ -97,7 +119,7 @@ export class ProductsListComponent implements OnInit {
    }
    getProducts() {
       this.appService.getObject('/service/catalog/getProductsOnSale/' +
-         this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId)
+         this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId + '/' + this.searchText)
          .subscribe((data: ProductListVO) => {
             this.productList = data;
             console.log(data);
@@ -122,7 +144,7 @@ export class ProductsListComponent implements OnInit {
                      found = false;
                   }
                }
-
+ 
                if (this.searchCriteria.category) {
                   if (!(this.searchCriteria.category === data.category)) {
                      found = false;
