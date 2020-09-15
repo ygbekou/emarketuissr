@@ -439,7 +439,9 @@
 		"ORDER_DETAILS": "Order Details",
 		"CUSTOMER_DETAILS": "Customer Details",
 		"UNIT_PRICE": "Unit Price",
-		"REWARD_POINTS": "Reward Points"
+		"REWARD_POINTS": "Reward Points",
+		"MIN": "Min",
+		"MAX": "Max"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

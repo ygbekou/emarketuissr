@@ -439,7 +439,9 @@
 		"ORDER_DETAILS": "Détails de l'achat",
 		"CUSTOMER_DETAILS": "Détails de l'acheteur",
 		"UNIT_PRICE": "Prix Unitaire",
-		"REWARD_POINTS": "Points de r�compense"
+    "REWARD_POINTS": "Points de r�compense",
+    "MIN": "Min",
+		"MAX": "Max"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

@@ -888,6 +888,12 @@ export class ProductDescVO {
   mediumDescription: string;
   category: string;
 }
+
+export class ProductListVO {
+	categories: string[];
+	productDescVOs: ProductDescVO[];
+}
+
 export class ProductVO {
   id: number;
   dateAvailable: number;
@@ -1085,4 +1091,10 @@ export class OrderProduct {
   reward: number;
   tax: number;
   total: number;
+}
+
+export class SearchCriteria {
+  priceMin: number;
+  priceMax: number;
+  category: string;
 }

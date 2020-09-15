@@ -8,7 +8,7 @@
         <div fxFlex.sm="60" fxHide.xs="true" fxHide.sm="true" fxFlex.md="40" fxFlex.sm.hdie fxFlex.lg="60%"
           fxFlex.xl="60%" class="align-center">
 
-          <form action="">
+          <form name="form" (ngSubmit)="f.form.valid && searchProducts()" #f="ngForm" validate>
             <div fxLayout="row wrap" style="align-items: baseline;">
               <div fxFlex.xs="20%" fxFlex.sm="20%" style="vertical-align: middle;" fxFlex.md="20%" fxFlex.lg="20%"
                 fxFlex.xl="20%">
@@ -25,13 +25,13 @@
                 fxFlex.xl="70%">
                 <mat-form-field>
                   <mat-placeholder>Chercher un produit</mat-placeholder>
-                  <input matInput type="text">
+                  <input matInput type="text" [(ngModel)]="searchText" name="searchText">
                 </mat-form-field>
               </div>
               <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" fxFlex.xl="15%"
                 style="vertical-align: middle;">
 
-                <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;">
+                <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;" type="submit">
                   <mat-icon>search</mat-icon> Search
                 </button>
               </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { CategoryDescription } from 'src/app/app.models';
+import { Router } from '@angular/router';
 
 @Component({
    selector: 'header-two',
@@ -16,8 +17,11 @@ export class HeaderTwoComponent implements OnInit {
    // = ['All Categories', 'Computers', 'Food', 'Vegetables'];
    selectedCategory = 'All Categories';
    addressType: string;
+   searchText: string;
 
-   constructor(public appService: AppService, public translate: TranslateService) { }
+   constructor(public appService: AppService, 
+      public translate: TranslateService,
+      public router: Router) { }
 
    ngOnInit() { 
 
@@ -76,4 +80,7 @@ export class HeaderTwoComponent implements OnInit {
       this.appService.addToCart(value, 'wishlist');
    }
 
+   public searchProducts() {
+      this.router.navigate(['/products'], { queryParams: { searchText: this.searchText }});
+   }
 }
