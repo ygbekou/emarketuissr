@@ -54,7 +54,7 @@ export class ProductsListComponent implements OnInit {
             { code: 'pricedesc', name: 'Price descending' },
             { code: 'rating', name: 'Rating' }];
       }
-      this.sort = this.sortings[0]; 
+      this.sort = this.sortings[0];
       this.activatedRoute.params.subscribe(params => {
          console.log(params);
          console.log(params.type);
@@ -250,7 +250,7 @@ export class ProductsListComponent implements OnInit {
    }
 
 
-   public filterData(data) {
+   public filterData(data) { 
       return this.appService.filterData(data, this.searchFields, this.sort.code, this.pagination.page, this.pagination.perPage);
    }
 
