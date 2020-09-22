@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProductsListComponent implements OnInit {
 
    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-   @ViewChild(MatSort, { static: true }) sort: MatSort;
+   @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
    dataSource: MatTableDataSource<ProductDescVO>;
    public viewType = 'grid';
@@ -250,7 +250,7 @@ export class ProductsListComponent implements OnInit {
    }
 
 
-   public filterData(data) { 
+   public filterData(data) {
       return this.appService.filterData(data, this.searchFields, this.sort.code, this.pagination.page, this.pagination.perPage);
    }
 
