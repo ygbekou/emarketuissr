@@ -54,7 +54,7 @@ export class WeightClassComponent implements OnInit {
     this.weightClassDescs = [];
     this.refreshLangObjects();
   }
-  onMainTabChanged() {
+  onMainTabChanged($event) {
     console.log('Selectd main = ' + this.selectedMainTabIndex);
     this.messages = '';
     if (this.selectedMainTabIndex === 1) {

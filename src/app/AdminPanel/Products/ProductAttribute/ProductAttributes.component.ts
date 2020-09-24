@@ -24,7 +24,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
    filteredAttributeOptions: Observable<AttributeDescription[]>;
 
    productAttributes: ProductAttribute[];
-   
+
    constructor(public appService: AppService,
       public translate: TranslateService) {
       super(translate);
@@ -42,8 +42,8 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
             this.attributeOptions = data;
 
          },
-         error => console.log(error),
-         () => console.log('Get product unselected AttributeDescription complete'));
+            error => console.log(error),
+            () => console.log('Get product unselected AttributeDescription complete'));
    }
 
    getProductSelectedAttributes() {
@@ -79,17 +79,15 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
 
    }
 
-    public addAttribute(productAttribute: ProductAttribute): void {
-      if (!this.productAttributes || this.productAttributes === null ) {
+   public addAttribute(): void {
+      if (!this.productAttributes || this.productAttributes === null) {
          this.productAttributes = [];
       }
 
       let prAttr: ProductAttribute;
-      if (productAttribute === undefined) {
-         prAttr = new ProductAttribute();
-         prAttr.product.id = this.productId;
-      }
-      this.productAttributes.unshift(productAttribute !== undefined ? productAttribute : prAttr);
+      prAttr = new ProductAttribute();
+      prAttr.product.id = this.productId;
+      this.productAttributes.unshift(prAttr);
    }
 
    public deleteProductAttribute(productAttribute: ProductAttribute, index: number) {
@@ -103,7 +101,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
          .subscribe(data => {
             this.removeItem(this.productAttributes, productAttribute.id);
             this.processDeleteResult(data, this.messages);
-            
+
          });
    }
 

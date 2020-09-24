@@ -7,11 +7,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-return-action',
-  templateUrl: './ReturnActions.component.html',
-  styleUrls: ['./ReturnActions.component.scss']
+  selector: 'app-stores',
+  templateUrl: './Stores.component.html',
+  styleUrls: ['./Stores.component.scss']
 })
-export class ReturnActionsComponent implements OnInit {
+export class StoresComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
   dataSource: MatTableDataSource<ReturnAction>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

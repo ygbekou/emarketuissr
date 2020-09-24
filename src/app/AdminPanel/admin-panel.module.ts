@@ -46,6 +46,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GlobalModule } from '../Global/Global.module';
 import { InputFileModule } from 'ngx-input-file';
+import { BaseComponent } from './baseComponent';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -61,7 +62,7 @@ export function createTranslateLoader(http: HttpClient) {
 		MainAdminPanelComponent,
 		SideBarComponent,
 		MenuListItemsComponent,
-		AdminHeaderComponent
+		AdminHeaderComponent, BaseComponent
 	],
 	imports: [
 		CommonModule,
