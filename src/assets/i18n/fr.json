@@ -441,7 +441,8 @@
 		"UNIT_PRICE": "Prix Unitaire",
     "REWARD_POINTS": "Points de r�compense",
     "MIN": "Min",
-		"MAX": "Max"
+		"MAX": "Max",
+		"SOLD_BY": "Vendu par"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

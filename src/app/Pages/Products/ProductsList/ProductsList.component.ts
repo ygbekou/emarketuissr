@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription } from 'src/app/app.models';
+import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core'; 
 
 @Component({
    selector: 'app-prod-list-all',
    templateUrl: './ProductsList.component.html',
-   styleUrls: ['./ProductsList.component.scss']
+   styleUrls: ['./ProductsList.component.scss'] 
 })
 export class ProductsListComponent implements OnInit {
-
+ 
    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
@@ -22,20 +22,25 @@ export class ProductsListComponent implements OnInit {
    public viewType = 'grid';
    public viewCol = 33.3;
    public count = 6;
-   public searchFields: any;
+   public searchFields: any; 
    products: ProductDescVO[] = [];
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
-   public errors: string;
+   public errors: string; 
    public watcher: Subscription;
    catId = 0;
    marketId = 0;
+   searchText = '0';
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
    slideConfig: any;
    height = { 'height': '70px' };
    public counts = [2, 3, 6, 12, 24, 36];
 
+   productList: ProductListVO = new ProductListVO();
+   public searchCriteria: SearchCriteria = new SearchCriteria();
+
+   
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
       { code: 'pricedesc', name: 'Prix descendant' },
@@ -55,11 +60,17 @@ export class ProductsListComponent implements OnInit {
             { code: 'rating', name: 'Rating' }];
       }
       this.sort = this.sortings[0];
+
+      this.dataSource = new MatTableDataSource();
+      
+
       this.activatedRoute.params.subscribe(params => {
          console.log(params);
          console.log(params.type);
+
          this.catId = 0;
-         this.marketId = 0;
+         this.marketId = 0; 
+         
          if (params.type) {
             const type = params.type.substring(0, 3);
             if (type === 'cat') {
@@ -67,13 +78,31 @@ export class ProductsListComponent implements OnInit {
             } else if (type === 'mak') {
                this.marketId = params.type.substring(3);
             }
+
             if (this.catId > 0 || this.marketId > 0) {
                console.log('catId=' + this.catId + ', marketId=' + this.marketId);
                this.getData();
             }
          }
 
+      }); 
+
+
+      this.activatedRoute.queryParams.subscribe(params => {
+         
+         console.info(this.activatedRoute.queryParams);
+         this.activatedRoute.queryParams.forEach(queryParams => {
+            if (queryParams['searchText'] !== undefined) {
+               this.searchText = queryParams['searchText'];
+               this.getData();
+            }
+
+         });
+         
+
       });
+
+
 
       this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
          if (change.mqAlias === 'xs') {
@@ -89,12 +118,12 @@ export class ProductsListComponent implements OnInit {
 
    }
    getProducts() {
-      this.appService.getObjects('/service/catalog/getProductsOnSale/' +
-         this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId)
-         .subscribe((data: ProductDescVO[]) => {
-            this.products = data;
+      this.appService.getObject('/service/catalog/getProductsOnSale/' +
+         this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId + '/' + this.searchText)
+         .subscribe((data: ProductListVO) => {
+            this.productList = data;
             console.log(data);
-            const result = this.filterData(data);
+            const result = this.filterData(data.productDescVOs);
             if (result.data.length === 0) {
                // this.properties.length = 0;
                this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -102,10 +131,31 @@ export class ProductsListComponent implements OnInit {
                   this.message = res['MESSAGE.NO_RESULT_FOUND'];
                });
             }
-            console.log(result.data);
+            console.log(result.data.categories);
             this.dataSource = new MatTableDataSource(result.data);
             this.pagination = result.pagination;
             this.message = null;
+
+            this.dataSource.filterPredicate = (data, filter) => {
+               let found = true;
+               if (this.searchCriteria.priceMin && this.searchCriteria.priceMax) {
+
+                  if (!(data.product.price >= this.searchCriteria.priceMin && data.product.price <= this.searchCriteria.priceMax)) {
+                     found = false;
+                  }
+               }
+ 
+               if (this.searchCriteria.category) {
+                  if (!(this.searchCriteria.category === data.category)) {
+                     found = false;
+                  }
+               }
+
+               return found;
+            }
+
+            this.productList.categories.push('Test');
+
          },
             error => console.log(error),
             () => console.log('Get all getProductsOnSale complete'));
@@ -157,7 +207,7 @@ export class ProductsListComponent implements OnInit {
                () => console.log('Get all Marketing Item complete'));
       }
    }
-
+ 
    getCatDescs(langId: number) {
       const parameters: string[] = [];
       if (this.catId > 0) {
@@ -181,6 +231,11 @@ export class ProductsListComponent implements OnInit {
          this.dataSource.paginator.firstPage();
       }
    }
+
+   public applyAllFilter() {
+      this.dataSource.filter = ''+Math.random();
+   }
+
 
    public addToCart(value) {
       this.appService.addToCart(value);

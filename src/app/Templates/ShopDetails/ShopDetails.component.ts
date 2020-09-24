@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AppService } from '../../Services/app.service';
-import { ProductDescription } from 'src/app/app.models';
+import { ProductDescription, ProductDescVO } from 'src/app/app.models';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -11,7 +11,7 @@ import { ProductDescription } from 'src/app/app.models';
 })
 export class ShopDetailsComponent implements OnInit, OnChanges {
 
-   @Input() detailData: ProductDescription;
+   @Input() detailData: ProductDescVO;
    @Input() currency: string;
    @Input() fromPage: string;
    @Output() sellProduct: EventEmitter<any> = new EventEmitter();
@@ -65,7 +65,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
    public calculatePrice(detailData: any, value: any) {
       detailData.quantity = value;
-      this.totalPrice = detailData.price * value;
+      this.totalPrice = detailData.product.price * value;
    }
 
    public reviewPopup(detailData) {

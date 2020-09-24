@@ -26,90 +26,111 @@
     </div>
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
-    <div class="product-detail-content">
-      <h3>{{detailData?.name}}</h3>
-      <div fxLayoutAlign="start center" class="mb-3">
-        <div>
-          <a href="javascript:void(0)" class="text-underline" (click)="reviewPopup(detailData)">
-            Review</a>
-        </div>
-        <div class="rating-star">
-          <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
-        </div>
-      </div>
-      <div class="product-detail-price">
-        <h4 class="accent-color">{{totalPrice | currency:currency}} </h4>
-      </div>
-      <ul class="no-style mb-4">
-        <li>
-          <span class="font-medium"> Availablity </span>:
-          <span *ngIf="detailData?.availablity">In Stocks</span>
-          <span *ngIf="!(detailData?.availablity)">Out Of Stocks</span>
-        </li>
-        <li>
-          <span class="font-medium">Product Code </span>: {{detailData?.product_code}}
-        </li>
-        <li>
-          <span class="font-medium">Tags</span>:
-          <ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>
-        </li>
-      </ul>
-      <div class="short-des" [innerHTML]="detailData?.shortDescription"></div>
-      <div class="bullets-points">
-        <ul class="bullets-list">
-          <li *ngFor="let feature of detailData?.features">
-            {{feature}}
-          </li>
-        </ul>
-      </div>
-      <div fxLayoutGap="30px" class="mb-3 select-group">
-        <ng-container *ngIf="type == 'men' || type == 'women'">
-          <mat-form-field>
-            <mat-select class="product-detail-select" placeholder="Color">
-              <ng-container *ngFor="let color of colorsArray">
-                <mat-option class="product-detail-select" value="{{color}}">{{color}}</mat-option>
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select placeholder="Size">
-              <ng-container *ngFor="let size of sizeArray">
-                <mat-option value="{{size}}">{{size}}</mat-option>
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
-        <mat-form-field>
-          <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
-            <ng-container *ngFor="let quantity of quantityArray">
-              <mat-option value="{{quantity}}">{{quantity}}</mat-option>
+    <div fxLayout='row wrap'>
+      <div fxFlex.xs="85" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85">
+        <div class="product-detail-content">
+          <h3>{{detailData?.name}}</h3>
+          <div fxLayoutAlign="start center" class="mb-3">
+            <div>
+              <a href="javascript:void(0)" class="text-underline" (click)="reviewPopup(detailData)">
+                Review</a>
+            </div>
+            <div class="rating-star">
+              <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
+            </div>
+          </div>
+          <div class="product-detail-price">
+            <h4 class="accent-color">{{totalPrice | currency:currency}} </h4>
+          </div>
+          <ul class="no-style mb-4">
+            <li>
+              <span class="font-medium"> Availablity </span>:
+              <span *ngIf="detailData?.availablity">In Stocks</span>
+              <span *ngIf="!(detailData?.availablity)">Out Of Stocks</span>
+            </li>
+            <li>
+              <span class="font-medium">Product Code </span>: {{detailData?.product_code}}
+            </li>
+            <li>
+              <span class="font-medium">Tags</span>:
+              <ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>
+            </li>
+          </ul>
+          <div class="short-des" [innerHTML]="detailData?.description"></div>
+          <div class="bullets-points">
+            <ul class="bullets-list">
+              <li *ngFor="let feature of detailData?.features">
+                {{feature}}
+              </li>
+            </ul>
+          </div>
+          <div fxLayoutGap="30px" class="mb-3 select-group">
+            <ng-container *ngIf="type == 'men' || type == 'women'">
+              <mat-form-field>
+                <mat-select class="product-detail-select" placeholder="Color">
+                  <ng-container *ngFor="let color of colorsArray">
+                    <mat-option class="product-detail-select" value="{{color}}">{{color}}</mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="Size">
+                  <ng-container *ngFor="let size of sizeArray">
+                    <mat-option value="{{size}}">{{size}}</mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
             </ng-container>
-          </mat-select>
-        </mat-form-field>
+            <!-- <mat-form-field>
+              <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
+                <ng-container *ngFor="let quantity of quantityArray">
+                  <mat-option value="{{quantity}}">{{quantity}}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field> -->
+          </div>
+          <div class="mb-4" *ngIf="fromPage==='buy'">
+            <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
+          </div>
+          <div class="mb-4" *ngIf="fromPage==='buy'">
+            <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
+          </div>
+          <div class="mb-5 detail-btns" *ngIf="fromPage==='buy'">
+            <button mat-raised-button color="accent" class="button-lg mr-3" (click)="addToCart(detailData)">Add To
+              Cart</button>
+            <button class="button-lg" mat-raised-button (click)="buyNow(detailData)">Buy Now</button>
+          </div>
+          <div class="mb-5 detail-btns" *ngIf="fromPage==='sell'">
+            <button mat-fab (click)="selectForSaleProduct(detailData)"><i class="material-icons"> check_box
+              </i></button>
+          </div>
+          <div class="mb-5 detail-btns" *ngIf="fromPage==='sellP'">
+            <button mat-raised-button color="accent" class="button-lg mr-3"
+              (click)="submitProductForSale(detailData)">{{'COMMON.SELL_PRODUCT'|translate}}</button>
+          </div>
+          <div fxLayoutAlign="start center"  *ngIf="fromPage==='buy'">
+            <div class="mr-3"> <span>Share Now</span></div>
+            <div class="detail-product-share">
+              <embryo-SocialShare></embryo-SocialShare>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-4" *ngIf="fromPage==='buy'">
-        <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
-      </div>
-      <div class="mb-4" *ngIf="fromPage==='buy'">
-        <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
-      </div>
-      <div class="mb-5 detail-btns" *ngIf="fromPage==='buy'">
-        <button mat-raised-button color="accent" class="button-lg mr-3" (click)="addToCart(detailData)">Add To
-          Cart</button>
-        <button class="button-lg" mat-raised-button (click)="buyNow(detailData)">Buy Now</button>
-      </div>
-      <div class="mb-5 detail-btns" *ngIf="fromPage==='sell'">
-        <button mat-fab (click)="selectForSaleProduct(detailData)"><i class="material-icons"> check_box
-          </i></button>
-      </div>
-      <div class="mb-5 detail-btns" *ngIf="fromPage==='sellP'">
-        <button mat-raised-button color="accent" class="button-lg mr-3"
-          (click)="submitProductForSale(detailData)">{{'COMMON.SELL_PRODUCT'|translate}}</button>
-      </div>
-      <div fxLayoutAlign="start center"  *ngIf="fromPage==='buy'">
-        <div class="mr-3"> <span>Share Now</span></div>
-        <div class="detail-product-share">
-          <embryo-SocialShare></embryo-SocialShare>
+      <div fxFlex.xs="15" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+        <div class="product-detail-price">
+          <h6 class="accent-color">{{totalPrice | currency:currency}} </h6>
+        </div>
+
+        <div *ngIf="detailData.product.quantity > 0">
+          <h6>In Stock</h6>
+        </div>
+        <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
+          <ng-container *ngFor="let quantity of [].constructor(detailData.product.quantity); let i = index;">
+            <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
+          </ng-container>
+        </mat-select>
+        <div>
+          <span style="font-size:10vw">{{'COMMON.SOLD_BY'|translate}}: {{detailData.product.storeName}}</span>
         </div>
       </div>
     </div>

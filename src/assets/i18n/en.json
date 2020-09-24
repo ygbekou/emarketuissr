@@ -441,7 +441,8 @@
 		"UNIT_PRICE": "Unit Price",
 		"REWARD_POINTS": "Reward Points",
 		"MIN": "Min",
-		"MAX": "Max"
+		"MAX": "Max",
+		"SOLD_BY": "Sold By"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
