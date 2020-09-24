@@ -24,7 +24,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
    filteredAttributeOptions: Observable<AttributeDescription[]>;
 
    productAttributes: ProductAttribute[];
-
+   
    constructor(public appService: AppService,
       public translate: TranslateService) {
       super(translate);
@@ -42,8 +42,8 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
             this.attributeOptions = data;
 
          },
-            error => console.log(error),
-            () => console.log('Get product unselected AttributeDescription complete'));
+         error => console.log(error),
+         () => console.log('Get product unselected AttributeDescription complete'));
    }
 
    getProductSelectedAttributes() {
@@ -51,7 +51,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
          + this.productId + '/' + this.appService.appInfoStorage.language.id)
          .subscribe((data: ProductAttribute[]) => {
             data.forEach(element => {
-               this.addAttribute(element);
+               this.addNewAttribute(element);
             });
          },
             error => console.log(error),
@@ -79,7 +79,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
 
    }
 
-   public addAttribute(): void {
+      public addAttribute(): void {
       if (!this.productAttributes || this.productAttributes === null) {
          this.productAttributes = [];
       }
@@ -88,6 +88,19 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
       prAttr = new ProductAttribute();
       prAttr.product.id = this.productId;
       this.productAttributes.unshift(prAttr);
+   }
+
+    public addNewAttribute(productAttribute: ProductAttribute): void {
+      if (!this.productAttributes || this.productAttributes === null ) {
+         this.productAttributes = [];
+      }
+
+      let prAttr: ProductAttribute;
+      if (productAttribute === undefined) {
+         prAttr = new ProductAttribute();
+         prAttr.product.id = this.productId;
+      }
+      this.productAttributes.unshift(productAttribute !== undefined ? productAttribute : prAttr);
    }
 
    public deleteProductAttribute(productAttribute: ProductAttribute, index: number) {

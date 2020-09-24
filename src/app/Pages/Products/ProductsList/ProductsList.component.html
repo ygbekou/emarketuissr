@@ -94,7 +94,7 @@
 
                 <!-- <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
                   {{sort.name}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-                </a> -->
+                </a> 
                 <mat-menu #sortMenu="matMenu" xPosition="before" overlapTrigger="true">
                   <span (mouseleave)="sortMenuTrigger.closeMenu()">
                     <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
@@ -102,7 +102,7 @@
                     </button>
                   </span>
                 </mat-menu>
-
+                -->
               </div>
 
             </div>
