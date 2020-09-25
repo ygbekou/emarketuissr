@@ -47,7 +47,7 @@
          <mat-label>{{'COMMON.RELATED_PRODUCT' | translate }}</mat-label>
          <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput
             [(ngModel)]="currentOption" [matAutocomplete]="auto"
-            (ngModelChange)="filteredRelatedProductOptions = filterRelatedProducts(currentOption)">
+            (ngModelChange)="filterRelatedProducts(currentOption)">
          <mat-autocomplete id="relatedProduct" #auto="matAutocomplete" [(ngModel)]="selectedRelatedProduct">
             <mat-option *ngFor="let option of filteredRelatedProductOptions"
                (onSelectionChange)="relatedSelected(option)" [value]="option.name">

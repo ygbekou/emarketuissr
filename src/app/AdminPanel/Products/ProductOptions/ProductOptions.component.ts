@@ -26,7 +26,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    productOption: ProductOption;
    productOptionValues: ProductOptionValue[];
    optionValues: OptionValueDescription[];
-   
+
    constructor(public appService: AppService,
       public translate: TranslateService) {
       super(translate);
@@ -48,8 +48,8 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             })
 
          },
-         error => console.log(error),
-         () => console.log('Get product unselected OptionDescription complete'));
+            error => console.log(error),
+            () => console.log('Get product unselected OptionDescription complete'));
    }
 
    getProductSelectedOptions() {
@@ -74,7 +74,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          return this.optionOptions.filter(attrDesc => attrDesc.name.toLowerCase().startsWith(filterValue));
       }
-      return this.optionOptions;
+     return this.optionOptions;
    }
 
 
@@ -107,13 +107,13 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    saveProductOption2() {
 
       this.productOption.required = (this.productOption.required == null
-      || this.productOption.required.toString() === 'false'
-      || this.productOption.required.toString() === '0') ? 0 : 1;
+         || this.productOption.required.toString() === 'false'
+         || this.productOption.required.toString() === '0') ? 0 : 1;
 
       if (this.isDateOption()) {
          this.productOption.value = this.productOption.valueDate.toLocaleDateString();
       }
-     
+
       if (this.isTimeOption()) {
          this.productOption.value = this.productOption.timeHour + ':' + this.productOption.timeMinute;
       }
@@ -128,18 +128,18 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    }
 
    public get dateTimeLocal(): string {
-    return this.productOption.value;
-  }
+      return this.productOption.value;
+   }
 
-  public set dateTimeLocal(v: string) {
-    this.productOption.value = v;
-  }
+   public set dateTimeLocal(v: string) {
+      this.productOption.value = v;
+   }
 
 
-    public addOption(productOption: ProductOption): void {
-      
+   public addOption(productOption: ProductOption): void {
+
       this.messages = '';
-      if (!this.productOptions || this.productOptions === null ) {
+      if (!this.productOptions || this.productOptions === null) {
          this.productOptions = [];
       }
 
@@ -162,7 +162,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
          .subscribe(data => {
             this.removeItem(this.productOptions, productOption.id);
             this.processDeleteResult(data, this.messages);
-            
+
          });
    }
 
@@ -171,35 +171,35 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       if (productOptionId > 0) {
          this.appService.getOneWithChildsAndFiles(productOptionId, 'ProductOption')
             .subscribe(result => {
-          if (result.id > 0) {
-            this.productOption = result;
-            this.getOptionValues();
-            this.productOptionValues = this.productOption.productOptionValues;
-            this.productOption.productOptionValues = [];
-            if (this.isDateOption()) {
-               this.productOption.valueDate = new Date(this.productOption.value);
-            }
+               if (result.id > 0) {
+                  this.productOption = result;
+                  this.getOptionValues();
+                  this.productOptionValues = this.productOption.productOptionValues;
+                  this.productOption.productOptionValues = [];
+                  if (this.isDateOption()) {
+                     this.productOption.valueDate = new Date(this.productOption.value);
+                  }
 
-            if (this.isTimeOption()) {
-               this.productOption.timeHour = +this.productOption.value.split(':')[0];
-               this.productOption.timeMinute = +this.productOption.value.split(':')[1];
-            }
+                  if (this.isTimeOption()) {
+                     this.productOption.timeHour = +this.productOption.value.split(':')[0];
+                     this.productOption.timeMinute = +this.productOption.value.split(':')[1];
+                  }
 
-          } else {
-            this.productOption = new ProductOption();
-            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-              this.messages = res['MESSAGE.READ_FAILED'];
+               } else {
+                  this.productOption = new ProductOption();
+                  this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                     this.messages = res['MESSAGE.READ_FAILED'];
+                  });
+               }
             });
-          }
-        });
-    }
-  }
+      }
+   }
 
    saveProductOptionValue(pov: ProductOptionValue) {
 
       pov.subtract = (pov.subtract == null
-      || pov.subtract.toString() === 'false'
-      || pov.subtract.toString() === '0') ? 0 : 1;
+         || pov.subtract.toString() === 'false'
+         || pov.subtract.toString() === '0') ? 0 : 1;
 
       pov.productOption = this.productOption;
 
@@ -215,7 +215,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    }
 
 
-  public deleteProductOptionValue(productOptionValue: ProductOptionValue, index: number) {
+   public deleteProductOptionValue(productOptionValue: ProductOptionValue, index: number) {
 
       if (productOptionValue.id === undefined || productOptionValue.id === null) {
          this.productOptionValues.splice(index, 1);
@@ -226,13 +226,13 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
          .subscribe(data => {
             this.removeItem(this.productOptionValues, productOptionValue.id);
             this.processDeleteResult(data, this.messages);
-            
+
          });
    }
 
    public addProductOptionValue(productOptionValue: ProductOptionValue): void {
       this.messages = '';
-      if (!this.productOptionValues || this.productOptionValues === null ) {
+      if (!this.productOptionValues || this.productOptionValues === null) {
          this.productOptionValues = [];
       }
 
@@ -246,66 +246,66 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       this.productOptionValues.unshift(productOptionValue !== undefined ? productOptionValue : prOptVal);
    }
 
-  isTextOption() {
-     return this.productOption.option.optionType === 'Text';
-  }
+   isTextOption() {
+      return this.productOption.option.optionType === 'Text';
+   }
 
-  isTextAreaOption() {
-     return this.productOption.option.optionType === 'Textarea';
-  }
+   isTextAreaOption() {
+      return this.productOption.option.optionType === 'Textarea';
+   }
 
-  isDateOption() {
-     return this.productOption.option.optionType === 'Date';
-  }
+   isDateOption() {
+      return this.productOption.option.optionType === 'Date';
+   }
 
-  isTimeOption() {
-     return this.productOption.option.optionType === 'Time';
-  }
+   isTimeOption() {
+      return this.productOption.option.optionType === 'Time';
+   }
 
-  isDateTimeOption() {
-     return this.productOption.option.optionType === 'Date & Time';
-  }
+   isDateTimeOption() {
+      return this.productOption.option.optionType === 'Date & Time';
+   }
 
-  isSelectOption() {
-     return this.productOption.option.optionType === 'Select';
-  }
+   isSelectOption() {
+      return this.productOption.option.optionType === 'Select';
+   }
 
-  isRadioOption() {
-     return this.productOption.option.optionType === 'Radio';
-  }
+   isRadioOption() {
+      return this.productOption.option.optionType === 'Radio';
+   }
 
-  isCheckboxOption() {
-     return this.productOption.option.optionType === 'Checkbox';
-  }
+   isCheckboxOption() {
+      return this.productOption.option.optionType === 'Checkbox';
+   }
 
-  isSelectableOption() {
-     return this.isSelectOption() || this.isRadioOption() || this.isCheckboxOption();
-  }
-  
-  getOptionValues() {
-    const parameters: string[] = [];
-    parameters.push('e.language.id = |languageId|' + this.appService.appInfoStorage.language.id + '|Integer');
-    parameters.push('e.option.id = |optionId|' + this.productOption.option.id + '|Integer');
+   isSelectableOption() {
+      return this.isSelectOption() || this.isRadioOption() || this.isCheckboxOption();
+   }
 
-    this.appService.getAllByCriteria('OptionValueDescription', parameters)
-      .subscribe((data: OptionValueDescription[]) => {
+   getOptionValues() {
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |languageId|' + this.appService.appInfoStorage.language.id + '|Integer');
+      parameters.push('e.option.id = |optionId|' + this.productOption.option.id + '|Integer');
 
-        this.optionValues = data;
-        this.optionValues.forEach(element => {
-            element.id = element.optionValue.id;
-         })
+      this.appService.getAllByCriteria('OptionValueDescription', parameters)
+         .subscribe((data: OptionValueDescription[]) => {
 
-      },
-        error => console.log(error),
-        () => console.log('Get OptionValueDescription Items for Option complete'));
-  }
+            this.optionValues = data;
+            this.optionValues.forEach(element => {
+               element.id = element.optionValue.id;
+            })
+
+         },
+            error => console.log(error),
+            () => console.log('Get OptionValueDescription Items for Option complete'));
+   }
 
 
-  getStyle(productOption: ProductOption) {
-    if (productOption.id === this.productOption.id) {
-       return {'background-color': '#8AACB8'};
-    } else {
-      return {'background-color': '#ADD8E6'};
-    }
-  }
+   getStyle(productOption: ProductOption) {
+      if (productOption.id === this.productOption.id) {
+         return { 'background-color': '#8AACB8' };
+      } else {
+         return { 'background-color': '#ADD8E6' };
+      }
+   }
 }

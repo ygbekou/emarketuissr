@@ -16,13 +16,13 @@
       <mat-form-field appearance="outline" class="w-100">
          <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
             [(ngModel)]="currentOption" required
-            (ngModelChange)="filteredOptionOptions = filterOptions(currentOption)">
+            (ngModelChange)="filterOptions(currentOption)">
          <mat-autocomplete id="option1" #auto="matAutocomplete" >
             <mat-option *ngFor="let option of filteredOptionOptions" 
                (onSelectionChange)="saveProductOption(option)" 
                [value]="option.name">
                {{option.name}}
-            </mat-option>
+            </mat-option>ng 
          </mat-autocomplete>
       </mat-form-field>
 
