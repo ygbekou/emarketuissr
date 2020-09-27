@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenStorage } from 'src/app/token.storage';
@@ -16,6 +16,10 @@ export class CommonSignInComponent implements OnInit {
   public loginForm: FormGroup;
   public hide = true;
   error: '';
+
+  @Input()
+  fromPage = '';
+
   constructor(public fb: FormBuilder,
     public router: Router,
     private tokenStorage: TokenStorage,
@@ -46,6 +50,7 @@ export class CommonSignInComponent implements OnInit {
         this.error = ''
         user.lang = this.translate.currentLang;
         console.log('Current lang=' + this.translate.currentLang);
+
         this.appService.authenticate(user)
           .subscribe(data => {
             console.log(data);
@@ -53,6 +58,12 @@ export class CommonSignInComponent implements OnInit {
               console.log('login successful');
               this.tokenStorage.saveAuthData(data);
               this.appService.updateToken();
+
+              if (this.fromPage === 'checkout') {
+                this.router.navigate(['/checkout/payment']);
+                return;
+              }
+
               if (this.appService.tokenStorage.getRole() === '1') {// client
                 this.router.navigate(['/account/profile']);
               } else if (this.appService.tokenStorage.getRole() === '2') { // seller

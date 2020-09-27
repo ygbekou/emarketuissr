@@ -3,12 +3,87 @@
 <div class="inner-container section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
    <div class="checkout-option">
     <div class="container">
-    <div class="view-cart text-right mb-5">
-      <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail : {{getCartProducts() | currency:appService?.currency}}</button>
-    </div>
-      <mat-accordion class="mat-ex-wrapper">
+      <div class="view-cart text-right">
+        <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail : {{getCartProducts() | currency:appService?.currency}}</button>
+      </div>
+      <div class="container" *ngIf="isUserLoggedIn()">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+          <h5>{{'COMMON.REVIEW_YOUR_ORDER' | translate}}</h5>
+          <mat-card>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+              <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
+              <div>
+                {{user.firstName}} {{user.lastName}}
+                {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br>
+                {{user.shippingAddress.city}}<br>
+                {{user.shippingAddress.postCode}}<br>
+                {{user.shippingAddress.zone.name}}<br>
+                {{user.shippingAddress.country.name}}<br>
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+              <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
+              <div>
+                {{user.firstName}} {{user.lastName}}
+                {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br>
+                {{user.billingAddress.city}}<br>
+                {{user.billingAddress.postCode}}<br>
+                {{user.billingAddress.zone.name}}<br>
+                {{user.billingAddress.country.name}}<br>
+              </div>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+              <h6>{{'COMMON.PAYMENT_METHOD' | translate}}</h6>
+              <div>
+                {{'COMMON.ENDING_IN' | translate}} {{user.paymentMethod.last4Digits}}
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2"></div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="18" fxFlex.lg="18" fxFlex.xl="18">
+          <mat-card>
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="addToCart(detailData)" type="button" style="width:100%;">
+              <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
+            </button>
+            <div style="text-align: center; font-size:11px; width:100%;">{{'COMMON.PLACE_YOUR_ORDER_NOTICE' | translate}}</div>
+            <h6>{{'COMMON.ORDER_SUMMARY' | translate}}</h6>
+            <div fxLayout="row wrap" fxLayoutAlign="none">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.ITEMS' | translate}} ({{appService?.navbarCartCount}}):</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartPrice}}</div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="none">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.SHIPPING_AND_HANDLING' | translate}}:</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartShipping}}</div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="none">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotalBeforeTax}}</div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="none">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.ESTIMATED_TAX' | translate}}:</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartEstimatedTax}}</div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.TOTAL' | translate}}:</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotal}}</div>
+            </div>
+            
+            <br/>
+            <div fxLayout="row wrap" fxLayoutAlign="none">
+              <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75"><h6 style="color: #ff5722">{{'COMMON.ORDER_TOTAL' | translate}}:</h6></div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"><h6 style="color: #ff5722">{{appService?.navbarCartTotal}}</h6></div>
+            </div>
+
+          </mat-card>
+        </div>
+      </div>
+
+
+      <mat-accordion class="mat-ex-wrapper" *ngIf="!isUserLoggedIn()">
         <form card container=".card-container" [formGroup] = "paymentFormOne">
-          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          
+          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle >
             <mat-expansion-panel-header>
               <h4 class="mb-0">Enter Your Shipping Address</h4>
             </mat-expansion-panel-header>

@@ -10,7 +10,7 @@
          <div class="drop-wrap">
             <div fxFlex="row wrap" class="cart-menu-list p-2" fxLayoutAlign="start center" *ngFor="let product of cartProducts;">
                <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"> <a href="
-               javascript:void(0);"><img [src]="product?.image" width="60" alt="cart-image"></a> </div>
+               javascript:void(0);"><img [src]="'assets/images/products/' + product?.product?.id + '/' + product?.product?.image" width="60" alt="cart-image"></a> </div>
                <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="px-2">
                   <h6 class="mb-0"><a href="javascript:void(0);">{{product?.name}}</a></h6>
                   <span>{{calculatePrice(product) | currency:currency }}</span>

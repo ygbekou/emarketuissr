@@ -39,6 +39,11 @@ export class AppService {
    localStorageCartProducts: any;
    localStorageWishlist: any;
    navbarCartCount = 0;
+   navbarCartPrice = 0;
+   navbarCartShipping = 0;
+   navbarCartTotalBeforeTax = 0;
+   navbarCartEstimatedTax = 0;
+   navbarCartTotal = 0;
    navbarWishlistProdCount = 0;
    buyUserCartProducts: any;
 
@@ -61,7 +66,9 @@ export class AppService {
       localStorage.removeItem('user');
       localStorage.removeItem('byProductDetails');
 
-      this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
+      //this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
+
+      localStorage.setItem('cart_item', JSON.stringify([]));
 
       // Custom
       this.headers = new HttpHeaders();
@@ -156,6 +163,7 @@ export class AppService {
       }
 
       this.toastyService.wait(toastOption);
+      console.info(products);
       setTimeout(() => {
          localStorage.setItem('cart_item', JSON.stringify(products));
          this.calculateLocalCartProdCounts();
@@ -190,6 +198,21 @@ export class AppService {
       this.localStorageCartProducts = null;
       this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
       this.navbarCartCount = +((this.localStorageCartProducts).length);
+
+      this.navbarCartPrice = 0;
+      this.navbarCartShipping = 0;
+      this.navbarCartTotalBeforeTax = 0;
+      this.navbarCartEstimatedTax = 0;
+      this.navbarCartTotal = 0;
+
+      this.localStorageCartProducts.forEach(element => {
+         this.navbarCartPrice += element.product.price;
+         this.navbarCartShipping += 0;
+         this.navbarCartEstimatedTax += 5;
+      });
+
+      this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
+      this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
    }
 
    // Removing cart from local

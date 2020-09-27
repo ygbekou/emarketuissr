@@ -36,6 +36,7 @@ import { SigninComponent } from './Signin/Signin.component';
 import { FinalReceiptComponent } from './FinalReceipt/FinalReceipt.component';
 
 import { GlobalModule } from '../../Global/Global.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { GlobalModule } from '../../Global/Global.module';
       GlobalModule,
       FormsModule,
       ReactiveFormsModule,
+      TranslateModule,
       CardModule
    ],
    declarations: [

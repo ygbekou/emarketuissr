@@ -27,7 +27,7 @@
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
     <div fxLayout='row wrap'>
-      <div fxFlex.xs="85" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85">
+      <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
         <div class="product-detail-content">
           <h3>{{detailData?.name}}</h3>
           <div fxLayoutAlign="start center" class="mb-3">
@@ -116,22 +116,32 @@
           </div>
         </div>
       </div>
-      <div fxFlex.xs="15" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-        <div class="product-detail-price">
-          <h6 class="accent-color">{{totalPrice | currency:currency}} </h6>
-        </div>
+      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" style="font-size:12px;">
+        <mat-card style="height: 100%;">
+          <div class="product-detail-price">
+            <h6 class="accent-color">{{totalPrice | currency:currency}} </h6>
+          </div>
 
-        <div *ngIf="detailData.product.quantity > 0">
-          <h6>In Stock</h6>
-        </div>
-        <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
-          <ng-container *ngFor="let quantity of [].constructor(detailData.product.quantity); let i = index;">
-            <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
-          </ng-container>
-        </mat-select>
-        <div>
-          <span style="font-size:10vw">{{'COMMON.SOLD_BY'|translate}}: {{detailData.product.storeName}}</span>
-        </div>
+          <div *ngIf="detailData.product.quantity > 0">
+            <h6>In Stock</h6>
+          </div>
+          <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
+            <ng-container *ngFor="let quantity of [].constructor(detailData.product.quantity); let i = index;">
+              <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
+            </ng-container>
+          </mat-select>
+          <br/><br/>
+          <div>
+            <span style="font-size:12px;">{{'COMMON.SOLD_BY'|translate}}: {{detailData.product.storeName}}</span>
+          </div>
+
+          <br/><br/>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="addToCart(detailData)" type="button" style="width:100%;">
+              <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.ADD_TO_CART' | translate}}</span>
+              <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+
+        </mat-card>
       </div>
     </div>
   </div>

@@ -102,9 +102,20 @@ export class User extends BaseModel {
   modifiedBy: number;
   fileNames: string[];
   type: 'User';
+
+  // transient
+  addresss: Address[] = [];
+  shippingAddress: Address;
+  billingAddress: Address;
+  creditCards: CreditCard[] = [];
+  paymentMethod: CreditCard;
+
   constructor() {
     super();
     this.userGroup = new UserGroup();
+    this.shippingAddress = new Address();
+    this.billingAddress = new Address();
+    this.paymentMethod = new CreditCard();
   }
 }
 

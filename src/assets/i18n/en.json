@@ -442,7 +442,19 @@
 		"REWARD_POINTS": "Reward Points",
 		"MIN": "Min",
 		"MAX": "Max",
-		"SOLD_BY": "Sold By"
+		"SOLD_BY": "Sold By",
+		"ADD_TO_CART": "Add To Cart",
+		"ENDING_IN": "ending in",
+		"PAYMENT_METHOD": "Payment Method",
+		"REVIEW_YOUR_ORDER": "Review your order",
+		"PLACE_YOUR_ORDER": "Place your order",
+		"PLACE_YOUR_ORDER_NOTICE": "By placing your order, you agree to Amazon's privacy notice and conditions of use.",
+		"ORDER_SUMMARY": "Order Summary",
+		"ITEMS": "Items",
+		"SHIPPING_AND_HANDLING": "Shipping & handling",
+		"TOTAL_BEFORE_TAX": "Total before Tax",
+		"ESTIMATED_TAX": "Estimated tax to be collected",
+		"ORDER_TOTAL": "Order Total"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

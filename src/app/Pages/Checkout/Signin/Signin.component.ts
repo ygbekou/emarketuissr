@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Signin',
@@ -9,7 +10,12 @@ import { AppService } from '../../../Services/app.service';
 export class SigninComponent implements OnInit {
 
 
-   constructor(public appService : AppService) { }
+   constructor(public appService : AppService,
+      public router: Router) { 
+      if (this.appService.tokenStorage.getUserId() != null) {
+         this.router.navigate(['/checkout/payment']);
+      }
+   }
 
    ngOnInit() {
    }
