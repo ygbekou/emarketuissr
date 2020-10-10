@@ -27,6 +27,7 @@ import {
    MatDialogModule,
    MatGridListModule
 } from '@angular/material';
+import { MdePopoverModule } from '@material-extended/mde';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { GlobalModule } from '../Global/Global.module';
@@ -67,7 +68,8 @@ import { TranslateModule } from '@ngx-translate/core';
       MatDialogModule,
       MatGridListModule,
       TranslateModule,
-      GlobalModule
+      GlobalModule,
+      MdePopoverModule
    ],
    declarations: [
       ProductGridComponent,

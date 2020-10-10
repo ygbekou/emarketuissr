@@ -37,6 +37,7 @@ import { FinalReceiptComponent } from './FinalReceipt/FinalReceipt.component';
 
 import { GlobalModule } from '../../Global/Global.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CartModule } from '../Cart/Cart.module';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { TranslateModule } from '@ngx-translate/core';
       FormsModule,
       ReactiveFormsModule,
       TranslateModule,
-      CardModule
+      CardModule,
+      CartModule
    ],
    declarations: [
       PaymentComponent,

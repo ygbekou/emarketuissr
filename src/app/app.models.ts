@@ -954,8 +954,19 @@ export class ProductVO {
   pMinimum: number;
   pSortOrder: number;
   fileNames: string[];
+  reviews: Review[];
 }
 
+export class Review {
+  id: number;
+  user: User;
+  product: Product;
+  author: string;
+  rating: number;
+  status: number;
+  text: string;
+  createDate: Date;
+}
 export class Company {
   id: number;
   name: string;

@@ -69,12 +69,13 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    public reviewPopup(detailData) {
+      alert('Here')
       let reviews: any = null;
       for (let review of this.productReviews) {
          reviews = review.user_rating;
       }
 
-      this.appService.reviewPopup(detailData, reviews);
+      this.appService.reviewPopup(detailData, detailData.product.reviews);
    }
 
    public addToWishlist(value: any) {

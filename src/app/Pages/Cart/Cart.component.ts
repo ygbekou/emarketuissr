@@ -47,7 +47,9 @@ export class CartComponent implements OnInit, AfterViewChecked {
    public calculateProductSinglePrice(product:any, value: any) {
       let price = 0;
       product.quantity = value;
-      price = product.price*value;
+      price = product.product.price*value;
+ 
+      this.appService.calculateLocalCartInfos();
       return price;
    }
 
@@ -83,6 +85,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
    public getQuantityValue(product) {
+      console.info(product)
       if(product.quantity) {
          return product.quantity
       } else {

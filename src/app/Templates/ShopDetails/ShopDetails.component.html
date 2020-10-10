@@ -31,12 +31,27 @@
         <div class="product-detail-content">
           <h3>{{detailData?.name}}</h3>
           <div fxLayoutAlign="start center" class="mb-3">
-            <div>
-              <a href="javascript:void(0)" class="text-underline" (click)="reviewPopup(detailData)">
-                Review</a>
-            </div>
             <div class="rating-star">
               <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
+            </div>
+            <span class="a-letter-space"></span>
+            <div>
+              <a href="javascript:void(0)" class="text-underline" data-toggle="popover" data-content="Some content inside the popover" (onmouseover)="reviewPopup(detailData)">Review</a>
+            
+              <button mat-raised-button color="primary"
+    [mdePopoverTriggerFor]="appPopover"
+    mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger">
+    Show Popover
+  </button>
+
+  <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+    <mat-card style="max-width: 300px">
+      <mat-card-content>
+      A material design popover component created using Angular version 8 with the Angular CDK.
+      </mat-card-content>
+    </mat-card>
+  </mde-popover>
+            
             </div>
           </div>
           <div class="product-detail-price">

@@ -1,20 +1,19 @@
 
-<embryo-PageTitle heading="Here’s what’s in your bag." subHeading="Our latest news and learning articles."></embryo-PageTitle>
+<!-- <embryo-PageTitle heading="Here’s what’s in your bag." subHeading="Our latest news and learning articles."></embryo-PageTitle> -->
 
-<div class="inner-container bg-white cart-page section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
-  <div class="container">
+<div class="inner-container cart-page section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
     <div class="cart-wrapper">
       <div class="cart-shop-list mb-5 text-center  card-shadow">
-        <div fxLayout='row wrap' fxLayoutAlign="start center" class="cart-item" *ngFor="let product of appService.localStorageCartProducts">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="cart-item" *ngFor="let product of appService.localStorageCartProducts">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="20" fxFlex.xl="20" class="cart-product-image">
             <div class="cart-item-thumb">
               <a href="javascript:void(0)" class="p-link">
-                <img width="626" height="800" class="card-shadow" [src]="product.image" alt="cart image">
+                <img width="626" height="800" class="card-shadow" [src]="'assets/images/products/' + product?.product?.id + '/' + product?.product?.image" alt="cart image">
               </a>
             </div>
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="80" fxFlex.xl="80">
-            <div fxLayout='row wrap' fxLayoutAlign="center center" class="cart-product-info">
+            <div fxLayout="row wrap" fxLayoutAlign="center center" class="cart-product-info">
               <div fxFlex.xs="100" fxFlex.sm="40" fxFlex.md="30" fxFlex.lg="40" fxFlex.xl="40">
                 <h5>{{product?.name}}</h5>
                 <p class="mb-0">Delivery in 3-4 days | Free</p>
@@ -41,27 +40,26 @@
           </div>
         </div>
       </div>
-      <div class="cart-total" fxLayout='row wrap' fxLayoutAlign="flex-end">
+      <div class="cart-total" fxLayout="row wrap" fxLayoutAlign="flex-end">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
           <div>
-            <p>Subtotal</p><span fxFlex></span> {{calculateTotalPrice() | currency:appService?.currency}}
+            <p>Subtotal</p><span fxFlex></span> {{appService?.navbarCartPrice | currency:appService?.currency}}
           </div>
           <div>
-            <p>Shipping</p><span fxFlex></span> {{appService.shipping | currency:appService?.currency}}
+            <p>Shipping</p><span fxFlex></span> {{appService?.navbarCartShipping | currency:appService?.currency}}
           </div>
           <div>
-            <p>Tax(GST)</p><span fxFlex></span> {{appService.tax | currency:appService?.currency}}
+            <p>Tax(GST)</p><span fxFlex></span> {{appService?.navbarCartEstimatedTax | currency:appService?.currency}}
           </div>
           <hr class="spacer">
           <div class="mb-4">
             <h4>Total</h4><span fxFlex></span>
-            <h4> {{getTotalPrice() | currency:appService?.currency}}</h4>
+            <h4> {{appService?.navbarCartTotal | currency:appService?.currency}}</h4>
           </div>
           <div> <span fxFlex></span><button mat-raised-button color="accent" class="button-lg" (click)="updateLocalCartProduct()">Checkout</button></div>
         </div>
       </div>
     </div>
-  </div>
 </div>
 
 <ng-template #elseBlock>

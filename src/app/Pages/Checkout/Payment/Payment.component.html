@@ -39,6 +39,7 @@
               </div>
             </div>
           </mat-card>
+          <embryo-Cart></embryo-Cart>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2"></div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="18" fxFlex.lg="18" fxFlex.xl="18">
@@ -50,35 +51,38 @@
             <h6>{{'COMMON.ORDER_SUMMARY' | translate}}</h6>
             <div fxLayout="row wrap" fxLayoutAlign="none">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.ITEMS' | translate}} ({{appService?.navbarCartCount}}):</div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartPrice}}</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartPrice | currency:appService?.currency}}</div>
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="none">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.SHIPPING_AND_HANDLING' | translate}}:</div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartShipping}}</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartShipping | currency:appService?.currency}}</div>
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="none">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotalBeforeTax}}</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotalBeforeTax | currency:appService?.currency}}</div>
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="none">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.ESTIMATED_TAX' | translate}}:</div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartEstimatedTax}}</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartEstimatedTax | currency:appService?.currency}}</div>
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.TOTAL' | translate}}:</div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotal}}</div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">{{appService?.navbarCartTotal | currency:appService?.currency}}</div>
             </div>
             
             <br/>
             <div fxLayout="row wrap" fxLayoutAlign="none">
               <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75"><h6 style="color: #ff5722">{{'COMMON.ORDER_TOTAL' | translate}}:</h6></div>
-              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"><h6 style="color: #ff5722">{{appService?.navbarCartTotal}}</h6></div>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"><h6 style="color: #ff5722">{{appService?.navbarCartTotal | currency:appService?.currency}}</h6></div>
             </div>
 
           </mat-card>
         </div>
       </div>
 
+      <div class="container">
+        
+      </div>
 
       <mat-accordion class="mat-ex-wrapper" *ngIf="!isUserLoggedIn()">
         <form card container=".card-container" [formGroup] = "paymentFormOne">

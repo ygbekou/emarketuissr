@@ -78,6 +78,7 @@ import { AppInfoStorage } from './app.info.storage';
 import { TokenStorage } from './token.storage';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
+import { CartModule } from './Pages/Cart/Cart.module';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -100,7 +101,6 @@ export function createTranslateLoader(http: HttpClient) {
       FooterOneComponent,
       MenuComponent,
       SideBarMenuComponent,
-      CartComponent,
       NotFoundComponent,
       PaymentDetailSideBarComponent,
       HomeTwoComponent,
@@ -164,7 +164,8 @@ export function createTranslateLoader(http: HttpClient) {
       PerfectScrollbarModule,
       DeviceDetectorModule.forRoot(),
       InputFileModule.forRoot(config),
-      AdminPanelModule
+      AdminPanelModule,
+      CartModule
    ],
    providers: [
       TokenStorage,
