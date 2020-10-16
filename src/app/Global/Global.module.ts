@@ -77,6 +77,7 @@ import { HomePageThreeSliderComponent } from './Slider/HomePageThreeSlider/HomeP
 import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
+import { ProductReviewComponent } from './ProductReview/ProductReview.component';
 
 @NgModule({
    imports: [
@@ -160,7 +161,8 @@ import { PipesModule } from '../pipes/pipes.module';
       CTASingleBannerComponent,
       DownloadAppSectionComponent,
       HomePageThreeSliderComponent,
-      NewProductsCardComponent
+      NewProductsCardComponent,
+      ProductReviewComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -200,11 +202,16 @@ import { PipesModule } from '../pipes/pipes.module';
       CTASingleBannerComponent,
       DownloadAppSectionComponent,
       HomePageThreeSliderComponent,
-      NewProductsCardComponent
+      NewProductsCardComponent,
+      ReviewPopupComponent,
+      ProductReviewComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
-      ConfirmationPopupComponent
+      ConfirmationPopupComponent,
+      ProductReviewComponent
    ]
 })
-export class GlobalModule { }
+export class GlobalModule {
+
+ }

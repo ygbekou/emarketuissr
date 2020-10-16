@@ -27,7 +27,6 @@ import {
    MatDialogModule,
    MatGridListModule
 } from '@angular/material';
-import { MdePopoverModule } from '@material-extended/mde';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { GlobalModule } from '../Global/Global.module';
@@ -37,6 +36,7 @@ import { ReviewComponent } from './Review/Review.component';
 import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
 import { ProductsToolbarComponent } from './products-toolbar/products-toolbar.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MdePopoverModule } from '@material-extended/mde';
 
 @NgModule({
    imports: [
@@ -83,7 +83,7 @@ import { TranslateModule } from '@ngx-translate/core';
       Grid3Component,
       ReviewComponent,
       ShopDetailsComponent,
-      ProductsToolbarComponent
+      ProductsToolbarComponent,
    ]
 })
 export class TemplatesModule { }

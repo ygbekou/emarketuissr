@@ -32,26 +32,30 @@
           <h3>{{detailData?.name}}</h3>
           <div fxLayoutAlign="start center" class="mb-3">
             <div class="rating-star">
-              <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
-            </div>
-            <span class="a-letter-space"></span>
-            <div>
-              <a href="javascript:void(0)" class="text-underline" data-toggle="popover" data-content="Some content inside the popover" (onmouseover)="reviewPopup(detailData)">Review</a>
-            
-              <button mat-raised-button color="primary"
-    [mdePopoverTriggerFor]="appPopover"
-    mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger">
-    Show Popover
-  </button>
+              <span class="nav-item" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover" #popoverTrigger="mdePopoverTrigger">
+                <a class="nav-link">
+                  <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
+                </a>
+              </span>
 
-  <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
-    <mat-card style="max-width: 300px">
-      <mat-card-content>
-      A material design popover component created using Angular version 8 with the Angular CDK.
-      </mat-card-content>
-    </mat-card>
-  </mde-popover>
-            
+              <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+                <mat-card style="width: 500px">
+                  <mat-card-content>
+                    <h3>{{detailData.product.rating}} out of 5</h3>
+                   <div fxLayout='row wrap'>5 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[5]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[5]}}%</div><br/>
+                   <div fxLayout='row wrap'>4 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[4]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[4]}}%</div><br/>
+                   <div fxLayout='row wrap'>3 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[3]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[3]}}%</div><br/>
+                   <div fxLayout='row wrap'>2 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[2]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[2]}}%</div><br/>
+                   <div fxLayout='row wrap'>1 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[1]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[1]}}%</div><br/>
+                 </mat-card-content>
+                </mat-card>
+              </mde-popover>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div>
+              <a href="http://localhost:4200/products/dtl/58/3#reviews" class="a-link-normal">
+                <span class="a-size-base">{{detailData.product.reviews.length}} Reviews</span>
+              </a>
             </div>
           </div>
           <div class="product-detail-price">
@@ -72,6 +76,25 @@
             </li>
           </ul>
           <div class="short-des" [innerHTML]="detailData?.description"></div>
+
+
+            <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue">
+              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+              <div fxLayout='row wrap'>
+                <div *ngFor="let optionValueDescription of mapEntry.value">
+                  <div fxLayout='row wrap'>
+                    <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
+                      {{optionValueDescription.name}}
+                    </div>
+                    <span style="width:10px;"></span>
+                  </div>
+                </div>
+                
+              </div>
+           
+          </div>
+      
+
           <div class="bullets-points">
             <ul class="bullets-list">
               <li *ngFor="let feature of detailData?.features">
@@ -159,5 +182,7 @@
         </mat-card>
       </div>
     </div>
+
+    
   </div>
 </div>

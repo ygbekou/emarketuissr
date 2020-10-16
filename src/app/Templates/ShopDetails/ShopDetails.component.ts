@@ -29,15 +29,16 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       public appService: AppService
    ) {
       console.log('constructor called');
-      console.log(this.detailData);
-      this.appService.getProductReviews().valueChanges().subscribe(res => { this.productReviews = res });
+
+      //this.appService.getProductReviews().valueChanges().subscribe(res => { this.productReviews = res });
    }
 
    ngOnInit() {
       console.log('ngOnInit called');
-      console.log(this.detailData);
+      //onsole.log(this.detailData.product.optionValueDescriptions);
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
+
 
       this.route.params.subscribe(res => {
          this.type = null;

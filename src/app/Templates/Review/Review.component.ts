@@ -9,12 +9,13 @@ export class ReviewComponent implements OnInit {
 
    @Input() reviews : any;
 
+   @Input()
    userReviews : any = [];
 
    constructor() { }
 
    ngOnInit() {
-      this.getReviews();
+      //this.getReviews();
    }
 
    public getReviews() {

@@ -782,6 +782,8 @@ export class Options {
 
   optionDescriptions: OptionDescription[] = [];
 
+  optionDescriptionName: string;
+
   type = 'Option';
 }
 
@@ -815,6 +817,8 @@ export class OptionValueDescription {
   language: Language;
   name: string;
 
+  // Transient
+  optionDescriptionName: string;
   type = 'OptionValueDescription';
 }
 
@@ -901,8 +905,8 @@ export class ProductDescVO {
 }
 
 export class ProductListVO {
-	categories: string[];
-	productDescVOs: ProductDescVO[];
+  categories: string[];
+  productDescVOs: ProductDescVO[];
 }
 
 export class ProductVO {
@@ -955,6 +959,8 @@ export class ProductVO {
   pSortOrder: number;
   fileNames: string[];
   reviews: Review[];
+  ratingCountMaps: Map<number, number>;
+  optionValueDescriptionMaps: Map<string, OptionValueDescription[]>;
 }
 
 export class Review {
