@@ -1,0 +1,34 @@
+<div class="inner-container section-gap">
+   <div class="checkout-option">
+    <div class="container">
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+          <app-addresses ></app-addresses>
+
+          <br/>
+          <div>
+            <mat-accordion>
+              <mat-expansion-panel 
+                (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+                                
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <button mat-flat-button color="primary">{{'COMMON.ADD_NEW_SHIPPING_ADDRESS'|translate}}</button>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-address [selectedAddressType]="addressType" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+         
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+          <button mat-flat-button color="primary" [routerLink]="['/checkout/payment']">{{'COMMON.CONTINUE'|translate}}</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

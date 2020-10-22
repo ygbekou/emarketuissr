@@ -1,0 +1,118 @@
+  <form name="form" (ngSubmit)="f2.form.valid && submitAddress()" #f2="ngForm" validate>
+    <div fxLayout="row wrap" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="example-container">
+
+          <mat-form-field class="w-100 mb-3" *ngIf="isNotAddressTypePreSelected()">
+            <mat-label>{{'COMMON.ADDRESS_TYPE'|translate}}</mat-label>
+            <mat-select placeholder="Type" id="addressType" name="addressType" [(ngModel)]="address.addressType"
+              #addressType="ngModel" required>
+              <mat-option *ngFor="let type of addressTypes" [value]="type.id">
+                {{type.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.FIRST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName"
+              name="firstName" #firstName="ngModel" required>
+            <mat-error *ngIf="f2.submitted && firstName.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.MIDDLE_NAME' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="middleName" [(ngModel)]="address.middleName"
+              name="middleName" #middleName="ngModel">
+          </mat-form-field>
+
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.LAST_NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="address.lastName"
+              name="lastName" #lastName="ngModel" required>
+            <mat-error *ngIf="f2.submitted && lastName.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.STREET_NAME_NBR' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="address1" [(ngModel)]="address.address1"
+              name="address1" #address1="ngModel" required>
+            <mat-error *ngIf="f2.submitted && address1.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.APPARTMENT_BLG' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="address2" [(ngModel)]="address.address2"
+              name="address2" #address2="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.CITY' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="city" [(ngModel)]="address.city" name="city"
+              #city="ngModel" required>
+            <mat-error *ngIf="f2.submitted && city.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.POSTAL_CODE' | translate}} </mat-label>
+            <input matInput type="text" class="form-control" id="postCode" [(ngModel)]="address.postCode"
+              name="postCode" #postCode="ngModel" required>
+            <mat-error *ngIf="f2.submitted && postCode.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" id="country" name="country"
+              [(ngModel)]="address.country" #country="ngModel" required (selectionChange)="appService.getZones(address.country)">
+              <mat-option *ngFor="let ctry of appService.appInfoStorage.getCountries()" [value]="ctry">
+                {{ctry.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>Zone/State</mat-label>
+            <mat-select placeholder="Zone" id="zone" name="zone" [(ngModel)]="address.zone" #zone="ngModel">
+              <mat-option *ngFor="let zone of appService.appInfoStorage.getZones()" [value]="zone">
+                {{zone.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="edit-profile"
+        style="background-image: url(assets/images/billing-edit.png)">
+      </div>
+    </div>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+        <div class="text-left mt-2" fxFlex.gt-sm="25">
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+          </button> </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+        </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+          <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+        </div>
+      </div>
+    </div>
+  </form>

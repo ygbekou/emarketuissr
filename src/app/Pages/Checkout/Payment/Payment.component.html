@@ -11,7 +11,11 @@
           <h5>{{'COMMON.REVIEW_YOUR_ORDER' | translate}}</h5>
           <mat-card>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-              <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6> 
+                <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType:1}"
+                    routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+              </div>
               <div>
                 {{user.firstName}} {{user.lastName}}
                 {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br>
@@ -22,7 +26,11 @@
               </div>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-              <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid">   
+                <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6> 
+                <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType:2}"
+                  routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+              </div>
               <div>
                 {{user.firstName}} {{user.lastName}}
                 {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br>
@@ -33,7 +41,10 @@
               </div>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-              <h6>{{'COMMON.PAYMENT_METHOD' | translate}}</h6>
+              <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                <h6>{{'COMMON.PAYMENT_METHOD' | translate}}</h6> 
+                <a [routerLink]="['/checkout/cards']" routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+              </div>
               <div>
                 {{'COMMON.ENDING_IN' | translate}} {{user.paymentMethod.last4Digits}}
               </div>

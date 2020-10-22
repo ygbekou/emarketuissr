@@ -1,0 +1,57 @@
+<mat-card>
+
+  <div *ngIf="isForShippingAddresses()">
+    <div fxLayout="row wrap"><h5>{{'COMMON.SHIPPING_ADDRESS'|translate}}</h5></div>
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of shippingAddresses">
+        <div class="pt-3">
+          <address class="mb-4">
+            <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
+            {{addr.address1}} {{addr.address2}}<br>
+            {{addr.city}}<br>
+            {{addr.postCode}}<br>
+            {{addr.zone.name}}<br>
+            {{addr.country.name}}<br>
+          </address>
+          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
+            <button mat-raised-button color="accent" [disabled]="addr.status === 1" (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}</button>
+          </div>
+          <br/>
+          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
+            <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
+              [queryParams]="{type:'address', adrId:addr.id}">{{'COMMON.EDIT'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isForBillingAddresses()">
+    <div fxLayout="row wrap"><h5>{{'COMMON.BILLING_ADDRESS'|translate}}</h5></div>
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of billingAddresses">
+        <div class="pt-3">
+          <address class="mb-4">
+            <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
+            {{addr.address1}} {{addr.address2}}<br>
+            {{addr.city}}<br>
+            {{addr.postCode}}<br>
+            {{addr.zone.name}}<br>
+            {{addr.country.name}}<br>
+          </address>
+          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
+            <button mat-raised-button color="accent" [disabled]="addr.status === 1" (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}</button>
+          </div>
+          <br/>
+          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
+            <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
+              [queryParams]="{type:'address', adrId:addr.id}">{{'COMMON.EDIT'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</mat-card>

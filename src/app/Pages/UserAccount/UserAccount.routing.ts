@@ -4,12 +4,12 @@ import { AccountComponent } from './Account/Account.component';
 import { ProfileComponent } from './Profile/Profile.component';
 import { EditProfileComponent } from './EditProfile/EditProfile.component';
 import { CardsComponent } from './Cards/Cards.component';
-import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { StoresComponent } from './Stores/Stores.component';
 import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
+import { AddressesComponent } from 'src/app/Global/Addresses/Addresses.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -25,8 +25,8 @@ export const UserAccountRoutes: Routes = [
             component: CardsComponent
          },
          {
-            path: 'address',
-            component: AddressComponent
+            path: 'addresses',
+            component: AddressesComponent
          },
          {
             path: 'order-history',

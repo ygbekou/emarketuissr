@@ -78,6 +78,10 @@ import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.comp
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
 import { ProductReviewComponent } from './ProductReview/ProductReview.component';
+import { PaymentCardsComponent } from './Cards/PaymentCards.component';
+import { PaymentCardComponent } from './Card/PaymentCard.component';
+import { AddressComponent } from './Address/Address.component';
+import { AddressesComponent } from './Addresses/Addresses.component';
 
 @NgModule({
    imports: [
@@ -162,7 +166,11 @@ import { ProductReviewComponent } from './ProductReview/ProductReview.component'
       DownloadAppSectionComponent,
       HomePageThreeSliderComponent,
       NewProductsCardComponent,
-      ProductReviewComponent
+      ProductReviewComponent,
+      PaymentCardsComponent,
+      PaymentCardComponent,
+      AddressesComponent,
+      AddressComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -204,7 +212,11 @@ import { ProductReviewComponent } from './ProductReview/ProductReview.component'
       HomePageThreeSliderComponent,
       NewProductsCardComponent,
       ReviewPopupComponent,
-      ProductReviewComponent
+      ProductReviewComponent,
+      PaymentCardsComponent,
+      PaymentCardComponent,
+      AddressesComponent,
+      AddressComponent
    ],
    entryComponents: [
       ReviewPopupComponent,

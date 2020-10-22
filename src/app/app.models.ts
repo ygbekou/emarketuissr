@@ -101,7 +101,7 @@ export class User extends BaseModel {
   reveivePromo: boolean;
   modifiedBy: number;
   fileNames: string[];
-  type: 'User';
+  type = 'User';
 
   // transient
   addresss: Address[] = [];
@@ -653,6 +653,7 @@ export class Address {
   middleName: string;
   addressType: number;
   zone: Zone;
+  status = 0;
   type = 'Address';
 }
 

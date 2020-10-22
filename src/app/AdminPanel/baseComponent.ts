@@ -73,7 +73,7 @@ export class BaseComponent {
       const index: number = dataSource.data.indexOf(object);
       if (index !== -1) {
         dataSource.data.splice(index, 1);
-        dataSource = new MatTableDataSource<any>(this.dataSource.data);
+        dataSource = new MatTableDataSource <any>(this.dataSource.data);
         dataSource.paginator = this.paginator;
         dataSource.sort = this.sort;
       }

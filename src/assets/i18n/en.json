@@ -454,7 +454,14 @@
 		"SHIPPING_AND_HANDLING": "Shipping & handling",
 		"TOTAL_BEFORE_TAX": "Total before Tax",
 		"ESTIMATED_TAX": "Estimated tax to be collected",
-		"ORDER_TOTAL": "Order Total"
+		"ORDER_TOTAL": "Order Total",
+		"CREDIT_OR_DEBIT_CARDS": "Credit or debit cards",
+		"ADD_CREDIT_OR_DEBIT_CARD": "Add a credit or debit card",
+		"CONTINUE": "Continue",
+		"CHANGE": "Change",
+		"ADD_NEW_SHIPPING_ADDRESS": "Add New Shipping Address",
+		"ADD_NEW_BILLING_ADDRESS": "Add New Billing Address",
+		"DELIVER_TO_THIS_ADDRESS": "Deliver to this address"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

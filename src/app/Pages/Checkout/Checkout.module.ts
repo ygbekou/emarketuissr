@@ -38,6 +38,10 @@ import { FinalReceiptComponent } from './FinalReceipt/FinalReceipt.component';
 import { GlobalModule } from '../../Global/Global.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CartModule } from '../Cart/Cart.module';
+import { PaymentChangeModelComponent } from './PaymentChangeModel/PaymentChangeModel.component';
+import { CardsComponent } from '../UserAccount/Cards/Cards.component';
+import { UserAccountModule } from '../UserAccount/UserAccount.module';
+import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentChangeAddress.component';
 
 
 @NgModule({
@@ -79,7 +83,9 @@ import { CartModule } from '../Cart/Cart.module';
    declarations: [
       PaymentComponent,
       SigninComponent,
-      FinalReceiptComponent
+      FinalReceiptComponent,
+      PaymentChangeModelComponent,
+      PaymentChangeAddressComponent
    ]
 })
 export class CheckoutModule { }

@@ -42,7 +42,6 @@ import { ProfileComponent } from './Profile/Profile.component';
 import { EditProfileComponent } from './EditProfile/EditProfile.component';
 import { CardsComponent } from './Cards/Cards.component';
 import { StoresComponent } from './Stores/Stores.component';
-import { AddressComponent } from './Address/Address.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -51,6 +50,7 @@ import { QuillModule } from 'ngx-quill';
 import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
+import { GlobalModule } from 'src/app/Global/Global.module';
 
 @NgModule({
   imports: [
@@ -90,6 +90,7 @@ import { MyProductsComponent } from './MyProducts/MyProducts.component';
     InputFileModule,
     NgAisModule,
     MatStepperModule,
+    GlobalModule,
     TemplatesModule,
     MatPaginatorModule,
     QuillModule.forRoot({
@@ -121,11 +122,13 @@ import { MyProductsComponent } from './MyProducts/MyProducts.component';
     EditProfileComponent,
     CardsComponent,
     StoresComponent,
-    AddressComponent,
     OrderHistoryComponent,
     GridProductComponent,
     SellProductComponent,
     MyProductsComponent
-  ]
+  ],
+   exports: [
+      CardsComponent
+   ]
 })
 export class UserAccountModule { }

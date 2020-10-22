@@ -454,7 +454,14 @@
     "SHIPPING_AND_HANDLING": "Exp√©dition et manutention",
 		"TOTAL_BEFORE_TAX": "Total hors Taxe",
 		"ESTIMATED_TAX": "Taxe estim√© ‡ collecter",
-		"ORDER_TOTAL": "Total de la commande"
+		"ORDER_TOTAL": "Total de la commande",
+		"CREDIT_OR_DEBIT_CARDS": "Cartes de crÈdit ou de dÈbit",
+		"ADD_CREDIT_OR_DEBIT_CARD": "Ajouter une Carte de CrÈdit ou DÈbit",
+		"CONTINUE": "Continue",
+		"CHANGE": "Changer",
+		"ADD_NEW_SHIPPING_ADDRESS": "Ajouter une nouvelle adresse d'exp√©dition",
+    "ADD_NEW_BILLING_ADDRESS": "Ajouter une nouvelle adresse de facturation",
+    "DELIVER_TO_THIS_ADDRESS": "Livrer ‡ cette adresse"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez d√©j√† souscrit √† notre blogs",

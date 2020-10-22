@@ -139,8 +139,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
           });
 
           this.user.creditCards.forEach(creditCard => {
-            this.user.paymentMethod = creditCard;
-            return;
+            if (creditCard.status === 1) {
+               this.user.paymentMethod = creditCard;
+               return;
+            }
           });
 
         } else {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthToken } from './app.models';
+import { AuthToken, User } from './app.models';
 
 @Injectable()
 export class TokenStorage {
@@ -17,6 +17,8 @@ export class TokenStorage {
   public static USER_ID = 'user_id';
   public static USER_NAME = 'user_name';
   public static HOME_PAGE = 'home_page';
+  public static USER = 'user';
+
 
   constructor() { }
 
@@ -26,6 +28,9 @@ export class TokenStorage {
   }
 
   public saveAuthData(authData: AuthToken) {
+
+    window.sessionStorage.removeItem(TokenStorage.USER);
+    window.sessionStorage.setItem(TokenStorage.USER, JSON.stringify(authData));
 
     window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
     window.sessionStorage.setItem(TokenStorage.TOKEN_KEY, authData.token);
@@ -133,7 +138,12 @@ export class TokenStorage {
   public getUserName(): string {
     return window.sessionStorage.getItem(TokenStorage.USER_NAME);
   }
+
   public getHomePage(): string {
     return window.sessionStorage.getItem(TokenStorage.HOME_PAGE);
+  }
+
+  public getUser(): User {
+    return JSON.parse(window.sessionStorage.getItem(TokenStorage.USER));
   }
 }

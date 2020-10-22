@@ -8,7 +8,7 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -742,6 +742,33 @@ export class AppService {
          },
             error => console.log(error),
             () => console.log('Get all CategoryDescription complete'));
+   }
+
+   getCountries() {
+      if (this.appInfoStorage.getCountries().length > 0) {
+         return;
+      }
+
+      const parameters: string[] = [];
+      this.getAllByCriteria('com.softenza.emarket.model.Country', parameters)
+         .subscribe((data: Country[]) => {
+            this.appInfoStorage.setCountries(data);
+         },
+         error => console.log(error),
+         () => console.log('Get all Countries complete'));
+   }
+
+   getZones(country: Country) {
+      if (country) {
+         const parameters: string[] = [];
+         parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
+         this.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
+            .subscribe((data: Zone[]) => {
+               this.appInfoStorage.setZones(data);
+            },
+               error => console.log(error),
+               () => console.log('Get all GeoZone complete'));
+      }
    }
 
    // Error handling

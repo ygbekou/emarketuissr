@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language, CategoryDescription, Menu, Company } from './app.models';
+import { Language, CategoryDescription, Menu, Company, Country, Zone } from './app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -25,7 +25,8 @@ export class AppInfoStorage {
 
   public companies: Company[] = [];
   public company: Company = new Company();
-
+  public countries: Country[] = [];
+  public zones: Zone[] = [];
 
   constructor(private translate: TranslateService) {
 
@@ -48,5 +49,21 @@ export class AppInfoStorage {
 
   filterAttributeGroups(languageId: number) {
     return this.attributeGroups.filter((item) => item.language.id === languageId);
+  }
+
+  public setCountries(countries: Country[]) {
+    this.countries = countries;
+  }
+
+  public getCountries() {
+    return this.countries;
+  }
+
+  public setZones(zones: Zone[]) {
+    this.zones = zones;
+  }
+
+  public getZones() {
+    return this.zones;
   }
 }
