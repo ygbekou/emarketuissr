@@ -111,7 +111,11 @@
             class="my-2">
             {{ 'COMMON.SHOW_IN_FOOTER' | translate }}
           </mat-slide-toggle>
-
+          &nbsp;&nbsp;
+          <mat-slide-toggle [(ngModel)]="category.showInMobile" name="showInMobile" #showInMobile="ngModel"
+            class="my-2">
+            {{ 'COMMON.SHOW_IN_MOBILE' | translate }}
+          </mat-slide-toggle>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.COLUMNS' | translate}}
             </mat-label>

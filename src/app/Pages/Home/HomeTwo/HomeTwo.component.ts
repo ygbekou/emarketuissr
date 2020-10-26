@@ -79,7 +79,7 @@ export class HomeTwoComponent implements OnInit {
             // console.log(data);
             if (data && data.length > 0) {
                this.appService.getObjects('/service/catalog/getProductsOnSale/' +
-                  langId + '/0/' + data[0].marketing.id + '/0')
+                  langId + '/0/' + data[0].marketing.id + '/0/0')
                   .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);

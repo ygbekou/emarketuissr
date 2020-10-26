@@ -18,7 +18,7 @@
       <div class="bg-grey section-gap" *ngIf="products && products.length>0">
         <div class="container">
           <div class="block-title text-center gap">
-            <h2>You Might Also Like</h2>
+            <h2>{{'COMMON.SIMILAR_ARTICLES'|translate}}</h2>
           </div>
 
           <embryo-ProductGrid [currency]="appService?.currency" [products]="products" [viewType]="viewType"

@@ -10,7 +10,7 @@ export const AdminPanelRoutes: Routes = [
       pathMatch: 'full',
    },
    {
-      path: "admin",
+      path: "admin", 
       component: MainAdminPanelComponent,
       children: [
          {
