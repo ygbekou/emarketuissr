@@ -1,8 +1,9 @@
 export class Constants {
 	public static apiServer = 'http://localhost:8080';
-	//public static apiServer = 'http://www.kekouda.com/emarket';
+	// public static apiServer = 'http://www.kekouda.com/emarket';
 	public static SUCCESS = 'success';
 	public static INFO = 'info';
 	public static WARN = 'warn';
-	public static ERROR = 'error';	public static DATE_FORMAT = 'MM/dd/yyyy';
+	public static ERROR = 'error';
+	public static DATE_FORMAT = 'MM/dd/yyyy';
 }
