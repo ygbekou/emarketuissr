@@ -24,6 +24,8 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    productReviews: any;
 
+   queryParams: any;
+
    constructor(private route: ActivatedRoute,
       private router: Router,
       public appService: AppService
@@ -39,6 +41,10 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
 
+
+      this.queryParams = {
+         storeId: this.detailData.product.storeId
+      }
 
       this.route.params.subscribe(res => {
          this.type = null;

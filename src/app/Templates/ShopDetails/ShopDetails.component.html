@@ -30,6 +30,8 @@
       <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
         <div class="product-detail-content">
           <h3>{{detailData?.name}}</h3>
+          <a [routerLink]="['/products']" [queryParams]="{storeId:detailData.product.storeId}"
+                    routerLinkActive="tab-active">{{'COMMON.VISIT' | translate}} {{detailData.product.storeName}}</a>
           <div fxLayoutAlign="start center" class="mb-3">
             <div class="rating-star">
               <span class="nav-item" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover" #popoverTrigger="mdePopoverTrigger">
@@ -64,18 +66,18 @@
           <ul class="no-style mb-4">
             <li>
               <span class="font-medium"> Availablity </span>:
-              <span *ngIf="detailData?.availablity">In Stocks</span>
-              <span *ngIf="!(detailData?.availablity)">Out Of Stocks</span>
+              <span *ngIf="detailData.product.quantity > 0">In Stocks</span>
+              <span *ngIf="!(detailData.product.quantity > 0)">Out Of Stocks</span>
             </li>
-            <li>
-              <span class="font-medium">Product Code </span>: {{detailData?.product_code}}
+            <!-- <li>
+              <span class="font-medium">Product Code </span>: {{detailData?.product.}}
             </li>
             <li>
               <span class="font-medium">Tags</span>:
               <ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>
-            </li>
+            </li> -->
           </ul>
-          <div class="short-des" [innerHTML]="detailData?.description"></div>
+          <div class="short-des" [innerHTML]="detailData?.shortDescription"></div>
 
 
             <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue">
@@ -182,7 +184,5 @@
         </mat-card>
       </div>
     </div>
-
-    
   </div>
 </div>

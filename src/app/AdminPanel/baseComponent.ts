@@ -88,4 +88,8 @@ export class BaseComponent {
     }
   }
 
+  public isBlank(value: any) {
+    return value === undefined || value === null || value === '';
+  }
+
 }

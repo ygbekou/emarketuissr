@@ -17,7 +17,7 @@
                     routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
               <div>
-                {{user.firstName}} {{user.lastName}}
+                {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}
                 {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br>
                 {{user.shippingAddress.city}}<br>
                 {{user.shippingAddress.postCode}}<br>
@@ -32,7 +32,7 @@
                   routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
               <div>
-                {{user.firstName}} {{user.lastName}}
+                {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}
                 {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br>
                 {{user.billingAddress.city}}<br>
                 {{user.billingAddress.postCode}}<br>
@@ -42,11 +42,17 @@
             </div>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
               <div fxLayout="row wrap" fxLayoutGap="10px grid">
-                <h6>{{'COMMON.PAYMENT_METHOD' | translate}}</h6> 
+                <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{user.paymentMethodCode}}</h6> 
                 <a [routerLink]="['/checkout/cards']" routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
-              <div>
-                {{'COMMON.ENDING_IN' | translate}} {{user.paymentMethod.last4Digits}}
+              <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD'">
+                {{'COMMON.ENDING_IN' | translate}} {{user.creditCard.last4Digits}}
+              </div>
+              <div *ngIf="user.paymentMethodCode === 'TMONEY'">
+                {{'COMMON.PHONE_NUMBER' | translate}} {{user.tmoney.phoneNumber}}
+              </div>
+              <div *ngIf="user.paymentMethodCode === 'FLOOZ'">
+                {{'COMMON.PHONE_NUMBER' | translate}} {{user.flooz.phoneNumber}}
               </div>
             </div>
           </mat-card>
@@ -55,7 +61,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2"></div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="18" fxFlex.lg="18" fxFlex.xl="18">
           <mat-card>
-            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="addToCart(detailData)" type="button" style="width:100%;">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()" type="button" style="width:100%;">
               <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
             </button>
             <div style="text-align: center; font-size:11px; width:100%;">{{'COMMON.PLACE_YOUR_ORDER_NOTICE' | translate}}</div>

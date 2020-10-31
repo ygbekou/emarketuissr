@@ -6,13 +6,14 @@ import { MediaObserver } from '@angular/flex-layout';
 import { ProductDescVO, Pagination, Language, Product } from 'src/app/app.models';
 import { MatTableDataSource } from '@angular/material';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 @Component({
    selector: 'app-DetailPage',
    templateUrl: './DetailPage.component.html',
    styleUrls: ['./DetailPage.component.scss']
 })
-export class DetailPageComponent implements OnInit {
+export class DetailPageComponent extends BaseComponent implements OnInit {
 
    prdId = 0;
    ptsId = 0;
@@ -26,7 +27,7 @@ export class DetailPageComponent implements OnInit {
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
       private activatedRoute: ActivatedRoute) {
-
+         super(translate);
    }
 
    ngOnInit() {

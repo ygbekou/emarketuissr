@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@ang
 import { AppService } from '../../../Services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, Address, CreditCard } from 'src/app/app.models';
+import { User, Address, CreditCard, Order } from 'src/app/app.models';
 
 @Component({
   selector: 'app-Payment',
@@ -72,8 +72,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    user: User = new User();
    error: string;
 
+   order: Order;
+   orderTotal: number;
+
    constructor(public appService: AppService,
-               private formGroup: FormBuilder,
                public router: Router,
                public translate: TranslateService
                ) {
@@ -87,34 +89,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-
-      this.paymentFormOne = this.formGroup.group({
-         user_details       : this.formGroup.group({
-            first_name         : ['', [Validators.required]],
-            last_name          : ['', [Validators.required]],
-            street_name_number : ['', [Validators.required]],
-            apt                : ['', [Validators.required]],
-            zip_code           : ['', [Validators.required]],
-            city_state         : ['', [Validators.required]],
-            country            : ['', [Validators.required]],
-            mobile             : ['', [Validators.required]],
-            email              : ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-            share_email        : ['', [Validators.pattern(this.emailPattern)]],
-         }),
-         offers             : this.formGroup.group({
-            discount_code   : [''],
-            card_type       : [1],
-            card_type_offer_name  : [null]
-         }),
-         payment            : this.formGroup.group({
-            card_number     : ['', [Validators.required]],
-            user_card_name  : ['', [Validators.required]],
-            cvv             : ['', [Validators.required]],
-            expiry_date     : ['', [Validators.required]],
-            card_id         : [1],
-            bank_card_value : [null]
-         })
-      });
    }
 
    ngAfterViewInit() {
@@ -126,25 +100,39 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       .subscribe(result => {
         if (result.id > 0) {
           this.user = result;
-          console.info(this.user);
 
          this.user.addresss.forEach(address => {
             if (address.addressType === 1) {
-               this.user.shippingAddress = address;
+               if (address.status === 1) {
+                  this.user.shippingAddress = address;
+                  return;
+               }
             }
             if (address.addressType === 2) {
-               
-               this.user.billingAddress = address;
+               if (address.status === 1) {
+                  this.user.billingAddress = address;
+                  return;
+               }
             }
           });
 
           this.user.creditCards.forEach(creditCard => {
             if (creditCard.status === 1) {
-               this.user.paymentMethod = creditCard;
+               this.user.creditCard = creditCard;
                return;
             }
           });
 
+
+          if (this.user.shippingAddress === undefined) {
+            this.user.shippingAddress = new Address();
+          }
+           if (this.user.billingAddress === undefined) {
+            this.user.billingAddress = new Address();
+          }
+          if (this.user.creditCard === undefined) {
+            this.user.creditCard = new CreditCard();
+          }
         } else {
           this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
             this.error = res['MESSAGE.READ_FAILED'];
@@ -186,6 +174,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
          total += (this.appService.shipping + this.appService.tax);
          return total;
       }
+      this.orderTotal = total;
       return total;
    }
 
@@ -257,6 +246,21 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    isUserLoggedIn() {
       return this.appService.tokenStorage.getUserId() !== null;
+   }
+
+
+   placeYourOrder() {
+      this.order = new Order();
+
+      this.order.products = this.appService.localStorageCartProducts;
+      this.order.total = this.appService.navbarCartTotal;
+
+      this.appService.saveWithUrl('/service/catalog/proceedCheckout/', this.order)
+      .subscribe((data: Order) => {
+        console.info(data);
+      },
+        error => console.log(error),
+        () => console.log('Changing Payment Method complete'));
    }
 }
 

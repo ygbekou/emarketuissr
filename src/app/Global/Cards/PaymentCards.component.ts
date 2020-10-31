@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CreditCard } from 'src/app/app.models';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CreditCard, PaymentMethodChangeVO, Tmoney } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -16,10 +16,13 @@ export class PaymentCardsComponent implements OnInit {
   selectedCard: CreditCard;
 
   panelOpenState = false;
-
+  @Output()
+  changePaymentMethodEvent = new EventEmitter<any>();
 
   creditCards: CreditCard[] = [];
   error: string;
+  paymentMethodChange: PaymentMethodChangeVO = new PaymentMethodChangeVO();
+
   constructor(public appService: AppService, public translate: TranslateService) {
   }
 
@@ -55,11 +58,16 @@ export class PaymentCardsComponent implements OnInit {
     }
   }
 
-  changePaymentMethod(card: CreditCard) {
-    this.appService.saveWithUrl('/service/catalog/changePaymentMethod/', card)
-      .subscribe((data: CreditCard[]) => {
-        this.creditCardsDataSource.data = data;
-        this.creditCardsDataSource.data = this.creditCardsDataSource.data.slice();
+  changePaymentMethod(creditCard: CreditCard) {
+
+    this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
+    this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
+    this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';
+
+    this.appService.saveWithUrl('/service/catalog/changePaymentMethod/', this.paymentMethodChange)
+      .subscribe((data: any) => {
+        this.getCreditCards();
+        this.changePaymentMethodEvent.emit(data);
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));

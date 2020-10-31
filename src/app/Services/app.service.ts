@@ -229,11 +229,25 @@ export class AppService {
       this.localStorageCartProducts.forEach(element => {
          this.navbarCartPrice += element.product.price * element.quantity;
          this.navbarCartShipping += 0;
-         this.navbarCartEstimatedTax += 5;
+
+         if (element.product.taxRules) {
+            element.product.taxRules.forEach(
+               taxRule => {
+               this.navbarCartEstimatedTax += taxRule.taxRate.rate * element.quantity;
+               }
+            )
+         }
+         
       });
 
-      this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
-      this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
+      this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
+      this.navbarCartTotalBeforeTax += this.roundingValue(this.navbarCartPrice + this.navbarCartShipping);
+      this.navbarCartTotal += this.roundingValue(this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax);
+   }
+
+   roundingValue(value: number) {
+      return Math.round( value * 100 + Number.EPSILON ) / 100;
+
    }
 
 

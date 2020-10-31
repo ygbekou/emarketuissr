@@ -461,7 +461,16 @@
 		"CHANGE": "Change",
 		"ADD_NEW_SHIPPING_ADDRESS": "Add New Shipping Address",
 		"ADD_NEW_BILLING_ADDRESS": "Add New Billing Address",
-		"DELIVER_TO_THIS_ADDRESS": "Deliver to this address"
+		"DELIVER_TO_THIS_ADDRESS": "Deliver to this address",
+		"VISIT": "Visit",
+		"PRODUCT_DESCRIPTION": "Product Description",
+		"PRODUCT_DETAILS": "Product Details",
+		"PRODUCT_DIMENSIONS": "Product Dimensions",
+		"MODEL_NUMBER": "Model Number",
+		"DATE_FIRST_AVAILABLE": "Date First Available",
+		"ADD_TMONEY": "Add Tmoney",
+		"ADD_FLOOZ": "Add Flooz",
+		"PHONE_NUMBER": "Phone Number"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

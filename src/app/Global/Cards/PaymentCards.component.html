@@ -1,9 +1,11 @@
 
+
 <div class="table-wrapper">
+  <div><h6>Credit Cards</h6></div>
   <table mat-table [dataSource]="creditCardsDataSource" matSort class="w-100">
 
     <ng-container matColumnDef="selected">
-      <th mat-header-cell *matHeaderCellDef>  </th>
+      <th mat-header-cell *matHeaderCellDef> Selected </th>
       <td mat-cell *matCellDef="let creditCard">
         <mat-radio-group [(ngModel)]="creditCard.status">
           <mat-radio-button [value]="1"  (click)="changePaymentMethod(creditCard)"></mat-radio-button>
@@ -14,7 +16,7 @@
 
     <!-- Image Column -->
     <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>  </th>
+      <th mat-header-cell *matHeaderCellDef> Card Type</th>
       <td mat-cell *matCellDef="let creditCard"><img [src]="'assets/images/cards/' + creditCard.cardNumber.substring(0,1)  + '.png'"
           [style.width.px]="50" class="d-block"></td>
     </ng-container>
@@ -33,8 +35,9 @@
 
      
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns">Credit Cards</tr>
     <tr mat-row *matRowDef="let creditCard; columns: displayedColumns;">
+      My tabss
     </tr>
   </table>
 </div>

@@ -82,6 +82,8 @@ import { PaymentCardsComponent } from './Cards/PaymentCards.component';
 import { PaymentCardComponent } from './Card/PaymentCard.component';
 import { AddressComponent } from './Address/Address.component';
 import { AddressesComponent } from './Addresses/Addresses.component';
+import { TmoneysComponent } from './Tmoneys/Tmoneys.component';
+import { TmoneyComponent } from './Tmoney/Tmoney.component';
 
 @NgModule({
    imports: [
@@ -169,6 +171,8 @@ import { AddressesComponent } from './Addresses/Addresses.component';
       ProductReviewComponent,
       PaymentCardsComponent,
       PaymentCardComponent,
+      TmoneysComponent,
+      TmoneyComponent,
       AddressesComponent,
       AddressComponent
    ],
@@ -215,6 +219,8 @@ import { AddressesComponent } from './Addresses/Addresses.component';
       ProductReviewComponent,
       PaymentCardsComponent,
       PaymentCardComponent,
+      TmoneysComponent,
+      TmoneyComponent,
       AddressesComponent,
       AddressComponent
    ],

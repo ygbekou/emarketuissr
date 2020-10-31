@@ -31,6 +31,7 @@ export class ProductsListComponent implements OnInit {
    catId = 0;
    marketId = 0;
    searchText = '0';
+   storeId = 0;
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
    slideConfig: any;
@@ -97,6 +98,11 @@ export class ProductsListComponent implements OnInit {
                this.getData();
             }
 
+            if (queryParams['storeId'] !== undefined) {
+               this.storeId = queryParams['storeId'];
+               this.getData();
+            }
+
          });
          
 
@@ -119,7 +125,7 @@ export class ProductsListComponent implements OnInit {
    }
    getProducts() {
       this.appService.getObject('/service/catalog/getProductsOnSale/' +
-         this.appService.appInfoStorage.language.id + '/0/' + this.marketId + '/' + this.catId + '/' + this.searchText)
+         this.appService.appInfoStorage.language.id + '/' + this.storeId + '/' + this.marketId + '/' + this.catId + '/' + this.searchText)
          .subscribe((data: ProductListVO) => {
             this.productList = data;
             console.log(data);

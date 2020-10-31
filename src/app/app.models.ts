@@ -108,14 +108,19 @@ export class User extends BaseModel {
   shippingAddress: Address;
   billingAddress: Address;
   creditCards: CreditCard[] = [];
-  paymentMethod: CreditCard;
+  creditCard: CreditCard;
+  tmoneys: Tmoney[] = [];
+  tmoney: Tmoney;
+  floozs: Flooz[] = [];
+  flooz: Flooz;
+  paymentMethodCode: string;
 
   constructor() {
     super();
     this.userGroup = new UserGroup();
     this.shippingAddress = new Address();
     this.billingAddress = new Address();
-    this.paymentMethod = new CreditCard();
+    this.creditCard = new CreditCard();
   }
 }
 
@@ -671,6 +676,20 @@ export class CreditCard {
   type = 'CreditCard';
 }
 
+export class Tmoney {
+  id: number;
+  phoneNumber: string;
+  user: User;
+  type = 'Tmoney';
+}
+
+export class Flooz {
+  id: number;
+  phoneNumber: string;
+  user: User;
+  type = 'Flooz';
+}
+
 export class Menu {
   state: string;
   name?: string;
@@ -920,8 +939,10 @@ export class ProductVO {
   jan: string;
   length: number;
   lengthClassId: number;
+  lengthClassName: string;
   location: string;
   manufacturerId: number;
+  manufacturerName: string;
   minimum: number;
   model: string;
   mpn: string;
@@ -940,6 +961,7 @@ export class ProductVO {
   viewed: number;
   weight: number;
   weightClassId: number;
+  weightClassName: string;
   width: number;
   viewCount: number;
   ratingCount: number;
@@ -962,6 +984,8 @@ export class ProductVO {
   reviews: Review[];
   ratingCountMaps: Map<number, number>;
   optionValueDescriptionMaps: Map<string, OptionValueDescription[]>;
+  productDimensions: string;
+  taxRules: TaxRule[];
 }
 
 export class Review {
@@ -1042,6 +1066,7 @@ export class CompanyLocation {
   telephone: string;
   type = 'Location';
 }
+
 export class Order {
   id: number;
   acceptLanguage: string;
@@ -1104,8 +1129,11 @@ export class Order {
   createDate: Date;
   modDate: Date;
 
+  type = 'Order';
+
   totalRewardPoints: number;
   orderProducts: OrderProduct[] = [];
+  products: Product[] = [];
 
 }
 
@@ -1126,4 +1154,10 @@ export class SearchCriteria {
   priceMin: number;
   priceMax: number;
   category: string;
+}
+
+export class PaymentMethodChangeVO {
+  userId: number;
+	paymentMethodCode: string;
+	paymentMethodCodeId: number;
 }
