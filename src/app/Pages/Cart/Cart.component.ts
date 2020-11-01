@@ -85,7 +85,6 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
    public getQuantityValue(product) {
-      console.info(product)
       if(product.quantity) {
          return product.quantity
       } else {

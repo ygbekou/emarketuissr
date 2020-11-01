@@ -987,6 +987,8 @@ export class ProductVO {
   optionValueDescriptionMaps: Map<string, OptionValueDescription[]>;
   productDimensions: string;
   taxRules: TaxRule[];
+  tax: number;
+  total: number;
 }
 
 export class Review {
@@ -1078,7 +1080,7 @@ export class Order {
   currencyId: number;
   currencyValue: number;
   customField: string;
-  customerId: number;
+  userId: number;
   email: string;
   fax: string;
   firstName: string;

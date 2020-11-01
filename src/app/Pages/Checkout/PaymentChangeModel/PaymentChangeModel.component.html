@@ -53,6 +53,14 @@
             </mat-expansion-panel>
           </mat-accordion>
 
+          <br/>
+          <br/>
+          <ng-container matColumnDef="selected">
+            <mat-radio-group [(ngModel)]="paypalMethodStatus">
+              <mat-radio-button [value]="1"  (click)="changePaymentMethod('PAYPAL')"><div><h6>Paypal</h6></div></mat-radio-button>
+            </mat-radio-group>
+          </ng-container>
+
           </div>
         </div>
         

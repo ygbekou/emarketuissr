@@ -188,6 +188,7 @@ export class AppService {
    }
 
    public updateAllLocalCartProduct(products: any) {
+      
       localStorage.removeItem('cart_item');
 
       localStorage.setItem('cart_item', JSON.stringify(products));
@@ -214,7 +215,6 @@ export class AppService {
 
       this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
       this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
-      console.info('Here 1')
    }
 
    public calculateLocalCartInfos() {
@@ -231,12 +231,17 @@ export class AppService {
          this.navbarCartShipping += 0;
 
          if (element.product.taxRules) {
+            element.product.tax = 0;
             element.product.taxRules.forEach(
                taxRule => {
-               this.navbarCartEstimatedTax += taxRule.taxRate.rate * element.quantity;
+                  element.product.tax += taxRule.taxRate.rate * element.quantity;
                }
             )
          }
+
+         element.product.tax = this.roundingValue(element.product.tax);
+         element.product.total = this.roundingValue(element.product.price * element.quantity + element.product.tax);
+         this.navbarCartEstimatedTax += element.product.tax;
          
       });
 

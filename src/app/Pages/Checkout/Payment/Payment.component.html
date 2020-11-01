@@ -43,7 +43,8 @@
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
               <div fxLayout="row wrap" fxLayoutGap="10px grid">
                 <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{user.paymentMethodCode}}</h6> 
-                <a [routerLink]="['/checkout/cards']" routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+                <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}" 
+                  routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
               <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD'">
                 {{'COMMON.ENDING_IN' | translate}} {{user.creditCard.last4Digits}}
