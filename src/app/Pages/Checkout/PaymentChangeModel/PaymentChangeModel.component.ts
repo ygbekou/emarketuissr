@@ -35,7 +35,6 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    }
 
    ngAfterViewInit() {
-      this.paypalMethodStatus = 1;
    }
 
    onCardSaved($event) {
