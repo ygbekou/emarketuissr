@@ -42,6 +42,13 @@
           <td mat-cell *matCellDef="let orderStatus"> {{orderStatus.language.code}}</td>
         </ng-container>
 
+        <!-- Image Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.DESCRIPTION' | translate}} </th>
+          <td mat-cell *matCellDef="let orderStatus"> {{orderStatus.description}}
+          </td>
+        </ng-container>
+
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
@@ -87,6 +94,15 @@
                 {{lang.name}}
               </mat-option>
             </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.DESCRIPTION' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="description" [(ngModel)]="orderStatus.description" name="description"
+              #description="ngModel" required>
+            <mat-error *ngIf="ff.submitted && description.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>

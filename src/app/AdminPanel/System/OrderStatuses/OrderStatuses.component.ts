@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./OrderStatuses.component.scss']
 })
 export class OrderStatusesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<OrderStatus>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

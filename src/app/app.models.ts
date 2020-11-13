@@ -100,6 +100,7 @@ export class User extends BaseModel {
   website: string;
   reveivePromo: boolean;
   modifiedBy: number;
+  stripeCustomerId: string;
   fileNames: string[];
   type = 'User';
 
@@ -479,6 +480,7 @@ export class OrderStatus {
   id: number;
   name: string;
   language: Language;
+  description: string;
   type = 'OrderStatus';
 }
 
@@ -672,6 +674,7 @@ export class CreditCard {
   expYear: string;
   status: number;
   cardType: string;
+  cardTypeIndex: number;
   user: User;
   last4Digits: string;
   type = 'CreditCard';
