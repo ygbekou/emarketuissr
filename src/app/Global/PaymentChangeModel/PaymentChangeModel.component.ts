@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { AppService } from '../../../Services/app.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PaymentCardsComponent } from 'src/app/Global/Cards/PaymentCards.component';
 import { TmoneysComponent } from 'src/app/Global/Tmoneys/Tmoneys.component';
 import { PaymentMethodChangeVO } from 'src/app/app.models';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
   selector: 'app-PaymentChangeModel',
@@ -76,7 +76,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
       this.paymentMethodChange.paymentMethodCodeId = null;
       this.paymentMethodChange.paymentMethodCode = paymentMethodCode;
 
-      this.appService.saveWithUrl('/service/catalog/changePaymentMethod/', this.paymentMethodChange)
+      this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
          .subscribe((data: any) => {
             this.floozsComponent.getTmoneys();
             this.tmoneysComponenet.getTmoneys();

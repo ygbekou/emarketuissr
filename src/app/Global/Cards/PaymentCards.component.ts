@@ -12,7 +12,7 @@ import CardUtils from 'src/app/Services/cardUtils';
 })
 export class PaymentCardsComponent implements OnInit {
 
-  displayedColumns: string[] = ['selected', 'image', 'name', 'expire'];
+  displayedColumns: string[] = ['selected', 'image', 'cardNumber', 'name', 'expire'];
   creditCardsDataSource: MatTableDataSource<CreditCard>;
   selectedCard: CreditCard;
 
@@ -65,7 +65,7 @@ export class PaymentCardsComponent implements OnInit {
     if (userId > 0) {
       const parameters: string[] = [];
       parameters.push('e.user.id = |userId|' + userId + '|Integer');
-      this.appService.getObject('/service/catalog/customer/' + userId + '/cards')
+      this.appService.getObject('/service/order/customer/' + userId + '/cards')
         .subscribe((data: CreditCard[]) => {
           this.creditCards = data;
           this.creditCardsDataSource = new MatTableDataSource(data);
@@ -81,8 +81,9 @@ export class PaymentCardsComponent implements OnInit {
     this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
     this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
     this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';
+    this.paymentMethodChange.stripePaymentMethodId = creditCard.stripePaymentMethodId;
 
-    this.appService.saveWithUrl('/service/catalog/changePaymentMethod/', this.paymentMethodChange)
+    this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
       .subscribe((data: any) => {
         this.getCreditCards();
         this.changePaymentMethodEvent.emit(data);

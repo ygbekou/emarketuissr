@@ -58,7 +58,7 @@ const TREE_DATA_FR: MenuNode[] = [
     icon: '',
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
-      { name: 'Adresses', url: '/account/address', icon: 'location_on' },
+      { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
       { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' }
     ]
   },

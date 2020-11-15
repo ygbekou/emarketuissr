@@ -663,6 +663,11 @@ export class Address {
   zone: Zone;
   status = 0;
   type = 'Address';
+
+  constructor() {
+    this.country = new Country();
+    this.zone = new Zone();
+  }
 }
 
 export class CreditCard {
@@ -677,6 +682,7 @@ export class CreditCard {
   cardTypeIndex: number;
   user: User;
   last4Digits: string;
+  stripePaymentMethodId: string;
   type = 'CreditCard';
 }
 
@@ -1165,5 +1171,6 @@ export class SearchCriteria {
 export class PaymentMethodChangeVO {
   userId: number;
 	paymentMethodCode: string;
-	paymentMethodCodeId: number;
+  paymentMethodCodeId: number;
+  stripePaymentMethodId: string;
 }

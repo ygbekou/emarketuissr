@@ -105,6 +105,7 @@ export class PaymentCardComponent implements OnInit {
       // changeLoadingState(true);
       
       // Collects card details and creates a PaymentMethod
+
       stripe
          .createPaymentMethod('card', card)
          .then(result => {
@@ -133,8 +134,12 @@ export class PaymentCardComponent implements OnInit {
    saveCustomer(result) {
       // changeLoadingState(true);
  
-      this.appService.saveWithUrl('/service/catalog/attachPaymentMethodToCustomer', 
-      {userId: this.appService.tokenStorage.getUserId(), paymentMethodId: result.paymentMethod.id})
+      this.appService.saveWithUrl('/service/order/attachPaymentMethodToCustomer', 
+      {
+         userId: this.appService.tokenStorage.getUserId(),
+         paymentMethodId: result.paymentMethod.id,
+         nameOnCard: this.card.name
+      })
          .subscribe(result => {
             if (result.result === 'SUCCESS') {
                alert('Here ...')
