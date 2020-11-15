@@ -46,9 +46,9 @@
                 <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}" 
                   routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
-              <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD'">
+              <!-- <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD'">
                 {{'COMMON.ENDING_IN' | translate}} {{user.creditCard.last4Digits}}
-              </div>
+              </div> -->
               <div *ngIf="user.paymentMethodCode === 'TMONEY'">
                 {{'COMMON.PHONE_NUMBER' | translate}} {{user.tmoney.phoneNumber}}
               </div>

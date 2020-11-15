@@ -3,6 +3,7 @@ import { CreditCard, PaymentMethodChangeVO, Tmoney } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import CardUtils from 'src/app/Services/cardUtils';
 
 @Component({
   selector: 'app-PaymentCards',
@@ -11,7 +12,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 })
 export class PaymentCardsComponent implements OnInit {
 
-  displayedColumns: string[] = ['selected', 'image', 'name', 'expire'];
+  displayedColumns: string[] = ['selected', 'image', 'cardNumber', 'name', 'expire'];
   creditCardsDataSource: MatTableDataSource<CreditCard>;
   selectedCard: CreditCard;
 
@@ -22,6 +23,8 @@ export class PaymentCardsComponent implements OnInit {
   creditCards: CreditCard[] = [];
   error: string;
   paymentMethodChange: PaymentMethodChangeVO = new PaymentMethodChangeVO();
+
+  cardUtils = new CardUtils();
 
   constructor(public appService: AppService, public translate: TranslateService) {
   }
@@ -43,11 +46,26 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   getCreditCards() {
+    // const userId = Number(this.appService.tokenStorage.getUserId());
+    // if (userId > 0) {
+    //   const parameters: string[] = [];
+    //   parameters.push('e.user.id = |userId|' + userId + '|Integer');
+    //   this.appService.getAllByCriteria('com.softenza.emarket.model.CreditCard', parameters)
+    //     .subscribe((data: CreditCard[]) => {
+    //       this.creditCards = data;
+    //       this.creditCardsDataSource = new MatTableDataSource(data);
+    //       this.selectedCard = data[0];
+    //     },
+    //       error => console.log(error),
+    //       () => console.log('Get all CreditCard complete for userId=' + userId));
+    // }
+
+
     const userId = Number(this.appService.tokenStorage.getUserId());
     if (userId > 0) {
       const parameters: string[] = [];
       parameters.push('e.user.id = |userId|' + userId + '|Integer');
-      this.appService.getAllByCriteria('com.softenza.emarket.model.CreditCard', parameters)
+      this.appService.getObject('/service/order/customer/' + userId + '/cards')
         .subscribe((data: CreditCard[]) => {
           this.creditCards = data;
           this.creditCardsDataSource = new MatTableDataSource(data);
@@ -63,8 +81,9 @@ export class PaymentCardsComponent implements OnInit {
     this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
     this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
     this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';
+    this.paymentMethodChange.stripePaymentMethodId = creditCard.stripePaymentMethodId;
 
-    this.appService.saveWithUrl('/service/catalog/changePaymentMethod/', this.paymentMethodChange)
+    this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
       .subscribe((data: any) => {
         this.getCreditCards();
         this.changePaymentMethodEvent.emit(data);

@@ -28,9 +28,11 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   getAll() {
-    const parameters: string[] = [];
-    parameters.push('e.languageId = |langId|' + this.appService.appInfoStorage.language.id + '|Integer');
-    this.appService.getAllByCriteria('Order', parameters)
+    let searchCriteria = {
+      userId: this.appService.tokenStorage.getUserId()
+    };
+
+    this.appService.saveWithUrl('/service/order/orders', searchCriteria)
       .subscribe((data: Order[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;

@@ -17,6 +17,21 @@ export default class CardUtils {
       return '';
    }
 
+   static getCardTypeIndex(cardType: string): string {
+      if ( cardType !== undefined && cardType !== null) {
+         if (cardType === 'Amex') {
+            return '3';
+         } else if (cardType === 'Visa') {
+            return '4';
+         } else if (cardType === 'MasterCard') {
+            return '5';
+         } else if (cardType === 'Discover') {
+            return '6';
+         }
+      }
+      return '';
+   }
+
    static getAddressTypes(): any[] {
       return [
          { id: 1, name: 'Shipping address' },

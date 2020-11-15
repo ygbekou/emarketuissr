@@ -1,7 +1,6 @@
-<mat-card>
-
-  <div *ngIf="isForShippingAddresses()">
-    <div fxLayout="row wrap"><h5>{{'COMMON.SHIPPING_ADDRESS'|translate}}</h5></div>
+<mat-card *ngIf="isForShippingAddresses()">
+  <div>
+    <div fxLayout="row wrap"><h5>{{'COMMON.SHIPPING_ADDRESS'|translate}}</h5></div> 
     <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of shippingAddresses">
         <div class="pt-3">
@@ -18,16 +17,33 @@
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
-              [queryParams]="{type:'address', adrId:addr.id}">{{'COMMON.EDIT'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 1)">{{'COMMON.EDIT'|translate}}</button>
             <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div *ngIf="isForBillingAddresses()">
+  <br/>
+  <div>
+    <mat-accordion>
+      <mat-expansion-panel #shippingExpansionPanelElement
+        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                        
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button mat-flat-button color="primary">{{'COMMON.ADD_NEW_SHIPPING_ADDRESS'|translate}}</button>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-address #shippingAddressComponent [selectedAddressType]="1" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</mat-card>
+<br/>
+<mat-card *ngIf="isForBillingAddresses()">
+  <div>
     <div fxLayout="row wrap"><h5>{{'COMMON.BILLING_ADDRESS'|translate}}</h5></div>
     <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of billingAddresses">
@@ -45,13 +61,27 @@
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
-              [queryParams]="{type:'address', adrId:addr.id}">{{'COMMON.EDIT'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 2)">{{'COMMON.EDIT'|translate}}</button>
             <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <br/>
+  <div>
+    <mat-accordion>
+      <mat-expansion-panel #billingExpansionPanelElement
+        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                        
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <button mat-flat-button color="primary">{{'COMMON.ADD_NEW_BILLING_ADDRESS'|translate}}</button>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-address #billingAddressComponent [selectedAddressType]="2" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </mat-card>

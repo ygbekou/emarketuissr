@@ -1,23 +1,23 @@
 <div fxLayout="row wrap">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
     <mat-card>
       <h6>{{'COMMON.ORDER_DETAILS' | translate}}</h6>
       <div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{'COMMON.YOUR_STORE' | translate}}</label>
             <a href="{{order.storeUrl}}" target="_blank">
               {{order.storeUrl}}
             </a>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>Add Date:</label>
             <span>{{order.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>Payment Method:</label>
             <span>{{order.paymentMethod}}</span>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>Shipping Method:</label>
             <span>{{order.shippingMethod}}</span>
           </div>
@@ -25,19 +25,19 @@
     </mat-card>
   </div>
 
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
     <mat-card>
       <h6>{{'COMMON.CUSTOMER_DETAILS' | translate}}</h6>
       <div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{'COMMON.NAME' | translate}}</label>
             <span>{{order.firstName}} {{order.lastName}}</span>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{'COMMON.EMAIL' | translate}}</label>
             <span>{{order.email}}</span>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{'COMMON.PHONE' | translate}}</label>
             <span>{{order.telephone}}</span>
           </div>
@@ -45,11 +45,11 @@
     </mat-card>
   </div>
 
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
     <mat-card>
       <h6>{{'COMMON.OPTIONS' | translate}}</h6>
       <div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{'COMMON.REWARD_POINTS' | translate}}</label>
             <span>{{order.totalRewardPoints}}</span>
           </div>
@@ -60,46 +60,46 @@
 </div>
 
 <div fxLayout="row wrap">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <mat-card>
       <h6>{{'COMMON.PAYMENT_ADDRESS' | translate}}</h6>
       <div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.paymentfirstName}} {{order.paymentlastName}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.paymentAddress1}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1" *ngIf="!isEmpty(order.paymentAddress2)">
             <label>{{order.paymentAddress2}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.paymentCity}}, {{order.paymentZone}} {{order.paymentPostcode}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.paymentCountry}}</label>
           </div>
       </div>
     </mat-card>
   </div>
 
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <mat-card>
       <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
       <div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.shippingfirstName}} {{order.shippinglastName}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.shippingAddress1}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1" *ngIf="!isEmpty(order.shippingAddress2)">
             <label>{{order.shippingAddress2}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.shippingCity}}, {{order.shippingZone}} {{order.shippingPostcode}}</label>
           </div>
-          <div class="proflie-field mb-3">
+          <div class="proflie-field mb-1">
             <label>{{order.shippingCountry}}</label>
           </div>
       </div>

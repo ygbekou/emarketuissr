@@ -48,7 +48,7 @@ export class AddressComponent implements OnInit {
       if (!this.isNotAddressTypePreSelected()) {
          this.address.addressType = this.selectedAddressType;
       }
-      
+
       this.appService.save(this.address, 'Address')
          .subscribe(result => {
             if (result.id > 0) {
@@ -69,4 +69,15 @@ export class AddressComponent implements OnInit {
    isNotAddressTypePreSelected() {
       return this.selectedAddressType === undefined;
    }
+
+   getAddress(addressId: number) {
+      this.appService.getOne(addressId, 'com.softenza.emarket.model.Address')
+        .subscribe((data: Address) => {
+          this.address = data;
+          this.appService.getZones(this.address.country);
+        },
+          error => console.log(error),
+          () => console.log('Get address complete for addressId=' + addressId));
+   }
+  
 }

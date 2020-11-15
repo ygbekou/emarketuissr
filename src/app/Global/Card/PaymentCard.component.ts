@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import CardUtils from 'src/app/Services/cardUtils';
 
+declare var Stripe: any;
 
 @Component({
   selector: 'app-PaymentCard',
@@ -18,6 +19,9 @@ export class PaymentCardComponent implements OnInit {
   messages: string;
   errors: string;
   creditCardBackground = 'background-image: url(assets/images/cards/card-edit.png)';
+  stripe: any;
+
+  data: any;
 
   @Output() 
   cardSaveEvent = new EventEmitter<CreditCard>();
@@ -31,8 +35,125 @@ export class PaymentCardComponent implements OnInit {
 
   ngOnInit() {
 
+   //this.user.id = this.appService.tokenStorage.getUserId() ;
+
+   this.initPaymentMethod();
+
 
   }
+
+   initPaymentMethod() {
+      this.appService.getObject('/service/catalog/stripe-key').toPromise()
+   .then(result => {
+      return result;
+  })
+  .then(data => {
+    return this.setupElements(data);
+  })
+  .then(data => {
+     console.info(data);
+     this.data = data;
+    document.querySelector('button').disabled = false;
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', this.handleCardSave.bind(this));
+  });
+   }
+
+
+   handleCardSave(event) {
+      event.preventDefault();
+      this.saveCard(this.data.stripe, this.data.card, this.data.clientSecret); 
+   }
+
+   setupElements (data) {
+      this.stripe = Stripe(data.publishableKey);
+
+      /* ------- Set up Stripe Elements to use in checkout form ------- */
+      var elements = this.stripe.elements();
+      var style = {
+         base: {
+            color: '#32325d',
+            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+            color: '#aab7c4'
+            }
+         },
+         invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+         }
+      };
+
+      var card = elements.create('card', { style: style });
+      card.mount('#card-element');
+
+      return {
+         stripe: this.stripe,
+         card: card,
+         clientSecret: data.clientSecret
+      };
+   };
+
+
+   /*
+   * Collect card details and pay for the order
+   */
+   saveCard(stripe, card, clientSecret) {
+      // changeLoadingState(true);
+      
+      // Collects card details and creates a PaymentMethod
+
+      stripe
+         .createPaymentMethod('card', card)
+         .then(result => {
+            if (result.error) {
+               //showError(result.error.message);
+            } else {
+               this.saveCustomer(result)
+            }
+         })
+         .then(function(result) {
+            return result.json();
+         })
+         .then(function(response) {
+            if (response.error) {
+               //showError(response.error);
+            } else if (response.requiresAction) {
+               // Request authentication
+               //handleAction(response.clientSecret);
+            } else {
+               ///orderComplete(response.clientSecret);
+            }
+         });
+   };
+
+
+   saveCustomer(result) {
+      // changeLoadingState(true);
+ 
+      this.appService.saveWithUrl('/service/order/attachPaymentMethodToCustomer', 
+      {
+         userId: this.appService.tokenStorage.getUserId(),
+         paymentMethodId: result.paymentMethod.id,
+         nameOnCard: this.card.name
+      })
+         .subscribe(result => {
+            if (result.result === 'SUCCESS') {
+               alert('Here ...')
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+               });
+            }
+         });
+      
+   };
+
+
+
 
   /**
     * Function is used to submit the profile card.
@@ -49,7 +170,7 @@ export class PaymentCardComponent implements OnInit {
             this.errors = res['MESSAGE.INVALID_CARD'];
          });
       } else {
-         this.appService.save(this.card, 'CreditCard')
+         this.appService.saveWithUrl('/service/catalog/save_creditcard', this.card)
             .subscribe(result => {
                if (result.id > 0) {
                   this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {

@@ -73,4 +73,10 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
     }
   }
 
+
+  isEmpty(value: string): boolean {
+    const val = value !== null ? value.trim() : '';
+
+    return val.length === 0;
+  }
 }

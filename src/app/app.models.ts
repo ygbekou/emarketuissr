@@ -100,6 +100,7 @@ export class User extends BaseModel {
   website: string;
   reveivePromo: boolean;
   modifiedBy: number;
+  stripeCustomerId: string;
   fileNames: string[];
   type = 'User';
 
@@ -479,6 +480,7 @@ export class OrderStatus {
   id: number;
   name: string;
   language: Language;
+  description: string;
   type = 'OrderStatus';
 }
 
@@ -661,6 +663,11 @@ export class Address {
   zone: Zone;
   status = 0;
   type = 'Address';
+
+  constructor() {
+    this.country = new Country();
+    this.zone = new Zone();
+  }
 }
 
 export class CreditCard {
@@ -672,8 +679,10 @@ export class CreditCard {
   expYear: string;
   status: number;
   cardType: string;
+  cardTypeIndex: number;
   user: User;
   last4Digits: string;
+  stripePaymentMethodId: string;
   type = 'CreditCard';
 }
 
@@ -1162,5 +1171,6 @@ export class SearchCriteria {
 export class PaymentMethodChangeVO {
   userId: number;
 	paymentMethodCode: string;
-	paymentMethodCodeId: number;
+  paymentMethodCodeId: number;
+  stripePaymentMethodId: string;
 }

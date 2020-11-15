@@ -84,6 +84,8 @@ import { AddressComponent } from './Address/Address.component';
 import { AddressesComponent } from './Addresses/Addresses.component';
 import { TmoneysComponent } from './Tmoneys/Tmoneys.component';
 import { TmoneyComponent } from './Tmoney/Tmoney.component';
+import { PaymentChangeModelComponent } from './PaymentChangeModel/PaymentChangeModel.component';
+import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentChangeAddress.component';
 
 @NgModule({
    imports: [
@@ -174,7 +176,9 @@ import { TmoneyComponent } from './Tmoney/Tmoney.component';
       TmoneysComponent,
       TmoneyComponent,
       AddressesComponent,
-      AddressComponent
+      AddressComponent,
+      PaymentChangeModelComponent,
+      PaymentChangeAddressComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -222,7 +226,9 @@ import { TmoneyComponent } from './Tmoney/Tmoney.component';
       TmoneysComponent,
       TmoneyComponent,
       AddressesComponent,
-      AddressComponent
+      AddressComponent,
+      PaymentChangeModelComponent,
+      PaymentChangeAddressComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
