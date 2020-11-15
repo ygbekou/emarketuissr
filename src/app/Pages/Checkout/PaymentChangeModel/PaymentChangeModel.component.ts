@@ -19,6 +19,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    paymentMethodChange: PaymentMethodChangeVO = new PaymentMethodChangeVO();
    paypalMethodStatus: number;
+   panelOpenState = false;
 
    constructor(public appService: AppService,
                public router: Router,

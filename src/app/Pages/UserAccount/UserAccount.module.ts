@@ -51,6 +51,7 @@ import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
 import { GlobalModule } from 'src/app/Global/Global.module';
+import { AddressesComponent } from './Addresses/Addresses.component';
 
 @NgModule({
   imports: [
@@ -125,6 +126,7 @@ import { GlobalModule } from 'src/app/Global/Global.module';
     OrderHistoryComponent,
     GridProductComponent,
     SellProductComponent,
+    AddressesComponent,
     MyProductsComponent
   ],
    exports: [

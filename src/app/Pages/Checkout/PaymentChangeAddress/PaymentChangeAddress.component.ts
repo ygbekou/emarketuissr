@@ -13,6 +13,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
 
    @ViewChild(AddressesComponent, {static: false}) paymentAddresses: AddressesComponent;
    addressType: number = 1;
+   panelOpenState = false;
 
    constructor(public appService: AppService,
                public router: Router,
