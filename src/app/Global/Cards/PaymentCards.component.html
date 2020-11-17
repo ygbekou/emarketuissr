@@ -1,5 +1,3 @@
-
-
 <div class="table-wrapper">
   <div><h6>Credit Cards</h6></div>
   <table mat-table [dataSource]="creditCardsDataSource" matSort class="w-100">
@@ -14,32 +12,36 @@
       </td>
     </ng-container>
 
-    <!-- Image Column -->
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef> Card Type</th>
       <td mat-cell *matCellDef="let creditCard"><img [src]="'assets/images/cards/' + creditCard.cardTypeIndex + '.png'"
           [style.width.px]="50" class="d-block"></td>
     </ng-container>
 
-    <!-- Title Column -->
     <ng-container matColumnDef="cardNumber">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Card Number </th>
       <td mat-cell *matCellDef="let creditCard"> XXXX XXXX XXXX {{creditCard.last4Digits}} </td>
     </ng-container>
 
-    <!-- Title Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name on Card </th>
       <td mat-cell *matCellDef="let creditCard"> {{creditCard.name}} </td>
     </ng-container>
 
-    <!-- Title Column -->
     <ng-container matColumnDef="expire">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Expire </th>
       <td mat-cell *matCellDef="let creditCard"> {{creditCard.expMonth}}/{{creditCard.expYear}} </td>
     </ng-container>
 
-     
+    <ng-container matColumnDef="action">
+        <th class="px-3" mat-header-cell *matHeaderCellDef> Action </th>
+        <td class="px-3" mat-cell *matCellDef="let creditCard; let i = index;">
+          <button color="warn" mat-icon-button (click)="delete(creditCard.stripePaymentMethodId)" 
+            matTooltip="{{'COMMON.DELETE' | translate}}">
+              <mat-icon class="">delete</mat-icon>
+          </button>
+        </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns">Credit Cards</tr>
     <tr mat-row *matRowDef="let creditCard; columns: displayedColumns;">

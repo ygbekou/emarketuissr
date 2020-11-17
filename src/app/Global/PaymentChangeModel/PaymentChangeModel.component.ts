@@ -38,7 +38,8 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    }
 
    onCardSaved($event) {
-      this.paymentCardsComponent.updateTable($event);
+      //this.paymentCardsComponent.updateTable($event);
+      this.paymentCardsComponent.getCreditCards();
    }
 
    onCardMethodSelected($event) {

@@ -12,7 +12,7 @@ import CardUtils from 'src/app/Services/cardUtils';
 })
 export class PaymentCardsComponent implements OnInit {
 
-  displayedColumns: string[] = ['selected', 'image', 'cardNumber', 'name', 'expire'];
+  displayedColumns: string[] = ['selected', 'image', 'cardNumber', 'name', 'expire', 'action'];
   creditCardsDataSource: MatTableDataSource<CreditCard>;
   selectedCard: CreditCard;
 
@@ -36,8 +36,12 @@ export class PaymentCardsComponent implements OnInit {
 
   }
 
-  public delete(cardId: number) {
-    this.appService.delete(cardId, 'com.softenza.emarket.model.CreditCard')
+  public delete(cardId: string) {
+    this.appService.saveWithUrl('/service/order/deleteCard',
+      {
+         userId: this.appService.tokenStorage.getUserId(),
+         paymentMethodId: cardId
+      })
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           this.getCreditCards();
@@ -46,21 +50,6 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   getCreditCards() {
-    // const userId = Number(this.appService.tokenStorage.getUserId());
-    // if (userId > 0) {
-    //   const parameters: string[] = [];
-    //   parameters.push('e.user.id = |userId|' + userId + '|Integer');
-    //   this.appService.getAllByCriteria('com.softenza.emarket.model.CreditCard', parameters)
-    //     .subscribe((data: CreditCard[]) => {
-    //       this.creditCards = data;
-    //       this.creditCardsDataSource = new MatTableDataSource(data);
-    //       this.selectedCard = data[0];
-    //     },
-    //       error => console.log(error),
-    //       () => console.log('Get all CreditCard complete for userId=' + userId));
-    // }
-
-
     const userId = Number(this.appService.tokenStorage.getUserId());
     if (userId > 0) {
       const parameters: string[] = [];
@@ -93,15 +82,16 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   updateTable(card: CreditCard) {
-    
+
     const index = this.creditCardsDataSource.data.findIndex(x => x.id === card.id);
-		
-		if (index === -1) {
-			this.creditCardsDataSource.data.push(card);
-		} else {
-			this.creditCardsDataSource.data[index] = card;
-		}
+
+    if (index === -1) {
+      this.creditCardsDataSource.data.push(card);
+    } else {
+      this.creditCardsDataSource.data[index] = card;
+    }
 
     this.creditCardsDataSource.data = this.creditCardsDataSource.data.slice();
-	}
+  }
+
 }

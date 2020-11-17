@@ -16,6 +16,9 @@ import { Constants } from 'src/app/app.constants';
 })
 export class OrderViewComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['product', 'model', 'quantity', 'price', 'total'];
+  displayedShippingColumns = ['shippingRateTitle', 'emptyFooter1', 'emptyFooter2', 'emptyFooter3', 'shippingAmount'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5', 'emptyFooter6', 'totalAmount'];
+
   dataSource: MatTableDataSource<OrderProduct>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
