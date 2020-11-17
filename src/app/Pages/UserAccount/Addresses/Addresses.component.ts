@@ -5,10 +5,10 @@ import { Address } from 'src/app/app.models';
 
 @Component({
   selector: 'app-address',
-  templateUrl: './Address.component.html',
-  styleUrls: ['./Address.component.scss']
+  templateUrl: './Addresses.component.html',
+  styleUrls: ['./Addresses.component.scss']
 })
-export class AddressComponent implements OnInit {
+export class AddressesComponent implements OnInit {
 
   addresses: Address[] = [];
   error: string;
