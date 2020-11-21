@@ -4,6 +4,7 @@ import { AppService } from '../../../Services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User, Address, CreditCard, Order } from 'src/app/app.models';
+import { Constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-Payment',
@@ -19,27 +20,27 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    offerCards: any = [
       {
          id: 1,
-         name:'Debit Card',
+         name: 'Debit Card',
          content: 'Visa Mega Shopping Offer'
       },
       {
          id: 2,
-         name: "Credit Card",
+         name: 'Credit Card',
          content: 'American Express 20% Flat'
       },
       {
          id: 3,
-         name:'Debit Card',
+         name: 'Debit Card',
          content: 'BOA Buy 1 Get One Offer'
       },
       {
          id: 4,
-         name: "Master Card",
+         name: 'Master Card',
          content: 'Mastercard Elite Card'
       },
       {
          id: 5,
-         name:'Debit Card',
+         name: 'Debit Card',
          content: 'Visa Mega Shopping Offer'
       }
    ];
@@ -47,23 +48,23 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    bankCardsImages: any = [
       {
          id: 1,
-         image: "assets/images/client-logo-1.png"
+         image: 'assets/images/client-logo-1.png'
       },
       {
          id: 2,
-         image: "assets/images/client-logo-2.png"
+         image: 'assets/images/client-logo-2.png'
       },
       {
          id: 3,
-         image: "assets/images/client-logo-3.png"
+         image: 'assets/images/client-logo-3.png'
       },
       {
          id: 4,
-         image:'assets/images/client-logo-4.png'
+         image: 'assets/images/client-logo-4.png'
       },
       {
          id: 5,
-         image:'assets/images/client-logo-5.png'
+         image: 'assets/images/client-logo-5.png'
       }
    ];
 
@@ -208,7 +209,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
       paymentGroup.markAsUntouched();
 
-      if (value && value.index == 1) {
+      if (value && value.index === 1) {
             paymentGroup.controls['card_number'].clearValidators();
             paymentGroup.controls['user_card_name'].clearValidators();
             paymentGroup.controls['cvv'].clearValidators();
@@ -257,12 +258,21 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
 
-      console.info("My Order");
-      console.info(this.order);
-
-      this.appService.saveWithUrl('/service/catalog/proceedCheckout/', this.order)
+      this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
       .subscribe((data: Order) => {
-        console.info(data);
+         // console.info("Saved Order");
+         // console.info(this.order);
+         // console.info(window.location.href);
+
+         if (data.errors !== null && data.errors !== undefined) {
+            this.error = data.errors[0];
+         }
+
+         if (this.user.paymentMethodCode === 'TMONEY') {
+            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+            window.location.href = url;
+            return;
+         }
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));

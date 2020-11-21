@@ -1140,6 +1140,8 @@ export class Order {
   userAgent: string;
   createDate: Date;
   modDate: Date;
+  paygateGlobalPaymentUrl: string;
+  errors: string[];
 
   type = 'Order';
 
