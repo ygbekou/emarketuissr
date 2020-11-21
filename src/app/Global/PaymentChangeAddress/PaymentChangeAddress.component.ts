@@ -14,7 +14,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    @ViewChild(AddressesComponent, {static: false}) paymentAddresses: AddressesComponent;
    addressType = 1;
    panelOpenState = false;
-
+ 
    constructor(public appService: AppService,
                public router: Router,
                private route: ActivatedRoute,
@@ -22,13 +22,13 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
                ) {
                   this.route.queryParams.forEach(queryParams => {
          this.addressType = +queryParams['addressType'];
-
+         
       });
 
    }
 
    ngOnInit() {
-
+      
    }
 
    ngAfterViewInit() {
