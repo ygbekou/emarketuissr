@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AddressesComponent } from 'src/app/Global/Addresses/Addresses.component';
@@ -13,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
 export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
 
    @ViewChild(AddressesComponent, {static: false}) paymentAddresses: AddressesComponent;
-   addressType: number = 1;
+   addressType = 1;
    panelOpenState = false;
  
    constructor(public appService: AppService,

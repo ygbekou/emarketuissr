@@ -79,6 +79,7 @@ import { TokenStorage } from './token.storage';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
 import { CartModule } from './Pages/Cart/Cart.module';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -175,7 +176,8 @@ export function createTranslateLoader(http: HttpClient) {
       {
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-      }
+      },
+      { provide: LocationStrategy, useClass: HashLocationStrategy }
    ],
    exports: [
       RouterModule,

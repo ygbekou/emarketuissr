@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Product, CategoryDescription, ProductToCategory, Category, ProductDescription, ProductRelated } from 'src/app/app.models';
@@ -17,6 +17,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
    @Input() product: Product;
    @Input() productId: number;
    @Input() f: Form;
+   @Output() productChangeEvent = new EventEmitter<Product>();
 
    categories: CategoryDescription[][] = [];
    categoryId: number;
@@ -241,6 +242,10 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
 
    }
 
+   setProduct(prod: Product) {
+      this.product = prod;
+   }
+
 
    save() {
       this.messages = '';
@@ -267,6 +272,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
                   this.processResult(result, this.product, null);
                   this.getParentCategoryDescriptions();
                   this.getProductCategoryDescriptions();
+                  // this.productChangeEvent.emit(this.product);
                }
             });
 

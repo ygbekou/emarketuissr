@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Product, ProductVideo } from 'src/app/app.models';
@@ -16,6 +16,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
    @Input() product: Product;
    @Input() productId: number;
    @Input() f: Form;
+   @Output() imageSaveEvent = new EventEmitter<String>();
 
    messages: string;
    formData: FormData;
@@ -29,7 +30,12 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
    }
 
    ngOnInit() {
+      console.log('Product image loaded');
       this.getProduct();
+   }
+
+   setProduct(prod: Product) {
+      this.product = prod;
    }
 
    getProduct() {
@@ -48,15 +54,15 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
                            link: 'assets/images/products/' + this.productId + '/' + item,
                            preview: 'assets/images/products/' + this.productId + '/' + item
                         }
-                     )
+                     );
                   } else {
                      const image = {
                         link: 'assets/images/products/' + this.productId + '/' + item,
                         preview: 'assets/images/products/' + this.productId + '/' + item
-                     }
+                     };
                      images.push(image);
                   }
-               })
+               });
                this.files = images;
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -76,21 +82,32 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
       product.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
 
+      console.log(this.files);
+      console.log(this.mainFiles);
+
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.files.length; i++) {
          if (this.files[i].file) {
+            console.log('Additional file added: ' + 'picture.' + this.files[i].file.name);
             this.formData.append('file[]', this.files[i].file, 'picture.' + this.files[i].file.name);
+         } else {
+            console.log(this.files[i].file);
          }
       }
       for (let i = 0; i < this.mainFiles.length; i++) {
          if (this.mainFiles[i].file) {
+            console.log('main file added: ' + 'main_picture.' + this.mainFiles[i].file.name);
             this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
+         } else {
+            console.log(this.mainFiles[i].file);
          }
       }
 
+      console.log(this.formData);
+
       product.productVideos = this.product.productVideos;
       product.singleImage = false;
-      if (this.files.length > 0) {
+      if (this.files.length > 0 || this.mainFiles.length > 0) {
          console.log(product);
 
          this.appService.saveWithFile(product, 'Product', this.formData, 'saveWithFile')
@@ -99,6 +116,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
                   console.log('saveWithFile');
                   this.product.productVideos = result.productVideos;
                   this.product.image = result.image;
+                  this.imageSaveEvent.emit(this.product.image);
                   this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                      this.messages = res['MESSAGE.SAVE_SUCCESS'];
                   });
@@ -113,6 +131,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             .subscribe(result => {
                if (result.id > 0) {
                   this.product.id = result.id;
+                  this.imageSaveEvent.emit(this.product.image);
                   this.processResult(result, this.product, null);
                }
             });
