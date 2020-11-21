@@ -142,7 +142,7 @@ export class PaymentCardComponent implements OnInit {
       })
          .subscribe(result => {
             if (result.result === 'SUCCESS') {
-               alert('Here ...')
+               this.cardSaveEvent.emit(result);
             } else {
                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
                   this.errors = res['MESSAGE.SAVE_UNSUCCESS'];

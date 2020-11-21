@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class TmoneysComponent implements OnInit {
 
-  displayedColumns: string[] = ['selected', 'image', 'phoneNumber'];
+  displayedColumns: string[] = ['selected', 'image', 'phoneNumber', 'action'];
   tmoneysDataSource: MatTableDataSource<Tmoney>;
   selectedTmoney: Tmoney;
 
