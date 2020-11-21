@@ -55,6 +55,7 @@ export class ProductDescriptionComponent implements OnInit {
 
    onLangChanged(event) {
       this.messages = '';
+      console.log('tab changed')
       this.product.productDescriptions.forEach(prodDesc => {
          if (prodDesc.language.name === event.tab.textLabel) {
             this.productDescription = prodDesc;
@@ -70,8 +71,7 @@ export class ProductDescriptionComponent implements OnInit {
          // prod.model = this.product.model;
          // prod.id = this.product.id;
          // prod.status = 1;
-         this.productDescription.product = this.product;
-         this.productDescription.product.productDescriptions = [];
+         this.productDescription.product =   this.product.clone();
          this.appService.save(this.productDescription, 'ProductDescription')
             .subscribe(result => {
                if (result.id > 0) {

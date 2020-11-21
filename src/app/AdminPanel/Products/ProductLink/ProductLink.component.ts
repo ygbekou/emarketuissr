@@ -262,7 +262,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
          });
 
 
-         const product = this.product.cloneWithoutChilds(this.product);
+         const product = this.product.clone();
          product.id = this.productId;
          product.productToCategorys = productToCategorys;
          this.appService.save(product, 'Product')
