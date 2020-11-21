@@ -488,6 +488,7 @@
 		"INVALID_USER_PASS": "Invalid Username or password. Please try again.",
 		"INVALID_CARD": "Invalid credit card",
 		"MESSAGE_FAILED": "Error sending message",
+		"INVALID_BARCODE":"Invalid barcode",
 		"MESSAGE_SENT": "Message sent successfully",
 		"NO_CRITERIA_SET": "At least one search criteria is required",
 		"NO_DATA": "No data available",
