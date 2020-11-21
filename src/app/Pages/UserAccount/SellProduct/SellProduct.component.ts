@@ -49,7 +49,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
   public message: string;
   public errors: string;
-  public watcher: Subscription; 
+  public watcher: Subscription;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -277,7 +277,56 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   selectForSaleProduct($event) {
     this.productDesc = $event;
     this.productStore = new ProductToStore();
+    this.productStore.dateAvailable = new Date();
+    this.productStore.minimum = 0;
+    this.productStore.quantity = 0;
+    this.productStore.sortOrder = 0;
+    this.productStore.price = this.productDesc.product.price;
+    this.productStore.points = Number(this.productDesc.product.price.toFixed(0));
+    this.productStore.status = 1;
     this.stepper.selectedIndex = 3;
+  }
+
+  quickSell($event) {
+    this.messages = '';
+    this.errors = '';
+    this.productDesc = $event;
+    this.productStore = new ProductToStore();
+    this.productStore.dateAvailable = new Date();
+    this.productStore.minimum = 0;
+    this.productStore.quantity = 0;
+    this.productStore.sortOrder = 0;
+    this.productStore.price = this.productDesc.product.price;
+    this.productStore.points = Number(this.productDesc.product.price.toFixed(0));
+    this.productStore.status = 1;
+    // this.stepper.selectedIndex = 3;
+    this.productStore.product = this.productDesc.product;
+    this.productStore.store = this.selectedStore;
+    this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
+    console.log(this.productStore);
+    // const index: number = this.products.indexOf(this.productDesc);
+    this.appService.save(this.productStore, 'ProductStore')
+      .subscribe(result => {
+        if (result.id > 0) {
+          if (result.id > 0) {
+            const index: number = this.dataSource.data.indexOf(this.productDesc);
+            if (index !== -1) {
+              this.dataSource.data.splice(index, 1);
+              this.dataSource = new MatTableDataSource<ProductDescription>(this.dataSource.data);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            }
+            this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+              this.messages = res['MESSAGE.SAVE_SUCCESS'];
+            });
+          } else {
+            this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+              this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+            });
+          }
+        }
+      });
+
   }
 
   sell() {

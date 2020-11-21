@@ -1,4 +1,15 @@
-<mat-tab-group>
+<a mat-button [routerLink]="['/admin/products']">{{'COMMON.PRODUCT' | translate}}s
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="gray">
+  <h5>{{'COMMON.PRODUCT' | translate}}</h5>
+</a>
+
+<a (click)="clear()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+</a>
+
+<mat-tab-group (selectedTabChange)="clearMessages($event)">
    <mat-tab label="{{'COMMON.GENERAL' | translate}}">
       <app-product-description [product]="product"></app-product-description>
    </mat-tab>
@@ -248,11 +259,11 @@
    </mat-tab>
 
    <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
-      <app-product-link [product]="product" [productId]="product.id"></app-product-link>
+      <app-product-link (productChangeEvent)="setProduct($event)" [product]="product" [productId]="product.id"></app-product-link>
    </mat-tab>
 
    <mat-tab label="{{'COMMON.MEDIA' | translate}}" *ngIf="product.id > 0">
-      <app-product-images [product]="product" [productId]="product.id"></app-product-images>
+      <app-product-images (imageSaveEvent)="setImage($event)" [product]="product" [productId]="product.id"></app-product-images>
    </mat-tab>
 
    <mat-tab label="{{'COMMON.ATTRIBUTE' | translate}}" *ngIf="product.id > 0">

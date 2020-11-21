@@ -88,7 +88,7 @@
           <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
             <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
               [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
-              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+              (addToWishList)="addToWishList($event)" (selectProduct)="quickSell($event)" gridThree="true">
             </embryo-ProductGrid>
           </div>
         </div>
@@ -96,6 +96,8 @@
           [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
         </mat-paginator>
       </mat-step>
+
+      <!--
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.SELL_PRODUCT'|translate}}</ng-template>
         <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
@@ -231,6 +233,7 @@
           </div>
         </div>
       </mat-step>
+-->
     </mat-horizontal-stepper>
   </div>
 </mat-card>
