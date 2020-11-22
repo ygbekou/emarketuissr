@@ -79,6 +79,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
       product.productVideos = [];
       product.productToCategorys = [];
       product.id = this.productId;
+      product.remainingFileNames = [];
       product.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
 
@@ -91,7 +92,9 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             console.log('Additional file added: ' + 'picture.' + this.files[i].file.name);
             this.formData.append('file[]', this.files[i].file, 'picture.' + this.files[i].file.name);
          } else {
-            console.log(this.files[i].file);
+            console.log(this.files[i]);
+            const pathSplitArray = this.files[i].link.split('/');
+            product.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
          }
       }
       for (let i = 0; i < this.mainFiles.length; i++) {
@@ -99,7 +102,9 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             console.log('main file added: ' + 'main_picture.' + this.mainFiles[i].file.name);
             this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
          } else {
-            console.log(this.mainFiles[i].file);
+            console.log(this.mainFiles[i]);
+            const pathSplitArray = this.files[i].link.split('/');
+            product.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
          }
       }
 

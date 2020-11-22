@@ -51,6 +51,7 @@ export class Pagination {
 
 export class BaseModel {
   lang: string;
+  remainingFileNames: string[];
 }
 
 export class SearchAttribute {
@@ -153,7 +154,7 @@ export class AuthToken {
 }
 
 
-export class Product {
+export class Product extends BaseModel {
   id: number;
   dateAvailable: Date;
   ean: string;
