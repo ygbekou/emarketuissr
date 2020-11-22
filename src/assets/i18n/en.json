@@ -471,7 +471,9 @@
 		"DATE_FIRST_AVAILABLE": "Date First Available",
 		"ADD_TMONEY": "Add Tmoney",
 		"ADD_FLOOZ": "Add Flooz",
-		"PHONE_NUMBER": "Phone Number"
+		"PHONE_NUMBER": "Phone Number",
+		"LINK_PRODUCTS": "Link Products",
+		"LINK_CATEGORIES": "Link Categories"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

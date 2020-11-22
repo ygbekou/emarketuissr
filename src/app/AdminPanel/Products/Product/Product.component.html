@@ -258,7 +258,11 @@
       </form>
    </mat-tab>
 
-   <mat-tab label="{{'COMMON.LINKS' | translate}}" *ngIf="product.id > 0">
+   <mat-tab label="{{'COMMON.LINK_PRODUCTS' | translate}}" *ngIf="product.id > 0">
+      <app-product-to-product (productChangeEvent)="setProduct($event)" [product]="product" [productId]="product.id"></app-product-to-product>
+   </mat-tab>
+
+   <mat-tab label="{{'COMMON.LINK_CATEGORIES' | translate}}" *ngIf="product.id > 0">
       <app-product-link (productChangeEvent)="setProduct($event)" [product]="product" [productId]="product.id"></app-product-link>
    </mat-tab>
 

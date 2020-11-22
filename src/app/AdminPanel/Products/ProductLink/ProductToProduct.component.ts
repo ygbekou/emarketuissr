@@ -1,47 +1,37 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Form } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, CategoryDescription, ProductToCategory, ProductDescription } from 'src/app/app.models';
+import { Product, CategoryDescription, ProductToCategory, ProductDescription, ProductRelated } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { Observable } from 'rxjs';
 
 @Component({
-   selector: 'app-product-link',
-   templateUrl: './ProductLink.component.html',
+   selector: 'app-product-to-product',
+   templateUrl: './ProductToProduct.component.html',
    styleUrls: ['./ProductLink.component.scss']
 })
 
-export class ProductLinkComponent extends BaseComponent implements OnInit {
+export class ProductToProductComponent extends BaseComponent implements OnInit {
 
    @Input() product: Product;
    @Input() productId: number;
    @Input() f: Form;
-   @Output() productChangeEvent = new EventEmitter<Product>();
 
    categories: CategoryDescription[][] = [];
    categoryId: number;
-   finalSelectedCatDescs: CategoryDescription[] = [];
+   finalSelectedCatDesc: CategoryDescription;
    finalDeletedCatDescs: number[] = [];
    selectedCatDescs: CategoryDescription[] = [];
    depth = 0;
    messages: string;
-
-   pCategories: CategoryDescription[][] = [];
-   pCategoryId: number;
-   pFinalSelectedCatDescs: CategoryDescription[] = [];
-   pFinalDeletedCatDescs: number[] = [];
-   pSelectedCatDescs: CategoryDescription[] = [];
-   pDepth = 0;
-
-
 
    options = ['One', 'Two'];
    filteredOptions: Observable<string[]>;
    currentOption: string;
 
    relatedProductOptions: ProductDescription[];
-   filteredRelatedProductOptions: Observable<ProductDescription[]>;
+   filteredRelatedProductOptions: ProductDescription[] = [];
    selectedRelatedProduct: ProductDescription;
    finalSelectedRelatedProdDescs: ProductDescription[] = [];
 
@@ -64,7 +54,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       }, 1000);
 
       this.getParentCategoryDescriptions();
-      this.getProductCategoryDescriptions();
+      this.getProductRelatedDescriptions();
    }
 
    filterStates(val: string) {
@@ -75,19 +65,42 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       return this.options;
    }
 
-   getProductCategoryDescriptions() {
-      this.depth = 0;
-      this.categories = [];
-      this.appService.getObjects('/service/catalog/productcategorydescriptions/'
+   filterRelatedProducts(val) {
+      if (val) {
+         const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name;
+         this.filteredRelatedProductOptions = this.relatedProductOptions.filter(prodDesc => 
+            prodDesc.name.toLowerCase().startsWith(filterValue));
+         return this.relatedProductOptions.filter(prodDesc => prodDesc.name.toLowerCase().startsWith(filterValue));
+      }
+
+      return this.relatedProductOptions;
+   }
+
+   getProductRelatedDescriptions() {
+      this.appService.getObjects('/service/catalog/productrelateddescriptions/'
          + this.productId + '/' + this.appService.appInfoStorage.language.id)
-         .subscribe((data: CategoryDescription[]) => {
-            this.finalSelectedCatDescs = data;
-            this.finalSelectedCatDescs.forEach(element => {
-               element.id = element.category.id;
+         .subscribe((data: ProductDescription[]) => {
+            this.finalSelectedRelatedProdDescs = data;
+            this.finalSelectedRelatedProdDescs.forEach(element => {
+               element.id = element.product.id;
             });
          },
             error => console.log(error),
-            () => console.log('Get all CategoryDescription complete'));
+            () => console.log('Get all ProductDescription complete'));
+   }
+
+   getRelatedProducts(categoryId: number) {
+
+      if (categoryId !== undefined) {
+         this.appService.getObjects('/service/catalog/relatedproducts/' + this.appService.appInfoStorage.language.id
+            + '/' + categoryId + '/' + this.productId )
+            .subscribe((data: ProductDescription[]) => {
+               this.relatedProductOptions = data;
+               this.currentOption = '';
+            },
+               error => console.log(error),
+               () => console.log('Get all non related product complete'));
+      }
    }
 
    getParentCategoryDescriptions() {
@@ -108,46 +121,23 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
             () => console.log('Get all CategoryDescription complete'));
    }
 
+   removeRelatedProduct(selectedProductDesc: ProductDescription, index: number) {
 
-   removeCategory(categoryDescId: number, index: number) {
-      this.finalDeletedCatDescs.push(categoryDescId);
-      this.finalSelectedCatDescs[index].action = 'delete';
+      const pr = new ProductRelated();
+      pr.related = new Product();
+      pr.related.id = this.finalSelectedRelatedProdDescs[index].product.id;
+      pr.product = new Product();
+      pr.product.id = this.productId;
 
-      const ptc = new ProductToCategory();
-      ptc.category = this.finalSelectedCatDescs[index].category;
-      ptc.product = new Product();
-      ptc.product.id = this.productId;
-
-      this.appService.saveWithUrl('/service/crud/ProductToCategory/delete/', ptc)
+      this.appService.saveWithUrl('/service/crud/ProductRelated/delete/', pr)
          .subscribe((data: ProductToCategory[]) => {
             this.processDeleteResult(data, this.messages);
-            this.finalSelectedCatDescs.splice(index, 1);
+            this.finalSelectedRelatedProdDescs.splice(index, 1);
          },
             error => console.log(error),
-            () => console.log('Delete of selected category complete'));
+            () => console.log('Delete of selected related product complete'));
    }
 
-   addCategory(indexOfElement: number, index: number) {
-
-      const ptc = new ProductToCategory();
-      ptc.category = this.finalSelectedCatDescs[index].category;
-      ptc.product = new Product();
-      ptc.product.id = this.productId;
-      ptc.action = 'Ignore_parent';
-
-      this.appService.saveWithUrl('/service/crud/ProductToCategory/save/', ptc)
-         .subscribe((data: ProductToCategory[]) => {
-            this.processResult(data, ptc, null);
-            const name = this.finalSelectedCatDescs[index].name;
-            this.finalSelectedCatDescs[index].name = '';
-            for (const catIndex in this.selectedCatDescs) {
-               this.finalSelectedCatDescs[index].longName += (+catIndex > 0 ? ' > ' : '') 
-                  + this.selectedCatDescs[catIndex].name;
-            }
-         },
-            error => console.log(error),
-            () => console.log('Delete of selected category complete'));
-   }
 
    categorySelected(selectedCatDesc: CategoryDescription, indexOfElement: number) {
 
@@ -171,19 +161,32 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
                error => console.log(error),
                () => console.log('Get all CategoryDescription complete'));
       } else {
-         const index = this.finalSelectedCatDescs.length;
-         this.finalSelectedCatDescs[index] = new CategoryDescription();
-         this.finalSelectedCatDescs[index].category = this.selectedCatDescs[indexOfElement].category;
-         this.finalSelectedCatDescs[index].id = this.selectedCatDescs[indexOfElement].category.id;
-         this.finalSelectedCatDescs[index].name = this.selectedCatDescs[indexOfElement].name;
-
-         this.addCategory(indexOfElement, index);
+          this.getRelatedProducts(this.selectedCatDescs[indexOfElement].category.id);
       }
    }
 
 
+   relatedSelected(selectedProdDesc: ProductDescription) {
+
+      const pr = new ProductRelated();
+      pr.related = selectedProdDesc.product;
+      pr.product = new Product();
+      pr.product.id = this.productId;
+      pr.action = 'Ignore_parent';
+
+      this.appService.saveWithUrl('/service/crud/ProductRelated/save/', pr)
+         .subscribe((data: ProductRelated[]) => {
+            this.processResult(data, pr, null);
+            this.finalSelectedRelatedProdDescs.push(selectedProdDesc);
+         },
+            error => console.log(error),
+            () => console.log('Delete of selected related product complete'));
+
+   }
+
    setProduct(prod: Product) {
       this.product = prod;
    }
+
 
 }

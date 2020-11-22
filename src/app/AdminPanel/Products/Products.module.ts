@@ -65,13 +65,14 @@ import { OptionValueComponent } from './OptionValue/OptionValue.component';
 import { ProductOptionsComponent } from './ProductOptions/ProductOptions.component';
 import { MarketingProductComponent } from './MarketingProduct/MarketingProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
+import { ProductToProductComponent } from './ProductLink/ProductToProduct.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
     MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
     AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
-    OptionsComponent, OptionComponent, OptionDescriptionComponent,
+    OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent,
     OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,
     MarketingProductComponent],
   imports: [

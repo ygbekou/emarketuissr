@@ -193,6 +193,7 @@ export class Product {
   productToCategorys: ProductToCategory[] = [];
 
   type = 'Product';
+  action: string;
 
   cloneWithoutChilds(product: Product) {
     const copy = { ...product };
