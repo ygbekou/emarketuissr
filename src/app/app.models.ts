@@ -195,15 +195,26 @@ export class Product {
   type = 'Product';
   action: string;
 
-  cloneWithoutChilds(product: Product) {
+/*   cloneWithoutChilds(product: Product) {
     const copy = { ...product };
     copy.productDescriptions = [];
     copy.productVideos = [];
     copy.productToCategorys = [];
+    console.log('Product copied');
+    console.log(copy);
+    return copy;
+  } */
 
+  clone(): Product {
+    let copy: Product = new Product();
+    copy = JSON.parse(JSON.stringify({ ...this }));
+    copy.productDescriptions = [];
+    copy.productVideos = [];
+    copy.productToCategorys = [];
+    console.log('Product copied');
+    console.log(copy);
     return copy;
   }
-
   copyData(copyFrom: Product) {
     this.id = copyFrom.id;
   }
@@ -1173,7 +1184,7 @@ export class SearchCriteria {
 
 export class PaymentMethodChangeVO {
   userId: number;
-	paymentMethodCode: string;
+  paymentMethodCode: string;
   paymentMethodCodeId: number;
   stripePaymentMethodId: string;
 }

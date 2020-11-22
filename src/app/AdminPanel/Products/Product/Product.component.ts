@@ -131,7 +131,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
             this.product.id = result.id;
             this.processResult(result, this.product, null);
             this.prodImageComponent.setProduct(this.product);
-            // this.prodLinkComponent.setProduct(this.product);
+            this.prodLinkComponent.setProduct(this.product);
             this.productDescriptionView.setProduct(this.product);
           }
         });
