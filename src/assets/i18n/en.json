@@ -478,7 +478,17 @@
 		"LINK_CATEGORIES": "Link Categories",
 		"FILTER": "Filter",
 		"MIN_TOTAL": "Min Total",
-		"MAX_TOTAL": "Max Total"
+		"MAX_TOTAL": "Max Total",
+		"ORDERS": "Orders",
+		"OVERRIDE": "Override",
+		"NOTIFY_CUSTOMER": "Notify Customer",
+		"BROWSER": "Browser",
+		"IP_ADDRESS": "Ip Address",
+		"FORWARDED_IP": "Fowarded Address",
+		"USER_AGENT": "User Agent",
+		"ACCEPT_LANGUAGE": "Accept Language",
+		"ADDITIONAL": "Additional",
+		"ORDER_HISTORY": "Order History"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

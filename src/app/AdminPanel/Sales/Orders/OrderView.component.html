@@ -218,3 +218,31 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </mat-card>
 </div>
+
+<mat-tab-group (selectedTabChange)="clearMessages($event)">
+  <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
+    <app-orderHistory [orderId]="order.id"></app-orderHistory>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.ADDITIONAL' | translate}}" *ngIf="order.id > 0">
+    <mat-card>
+       <h6>{{'COMMON.BROWSER' | translate}}</h6>
+      <div>
+        <div class="proflie-field mb-12">
+           <label>{{'COMMON.IP_ADDRESS' | translate}}</label> <span>{{order.ip}}</span>
+        </div>
+        <div class="proflie-field mb-12">
+           <label>{{'COMMON.FORWARDED_IP' | translate}}</label> <span>{{order.forwardedIp}}</span>
+        </div>
+        <div class="proflie-field mb-12">
+           <label>{{'COMMON.USER_AGENT' | translate}}</label> <span>{{order.userAgent}}</span>
+        </div>
+        <div class="proflie-field mb-12">
+           <label>{{'COMMON.ACCEPT_LANGUAGE' | translate}}</label> <span>{{order.acceptLanguage}}</span>
+        </div>
+      </div>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+
+    
+ 

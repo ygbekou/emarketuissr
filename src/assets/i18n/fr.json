@@ -479,7 +479,16 @@
 		"FILTER": "Filtrer",
 		"MIN_TOTAL": "Min Total",
 		"MAX_TOTAL": "Max Total",
-		"ORDERS": "Achats"
+		"ORDERS": "Achats",
+		"OVERRIDE": "Remplacer",
+		"NOTIFY_CUSTOMER": "Notify le client",
+		"BROWSER": "Navigateur",
+		"IP_ADDRESS": "Adresse IP",
+		"FORWARDED_IP": "Adresse transférée",
+		"USER_AGENT": "Agent utilisateur",
+		"ACCEPT_LANGUAGE": "Language Accepté",
+		"ADDITIONAL": "Additionnel",
+		"ORDER_HISTORY": "Historique commandes"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
