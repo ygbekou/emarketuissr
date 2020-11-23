@@ -1092,6 +1092,26 @@ export class CompanyLocation {
   type = 'Location';
 }
 
+
+export class OrderHistory {
+  id: number;
+  comment: string;
+  notify: number;
+  order: Order;
+  orderStatus: OrderStatus;
+  createDate: Date;
+
+  override: boolean;
+
+  type = 'OrderHistory';
+
+  constructor() {
+    this.order = new Order();
+    this.orderStatus = new OrderStatus();
+  }
+}
+
+
 export class Order {
   id: number;
   acceptLanguage: string;
@@ -1181,6 +1201,16 @@ export class SearchCriteria {
   priceMin: number;
   priceMax: number;
   category: string;
+}
+
+export class OrderSearchCriteria {
+  orderId: number;
+  customerName: string;
+  orderStatus: OrderStatus;
+  minTotal: number;
+  maxTotal: number;
+  beginDate: Date;
+  endDate: Date;
 }
 
 export class PaymentMethodChangeVO {

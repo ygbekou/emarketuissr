@@ -58,7 +58,6 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
             this.dataSource = new MatTableDataSource(this.order.orderProducts);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-            console.info(this.order);
           } else {
             this.order = new Order();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -78,7 +77,7 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
 
 
   isEmpty(value: string): boolean {
-    const val = value !== null ? value.trim() : '';
+    const val = value !== null && value !== undefined ? value.trim() : '';
 
     return val.length === 0;
   }

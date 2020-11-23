@@ -22,7 +22,7 @@ export class AttributesComponent extends BaseComponent implements OnInit {
 
   @ViewChild(AttributeComponent, { static: false }) attributeView: AttributeComponent;
 
-  @Input() attributeGroup: AttributeGroup;
+  @Input() attributeGroup: AttributeGroup = new AttributeGroup();
   @Input() attributeGroupId: number;
 
   constructor(public appService: AppService,

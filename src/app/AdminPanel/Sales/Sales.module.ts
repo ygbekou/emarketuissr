@@ -40,9 +40,10 @@ import { GlobalModule } from '../../Global/Global.module';
 import { SalesRoutes } from './Sales.routing';
 import { OrdersComponent } from './Orders/Orders.component';
 import { OrderViewComponent } from './Orders/OrderView.component';
+import { OrderHistoryComponent } from './Orders/OrderHistory.component';
 
 @NgModule({
-  declarations: [OrdersComponent, OrderViewComponent],
+  declarations: [OrdersComponent, OrderViewComponent, OrderHistoryComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
