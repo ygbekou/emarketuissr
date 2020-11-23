@@ -1183,6 +1183,16 @@ export class SearchCriteria {
   category: string;
 }
 
+export class OrderSearchCriteria {
+  orderId: number;
+  customerName: string;
+  orderStatus: OrderStatus;
+  minTotal: number;
+  maxTotal: number;
+  beginDate: Date;
+  endDate: Date;
+}
+
 export class PaymentMethodChangeVO {
   userId: number;
   paymentMethodCode: string;

@@ -283,6 +283,7 @@
 		"OLD": "Old",
 		"OTHER_PICTURES": "Additional images",
 		"ORDER_STATUS": "Order status",
+		"ORDER_ID": "Order Id",
 		"OUR_EXPERTISE": "Our expertise",
 		"OUR_LOCATION": "Our location",
 		"OUR_SERVICE": "Our service",
@@ -439,6 +440,7 @@
 		"ORDER": "Order",
 		"ORDER_DETAILS": "Order Details",
 		"CUSTOMER_DETAILS": "Customer Details",
+		"CUSTOMER_NAME": "Customer Name",
 		"UNIT_PRICE": "Unit Price",
 		"REWARD_POINTS": "Reward Points",
 		"MIN": "Min",
@@ -473,7 +475,10 @@
 		"ADD_FLOOZ": "Add Flooz",
 		"PHONE_NUMBER": "Phone Number",
 		"LINK_PRODUCTS": "Link Products",
-		"LINK_CATEGORIES": "Link Categories"
+		"LINK_CATEGORIES": "Link Categories",
+		"FILTER": "Filter",
+		"MIN_TOTAL": "Min Total",
+		"MAX_TOTAL": "Max Total"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

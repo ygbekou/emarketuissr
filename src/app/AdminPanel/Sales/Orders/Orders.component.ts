@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Order } from 'src/app/app.models';
+import { Order, SearchCriteria, OrderSearchCriteria, OrderStatus } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,21 +18,37 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   messages = '';
+  searchCriteria: OrderSearchCriteria;
+  orderStatuses: OrderStatus[];
+
+
+
   constructor(public appService: AppService,
     public translate: TranslateService) {
       super(translate);
     }
 
   ngOnInit() {
-    this.getAll();
+    this.searchCriteria = new OrderSearchCriteria();
+    this.search();
+    this.getOrderStatuses();
   }
 
-  getAll() {
-    let searchCriteria = {
-      userId: this.appService.tokenStorage.getUserId()
-    };
+  getOrderStatuses() {
+    const parameters: string[] = [];
+    this.appService.getAllByCriteria('com.softenza.emarket.model.OrderStatus', parameters)
+      .subscribe((data: OrderStatus[]) => {
+        this.orderStatuses = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all OrderStatus complete'));
+  }
 
-    this.appService.saveWithUrl('/service/order/orders', searchCriteria)
+  search() {
+
+    console.info(this.searchCriteria);
+
+    this.appService.saveWithUrl('/service/order/orders', this.searchCriteria)
       .subscribe((data: Order[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;

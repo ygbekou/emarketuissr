@@ -20,7 +20,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    messages: string;
    currentOption: string;
    optionOptions: OptionDescription[];
-   filteredOptionOptions: Observable<OptionDescription[]>;
+   filteredOptionOptions: OptionDescription[];
 
    productOptions: ProductOption[];
    productOption: ProductOption;
@@ -45,7 +45,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             this.optionOptions = data;
             this.optionOptions.forEach(element => {
                element.id = element.option.id;
-            })
+            });
 
          },
             error => console.log(error),
@@ -72,7 +72,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
    filterOptions(val) {
       if (val) {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
-         return this.optionOptions.filter(attrDesc => attrDesc.name.toLowerCase().startsWith(filterValue));
+         this.filteredOptionOptions = this.optionOptions.filter(attrDesc => attrDesc.name.toLowerCase().startsWith(filterValue));
       }
      return this.optionOptions;
    }
@@ -206,7 +206,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       this.appService.saveWithUrl('/service/crud/ProductOptionValue/save/', pov)
          .subscribe((data: ProductOption) => {
             this.processResult(data, this.productOption, null);
-            //this.productOptions[i].id = data.id;
+            // this.productOptions[i].id = data.id;
             pov.id = data.id;
          },
             error => console.log(error),
@@ -293,7 +293,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
             this.optionValues = data;
             this.optionValues.forEach(element => {
                element.id = element.optionValue.id;
-            })
+            });
 
          },
             error => console.log(error),
