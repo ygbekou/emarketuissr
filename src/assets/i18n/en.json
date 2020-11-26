@@ -488,7 +488,15 @@
 		"USER_AGENT": "User Agent",
 		"ACCEPT_LANGUAGE": "Accept Language",
 		"ADDITIONAL": "Additional",
-		"ORDER_HISTORY": "Order History"
+		"ORDER_HISTORY": "Order History",
+		"ORDER_INFORMATION": "Order Information",
+		"ORDER_DATE": "Order Date",
+		"PRODUCT_INFORMATION_AND_RETURN_REASON": "Product Information & Reason for Return",
+		"RETURN_ACTION": "Return Action",
+		"RETURN_REASON": "Return Reason",
+		"RETURN_STATUS": "Return Status",
+		"CUSTOMER_ID": "Customer Id",
+		"OPENED": "Opened"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -531,7 +539,8 @@
 		"SEND_US_FEEDBACK": "Send us your feedback",
 		"SEND_US_FEEDBACK_TEXT": "You have a feedback on the article? Let us know.",
 		"WELCOME_ON_BLOG": "Welcome to Bat & Bel Blog",
-		"YOUR_EMAIL_NOT_PUBLISHED": "Your e-mail will not be published. Required fields are marked with *"
+		"YOUR_EMAIL_NOT_PUBLISHED": "Your e-mail will not be published. Required fields are marked with *",
+		"INVALID_ORDER_ID": "Invalid Order Id"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

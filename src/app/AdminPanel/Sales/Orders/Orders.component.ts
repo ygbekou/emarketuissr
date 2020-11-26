@@ -46,8 +46,6 @@ export class OrdersComponent extends BaseComponent implements OnInit {
 
   search() {
 
-    console.info(this.searchCriteria);
-
     this.appService.saveWithUrl('/service/order/orders', this.searchCriteria)
       .subscribe((data: Order[]) => {
         this.dataSource = new MatTableDataSource(data);

@@ -47,7 +47,8 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'shopping_cart',
     children: [
-      { state: 'orders', name: 'Orders', type: 'link' }
+      { state: 'orders', name: 'Orders', type: 'link' },
+      { state: 'returns', name: 'Returns', type: 'link' }
     ]
   },
   {

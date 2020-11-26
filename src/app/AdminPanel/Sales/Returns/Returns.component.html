@@ -1,0 +1,150 @@
+<a mat-button [routerLink]="['/admin/sale/returns']">{{'COMMON.ORDERS' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+    <a [routerLink]="['/admin/sales/return', 0]" mat-icon-button color="primary"
+      matTooltip="{{'COMMON.ADD' | translate}}">
+      <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+    </a>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+
+        <ng-container matColumnDef="id" >
+          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Return ID </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="orderId" >
+          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Order ID </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.order.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> Customer </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.firstName}} {{orderReturn.lastName}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef width ="15%" mat-sort-header> Product </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{getProducts(orderReturn)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="model">
+          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Model </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.model}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.returnStatus.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateAdded">
+          <th mat-header-cell *matHeaderCellDef width ="12%" mat-sort-header> {{'COMMON.DATE_ADDED' | translate}} </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateModified">
+          <th mat-header-cell *matHeaderCellDef width ="12%" mat-sort-header> {{'COMMON.DATE_MODIFIED' | translate}} </th>
+          <td mat-cell *matCellDef="let orderReturn"> {{orderReturn.modDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width ="15%"> Actions </th>
+          <td mat-cell *matCellDef="let orderReturn">
+            <a [routerLink]="['/admin/sales/return', orderReturn.id]" mat-icon-button color="primary"
+              matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+            <button mat-icon-button color="warn" (click)="remove(orderReturn)" matTooltip="{{'COMMON.DELETE' | translate}}"
+              class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let orderReturn; columns: displayedColumns;">
+        </tr>
+      </table>
+      <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+    <mat-card>
+      <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+        <div fxLayout="row wrap">
+          <div class="text-center">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                <mat-icon>save</mat-icon>
+            </button> 
+          </div>
+          <div class="text-center" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.ORDER_ID' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.orderId" name="model"
+                #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.CUSTOMER_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.customerName" name="model"
+                #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label> {{'COMMON.RETURN_STATUS' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.returnStatus" name="food">
+              <mat-option *ngFor="let returnStatus of returnStatuses" [value]="returnStatus">
+                {{returnStatus.description}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

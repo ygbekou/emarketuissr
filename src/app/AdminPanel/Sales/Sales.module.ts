@@ -41,9 +41,19 @@ import { SalesRoutes } from './Sales.routing';
 import { OrdersComponent } from './Orders/Orders.component';
 import { OrderViewComponent } from './Orders/OrderView.component';
 import { OrderHistoryComponent } from './Orders/OrderHistory.component';
+import { ReturnsComponent } from './Returns/Returns.component';
+import { ReturnComponent } from './Returns/Return.component';
+import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
 
 @NgModule({
-  declarations: [OrdersComponent, OrderViewComponent, OrderHistoryComponent],
+  declarations: [
+    OrdersComponent,
+    OrderViewComponent,
+    OrderHistoryComponent,
+    ReturnsComponent,
+    ReturnComponent,
+    ReturnHistoryComponent
+  ],
   imports: [
     CommonModule,
     FlexLayoutModule,

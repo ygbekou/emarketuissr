@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./ReturnStatuses.component.scss']
 })
 export class ReturnStatusesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<ReturnStatus>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -79,10 +79,26 @@ export class ReturnStatusesComponent implements OnInit {
     this.selectedTab = 1;
     this.returnStatus = new ReturnStatus();
   }
-  edit(si: ReturnStatus) {
-    this.returnStatus = si;
-    this.selectedTab = 1;
+
+  edit(returnStatusId: number) {
+    if (returnStatusId > 0) {
+      this.appService.getOne(returnStatusId, 'ReturnAction')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.returnStatus = result;
+            this.selectedTab = 1;
+            console.info(this.returnStatus);
+          } else {
+            this.returnStatus = new ReturnStatus();
+            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+              this.messages = res['MESSAGE.READ_FAILED'];
+            });
+          }
+        });
+    }
   }
+
+
   save() {
     this.messages = '';
     this.errors = '';

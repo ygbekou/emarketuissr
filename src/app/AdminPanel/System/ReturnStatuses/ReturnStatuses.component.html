@@ -22,31 +22,32 @@
     <div class="table-wrapper">
       <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
-        <!-- ID Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
           <td mat-cell *matCellDef="let returnStatus"> {{returnStatus.id}} </td>
         </ng-container>
 
-        <!-- Image Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
           <td mat-cell *matCellDef="let returnStatus"> {{returnStatus.name}}
           </td>
         </ng-container>
 
-
-        <!-- Title Column -->
         <ng-container matColumnDef="language">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.LANGUAGE' | translate}} </th>
-          <td mat-cell *matCellDef="let returnStatus"> {{returnStatus.language.code}}</td>
+          <td mat-cell *matCellDef="let returnStatus"> {{returnStatus.language.description}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.DESCRIPTION' | translate}} </th>
+          <td mat-cell *matCellDef="let returnStatus"> {{returnStatus.description}}</td>
         </ng-container>
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let returnStatus">
-            <a (click)="edit(returnStatus)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+            <a (click)="edit(returnStatus.id)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
               <mat-icon>edit</mat-icon>
             </a>
             &nbsp;&nbsp;
@@ -82,11 +83,20 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"
-              [(ngModel)]="returnStatus.language" #language="ngModel">
-              <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang">
+              [(ngModel)]="returnStatus.language.id" #language="ngModel">
+              <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang.id">
                 {{lang.name}}
               </mat-option>
             </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.DESCRIPTION' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="description" [(ngModel)]="returnStatus.description" name="description"
+              #description="ngModel" required>
+            <mat-error *ngIf="ff.submitted && description.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>

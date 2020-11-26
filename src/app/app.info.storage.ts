@@ -14,6 +14,9 @@ export class AppInfoStorage {
   public stockStatuses: any = [];
   public weightClasses: any = [];
   public lengthClasses: any = [];
+  public returnStatuses: any = [];
+  public returnReasons: any = [];
+  public returnActions: any = [];
   public language: Language;
   public searchCategories: CategoryDescription[] = [];
   public mainMenus: Menu[] = [];

@@ -24,7 +24,7 @@ export class ProductAttributesComponent extends BaseComponent implements OnInit 
    filteredAttributeOptions: Observable<AttributeDescription[]>;
 
    productAttributes: ProductAttribute[];
-   
+
    constructor(public appService: AppService,
       public translate: TranslateService) {
       super(translate);

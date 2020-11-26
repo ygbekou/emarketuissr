@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ReturnAction } from 'src/app/app.models';
+import { ReturnAction, Language } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./ReturnActions.component.scss']
 })
 export class ReturnActionsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<ReturnAction>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -79,10 +79,25 @@ export class ReturnActionsComponent implements OnInit {
     this.selectedTab = 1;
     this.returnAction = new ReturnAction();
   }
-  edit(si: ReturnAction) {
-    this.returnAction = si;
-    this.selectedTab = 1;
+
+  edit(returnActionId: number) {
+    if (returnActionId > 0) {
+      this.appService.getOne(returnActionId, 'ReturnAction')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.returnAction = result;
+            this.selectedTab = 1;
+          } else {
+            this.returnAction = new ReturnAction();
+            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+              this.messages = res['MESSAGE.READ_FAILED'];
+            });
+          }
+        });
+    }
   }
+
+
   save() {
     this.messages = '';
     this.errors = '';

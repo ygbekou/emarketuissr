@@ -219,7 +219,7 @@
   </mat-card>
 </div>
 
-<mat-tab-group (selectedTabChange)="clearMessages($event)">
+<mat-tab-group>
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
     <app-orderHistory [orderId]="order.id"></app-orderHistory>
   </mat-tab>

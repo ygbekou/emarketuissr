@@ -488,7 +488,15 @@
 		"USER_AGENT": "Agent utilisateur",
 		"ACCEPT_LANGUAGE": "Language Accepté",
 		"ADDITIONAL": "Additionnel",
-		"ORDER_HISTORY": "Historique commandes"
+		"ORDER_HISTORY": "Historique commandes",
+    "ORDER_INFORMATION": "Informations sur la commande",
+		"ORDER_DATE": "Date de commande",
+		"PRODUCT_INFORMATION_AND_RETURN_REASON": "Informations sur le produit et motif du retour",
+		"RETURN_ACTION": "Action de retour",
+		"RETURN_REASON": "Raison de retour",
+		"RETURN_STATUS": "Statut de retour",
+		"CUSTOMER_ID": "Id du Client",
+		"OPENED": "Ouvert(e)"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
@@ -530,7 +538,8 @@
     "SEND_US_FEEDBACK_TEXT": "Vous avez un feedback sur l'article? Faites-nous le savoir.",
     "AGREEMENT": "En vous enregistrant, vous etes d'accord avec",
     "WELCOME_ON_BLOG": "Bienvenue sur le blogue de Bat & Bel",
-    "YOUR_EMAIL_NOT_PUBLISHED": "Votre e-mail ne sera pas publie. Les champs requis sont marques d'une *"
+    "YOUR_EMAIL_NOT_PUBLISHED": "Votre e-mail ne sera pas publie. Les champs requis sont marques d'une *",
+		"INVALID_ORDER_ID": "ID de commande non valide"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

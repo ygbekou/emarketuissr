@@ -501,21 +501,36 @@ export class ReturnStatus {
   id: number;
   name: string;
   language: Language;
+  description: string;
   type = 'ReturnStatus';
+
+  constructor() {
+    this.language = new Language();
+  }
 }
 
 export class ReturnReason {
   id: number;
   name: string;
   language: Language;
+  description: string;
   type = 'ReturnReason';
+
+  constructor() {
+    this.language = new Language();
+  }
 }
 
 export class ReturnAction {
   id: number;
   name: string;
   language: Language;
+  description: string;
   type = 'ReturnAction';
+
+  constructor() {
+    this.language = new Language();
+  }
 }
 
 export class Country {
@@ -897,7 +912,7 @@ export class ProductOption {
   timeMinute: number;
   timeHour: number;
 
-  productOptionValues: ProductOptionValue[]
+  productOptionValues: ProductOptionValue[];
 
   type = 'ProductOption';
 
@@ -1112,6 +1127,84 @@ export class OrderHistory {
 }
 
 
+export class Return {
+
+  id: number;
+  comment: string;
+  customerId: number;
+  dateOrdered: Date;
+  email: string;
+  firstName: string;
+  lastName: string;
+  model: string;
+  opened: number;
+  order: Order;
+  product: string;
+  productId: number;
+  quantity: number;
+  returnAction: ReturnAction;
+  returnReason: ReturnReason;
+  returnStatus: ReturnStatus;
+  telephone: string;
+  createDate: Date;
+  modDate: Date;
+
+  customer: string;
+
+  returnProducts: ReturnProduct[];
+
+  type = 'Return';
+
+
+  constructor() {
+    this.order = new Order();
+    this.returnAction = new ReturnAction();
+    this.returnReason = new ReturnReason();
+    this.returnStatus = new ReturnStatus();
+    this.returnProducts = [];
+  }
+}
+
+
+export class ReturnProduct {
+
+  id: number;
+  comment: string;
+  model: string;
+  opened: number;
+  productName: string;
+  product: Product;
+  returnId: number;
+  quantity: number;
+  returnReason: ReturnReason;
+
+  type = 'ReturnProduct';
+
+  constructor() {
+    this.product = new Product();
+    this.returnReason = new ReturnReason();
+  }
+}
+
+export class ReturnHistory {
+  id: number;
+  comment: string;
+  notify: number;
+  returnId: number;
+  returnStatus: ReturnStatus;
+  createDate: Date;
+
+  override: boolean;
+
+  type = 'ReturnHistory';
+
+  constructor() {
+    this.returnStatus = new ReturnStatus();
+  }
+}
+
+
+
 export class Order {
   id: number;
   acceptLanguage: string;
@@ -1205,8 +1298,10 @@ export class SearchCriteria {
 
 export class OrderSearchCriteria {
   orderId: number;
+  returnId: number;
   customerName: string;
   orderStatus: OrderStatus;
+  returnStatus: ReturnStatus;
   minTotal: number;
   maxTotal: number;
   beginDate: Date;

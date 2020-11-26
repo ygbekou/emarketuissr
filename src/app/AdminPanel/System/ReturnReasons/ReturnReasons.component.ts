@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./ReturnReasons.component.scss']
 })
 export class ReturnReasonsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<ReturnReason>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -79,10 +79,24 @@ export class ReturnReasonsComponent implements OnInit {
     this.selectedTab = 1;
     this.returnReason = new ReturnReason();
   }
-  edit(si: ReturnReason) {
-    this.returnReason = si;
-    this.selectedTab = 1;
+
+  edit(returnReasonId: number) {
+    if (returnReasonId > 0) {
+      this.appService.getOne(returnReasonId, 'ReturnReason')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.returnReason = result;
+            this.selectedTab = 1;
+          } else {
+            this.returnReason = new ReturnReason();
+            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+              this.messages = res['MESSAGE.READ_FAILED'];
+            });
+          }
+        });
+    }
   }
+
   save() {
     this.messages = '';
     this.errors = '';

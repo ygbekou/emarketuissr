@@ -39,14 +39,19 @@
         <!-- Title Column -->
         <ng-container matColumnDef="language">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.LANGUAGE' | translate}} </th>
-          <td mat-cell *matCellDef="let returnAction"> {{returnAction.language.code}}</td>
+          <td mat-cell *matCellDef="let returnAction"> {{returnAction.language.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.DESCRIPTION' | translate}} </th>
+          <td mat-cell *matCellDef="let returnAction"> {{returnAction.description}}</td>
         </ng-container>
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let returnAction">
-            <a (click)="edit(returnAction)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+            <a (click)="edit(returnAction.id)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
               <mat-icon>edit</mat-icon>
             </a>
             &nbsp;&nbsp;
@@ -82,11 +87,20 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"
-              [(ngModel)]="returnAction.language" #language="ngModel">
-              <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang">
+              [(ngModel)]="returnAction.language.id" #language="ngModel">
+              <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang.id">
                 {{lang.name}}
-              </mat-option>
+              </mat-option> 
             </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.DESCRIPTION' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="description" [(ngModel)]="returnAction.description" name="description"
+              #description="ngModel" required>
+            <mat-error *ngIf="ff.submitted && description.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>

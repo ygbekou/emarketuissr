@@ -1,0 +1,226 @@
+<mat-tab-group>
+  <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+    <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                <mat-icon>save</mat-icon>
+            </button> 
+          </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+        </div>
+      </div>
+      <h5>{{'COMMON.ORDER_INFORMATION' | translate}}</h5>
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.ORDER_ID' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="orderId" [(ngModel)]="orderReturn.order.id" 
+              (change)="getOrder()" name="orderId" #orderId="ngModel" required>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.CUSTOMER_ID' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="customerId" [(ngModel)]="orderReturn.customerId" 
+              name="customerId" #customerId="ngModel" readonly>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.ORDER_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="dateOrderedPicker" class="form-control" id="dateOrdered"
+                [(ngModel)]="orderReturn.dateOrdered" name="dateOrdered" #dateOrdered="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="dateOrderedPicker"></mat-datepicker-toggle>
+            <mat-datepicker #dateOrderedPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.EMAIL' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="email" [(ngModel)]="orderReturn.email" 
+              name="email" #email="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.FIRST_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="orderReturn.firstName" 
+              name="firstName" #firstName="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.LAST_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="orderReturn.lastName" 
+              name="lastName" #lastName="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.PHONE' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="telephone" [(ngModel)]="orderReturn.telephone" 
+              name="telephone" #telephone="ngModel">
+          </mat-form-field>
+        </div>
+        
+    </div>
+    <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.RETURN_ACTION' | translate}}</mat-label>
+            <mat-select [(ngModel)]="orderReturn.returnAction.id" name="returnAction">
+              <mat-option *ngFor="let returnAction of appService.appInfoStorage.returnActions" [value]="returnAction.id">
+                {{returnAction.description}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.RETURN_STATUS' | translate}}</mat-label>
+            <mat-select [(ngModel)]="orderReturn.returnStatus.id" name="returnStatus">
+              <mat-option *ngFor="let returnStatus of appService.appInfoStorage.returnStatuses" [value]="returnStatus.id">
+                {{returnStatus.description}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+          <mat-form-field class="w-100">
+            <input type="text" matInput rows="2" cols="50" id="comment"
+                name="comment" [(ngModel)]="orderReturn.comment"  required>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <h5>{{'COMMON.PRODUCT_INFORMATION_AND_RETURN_REASON' | translate}}</h5>
+
+      <div fxLayout="row wrap">
+   
+        <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+            <button type="button" mat-icon-button color="primary" (click)="addProduct()"
+              matTooltip="Assign New Attribute" matTooltipPosition="after">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+        </div>
+        <div fxFlex="100">
+          <div class="table-wrapper">
+
+            <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+              <!-- Product Column -->
+              <ng-container matColumnDef="product" >
+                <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> {{'COMMON.PRODUCT' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> 
+                  <mat-form-field>
+
+                    <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
+                     [(ngModel)]="returnProduct.productName" required
+                     (ngModelChange)="filterProducts(returnProduct.productName)">
+                    <mat-autocomplete id="product" #auto="matAutocomplete" >
+                     <mat-option *ngFor="let option of filteredOrderProducts" 
+                        (onSelectionChange)="setSelectedValue(returnProduct, option)" 
+                        [value]="option.name">
+                        {{option.name}}
+                     </mat-option>
+                    </mat-autocomplete>
+
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <!-- Model Column -->
+              <ng-container matColumnDef="model">
+                <th mat-header-cell *matHeaderCellDef width ="15%" mat-sort-header> {{'COMMON.MODEL' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> {{returnProduct.model}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+
+              <!-- Quantity Column -->
+              <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> 
+                  <mat-form-field class="w-50">
+                    <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="returnProduct.quantity" 
+                      name="quantity" #quantity="ngModel">
+                  </mat-form-field>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="returnReason">
+                <th mat-header-cell *matHeaderCellDef width ="15%" mat-sort-header> {{'COMMON.RETURN_REASON' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> 
+                  <mat-form-field class="w-100">
+                    <mat-select [(ngModel)]="returnProduct.returnReason.id" name="returnReason">
+                      <mat-option *ngFor="let returnReason of appService.appInfoStorage.returnReasons" [value]="returnReason.id">
+                        {{returnReason.description}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="opened">
+                <th mat-header-cell *matHeaderCellDef width ="5%" mat-sort-header> {{'COMMON.OPENED' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> 
+                  
+                  <mat-slide-toggle [(ngModel)]="returnProduct.opened" (ngModelChange)="setToggleValues(returnProduct)" 
+                    name="opened" #opened="ngModel" class="my-2">
+                  </mat-slide-toggle>
+                  
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="comment">
+                <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> {{'COMMON.COMMENTS' | translate}} </th>
+                <td mat-cell *matCellDef="let returnProduct"> 
+                  <mat-form-field class="w-100">
+                    <input matInput type="text" class="form-control" id="comment" [(ngModel)]="returnProduct.comment" 
+                      name="comment" #comment="ngModel">
+                  </mat-form-field>
+                </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
+              </ng-container>
+
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let returnProduct">
+                  <button mat-icon-button color="warn" (click)="deleteReturnProduct(returnProduct)" matTooltip="{{'COMMON.DELETE' | translate}}"
+                    class="remove">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let returnProduct; columns: displayedColumns;"></tr>
+            </table>
+            <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+          
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.HISTORY' | translate}}" *ngIf="orderReturn.id > 0">
+    <app-returnHistory [returnId]="orderReturn.id"></app-returnHistory>
+  </mat-tab>
+</mat-tab-group>
+        
+    

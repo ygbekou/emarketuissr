@@ -66,7 +66,7 @@ export class AppService {
       localStorage.removeItem('user');
       localStorage.removeItem('byProductDetails');
 
-      //this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
+      // this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
 
       localStorage.setItem('cart_item', JSON.stringify([]));
 
@@ -188,7 +188,7 @@ export class AppService {
    }
 
    public updateAllLocalCartProduct(products: any) {
-      
+
       localStorage.removeItem('cart_item');
 
       localStorage.setItem('cart_item', JSON.stringify(products));
@@ -196,7 +196,7 @@ export class AppService {
 
    // returning LocalCarts Product Count
    public calculateLocalCartProdCounts() {
-      console.info('Here')
+      console.info('Here');
       this.localStorageCartProducts = null;
       this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
       this.navbarCartCount = +((this.localStorageCartProducts).length);
@@ -236,13 +236,13 @@ export class AppService {
                taxRule => {
                   element.product.tax += taxRule.taxRate.rate * element.quantity;
                }
-            )
+            );
          }
 
          element.product.tax = this.roundingValue(element.product.tax);
          element.product.total = this.roundingValue(element.product.price * element.quantity + element.product.tax);
          this.navbarCartEstimatedTax += element.product.tax;
-         
+
       });
 
       this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
@@ -763,6 +763,21 @@ export class AppService {
             () => console.log('Get all CategoryDescription complete'));
    }
 
+   refreshReferenceData(dataType: string) {
+      const parameters: string[] = [];
+      this.getAllByCriteria(dataType, parameters, ' order by e.description ')
+      .subscribe((data: any[]) => {
+         if ('ReturnAction' === dataType) {
+            this.appInfoStorage.returnActions = data;
+         } else if ('ReturnStatus' === dataType) {
+            this.appInfoStorage.returnStatuses = data;
+         } else if ('ReturnReason' === dataType) {
+            this.appInfoStorage.returnReasons = data;
+         }
+      }, error => console.log(error),
+      () => console.log('Get ' + dataType + ' complete'));
+   }
+
    getCountries() {
       if (this.appInfoStorage.getCountries().length > 0) {
          return;
@@ -812,7 +827,7 @@ export class AppService {
 
    public filterData(data, params: any, sort?, page?, perPage?) {
       this.sortData(sort, data);
-      return this.paginator(data, page, perPage)
+      return this.paginator(data, page, perPage);
    }
 
    public sortData(sort, data) {
@@ -889,7 +904,7 @@ export class AppService {
    }
 
    public paginator(items, page?, perPage?) {
-      var page = page || 1,
+      let page = page || 1,
          perPage = perPage || 4,
          offset = (page - 1) * perPage,
          paginatedItems = items.slice(offset).slice(0, perPage),
