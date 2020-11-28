@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PaymentCardsComponent } from 'src/app/Global/Cards/PaymentCards.component';
@@ -14,12 +14,15 @@ import { AppService } from 'src/app/Services/app.service';
 export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    @ViewChild(PaymentCardsComponent, {static: false}) paymentCardsComponent: PaymentCardsComponent;
-   @ViewChild('TmoneysComponent', {static: false}) tmoneysComponenet: TmoneysComponent;
+   @ViewChild('TmoneysComponent', {static: false}) tmoneysComponent: TmoneysComponent;
    @ViewChild('FloozsComponent', {static: false}) floozsComponent: TmoneysComponent;
 
    paymentMethodChange: PaymentMethodChangeVO = new PaymentMethodChangeVO();
    paypalMethodStatus: number;
    panelOpenState = false;
+
+   @Input()
+   userId: number;
 
    constructor(public appService: AppService,
                public router: Router,
@@ -33,9 +36,13 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
       
+
    }
 
    ngAfterViewInit() {
+      if (this.userId === undefined) {
+         this.userId = Number(this.appService.tokenStorage.getUserId());
+      }
    }
 
    onCardSaved($event) {
@@ -45,13 +52,13 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    onCardMethodSelected($event) {
       this.floozsComponent.getTmoneys();
-      this.tmoneysComponenet.getTmoneys();
+      this.tmoneysComponent.getTmoneys();
       this.paypalMethodStatus = 0;
    }
 
 
    onTmoneySaved($event) {
-      this.tmoneysComponenet.updateTable($event);
+      this.tmoneysComponent.updateTable($event);
    }
 
    onTmoneyMethodSelected($event) {
@@ -65,7 +72,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    }
 
    onFloozMethodSelected($event) {
-      this.tmoneysComponenet.getTmoneys();
+      this.tmoneysComponent.getTmoneys();
       this.paymentCardsComponent.getCreditCards();
       this.paypalMethodStatus = 0;
    }
@@ -74,14 +81,14 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    changePaymentMethod(paymentMethodCode: string) {
 
-      this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
+      this.paymentMethodChange.userId = this.userId;
       this.paymentMethodChange.paymentMethodCodeId = null;
       this.paymentMethodChange.paymentMethodCode = paymentMethodCode;
 
       this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
          .subscribe((data: any) => {
             this.floozsComponent.getTmoneys();
-            this.tmoneysComponenet.getTmoneys();
+            this.tmoneysComponent.getTmoneys();
             this.paymentCardsComponent.getCreditCards();
             this.paypalMethodStatus = 1;
          },

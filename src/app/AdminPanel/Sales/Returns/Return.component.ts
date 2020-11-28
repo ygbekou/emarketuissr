@@ -30,6 +30,7 @@ export class ReturnComponent  extends BaseComponent implements OnInit {
   orderReturn: Return;
   constants: Constants = new Constants();
   order: Order = new Order();
+  orderId: number;
 
   filteredOrderProducts: OrderProduct[];
   currentOption: string;
@@ -38,9 +39,9 @@ export class ReturnComponent  extends BaseComponent implements OnInit {
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
       super(translate);
-      this.appService.refreshReferenceData('ReturnAction');
-      this.appService.refreshReferenceData('ReturnStatus');
-      this.appService.refreshReferenceData('ReturnReason');
+      this.appService.refreshReferenceData('ReturnAction', undefined);
+      this.appService.refreshReferenceData('ReturnStatus', undefined);
+      this.appService.refreshReferenceData('ReturnReason', undefined);
     }
 
   ngOnInit() {
@@ -56,6 +57,7 @@ export class ReturnComponent  extends BaseComponent implements OnInit {
 
   clear() {
     this.orderReturn = new Return();
+    this.orderId = undefined;
   }
 
   getReturn(returnId: number) {
@@ -81,14 +83,16 @@ export class ReturnComponent  extends BaseComponent implements OnInit {
   getOrder() {
     this.messages = '';
 
-    if (this.orderReturn.order.id > 0) {
-      this.appService.getOneWithChildsAndFiles(this.orderReturn.order.id, 'Order')
+    if (this.orderId > 0) {
+      this.appService.getOneWithChildsAndFiles(this.orderId, 'Order')
         .subscribe(result => {
           if (result !== null && result.id > 0) {
+            this.orderReturn.order.id = result.id;
             this.orderReturn.customerId = result.userId;
             this.order = result;
             this.filteredOrderProducts = this.order.orderProducts;
           } else {
+            this.orderReturn.order.id = undefined;
             this.orderReturn.customerId = undefined;
             this.translate.get(['COMMON.READ', 'MESSAGE.INVALID_ORDER_ID']).subscribe(res => {
               this.messages = res['MESSAGE.INVALID_ORDER_ID'];

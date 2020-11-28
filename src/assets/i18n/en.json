@@ -496,7 +496,8 @@
 		"RETURN_REASON": "Return Reason",
 		"RETURN_STATUS": "Return Status",
 		"CUSTOMER_ID": "Customer Id",
-		"OPENED": "Opened"
+		"OPENED": "Opened",
+		"TRANSACTION": "Transaction"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

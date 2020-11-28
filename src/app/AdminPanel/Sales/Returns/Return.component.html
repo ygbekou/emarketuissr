@@ -21,8 +21,8 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.ORDER_ID' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="orderId" [(ngModel)]="orderReturn.order.id" 
-              (change)="getOrder()" name="orderId" #orderId="ngModel" required>
+            <input matInput type="text" class="form-control" id="orderId" [(ngModel)]="orderId" 
+              (change)="getOrder()" name="orderId" #oId="ngModel" required>
           </mat-form-field>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">

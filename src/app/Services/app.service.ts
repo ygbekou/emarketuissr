@@ -81,6 +81,8 @@ export class AppService {
 
 
       this.appInfoStorage = new AppInfoStorage(this.translate);
+
+      this.refreshReferenceData('UserGroup', 'ORDER BY e.name')
    }
 
    public setCartItemDefaultValue(setCartItemDefaultValue) {
@@ -763,9 +765,9 @@ export class AppService {
             () => console.log('Get all CategoryDescription complete'));
    }
 
-   refreshReferenceData(dataType: string) {
+   refreshReferenceData(dataType: string, orderBy: string) {
       const parameters: string[] = [];
-      this.getAllByCriteria(dataType, parameters, ' order by e.description ')
+      this.getAllByCriteria(dataType, parameters, orderBy !== undefined ? orderBy : ' order by e.description')
       .subscribe((data: any[]) => {
          if ('ReturnAction' === dataType) {
             this.appInfoStorage.returnActions = data;
@@ -773,6 +775,8 @@ export class AppService {
             this.appInfoStorage.returnStatuses = data;
          } else if ('ReturnReason' === dataType) {
             this.appInfoStorage.returnReasons = data;
+         } else if ('UserGroup' === dataType) {
+            this.appInfoStorage.USER_GROUPS = data;
          }
       }, error => console.log(error),
       () => console.log('Get ' + dataType + ' complete'));
@@ -903,9 +907,9 @@ export class AppService {
       return data;
    }
 
-   public paginator(items, page?, perPage?) {
-      let page = page || 1,
-         perPage = perPage || 4,
+   public paginator(items, inpage?, inperPage?) {
+      let page = inpage || 1,
+         perPage = inperPage || 4,
          offset = (page - 1) * perPage,
          paginatedItems = items.slice(offset).slice(0, perPage),
          totalPages = Math.ceil(items.length / perPage);

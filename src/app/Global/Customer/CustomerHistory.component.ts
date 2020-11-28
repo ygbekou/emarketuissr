@@ -1,29 +1,27 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { ReturnHistory } from 'src/app/app.models';
+import { ReturnHistory, CustomerHistory } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
-import { BaseComponent } from '../../baseComponent';
-
+import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 @Component({
-  selector: 'app-returnHistory',
-  templateUrl: './ReturnHistory.component.html',
-  styleUrls: ['./Returns.component.scss']
+  selector: 'app-customer-history',
+  templateUrl: './CustomerHistory.component.html'
 })
-export class ReturnHistoryComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['dateAdded', 'comment', 'status', 'notified', 'actions'];
-  dataSource: MatTableDataSource<ReturnHistory>;
+export class CustomerHistoryComponent extends BaseComponent implements OnInit {
+  displayedColumns: string[] = ['dateAdded', 'comment', 'notified', 'actions'];
+  dataSource: MatTableDataSource<CustomerHistory>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   messages = '';
   errors = '';
 
-  returnHistory: ReturnHistory = new ReturnHistory();
+  customerHistory: CustomerHistory = new CustomerHistory();
 
   @Input()
-  returnId: number;
+  userId: number;
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -31,34 +29,33 @@ export class ReturnHistoryComponent extends BaseComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.returnHistory.returnId = this.returnId;
-    this.appService.refreshReferenceData('ReturnStatus', undefined);
-    this.getReturnHistories();
+    this.customerHistory.user.id = this.userId;
+    this.getCustomerHistories();
   }
 
-  getReturnHistories() {
+  getCustomerHistories() {
     const parameters: string[] = [];
-    if (this.returnId !== null && this.returnId !== undefined) {
-        parameters.push('e.returnId = |returnId|' + this.returnId + '|Integer');
+    if (this.userId !== null && this.userId !== undefined) {
+        parameters.push('e.user.id = |userId|' + this.userId + '|Integer');
     }
-    this.appService.getAllByCriteria('ReturnHistory', parameters)
-      .subscribe((data: ReturnHistory[]) => {
-        this.dataSource = new MatTableDataSource<ReturnHistory>(data);
+    this.appService.getAllByCriteria('CustomerHistory', parameters)
+      .subscribe((data: CustomerHistory[]) => {
+        this.dataSource = new MatTableDataSource<CustomerHistory>(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all ReturnHistory complete'));
+        () => console.log('Get all CustomerHistory complete'));
   }
 
-  edit(returnHistoryId: number) {
-    if (returnHistoryId > 0) {
-      this.appService.getOne(returnHistoryId, 'ReturnHistory')
+  edit(customerHistoryId: number) {
+    if (customerHistoryId > 0) {
+      this.appService.getOne(customerHistoryId, 'CustomerHistory')
         .subscribe(result => {
           if (result.id > 0) {
-            this.returnHistory = result;
+            this.customerHistory = result;
           } else {
-            this.returnHistory = new ReturnHistory();
+            this.customerHistory = new CustomerHistory();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
               this.messages = res['MESSAGE.READ_FAILED'];
             });
@@ -67,15 +64,15 @@ export class ReturnHistoryComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public remove(returnHistoryId: number) {
+  public remove(customerHistoryId: number) {
     this.messages = '';
-    this.appService.delete(returnHistoryId, 'ReturnHistory')
+    this.appService.delete(customerHistoryId, 'CustomerHistory')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.findIndex(element => element.id === returnHistoryId);
+          const index: number = this.dataSource.data.findIndex(element => element.id === customerHistoryId);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<ReturnHistory>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<CustomerHistory>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }
@@ -91,24 +88,27 @@ export class ReturnHistoryComponent extends BaseComponent implements OnInit {
       });
   }
 
+  add() {
+    this.customerHistory = new CustomerHistory();
+  }
 
   save() {
     this.messages = '';
     this.errors = '';
     try {
 
-      this.returnHistory.returnId = this.returnId;
+      this.customerHistory.user.id = this.userId;
       this.setToggleValues();
-      const index: number = this.dataSource.data.findIndex(element => element.id === this.returnHistory.id);
-      this.appService.save(this.returnHistory, 'ReturnHistory')
+      const index: number = this.dataSource.data.findIndex(element => element.id === this.customerHistory.id);
+      this.appService.save(this.customerHistory, 'CustomerHistory')
         .subscribe(result => {
           if (result.id > 0) {
-            this.returnHistory = new ReturnHistory();
+            this.customerHistory = new CustomerHistory();
             if (index !== -1) {
               this.dataSource.data.splice(index, 1);
             }
             this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<ReturnHistory>(this.dataSource.data);
+            this.dataSource = new MatTableDataSource<CustomerHistory>(this.dataSource.data);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
@@ -128,11 +128,11 @@ export class ReturnHistoryComponent extends BaseComponent implements OnInit {
 
 
   setToggleValues() {
-    this.returnHistory.notify = (
-      this.returnHistory.notify === null
-      || this.returnHistory.notify === undefined
-      || this.returnHistory.notify.toString() === 'false'
-      || this.returnHistory.notify.toString() === '0') ? 0 : 1;
+    this.customerHistory.notify = (
+      this.customerHistory.notify === null
+      || this.customerHistory.notify === undefined
+      || this.customerHistory.notify.toString() === 'false'
+      || this.customerHistory.notify.toString() === '0') ? 0 : 1;
   }
 
 }

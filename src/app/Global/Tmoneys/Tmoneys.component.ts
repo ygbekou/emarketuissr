@@ -19,6 +19,9 @@ export class TmoneysComponent implements OnInit {
 
   @Input()
   paymentType: string;
+  @Input()
+  userId;
+
   @Output()
   changePaymentMethodEvent = new EventEmitter<any>();
 
@@ -31,6 +34,11 @@ export class TmoneysComponent implements OnInit {
   ngOnInit() {
 
     this.tmoneysDataSource = new MatTableDataSource();
+    
+    if (this.userId === undefined) {
+      this.userId = Number(this.appService.tokenStorage.getUserId());
+    }
+
     this.getTmoneys();
 
   }
@@ -45,10 +53,9 @@ export class TmoneysComponent implements OnInit {
   }
 
   getTmoneys() {
-    const userId = Number(this.appService.tokenStorage.getUserId());
-    if (userId > 0) {
+    if (this.userId > 0) {
       const parameters: string[] = [];
-      parameters.push('e.user.id = |userId|' + userId + '|Integer');
+      parameters.push('e.user.id = |userId|' + this.userId + '|Integer');
       this.appService.getAllByCriteria(this.paymentType, parameters)
         .subscribe((data: Tmoney[]) => {
           this.tmoneys = data;
@@ -56,13 +63,13 @@ export class TmoneysComponent implements OnInit {
           this.selectedTmoney = data[0];
         },
           error => console.log(error),
-          () => console.log('Get all Tmoney complete for userId=' + userId));
+          () => console.log('Get all Tmoney complete for userId=' + this.userId));
     }
   }
 
   changePaymentMethod(tmoney: Tmoney) {
 
-    this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
+    this.paymentMethodChange.userId = this.userId;
     this.paymentMethodChange.paymentMethodCodeId = tmoney.id;
     this.paymentMethodChange.paymentMethodCode = this.paymentType.toUpperCase();
 

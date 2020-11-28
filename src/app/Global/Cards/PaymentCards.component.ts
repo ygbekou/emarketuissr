@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CreditCard, PaymentMethodChangeVO, Tmoney } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,6 +19,8 @@ export class PaymentCardsComponent implements OnInit {
   panelOpenState = false;
   @Output()
   changePaymentMethodEvent = new EventEmitter<any>();
+  @Input()
+  userId;
 
   creditCards: CreditCard[] = [];
   error: string;
@@ -27,11 +29,18 @@ export class PaymentCardsComponent implements OnInit {
   cardUtils = new CardUtils();
 
   constructor(public appService: AppService, public translate: TranslateService) {
+
   }
 
   ngOnInit() {
 
     this.creditCardsDataSource = new MatTableDataSource();
+
+    
+    if (this.userId === undefined) {
+      this.userId = Number(this.appService.tokenStorage.getUserId());
+    }
+
     this.getCreditCards();
 
   }
@@ -39,7 +48,7 @@ export class PaymentCardsComponent implements OnInit {
   public delete(cardId: string) {
     this.appService.saveWithUrl('/service/order/deleteCard',
       {
-         userId: this.appService.tokenStorage.getUserId(),
+         userId: this.userId,
          paymentMethodId: cardId
       })
       .subscribe(resp => {
@@ -50,24 +59,24 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   getCreditCards() {
-    const userId = Number(this.appService.tokenStorage.getUserId());
-    if (userId > 0) {
+
+    if (this.userId > 0) {
       const parameters: string[] = [];
-      parameters.push('e.user.id = |userId|' + userId + '|Integer');
-      this.appService.getObject('/service/order/customer/' + userId + '/cards')
+      parameters.push('e.user.id = |userId|' + this.userId + '|Integer');
+      this.appService.getObject('/service/order/customer/' + this.userId + '/cards')
         .subscribe((data: CreditCard[]) => {
           this.creditCards = data;
           this.creditCardsDataSource = new MatTableDataSource(data);
           this.selectedCard = data[0];
         },
           error => console.log(error),
-          () => console.log('Get all CreditCard complete for userId=' + userId));
+          () => console.log('Get all CreditCard complete for userId=' + this.userId));
     }
   }
 
   changePaymentMethod(creditCard: CreditCard) {
 
-    this.paymentMethodChange.userId = Number(this.appService.tokenStorage.getUserId());
+    this.paymentMethodChange.userId = this.userId;
     this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
     this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';
     this.paymentMethodChange.stripePaymentMethodId = creditCard.stripePaymentMethodId;

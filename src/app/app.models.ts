@@ -52,6 +52,7 @@ export class Pagination {
 export class BaseModel {
   lang: string;
   remainingFileNames: string[];
+  createDate: Date;
 }
 
 export class SearchAttribute {
@@ -1308,9 +1309,50 @@ export class OrderSearchCriteria {
   endDate: Date;
 }
 
+export class UserSearchCriteria {
+  firstName: string;
+  lastName: string;
+  email: string;
+  userGroup: UserGroup;
+  status: number;
+  ip: string;
+  dateAdded: Date;
+}
+
 export class PaymentMethodChangeVO {
   userId: number;
   paymentMethodCode: string;
   paymentMethodCodeId: number;
   stripePaymentMethodId: string;
+}
+
+export class CustomerHistory {
+  id: number;
+  comment: string;
+  notify: number;
+  user: User;
+  createDate: Date;
+
+  type = 'CustomerHistory';
+
+  constructor() {
+    this.user = new User();
+  }
+}
+
+export class CustomerTransaction {
+  id: number;
+  amount: number;
+  description: string;
+  notify: number;
+  user: User;
+  order: Order;
+  createDate: Date;
+
+  type = 'CustomerTransaction';
+
+  constructor() {
+    this.user = new User();
+    this.order = new Order();
+  }
 }

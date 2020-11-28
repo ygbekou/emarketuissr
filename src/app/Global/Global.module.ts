@@ -86,11 +86,14 @@ import { TmoneysComponent } from './Tmoneys/Tmoneys.component';
 import { TmoneyComponent } from './Tmoney/Tmoney.component';
 import { PaymentChangeModelComponent } from './PaymentChangeModel/PaymentChangeModel.component';
 import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentChangeAddress.component';
+import { CustomerHistoryComponent } from './Customer/CustomerHistory.component';
+import { MatPaginatorModule } from '@angular/material';
+import { CustomerTransactionComponent } from './Customer/CustomerTransaction.component';
 
 @NgModule({
    imports: [
       CommonModule,
-      RouterModule,
+      RouterModule, 
       MatBadgeModule,
       MatButtonModule,
       FlexLayoutModule,
@@ -121,6 +124,7 @@ import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentCha
       MatSlideToggleModule,
       TranslateModule,
       PipesModule,
+      MatPaginatorModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyC9PnuRk42kbCPMOvsfHpn40r5SoyN38zI',
          libraries: ['places']
@@ -178,7 +182,9 @@ import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentCha
       AddressesComponent,
       AddressComponent,
       PaymentChangeModelComponent,
-      PaymentChangeAddressComponent
+      PaymentChangeAddressComponent,
+      CustomerHistoryComponent,
+      CustomerTransactionComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -228,7 +234,9 @@ import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentCha
       AddressesComponent,
       AddressComponent,
       PaymentChangeModelComponent,
-      PaymentChangeAddressComponent
+      PaymentChangeAddressComponent,
+      CustomerHistoryComponent,
+      CustomerTransactionComponent
    ],
    entryComponents: [
       ReviewPopupComponent,

@@ -25,6 +25,9 @@ export class TmoneyComponent implements OnInit {
   @Input()
   paymentType: string;
 
+  @Input()
+  userId: number;
+
 
   constructor(
     public appService: AppService,
@@ -41,9 +44,10 @@ export class TmoneyComponent implements OnInit {
     * If form value is valid, redirect to card page.
     */
    submitTmoney() {
+
       this.messages = '';
       this.errors = '';
-      this.user.id = +this.appService.tokenStorage.getUserId();
+      this.user.id = this.userId;
       this.tmoney.user = this.user
       this.tmoney.type = this.paymentType;
       this.appService.save(this.tmoney, this.paymentType)

@@ -52,6 +52,15 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin/customers',
+    name: 'Customers',
+    type: 'sub',
+    icon: 'people',
+    children: [
+      { state: 'users', name: 'Users', type: 'link' }
+    ]
+  },
+  {
     state: 'admin/system',
     name: 'System',
     type: 'sub',

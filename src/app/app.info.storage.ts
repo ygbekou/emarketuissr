@@ -17,6 +17,8 @@ export class AppInfoStorage {
   public returnStatuses: any = [];
   public returnReasons: any = [];
   public returnActions: any = [];
+  public activeStatuses: any = [];
+  public USER_GROUPS: any = [];
   public language: Language;
   public searchCategories: CategoryDescription[] = [];
   public mainMenus: Menu[] = [];
@@ -34,6 +36,9 @@ export class AppInfoStorage {
   constructor(private translate: TranslateService) {
 
     this.updateInfo();
+
+    this.activeStatuses.push({'id': 1, 'label': 'Actif'});
+    this.activeStatuses.push({'id': 0, 'label': 'Inactif'});
   }
 
   updateInfo() {

@@ -12,23 +12,24 @@ import { AppService } from 'src/app/Services/app.service';
 export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
 
    @ViewChild(AddressesComponent, {static: false}) paymentAddresses: AddressesComponent;
-   addressType = 1;
+   addressType = 0;
    panelOpenState = false;
- 
+
    constructor(public appService: AppService,
                public router: Router,
                private route: ActivatedRoute,
                public translate: TranslateService
                ) {
                   this.route.queryParams.forEach(queryParams => {
-         this.addressType = +queryParams['addressType'];
-         
+                     if (+queryParams['addressType'] > 0) {
+                        this.addressType = +queryParams['addressType'];
+                     }
       });
 
    }
 
    ngOnInit() {
-      
+
    }
 
    ngAfterViewInit() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CreditCard, User } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +26,9 @@ export class PaymentCardComponent implements OnInit {
   @Output() 
   cardSaveEvent = new EventEmitter<CreditCard>();
 
+  @Input()
+  userId: number;
+
 
   constructor(
     public appService: AppService,
@@ -35,15 +38,17 @@ export class PaymentCardComponent implements OnInit {
 
   ngOnInit() {
 
-   //this.user.id = this.appService.tokenStorage.getUserId() ;
-
-   this.initPaymentMethod();
-
-
   }
 
+
+   ngAfterViewInit() {
+      setTimeout(() => {
+         this.initPaymentMethod();
+      }, 0);
+   }
+
    initPaymentMethod() {
-      this.appService.getObject('/service/catalog/stripe-key').toPromise()
+      this.appService.getObject('/service/order/stripe-key').toPromise()
    .then(result => {
       return result;
   })
@@ -132,11 +137,10 @@ export class PaymentCardComponent implements OnInit {
 
 
    saveCustomer(result) {
-      // changeLoadingState(true);
  
       this.appService.saveWithUrl('/service/order/attachPaymentMethodToCustomer', 
       {
-         userId: this.appService.tokenStorage.getUserId(),
+         userId: this.userId,
          paymentMethodId: result.paymentMethod.id,
          nameOnCard: this.card.name
       })
@@ -162,7 +166,7 @@ export class PaymentCardComponent implements OnInit {
    submitCard() {
       this.messages = '';
       this.errors = '';
-      this.user.id = +this.appService.tokenStorage.getUserId();
+      this.user.id = this.userId;
       this.card.user = this.user
       this.card.cardType = CardUtils.getCardType(this.card);
       if (this.card.cardType === '') {

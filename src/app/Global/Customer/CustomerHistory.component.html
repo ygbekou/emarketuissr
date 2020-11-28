@@ -1,0 +1,96 @@
+
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+        <ng-container matColumnDef="dateAdded" >
+          <th mat-header-cell *matHeaderCellDef width ="15%" mat-sort-header> Date Added </th>
+          <td mat-cell *matCellDef="let customerHistory"> {{customerHistory.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef width ="25%" mat-sort-header> Comment </th>
+          <td mat-cell *matCellDef="let customerHistory"> {{customerHistory.comment}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="notified">
+          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> Customer Notified </th>
+          <td mat-cell *matCellDef="let customerHistory"> 
+            <span *ngIf="customerHistory.notify === 1">{{'COMMON.YES' | translate}}</span>
+            <span *ngIf="customerHistory.notify === 0">{{'COMMON.NO' | translate}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width ="15%"> Actions </th>
+          <td mat-cell *matCellDef="let customerHistory">
+            <button mat-icon-button color="primary" (click)="edit(customerHistory.id)" matTooltip="{{'COMMON.EDIT' | translate}}"
+              class="edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            &nbsp;&nbsp;
+            <button mat-icon-button color="warn" (click)="remove(customerHistory.id)" matTooltip="{{'COMMON.DELETE' | translate}}"
+              class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let customerHistory; columns: displayedColumns;">
+        </tr>
+      </table>
+      <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator> 
+  </div>
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+    <mat-card>
+      <div class="text-center">
+        <h5>{{'COMMON.DETAILS' | translate}}</h5>
+      </div>
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+        <div fxLayout="row wrap">
+          
+          <div class="text-center" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+
+          <div fxLayout="row wrap" class="w-100">
+            <mat-slide-toggle [(ngModel)]="customerHistory.notify" name="notify" #notify="ngModel" class="my-2">
+              {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
+            </mat-slide-toggle>
+          </div>
+    
+          <div fxLayout="row wrap" class="w-100">
+            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+            <textarea matInput rows="5" cols="50" class="form-control" id="comment"
+               [(ngModel)]="customerHistory.comment" name="comment"
+               #comment="ngModel"></textarea>
+          </div>
+
+          <div fxLayout="row wrap" class="w-100">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                <mat-icon>save</mat-icon>
+            </button> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button (click)="add()" color="primary" fxLayout="row" fxLayoutAlign="center center">
+                <span class="mx-1 uppercase">{{'COMMON.ADD' | translate}}</span>
+                <mat-icon>add_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>
