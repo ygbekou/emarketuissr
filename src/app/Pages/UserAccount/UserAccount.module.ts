@@ -130,7 +130,8 @@ import { AddressesComponent } from './Addresses/Addresses.component';
     MyProductsComponent
   ],
    exports: [
-      CardsComponent
+      CardsComponent,
+      StoresComponent
    ]
 })
 export class UserAccountModule { }

@@ -199,14 +199,23 @@
 
     </form>
   </mat-tab>
+  <mat-tab label="{{'COMMON.ADDRESSES' | translate}}" *ngIf="user.id > 0">
+    <app-PaymentChangeAddress [userId]="user.id" *ngIf="selectedTabIndex === 1"></app-PaymentChangeAddress>
+  </mat-tab>
   <mat-tab label="{{'COMMON.PAYMENT_METHOD' | translate}}" *ngIf="user.id > 0">
-    <app-PaymentChangeModel [userId]="user.id" *ngIf="selectedTabIndex === 1"></app-PaymentChangeModel>
+    <app-PaymentChangeModel [userId]="user.id" *ngIf="selectedTabIndex === 2"></app-PaymentChangeModel>
   </mat-tab>
   <mat-tab label="{{'COMMON.HISTORY' | translate}}" *ngIf="user.id > 0">
-    <app-customer-history [userId]="user.id" *ngIf="selectedTabIndex === 2"></app-customer-history>
+    <app-customer-history [userId]="user.id" *ngIf="selectedTabIndex === 3"></app-customer-history>
   </mat-tab>
   <mat-tab label="{{'COMMON.TRANSACTION' | translate}}" *ngIf="user.id > 0">
-    <app-customer-transaction [userId]="user.id" *ngIf="selectedTabIndex === 3"></app-customer-transaction>
+    <app-customer-transaction [userId]="user.id" *ngIf="selectedTabIndex === 4"></app-customer-transaction>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.REWARD_POINTS' | translate}}" *ngIf="user.id > 0">
+    <app-customer-reward [userId]="user.id" *ngIf="selectedTabIndex === 5"></app-customer-reward>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.STORES' | translate}}" *ngIf="user.id > 0"> 
+    <app-stores [userId]="user.id" *ngIf="selectedTabIndex === 6"></app-stores>
   </mat-tab>
 </mat-tab-group>
         
