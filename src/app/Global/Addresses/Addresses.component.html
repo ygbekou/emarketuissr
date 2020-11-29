@@ -13,12 +13,17 @@
             {{addr.country.name}}<br>
           </address>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="accent" [disabled]="addr.status === 1" (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}</button>
+            <input type="checkbox" class="mb-2 d-block" [disabled]="addr.status === 1" [checked]="addr.status === 1" 
+              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}>
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 1)">{{'COMMON.EDIT'|translate}}</button>
-            <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 1)" 
+                matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-raised-button color="accent" (click)="removeAddress(addr.id)"
+                matTooltip="{{'COMMON.REMOVE' | translate}}"><mat-icon>remove</mat-icon></button>
           </div>
         </div>
       </div>
@@ -33,10 +38,11 @@
                         
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <button mat-flat-button color="primary">{{'COMMON.ADD_NEW_SHIPPING_ADDRESS'|translate}}</button>
+            <button mat-flat-button color="primary" matTooltip="{{'COMMON.ADD_NEW_SHIPPING_ADDRESS' | translate}}">
+              <mat-icon>add</mat-icon></button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-address #shippingAddressComponent [selectedAddressType]="1" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+        <app-address #shippingAddressComponent [userId]="userId" [selectedAddressType]="1" (addressSaveEvent)="onAddressSaved($event)"></app-address>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -57,12 +63,17 @@
             {{addr.country.name}}<br>
           </address>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="accent" [disabled]="addr.status === 1" (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}</button>
+            <input type="checkbox" class="mb-2 d-block" [disabled]="addr.status === 1" [checked]="addr.status === 1" 
+              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}>
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 2)">{{'COMMON.EDIT'|translate}}</button>
-            <button mat-raised-button color="primary" (click)="removeAddress(addr.id)">{{'COMMON.REMOVE'|translate}}</button>
+            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 2)" 
+                matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-raised-button color="accent" (click)="removeAddress(addr.id)"
+                matTooltip="{{'COMMON.REMOVE' | translate}}"><mat-icon>remove</mat-icon></button>
           </div>
         </div>
       </div>
@@ -77,10 +88,11 @@
                         
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <button mat-flat-button color="primary">{{'COMMON.ADD_NEW_BILLING_ADDRESS'|translate}}</button>
+            <button mat-flat-button color="primary" matTooltip="{{'COMMON.ADD_NEW_BILLING_ADDRESS' | translate}}">
+              <mat-icon>add</mat-icon></button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-address #billingAddressComponent [selectedAddressType]="2" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+        <app-address #billingAddressComponent [userId]="userId" [selectedAddressType]="2" (addressSaveEvent)="onAddressSaved($event)"></app-address>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

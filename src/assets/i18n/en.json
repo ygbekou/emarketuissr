@@ -370,6 +370,7 @@
 		"STATUS": "Status",
 		"STAY_INFORMED": "Stay informed of last developements",
 		"STORE": "Store",
+		"STORES": "Stores",
 		"STORE_ADDRESS": "Store address",
 		"STREET_NAME_NBR": "Street number and name",
 		"SUBJECT": "Subject",
@@ -497,7 +498,8 @@
 		"RETURN_STATUS": "Return Status",
 		"CUSTOMER_ID": "Customer Id",
 		"OPENED": "Opened",
-		"TRANSACTION": "Transaction"
+		"TRANSACTION": "Transaction",
+		"ADDRESSES": "Addresses"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

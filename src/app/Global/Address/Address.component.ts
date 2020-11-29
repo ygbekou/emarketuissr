@@ -22,6 +22,8 @@ export class AddressComponent implements OnInit {
    addressSaveEvent = new EventEmitter<Address>();
 
    @Input()
+   userId;
+   @Input()
    selectedAddressType: number;
 
   constructor(
@@ -33,6 +35,9 @@ export class AddressComponent implements OnInit {
   ngOnInit() {
       this.appService.getCountries();
 
+      if (this.userId === undefined) {
+         this.userId = Number(this.appService.tokenStorage.getUserId());
+      }
   }
 
   /**
@@ -42,7 +47,7 @@ export class AddressComponent implements OnInit {
    submitAddress() {
       this.messages = '';
       this.errors = '';
-      this.user.id = +this.appService.tokenStorage.getUserId();
+      this.user.id = +this.userId;
       this.address.user = this.user
 
       if (!this.isNotAddressTypePreSelected()) {

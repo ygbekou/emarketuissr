@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AddressesComponent } from 'src/app/Global/Addresses/Addresses.component';
@@ -14,6 +14,10 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    @ViewChild(AddressesComponent, {static: false}) paymentAddresses: AddressesComponent;
    addressType = 0;
    panelOpenState = false;
+
+
+   @Input()
+   userId: number;
 
    constructor(public appService: AppService,
                public router: Router,
@@ -34,6 +38,11 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
 
    ngAfterViewInit() {
       this.paymentAddresses.setAddressType(this.addressType);
+
+      if (this.userId === undefined) {
+         this.userId = Number(this.appService.tokenStorage.getUserId());
+      }
+
    }
 
    onAddressSaved($event) {

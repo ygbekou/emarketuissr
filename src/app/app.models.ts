@@ -1356,3 +1356,20 @@ export class CustomerTransaction {
     this.order = new Order();
   }
 }
+
+export class CustomerReward {
+  id: number;
+  points: number;
+  description: string;
+  user: User;
+  order: Order;
+  createDate: Date;
+
+  type = 'CustomerReward';
+
+  constructor() {
+    this.user = new User();
+    this.order = new Order();
+  }
+}
+

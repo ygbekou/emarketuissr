@@ -17,6 +17,9 @@ export class AddressesComponent implements OnInit {
   billingAddresses: Address[] = [];
   error: string;
 
+  @Input()
+  userId;
+
   addressType = 0;
   @ViewChild('shippingAddressComponent', {static: false}) shippingAddressComponent: AddressComponent;
   @ViewChild('billingAddressComponent', {static: false}) billingAddressComponent: AddressComponent;
@@ -29,26 +32,29 @@ export class AddressesComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.userId === undefined) {
+      this.userId = Number(this.appService.tokenStorage.getUserId());
+    }
+
     this.getAddresses();
 
   }
 
 
   getAddresses() {
-    const userId = Number(this.appService.tokenStorage.getUserId());
     this.shippingAddresses = [];
     this.billingAddresses = [];
 
-    if (userId > 0) {
+    if (this.userId > 0) {
       const parameters: string[] = [];
-      parameters.push('e.user.id = |userId|' + userId + '|Integer');
+      parameters.push('e.user.id = |userId|' + this.userId + '|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
         .subscribe((data: Address[]) => {
           this.shippingAddresses = data.filter(this.isShippingAddr);
           this.billingAddresses = data.filter(this.isBillingAddr);
         },
           error => console.log(error),
-          () => console.log('Get all addresses complete for userId=' + userId));
+          () => console.log('Get all addresses complete for userId=' + this.userId));
     }
   }
 

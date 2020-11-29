@@ -89,6 +89,7 @@ import { PaymentChangeAddressComponent } from './PaymentChangeAddress/PaymentCha
 import { CustomerHistoryComponent } from './Customer/CustomerHistory.component';
 import { MatPaginatorModule } from '@angular/material';
 import { CustomerTransactionComponent } from './Customer/CustomerTransaction.component';
+import { CustomerRewardComponent } from './Customer/CustomerReward.component';
 
 @NgModule({
    imports: [
@@ -184,7 +185,8 @@ import { CustomerTransactionComponent } from './Customer/CustomerTransaction.com
       PaymentChangeModelComponent,
       PaymentChangeAddressComponent,
       CustomerHistoryComponent,
-      CustomerTransactionComponent
+      CustomerTransactionComponent,
+      CustomerRewardComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -236,7 +238,8 @@ import { CustomerTransactionComponent } from './Customer/CustomerTransaction.com
       PaymentChangeModelComponent,
       PaymentChangeAddressComponent,
       CustomerHistoryComponent,
-      CustomerTransactionComponent
+      CustomerTransactionComponent,
+      CustomerRewardComponent
    ],
    entryComponents: [
       ReviewPopupComponent,

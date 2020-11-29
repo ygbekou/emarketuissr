@@ -40,6 +40,7 @@ import { GlobalModule } from '../../Global/Global.module';
 import { CustomersRoutes } from './Customers.routing';
 import { UsersComponent } from './Customers/Users.component';
 import { UserComponent } from './Customers/User.component';
+import { UserAccountModule } from 'src/app/Pages/UserAccount/UserAccount.module';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { UserComponent } from './Customers/User.component';
     MatSortModule,
     MatGridListModule,
     GlobalModule,
+    UserAccountModule,
     FormsModule,
     MatTabsModule,
     ReactiveFormsModule,
