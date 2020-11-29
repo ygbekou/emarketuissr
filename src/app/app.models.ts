@@ -197,15 +197,15 @@ export class Product extends BaseModel {
   type = 'Product';
   action: string;
 
-/*   cloneWithoutChilds(product: Product) {
-    const copy = { ...product };
-    copy.productDescriptions = [];
-    copy.productVideos = [];
-    copy.productToCategorys = [];
-    console.log('Product copied');
-    console.log(copy);
-    return copy;
-  } */
+  /*   cloneWithoutChilds(product: Product) {
+      const copy = { ...product };
+      copy.productDescriptions = [];
+      copy.productVideos = [];
+      copy.productToCategorys = [];
+      console.log('Product copied');
+      console.log(copy);
+      return copy;
+    } */
 
   clone(): Product {
     let copy: Product = new Product();
@@ -1295,6 +1295,7 @@ export class SearchCriteria {
   priceMin: number;
   priceMax: number;
   category: string;
+  text: string;
 }
 
 export class OrderSearchCriteria {

@@ -6,15 +6,15 @@ import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core'; 
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'app-prod-list-all',
    templateUrl: './ProductsList.component.html',
-   styleUrls: ['./ProductsList.component.scss'] 
+   styleUrls: ['./ProductsList.component.scss']
 })
 export class ProductsListComponent implements OnInit {
- 
+
    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
@@ -22,11 +22,11 @@ export class ProductsListComponent implements OnInit {
    public viewType = 'grid';
    public viewCol = 33.3;
    public count = 6;
-   public searchFields: any; 
+   public searchFields: any;
    products: ProductDescVO[] = [];
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
-   public errors: string; 
+   public errors: string;
    public watcher: Subscription;
    catId = 0;
    marketId = 0;
@@ -37,9 +37,11 @@ export class ProductsListComponent implements OnInit {
    slideConfig: any;
    height = { 'height': '70px' };
    public counts = [2, 3, 6, 12, 24, 36];
+   dummyCat = '';
 
    productList: ProductListVO = new ProductListVO();
    public searchCriteria: SearchCriteria = new SearchCriteria();
+
 
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
@@ -62,15 +64,15 @@ export class ProductsListComponent implements OnInit {
       this.sort = this.sortings[0];
 
       this.dataSource = new MatTableDataSource();
-      
+
 
       this.activatedRoute.params.subscribe(params => {
          console.log(params);
          console.log(params.type);
 
          this.catId = 0;
-         this.marketId = 0; 
-         
+         this.marketId = 0;
+
          if (params.type) {
             const type = params.type.substring(0, 3);
             if (type === 'cat') {
@@ -85,11 +87,11 @@ export class ProductsListComponent implements OnInit {
             }
          }
 
-      }); 
+      });
 
 
       this.activatedRoute.queryParams.subscribe(params => {
-         
+
          console.info(this.activatedRoute.queryParams);
          this.activatedRoute.queryParams.forEach(queryParams => {
             if (queryParams['searchText'] !== undefined) {
@@ -103,7 +105,7 @@ export class ProductsListComponent implements OnInit {
             }
 
          });
-         
+
 
       });
 
@@ -123,18 +125,18 @@ export class ProductsListComponent implements OnInit {
 
    }
    getProducts() {
-      
-      if (this.searchText !== '0' && this.appService.appInfoStorage.selectedSearchCategory.category.sortOrder >= 0) {
-         this.catId = this.appService.appInfoStorage.selectedSearchCategory.id;
-      } else {
-         this.catId = 0;
-      }
-      
       this.appService.getObject('/service/catalog/getProductsOnSale/' +
          this.appService.appInfoStorage.language.id + '/' + this.storeId + '/' + this.marketId + '/' + this.catId + '/' + this.searchText)
          .subscribe((data: ProductListVO) => {
             this.productList = data;
-            console.log(data);
+            this.translate.get(['COMMON.ALL_CATEGORIES', 'COMMON.ALL_CATEGORIES']).subscribe(res => {
+               this.dummyCat = res['COMMON.ALL_CATEGORIES'];
+            });
+            if (this.productList && this.productList.categories) {
+               this.productList.categories.unshift(this.dummyCat);
+            }
+
+            // console.log(data);
             const result = this.filterData(data.productDescVOs);
             if (result.data.length === 0) {
                // this.properties.length = 0;
@@ -143,7 +145,7 @@ export class ProductsListComponent implements OnInit {
                   this.message = res['MESSAGE.NO_RESULT_FOUND'];
                });
             }
-            console.log(result.data.categories);
+            // console.log(result.data.categories);
             this.dataSource = new MatTableDataSource(result.data);
             this.pagination = result.pagination;
             this.message = null;
@@ -152,21 +154,35 @@ export class ProductsListComponent implements OnInit {
                let found = true;
                if (this.searchCriteria.priceMin && this.searchCriteria.priceMax) {
 
-                  if (!(data.product.price >= this.searchCriteria.priceMin && data.product.price <= this.searchCriteria.priceMax)) {
+                  if (!(data.product.price >= this.searchCriteria.priceMin
+                     && data.product.price <= this.searchCriteria.priceMax)) {
+                     found = false;
+                  }
+               } else if (this.searchCriteria.priceMin && !this.searchCriteria.priceMax) {
+                  if (!(data.product.price >= this.searchCriteria.priceMin)) {
+                     found = false;
+                  }
+               } else if (!this.searchCriteria.priceMin && this.searchCriteria.priceMax) {
+                  if (!(data.product.price <= this.searchCriteria.priceMax)) {
                      found = false;
                   }
                }
- 
+
                if (this.searchCriteria.category) {
-                  if (!(this.searchCriteria.category === data.category)) {
+                  if (!(this.searchCriteria.category === data.category) &&
+                     this.searchCriteria.category !== this.dummyCat) {
+                     found = false;
+                  }
+               }
+
+               if (this.searchCriteria.text) {
+                  if (!(data.name.toLowerCase().indexOf(this.searchCriteria.text.toLowerCase()) > -1)) {
                      found = false;
                   }
                }
 
                return found;
             }
-
-            this.productList.categories.push('Test');
 
          },
             error => console.log(error),
@@ -219,7 +235,7 @@ export class ProductsListComponent implements OnInit {
                () => console.log('Get all Marketing Item complete'));
       }
    }
- 
+
    getCatDescs(langId: number) {
       const parameters: string[] = [];
       if (this.catId > 0) {
@@ -245,7 +261,7 @@ export class ProductsListComponent implements OnInit {
    }
 
    public applyAllFilter() {
-      this.dataSource.filter = ''+Math.random();
+      this.dataSource.filter = '' + Math.random();
    }
 
 
@@ -322,7 +338,10 @@ export class ProductsListComponent implements OnInit {
    }
 
    public searchClicked(data: string) {
-      this.applyFilter(data);
+
+      this.searchCriteria.text = data.trim().toLowerCase();
+      this.applyAllFilter();
+      // this.applyFilter(data);
    }
 
    selectForSaleProduct($event) {

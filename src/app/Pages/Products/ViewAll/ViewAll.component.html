@@ -4,7 +4,7 @@
          <mat-toolbar-row>
             <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
                <div class="block-title" Flex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                  <h2 class="text-inverse mb-0 text-xxl">Lightening Deals</h2>
+                  <h2 class="text-inverse mb-0 text-xxl">{{'COMMON.DEALS'|translate}}</h2>
                </div>
                <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                   <mat-form-field class="w-100">
@@ -15,7 +15,7 @@
                <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                   <!-- <span *ngIf="isHomePage"> -->
                   <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-                     Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+                     {{'COMMON.SHOW'|translate}} {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
                   </a>
                   <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
                      <span (mouseleave)="countsMenuTrigger.closeMenu()">
@@ -65,7 +65,7 @@
                         width="100%">
                      <div class="home-2-slider-content">
                         <div [innerHTML]="slide?.description| safehtml"></div>
-                        <button color="accent" mat-raised-button [routerLink]="['/products']">Shop Now</button>
+                        <button color="accent" mat-raised-button [routerLink]="['/products']">{{'COMMON.SHOP_NOW'|translate}}</button>
                      </div>
                   </div>
                </mat-card>
