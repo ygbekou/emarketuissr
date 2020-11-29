@@ -14,12 +14,13 @@
   <button color="accent" *ngIf="appService.tokenStorage.hasToken()" mat-menu-item [routerLink]="['/account/profile']"><i
       class="material-icons mr-1">shopping_basket</i><span>{{'COMMON.CLIENT_SPACE' | translate }}</span></button>
 
-  <button color="accent" *ngIf="appService.tokenStorage.hasToken() " mat-menu-item [routerLink]="['/account/profile']"><i
+  <button color="accent" *ngIf="appService.tokenStorage.hasToken() " mat-menu-item
+    [routerLink]="['/account/profile']"><i
       class="material-icons mr-1">storefront</i><span>{{'COMMON.SELLER_SPACE' | translate }}</span></button>
 
-  <button  *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='3'" mat-menu-item
-    [routerLink]="['/admin']"><i
-      class="material-icons mr-1" color="accent">admin_panel_settings</i><span>{{'COMMON.ADMIN_SPACE' | translate }}</span></button>
+  <button *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='3'" mat-menu-item
+    [routerLink]="['/admin']"><i class="material-icons mr-1"
+      color="accent">admin_panel_settings</i><span>{{'COMMON.ADMIN_SPACE' | translate }}</span></button>
 
 
   <button color="accent" (click)="logout()" *ngIf="appService.tokenStorage.hasToken()" mat-menu-item

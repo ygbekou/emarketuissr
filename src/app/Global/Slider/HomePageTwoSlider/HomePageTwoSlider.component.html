@@ -5,7 +5,8 @@
         <img [src]="'assets/images/marketings/'+slide.marketing.id+'/'+slide.marketing.image" alt="" width="100%">
         <div class="home-2-slider-content">
           <div [innerHTML]="slide?.description| safehtml"></div>
-          <button color="accent" mat-raised-button [routerLink]="['/products/mak'+slide.marketing.id]">Shop Now</button>
+          <button color="accent" mat-raised-button
+            [routerLink]="['/products/mak'+slide.marketing.id]">{{'COMMON.SHOP_NOW'|translate}}</button>
         </div>
       </div>
     </div>
