@@ -14,7 +14,7 @@
                 fxFlex.xl="20%">
 
                 <mat-form-field appearance="fill">
-                  <mat-select [(value)]="appService.appInfoStorage.searchCategories[0]" color="accent">
+                  <mat-select [(value)]="appService.appInfoStorage.selectedSearchCategory" color="accent">
                     <mat-option [value]="cat" *ngFor="let cat of appService.appInfoStorage.searchCategories">
                       {{ cat.name}}
                     </mat-option>

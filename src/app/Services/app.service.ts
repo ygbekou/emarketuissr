@@ -760,6 +760,7 @@ export class AppService {
          ' order by e.category.sortOrder ')
          .subscribe((data: CategoryDescription[]) => {
             this.appInfoStorage.searchCategories = data;
+            this.appInfoStorage.selectedSearchCategory = this.appInfoStorage.searchCategories[0];
          },
             error => console.log(error),
             () => console.log('Get all CategoryDescription complete'));

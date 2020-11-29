@@ -21,6 +21,7 @@ export class AppInfoStorage {
   public USER_GROUPS: any = [];
   public language: Language;
   public searchCategories: CategoryDescription[] = [];
+  public selectedSearchCategory: CategoryDescription;
   public mainMenus: Menu[] = [];
   public footerMenus: Menu[] = [];
   public manufacturers: any = [];

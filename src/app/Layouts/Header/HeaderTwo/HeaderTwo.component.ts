@@ -23,7 +23,7 @@ export class HeaderTwoComponent implements OnInit {
       public translate: TranslateService,
       public router: Router) { }
 
-   ngOnInit() { 
+   ngOnInit() {
 
    }
 
