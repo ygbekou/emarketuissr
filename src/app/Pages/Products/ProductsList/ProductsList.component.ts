@@ -41,7 +41,6 @@ export class ProductsListComponent implements OnInit {
    productList: ProductListVO = new ProductListVO();
    public searchCriteria: SearchCriteria = new SearchCriteria();
 
-   
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
       { code: 'pricedesc', name: 'Prix descendant' },
@@ -124,6 +123,13 @@ export class ProductsListComponent implements OnInit {
 
    }
    getProducts() {
+      
+      if (this.searchText !== '0' && this.appService.appInfoStorage.selectedSearchCategory.category.sortOrder >= 0) {
+         this.catId = this.appService.appInfoStorage.selectedSearchCategory.id;
+      } else {
+         this.catId = 0;
+      }
+      
       this.appService.getObject('/service/catalog/getProductsOnSale/' +
          this.appService.appInfoStorage.language.id + '/' + this.storeId + '/' + this.marketId + '/' + this.catId + '/' + this.searchText)
          .subscribe((data: ProductListVO) => {
