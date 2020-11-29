@@ -21,19 +21,22 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div fxFlex.xs="60%" fxFlex.sm="60%" style="vertical-align: middle;" fxFlex.md="60%" fxFlex.lg="60%"
-                fxFlex.xl="70%">
+              <div fxFlex.xs="50%" fxFlex.sm="50%" style="vertical-align: middle;" fxFlex.md="50%" fxFlex.lg="50%"
+                fxFlex.xl="50%">
                 <mat-form-field>
-                  <mat-placeholder>Chercher un produit</mat-placeholder>
+                  <mat-placeholder>{{'COMMON.SEARCH'|translate}}</mat-placeholder>
                   <input matInput type="text" [(ngModel)]="searchText" name="searchText">
                 </mat-form-field>
               </div>
               <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" fxFlex.xl="15%"
                 style="vertical-align: middle;">
-
                 <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;" type="submit">
                   <mat-icon>search</mat-icon> Search
                 </button>
+              </div>
+              <div fxFlex.xs="10%" fxFlex.sm="10%" fxFlex.md="10%" fxFlex.lg="10%" fxFlex.xl="10%"
+                style="vertical-align: middle;"> 
+                <app-lang></app-lang>
               </div>
             </div>
           </form>

@@ -47,6 +47,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GlobalModule } from '../Global/Global.module';
 import { InputFileModule } from 'ngx-input-file';
 import { BaseComponent } from './baseComponent';
+import { ThemeService } from 'ng2-charts';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
@@ -108,7 +109,8 @@ export function createTranslateLoader(http: HttpClient) {
 		ToastaModule.forRoot()
 	],
 	providers: [
-		AdminMenuItems
+		AdminMenuItems,
+		ThemeService
 	],
 	exports: [
 		RouterModule,
