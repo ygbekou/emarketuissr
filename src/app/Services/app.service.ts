@@ -837,17 +837,9 @@ export class AppService {
 
    public sortData(sort, data) {
       if (sort) {
-         console.log('Sort called: ' + sort);
-         console.log(data);
+         // console.log('Sort called: ' + sort);
+         // console.log(data);
          switch (sort) {
-            /* case 'publicationAsc':
-               data = data.sort((a, b) => { return <any>new Date(b.publicationDatetime) - <any>new Date(a.publicationDatetime) });
-               console.log('Which one? publicationAsc');
-               break;
-            case 'publicationDesc':
-               data = data.sort((a, b) => { return <any>new Date(a.publicationDatetime) - <any>new Date(b.publicationDatetime) });
-               console.log('Which one? publicationDesc');
-               break; */
             case 'rating':
                data = data.sort((a, b) => {
                   if (a.rating / a.ratingCount < b.rating / b.ratingCount) {
@@ -904,7 +896,7 @@ export class AppService {
                break;
          }
       }
-      console.log(data);
+      // console.log(data);
       return data;
    }
 
