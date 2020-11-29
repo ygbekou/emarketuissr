@@ -39,7 +39,7 @@ export class ReturnHistoryComponent extends BaseComponent implements OnInit {
   getReturnHistories() {
     const parameters: string[] = [];
     if (this.returnId !== null && this.returnId !== undefined) {
-        parameters.push('e.returnId = |returnId|' + this.returnId + '|Integer');
+        parameters.push('e.returnId = |returnIds|' + this.returnId + '|Integer');
     }
     this.appService.getAllByCriteria('ReturnHistory', parameters)
       .subscribe((data: ReturnHistory[]) => {
