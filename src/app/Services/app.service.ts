@@ -8,7 +8,7 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone, CartItem } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -63,12 +63,12 @@ export class AppService {
       this.toastyConfig.position = 'top-right';
       this.toastyConfig.theme = 'material';
       this.calculateLocalWishlistProdCounts();
-      localStorage.removeItem('user');
-      localStorage.removeItem('byProductDetails');
+      // localStorage.removeItem('user');
+      // localStorage.removeItem('byProductDetails');
 
       // this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
 
-      localStorage.setItem('cart_item', JSON.stringify([]));
+      // localStorage.setItem('cart_item', JSON.stringify([]));
 
       // Custom
       this.headers = new HttpHeaders();
@@ -96,7 +96,7 @@ export class AppService {
       if (!found) { products.push(setCartItemDefaultValue); }
 
       localStorage.setItem('cart_item', JSON.stringify(products));
-      this.calculateLocalCartProdCounts();
+       this.recalculateCart(true);
    }
 
    public reviewPopup(singleProductDetails, reviews) {
@@ -134,41 +134,51 @@ export class AppService {
 
    // Adding new Product to cart in localStorage
    public addToCart(data: any, type: any = '') {
-      let products: any;
-      products = JSON.parse(localStorage.getItem('cart_item')) || [];
-      const productsLength = products.length;
-
+      let cartItems: CartItem[] = [];
+      cartItems = JSON.parse(localStorage.getItem('cart_item')) || [];
+      let title = 'Adding Product To Cart';
+      let msg = 'Product adding to the cart';
+      this.translate.get(['COMMON.ADDING_PRODUCT', 'COMMON.ERROR']).subscribe((res) => {
+         title = res['COMMON.ADDING_PRODUCT'];
+      });
+      this.translate.get(['COMMON.QUANTITY', 'COMMON.ERROR']).subscribe((res) => {
+         msg = res['COMMON.QUANTITY'] + ' : 1';
+      });
       const toastOption: ToastOptions = {
-         title: 'Adding Product To Cart',
-         msg: 'Product adding to the cart',
+         title: title,
+         msg: msg,
          showClose: true,
          timeout: 1000,
          theme: 'material'
       };
 
-      const found = products.some(function (el, index) {
-         if (el.name == data.name) {
-            if (!data.quantity) { data.quantity = 1; }
-            products[index]['quantity'] = data.quantity;
-            return true;
+      let found = false;
+      let index = 0;
+      for (const ci of cartItems) {
+         if (ci.ptsId === data.ptsId) {
+            cartItems[index].quantity += 1;
+            cartItems[index].total += cartItems[index].price;
+            found = true;
+            break;
          }
-      });
-      if (!found) { products.push(data); }
-
-      if (productsLength == products.length) {
-         toastOption.title = 'Product Already Added';
-         toastOption.msg = 'You have already added this product to cart list';
+         index++;
       }
 
-      if (type == 'wishlist') {
+      if (!found) {
+         data.quantity = 1;
+         data.total = data.price;
+         cartItems.push(data);
+      }
+      if (type === 'wishlist') {
+         console.log('wishlist');
+         console.log(data);
          this.removeLocalWishlistProduct(data);
       }
 
       this.toastyService.wait(toastOption);
-      console.info(products);
       setTimeout(() => {
-         localStorage.setItem('cart_item', JSON.stringify(products));
-         this.calculateLocalCartProdCounts();
+         localStorage.setItem('cart_item', JSON.stringify(cartItems));
+          this.recalculateCart(true);
       }, 500);
    }
 
@@ -179,14 +189,14 @@ export class AppService {
       const found = products.some(function (el, index) {
          if (el.name == data.name) {
             if (!data.quantity) { data.quantity = 1; }
-            products[index]['quantity'] = data.quantity;
+            products[index].quantity = data.quantity;
             return true;
          }
       });
       if (!found) { products.push(data); }
 
       localStorage.setItem('cart_item', JSON.stringify(products));
-      this.calculateLocalCartProdCounts();
+       this.recalculateCart(true);
    }
 
    public updateAllLocalCartProduct(products: any) {
@@ -197,8 +207,8 @@ export class AppService {
    }
 
    // returning LocalCarts Product Count
-   public calculateLocalCartProdCounts() {
-      console.info('Here');
+/*    public calculateLocalCartProdCounts() {
+
       this.localStorageCartProducts = null;
       this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
       this.navbarCartCount = +((this.localStorageCartProducts).length);
@@ -210,16 +220,22 @@ export class AppService {
       this.navbarCartTotal = 0;
 
       this.localStorageCartProducts.forEach(element => {
-         this.navbarCartPrice += element.product.price * element.quantity;
+         console.log(element);
+         this.navbarCartPrice += element.price * element.quantity;
          this.navbarCartShipping += 0;
          this.navbarCartEstimatedTax += 5;
       });
 
       this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
       this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
-   }
+   } */
 
-   public calculateLocalCartInfos() {
+   public recalculateCart(needParse: boolean) {
+      if (needParse) {
+         this.localStorageCartProducts = null;
+         this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
+      }
+
       this.navbarCartCount = +((this.localStorageCartProducts).length);
 
       this.navbarCartPrice = 0;
@@ -229,21 +245,21 @@ export class AppService {
       this.navbarCartTotal = 0;
 
       this.localStorageCartProducts.forEach(element => {
-         this.navbarCartPrice += element.product.price * element.quantity;
+         this.navbarCartPrice += element.price * element.quantity;
          this.navbarCartShipping += 0;
 
-         if (element.product.taxRules) {
-            element.product.tax = 0;
-            element.product.taxRules.forEach(
+         if (element.taxRules) {
+            element.tax = 0;
+            element.taxRules.forEach(
                taxRule => {
-                  element.product.tax += taxRule.taxRate.rate * element.quantity;
+                  element.tax += taxRule.taxRate.rate * element.quantity;
                }
             );
          }
 
-         element.product.tax = this.roundingValue(element.product.tax);
-         element.product.total = this.roundingValue(element.product.price * element.quantity + element.product.tax);
-         this.navbarCartEstimatedTax += element.product.tax;
+         element.tax = this.roundingValue(element.tax);
+         element.total = this.roundingValue(element.price * element.quantity + element.tax);
+         this.navbarCartEstimatedTax += element.tax;
 
       });
 
@@ -253,7 +269,7 @@ export class AppService {
    }
 
    roundingValue(value: number) {
-      return Math.round( value * 100 + Number.EPSILON ) / 100;
+      return Math.round(value * 100 + Number.EPSILON) / 100;
 
    }
 
@@ -263,15 +279,24 @@ export class AppService {
       const products: any = JSON.parse(localStorage.getItem('cart_item'));
 
       for (let i = 0; i < products.length; i++) {
-         if (products[i].id === product.id) {
+         if (products[i].ptsId === product.ptsId) {
             products.splice(i, 1);
             break;
          }
       }
 
+      let title = 'Remove Product From Cart';
+      let msg = '';
+      this.translate.get(['MESSAGE.REMOVE_PROD_CART', 'COMMON.ERROR']).subscribe((res) => {
+         title = res['MESSAGE.REMOVE_PROD_CART'];
+      });
+      this.translate.get(['COMMON.QUANTITY', 'COMMON.ERROR']).subscribe((res) => {
+         msg = res['COMMON.QUANTITY'] + ' : ' + product.quantity;
+      });
+
       const toastOption: ToastOptions = {
-         title: 'Remove Product From Cart',
-         msg: 'Product removing from cart',
+         title: title,
+         msg: msg,
          showClose: true,
          timeout: 1000,
          theme: 'material'
@@ -281,7 +306,7 @@ export class AppService {
       setTimeout(() => {
          // ReAdding the products after remove
          localStorage.setItem('cart_item', JSON.stringify(products));
-         this.calculateLocalCartProdCounts();
+         this.recalculateCart(true);
       }, 500);
    }
 
@@ -291,43 +316,58 @@ export class AppService {
 
    // Adding new Product to Wishlist in localStorage
    public addToWishlist(data: any) {
+
+      let title = 'Adding Product To wishlist';
+      let msg = '';
+      this.translate.get(['MESSAGE.ADDING_WISHLIST', 'COMMON.ERROR']).subscribe((res) => {
+         msg = res['MESSAGE.ADDING_WISHLIST'];
+      });
+
+      this.translate.get(['COMMON.WISHLIST', 'COMMON.ERROR']).subscribe((res) => {
+         title = res['COMMON.WISHLIST'];
+      });
+
       const toastOption: ToastOptions = {
-         title: 'Adding Product To Wishlist',
-         msg: 'Product adding to the wishlist',
+         title: title,
+         msg: msg,
          showClose: true,
          timeout: 1000,
          theme: 'material'
       };
 
-      let products: any;
-      products = JSON.parse(localStorage.getItem('wishlist_item')) || [];
-      const productsLength = products.length;
+      let wishItems: any;
+      wishItems = JSON.parse(localStorage.getItem('wishlist_item')) || [];
 
-      const found = products.some(function (el, index) {
-         if (el.name == data.name) {
-            if (!data.quantity) { data.quantity = 1; }
-            products[index]['quantity'] = data.quantity;
-            return true;
+      let found = false;
+      let index = 0;
+      for (const ci of wishItems) {
+         if (ci.ptsId === data.ptsId) {
+            found = true;
+            break;
          }
-      });
-      if (!found) { products.push(data); }
-
-      if (productsLength == products.length) {
-         toastOption.title = 'Product Already Added';
-         toastOption.msg = 'You have already added this product to wishlist';
+         index++;
       }
 
-      this.toastyService.wait(toastOption);
-      setTimeout(() => {
-         localStorage.setItem('wishlist_item', JSON.stringify(products));
-         this.calculateLocalWishlistProdCounts();
-      }, 500);
+      if (!found) {
+         wishItems.push(data);
+         this.toastyService.wait(toastOption);
+         setTimeout(() => {
+            localStorage.setItem('wishlist_item', JSON.stringify(wishItems));
+            this.calculateLocalWishlistProdCounts();
+         }, 500);
+      } else {
+         this.translate.get(['MESSAGE.PROD_ALREADY_ADDED', 'COMMON.ERROR']).subscribe((res) => {
+            msg = res['MESSAGE.PROD_ALREADY_ADDED'];
 
+         });
+         toastOption.title = title;
+         toastOption.msg = msg;
+         this.toastyService.wait(toastOption);
+      }
    }
 
    // returning LocalWishlist Product Count
    public calculateLocalWishlistProdCounts() {
-
       this.localStorageWishlist = null;
       this.localStorageWishlist = JSON.parse(localStorage.getItem('wishlist_item')) || [];
       this.navbarWishlistProdCount = +((this.localStorageWishlist).length);
@@ -338,15 +378,23 @@ export class AppService {
       const products: any = JSON.parse(localStorage.getItem('wishlist_item'));
 
       for (let i = 0; i < products.length; i++) {
-         if (products[i].productId === product.productId) {
+         if (products[i].ptsId === product.ptsId) {
             products.splice(i, 1);
             break;
          }
       }
+      let title = '';
+      let msg = '';
+      this.translate.get(['MESSAGE.REMOVE_PROD_WISH', 'COMMON.ERROR']).subscribe((res) => {
+         msg = res['MESSAGE.REMOVE_PROD_WISH'];
+      });
+      this.translate.get(['COMMON.WISHLIST', 'COMMON.ERROR']).subscribe((res) => {
+         title = res['COMMON.WISHLIST'];
+      });
 
       const toastOption: ToastOptions = {
-         title: 'Remove Product From Wishlist',
-         msg: 'Product removing from wishlist',
+         title: title,
+         msg: msg,
          showClose: true,
          timeout: 1000,
          theme: 'material'
@@ -363,29 +411,52 @@ export class AppService {
    }
 
    public addAllWishListToCart(dataArray: any) {
-      let a: any;
-      a = JSON.parse(localStorage.getItem('cart_item')) || [];
 
-      for (const singleData of dataArray) {
-         a.push(singleData);
-      }
-
+      let cartItems: CartItem[] = [];
+      cartItems = JSON.parse(localStorage.getItem('cart_item')) || [];
+      let title = '';
+      let msg = '';
+      this.translate.get(['COMMON.ADDING_PRODUCT', 'COMMON.ERROR']).subscribe((res) => {
+         title = res['COMMON.ADDING_PRODUCT'];
+      });
+      this.translate.get(['COMMON.QUANTITY', 'COMMON.ERROR']).subscribe((res) => {
+         msg = res['COMMON.QUANTITY'] + ' : 1';
+      });
       const toastOption: ToastOptions = {
-         title: 'Adding All Product To Cart',
-         msg: 'Products adding to the cart',
+         title: title,
+         msg: msg,
          showClose: true,
          timeout: 1000,
          theme: 'material'
       };
 
+      for (const data of dataArray) {
+         let found = false;
+         let index = 0;
+         for (const ci of cartItems) {
+            if (ci.ptsId === data.ptsId) {
+               cartItems[index].quantity += 1;
+               cartItems[index].total += cartItems[index].price;
+               found = true;
+               break;
+            }
+            index++;
+         }
+
+         if (!found) {
+            data.quantity = 1;
+            data.total = data.price;
+            cartItems.push(data);
+         }
+      }
+
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          localStorage.removeItem('wishlist_item');
-         localStorage.setItem('cart_item', JSON.stringify(a));
-         this.calculateLocalCartProdCounts();
+         localStorage.setItem('cart_item', JSON.stringify(cartItems));
+          this.recalculateCart(true);
          this.calculateLocalWishlistProdCounts();
       }, 500);
-
    }
 
    /**
@@ -453,7 +524,7 @@ export class AppService {
       this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
 
       localStorage.removeItem('cart_item');
-      this.calculateLocalCartProdCounts();
+       this.recalculateCart(true);
    }
 
    public removeBuyProducts() {
@@ -690,7 +761,7 @@ export class AppService {
             this.getMenus(this.appInfoStorage.language.id, 1)
                .subscribe((menus: Menu[]) => {
                   this.appInfoStorage.mainMenus = menus;
-                  console.log(this.appInfoStorage.mainMenus);
+                  // console.log(this.appInfoStorage.mainMenus);
                },
                   error => console.log(error),
                   () => console.log('Get all Main menus complete'));
@@ -769,18 +840,18 @@ export class AppService {
    refreshReferenceData(dataType: string, orderBy: string) {
       const parameters: string[] = [];
       this.getAllByCriteria(dataType, parameters, orderBy !== undefined ? orderBy : ' order by e.description')
-      .subscribe((data: any[]) => {
-         if ('ReturnAction' === dataType) {
-            this.appInfoStorage.returnActions = data;
-         } else if ('ReturnStatus' === dataType) {
-            this.appInfoStorage.returnStatuses = data;
-         } else if ('ReturnReason' === dataType) {
-            this.appInfoStorage.returnReasons = data;
-         } else if ('UserGroup' === dataType) {
-            this.appInfoStorage.USER_GROUPS = data;
-         }
-      }, error => console.log(error),
-      () => console.log('Get ' + dataType + ' complete'));
+         .subscribe((data: any[]) => {
+            if ('ReturnAction' === dataType) {
+               this.appInfoStorage.returnActions = data;
+            } else if ('ReturnStatus' === dataType) {
+               this.appInfoStorage.returnStatuses = data;
+            } else if ('ReturnReason' === dataType) {
+               this.appInfoStorage.returnReasons = data;
+            } else if ('UserGroup' === dataType) {
+               this.appInfoStorage.USER_GROUPS = data;
+            }
+         }, error => console.log(error),
+            () => console.log('Get ' + dataType + ' complete'));
    }
 
    getCountries() {
@@ -793,8 +864,8 @@ export class AppService {
          .subscribe((data: Country[]) => {
             this.appInfoStorage.setCountries(data);
          },
-         error => console.log(error),
-         () => console.log('Get all Countries complete'));
+            error => console.log(error),
+            () => console.log('Get all Countries complete'));
    }
 
    getZones(country: Country) {

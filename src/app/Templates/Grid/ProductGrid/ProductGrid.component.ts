@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'; 
+import { CartItem } from 'src/app/app.models';
 
 @Component({
    selector: 'embryo-ProductGrid',
@@ -49,7 +50,8 @@ export class ProductGridComponent implements OnInit {
    }
 
    public addToCartProduct(value: any) {
-      this.addToCart.emit(value);
+      const ci = new CartItem(value);
+      this.addToCart.emit(ci);
    }
 
    public onLoad() {
@@ -60,7 +62,8 @@ export class ProductGridComponent implements OnInit {
       if (!(document.getElementById(parentClass).classList.contains('wishlist-active'))) {
          let element = document.getElementById(parentClass).className += " wishlist-active";
       }
-      this.addToWishList.emit(value);
+      const ci = new CartItem(value);
+      this.addToWishList.emit(ci);
    }
 
    public checkCartAlready(singleProduct) {

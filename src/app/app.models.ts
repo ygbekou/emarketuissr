@@ -963,6 +963,33 @@ export class ProductDescVO {
   category: string;
 }
 
+export class CartItem {
+  prdId: number;
+  ptsId: number;
+  storeId: number;
+  image: string;
+  name: string;
+  storeName: string;
+  quantity: number;
+  price: number;
+  tax: number;
+  total: number;
+  taxRules: TaxRule[];
+  public constructor(p: ProductDescVO) {
+    this.prdId = p.product.id;
+    this.ptsId = p.product.ptsId;
+    this.storeId = p.product.storeId;
+    this.image = p.product.image;
+    this.name = p.name;
+    this.storeName = p.product.storeName;
+    this.quantity = 0;
+    this.price = p.product.price;
+    this.tax = p.product.tax;
+    this.total = 0;
+    this.taxRules = p.product.taxRules;
+  }
+}
+
 export class ProductListVO {
   categories: string[];
   productDescVOs: ProductDescVO[];

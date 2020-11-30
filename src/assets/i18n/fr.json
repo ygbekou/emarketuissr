@@ -7,6 +7,8 @@
     "SHOP_NOW": "Acheter",
     "PRODUCT DETAILS": "détails du produit",
     "CART": "Chariot",
+    "CART_EMPTY": "Le panier est vide",
+    "WISH_EMPTY": "Votre liste de favoris est vide",
     "CHECKOUT": "Check-out",
     "PAYMENT": "Paiement",
     "FASHION": "Mode",
@@ -85,7 +87,9 @@
     "ACCOUNT_DETAILS": "Détails du compte",
     "ACTIVE": "Actif",
     "ADD": "Ajouter",
+    "ADD_ALL_CART": "Ajouter tout au panier",
     "ADD_NEW": "Ajouter un Nouveau",
+    "ADDING_PRODUCT":"Ajout de l'article au panier",
     "ADDRESS": "Adresse",
     "ADDRESS_FORMAT": "Format d'adresse",
     "ADDRESS_TYPE": "Type d'adresse",
@@ -307,6 +311,7 @@
     "PRODUCT_SALE": "Vente de produits",
     "PROFILE_INFO": "Profile utilisateur",
     "PUBLISHED": "Publié",
+    "QTY": "Qté",
     "QUANTITY": "Quantité",
     "QUESTION": "Question",
     "RANK": "Rang",
@@ -503,7 +508,8 @@
 		"CUSTOMER_ID": "Id du Client",
 		"OPENED": "Ouvert(e)",
 		"TRANSACTION": "Transaction",
-		"ADDRESSES": "Adresses"
+    "ADDRESSES": "Adresses",
+    "WISHLIST": "Favoris"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
@@ -546,7 +552,12 @@
     "AGREEMENT": "En vous enregistrant, vous etes d'accord avec",
     "WELCOME_ON_BLOG": "Bienvenue sur le blogue de Bat & Bel",
     "YOUR_EMAIL_NOT_PUBLISHED": "Votre e-mail ne sera pas publie. Les champs requis sont marques d'une *",
-		"INVALID_ORDER_ID": "ID de commande non valide"
+    "INVALID_ORDER_ID": "ID de commande non valide",
+    "CONFIRM_ART_REMOVE":"Voulez-vous vraiment enlever cet article?",
+    "REMOVE_PROD_CART": "Suppression de l'article du panier",
+    "REMOVE_PROD_WISH": "Suppression de l'article du favoris",
+		"ADDING_WISHLIST":"Ajout de l'article au favoris",
+		"PROD_ALREADY_ADDED":"Article deja ajouté"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

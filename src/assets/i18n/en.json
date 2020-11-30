@@ -7,6 +7,8 @@
 		"SHOP_NOW": "Shop now",
 		"PRODUCT DETAILS": "Product Details",
 		"CART": "Cart",
+		"CART_EMPTY": "The cart is empty",
+		"WISH_EMPTY": "Wishlist is empty",
 		"CHECKOUT": "Checkout",
 		"PAYMENT": "Payment",
 		"FASHION": "Fashion",
@@ -85,7 +87,9 @@
 		"ACCOUNT_DETAILS": "Account Details",
 		"ACTIVE": "Active",
 		"ADD": "Add",
+		"ADD_ALL_CART": "Add All To Cart",
 		"ADD_NEW": "Add New",
+		"ADDING_PRODUCT":"Adding Product To Cart",
 		"ADDRESS": "Address",
 		"ADDRESS_TYPE": "Address type",
 		"ADDRESS_FORMAT": "Address Format",
@@ -195,7 +199,7 @@
 		"ERROR": "Error",
 		"FACEBOOK": "Facebook",
 		"FACEBOOK_URL": "Facebook URL",
-		"FAVICON": "Favicon",
+		"FAVICON": "Favicon", 
 		"FAX": "Fax",
 		"FEMALE": "Female",
 		"FEATURED": "Featured",
@@ -307,6 +311,7 @@
 		"PRODUCT_SALE": "Product sale",
 		"PROFILE_INFO": "Profile Information",
 		"PUBLISHED": "Published",
+		"QTY": "Qty",
 		"QUANTITY": "Quantity",
 		"QUESTION": "Question",
 		"RANK": "Rank",
@@ -503,7 +508,8 @@
 		"CUSTOMER_ID": "Customer Id",
 		"OPENED": "Opened",
 		"TRANSACTION": "Transaction",
-		"ADDRESSES": "Addresses"
+		"ADDRESSES": "Addresses",
+		"WISHLIST": "Wish list"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -547,7 +553,12 @@
 		"SEND_US_FEEDBACK_TEXT": "You have a feedback on the article? Let us know.",
 		"WELCOME_ON_BLOG": "Welcome to Bat & Bel Blog",
 		"YOUR_EMAIL_NOT_PUBLISHED": "Your e-mail will not be published. Required fields are marked with *",
-		"INVALID_ORDER_ID": "Invalid Order Id"
+		"INVALID_ORDER_ID": "Invalid Order Id",
+		"CONFIRM_ART_REMOVE":"Are you sure you want to remove this article?",
+		"REMOVE_PROD_CART": "Removing Product From Cart",
+		"REMOVE_PROD_WISH": "Removing Product From wishlist",
+		"ADDING_WISHLIST":"Adding Product To wishlist",
+		"PROD_ALREADY_ADDED":"Product Already Added"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

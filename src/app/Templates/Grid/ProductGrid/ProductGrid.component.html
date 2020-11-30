@@ -8,7 +8,8 @@
 
       <!-- Multiple show products grid -->
       <mat-card class="product-card" *ngIf="viewType==='grid'">
-         <a class="p-link" *ngIf="prd.product?.id" [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
+         <a class="p-link" *ngIf="prd.product?.id"
+            [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
             <img width="626" height="800" mat-card-image
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
          </a>
@@ -18,10 +19,11 @@
                [ngClass]="{ transparent: !loaded }" (load)="onLoad()" alt="Photo">
          </a>
          <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist" *ngIf="fromPage==='buy'">
-            <a (click)="productAddToWishlist(prd.product, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
+            <a (click)="productAddToWishlist(prd, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
          </div>
          <mat-card-content class="product-content relative">
-            <h5><a *ngIf="prd.product?.id" [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]"
+            <h5><a *ngIf="prd.product?.id"
+                  [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]"
                   class="title-link">{{prd?.name}}</a> </h5>
             <h5><a *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>
@@ -33,8 +35,8 @@
                   </div>
                </div>
             </div>
-            <div class="m-icon" *ngIf="checkCartAlready(prd.product)  && fromPage==='buy'">
-               <embryo-AddToCardButton [product]="prd.product" (addToCart)="addToCartProduct($event)">
+            <div class="m-icon" *ngIf="fromPage==='buy'">
+               <embryo-AddToCardButton [product]="prd" (addToCart)="addToCartProduct($event)">
                </embryo-AddToCardButton>
             </div>
             <div class="m-icon" *ngIf="fromPage==='sell'">
@@ -43,18 +45,20 @@
                      </i></button>
                </ng-container>
             </div>
-                        <div class="m-icon" *ngIf="fromPage==='marketing'">
+            <div class="m-icon" *ngIf="fromPage==='marketing'">
                <ng-container *ngIf="prd">
                   <button mat-fab (click)="removeProductFromList(prd)"><i class="material-icons"> delete_sweep
                      </i></button>
                </ng-container>
             </div>
+            <!--
             <div class="m-icon" *ngIf="!checkCartAlready(prd.product)">
                <button mat-fab *ngIf="prd.product?.id" [routerLink]="['/products', prd.product?.id]"><i
                      class="material-icons">remove_red_eye</i> </button>
                <button mat-fab *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"><i
                      class="material-icons">remove_red_eye</i> </button>
             </div>
+            -->
          </mat-card-content>
       </mat-card>
    </div>
