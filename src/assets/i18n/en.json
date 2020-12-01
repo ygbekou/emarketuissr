@@ -199,7 +199,7 @@
 		"ERROR": "Error",
 		"FACEBOOK": "Facebook",
 		"FACEBOOK_URL": "Facebook URL",
-		"FAVICON": "Favicon", 
+		"FAVICON": "Favicon",
 		"FAX": "Fax",
 		"FEMALE": "Female",
 		"FEATURED": "Featured",
@@ -511,7 +511,9 @@
 		"OPENED": "Opened",
 		"TRANSACTION": "Transaction",
 		"ADDRESSES": "Addresses",
-		"WISHLIST": "Wish list"
+		"WISHLIST": "Wish list",
+		"OWNER_ID": "Owner ID",
+		"OWNER_NAME": "Owner Name"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -562,7 +564,8 @@
 		"REMOVE_PROD_CART": "Removing Product From Cart",
 		"REMOVE_PROD_WISH": "Removing Product From wishlist",
 		"ADDING_WISHLIST":"Adding Product To wishlist",
-		"PROD_ALREADY_ADDED":"Product Already Added"
+		"PROD_ALREADY_ADDED":"Product Already Added",
+		"INVALID_USER_ID": "Invalid User Id"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

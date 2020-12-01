@@ -460,7 +460,7 @@
     "SOLD_BY": "Vendu par",
     "ADD_TO_CART": "Ajouter Au Panier",
     "ENDING_IN": "se terminant en",
-    "PAYMENT_METHOD": "Méthod de payment",
+    "PAYMENT_METHOD": "Méthode de payement",
     "REVIEW_YOUR_ORDER": "Vérifiez votre commande",
     "PLACE_YOUR_ORDER": "Passer votre commande",
     "PLACE_YOUR_ORDER_NOTICE": "En passant votre commande, vous acceptez la politique de confidentialité d'Amazon et les conditions d'utilisation.",
@@ -512,6 +512,9 @@
 		"TRANSACTION": "Transaction",
     "ADDRESSES": "Adresses",
     "WISHLIST": "Favoris"
+		"ADDRESSES": "Adresses",
+		"OWNER_ID": "ID du propriétaire",
+		"OWNER_NAME": "Nom du propriétaire"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
@@ -561,7 +564,8 @@
     "REMOVE_PROD_CART": "Suppression de l'article du panier",
     "REMOVE_PROD_WISH": "Suppression de l'article du favoris",
 		"ADDING_WISHLIST":"Ajout de l'article au favoris",
-		"PROD_ALREADY_ADDED":"Article deja ajouté"
+		"PROD_ALREADY_ADDED":"Article deja ajouté",
+		"INVALID_USER_ID": "ID d'utilisateur non valide"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

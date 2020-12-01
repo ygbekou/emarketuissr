@@ -57,7 +57,8 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'people',
     children: [
-      { state: 'users', name: 'Users', type: 'link' }
+      { state: 'users', name: 'Users', type: 'link' },
+      { state: 'stores/list', name: 'Stores', type: 'link' }
     ]
   },
   {

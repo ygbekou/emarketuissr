@@ -131,7 +131,8 @@ import { AddressesComponent } from './Addresses/Addresses.component';
   ],
    exports: [
       CardsComponent,
-      StoresComponent
+      StoresComponent,
+      EditProfileComponent
    ]
 })
 export class UserAccountModule { }

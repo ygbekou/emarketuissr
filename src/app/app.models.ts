@@ -645,7 +645,7 @@ export class InformationDescription {
   type = 'InformationDescription';
 }
 
-export class Store {
+export class Store extends BaseModel {
   id: number;
   name: string;
   owner: User;
@@ -660,6 +660,10 @@ export class Store {
   sslUrl: string;
   url: string;
   type = 'Store';
+
+  constructor() {
+    this.owner = new User();
+  }
 }
 
 export class SeoUrl {
@@ -1338,6 +1342,7 @@ export class OrderSearchCriteria {
 }
 
 export class UserSearchCriteria {
+  userId: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -1345,6 +1350,17 @@ export class UserSearchCriteria {
   status: number;
   ip: string;
   dateAdded: Date;
+}
+
+export class StoreSearchCriteria {
+  storeId: number;
+  name: string;
+  email: string;
+  userId: number;
+  firstName: string;
+  lastName: string;
+  status: number;
+  createDate: Date;
 }
 
 export class PaymentMethodChangeVO {
