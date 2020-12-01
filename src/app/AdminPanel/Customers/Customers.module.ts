@@ -41,11 +41,15 @@ import { CustomersRoutes } from './Customers.routing';
 import { UsersComponent } from './Customers/Users.component';
 import { UserComponent } from './Customers/User.component';
 import { UserAccountModule } from 'src/app/Pages/UserAccount/UserAccount.module';
+import { StoresComponent } from './Customers/Stores.component';
+import { StoreComponent } from './Customers/Store.component';
 
 @NgModule({
   declarations: [
     UsersComponent,
-    UserComponent
+    UserComponent,
+    StoresComponent,
+    StoreComponent
   ],
   imports: [
     CommonModule,

@@ -503,7 +503,9 @@
 		"CUSTOMER_ID": "Customer Id",
 		"OPENED": "Opened",
 		"TRANSACTION": "Transaction",
-		"ADDRESSES": "Addresses"
+		"ADDRESSES": "Addresses",
+		"OWNER_ID": "Owner ID",
+		"OWNER_NAME": "Owner Name"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
