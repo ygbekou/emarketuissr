@@ -1,5 +1,13 @@
 <div class="section-gap pb-0">
   <div class="container">
+    <div fxLayout="row wrap" class="col-gap" *ngIf="store.id > 0">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+        <img width="626" height="800" class="card-shadow" [src]="'assets/images/stores/' + storeId + '/' + store.image" alt="cart image">
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+        <h4>{{store.name}}</h4>
+      </div>
+    </div>
     <div fxLayout="row wrap" class="col-gap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
         <div class="mat-card mb-4">

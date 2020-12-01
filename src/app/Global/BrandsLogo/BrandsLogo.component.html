@@ -1,6 +1,6 @@
 <ngx-slick-carousel class="carousel" [config]="slideConfig">
   <div ngxSlickItem *ngFor="let store of stores">
-    <a [routerLink]="['/products']">
+    <a [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
       <mat-card>
         <mat-card-header>
           <mat-card-title>{{store.name}}</mat-card-title>

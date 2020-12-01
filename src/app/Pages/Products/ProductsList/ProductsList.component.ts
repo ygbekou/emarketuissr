@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem } from 'src/app/app.models';
+import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem, Store } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -23,7 +23,6 @@ export class ProductsListComponent implements OnInit {
    public viewCol = 33.3;
    public count = 6;
    public searchFields: any;
-   products: ProductDescVO[] = [];
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
    public errors: string;
@@ -32,6 +31,7 @@ export class ProductsListComponent implements OnInit {
    marketId = 0;
    searchText = '0';
    storeId = 0;
+   store = new Store();
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
    slideConfig: any;
@@ -101,6 +101,7 @@ export class ProductsListComponent implements OnInit {
 
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
+               this.getStore();
                this.getData();
             }
 
@@ -124,6 +125,19 @@ export class ProductsListComponent implements OnInit {
       });
 
    }
+
+   getStore() {
+    if (this.storeId > 0) {
+      this.appService.getOne(this.storeId, 'Store')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.store = result;
+          }
+        });
+    }
+  }
+
+
    getProducts() {
       this.appService.getObject('/service/catalog/getProductsOnSale/' +
          this.appService.appInfoStorage.language.id + '/' + this.storeId + '/' + this.marketId + '/' + this.catId + '/' + this.searchText)
@@ -319,7 +333,7 @@ export class ProductsListComponent implements OnInit {
    }
 
    public filterProducts() {
-      const result = this.filterData(this.products);
+      const result = this.filterData(this.productList.productDescVOs);
       if (result.data.length === 0) {
          // this.properties.length = 0;
          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);

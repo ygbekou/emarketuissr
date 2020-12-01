@@ -662,6 +662,7 @@ export class Store extends BaseModel {
   type = 'Store';
 
   constructor() {
+    super();
     this.owner = new User();
   }
 }

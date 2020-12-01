@@ -509,8 +509,7 @@
 		"OPENED": "Ouvert(e)",
 		"TRANSACTION": "Transaction",
     "ADDRESSES": "Adresses",
-    "WISHLIST": "Favoris"
-		"ADDRESSES": "Adresses",
+    "WISHLIST": "Favoris",
 		"OWNER_ID": "ID du propriétaire",
 		"OWNER_NAME": "Nom du propriétaire"
   },
