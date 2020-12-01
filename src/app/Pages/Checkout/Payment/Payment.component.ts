@@ -7,14 +7,14 @@ import { User, Address, CreditCard, Order } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
-  selector: 'app-Payment',
-  templateUrl: './Payment.component.html',
-  styleUrls: ['./Payment.component.scss']
+   selector: 'app-Payment',
+   templateUrl: './Payment.component.html',
+   styleUrls: ['./Payment.component.scss']
 })
 export class PaymentComponent implements OnInit, AfterViewInit {
 
    step = 0;
-   isDisabledPaymentStepTwo  = true;
+   isDisabledPaymentStepTwo = true;
    isDisabledPaymentStepThree = false;
    emailPattern: any = /\S+@\S+\.\S+/;
    offerCards: any = [
@@ -77,9 +77,9 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    orderTotal: number;
 
    constructor(public appService: AppService,
-               public router: Router,
-               public translate: TranslateService
-               ) {
+      public router: Router,
+      public translate: TranslateService
+   ) {
 
       this.appService.removeBuyProducts();
       this.user.shippingAddress = new Address();
@@ -90,58 +90,61 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
+      // console.log('On init of cart');
+      this.appService.recalculateCart(true);
    }
 
    ngAfterViewInit() {
+      // console.log(this.appService.localStorageCartProducts);
    }
 
 
-  getUser(userId: number) {
-    this.appService.getOneWithChildsAndFiles(userId, 'User')
-      .subscribe(result => {
-        if (result.id > 0) {
-          this.user = result;
+   getUser(userId: number) {
+      this.appService.getOneWithChildsAndFiles(userId, 'User')
+         .subscribe(result => {
+            if (result.id > 0) {
+               this.user = result;
 
-         // this.user.addresss.forEach(address => {
-         //    if (address.addressType === 1) {
-         //       if (address.status === 1) {
-         //          this.user.shippingAddress = address;
-         //          return;
-         //       }
-         //    }
-         //    if (address.addressType === 2) {
-         //       if (address.status === 1) {
-         //          this.user.billingAddress = address;
-         //          return;
-         //       }
-         //    }
-         //  });
+               // this.user.addresss.forEach(address => {
+               //    if (address.addressType === 1) {
+               //       if (address.status === 1) {
+               //          this.user.shippingAddress = address;
+               //          return;
+               //       }
+               //    }
+               //    if (address.addressType === 2) {
+               //       if (address.status === 1) {
+               //          this.user.billingAddress = address;
+               //          return;
+               //       }
+               //    }
+               //  });
 
-         //  this.user.creditCards.forEach(creditCard => {
-         //    if (creditCard.status === 1) {
-         //       this.user.creditCard = creditCard;
-         //       return;
-         //    }
-         //  });
+               //  this.user.creditCards.forEach(creditCard => {
+               //    if (creditCard.status === 1) {
+               //       this.user.creditCard = creditCard;
+               //       return;
+               //    }
+               //  });
 
 
-         //  if (this.user.shippingAddress === undefined) {
-         //    this.user.shippingAddress = new Address();
-         //  }
-         //   if (this.user.billingAddress === undefined) {
-         //    this.user.billingAddress = new Address();
-         //  }
-         //  if (this.user.creditCard === undefined) {
-         //    this.user.creditCard = new CreditCard();
-         //  }
-        } else {
-          this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-            this.error = res['MESSAGE.READ_FAILED'];
-          });
-        }
-      });
+               //  if (this.user.shippingAddress === undefined) {
+               //    this.user.shippingAddress = new Address();
+               //  }
+               //   if (this.user.billingAddress === undefined) {
+               //    this.user.billingAddress = new Address();
+               //  }
+               //  if (this.user.creditCard === undefined) {
+               //    this.user.creditCard = new CreditCard();
+               //  }
+            } else {
+               this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                  this.error = res['MESSAGE.READ_FAILED'];
+               });
+            }
+         });
 
-  }
+   }
 
    public setStep(index: number) {
       this.step = index;
@@ -210,12 +213,12 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       paymentGroup.markAsUntouched();
 
       if (value && value.index === 1) {
-            paymentGroup.controls['card_number'].clearValidators();
-            paymentGroup.controls['user_card_name'].clearValidators();
-            paymentGroup.controls['cvv'].clearValidators();
-            paymentGroup.controls['expiry_date'].clearValidators();
+         paymentGroup.controls['card_number'].clearValidators();
+         paymentGroup.controls['user_card_name'].clearValidators();
+         paymentGroup.controls['cvv'].clearValidators();
+         paymentGroup.controls['expiry_date'].clearValidators();
 
-            paymentGroup.controls['bank_card_value'].setValidators([Validators.required]);
+         paymentGroup.controls['bank_card_value'].setValidators([Validators.required]);
       } else {
 
          paymentGroup.controls['card_number'].setValidators([Validators.required]);
@@ -259,23 +262,23 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       this.order.language = this.appService.appInfoStorage.language;
 
       this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-      .subscribe((data: Order) => {
-         // console.info("Saved Order");
-         // console.info(this.order);
-         // console.info(window.location.href);
+         .subscribe((data: Order) => {
+            // console.info("Saved Order");
+            // console.info(this.order);
+            // console.info(window.location.href);
 
-         if (data.errors !== null && data.errors !== undefined) {
-            this.error = data.errors[0];
-         }
+            if (data.errors !== null && data.errors !== undefined) {
+               this.error = data.errors[0];
+            }
 
-         if (this.user.paymentMethodCode === 'TMONEY') {
-            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
-            window.location.href = url;
-            return;
-         }
-      },
-        error => console.log(error),
-        () => console.log('Changing Payment Method complete'));
+            if (this.user.paymentMethodCode === 'TMONEY') {
+               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+               window.location.href = url;
+               return;
+            }
+         },
+            error => console.log(error),
+            () => console.log('Changing Payment Method complete'));
    }
 }
 

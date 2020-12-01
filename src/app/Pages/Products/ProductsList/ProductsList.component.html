@@ -5,7 +5,7 @@
         <div class="mat-card mb-4">
           <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
             <div fxLayout="row wrap" *ngIf="productList.categories && productList.categories.length>1">
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
                 <mat-form-field class="w-100">
                   <mat-select placeholder="{{'COMMON.CATEGORY' | translate }}"              
                   id="category" name="category"
@@ -71,9 +71,11 @@
                   </span>
                 </mat-menu>
                 <!-- </span>        -->
+                <!--
                 <button mat-icon-button (click)="viewCol = 100; viewType='list'; count=1;">
                   <mat-icon>view_list</mat-icon>
                 </button>
+                -->
                 <button mat-icon-button (click)="viewCol = 50; viewType='grid';">
                   <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
                     <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />

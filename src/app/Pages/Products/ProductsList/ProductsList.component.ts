@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO } from 'src/app/app.models';
+import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -269,7 +269,7 @@ export class ProductsListComponent implements OnInit {
       this.appService.addToCart(value);
    }
 
-   public addToWishList(value) {
+   public addToWishList(value) { 
       this.appService.addToWishlist(value);
    }
 
