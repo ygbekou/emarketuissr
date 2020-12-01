@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TokenStorage } from 'src/app/token.storage';
 import { MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,12 +18,20 @@ export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
   public hide = true;
   error = '';
+  fromPage = '';
   constructor(public fb: FormBuilder,
     public router: Router,
+    private route: ActivatedRoute,
     private tokenStorage: TokenStorage,
     public snackBar: MatSnackBar,
     public translate: TranslateService,
     public appService: AppService) {
+    this.route.params.subscribe(() => {
+      this.route.queryParams.forEach(queryParams => {
+        this.fromPage = queryParams['fromPage'];
+        console.log('from page : ' + this.fromPage);
+      });
+    });
   }
 
   ngOnInit() {
@@ -58,6 +66,11 @@ export class RegisterComponent implements OnInit {
           } else {
             this.tokenStorage.saveAuthData(data);
             this.appService.updateToken();
+
+            if (this.fromPage === 'checkout') {
+              this.router.navigate(['/checkout/payment']);
+              return;
+            }
             if (this.appService.tokenStorage.getRole() === '1') {// client
               this.router.navigate(['/account/profile']);
             } else if (this.appService.tokenStorage.getRole() === '2') { // seller

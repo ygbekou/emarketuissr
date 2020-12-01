@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
    selector: 'embryo-HeaderCart',
@@ -19,7 +20,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
 
    hiddenBadge = true;
 
-   constructor() {
+   constructor(private appService: AppService) {
       this.mobWidth = window.screen.width;
    }
 

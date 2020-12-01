@@ -8,25 +8,25 @@ import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddre
 
 export const CheckoutRoutes: Routes = [
    {
-      path : '',
+      path: '',
       component: SigninComponent
    },
    {
       path: 'signin',
       component: SigninComponent
    },
-	{
-		path: 'payment',
-		component: PaymentComponent
+   {
+      path: 'payment',
+      component: PaymentComponent
    },
    {
-		path: 'cards',
-		component: PaymentChangeModelComponent
+      path: 'cards',
+      component: PaymentChangeModelComponent
    },
    {
-		path: 'addresses',
-		component: PaymentChangeAddressComponent
-	},
+      path: 'addresses',
+      component: PaymentChangeAddressComponent
+   },
    {
       path: 'final-receipt',
       component: FinalReceiptComponent

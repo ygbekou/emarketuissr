@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class SigninComponent implements OnInit {
 
 
-   constructor(public appService : AppService,
-      public router: Router) { 
+   constructor(public appService: AppService,
+      public router: Router) {
       if (this.appService.tokenStorage.getUserId() != null) {
          this.router.navigate(['/checkout/payment']);
       }
@@ -26,17 +26,17 @@ export class SigninComponent implements OnInit {
 
    public getCartProducts() {
       let total = 0;
-      if(this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length>0) {
-         for(let product of this.appService.localStorageCartProducts) {
-            if(!product.quantity){
+      if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
+         for (const product of this.appService.localStorageCartProducts) {
+            if (!product.quantity) {
                product.quantity = 1;
             }
-            total += (product.price*product.quantity);
+            total += (product.price * product.quantity);
          }
-         total += (this.appService.shipping+this.appService.tax);
+         total += (this.appService.shipping + this.appService.tax);
          return total;
       }
-      return total;  
+      return total;
    }
 
 }
