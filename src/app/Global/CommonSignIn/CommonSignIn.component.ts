@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TokenStorage } from 'src/app/token.storage';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
@@ -22,9 +22,19 @@ export class CommonSignInComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
     public router: Router,
+    private route: ActivatedRoute,
     private tokenStorage: TokenStorage,
     public translate: TranslateService,
-    public appService: AppService) { }
+    public appService: AppService) {
+
+    this.route.params.subscribe(() => {
+      this.route.queryParams.forEach(queryParams => {
+        this.fromPage = queryParams['fromPage'];
+        console.log('from page : ' + this.fromPage);
+      });
+    });
+
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -49,11 +59,11 @@ export class CommonSignInComponent implements OnInit {
       try {
         this.error = ''
         user.lang = this.translate.currentLang;
-        console.log('Current lang=' + this.translate.currentLang);
+        // console.log('Current lang=' + this.translate.currentLang);
 
         this.appService.authenticate(user)
           .subscribe(data => {
-            console.log(data);
+            // console.log(data);
             if (data.token !== '' && data.token !== null) {
               console.log('login successful');
               this.tokenStorage.saveAuthData(data);

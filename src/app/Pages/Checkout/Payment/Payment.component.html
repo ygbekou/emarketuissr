@@ -21,7 +21,7 @@
                 <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType:1}"
                     routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
-              <div>
+              <div *ngIf ="user.shippingAddress">
                 {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}
                 {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br>
                 {{user.shippingAddress.city}}<br>
@@ -36,7 +36,7 @@
                 <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType:2}"
                   routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
               </div>
-              <div>
+              <div *ngIf="user.billingAddress">
                 {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}
                 {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br>
                 {{user.billingAddress.city}}<br>

@@ -33,8 +33,11 @@
             </div>
          </div>
          <div class="footer-menu px-3 pb-2 pt-2">
-            <button mat-raised-button color="accent" class="w-100"
+            <button mat-raised-button color="accent" class="w-100" *ngIf="appService.tokenStorage.getUserId() !== null"
                [routerLink]="['/checkout']">{{'COMMON.CHECKOUT'|translate}}</button>
+            <button mat-raised-button color="accent" class="w-100" *ngIf="appService.tokenStorage.getUserId() === null"
+               [routerLink]="['/session/signin']"
+               [queryParams]="{fromPage:'checkout'}">{{'COMMON.CHECKOUT'|translate}}</button>
          </div>
       </ng-container>
       <ng-template #elseBlock>
