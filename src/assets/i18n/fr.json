@@ -462,13 +462,14 @@
     "ENDING_IN": "se terminant en",
     "PAYMENT_METHOD": "Méthode de payement",
     "REVIEW_YOUR_ORDER": "Vérifiez votre commande",
+    "ORDER_REVIEW": "Vérification de commande",
     "PLACE_YOUR_ORDER": "Passer votre commande",
     "PLACE_YOUR_ORDER_NOTICE": "En passant votre commande, vous acceptez la politique de confidentialité d'Amazon et les conditions d'utilisation.",
     "ORDER_SUMMARY": "Sommaire de la commande",
     "ITEMS": "Articles",
     "SHIPPING_AND_HANDLING": "Expédition et manutention",
     "TOTAL_BEFORE_TAX": "Total hors Taxe",
-    "ESTIMATED_TAX": "Taxe estimé � collecter",
+    "ESTIMATED_TAX": "Taxe estimé",
     "ORDER_TOTAL": "Total de la commande",
     "CREDIT_OR_DEBIT_CARDS": "Cartes de cr�dit ou de d�bit",
     "ADD_CREDIT_OR_DEBIT_CARD": "Ajouter une Carte de Cr�dit ou D�bit",
@@ -511,8 +512,7 @@
 		"OPENED": "Ouvert(e)",
 		"TRANSACTION": "Transaction",
     "ADDRESSES": "Adresses",
-    "WISHLIST": "Favoris"
-		"ADDRESSES": "Adresses",
+    "WISHLIST": "Favoris",
 		"OWNER_ID": "ID du propriétaire",
 		"OWNER_NAME": "Nom du propriétaire"
   },
@@ -565,7 +565,9 @@
     "REMOVE_PROD_WISH": "Suppression de l'article du favoris",
 		"ADDING_WISHLIST":"Ajout de l'article au favoris",
 		"PROD_ALREADY_ADDED":"Article deja ajouté",
-		"INVALID_USER_ID": "ID d'utilisateur non valide"
+		"INVALID_USER_ID": "ID d'utilisateur non valide",
+		"CART_EMPTY": "Votre panier est vide",
+		"GO_SHOPPING": "Continuez le shopping"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

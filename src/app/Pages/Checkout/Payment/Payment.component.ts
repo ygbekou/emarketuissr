@@ -104,39 +104,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
          .subscribe(result => {
             if (result.id > 0) {
                this.user = result;
-
-               // this.user.addresss.forEach(address => {
-               //    if (address.addressType === 1) {
-               //       if (address.status === 1) {
-               //          this.user.shippingAddress = address;
-               //          return;
-               //       }
-               //    }
-               //    if (address.addressType === 2) {
-               //       if (address.status === 1) {
-               //          this.user.billingAddress = address;
-               //          return;
-               //       }
-               //    }
-               //  });
-
-               //  this.user.creditCards.forEach(creditCard => {
-               //    if (creditCard.status === 1) {
-               //       this.user.creditCard = creditCard;
-               //       return;
-               //    }
-               //  });
-
-
-               //  if (this.user.shippingAddress === undefined) {
-               //    this.user.shippingAddress = new Address();
-               //  }
-               //   if (this.user.billingAddress === undefined) {
-               //    this.user.billingAddress = new Address();
-               //  }
-               //  if (this.user.creditCard === undefined) {
-               //    this.user.creditCard = new CreditCard();
-               //  }
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
                   this.error = res['MESSAGE.READ_FAILED'];

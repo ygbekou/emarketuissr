@@ -4,6 +4,9 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { AppService } from '../../Services/app.service';
+import { Order, User } from 'src/app/app.models';
+import { TranslateService } from '@ngx-translate/core';
+import { Constants } from 'src/app/app.constants';
 
 @Component({
    selector: 'embryo-Cart',
@@ -11,20 +14,39 @@ import { AppService } from '../../Services/app.service';
    styleUrls: ['./Cart.component.scss']
 })
 export class CartComponent implements OnInit, AfterViewChecked {
+   error: string;
 
+   order: Order;
    products: any;
+   user: User = new User();
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    popupResponse: any;
 
    constructor(public appService: AppService,
       private router: Router,
+      private translate: TranslateService,
       private loadingBar: LoadingBarService,
       private cdRef: ChangeDetectorRef) {
+      this.getUser(Number(this.appService.tokenStorage.getUserId()));
    }
 
    ngOnInit() {
    }
 
+
+   getUser(userId: number) {
+      this.appService.getOneWithChildsAndFiles(userId, 'User')
+         .subscribe(result => {
+            if (result.id > 0) {
+               this.user = result;
+            } else {
+               this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                  this.error = res['MESSAGE.READ_FAILED'];
+               });
+            }
+         });
+
+   }
    ngAfterViewChecked(): void {
       this.cdRef.detectChanges();
    }
@@ -90,5 +112,30 @@ export class CartComponent implements OnInit, AfterViewChecked {
       } else {
          return 1;
       }
+   }
+
+   placeYourOrder() {
+      this.order = new Order();
+
+      this.order.products = this.appService.localStorageCartProducts;
+      this.order.total = this.appService.navbarCartTotal;
+      this.order.userId = this.user.id;
+      this.order.language = this.appService.appInfoStorage.language;
+
+      this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
+         .subscribe((data: Order) => {
+
+            if (data.errors !== null && data.errors !== undefined) {
+               this.error = data.errors[0];
+            }
+
+            if (this.user.paymentMethodCode === 'TMONEY') {
+               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+               window.location.href = url;
+               return;
+            }
+         },
+            error => console.log(error),
+            () => console.log('Changing Payment Method complete'));
    }
 }
