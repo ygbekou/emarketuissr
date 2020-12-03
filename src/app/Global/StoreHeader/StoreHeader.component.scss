@@ -1,0 +1,31 @@
+.store-header-bar {
+    padding: 0rem 0;
+    text-align: center;
+    background-image: url(/assets/images/page-title-bar.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fff !important;
+}
+
+h1,
+.h1 {
+    font-size: 3.25rem;
+    color: #fff !important;
+    font-weight: 500;
+}
+
+p {
+    color: #fff !important;
+}
+
+img {
+    max-height: 100px;
+}
+
+.col-gap>div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
