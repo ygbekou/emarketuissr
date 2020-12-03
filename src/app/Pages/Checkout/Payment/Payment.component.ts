@@ -17,57 +17,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    isDisabledPaymentStepTwo = true;
    isDisabledPaymentStepThree = false;
    emailPattern: any = /\S+@\S+\.\S+/;
-   offerCards: any = [
-      {
-         id: 1,
-         name: 'Debit Card',
-         content: 'Visa Mega Shopping Offer'
-      },
-      {
-         id: 2,
-         name: 'Credit Card',
-         content: 'American Express 20% Flat'
-      },
-      {
-         id: 3,
-         name: 'Debit Card',
-         content: 'BOA Buy 1 Get One Offer'
-      },
-      {
-         id: 4,
-         name: 'Master Card',
-         content: 'Mastercard Elite Card'
-      },
-      {
-         id: 5,
-         name: 'Debit Card',
-         content: 'Visa Mega Shopping Offer'
-      }
-   ];
-
-   bankCardsImages: any = [
-      {
-         id: 1,
-         image: 'assets/images/client-logo-1.png'
-      },
-      {
-         id: 2,
-         image: 'assets/images/client-logo-2.png'
-      },
-      {
-         id: 3,
-         image: 'assets/images/client-logo-3.png'
-      },
-      {
-         id: 4,
-         image: 'assets/images/client-logo-4.png'
-      },
-      {
-         id: 5,
-         image: 'assets/images/client-logo-5.png'
-      }
-   ];
-
    paymentFormOne: FormGroup;
 
    user: User = new User();

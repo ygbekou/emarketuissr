@@ -1,3 +1,5 @@
+import { Constants } from "./app.constants";
+
 export class Area {
   constructor(public id: number,
     public value: number,
@@ -979,6 +981,7 @@ export class CartItem {
   price: number;
   tax: number;
   total: number;
+  storeUrl: string;
   taxRules: TaxRule[];
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -991,6 +994,7 @@ export class CartItem {
     this.price = p.product.price;
     this.tax = p.product.tax;
     this.total = 0;
+    this.storeUrl = Constants.webServer + '/#/products?storeId=' + this.storeId;
     this.taxRules = p.product.taxRules;
   }
 }
