@@ -90,11 +90,12 @@ import { CustomerHistoryComponent } from './Customer/CustomerHistory.component';
 import { MatPaginatorModule } from '@angular/material';
 import { CustomerTransactionComponent } from './Customer/CustomerTransaction.component';
 import { CustomerRewardComponent } from './Customer/CustomerReward.component';
+import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
 
 @NgModule({
    imports: [
       CommonModule,
-      RouterModule, 
+      RouterModule,
       MatBadgeModule,
       MatButtonModule,
       FlexLayoutModule,
@@ -186,7 +187,8 @@ import { CustomerRewardComponent } from './Customer/CustomerReward.component';
       PaymentChangeAddressComponent,
       CustomerHistoryComponent,
       CustomerTransactionComponent,
-      CustomerRewardComponent
+      CustomerRewardComponent,
+      StoreHeaderComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -239,7 +241,8 @@ import { CustomerRewardComponent } from './Customer/CustomerReward.component';
       PaymentChangeAddressComponent,
       CustomerHistoryComponent,
       CustomerTransactionComponent,
-      CustomerRewardComponent
+      CustomerRewardComponent,
+      StoreHeaderComponent
    ],
    entryComponents: [
       ReviewPopupComponent,

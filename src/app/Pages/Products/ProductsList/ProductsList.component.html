@@ -1,127 +1,120 @@
-<div class="section-gap pb-0">
-  <div class="container">
-    <div fxLayout="row wrap" class="col-gap" *ngIf="store.id > 0">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-        <img width="626" height="800" class="card-shadow" [src]="'assets/images/stores/' + storeId + '/' + store.image" alt="cart image">
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-        <h4>{{store.name}}</h4>
+<app-store-header *ngIf="store.id > 0" [store]="store">
+</app-store-header>
+
+<div class="container">
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+      <div class="mat-card mb-4">
+        <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
+          <div fxLayout="row wrap" *ngIf="productList.categories && productList.categories.length>1">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+              <mat-form-field class="w-100">
+                <mat-select placeholder="{{'COMMON.CATEGORY' | translate }}" id="category" name="category"
+                  [(ngModel)]="searchCriteria.category" #category="ngModel">
+                  <mat-option (click)="applyAllFilter()" *ngFor="let category of productList.categories"
+                    [value]="category">
+                    {{category}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
+          <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.MIN' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="priceMin" [(ngModel)]="searchCriteria.priceMin"
+                  name="priceMin" #priceMin="ngModel">
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.MAX' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="priceMax" [(ngModel)]="searchCriteria.priceMax"
+                  name="priceMax" #priceMax="ngModel">
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-3">
+              <button mat-mini-fab color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">GO</span>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-    <div fxLayout="row wrap" class="col-gap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-        <div class="mat-card mb-4">
-          <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
-            <div fxLayout="row wrap" *ngIf="productList.categories && productList.categories.length>1">
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-                <mat-form-field class="w-100">
-                  <mat-select placeholder="{{'COMMON.CATEGORY' | translate }}"              
-                  id="category" name="category"
-                    [(ngModel)]="searchCriteria.category" #category="ngModel">
-                    <mat-option   (click) ="applyAllFilter()" *ngFor="let category of productList.categories" [value]="category">
-                      {{category}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+      <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
+        <mat-toolbar-row>
+          <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+            <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+              <h2 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">{{'COMMON.CATEGORY'|translate}} :
+                {{ catDesc.name}}
+              </h2>
+              <h2 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h2>
             </div>
-            <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
-            <div fxLayout="row wrap">
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
-                <mat-form-field class="w-100">
-                  <mat-label> {{'COMMON.MIN' | translate}}</mat-label>
-                  <input matInput type="text" class="form-control" id="priceMin" [(ngModel)]="searchCriteria.priceMin"
-                    name="priceMin" #priceMin="ngModel">
-                </mat-form-field>
-              </div>
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
-                <mat-form-field class="w-100">
-                  <mat-label> {{'COMMON.MAX' | translate}}</mat-label>
-                  <input matInput type="text" class="form-control" id="priceMax" [(ngModel)]="searchCriteria.priceMax"
-                    name="priceMax" #priceMax="ngModel">
-                </mat-form-field>
-              </div>
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-3">
-                <button mat-mini-fab color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                  <span class="mx-1 uppercase">GO</span>
-                </button>
-              </div>
-            </div> 
-          </form>
-        </div>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-        <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
-          <mat-toolbar-row>
-            <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
-              <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                <h2 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">{{'COMMON.CATEGORY'|translate}} :
-                  {{ catDesc.name}}
-                </h2>
-                <h2 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h2>
-              </div>
-              <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                <mat-form-field class="w-100">
-                  <input matInput (keyup)="searchClicked($event.target.value)"
-                    placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
-                </mat-form-field>
-              </div>
-              <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-                <!-- <span *ngIf="isHomePage"> -->
-                <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-                  Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-                </a>
-                <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
-                  <span (mouseleave)="countsMenuTrigger.closeMenu()">
-                    <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
-                      <span>{{count}}</span>
-                    </button>
-                  </span>
-                </mat-menu>
-                <!-- </span>        -->
-                <!--
+            <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+              <mat-form-field class="w-100">
+                <input matInput (keyup)="searchClicked($event.target.value)"
+                  placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+              <!-- <span *ngIf="isHomePage"> -->
+              <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+                Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+              </a>
+              <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
+                <span (mouseleave)="countsMenuTrigger.closeMenu()">
+                  <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
+                    <span>{{count}}</span>
+                  </button>
+                </span>
+              </mat-menu>
+              <!-- </span>        -->
+              <!--
                 <button mat-icon-button (click)="viewCol = 100; viewType='list'; count=1;">
                   <mat-icon>view_list</mat-icon>
                 </button>
                 -->
-                <button mat-icon-button (click)="viewCol = 50; viewType='grid';">
-                  <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
-                    <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
-                  </svg>
-                </button>
-                <button mat-icon-button fxShow="false" fxShow.gt-md (click)="viewCol = 33.3; viewType='grid';">
-                  <mat-icon>view_module</mat-icon>
-                </button>
+              <button mat-icon-button (click)="viewCol = 50; viewType='grid';">
+                <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
+                  <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
+                </svg>
+              </button>
+              <button mat-icon-button fxShow="false" fxShow.gt-md (click)="viewCol = 33.3; viewType='grid';">
+                <mat-icon>view_module</mat-icon>
+              </button>
 
-                <button fxShow="false" fxShow.gt-md mat-icon-button (click)="viewCol = 25; viewType='grid';">
-                  <mat-icon>view_comfy</mat-icon>
-                </button>
-
-              </div>
+              <button fxShow="false" fxShow.gt-md mat-icon-button (click)="viewCol = 25; viewType='grid';">
+                <mat-icon>view_comfy</mat-icon>
+              </button>
 
             </div>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        <div fxLayout="row wrap" *ngIf="!productList.productDescVOs || productList.productDescVOs.length===0">
-          <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
-            </mat-chip>
+
           </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div fxLayout="row wrap" *ngIf="!productList.productDescVOs || productList.productDescVOs.length===0">
+        <div fxFlex="100" class="px-2 pb-2 pt-0">
+          <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+            {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
+          </mat-chip>
         </div>
-        <div fxLayout="row wrap" *ngIf="productList.productDescVOs && productList.productDescVOs.length>0">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
-            <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
-              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'buy'" (addToCart)="addToCart($event)"
-              (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
-            </embryo-ProductGrid>
-          </div>
-        </div>
-        <mat-paginator *ngIf="productList.productDescVOs && productList.productDescVOs.length>0"
-          [length]="pagination?.total" [pageSize]="pagination?.perPage" (page)="onPageChange($event)"
-          class="w-100 mat-elevation-z1">
-        </mat-paginator>
       </div>
+      <div fxLayout="row wrap" *ngIf="productList.productDescVOs && productList.productDescVOs.length>0">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+          <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
+            [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'buy'" (addToCart)="addToCart($event)"
+            (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
+          </embryo-ProductGrid>
+        </div>
+      </div>
+      <mat-paginator *ngIf="productList.productDescVOs && productList.productDescVOs.length>0"
+        [length]="pagination?.total" [pageSize]="pagination?.perPage" (page)="onPageChange($event)"
+        class="w-100 mat-elevation-z1">
+      </mat-paginator>
     </div>
   </div>
 </div>

@@ -127,15 +127,15 @@ export class ProductsListComponent implements OnInit {
    }
 
    getStore() {
-    if (this.storeId > 0) {
-      this.appService.getOne(this.storeId, 'Store')
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.store = result;
-          }
-        });
-    }
-  }
+      if (this.storeId > 0) {
+         this.appService.getOne(this.storeId, 'Store')
+            .subscribe(result => {
+               if (result.id > 0) {
+                  this.store = result;
+               }
+            });
+      }
+   }
 
 
    getProducts() {
@@ -194,7 +194,7 @@ export class ProductsListComponent implements OnInit {
                      found = false;
                   }
                }
-
+               console.log('Filter Predicate called.');
                return found;
             }
 
@@ -283,7 +283,7 @@ export class ProductsListComponent implements OnInit {
       this.appService.addToCart(value);
    }
 
-   public addToWishList(value) { 
+   public addToWishList(value) {
       this.appService.addToWishlist(value);
    }
 
@@ -326,9 +326,11 @@ export class ProductsListComponent implements OnInit {
    }
 
    public resetPagination() {
+      console.log( 'resetPagination called');
       if (this.paginator) {
          this.paginator.pageIndex = 0;
       }
+      
       this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
    }
 
@@ -355,8 +357,12 @@ export class ProductsListComponent implements OnInit {
 
       this.searchCriteria.text = data.trim().toLowerCase();
       this.applyAllFilter();
-      // this.applyFilter(data);
+      console.log('After applyAllFilter.' + this.dataSource.data.length );
+      this.pagination = this.appService.paginator(this.dataSource.data, 1, this.count).pagination;
+      // this.resetPagination();
    }
+
+
 
    selectForSaleProduct($event) {
       console.log($event);
