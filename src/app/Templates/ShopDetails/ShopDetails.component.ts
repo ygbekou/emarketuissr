@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AppService } from '../../Services/app.service';
-import { ProductDescription, ProductDescVO } from 'src/app/app.models';
+import { ProductDescription, ProductDescVO, CartItem } from 'src/app/app.models';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -19,6 +19,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    mainImgPath: string;
    totalPrice: any;
    type: any;
+   qty = 1;
    colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
    sizeArray: number[] = [36, 38, 40, 42, 44, 46, 48];
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -31,25 +32,27 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       public appService: AppService
    ) {
       console.log('constructor called');
-
-      //this.appService.getProductReviews().valueChanges().subscribe(res => { this.productReviews = res });
    }
 
    ngOnInit() {
       console.log('ngOnInit called');
-      //onsole.log(this.detailData.product.optionValueDescriptions);
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
-
-
       this.queryParams = {
          storeId: this.detailData.product.storeId
-      }
+      };
 
       this.route.params.subscribe(res => {
          this.type = null;
          this.type = res.type;
       });
+
+      if (this.detailData && this.detailData.product) {
+         console.log(this.detailData.product.quantity);
+         console.log(this.detailData);
+      } else {
+         console.log(this.detailData);
+      }
    }
 
    ngOnChanges() {
@@ -76,9 +79,9 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    public reviewPopup(detailData) {
-      alert('Here')
+      //  alert('Here')
       let reviews: any = null;
-      for (let review of this.productReviews) {
+      for (const review of this.productReviews) {
          reviews = review.user_rating;
       }
 
@@ -86,11 +89,14 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    public addToWishlist(value: any) {
-      this.appService.addToWishlist(value);
+      const ci = new CartItem(value);
+      this.appService.addToWishlist(ci);
    }
 
    public addToCart(value: any) {
-      this.appService.addToCart(value);
+      const ci = new CartItem(value);
+      ci.quantity = this.qty;
+      this.appService.addToCart(ci);
    }
 
    public buyNow(value: any) {

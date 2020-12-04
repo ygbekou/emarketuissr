@@ -6,3 +6,15 @@
     display: inline-block;
     width: .385em;
 }
+
+a, a:link, a:visited {
+    text-decoration: none;
+    color: #007185;
+}
+
+.col-gap > div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}

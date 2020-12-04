@@ -1,102 +1,82 @@
 <ng-container *ngIf="product">
-  <!--
-  <embryo-PageTitle heading="{{product.name}}"></embryo-PageTitle>
-  -->
+
   <div class="inner-container">
     <div class="product-detail-page">
 
       <div class="container">
-        <div fxLayout='row wrap' fxLayoutAlign="center center" class="col-gap">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <embryo-ShopDetails [currency]="appService?.currency" [detailData]="product"></embryo-ShopDetails>
-
           </div>
         </div>
       </div>
-
+      <div class="container">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+            <div>
+              <div fxLayout="row wrap" color="accent">
+                <h5>{{'COMMON.PRODUCT_DETAILS'|translate}}:</h5>
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.productDimensions)">
+                <h6>{{'COMMON.PRODUCT_DIMENSIONS'|translate}}: </h6>&nbsp;{{product.product?.productDimensions}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.model)">
+                <h6>{{'COMMON.MODEL_NUMBER'|translate}}: </h6>&nbsp;{{product.product?.model}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.category)">
+                <h6>{{'COMMON.CATEGORY'|translate}}: </h6>&nbsp;{{product?.category}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.dateAvailable)">
+                <h6>{{'COMMON.DATE_FIRST_AVAILABLE'|translate}}: </h6>&nbsp;{{product?.product.dateAvailable}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.manufacturerName)">
+                <h6>{{'COMMON.MANUFACTURER'|translate}}: </h6>&nbsp;{{product?.product.manufacturerName}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.sku)">
+                <h6>{{'COMMON.SKU'|translate}}: </h6>&nbsp;{{product?.product.sku}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.upc)">
+                <h6>{{'COMMON.UPC'|translate}}: </h6>&nbsp;{{product?.product.upc}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.ean)">
+                <h6>{{'COMMON.EAN'|translate}}: </h6>&nbsp;{{product?.product.ean}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.jan)">
+                <h6>{{'COMMON.JAN'|translate}}: </h6>&nbsp;{{product?.product.jan}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.isbn)">
+                <h6>{{'COMMON.ISBN'|translate}}: </h6>&nbsp;{{product?.product.isbn}}
+              </div>
+              <div fxLayout="row wrap" *ngIf="!isBlank(product?.product.mpn)">
+                <h6>{{'COMMON.MPN'|translate}}: </h6>&nbsp;{{product?.product.mpn}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="bg-grey section-gap" *ngIf="products && products.length>0">
         <div class="container">
           <div class="block-title text-center gap">
             <h2>{{'COMMON.SIMILAR_ARTICLES'|translate}}</h2>
           </div>
-
           <embryo-ProductGrid [currency]="appService?.currency" [products]="products" [viewType]="viewType"
             [viewCol]="viewCol" [fromPage]="'buy'" (addToCart)="addToCart($event)"
             (addToWishList)="addToWishList($event)" gridThree="true">
           </embryo-ProductGrid>
-
           <div class="text-center mt-4">
-            <button mat-raised-button (click)="showMore()">Show All</button>
+            <button mat-raised-button (click)="showMore()">{{'COMMON.SHOW_MORE'|translate}}</button>
           </div>
         </div>
       </div>
 
       <div class="container">
-        <div fxLayout='row wrap' fxLayoutAlign="center center" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=20 fxFlex.lg="20" fxFlex.xl="20"></div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=80 fxFlex.lg="80" fxFlex.xl="80">
-              <div>
-                <h5>{{'COMMON.PRODUCT_DESCRIPTION'|translate}}:</h5>
-                <div [innerHTML]="product?.description | safehtml"></div>
-              </div>
-            </div>
-          </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=20 fxFlex.lg="20" fxFlex.xl="20"></div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=80 fxFlex.lg="80" fxFlex.xl="80">
-              <div>
-                <div fxLayout='row wrap' color="accent">
-                  <h5>{{'COMMON.PRODUCT_DETAILS'|translate}}:</h5>
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.productDimensions)">
-                  <h6>{{'COMMON.PRODUCT_DIMENSIONS'|translate}}: </h6>&nbsp;{{product.product?.productDimensions}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.model)">
-                  <h6>{{'COMMON.MODEL_NUMBER'|translate}}: </h6>&nbsp;{{product.product?.model}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.category)">
-                  <h6>{{'COMMON.CATEGORY'|translate}}: </h6>&nbsp;{{product?.category}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.dateAvailable)">
-                  <h6>{{'COMMON.DATE_FIRST_AVAILABLE'|translate}}: </h6>&nbsp;{{product?.product.dateAvailable}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.manufacturerName)">
-                  <h6>{{'COMMON.MANUFACTURER'|translate}}: </h6>&nbsp;{{product?.product.manufacturerName}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.sku)">
-                  <h6>{{'COMMON.SKU'|translate}}: </h6>&nbsp;{{product?.product.sku}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.upc)">
-                  <h6>{{'COMMON.UPC'|translate}}: </h6>&nbsp;{{product?.product.upc}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.ean)">
-                  <h6>{{'COMMON.EAN'|translate}}: </h6>&nbsp;{{product?.product.ean}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.jan)">
-                  <h6>{{'COMMON.JAN'|translate}}: </h6>&nbsp;{{product?.product.jan}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.isbn)">
-                  <h6>{{'COMMON.ISBN'|translate}}: </h6>&nbsp;{{product?.product.isbn}}
-                </div>
-                <div fxLayout='row wrap' *ngIf="!isBlank(product?.product.mpn)">
-                  <h6>{{'COMMON.MPN'|translate}}: </h6>&nbsp;{{product?.product.mpn}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div fxLayout='row wrap' fxLayoutAlign="center center" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=20 fxFlex.lg="20" fxFlex.xl="20"></div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=80 fxFlex.lg="80" fxFlex.xl="80">
-              <div id="reviews" fxLayout='row wrap'>
-                <app-ProductReview [singleProductDetails]="product"></app-ProductReview>
-              </div>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+            <div id="reviews" fxLayout="row wrap">
+              <app-ProductReview [singleProductDetails]="product"></app-ProductReview>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone, CartItem } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -96,9 +96,19 @@ export class AppService {
       if (!found) { products.push(setCartItemDefaultValue); }
 
       localStorage.setItem('cart_item', JSON.stringify(products));
-       this.recalculateCart(true);
+      this.recalculateCart(true);
    }
 
+   public cloneProduct(p: Product): Product {
+      let copy: Product = new Product();
+      copy = { ...p };
+      copy.productDescriptions = [];
+      copy.productVideos = [];
+      copy.productToCategorys = [];
+      console.log('Product copied');
+      console.log(copy);
+      return copy;
+   }
    public reviewPopup(singleProductDetails, reviews) {
       let review: MatDialogRef<ReviewPopupComponent>;
       const dialogConfig = new MatDialogConfig();
@@ -156,7 +166,7 @@ export class AppService {
       let index = 0;
       for (const ci of cartItems) {
          if (ci.ptsId === data.ptsId) {
-            cartItems[index].quantity += 1;
+            cartItems[index].quantity += (data.quantity ? data.quantity : 1);
             cartItems[index].total += cartItems[index].price;
             found = true;
             break;
@@ -165,20 +175,18 @@ export class AppService {
       }
 
       if (!found) {
-         data.quantity = 1;
+         data.quantity = (data.quantity ? data.quantity : 1);
          data.total = data.price;
          cartItems.push(data);
       }
       if (type === 'wishlist') {
-         console.log('wishlist');
-         console.log(data);
          this.removeLocalWishlistProduct(data);
       }
 
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          localStorage.setItem('cart_item', JSON.stringify(cartItems));
-          this.recalculateCart(true);
+         this.recalculateCart(true);
       }, 500);
    }
 
@@ -196,7 +204,7 @@ export class AppService {
       if (!found) { products.push(data); }
 
       localStorage.setItem('cart_item', JSON.stringify(products));
-       this.recalculateCart(true);
+      this.recalculateCart(true);
    }
 
    public updateAllLocalCartProduct(products: any) {
@@ -207,28 +215,28 @@ export class AppService {
    }
 
    // returning LocalCarts Product Count
-/*    public calculateLocalCartProdCounts() {
-
-      this.localStorageCartProducts = null;
-      this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
-      this.navbarCartCount = +((this.localStorageCartProducts).length);
-
-      this.navbarCartPrice = 0;
-      this.navbarCartShipping = 0;
-      this.navbarCartTotalBeforeTax = 0;
-      this.navbarCartEstimatedTax = 0;
-      this.navbarCartTotal = 0;
-
-      this.localStorageCartProducts.forEach(element => {
-         console.log(element);
-         this.navbarCartPrice += element.price * element.quantity;
-         this.navbarCartShipping += 0;
-         this.navbarCartEstimatedTax += 5;
-      });
-
-      this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
-      this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
-   } */
+   /*    public calculateLocalCartProdCounts() {
+   
+         this.localStorageCartProducts = null;
+         this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
+         this.navbarCartCount = +((this.localStorageCartProducts).length);
+   
+         this.navbarCartPrice = 0;
+         this.navbarCartShipping = 0;
+         this.navbarCartTotalBeforeTax = 0;
+         this.navbarCartEstimatedTax = 0;
+         this.navbarCartTotal = 0;
+   
+         this.localStorageCartProducts.forEach(element => {
+            console.log(element);
+            this.navbarCartPrice += element.price * element.quantity;
+            this.navbarCartShipping += 0;
+            this.navbarCartEstimatedTax += 5;
+         });
+   
+         this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
+         this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
+      } */
 
    public recalculateCart(needParse: boolean) {
       if (needParse) {
@@ -454,7 +462,7 @@ export class AppService {
       setTimeout(() => {
          localStorage.removeItem('wishlist_item');
          localStorage.setItem('cart_item', JSON.stringify(cartItems));
-          this.recalculateCart(true);
+         this.recalculateCart(true);
          this.calculateLocalWishlistProdCounts();
       }, 500);
    }
@@ -524,7 +532,7 @@ export class AppService {
       this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
 
       localStorage.removeItem('cart_item');
-       this.recalculateCart(true);
+      this.recalculateCart(true);
    }
 
    public removeBuyProducts() {

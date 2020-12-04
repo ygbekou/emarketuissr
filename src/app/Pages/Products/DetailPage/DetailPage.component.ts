@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { ProductDescVO, Pagination, Language, Product } from 'src/app/app.models';
+import { ProductDescVO, Pagination, Language, Product, CartItem } from 'src/app/app.models';
 import { MatTableDataSource } from '@angular/material';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -27,7 +27,7 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
       private activatedRoute: ActivatedRoute) {
-         super(translate);
+      super(translate);
    }
 
    ngOnInit() {
@@ -101,10 +101,13 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
 
 
    public addToCart(value) {
+      /* const ci = new CartItem(value);
+      ci.quantity = 1; */
       this.appService.addToCart(value);
    }
 
-   public addToWishList(value) {
+   public addToWishList(value) {/* 
+      const ci = new CartItem(value); */
       this.appService.addToWishlist(value);
    }
 

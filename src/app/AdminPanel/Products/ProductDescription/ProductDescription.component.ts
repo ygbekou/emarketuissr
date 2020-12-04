@@ -32,6 +32,8 @@ export class ProductDescriptionComponent implements OnInit {
    }
 
    setProduct(prod: Product) {
+      console.log('set is called');
+      console.log(prod);
       this.product = prod;
       this.refreshLangObjects();
    }
@@ -71,7 +73,8 @@ export class ProductDescriptionComponent implements OnInit {
          // prod.model = this.product.model;
          // prod.id = this.product.id;
          // prod.status = 1;
-         this.productDescription.product =   this.product.clone();
+         console.log(this.product);
+         this.productDescription.product =   this.appService.cloneProduct(this.product);
          this.appService.save(this.productDescription, 'ProductDescription')
             .subscribe(result => {
                if (result.id > 0) {

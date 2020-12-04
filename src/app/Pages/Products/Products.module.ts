@@ -43,7 +43,6 @@ import { ViewAllComponent } from './ViewAll/ViewAll.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { ReviewPopupComponent } from 'src/app/Global/ReviewPopup/ReviewPopup.component';
 
 @NgModule({
 	imports: [
@@ -80,11 +79,12 @@ import { ReviewPopupComponent } from 'src/app/Global/ReviewPopup/ReviewPopup.com
 		FormsModule,
 		MatPaginatorModule,
 		PipesModule,
-		TranslateModule, 
+		TranslateModule,
 		MatSliderModule,
-      SlickCarouselModule,
+		SlickCarouselModule,
 		MatSlideToggleModule,
-		MatDialogModule
+		MatDialogModule,
+		PipesModule
 	],
 	declarations: [
 		ProductsListComponent,
