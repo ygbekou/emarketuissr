@@ -16,6 +16,8 @@ export class PaymentCardsComponent implements OnInit {
   creditCardsDataSource: MatTableDataSource<CreditCard>;
   selectedCard: CreditCard;
 
+  @Input()
+  paymentType: string;
   panelOpenState = false;
   @Output()
   changePaymentMethodEvent = new EventEmitter<any>();
@@ -36,7 +38,7 @@ export class PaymentCardsComponent implements OnInit {
 
     this.creditCardsDataSource = new MatTableDataSource();
 
-    
+
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     }
@@ -48,8 +50,8 @@ export class PaymentCardsComponent implements OnInit {
   public delete(cardId: string) {
     this.appService.saveWithUrl('/service/order/deleteCard',
       {
-         userId: this.userId,
-         paymentMethodId: cardId
+        userId: this.userId,
+        paymentMethodId: cardId
       })
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {

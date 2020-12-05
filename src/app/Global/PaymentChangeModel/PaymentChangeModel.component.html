@@ -1,69 +1,68 @@
-    <div class="container">
-      <div fxLayout="row wrap" class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-          <app-PaymentCards [userId]="userId" (changePaymentMethodEvent)="onCardMethodSelected($event)"></app-PaymentCards>
-  
-          <div>
-             <mat-accordion>
-              <mat-expansion-panel 
-                (opened)="panelOpenState = true"
-                                (closed)="panelOpenState = false">
-                                
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <button mat-flat-button color="primary">{{'COMMON.ADD_CREDIT_OR_DEBIT_CARD'|translate}}</button>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <app-PaymentCard [userId]="userId" (cardSaveEvent)="onCardSaved($event)"></app-PaymentCard>
-              </mat-expansion-panel>
-            </mat-accordion>
-          </div>
-
-          <br/>
-          <app-Tmoneys #TmoneysComponent [paymentType]="'Tmoney'" [userId]="userId" (changePaymentMethodEvent)="onTmoneyMethodSelected($event)"></app-Tmoneys>
-          <mat-accordion>
-            <mat-expansion-panel 
-              (opened)="panelOpenState = true"
-                              (closed)="panelOpenState = false">
-                              
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <button mat-flat-button color="primary">{{'COMMON.ADD_TMONEY'|translate}}</button>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <app-Tmoney #TmoneyComponent [paymentType]="'Tmoney'" [userId]="userId" (tmoneySaveEvent)="onTmoneySaved($event)"></app-Tmoney>
-            </mat-expansion-panel>
-          </mat-accordion>
-
-          <br/>
-          <app-Tmoneys #FloozsComponent [paymentType]="'Flooz'" [userId]="userId" (changePaymentMethodEvent)="onFloozMethodSelected($event)"></app-Tmoneys>
-          <mat-accordion>
-            <mat-expansion-panel 
-              (opened)="panelOpenState = true"
-                              (closed)="panelOpenState = false">
-                              
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <button mat-flat-button color="primary">{{'COMMON.ADD_FLOOZ'|translate}}</button>
-                </mat-panel-title> 
-              </mat-expansion-panel-header>
-              <app-Tmoney #FloozComponent [paymentType]="'Flooz'" [userId]="userId" (tmoneySaveEvent)="onFloozSaved($event)"></app-Tmoney>
-            </mat-expansion-panel>
-          </mat-accordion>
-
-          <br/>
-          <br/>
-          <ng-container matColumnDef="selected">
-            <mat-radio-group [(ngModel)]="paypalMethodStatus">
-              <mat-radio-button [value]="1"  (click)="changePaymentMethod('PAYPAL')"><div><h6>Paypal</h6></div></mat-radio-button>
-            </mat-radio-group>
-          </ng-container>
-
-          </div>
-        
-        
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-          <button mat-flat-button color="primary" [routerLink]="['/checkout/payment']">{{'COMMON.CONTINUE'|translate}}</button>
-        </div>
+<div class="container">
+  <div fxLayout="row wrap" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <app-PaymentCards [paymentType]="'CREDIT_CARD'" [userId]="userId"
+        (changePaymentMethodEvent)="onCardMethodSelected($event)"></app-PaymentCards>
+      <div>
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <button mat-flat-button color="primary">{{'COMMON.ADD_CREDIT_OR_DEBIT_CARD'|translate}}</button>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-PaymentCard [userId]="userId" (cardSaveEvent)="onCardSaved($event)"></app-PaymentCard>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
+
+      <br />
+      <app-Tmoneys #TmoneysComponent [paymentType]="'Tmoney'" [userId]="userId"
+        (changePaymentMethodEvent)="onTmoneyMethodSelected($event)"></app-Tmoneys>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <button mat-flat-button color="primary">{{'COMMON.ADD_TMONEY'|translate}}</button>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-Tmoney #TmoneyComponent [paymentType]="'Tmoney'" [userId]="userId"
+            (tmoneySaveEvent)="onTmoneySaved($event)"></app-Tmoney>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <br />
+      <app-Tmoneys #FloozsComponent [paymentType]="'Flooz'" [userId]="userId"
+        (changePaymentMethodEvent)="onFloozMethodSelected($event)"></app-Tmoneys>
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <button mat-flat-button color="primary">{{'COMMON.ADD_FLOOZ'|translate}}</button>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-Tmoney #FloozComponent [paymentType]="'Flooz'" [userId]="userId"
+            (tmoneySaveEvent)="onFloozSaved($event)"></app-Tmoney>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <br />
+      <ng-container matColumnDef="selected" *ngIf="1>2">
+        <mat-radio-group [(ngModel)]="paypalMethodStatus">
+          <mat-radio-button [value]="1" (click)="changePaymentMethod('PAYPAL')">
+            <div>
+              <h6>Paypal</h6>
+            </div>
+          </mat-radio-button>
+        </mat-radio-group>
+      </ng-container>
+
     </div>
+
+    <!-- 
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+      <button mat-flat-button color="primary"
+        [routerLink]="['/checkout/payment']">{{'COMMON.CONTINUE'|translate}}</button>
+    </div> -->
+  </div>
+</div>

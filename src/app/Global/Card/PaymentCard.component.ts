@@ -8,37 +8,37 @@ import CardUtils from 'src/app/Services/cardUtils';
 declare var Stripe: any;
 
 @Component({
-  selector: 'app-PaymentCard',
-  templateUrl: './PaymentCard.component.html',
-  styleUrls: ['./PaymentCard.component.scss']
+   selector: 'app-PaymentCard',
+   templateUrl: './PaymentCard.component.html',
+   styleUrls: ['./PaymentCard.component.scss']
 })
 export class PaymentCardComponent implements OnInit {
 
-  card: CreditCard = new CreditCard();
-  user: User = new User();
-  messages: string;
-  errors: string;
-  creditCardBackground = 'background-image: url(assets/images/cards/card-edit.png)';
-  stripe: any;
+   card: CreditCard = new CreditCard();
+   user: User = new User();
+   messages: string;
+   errors: string;
+   creditCardBackground = 'background-image: url(assets/images/cards/card-edit.png)';
+   stripe: any;
 
-  data: any;
+   data: any;
 
-  @Output() 
-  cardSaveEvent = new EventEmitter<CreditCard>();
+   @Output()
+   cardSaveEvent = new EventEmitter<CreditCard>();
 
-  @Input()
-  userId: number;
+   @Input()
+   userId: number;
 
 
-  constructor(
-    public appService: AppService,
-    public translate: TranslateService,
-    private sanitizer: DomSanitizer) {
-  }
+   constructor(
+      public appService: AppService,
+      public translate: TranslateService,
+      private sanitizer: DomSanitizer) {
+   }
 
-  ngOnInit() {
+   ngOnInit() {
 
-  }
+   }
 
 
    ngAfterViewInit() {
@@ -49,29 +49,29 @@ export class PaymentCardComponent implements OnInit {
 
    initPaymentMethod() {
       this.appService.getObject('/service/order/stripe-key').toPromise()
-   .then(result => {
-      return result;
-  })
-  .then(data => {
-    return this.setupElements(data);
-  })
-  .then(data => {
-     console.info(data);
-     this.data = data;
-    document.querySelector('button').disabled = false;
+         .then(result => {
+            return result;
+         })
+         .then(data => {
+            return this.setupElements(data);
+         })
+         .then(data => {
+            console.info(data);
+            this.data = data;
+            document.querySelector('button').disabled = false;
 
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', this.handleCardSave.bind(this));
-  });
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', this.handleCardSave.bind(this));
+         });
    }
 
 
    handleCardSave(event) {
       event.preventDefault();
-      this.saveCard(this.data.stripe, this.data.card, this.data.clientSecret); 
+      this.saveCard(this.data.stripe, this.data.card, this.data.clientSecret);
    }
 
-   setupElements (data) {
+   setupElements(data) {
       this.stripe = Stripe(data.publishableKey);
 
       /* ------- Set up Stripe Elements to use in checkout form ------- */
@@ -83,7 +83,7 @@ export class PaymentCardComponent implements OnInit {
             fontSmoothing: 'antialiased',
             fontSize: '16px',
             '::placeholder': {
-            color: '#aab7c4'
+               color: '#aab7c4'
             }
          },
          invalid: {
@@ -108,61 +108,59 @@ export class PaymentCardComponent implements OnInit {
    */
    saveCard(stripe, card, clientSecret) {
       // changeLoadingState(true);
-      
+
       // Collects card details and creates a PaymentMethod
 
       stripe
          .createPaymentMethod('card', card)
          .then(result => {
             if (result.error) {
-               //showError(result.error.message);
+               // showError(result.error.message);
             } else {
                this.saveCustomer(result)
             }
          })
-         .then(function(result) {
+         .then(function (result) {
             return result.json();
          })
-         .then(function(response) {
+         .then(function (response) {
             if (response.error) {
-               //showError(response.error);
+               // showError(response.error);
             } else if (response.requiresAction) {
                // Request authentication
-               //handleAction(response.clientSecret);
+               // handleAction(response.clientSecret);
             } else {
-               ///orderComplete(response.clientSecret);
+               // orderComplete(response.clientSecret);
             }
          });
-   };
+   }
 
 
    saveCustomer(result) {
- 
-      this.appService.saveWithUrl('/service/order/attachPaymentMethodToCustomer', 
-      {
-         userId: this.userId,
-         paymentMethodId: result.paymentMethod.id,
-         nameOnCard: this.card.name
-      })
-         .subscribe(result => {
-            if (result.result === 'SUCCESS') {
-               this.cardSaveEvent.emit(result);
+      console.log(result);
+      this.appService.saveWithUrl('/service/order/attachPaymentMethodToCustomer',
+         {
+            userId: this.userId,
+            paymentMethodId: result.paymentMethod.id,
+            nameOnCard: this.card.name
+         })
+         .subscribe(result2 => {
+            console.log(result2)
+            if (result2.result === 'SUCCESS') {
+               this.cardSaveEvent.emit(result2);
             } else {
                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
                   this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
                });
             }
          });
-      
-   };
 
+   }
 
-
-
-  /**
-    * Function is used to submit the profile card.
-    * If form value is valid, redirect to card page.
-    */
+   /**
+     * Function is used to submit the profile card.
+     * If form value is valid, redirect to card page.
+     */
    submitCard() {
       this.messages = '';
       this.errors = '';

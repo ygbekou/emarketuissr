@@ -66,6 +66,7 @@
             </mat-radio-button>
           </mat-radio-group>
 
+<!--           
           <div ngModelGroup="passwordGroup" password-matcher #passwordGroup="ngModelGroup">
             <mat-form-field class="w-100 mb-3">
               <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
@@ -88,7 +89,7 @@
               <div [hidden]="!passwordGroup.control?.errors.noMatch">Passwords do not match</div>
             </mat-error>
           </div>
-
+ -->
           <mat-form-field class="w-100 mb-3">
             <input matInput [matDatepicker]="picker" placeholder="{{'COMMON.BIRTH_DATE'|translate}}"
               [(ngModel)]="user.birthDate" name="birthDate" #birthDate="ngModel">
