@@ -4,7 +4,8 @@
   *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
   <div class="checkout-option">
     <div class="container" *ngIf="isUserLoggedIn()">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+      <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
         <div fxLayout="row wrap">
           <mat-error *ngIf="error">{{error}}</mat-error>
         </div>
@@ -57,9 +58,8 @@
           </div>
         </mat-card>
         <embryo-Cart></embryo-Cart>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2"></div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="18" fxFlex.lg="18" fxFlex.xl="18">
+      </div> 
+      <div fxFlex.xs="0" fxFlex.sm="0" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <mat-card>
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
             (click)="placeYourOrder()" type="button" style="width:100%;">
@@ -111,6 +111,7 @@
 
         </mat-card>
       </div>
+</div>
     </div>
   </div>
 </div>
