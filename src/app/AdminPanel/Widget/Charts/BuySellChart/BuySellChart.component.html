@@ -2,8 +2,10 @@
    <canvas baseChart
       [datasets]="data"
       [labels]="label"
-      [options]="lineChartOptions"
+      [legend]="chartLegend"
+      [options]="barChartOptions"
       [colors]="color"
-      chartType="line">   
+      (chartClick)="chartClicked($event)" 
+      [chartType]="chartType">   
     </canvas>
 </div>
