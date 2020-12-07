@@ -8,7 +8,8 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -71,7 +72,7 @@ export class AppService {
       private dialog: MatDialog,
       private db: AngularFireDatabase,
       private toastyService: ToastaService,
-      private toastyConfig: ToastaConfig,
+      private toastyConfig: ToastaConfig, 
       public tokenStorage: TokenStorage,
       private translate: TranslateService
    ) {
@@ -86,7 +87,7 @@ export class AppService {
 
       // localStorage.setItem('cart_item', JSON.stringify([]));
 
-      //localStorage.removeItem('cart_item'); 
+      //localStorage.removeItem('cart_item');  
 
       // Custom
       this.headers = new HttpHeaders();
