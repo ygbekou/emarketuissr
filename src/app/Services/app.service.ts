@@ -8,7 +8,8 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO, CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
+import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,13 +38,29 @@ export class AppService {
    products: AngularFireObject<any>;
 
    localStorageCartProducts: any;
+   localStorageCartProductsMap: any;
    localStorageWishlist: any;
+
    navbarCartCount = 0;
+   navbarCartCountMap = {};
+
    navbarCartPrice = 0;
+   navbarCartPriceMap = {};
+
    navbarCartShipping = 0;
+   navbarCartShippingMap = {};
+
    navbarCartTotalBeforeTax = 0;
+   navbarCartTotalBeforeTaxMap = {};
+
    navbarCartEstimatedTax = 0;
+   navbarCartEstimatedTaxMap = {};
+
    navbarCartTotal = 0;
+   navbarCartTotalMap = {};
+
+   navbarCartCurrencyMap = {};
+
    navbarWishlistProdCount = 0;
    buyUserCartProducts: any;
 
@@ -55,7 +72,7 @@ export class AppService {
       private dialog: MatDialog,
       private db: AngularFireDatabase,
       private toastyService: ToastaService,
-      private toastyConfig: ToastaConfig,
+      private toastyConfig: ToastaConfig, 
       public tokenStorage: TokenStorage,
       private translate: TranslateService
    ) {
@@ -69,6 +86,8 @@ export class AppService {
       // this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
 
       // localStorage.setItem('cart_item', JSON.stringify([]));
+
+      //localStorage.removeItem('cart_item');  
 
       // Custom
       this.headers = new HttpHeaders();
@@ -239,9 +258,19 @@ export class AppService {
       } */
 
    public recalculateCart(needParse: boolean) {
+
       if (needParse) {
          this.localStorageCartProducts = null;
          this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
+
+         this.localStorageCartProductsMap = {};
+         this.localStorageCartProducts.forEach(cartItem => {
+            if (!this.localStorageCartProductsMap[cartItem.currencyId + '']) {
+               this.localStorageCartProductsMap[cartItem.currencyId + ''] = new Array();
+            }
+            this.localStorageCartProductsMap[cartItem.currencyId + ''].push(cartItem);
+         });
+
       }
 
       this.navbarCartCount = +((this.localStorageCartProducts).length);
@@ -252,22 +281,55 @@ export class AppService {
       this.navbarCartEstimatedTax = 0;
       this.navbarCartTotal = 0;
 
-      this.localStorageCartProducts.forEach(element => {
-         this.navbarCartPrice += element.price * element.quantity;
-         this.navbarCartShipping += 0;
+      this.navbarCartCountMap = {};
+      this.navbarCartPriceMap = {};
+      this.navbarCartShippingMap = {};
+      this.navbarCartTotalBeforeTaxMap = {};
+      this.navbarCartEstimatedTaxMap = {};
+      this.navbarCartTotalMap = {};
 
-         if (element.taxRules) {
-            element.tax = 0;
-            element.taxRules.forEach(
+
+      this.localStorageCartProducts.forEach(cartItem => {
+         this.navbarCartPrice += cartItem.price * cartItem.quantity;
+         if (!this.navbarCartPriceMap[cartItem.currencyId + '']) {
+            this.navbarCartCountMap[cartItem.currencyId + ''] = 0;
+            this.navbarCartPriceMap[cartItem.currencyId + ''] = 0;
+            this.navbarCartShippingMap[cartItem.currencyId + ''] = 0;
+            this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + ''] = 0;
+            this.navbarCartEstimatedTaxMap[cartItem.currencyId + ''] = 0;
+            this.navbarCartTotalMap[cartItem.currencyId + ''] = 0;
+
+            this.navbarCartCurrencyMap[cartItem.currencyId + ''] = {'currencyCode': cartItem.currencyCode,
+                     'symbolLeft': cartItem.symbolLeft, 'symbolRight': cartItem.symbolRight};
+         }
+
+         this.navbarCartCountMap[cartItem.currencyId + ''] += 1;
+         this.navbarCartPriceMap[cartItem.currencyId + ''] += cartItem.price * cartItem.quantity;
+
+         this.navbarCartShipping += 0;
+         this.navbarCartShippingMap[cartItem.currencyId + ''] += 0;
+
+
+         if (cartItem.taxRules) {
+            cartItem.tax = 0;
+            cartItem.taxRules.forEach(
                taxRule => {
-                  element.tax += taxRule.taxRate.rate * element.quantity;
+                  cartItem.tax += taxRule.taxRate.rate * cartItem.quantity;
                }
             );
          }
 
-         element.tax = this.roundingValue(element.tax);
-         element.total = this.roundingValue(element.price * element.quantity + element.tax);
-         this.navbarCartEstimatedTax += element.tax;
+         cartItem.tax = this.roundingValue(cartItem.tax);
+         cartItem.total = this.roundingValue(cartItem.price * cartItem.quantity + cartItem.tax);
+         this.navbarCartEstimatedTax += cartItem.tax;
+         this.navbarCartEstimatedTaxMap[cartItem.currencyId + ''] += cartItem.tax;
+
+         this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + ''] =
+               this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId + ''] 
+               + this.navbarCartShippingMap[cartItem.currencyId + '']);
+         this.navbarCartTotalMap[cartItem.currencyId + ''] =
+               this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + '']
+                                       + this.navbarCartEstimatedTaxMap[cartItem.currencyId + '']);
 
       });
 

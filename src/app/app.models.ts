@@ -983,6 +983,10 @@ export class CartItem {
   tax: number;
   total: number;
   storeUrl: string;
+  currencyId: number;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
   taxRules: TaxRule[];
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -997,6 +1001,10 @@ export class CartItem {
     this.total = 0;
     this.storeUrl = Constants.webServer + '/#/products?storeId=' + this.storeId;
     this.taxRules = p.product.taxRules;
+    this.currencyId = p.product.currencyId;
+    this.currencyCode = p.product.currencyCode;
+    this.symbolLeft = p.product.symbolLeft;
+    this.symbolRight = p.product.symbolRight;
   }
 }
 
@@ -1044,6 +1052,10 @@ export class ProductVO {
   rating: number;
   storeId: number;
   storeName: string;
+  currencyId: number;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
   sold: number;
   ptsId: number;
   pQuantity: number;

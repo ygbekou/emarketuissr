@@ -39,6 +39,7 @@ import { GlobalModule } from '../../Global/Global.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CartModule } from '../Cart/Cart.module';
 import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
+import { PaymentCurrencyComponent } from './Payment/PaymentCurrency.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddre
    declarations: [
       PaymentComponent,
       SigninComponent,
-      FinalReceiptComponent
+      FinalReceiptComponent,
+      PaymentCurrencyComponent
    ]
 })
 export class CheckoutModule { }
