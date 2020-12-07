@@ -28,8 +28,8 @@
                   <h2 class="pull-right">{{dashboard.onlineSales|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <a [routerLink]="['/admin/admindash']" (click)="scrollDown()">
-                     {{'COMMON.VIEW_MORE'|translate}}...</a>
+                  <!--    <a  pageScroll href="#bottom">
+                     {{'COMMON.VIEW_MORE'|translate}}...</a> -->
                </div>
             </div>
          </div>
@@ -45,7 +45,9 @@
                   <i class="fa fa-credit-card"></i>
                   <h2 class="pull-right">{{dashboard.storeSales|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
 
@@ -61,7 +63,9 @@
                   <i class="fa fa-shopping-cart"></i>
                   <h2 class="pull-right">{{dashboard.onlineOrders|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
 
@@ -77,7 +81,9 @@
                   <i class="fa fa-shopping-cart"></i>
                   <h2 class="pull-right">{{dashboard.storeOrders|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
       </div>
@@ -95,7 +101,9 @@
                   <i class="fa fa-users"></i>
                   <h2 class="pull-right">{{dashboard.onlineCustomers|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
@@ -110,7 +118,9 @@
                   <i class="fa fa-users"></i>
                   <h2 class="pull-right">{{dashboard.storeCustomers|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
 
@@ -126,7 +136,9 @@
                   <i class="fa fa-cart-plus"></i>
                   <h2 class="pull-right">{{dashboard.onlineUnits|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
 
@@ -142,7 +154,9 @@
                   <i class="fa fa-cart-plus"></i>
                   <h2 class="pull-right">{{dashboard.storeUnits|number:'1.0-0'}}</h2>
                </div>
-               <div class="tile-footer"><a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a></div>
+               <div class="tile-footer">
+                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+               </div>
             </div>
          </div>
       </div>
@@ -171,18 +185,83 @@
    </mat-card>
    <!--mat-card-->
 </div>
-<ng-container *ngIf="ordersVO;else empty">
-   <mat-card class="p-3" id="bottom">
-      <mat-tab-group class="table-tab-list" color="accent">
-         <mat-tab label="{{'COMMON.ONLINE_ORDERS' | translate}}">
-            <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-               <div class="transactiion-list table-list-wrap">
+
+
+<mat-card class="p-3" id="bottom">
+
+
+
+   <mat-tab-group class="table-tab-list" color="accent">
+      <mat-tab label="{{'COMMON.ONLINE_ORDERS' | translate}}">
+
+
+
+         <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <div class="transactiion-list table-list-wrap">
+               <div class="table-responsive-x">
+                  <table class="w-100 table-scroll-wrap" mat-table [dataSource]="onlineDS" matSort>
+                     <ng-container matColumnDef="orderId">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                           <div>{{element.orderId}}</div>
+                        </td>
+                     </ng-container>
+                     <ng-container matColumnDef="createDate">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                           {{element.createDate | date:'mediumDate'}} </td>
+                     </ng-container>
+                     <ng-container matColumnDef="storeName">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>
+                           {{'COMMON.STORE'|translate}}</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.storeName}}</td>
+                     </ng-container>
+                     <ng-container matColumnDef="cLastName">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>
+                           {{'COMMON.CUSTOMER'|translate}}</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                           {{element.cFirstName}} {{element.cLastName}}
+                        </td>
+                     </ng-container>
+                     <ng-container matColumnDef="total">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>
+                           {{'COMMON.AMOUNT'|translate}}</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                           {{element.symbolLeft}}
+                           {{element.total| number:'1.0-2'}}
+                           {{element.symbolRight}}
+                        </td>
+                     </ng-container>
+                     <ng-container matColumnDef="phone">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>
+                           {{'COMMON.PHONE'|translate}}</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.phone}}
+                        </td>
+                     </ng-container>
+                     <ng-container matColumnDef="country">
+                        <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>
+                           {{'COMMON.COUNTRY'|translate}}</th>
+                        <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.country}}
+                        </td>
+                     </ng-container>
+                     <tr mat-header-row *matHeaderRowDef="displayedTransactionColumns"></tr>
+                     <tr mat-row *matRowDef="let row; columns: displayedTransactionColumns"></tr>
+                  </table>
+                  <mat-paginator #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+               </div>
+            </div>
+         </div>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.STORE_ORDERS' | translate}}">
+         <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <div class="invoice-list table-list-wrap">
+               <div class="overflow-hidden">
                   <div class="table-responsive-x">
-                     <table class="w-100 table-scroll-wrap" mat-table [dataSource]="ordersVO.online">
+                     <table class="w-100" mat-table [dataSource]="storeDS">
                         <ng-container matColumnDef="transid">
                            <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>ID</th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                              <div>{{element.orderId}}</div>
+                              <div>{{element.thId}}</div>
                            </td>
                         </ng-container>
                         <ng-container matColumnDef="date">
@@ -191,103 +270,55 @@
                               {{element.createDate | date:'mediumDate'}} </td>
                         </ng-container>
                         <ng-container matColumnDef="account">
-                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.STORE'|translate}}</th>
+                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.STORE'|translate}}
+                           </th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.storeName}}</td>
                         </ng-container>
                         <ng-container matColumnDef="type">
-                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.CUSTOMER'|translate}}</th>
+                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.CASHIER'|translate}}
+                           </th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                              {{element.cFirstName}} {{element.cLastName}}
+                              {{element.cashier}}
                            </td>
                         </ng-container>
                         <ng-container matColumnDef="amount">
-                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.AMOUNT'|translate}}</th>
+                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.AMOUNT'|translate}}
+                           </th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
                               {{element.symbolLeft}}
                               {{element.total| number:'1.0-2'}}
+                              {{element.symbolRight}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="balance">
+                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.QTY'|translate}}
+                           </th>
+                           <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                              {{element.quantity }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.REBATE'|translate}}
+                           </th>
+                           <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                              {{element.symbolLeft}}
+                              {{element.rebate| number:'1.0-2'}}
                               {{element.symbolRight}}
                            </td>
                         </ng-container>
-                        <ng-container matColumnDef="debit">
-                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.PHONE'|translate}}</th>
-                           <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.phone}}
-                           </td>
-                        </ng-container>
-                        <ng-container matColumnDef="balance">
-                           <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.COUNTRY'|translate}}</th>
-                           <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.country}}
-                           </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedTransactionColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedTransactionColumns"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedTransferColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedTransferColumns"></tr>
                      </table>
+                     <mat-paginator #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                   </div>
-                  <!-- table responsive -->
                </div>
-               <!-- table list wrap -->
+               <!-- table responsive-->
             </div>
-         </mat-tab>
-         <mat-tab label="{{'COMMON.STORE_ORDERS' | translate}}">
-            <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
-               <div class="invoice-list table-list-wrap">
-                  <div class="overflow-hidden">
-                     <div class="table-responsive-x">
-                        <table class="w-100" mat-table [dataSource]="ordersVO.store">
-                           <ng-container matColumnDef="transid">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>ID</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 <div>{{element.thId}}</div>
-                              </td>
-                           </ng-container>
-                           <ng-container matColumnDef="date">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>Date</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 {{element.createDate | date:'mediumDate'}} </td>
-                           </ng-container>
-                           <ng-container matColumnDef="account">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.STORE'|translate}}</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.storeName}}</td>
-                           </ng-container>
-                           <ng-container matColumnDef="type">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.CASHIER'|translate}}</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 {{element.cashier}}
-                              </td>
-                           </ng-container>
-                           <ng-container matColumnDef="amount">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.AMOUNT'|translate}}</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 {{element.symbolLeft}}
-                                 {{element.total| number:'1.0-2'}}
-                                 {{element.symbolRight}} </td>
-                           </ng-container>
-                           <ng-container matColumnDef="balance">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.QTY'|translate}}</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 {{element.quantity }} </td>
-                           </ng-container>
-                           <ng-container matColumnDef="status">
-                              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.REBATE'|translate}}</th>
-                              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                                 {{element.symbolLeft}}
-                                 {{element.rebate| number:'1.0-2'}}
-                                 {{element.symbolRight}}
-                              </td>
-                           </ng-container>
-                           <tr mat-header-row *matHeaderRowDef="displayedTransferColumns"></tr>
-                           <tr mat-row *matRowDef="let row; columns: displayedTransferColumns"></tr>
-                        </table>
-                     </div>
-                  </div>
-                  <!-- table responsive-->
-               </div>
-               <!--invoice list-->
-            </div>
-         </mat-tab>
-      </mat-tab-group>
-      <!--mat-tab-group-->
-   </mat-card>
-</ng-container>
+            <!--invoice list-->
+         </div>
+      </mat-tab>
+   </mat-tab-group>
+
+   <!--mat-tab-group-->
+</mat-card>
 <ng-template #empty>
    <h5 class="ml-5" id="bottom">{{'MESSAGE.NO_DATA'|translate}}</h5>
 </ng-template>

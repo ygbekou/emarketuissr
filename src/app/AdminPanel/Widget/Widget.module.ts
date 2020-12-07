@@ -56,7 +56,7 @@ import { RouterModule } from '@angular/router';
 		MatDialogModule,
 		ReactiveFormsModule,
 		MatDatepickerModule,
-		MatTableModule,  
+		MatTableModule,
 		FlexLayoutModule,
 		RouterModule
 	],

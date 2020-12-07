@@ -10,6 +10,7 @@ import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
 import { PaymentChangeModelComponent } from 'src/app/Global/PaymentChangeModel/PaymentChangeModel.component';
 import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
+import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -51,6 +52,10 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'my-items',
             component: MyProductsComponent
+         },
+         {
+            path: 'sales-dashboard',
+            component: SalesDashboardComponent
          }
       ]
    }

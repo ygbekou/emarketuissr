@@ -52,6 +52,8 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
 import { GlobalModule } from 'src/app/Global/Global.module';
 import { AddressesComponent } from './Addresses/Addresses.component';
+import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
+import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
 
 @NgModule({
   imports: [
@@ -93,6 +95,7 @@ import { AddressesComponent } from './Addresses/Addresses.component';
     MatStepperModule,
     GlobalModule,
     TemplatesModule,
+    ReportsModule,
     MatPaginatorModule,
     QuillModule.forRoot({
       theme: 'snow',
@@ -127,12 +130,13 @@ import { AddressesComponent } from './Addresses/Addresses.component';
     GridProductComponent,
     SellProductComponent,
     AddressesComponent,
-    MyProductsComponent
+    MyProductsComponent,
+    SalesDashboardComponent
   ],
-   exports: [
-      CardsComponent,
-      StoresComponent,
-      EditProfileComponent
-   ]
+  exports: [
+    CardsComponent,
+    StoresComponent,
+    EditProfileComponent
+  ]
 })
 export class UserAccountModule { }
