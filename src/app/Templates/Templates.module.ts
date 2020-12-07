@@ -37,6 +37,7 @@ import { ShopDetailsComponent } from './ShopDetails/ShopDetails.component';
 import { ProductsToolbarComponent } from './products-toolbar/products-toolbar.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MdePopoverModule } from '@material-extended/mde';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
    imports: [
@@ -69,6 +70,7 @@ import { MdePopoverModule } from '@material-extended/mde';
       MatGridListModule,
       TranslateModule,
       GlobalModule,
+      PipesModule,
       MdePopoverModule
    ],
    declarations: [

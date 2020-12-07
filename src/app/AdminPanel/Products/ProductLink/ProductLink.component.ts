@@ -55,7 +55,7 @@ export class ProductLinkComponent extends BaseComponent implements OnInit {
       this.product = new Product();
 
       for (let counter = 0; counter < 10; counter++) {
-         console.log('for loop executed : ' + counter);
+         // console.log('for loop executed : ' + counter);
          this.categories[counter] = [];
       }
 

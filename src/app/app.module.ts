@@ -115,7 +115,7 @@ export function createTranslateLoader(http: HttpClient) {
    imports: [
       BrowserModule.withServerTransition({ appId: 'embryo-seo-pre' }),
       BrowserAnimationsModule,
-      RouterModule.forRoot(AppRoutes, { onSameUrlNavigation: 'reload' }),
+      RouterModule.forRoot(AppRoutes, { onSameUrlNavigation: 'reload', anchorScrolling: 'enabled' }),
       GlobalModule,
       TemplatesModule,
       MatButtonModule,

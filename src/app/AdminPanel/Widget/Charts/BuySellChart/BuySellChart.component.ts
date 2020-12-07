@@ -1,48 +1,66 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 
 @Component({
-	selector: 'app-buy-sell-chart',
-	templateUrl: './BuySellChart.component.html',
-	styleUrls: ['./BuySellChart.component.scss']
+   selector: 'app-buy-sell-chart',
+   templateUrl: './BuySellChart.component.html',
+   styleUrls: ['./BuySellChart.component.scss']
 })
 
 export class BuySellChartComponent implements OnInit {
 
-	@Input() color :any;
-   @Input() label :any;
-   @Input() data  :any;
-   showChart : boolean;
-   //line chart options
-	public lineChartOptions :any = {
+   @Input() color: any;
+   @Input() label: any;
+   @Input() data: any;
+   @Input() chartType: any;
+   @Output() chartClick: EventEmitter<any> = new EventEmitter();
+   showChart: boolean;
+   chartLegend = true;
+   public barChartOptions: any = {
       responsive: true,
       maintainAspectRatio: false,
-		scales: {
+      tooltip: {
+         enabled: true
+      },
+      legend: {
+         display: true
+      },
+   };
+   // line chart options
+   public lineChartOptions: any = {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
          yAxes: [{
             gridLines: {
-              display: true,
-              drawBorder: false
+               display: true,
+               drawBorder: false
             }
-          }],
+         }],
          xAxes: [{
             gridLines: {
-              display: false,
-              drawBorder: false
+               display: false,
+               drawBorder: false
             }
          }]
       },
-		tooltip: {
-			enabled: true
-		},
-		legend: {
-			display: false
-		},
-	}
+      tooltip: {
+         enabled: true
+      },
+      legend: {
+         display: false
+      },
+   }
 
-	constructor() { }
+   constructor() { }
 
-	ngOnInit() {	
-      setTimeout(()=>{
+   chartClicked($event) {
+      console.log($event);
+      console.log($event.active[0]._model.label);
+      this.chartClick.emit($event.active[0]._model.label);
+   }
+   ngOnInit() {
+      setTimeout(() => {
          this.showChart = true;
-      },0)
-	}
+      }, 0)
+   }
 }

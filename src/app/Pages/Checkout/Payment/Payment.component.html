@@ -1,20 +1,241 @@
 <embryo-PageTitle heading="{{'COMMON.ORDER_REVIEW' | translate}}" subHeading=""></embryo-PageTitle>
 
-<div class="inner-container section-gap" *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
+<div class="inner-container section-gap"
+  *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
   <div class="checkout-option">
+<<<<<<< .mine
     <div class="container">
       <div class="view-cart text-right">
         <button mat-raised-button color="accent" (click)="toggleRightSidenav()">Show Order Detail : {{getCartProducts() | currency:appService?.currency}}</button>
+
+
       </div>
+=======
+    <div class="container" *ngIf="isUserLoggedIn()">
+      <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+        <div fxLayout="row wrap">
+          <mat-error *ngIf="error">{{error}}</mat-error>
+        </div>
+>>>>>>> .theirs
       <mat-tab-group>
         <mat-tab label="{{appService?.navbarCartCurrencyMap[item.key].currencyCode}}" *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
           <app-Payment-Currency [currencyId]="item.key"></app-Payment-Currency>
         </mat-tab>
       </mat-tab-group>
+<<<<<<< .mine
+    </div>
+=======
+            </div>
+>>>>>>> .theirs
+<<<<<<< .mine
+
+
+
+
+
+
+  </div>
+</div>
+=======
+            <div *ngIf="user.shippingAddress">
+              {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
+              {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
+              {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
+              {{user.shippingAddress.postCode}}<br />
+              {{user.shippingAddress.country.name}}<br />
+            </div>
+          </div>
+>>>>>>> .theirs
+<<<<<<< .mine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+            <div fxLayout="row wrap" fxLayoutGap="10px grid">
+              <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
+              <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType:2}"
+                routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+            </div>
+            <div *ngIf="user.billingAddress">
+              {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
+              {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br />
+              {{user.billingAddress.city}}, {{user.billingAddress.zone.name}}
+              {{user.billingAddress.postCode}}<br />
+              {{user.billingAddress.country.name}}<br>
+            </div>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+            <div fxLayout="row wrap" fxLayoutGap="10px grid">
+              <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{
+                user.paymentMethodCode==='CREDIT_CARD'?('COMMON.CREDIT_CARD' | translate):
+                user.paymentMethodCode}}</h6>
+              <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
+                routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+            </div>
+            <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
+              {{'COMMON.ENDING_IN' | translate}} {{user.creditCard.last4Digits}}
+            </div>
+            <div *ngIf="user.paymentMethodCode === 'TMONEY'">
+              {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
+            </div>
+            <div *ngIf="user.paymentMethodCode === 'FLOOZ'">
+              {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
+            </div>
+          </div>
+        </mat-card>
+        <embryo-Cart></embryo-Cart>
+      </div> 
+      <div fxFlex.xs="0" fxFlex.sm="0" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <mat-card>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+            (click)="placeYourOrder()" type="button" style="width:100%;">
+            <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
+          </button>
+          <div style="text-align: center; font-size:11px; width:100%;">
+            <a [routerLink]="['/terms-conditions']">{{'COMMON.PLACE_YOUR_ORDER_NOTICE' | translate}} </a></div>
+          <h6>{{'COMMON.ORDER_SUMMARY' | translate}} </h6>
+          <div fxLayout="row wrap" fxLayoutAlign="none">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              {{'COMMON.ITEMS' | translate}} ({{appService?.navbarCartCount}}):</div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              {{appService?.navbarCartPrice | currency:appService?.currency}}</div>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="none">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              {{'COMMON.SHIPPING_AND_HANDLING' | translate}}:</div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              {{appService?.navbarCartShipping | currency:appService?.currency}}</div>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="none">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              {{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              {{appService?.navbarCartTotalBeforeTax | currency:appService?.currency}}</div>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="none">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              {{'COMMON.ESTIMATED_TAX' | translate}}:</div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              {{appService?.navbarCartEstimatedTax | currency:appService?.currency}}</div>
+          </div>
+          <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              {{'COMMON.TOTAL' | translate}}:</div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              {{appService?.navbarCartTotal | currency:appService?.currency}}</div>
+          </div>
+>>>>>>> .theirs
+
+<<<<<<< .mine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+          <br />
+          <div fxLayout="row wrap" fxLayoutAlign="none">
+            <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+              <h6 style="color: #ff5722">{{'COMMON.ORDER_TOTAL' | translate}}:</h6>
+            </div>
+            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+              <h6 style="color: #ff5722">{{appService?.navbarCartTotal | currency:appService?.currency}}</h6>
+            </div>
+          </div>
+
+        </mat-card>
+      </div>
+</div>
     </div>
   </div>
 </div>
 
+>>>>>>> .theirs
 <ng-template #elseBlock>
   <div class="section-gap-lg text-center">
     <div class="mb-4">
@@ -24,8 +245,3 @@
     <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
   </div>
 </ng-template>
-
-
-
-
-  

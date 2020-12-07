@@ -8,7 +8,6 @@ import { GridProductComponent } from './GridProduct/GridProduct.component';
 import { StoresComponent } from './Stores/Stores.component';
 import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
-import { AddressesComponent } from 'src/app/Global/Addresses/Addresses.component';
 import { PaymentChangeModelComponent } from 'src/app/Global/PaymentChangeModel/PaymentChangeModel.component';
 import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
 

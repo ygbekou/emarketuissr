@@ -1,6 +1,6 @@
-<div fxLayout='row wrap' class="col-gap position-relative" *ngIf="detailData">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
-    <div fxLayout='row wrap'>
+<div fxLayout="row wrap" class="col-gap position-relative" *ngIf="detailData">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="45">
+    <div fxLayout="row wrap">
       <div fxFlex.xs="15" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
         <div class="product-detail-image-gallery pr-4">
           <mat-grid-list cols="1" rowHeight="1:1" gutterSize="20px">
@@ -25,16 +25,15 @@
       </div>
     </div>
   </div>
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md=50 fxFlex.lg="50" fxFlex.xl="50">
-    <div fxLayout='row wrap'>
-      <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="55" fxFlex.lg="55" fxFlex.xl="55">
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
         <div class="product-detail-content">
           <h3>{{detailData?.name}}</h3>
-          <a [routerLink]="['/products']" [queryParams]="{storeId:detailData.product.storeId}"
-                    routerLinkActive="tab-active">{{'COMMON.VISIT' | translate}} {{detailData.product.storeName}}</a>
           <div fxLayoutAlign="start center" class="mb-3">
             <div class="rating-star">
-              <span class="nav-item" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover" #popoverTrigger="mdePopoverTrigger">
+              <span class="nav-item" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover"
+                #popoverTrigger="mdePopoverTrigger">
                 <a class="nav-link">
                   <embryo-Rating [rate]="detailData.product.rating"></embryo-Rating>
                 </a>
@@ -44,90 +43,58 @@
                 <mat-card style="width: 500px">
                   <mat-card-content>
                     <h3>{{detailData.product.rating}} out of 5</h3>
-                   <div fxLayout='row wrap'>5 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[5]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[5]}}%</div><br/>
-                   <div fxLayout='row wrap'>4 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[4]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[4]}}%</div><br/>
-                   <div fxLayout='row wrap'>3 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[3]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[3]}}%</div><br/>
-                   <div fxLayout='row wrap'>2 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[2]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[2]}}%</div><br/>
-                   <div fxLayout='row wrap'>1 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate" [value]="detailData.product.ratingCountMaps[1]"></mat-progress-bar>&nbsp;  {{detailData.product.ratingCountMaps[1]}}%</div><br/>
-                 </mat-card-content>
+                    <div fxLayout="row wrap">5 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
+                        [value]="detailData.product.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
+                      {{detailData.product.ratingCountMaps[5]}}%</div><br />
+                    <div fxLayout="row wrap">4 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
+                        [value]="detailData.product.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
+                      {{detailData.product.ratingCountMaps[4]}}%</div><br />
+                    <div fxLayout="row wrap">3 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
+                        [value]="detailData.product.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
+                      {{detailData.product.ratingCountMaps[3]}}%</div><br />
+                    <div fxLayout="row wrap">2 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
+                        [value]="detailData.product.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
+                      {{detailData.product.ratingCountMaps[2]}}%</div><br />
+                    <div fxLayout="row wrap">1 star &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
+                        [value]="detailData.product.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
+                      {{detailData.product.ratingCountMaps[1]}}%</div><br />
+                  </mat-card-content>
                 </mat-card>
               </mde-popover>
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div>
-              <a href="http://localhost:4200/products/dtl/58/3#reviews" class="a-link-normal">
-                <span class="a-size-base">{{detailData.product.reviews.length}} Reviews</span>
+              <a href="javascript:void(0)" class="a-link-normal" (click)="reviewPopup(detailData)">
+                {{detailData.product.reviews.length}} {{'COMMON.REVIEW'|translate}}
+                {{detailData.product.reviews.length>1?'s':''}}
               </a>
             </div>
           </div>
           <div class="product-detail-price">
-            <h4 class="accent-color">{{totalPrice | currency:currency}} </h4>
+            <h4 class="accent-color">{{detailData.product.price | currency:currency}} </h4>
           </div>
           <ul class="no-style mb-4">
             <li>
-              <span class="font-medium"> Availablity </span>:
-              <span *ngIf="detailData.product.quantity > 0">In Stocks</span>
-              <span *ngIf="!(detailData.product.quantity > 0)">Out Of Stocks</span>
+              <span class="font-medium"> {{'COMMON.AVAILABILITY'|translate}} </span>:
+              <span style="color: green;font-weight: bold;"
+                *ngIf="detailData.product.quantity > 0">{{'COMMON.IN_STOCK'|translate}}</span>
+              <span style="color: red;font-weight: bold;"
+                *ngIf="!(detailData.product.quantity > 0)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
             </li>
-            <!-- <li>
-              <span class="font-medium">Product Code </span>: {{detailData?.product.}}
-            </li>
-            <li>
-              <span class="font-medium">Tags</span>:
-              <ng-container *ngFor="let tag of detailData.tags">{{tag}}</ng-container>
-            </li> -->
           </ul>
-          <div class="short-des" [innerHTML]="detailData?.shortDescription"></div>
-
-
-            <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue">
-              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-              <div fxLayout='row wrap'>
-                <div *ngFor="let optionValueDescription of mapEntry.value">
-                  <div fxLayout='row wrap'>
-                    <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
-                      {{optionValueDescription.name}}
-                    </div>
-                    <span style="width:10px;"></span>
+          <div class="short-des" [innerHTML]="detailData?.description | safehtml"></div>
+          <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue">
+            <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+            <div fxLayout="row wrap">
+              <div *ngFor="let optionValueDescription of mapEntry.value">
+                <div fxLayout="row wrap">
+                  <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
+                    {{optionValueDescription.name}}
                   </div>
+                  <span style="width:10px;"></span>
                 </div>
-                
               </div>
-           
-          </div>
-      
-
-          <div class="bullets-points">
-            <ul class="bullets-list">
-              <li *ngFor="let feature of detailData?.features">
-                {{feature}}
-              </li>
-            </ul>
-          </div>
-          <div fxLayoutGap="30px" class="mb-3 select-group">
-            <ng-container *ngIf="type == 'men' || type == 'women'">
-              <mat-form-field>
-                <mat-select class="product-detail-select" placeholder="Color">
-                  <ng-container *ngFor="let color of colorsArray">
-                    <mat-option class="product-detail-select" value="{{color}}">{{color}}</mat-option>
-                  </ng-container>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-                <mat-select placeholder="Size">
-                  <ng-container *ngFor="let size of sizeArray">
-                    <mat-option value="{{size}}">{{size}}</mat-option>
-                  </ng-container>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-            <!-- <mat-form-field>
-              <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
-                <ng-container *ngFor="let quantity of quantityArray">
-                  <mat-option value="{{quantity}}">{{quantity}}</mat-option>
-                </ng-container>
-              </mat-select>
-            </mat-form-field> -->
+            </div>
           </div>
           <div class="mb-4" *ngIf="fromPage==='buy'">
             <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
@@ -148,7 +115,7 @@
             <button mat-raised-button color="accent" class="button-lg mr-3"
               (click)="submitProductForSale(detailData)">{{'COMMON.SELL_PRODUCT'|translate}}</button>
           </div>
-          <div fxLayoutAlign="start center"  *ngIf="fromPage==='buy'">
+          <div fxLayoutAlign="start center" *ngIf="fromPage==='buy'">
             <div class="mr-3"> <span>Share Now</span></div>
             <div class="detail-product-share">
               <embryo-SocialShare></embryo-SocialShare>
@@ -156,30 +123,62 @@
           </div>
         </div>
       </div>
-      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" style="font-size:12px;">
-        <mat-card style="height: 100%;">
-          <div class="product-detail-price">
-            <h6 class="accent-color">{{totalPrice | currency:currency}} </h6>
+      <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" style="font-size:12px;">
+        <mat-card>
+          <div   class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <h6 class="accent-color">{{totalPrice | currency:currency}} </h6>
+            </div>
           </div>
 
-          <div *ngIf="detailData.product.quantity > 0">
-            <h6>In Stock</h6>
-          </div>
-          <mat-select placeholder="Quantity" (selectionChange)="calculatePrice(detailData, $event.value)">
-            <ng-container *ngFor="let quantity of [].constructor(detailData.product.quantity); let i = index;">
-              <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
-            </ng-container>
-          </mat-select>
-          <br/><br/>
-          <div>
-            <span style="font-size:12px;">{{'COMMON.SOLD_BY'|translate}}: {{detailData.product.storeName}}</span>
+          <div class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <span class="font-medium"> {{'COMMON.AVAILABILITY'|translate}} </span>:
+              <span style="color: green;font-weight: bold;"
+                *ngIf="detailData.product.quantity > 0">{{'COMMON.IN_STOCK'|translate}}</span>
+              <span style="color: red;font-weight: bold;"
+                *ngIf="!(detailData.product.quantity > 0)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
+            </div>
           </div>
 
-          <br/><br/>
-          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="addToCart(detailData)" type="button" style="width:100%;">
-              <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.ADD_TO_CART' | translate}}</span>
-              <mat-icon>add_shopping_cart</mat-icon>
-          </button>
+          <div class="col-gap" *ngIf="detailData.product.quantity > 0">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <mat-select *ngIf="detailData.product.quantity > 0" [(value)]="qty" placeholder="1"
+                (selectionChange)="calculatePrice(detailData, $event.value)">
+                <ng-container
+                  *ngFor="let quantity of [].constructor(detailData.product.quantity>30?30:detailData.product.quantity); let i = index;">
+                  <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
+                </ng-container>
+              </mat-select>
+            </div>
+          </div>
+
+          <div class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <p class="mb-0" style="font-style:italic;">{{'COMMON.SOLD_BY'|translate}}: <br /> <a
+                  [routerLink]="['/products']" [queryParams]="{storeId:detailData.product.storeId}"
+                  routerLinkActive="tab-active">
+                  {{detailData.product.storeName}}</a></p>
+            </div>
+          </div>
+
+          <div class="col-gap" *ngIf="detailData.product.quantity > 0">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <button mat-raised-button color="accent" class="w-100" (click)="addToCart(detailData)">
+                <mat-icon>add_shopping_cart</mat-icon>
+                {{'COMMON.ADD_TO_CART'|translate}}
+              </button>
+            </div>
+          </div>
+
+          <div  class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <button mat-raised-button color="secondary" class="w-100" (click)="addToWishlist(detailData)">
+                <mat-icon>favorite</mat-icon>
+                {{'COMMON.ADD_FAVORITE'|translate}}
+              </button>
+            </div>
+          </div>
 
         </mat-card>
       </div>

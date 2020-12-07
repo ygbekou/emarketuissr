@@ -965,6 +965,7 @@ export class ProductDescVO {
   metaTitle: string;
   name: string;
   tag: string;
+  features: string[];
   shortDescription: string;
   mediumDescription: string;
   category: string;
