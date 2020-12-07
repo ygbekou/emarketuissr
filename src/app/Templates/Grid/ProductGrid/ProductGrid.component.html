@@ -29,7 +29,7 @@
                   class="title-link">{{prd?.name}}</a> </h5>
             <div>
                <div fxFlex fxLayoutAlign="space-between">
-                  <h6 class="accent-color">{{prd.product?.price | currency: currency}}</h6>
+                  <h6 class="accent-color">{{prd.product.symbolLeft}} {{prd.product?.price}} {{prd.product.symbolRight}}</h6>
                   <div class="rating-star">
                      <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
                   </div>

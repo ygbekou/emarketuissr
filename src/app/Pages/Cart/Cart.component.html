@@ -1,9 +1,9 @@
 <div class="inner-container cart-page section-gap"
-  *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
+  *ngIf="(appService.localStorageCartProductsMap[currencyId] && appService.localStorageCartProductsMap[currencyId].length>0); else elseBlock">
   <div class="cart-wrapper">
     <div class="cart-shop-list mb-5 text-center  card-shadow">
       <div fxLayout="row wrap" fxLayoutAlign="start center" class="cart-item"
-        *ngFor="let product of appService.localStorageCartProducts">
+        *ngFor="let product of appService.localStorageCartProductsMap[currencyId]">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="cart-product-image">
           <div class="cart-item-thumb">
             <a href="javascript:void(0)" class="p-link">
@@ -27,7 +27,9 @@
             </div>
             <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
               <div class="cart-item-price">
-                <h4>{{ calculateProductSinglePrice(product, quantity.value) | currency:appService?.currency}}</h4>
+                <h4>{{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}} 
+                  {{ calculateProductSinglePrice(product, quantity.value)}}
+                   {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</h4>
               </div>
             </div>
             <div class="close-sm" fxFlex.xs="10" fxFlex.sm="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="20">
@@ -47,33 +49,43 @@
 
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">{{'COMMON.ITEMS' | translate}}
-            ({{appService?.navbarCartCount}}):</div>
+            ({{appService?.navbarCartCountMap[currencyId]}}):</div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            {{appService?.navbarCartPrice | currency:appService?.currency}}</div>
+            {{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}} 
+              {{appService?.navbarCartPriceMap[currencyId]}} 
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
             {{'COMMON.SHIPPING_AND_HANDLING' | translate}}:</div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            {{appService?.navbarCartShipping | currency:appService?.currency}}</div>
+            {{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}} 
+              {{appService?.navbarCartShippingMap[currencyId]}}
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
             {{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            {{appService?.navbarCartTotalBeforeTax | currency:appService?.currency}}</div>
+            {{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}}
+              {{appService?.navbarCartTotalBeforeTaxMap[currencyId]}}
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
             {{'COMMON.ESTIMATED_TAX' | translate}}:</div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            {{appService?.navbarCartEstimatedTax | currency:appService?.currency}}</div>
+            {{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}}
+              {{appService?.navbarCartEstimatedTaxMap[currencyId]}}
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
           <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
             {{'COMMON.TOTAL' | translate}}:</div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            {{appService?.navbarCartTotal | currency:appService?.currency}}</div>
+            {{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}}
+              {{appService?.navbarCartTotalMap[currencyId]}}
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</div>
         </div>
 
         <br />
@@ -82,7 +94,9 @@
             <h6 style="color: #ff5722">{{'COMMON.ORDER_TOTAL' | translate}}:</h6>
           </div>
           <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            <h6 style="color: #ff5722">{{appService?.navbarCartTotal | currency:appService?.currency}}</h6>
+            <h6 style="color: #ff5722">{{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}}
+              {{appService?.navbarCartTotalMap[currencyId]}}
+                {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</h6>
           </div>
         </div>
         <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"

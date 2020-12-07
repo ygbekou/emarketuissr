@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, Input } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
@@ -21,6 +21,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
    user: User = new User();
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    popupResponse: any;
+   @Input()
+   currencyId: number;
 
    constructor(public appService: AppService,
       private router: Router,
