@@ -1435,3 +1435,47 @@ export class CustomerReward {
   }
 }
 
+export class OnlineOrderVO {
+  orderId: number;
+  storeId: number;
+  storeName: string;
+  cFirstName: string;
+  cLastName: string;
+  email: string;
+  phone: string;
+  addr1: string;
+  addr2: string;
+  city: string;
+  zone: string;
+  zipCode: string;
+  country: string;
+  paymentMethod: string;
+  total: number;
+  tracking: string;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
+  createDate: Date;
+}
+
+export class StoreOrderVO {
+  thId: number;
+  storeId: number;
+  storeName: string;
+  cashier: string;
+  tName: string;
+  quantity: number;
+  price: number;
+  rebate: number;
+  total: number;
+  customers: number;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
+  createDate: Date;
+}
+
+export class OrdersVO {
+  online: OnlineOrderVO[];
+  store: StoreOrderVO[];
+}

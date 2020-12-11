@@ -53,6 +53,7 @@
     "ngx-card": "^0.2.4",
     "ngx-device-detector": "^1.5.2",
     "ngx-input-file": "8.0.1",
+    "ngx-page-scroll-core": "^7.0.3",
     "ngx-perfect-scrollbar": "^7.2.1",
     "ngx-quill": "^4.3.2",
     "ngx-slick-carousel": "^0.4.4",

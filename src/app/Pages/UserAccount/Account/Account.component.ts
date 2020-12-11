@@ -42,7 +42,7 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
-      { name: 'Sales Overview', url: '/account/sell-overview', icon: 'dashboard' },
+      { name: 'Sales Overview', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
       // { name: 'Draft items', url: '/account/draft-item', icon: 'restore_from_trash' },
       { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
@@ -78,7 +78,7 @@ const TREE_DATA_FR: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
-      { name: 'Aperçu des ventes', url: '/account/sell-overview', icon: 'dashboard' },
+      { name: 'Aperçu des ventes', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
       // { name: 'Brouillon', url: '/account/draft-item', icon: 'restore_from_trash' },
       { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' }
