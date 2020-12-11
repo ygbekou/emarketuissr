@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, Address, CreditCard, Order } from 'src/app/app.models';
+import { User, Address, CreditCard, Order, Currency } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
@@ -27,7 +27,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    @Input()
    currencyId: number;
+   @Output() orderCompleteEvent = new EventEmitter<Order>();
 
+   hasOrderSucceed: boolean;
 
    constructor(public appService: AppService,
       public router: Router,
@@ -43,12 +45,11 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-      // console.log('On init of cart');
-      //this.appService.recalculateCart(true);
+      
    }
 
    ngAfterViewInit() {
-      // console.log(this.appService.localStorageCartProducts);
+   
    }
 
 
@@ -57,6 +58,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          .subscribe(result => {
             if (result.id > 0) {
                this.user = result;
+               if (this.user.paymentMethodCode === 'CREDIT_CARD') {
+                  this.appService.getObject('/service/order/customer/' + userId + '/active_card')
+                     .subscribe((data: CreditCard) => {
+                        this.user.creditCard = data;
+                     },
+                        error => console.log(error),
+                        () => console.log('Get user active CreditCard complete for userId=' + userId));
+               }
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
                   this.error = res['MESSAGE.READ_FAILED'];
@@ -66,26 +75,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    }
 
-   public setStep(index: number) {
-      this.step = index;
-      switch (index) {
-         case 0:
-            this.isDisabledPaymentStepTwo = true;
-            this.isDisabledPaymentStepThree = true;
-            break;
-         case 1:
-            this.isDisabledPaymentStepThree = false;
-            break;
-         default:
-
-            break;
-      }
-   }
-
-   public toggleRightSidenav() {
-      this.appService.paymentSidenavOpen = !this.appService.paymentSidenavOpen;
-   }
-
+ 
    public getCartProducts() {
       let total = 0;
       if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
@@ -102,71 +92,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       return total;
    }
 
-   public submitPayment() {
-      const userDetailsGroup = <FormGroup>(this.paymentFormOne.controls['user_details']);
-      if (userDetailsGroup.valid) {
-         switch (this.step) {
-            case 0:
-               this.step = 1;
-               this.isDisabledPaymentStepTwo = false;
-               break;
-            case 1:
-               this.step = 2;
-               break;
-
-            default:
-               // code...
-               break;
-         }
-      } else {
-         this.isDisabledPaymentStepTwo = true;
-         this.isDisabledPaymentStepThree = true;
-         for (const i in userDetailsGroup.controls) {
-            userDetailsGroup.controls[i].markAsTouched();
-         }
-      }
-   }
-
-   public selectedPaymentTabChange(value) {
-      const paymentGroup = <FormGroup>(this.paymentFormOne.controls['payment']);
-
-      paymentGroup.markAsUntouched();
-
-      if (value && value.index === 1) {
-         paymentGroup.controls['card_number'].clearValidators();
-         paymentGroup.controls['user_card_name'].clearValidators();
-         paymentGroup.controls['cvv'].clearValidators();
-         paymentGroup.controls['expiry_date'].clearValidators();
-
-         paymentGroup.controls['bank_card_value'].setValidators([Validators.required]);
-      } else {
-
-         paymentGroup.controls['card_number'].setValidators([Validators.required]);
-         paymentGroup.controls['user_card_name'].setValidators([Validators.required]);
-         paymentGroup.controls['cvv'].setValidators([Validators.required]);
-         paymentGroup.controls['expiry_date'].setValidators([Validators.required]);
-
-         paymentGroup.controls['bank_card_value'].clearValidators();
-      }
-
-      paymentGroup.controls['card_number'].updateValueAndValidity();
-      paymentGroup.controls['user_card_name'].updateValueAndValidity();
-      paymentGroup.controls['cvv'].updateValueAndValidity();
-      paymentGroup.controls['expiry_date'].updateValueAndValidity();
-      paymentGroup.controls['bank_card_value'].updateValueAndValidity();
-   }
-
-   public finalStep() {
-      const paymentGroup = <FormGroup>(this.paymentFormOne.controls['payment']);
-      if (paymentGroup.valid) {
-         this.appService.addBuyUserDetails(this.paymentFormOne.value);
-         this.router.navigate(['/checkout/final-receipt']);
-      } else {
-         for (const i in paymentGroup.controls) {
-            paymentGroup.controls[i].markAsTouched();
-         }
-      }
-   }
 
    isUserLoggedIn() {
       return this.appService.tokenStorage.getUserId() !== null;
@@ -176,19 +101,20 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    placeYourOrder() {
       this.order = new Order();
 
-      this.order.products = this.appService.localStorageCartProducts;
-      this.order.total = this.appService.navbarCartTotal;
+      this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
+      this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
 
       this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
          .subscribe((data: Order) => {
-            // console.info("Saved Order");
-            // console.info(this.order);
-            // console.info(window.location.href);
 
+            this.order = data;
             if (data.errors !== null && data.errors !== undefined) {
                this.error = data.errors[0];
+            } else {
+               this.appService.completeOrder(+this.currencyId);
+               this.orderCompleteEvent.emit(this.order);
             }
 
             if (this.user.paymentMethodCode === 'TMONEY') {
@@ -196,9 +122,18 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                window.location.href = url;
                return;
             }
+
          },
             error => console.log(error),
             () => console.log('Changing Payment Method complete'));
+   }
+
+
+   updateOrder(order: Order) {
+
+      this.orderCompleteEvent.emit(order);
+
+
    }
 }
 

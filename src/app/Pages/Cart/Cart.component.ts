@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
@@ -23,6 +23,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    popupResponse: any;
    @Input()
    currencyId: number;
+   @Output() orderCompleteEvent = new EventEmitter<Order>();
 
    constructor(public appService: AppService,
       private router: Router,
@@ -119,17 +120,22 @@ export class CartComponent implements OnInit, AfterViewChecked {
    placeYourOrder() {
       this.order = new Order();
 
-      this.order.products = this.appService.localStorageCartProducts;
-      this.order.total = this.appService.navbarCartTotal;
+      this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
+      this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
 
       this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
          .subscribe((data: Order) => {
 
+            this.order = data;
             if (data.errors !== null && data.errors !== undefined) {
                this.error = data.errors[0];
+            } else {
+               this.appService.completeOrder(+this.currencyId);
+               this.orderCompleteEvent.emit(this.order);
             }
+
 
             if (this.user.paymentMethodCode === 'TMONEY') {
                const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);

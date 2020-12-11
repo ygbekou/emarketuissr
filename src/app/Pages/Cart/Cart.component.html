@@ -99,7 +99,8 @@
                 {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</h6>
           </div>
         </div>
-        <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+        <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" 
+            [disabled]="appService.hasOrderSucceedMap[currencyId]"
             (click)="placeYourOrder()" type="button" style="width:100%;">
             <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
           </button></div>

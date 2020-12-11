@@ -592,7 +592,8 @@
     "PROD_ALREADY_ADDED": "Article deja ajouté",
     "INVALID_USER_ID": "ID d'utilisateur non valide",
     "CART_EMPTY": "Votre panier est vide",
-    "GO_SHOPPING": "Continuez le shopping"
+    "GO_SHOPPING": "Continuez le shopping",
+		"YOUR_ORDER_WAS_SUCCESSFUL": "Votre commande pour la devise {{currency}} a été exécutée avec succès. Pour voir la commande, cliquez sur le num�ro de commande:"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

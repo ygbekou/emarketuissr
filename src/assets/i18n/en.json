@@ -591,7 +591,8 @@
 		"PROD_ALREADY_ADDED": "Product Already Added",
 		"INVALID_USER_ID": "Invalid User Id",
 		"CART_EMPTY": "Your Shopping Bag is empty",
-		"GO_SHOPPING": "Go for Shopping"
+		"GO_SHOPPING": "Go for Shopping",
+		"YOUR_ORDER_WAS_SUCCESSFUL": "Your order for currency {{currency}} was successfully completed. To view the order click on order id:  "
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

@@ -61,6 +61,8 @@ export class AppService {
 
    navbarCartCurrencyMap = {};
 
+   hasOrderSucceedMap = {};
+
    navbarWishlistProdCount = 0;
    buyUserCartProducts: any;
 
@@ -72,7 +74,7 @@ export class AppService {
       private dialog: MatDialog,
       private db: AngularFireDatabase,
       private toastyService: ToastaService,
-      private toastyConfig: ToastaConfig, 
+      private toastyConfig: ToastaConfig,
       public tokenStorage: TokenStorage,
       private translate: TranslateService
    ) {
@@ -87,7 +89,7 @@ export class AppService {
 
       // localStorage.setItem('cart_item', JSON.stringify([]));
 
-      //localStorage.removeItem('cart_item');  
+      // localStorage.removeItem('cart_item');
 
       // Custom
       this.headers = new HttpHeaders();
@@ -101,7 +103,7 @@ export class AppService {
 
       this.appInfoStorage = new AppInfoStorage(this.translate);
 
-      this.refreshReferenceData('UserGroup', 'ORDER BY e.name')
+      this.refreshReferenceData('UserGroup', 'ORDER BY e.name');
    }
 
    public setCartItemDefaultValue(setCartItemDefaultValue) {
@@ -235,24 +237,24 @@ export class AppService {
 
    // returning LocalCarts Product Count
    /*    public calculateLocalCartProdCounts() {
-   
+
          this.localStorageCartProducts = null;
          this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
          this.navbarCartCount = +((this.localStorageCartProducts).length);
-   
+
          this.navbarCartPrice = 0;
          this.navbarCartShipping = 0;
          this.navbarCartTotalBeforeTax = 0;
          this.navbarCartEstimatedTax = 0;
          this.navbarCartTotal = 0;
-   
+
          this.localStorageCartProducts.forEach(element => {
             console.log(element);
             this.navbarCartPrice += element.price * element.quantity;
             this.navbarCartShipping += 0;
             this.navbarCartEstimatedTax += 5;
          });
-   
+
          this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
          this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
       } */
@@ -265,10 +267,10 @@ export class AppService {
 
          this.localStorageCartProductsMap = {};
          this.localStorageCartProducts.forEach(cartItem => {
-            if (!this.localStorageCartProductsMap[cartItem.currencyId + '']) {
-               this.localStorageCartProductsMap[cartItem.currencyId + ''] = new Array();
+            if (!this.localStorageCartProductsMap[cartItem.currencyId]) {
+               this.localStorageCartProductsMap[cartItem.currencyId] = new Array();
             }
-            this.localStorageCartProductsMap[cartItem.currencyId + ''].push(cartItem);
+            this.localStorageCartProductsMap[cartItem.currencyId].push(cartItem);
          });
 
       }
@@ -291,24 +293,24 @@ export class AppService {
 
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += cartItem.price * cartItem.quantity;
-         if (!this.navbarCartPriceMap[cartItem.currencyId + '']) {
-            this.navbarCartCountMap[cartItem.currencyId + ''] = 0;
-            this.navbarCartPriceMap[cartItem.currencyId + ''] = 0;
-            this.navbarCartShippingMap[cartItem.currencyId + ''] = 0;
-            this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + ''] = 0;
-            this.navbarCartEstimatedTaxMap[cartItem.currencyId + ''] = 0;
-            this.navbarCartTotalMap[cartItem.currencyId + ''] = 0;
+         if (!this.navbarCartPriceMap[cartItem.currencyId]) {
+            this.navbarCartCountMap[cartItem.currencyId] = 0;
+            this.navbarCartPriceMap[cartItem.currencyId] = 0;
+            this.navbarCartShippingMap[cartItem.currencyId] = 0;
+            this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] = 0;
+            this.navbarCartEstimatedTaxMap[cartItem.currencyId] = 0;
+            this.navbarCartTotalMap[cartItem.currencyId] = 0;
+            this.hasOrderSucceedMap[cartItem.currencyId] = false;
 
-            this.navbarCartCurrencyMap[cartItem.currencyId + ''] = {'currencyCode': cartItem.currencyCode,
+            this.navbarCartCurrencyMap[cartItem.currencyId] = {'currencyCode': cartItem.currencyCode,
                      'symbolLeft': cartItem.symbolLeft, 'symbolRight': cartItem.symbolRight};
          }
 
-         this.navbarCartCountMap[cartItem.currencyId + ''] += 1;
-         this.navbarCartPriceMap[cartItem.currencyId + ''] += cartItem.price * cartItem.quantity;
+         this.navbarCartCountMap[cartItem.currencyId] += 1;
+         this.navbarCartPriceMap[cartItem.currencyId] += cartItem.price * cartItem.quantity;
 
          this.navbarCartShipping += 0;
-         this.navbarCartShippingMap[cartItem.currencyId + ''] += 0;
-
+         this.navbarCartShippingMap[cartItem.currencyId] += 0;
 
          if (cartItem.taxRules) {
             cartItem.tax = 0;
@@ -322,14 +324,14 @@ export class AppService {
          cartItem.tax = this.roundingValue(cartItem.tax);
          cartItem.total = this.roundingValue(cartItem.price * cartItem.quantity + cartItem.tax);
          this.navbarCartEstimatedTax += cartItem.tax;
-         this.navbarCartEstimatedTaxMap[cartItem.currencyId + ''] += cartItem.tax;
+         this.navbarCartEstimatedTaxMap[cartItem.currencyId] += cartItem.tax;
 
-         this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + ''] =
-               this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId + ''] 
-               + this.navbarCartShippingMap[cartItem.currencyId + '']);
-         this.navbarCartTotalMap[cartItem.currencyId + ''] =
-               this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId + '']
-                                       + this.navbarCartEstimatedTaxMap[cartItem.currencyId + '']);
+         this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] =
+               this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
+               + this.navbarCartShippingMap[cartItem.currencyId]);
+         this.navbarCartTotalMap[cartItem.currencyId] =
+               this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId]
+                                       + this.navbarCartEstimatedTaxMap[cartItem.currencyId]);
 
       });
 
@@ -380,6 +382,35 @@ export class AppService {
       }, 500);
    }
 
+   public completeOrder(currencyId: number) {
+      console.info('Completing order ...');
+      const products: any = JSON.parse(localStorage.getItem('cart_item'));
+      this.hasOrderSucceedMap[currencyId] = true;
+
+      const filteredProducts = products.filter(p => {
+         return p.currencyId !== currencyId;
+      });
+
+      delete this.localStorageCartProductsMap[currencyId];
+
+      const title = 'Updating Cart';
+      const msg = '';
+
+      const toastOption: ToastOptions = {
+         title: title,
+         msg: msg,
+         showClose: true,
+         timeout: 1000,
+         theme: 'material'
+      };
+
+      this.toastyService.wait(toastOption);
+      setTimeout(() => {
+         // ReAdding the products after remove
+         localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
+         this.recalculateCart(true);
+      }, 500);
+   }
    /*
       ----------  Wishlist Product Function  ----------
    */
@@ -1042,7 +1073,7 @@ export class AppService {
    }
 
    public paginator(items, inpage?, inperPage?) {
-      let page = inpage || 1,
+      const page = inpage || 1,
          perPage = inperPage || 4,
          offset = (page - 1) * perPage,
          paginatedItems = items.slice(offset).slice(0, perPage),
