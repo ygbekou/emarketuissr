@@ -9,7 +9,7 @@ import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/Confirma
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product } from '../app.models';
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
@@ -631,6 +631,23 @@ export class AppService {
    public removeBuyProducts() {
       localStorage.removeItem('byProductDetails');
       this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
+   }
+
+
+   public storeOrderId(order: Order) {
+
+      localStorage.setItem('order_id', order.id + '');
+   }
+
+    public clearOrderId() {
+
+      localStorage.removeItem('order_id');
+   }
+
+
+   public getStoredOrderId() {
+
+      return +localStorage.getItem('order_id');
    }
 
    /**
