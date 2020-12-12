@@ -25,11 +25,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-credit-card"></i>
-                  <h2 class="pull-right">{{dashboard.onlineSales|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.onlineSales?dashboard.onlineSales:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!--    <a  pageScroll href="#bottom">
-                     {{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                  <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -43,10 +42,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-credit-card"></i>
-                  <h2 class="pull-right">{{dashboard.storeSales|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{ (dashboard.storeSales?dashboard.storeSales:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                    <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -61,10 +60,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-shopping-cart"></i>
-                  <h2 class="pull-right">{{dashboard.onlineOrders|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.onlineOrders?dashboard.onlineOrders:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                   <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
                </div>
             </div>
          </div>
@@ -79,10 +78,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-shopping-cart"></i>
-                  <h2 class="pull-right">{{dashboard.storeOrders|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.storeOrders?dashboard.storeOrders:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                   <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -99,10 +98,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-users"></i>
-                  <h2 class="pull-right">{{dashboard.onlineCustomers|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.onlineCustomers?dashboard.onlineCustomers:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                  <a [routerLink]="'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
                </div>
             </div>
          </div>
@@ -116,10 +115,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-users"></i>
-                  <h2 class="pull-right">{{dashboard.storeCustomers|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.storeCustomers?dashboard.storeCustomers:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                  <a [routerLink]="'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -134,10 +133,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-cart-plus"></i>
-                  <h2 class="pull-right">{{dashboard.onlineUnits|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.onlineUnits?dashboard.onlineUnits:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                 <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -152,10 +151,10 @@
                </div>
                <div class="tile-body">
                   <i class="fa fa-cart-plus"></i>
-                  <h2 class="pull-right">{{dashboard.storeUnits|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.storeUnits?dashboard.storeUnits:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <!-- <a href="/admin/admindash">{{'COMMON.VIEW_MORE'|translate}}...</a> -->
+                  <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -193,9 +192,6 @@
 
    <mat-tab-group class="table-tab-list" color="accent">
       <mat-tab label="{{'COMMON.ONLINE_ORDERS' | translate}}">
-
-
-
          <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
             <div class="transactiion-list table-list-wrap">
                <div class="table-responsive-x">
@@ -244,8 +240,8 @@
                         <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.country}}
                         </td>
                      </ng-container>
-                     <tr mat-header-row *matHeaderRowDef="displayedTransactionColumns"></tr>
-                     <tr mat-row *matRowDef="let row; columns: displayedTransactionColumns"></tr>
+                     <tr mat-header-row *matHeaderRowDef="onlineOrdersColumns"></tr>
+                     <tr mat-row *matRowDef="let row; columns: onlineOrdersColumns"  [routerLink]="'/admin/sales/orderView/'+row.orderId"></tr>
                   </table>
                   <mat-paginator #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                </div>
@@ -261,7 +257,7 @@
                         <ng-container matColumnDef="transid">
                            <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>ID</th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                              <div>{{element.thId}}</div>
+                              <div>{{element.thId}}</div> 
                            </td>
                         </ng-container>
                         <ng-container matColumnDef="date">
@@ -304,8 +300,8 @@
                               {{element.symbolRight}}
                            </td>
                         </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedTransferColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedTransferColumns"></tr>
+                        <tr mat-header-row *matHeaderRowDef="storeOrdersColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: storeOrdersColumns"  [routerLink]="'/admin/sales/orderView/'+row.thId"></tr>
                      </table>
                      <mat-paginator #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                   </div>

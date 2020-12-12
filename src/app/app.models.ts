@@ -209,19 +209,19 @@ export class Product extends BaseModel {
       return copy;
     } */
 
- /*  clone(): Product {
-    let copy: Product = new Product();
-    copy = JSON.parse(JSON.stringify({ ...this }));
-    copy.productDescriptions = [];
-    copy.productVideos = [];
-    copy.productToCategorys = [];
-    console.log('Product copied');
-    console.log(copy);
-    return copy;
-  }
-  copyData(copyFrom: Product) {
-    this.id = copyFrom.id;
-  } */
+  /*  clone(): Product {
+     let copy: Product = new Product();
+     copy = JSON.parse(JSON.stringify({ ...this }));
+     copy.productDescriptions = [];
+     copy.productVideos = [];
+     copy.productToCategorys = [];
+     console.log('Product copied');
+     console.log(copy);
+     return copy;
+   }
+   copyData(copyFrom: Product) {
+     this.id = copyFrom.id;
+   } */
 }
 
 export class ProductDescription {
@@ -1350,6 +1350,11 @@ export class SearchCriteria {
 export class OrderSearchCriteria {
   orderId: number;
   returnId: number;
+  storeId: number;
+  userId: number;
+  langId: number;
+  status: number;
+  orderType: number; // 0 -- online, 1-- store
   customerName: string;
   orderStatus: OrderStatus;
   returnStatus: ReturnStatus;
@@ -1478,4 +1483,35 @@ export class StoreOrderVO {
 export class OrdersVO {
   online: OnlineOrderVO[];
   store: StoreOrderVO[];
+}
+
+export class TabHdr {
+  public id: number;
+  public tablId: number;
+  public storeId: number;
+  public userId: number;
+  public cashier: string;
+  public name: string;
+  public storeDay: Date;
+  public quantity: number;
+  public guests: number;
+  public price: number;
+  public rebate: number;
+  public total: number;
+  public status: number;
+  public tabDtls: TabDtl[] = [];
+  public type = 'TabHdr';
+}
+
+export class TabDtl {
+  public id: number;
+  public prdName: string;
+  public pic: string;
+  public tabId: number;
+  public ptsId: number;
+  public prdId: number;
+  public price: number;
+  public quantity: number;
+  public total: number;
+  public type = 'TabDtl';
 }

@@ -231,6 +231,8 @@
 		"HOME_PHONE": "Home Phone",
 		"ICON": "Icon",
 		"IN_STOCK": "In stock",
+		"IN_PROGRESS": "In progress",
+		"COMPLETED": "Completed",
 		"OUT_OF_STOCK": "Out of stock",
 		"INACTIVE": "Inactive",
 		"INBOX": "Inbox",

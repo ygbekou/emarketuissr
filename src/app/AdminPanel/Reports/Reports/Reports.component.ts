@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { OnlineOrderVO, OrdersVO } from 'src/app/app.models';
+import { OnlineOrderVO, OrdersVO, StoreOrderVO } from 'src/app/app.models';
 @Component({
    selector: 'app-reports',
    templateUrl: './Reports.component.html',
@@ -15,7 +15,7 @@ export class ReportsComponent implements OnInit {
    @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
    @ViewChild(MatSort, { static: true }) onlineST: MatSort;
 
-   storeDS: MatTableDataSource<OnlineOrderVO>;
+   storeDS: MatTableDataSource<StoreOrderVO>;
    @ViewChild('MatPaginatorS', { static: true }) storePG: MatPaginator;
    @ViewChild(MatSort, { static: true }) storeST: MatSort;
 
@@ -30,9 +30,9 @@ export class ReportsComponent implements OnInit {
    ordersVO: OrdersVO;
    colors = ['secondary', 'primary', 'secondary', 'secondary', 'secondary'];
 
-   displayedTransactionColumns: string[] = ['orderId', 'createDate', 'storeName', 'cLastName', 'total', 'phone', 'country'];
+   onlineOrdersColumns: string[] = ['orderId', 'createDate', 'storeName', 'cLastName', 'total', 'phone', 'country'];
 
-   displayedTransferColumns: string[] = ['transid', 'date', 'account', 'type', 'amount', 'balance', 'status'];
+   storeOrdersColumns: string[] = ['transid', 'date', 'account', 'type', 'amount', 'balance', 'status'];
 
    constructor(private appService: AppService,
       private translate: TranslateService) {
