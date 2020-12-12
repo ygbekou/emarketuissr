@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Order, SearchCriteria, OrderSearchCriteria, OrderStatus } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Order, OrderSearchCriteria, OrderStatus, TabHdr, StoreSearchCriteria, Store } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,29 +13,60 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Orders.component.scss']
 })
 export class OrdersComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'customer', 'status', 'total', 'dateAdded', 'dateModified', 'actions'];
-  dataSource: MatTableDataSource<Order>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  onlineOrdersColumns: string[] = ['id', 'customer', 'status', 'total', 'city', 'country', 'dateAdded', 'dateModified'];
+  storeOrdersColumns: string[] = ['transid', 'date', 'type', 'amount', 'balance', 'status'];
+
+  onlineDS: MatTableDataSource<Order>;
+  @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
+  @ViewChild(MatSort, { static: true }) onlineST: MatSort;
+
+  storeDS: MatTableDataSource<TabHdr>;
+  @ViewChild('MatPaginatorS', { static: true }) storePG: MatPaginator;
+  @ViewChild(MatSort, { static: true }) storeST: MatSort;
   messages = '';
+  button = 'filter';
+  @Input() userId: number;
   searchCriteria: OrderSearchCriteria;
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
   orderStatuses: OrderStatus[];
-
-
+  stores: Store[] = [];
+  colors = ['primary', 'secondary'];
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.searchCriteria = new OrderSearchCriteria();
+    this.searchCriteria.orderType = 0;
+    this.searchCriteria.userId = this.userId;
+    this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
+    this.getStores();
     this.search();
     this.getOrderStatuses();
   }
 
+
+  changeOrderType(event) {
+    this.searchCriteria.orderType = event.index;
+    this.search();
+
+  }
+
+  private getStores() {
+    this.storeSearchCriteria.status = 1;
+    this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
+  }
+
   getOrderStatuses() {
     const parameters: string[] = [];
+    parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderStatus', parameters)
       .subscribe((data: OrderStatus[]) => {
         this.orderStatuses = data;
@@ -45,39 +76,32 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   search() {
+    if (this.button.endsWith('clear')) {
+      this.searchCriteria = new OrderSearchCriteria();
+      this.searchCriteria.orderType = 0;
+    } else {
 
-    this.appService.saveWithUrl('/service/order/orders', this.searchCriteria)
-      .subscribe((data: Order[]) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-        error => console.log(error),
-        () => console.log('Get all Orders complete'));
-  }
+      if (this.searchCriteria.orderType === 0) {
+        this.appService.saveWithUrl('/service/order/orders', this.searchCriteria)
+          .subscribe((data: any[]) => {
+            this.onlineDS = new MatTableDataSource(data);
+            this.onlineDS.paginator = this.onlinePG;
+            this.onlineDS.sort = this.onlineST;
+          },
+            error => console.log(error),
+            () => console.log('Get all Orders complete'));
 
-  public remove(order: Order) {
-    this.messages = '';
-    this.appService.delete(order.id, 'Order')
-      .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(order);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<Order>(this.dataSource.data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }
-        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
-          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
-          });
-        } else {
-          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.ERROR_OCCURRED'];
-          });
-        }
-      });
+      } else {
+        this.appService.saveWithUrl('/service/order/storeOrders', this.searchCriteria)
+          .subscribe((data: any[]) => {
+            this.storeDS = new MatTableDataSource(data);
+            this.storeDS.paginator = this.storePG;
+            this.storeDS.sort = this.storeST;
+          },
+            error => console.log(error),
+            () => console.log('Get all Orders complete'));
+      }
+    }
   }
 
   public applyFilter(filterValue: string) {

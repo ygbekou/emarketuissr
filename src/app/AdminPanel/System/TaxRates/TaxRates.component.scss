@@ -1,0 +1,12 @@
+.mat-row:nth-child(even) {
+    background-color: white;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #e1eaf7;
+}
+
+.mat-row:hover {
+    background-color: #ff5722;
+    cursor: pointer;
+}
