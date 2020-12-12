@@ -124,7 +124,6 @@ export class ProductComponent extends BaseComponent implements OnInit {
       this.setProductToggles();
       const prod = { ...this.product };
       prod.productDescriptions = [];
-
       this.appService.save(prod, 'Product')
         .subscribe(result => {
           if (result.id > 0) {
@@ -135,7 +134,6 @@ export class ProductComponent extends BaseComponent implements OnInit {
             this.productDescriptionView.setProduct(this.product);
           }
         });
-
     } catch (e) {
       console.log(e);
     }

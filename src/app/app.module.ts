@@ -80,6 +80,7 @@ import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
 import { CartModule } from './Pages/Cart/Cart.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LangComponent } from './Layouts/lang/lang.component';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -110,6 +111,7 @@ export function createTranslateLoader(http: HttpClient) {
       HomeThreeComponent,
       HeaderThreeComponent,
       FixedHeaderComponent,
+      LangComponent,
       FooterComponent
    ],
    imports: [

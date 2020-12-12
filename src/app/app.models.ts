@@ -209,7 +209,7 @@ export class Product extends BaseModel {
       return copy;
     } */
 
-  clone(): Product {
+ /*  clone(): Product {
     let copy: Product = new Product();
     copy = JSON.parse(JSON.stringify({ ...this }));
     copy.productDescriptions = [];
@@ -221,7 +221,7 @@ export class Product extends BaseModel {
   }
   copyData(copyFrom: Product) {
     this.id = copyFrom.id;
-  }
+  } */
 }
 
 export class ProductDescription {

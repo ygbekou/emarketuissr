@@ -57,7 +57,7 @@ export class ProductDescriptionComponent implements OnInit {
 
    onLangChanged(event) {
       this.messages = '';
-      console.log('tab changed')
+      console.log('tab changed');
       this.product.productDescriptions.forEach(prodDesc => {
          if (prodDesc.language.name === event.tab.textLabel) {
             this.productDescription = prodDesc;
