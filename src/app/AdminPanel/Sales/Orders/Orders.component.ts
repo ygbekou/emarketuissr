@@ -105,10 +105,18 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.searchCriteria.orderType === 0) {
+      this.onlineDS.filter = filterValue.trim().toLowerCase();
+      if (this.onlineDS.paginator) {
+        this.onlineDS.paginator.firstPage();
+      }
+    } else {
+      this.storeDS.filter = filterValue.trim().toLowerCase();
+      if (this.storeDS.paginator) {
+        this.storeDS.paginator.firstPage();
+      }
     }
+
   }
 
 }

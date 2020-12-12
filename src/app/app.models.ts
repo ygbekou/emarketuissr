@@ -1353,6 +1353,7 @@ export class OrderSearchCriteria {
   storeId: number;
   userId: number;
   langId: number;
+  status: number;
   orderType: number; // 0 -- online, 1-- store
   customerName: string;
   orderStatus: OrderStatus;

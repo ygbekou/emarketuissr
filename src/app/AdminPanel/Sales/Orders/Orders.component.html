@@ -202,7 +202,7 @@
 
           <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.orderType ===1">
             <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
-            <mat-select [(ngModel)]="searchCriteria.orderStatus" name="food">
+            <mat-select [(ngModel)]="searchCriteria.status" name="food">
               <mat-option [value]="0">
                 {{'COMMON.IN_PROGRESS'|translate}}
               </mat-option>
