@@ -22,7 +22,7 @@ export class UserComponent  extends BaseComponent implements OnInit {
 
   user: User;
   constants: Constants = new Constants();
-
+  picture: any;
   selectedTabIndex = 0;
 
   constructor(public appService: AppService,

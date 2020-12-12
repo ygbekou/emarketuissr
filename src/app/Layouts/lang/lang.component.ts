@@ -4,7 +4,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { AppService } from 'src/app/Services/app.service';
 
 @Component({
-  selector: 'app-lang',
+  selector: 'app-lang-l',
   templateUrl: './lang.component.html',
   styleUrls: ['./lang.component.scss']
 })

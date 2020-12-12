@@ -10,25 +10,25 @@ import { Constants } from 'src/app/app.constants';
   selector: 'app-store',
   templateUrl: './Store.component.html'
 })
-export class StoreComponent  extends BaseComponent implements OnInit {
+export class StoreComponent extends BaseComponent implements OnInit {
   messages = '';
   errors = '';
 
   formData: FormData;
   picture: any[] = [];
-
+  addresses: any[];
   store: Store;
   constants: Constants = new Constants();
 
   userId: number;
-  user:  User = new User();
+  user: User = new User();
 
 
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -73,14 +73,14 @@ export class StoreComponent  extends BaseComponent implements OnInit {
             this.store = result;
             this.store.fileNames.forEach(item => {
               if (item === this.store.image) {
-                  this.picture.push(
-                    {
-                        link: 'assets/images/stores/' + this.store.id + '/' + item,
-                        preview: 'assets/images/stores/' + this.store.id + '/' + item
-                    }
-                  );
+                this.picture.push(
+                  {
+                    link: 'assets/images/stores/' + this.store.id + '/' + item,
+                    preview: 'assets/images/stores/' + this.store.id + '/' + item
+                  }
+                );
               } else {
-                  // Do Nothing
+                // Do Nothing
               }
             });
           } else {
@@ -94,30 +94,30 @@ export class StoreComponent  extends BaseComponent implements OnInit {
   }
 
   submitStoreInfo() {
-      this.messages = '';
-      this.errors = '';
-      this.store.status = (this.store.status == null
-         || this.store.status.toString() === 'false'
-         || this.store.status.toString() === '0') ? 0 : 1;
-      this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
-      //this.store.owner = this.user;
-      console.log(this.store);
-      this.formData = new FormData();
+    this.messages = '';
+    this.errors = '';
+    this.store.status = (this.store.status == null
+      || this.store.status.toString() === 'false'
+      || this.store.status.toString() === '0') ? 0 : 1;
+    this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
+    //this.store.owner = this.user;
+    console.log(this.store);
+    this.formData = new FormData();
 
-      if (this.picture && this.picture.length > 0) {
-        if (this.picture[0].file) {
-          this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
-        } else {
-          const pathSplitArray = this.picture[0].link.split('/');
-            this.store.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
-        }
+    if (this.picture && this.picture.length > 0) {
+      if (this.picture[0].file) {
+        this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+      } else {
+        const pathSplitArray = this.picture[0].link.split('/');
+        this.store.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
       }
-      this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
-         .subscribe(data => {
-            this.processResult(data, this.store, null);
-            this.store = data;
-         });
-   }
+    }
+    this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
+      .subscribe(data => {
+        this.processResult(data, this.store, null);
+        this.store = data;
+      });
+  }
 
 
   setToggleValues(store: Store) {
