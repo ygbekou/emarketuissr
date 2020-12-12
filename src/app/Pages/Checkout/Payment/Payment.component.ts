@@ -44,7 +44,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngAfterViewInit() {
-      
    }
 
 

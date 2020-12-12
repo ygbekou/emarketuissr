@@ -119,6 +119,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
             if (this.user.paymentMethodCode === 'TMONEY') {
                const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+               console.log(url);
                window.location.href = url;
                return;
             }
