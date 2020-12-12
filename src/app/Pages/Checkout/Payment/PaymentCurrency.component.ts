@@ -8,7 +8,7 @@ import { Constants } from 'src/app/app.constants';
 
 @Component({
    selector: 'app-Payment-Currency',
-   templateUrl: './PaymentCurrency.component.html',  
+   templateUrl: './PaymentCurrency.component.html',
    styleUrls: ['./Payment.component.scss']
 })
 export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
@@ -45,11 +45,15 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-      
+
+      if (this.user.paymentMethodCode === 'TMONEY') {
+         this.processPaymentConfirmation();
+      }
+
    }
 
    ngAfterViewInit() {
-   
+
    }
 
 
@@ -75,7 +79,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    }
 
- 
+
    public getCartProducts() {
       let total = 0;
       if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
@@ -110,15 +114,18 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          .subscribe((data: Order) => {
 
             this.order = data;
+            this.appService.storeOrderId(this.order);
             if (data.errors !== null && data.errors !== undefined) {
                this.error = data.errors[0];
             } else {
-               this.appService.completeOrder(+this.currencyId);
-               this.orderCompleteEvent.emit(this.order);
+               if (this.user.paymentMethodCode !== 'TMONEY') {
+                  this.appService.completeOrder(+this.currencyId);
+                  this.orderCompleteEvent.emit(this.order);
+               }
             }
 
             if (this.user.paymentMethodCode === 'TMONEY') {
-               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer + '/#');
                window.location.href = url;
                return;
             }
@@ -126,6 +133,29 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          },
             error => console.log(error),
             () => console.log('Changing Payment Method complete'));
+   }
+
+   processPaymentConfirmation() {
+
+      if (this.appService.getStoredOrderId() && this.appService.getStoredOrderId() > 0) {
+         this.appService.saveWithUrl('/service/order/payment/confirm/', {
+            'identifier': this.appService.getStoredOrderId()
+         })
+         .subscribe((data: Order) => {
+
+            this.order = data;
+            if (data.errors !== null && data.errors !== undefined) {
+               this.error = data.errors[0];
+            } else {
+               this.appService.completeOrder(+this.currencyId);
+               this.orderCompleteEvent.emit(this.order);
+            }
+
+            this.appService.clearOrderId();
+         },
+         error => console.log(error),
+         () => console.log('Changing Payment Method complete'));
+      }
    }
 
 
