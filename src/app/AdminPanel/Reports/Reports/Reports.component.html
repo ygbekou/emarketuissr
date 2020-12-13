@@ -28,7 +28,7 @@
                   <h2 class="pull-right">{{(dashboard.onlineSales?dashboard.onlineSales:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                  <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -45,7 +45,7 @@
                   <h2 class="pull-right">{{ (dashboard.storeSales?dashboard.storeSales:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                    <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                    <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -63,7 +63,7 @@
                   <h2 class="pull-right">{{(dashboard.onlineOrders?dashboard.onlineOrders:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                   <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
+                   <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
                </div>
             </div>
          </div>
@@ -81,7 +81,7 @@
                   <h2 class="pull-right">{{(dashboard.storeOrders?dashboard.storeOrders:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                   <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                   <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -101,7 +101,7 @@
                   <h2 class="pull-right">{{(dashboard.onlineCustomers?dashboard.onlineCustomers:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <a [routerLink]="'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
+                  <a [routerLink]="userId?'/account/sales-orders':'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a>  
                </div>
             </div>
          </div>
@@ -118,7 +118,7 @@
                   <h2 class="pull-right">{{(dashboard.storeCustomers?dashboard.storeCustomers:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <a [routerLink]="'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                  <a [routerLink]="userId?'/account/sales-orders':'/admin/customers/users'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -136,7 +136,7 @@
                   <h2 class="pull-right">{{(dashboard.onlineUnits?dashboard.onlineUnits:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                 <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                 <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -154,7 +154,7 @@
                   <h2 class="pull-right">{{(dashboard.storeUnits?dashboard.storeUnits:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
-                  <a [routerLink]="'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
+                  <a [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a> 
                </div>
             </div>
          </div>
@@ -241,9 +241,9 @@
                         </td>
                      </ng-container>
                      <tr mat-header-row *matHeaderRowDef="onlineOrdersColumns"></tr>
-                     <tr mat-row *matRowDef="let row; columns: onlineOrdersColumns"  [routerLink]="'/admin/sales/orderView/'+row.orderId"></tr>
+                     <tr mat-row *matRowDef="let row; columns: onlineOrdersColumns"  [routerLink]=" (userId?'/account':'/admin/sales')+'/orderView/o'+row.orderId"></tr>
                   </table>
-                  <mat-paginator #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                  <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                </div>
             </div>
          </div>
@@ -301,9 +301,9 @@
                            </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="storeOrdersColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: storeOrdersColumns"  [routerLink]="'/admin/sales/orderView/'+row.thId"></tr>
+                        <tr mat-row *matRowDef="let row; columns: storeOrdersColumns"  [routerLink]=" (userId?'/account':'/admin/sales')+'/orderView/s'+row.thId"></tr>
                      </table>
-                     <mat-paginator #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                     <mat-paginator [pageSize]="10" #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                   </div>
                </div>
                <!-- table responsive-->

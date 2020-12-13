@@ -15,12 +15,16 @@
                      <h4>{{appService.tokenStorage.getFirstName() +' '+appService.tokenStorage.getLastName()}}</h4>
                      <div class="text-muted text-xl">{{appService.tokenStorage.getUserName()}}</div>
                   </div>
+
+                  <button class="" mat-mini-fab color="primary" mat-card-icon (click)="toggleSidebar()">
+                     <mat-icon>menu</mat-icon>
+                  </button>
                </div>
             </div>
             <div fxLayout="row wrap" class="col-gap mx-0">
 
-               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="20" fxFlex.xl="20" class="user-nav-list">
-
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="user-nav-list"
+                  *ngIf="showMenu">
                   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                      <!-- This is the tree node template for leaf nodes -->
                      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
@@ -43,7 +47,7 @@
                   </mat-tree>
 
                </div>
-               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="70" fxFlex.lg="80" fxFlex.xl="80"
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{showMenu?85:100}}" fxFlex.lg="{{showMenu?85:100}}" fxFlex.xl="{{showMenu?85:100}}"
                   class="user-content-wrapper">
                   <div class="tab-container">
                      <router-outlet></router-outlet>

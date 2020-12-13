@@ -115,6 +115,7 @@ import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
       }
     })
 
-  ]
+  ],
+	exports: [OrdersComponent]
 })
 export class SalesModule { }

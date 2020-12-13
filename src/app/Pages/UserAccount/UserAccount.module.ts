@@ -54,6 +54,8 @@ import { GlobalModule } from 'src/app/Global/Global.module';
 import { AddressesComponent } from './Addresses/Addresses.component';
 import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
 import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
+import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
+import { SalesModule } from 'src/app/AdminPanel/Sales/Sales.module';
 
 @NgModule({
   imports: [
@@ -96,6 +98,7 @@ import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
     GlobalModule,
     TemplatesModule,
     ReportsModule,
+    SalesModule,
     MatPaginatorModule,
     QuillModule.forRoot({
       theme: 'snow',
@@ -131,7 +134,8 @@ import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
     SellProductComponent,
     AddressesComponent,
     MyProductsComponent,
-    SalesDashboardComponent
+    SalesDashboardComponent,
+    SalesOrdersComponent
   ],
   exports: [
     CardsComponent,
