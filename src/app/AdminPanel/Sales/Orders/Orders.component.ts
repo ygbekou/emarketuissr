@@ -13,8 +13,8 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Orders.component.scss']
 })
 export class OrdersComponent extends BaseComponent implements OnInit {
-  onlineOrdersColumns: string[] = ['id', 'customer', 'status', 'total', 'city', 'country', 'dateAdded', 'dateModified'];
-  storeOrdersColumns: string[] = ['transid', 'date', 'type', 'amount', 'balance', 'status'];
+  onlineOrdersColumns: string[] = ['id', 'storeName', 'customer', 'status', 'total', 'city', 'country', 'dateAdded'];
+  storeOrdersColumns: string[] = ['id', 'storeName', 'cashier', 'status', 'amount', 'rebate', 'qty', 'date'];
 
   onlineDS: MatTableDataSource<Order>;
   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
@@ -38,15 +38,19 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchCriteria = new OrderSearchCriteria();
-    this.searchCriteria.orderType = 0;
-    this.searchCriteria.userId = this.userId;
-    this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
+    this.clear();
     this.getStores();
     this.search();
     this.getOrderStatuses();
   }
 
+  private clear() {
+    const oType = this.searchCriteria ? this.searchCriteria.orderType : 0;
+    this.searchCriteria = new OrderSearchCriteria();
+    this.searchCriteria.orderType = oType;
+    this.searchCriteria.userId = this.userId;
+    this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
+  }
 
   changeOrderType(event) {
     this.searchCriteria.orderType = event.index;
@@ -76,13 +80,13 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   search() {
+    console.log(this.searchCriteria);
     if (this.button.endsWith('clear')) {
-      this.searchCriteria = new OrderSearchCriteria();
-      this.searchCriteria.orderType = 0;
+      this.clear();
     } else {
 
       if (this.searchCriteria.orderType === 0) {
-        this.appService.saveWithUrl('/service/order/orders', this.searchCriteria)
+        this.appService.saveWithUrl('/service/order/onlineOrders', this.searchCriteria)
           .subscribe((data: any[]) => {
             this.onlineDS = new MatTableDataSource(data);
             this.onlineDS.paginator = this.onlinePG;

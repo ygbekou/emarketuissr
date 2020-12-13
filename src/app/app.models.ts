@@ -1478,6 +1478,7 @@ export class StoreOrderVO {
   symbolLeft: string;
   symbolRight: string;
   createDate: Date;
+  status: number;
 }
 
 export class OrdersVO {
