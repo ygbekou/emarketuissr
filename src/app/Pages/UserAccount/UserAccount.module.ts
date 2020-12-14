@@ -56,6 +56,7 @@ import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.compo
 import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
 import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
 import { SalesModule } from 'src/app/AdminPanel/Sales/Sales.module';
+import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 
 @NgModule({
   imports: [
@@ -135,7 +136,8 @@ import { SalesModule } from 'src/app/AdminPanel/Sales/Sales.module';
     AddressesComponent,
     MyProductsComponent,
     SalesDashboardComponent,
-    SalesOrdersComponent
+    SalesOrdersComponent,
+    OrderDetailComponent
   ],
   exports: [
     CardsComponent,
