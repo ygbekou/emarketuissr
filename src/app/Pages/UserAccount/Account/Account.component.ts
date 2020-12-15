@@ -34,7 +34,7 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Purchase Overview', url: '/account/buy-overview', icon: 'dashboard' },
       { name: 'Purchase history', url: '/account/order-history', icon: 'history' },
       { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' }
-     // { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
+      // { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
     ]
   }, {
     name: 'Selling',
@@ -43,8 +43,9 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales Overview', url: '/account/sales-dashboard', icon: 'dashboard' },
+      { name: 'Sales detail', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
-      // { name: 'Draft items', url: '/account/draft-item', icon: 'restore_from_trash' },
+
       { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
       // { name: 'Sold items', url: '/account/sold-item', icon: 'toggle_off' }
     ]
@@ -79,6 +80,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
       { name: 'Aperçu des ventes', url: '/account/sales-dashboard', icon: 'dashboard' },
+      { name: 'Détail des ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
       // { name: 'Brouillon', url: '/account/draft-item', icon: 'restore_from_trash' },
       { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' }
@@ -106,6 +108,7 @@ interface EmarketFlatNode {
 })
 export class AccountComponent implements OnInit {
 
+  showMenu = true;
 
   private _transformer = (node: MenuNode, level: number) => {
     return {
@@ -135,5 +138,8 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
   }
 
+  toggleSidebar() {
+    this.showMenu = !this.showMenu;
+  }
   hasChild = (_: number, node: EmarketFlatNode) => node.expandable;
 }

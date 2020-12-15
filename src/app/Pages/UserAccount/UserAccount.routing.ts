@@ -11,6 +11,8 @@ import { MyProductsComponent } from './MyProducts/MyProducts.component';
 import { PaymentChangeModelComponent } from 'src/app/Global/PaymentChangeModel/PaymentChangeModel.component';
 import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
 import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
+import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
+import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -56,6 +58,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sales-dashboard',
             component: SalesDashboardComponent
+         },
+         {
+            path: 'sales-orders',
+            component: SalesOrdersComponent
+         },
+         {
+            path: 'order-detail/:id',
+            component: OrderDetailComponent
          }
       ]
    }

@@ -1,32 +1,27 @@
-
-<div class="text-center mt-2" *ngIf="messages">
-  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-</div>
-
-
 <div fxLayout="row wrap">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <div class="table-wrapper">
       <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
-        <ng-container matColumnDef="dateAdded" >
-          <th mat-header-cell *matHeaderCellDef width ="15%" mat-sort-header> Date Added </th>
+        <ng-container matColumnDef="dateAdded">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Date </th>
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="comment">
-          <th mat-header-cell *matHeaderCellDef width ="25%" mat-sort-header> Comment </th>
+          <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> Note </th>
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.comment}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Status </th>
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STATUS'|translate}} </th>
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.orderStatus.description}} </td>
         </ng-container>
 
         <ng-container matColumnDef="notified">
-          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> Customer Notified </th>
-          <td mat-cell *matCellDef="let orderHist"> 
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CUSTOMER_NOTIFIED'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let orderHist">
             <span *ngIf="orderHist.notify === 1">{{'COMMON.YES' | translate}}</span>
             <span *ngIf="orderHist.notify === 0">{{'COMMON.NO' | translate}}</span>
           </td>
@@ -34,15 +29,15 @@
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef width ="15%"> Actions </th>
+          <th mat-header-cell *matHeaderCellDef width="15%"> Actions </th>
           <td mat-cell *matCellDef="let orderHist">
-            <button mat-icon-button color="primary" (click)="edit(orderHist.id)" matTooltip="{{'COMMON.EDIT' | translate}}"
-              class="edit">
+            <button mat-icon-button color="primary" (click)="edit(orderHist.id)"
+              matTooltip="{{'COMMON.EDIT' | translate}}" class="edit">
               <mat-icon>edit</mat-icon>
             </button>
             &nbsp;&nbsp;
-            <button mat-icon-button color="warn" (click)="remove(orderHist.id)" matTooltip="{{'COMMON.DELETE' | translate}}"
-              class="remove">
+            <button mat-icon-button color="warn" (click)="remove(orderHist.id)"
+              matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -57,58 +52,40 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </div>
 
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-card>
-      <div class="text-center">
-        <h5>{{'COMMON.DETAILS' | translate}}</h5>
-      </div>
       <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
-
         <div fxLayout="row wrap">
-          
-          <div class="text-center" *ngIf="messages">
-            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-          </div>
-
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
-            <mat-select [(ngModel)]="orderHistory.orderStatus" name="food">
-              <mat-option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">
-                {{orderStatus.description}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div fxLayout="row wrap" class="w-100">
-            <mat-slide-toggle [(ngModel)]="orderHistory.override" name="override" #override="ngModel" class="my-2">
-              {{ 'COMMON.OVERRIDE' | translate }}
-            </mat-slide-toggle>
-          </div>
-
-          <div fxLayout="row wrap" class="w-100">
-            <mat-slide-toggle [(ngModel)]="orderHistory.notify" name="notify" #notify="ngModel" class="my-2">
-              {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
-            </mat-slide-toggle>
-          </div>
-    
-          <div fxLayout="row wrap" class="w-100">
-            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-            <textarea matInput rows="5" cols="50" class="form-control" id="comment"
-               [(ngModel)]="orderHistory.comment" name="comment"
-               #comment="ngModel"></textarea>
-          </div>
-
-          <div fxLayout="row wrap" class="w-100">
-            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
+              <mat-select [(ngModel)]="orderHistory.orderStatus" name="food">
+                <mat-option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">
+                  {{orderStatus.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxLayout="row wrap" class="w-100">
+              <mat-slide-toggle [(ngModel)]="orderHistory.notify" name="notify" #notify="ngModel" class="my-2">
+                {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
+              </mat-slide-toggle>
+            </div>
+            <div fxLayout="row wrap" class="w-100">
+              <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
                 <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                 <mat-icon>save</mat-icon>
-            </button> 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                <span class="mx-1 uppercase">{{'COMMON.ADD' | translate}}</span>
-                <mat-icon>add_circle</mat-icon>
-            </button>
+              </button>
+            </div>
           </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"></div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="5">
+            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+            <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="orderHistory.comment"
+              name="comment" #comment="ngModel"></textarea>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
         </div>
       </form>
     </mat-card>

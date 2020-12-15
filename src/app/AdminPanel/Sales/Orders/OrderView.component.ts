@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Order, OrderProduct } from 'src/app/app.models';
+import { Order, OrderProduct, TabHdr, TabDtl, Store, Currency } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,46 +7,112 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { ActivatedRoute } from '@angular/router';
-import { Constants } from 'src/app/app.constants';
+import { Constants } from 'src/app/app.constants'; 
 
 @Component({
-  selector: 'app-orders',
+  selector: 'app-orders-overview',
   templateUrl: './OrderView.component.html',
   styleUrls: ['./Orders.component.scss']
 })
 export class OrderViewComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['product', 'model', 'quantity', 'price', 'total'];
-  displayedShippingColumns = ['shippingRateTitle', 'emptyFooter1', 'emptyFooter2', 'emptyFooter3', 'shippingAmount'];
-  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5', 'emptyFooter6', 'totalAmount'];
+  displayedColumns: string[] = ['product',  'quantity', 'price', 'total'];
+  displayedShippingColumns = ['shippingRateTitle', 'emptyFooter1', 'emptyFooter2',  'shippingAmount'];
+  displayedTaxesColumns = ['taxes', 'emptyFooter7', 'emptyFooter8' , 'taxAmount'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5',  'totalAmount'];
 
-  dataSource: MatTableDataSource<OrderProduct>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  onlineDS: MatTableDataSource<OrderProduct>;
+  @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
+  @ViewChild(MatSort, { static: true }) onlineST: MatSort;
+
+  storeDS: MatTableDataSource<TabDtl>;
+  @ViewChild('MatPaginatorS', { static: true }) storePG: MatPaginator;
+  @ViewChild(MatSort, { static: true }) storeST: MatSort;
   messages = '';
+
+  @Input() userId: number;
 
   @Input()
   order: Order;
+  store: Store = new Store();
+  storeOrder: TabHdr = new TabHdr();
   constants: Constants = new Constants();
+  orderType = 'o';
+  deviceInfo = null;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      if (params.id === undefined || params.id === 0) {
+      console.log(params);
+      const paramId: string = params.id;
+      if (params.id === undefined || params.id === '0') {
         this.clear();
       } else {
         this.clear();
-        this.getOrder(params.id);
+        this.orderType = paramId.charAt(0);
+        if (paramId.charAt(0) === 'o') {
+          this.getOrder(Number(paramId.substring(1)));
+        } else if (paramId.charAt(0) === 's') {
+          this.getStoreOrder(Number(paramId.substring(1)));
+        }
+
       }
     });
   }
 
+
+
   clear() {
     this.order = new Order();
+    this.storeOrder = new TabHdr();
+    this.store = new Store();
+    this.store.currency = new Currency();
+  }
+
+  public getStoreOrder(id: number) {
+    const parameters: string[] = [];
+    parameters.push('e.id = |stta|' + id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.TabHdr', parameters,
+      ' ')
+      .subscribe((data: TabHdr[]) => {
+        this.storeOrder = data[0];
+        this.getStore(this.storeOrder.storeId);
+        this.setStoreOrderDetails();
+      },
+        (error) => console.log(error),
+        () => console.log('Get all Open tabs complete'));
+  }
+
+  public getStore(id: number) {
+    const parameters: string[] = [];
+    parameters.push('e.id = |stta|' + id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters,
+      ' ')
+      .subscribe((data: Store[]) => {
+        this.store = data[0];
+      },
+        (error) => console.log(error),
+        () => console.log('Get Store complete'));
+  }
+  public setStoreOrderDetails() {
+    const parameters: string[] = [];
+    parameters.push('e.tabId = |tId|' + this.storeOrder.id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.TabDtl', parameters)
+      .subscribe((data: TabDtl[]) => {
+        if (data && data.length > 0) {
+          this.storeOrder.tabDtls = data;
+          this.storeDS = new MatTableDataSource(this.storeOrder.tabDtls);
+          this.storeDS.paginator = this.storePG;
+          this.storeDS.sort = this.storeST;
+        }
+      },
+        (error) => console.log(error),
+        () => console.log('Get all TabDtl  complete'));
+
   }
 
   getOrder(orderId: number) {
@@ -55,9 +121,11 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           if (result.id > 0) {
             this.order = result;
-            this.dataSource = new MatTableDataSource(this.order.orderProducts);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            console.log(this.order);
+            this.getStore(this.order.storeId);
+            this.onlineDS = new MatTableDataSource(this.order.orderProducts);
+            this.onlineDS.paginator = this.onlinePG;
+            this.onlineDS.sort = this.onlineST;
           } else {
             this.order = new Order();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -69,16 +137,23 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
   }
 
   public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+    if (this.orderType === 'o') {
+      this.onlineDS.filter = filterValue.trim().toLowerCase();
+      if (this.onlineDS.paginator) {
+        this.onlineDS.paginator.firstPage();
+      }
+    } else {
+      this.storeDS.filter = filterValue.trim().toLowerCase();
+      if (this.storeDS.paginator) {
+        this.storeDS.paginator.firstPage();
+      }
 
+    }
+
+  }
 
   isEmpty(value: string): boolean {
     const val = value !== null && value !== undefined ? value.trim() : '';
-
     return val.length === 0;
   }
 }

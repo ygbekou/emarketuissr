@@ -8,12 +8,15 @@ import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.componen
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
-import { GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order } from '../app.models';
+import {
+   GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order
+} from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 interface Response {
    data: any;
@@ -74,6 +77,7 @@ export class AppService {
       private dialog: MatDialog,
       private db: AngularFireDatabase,
       private toastyService: ToastaService,
+      private deviceService: DeviceDetectorService,
       private toastyConfig: ToastaConfig,
       public tokenStorage: TokenStorage,
       private translate: TranslateService
@@ -82,14 +86,6 @@ export class AppService {
       this.toastyConfig.position = 'top-right';
       this.toastyConfig.theme = 'material';
       this.calculateLocalWishlistProdCounts();
-      // localStorage.removeItem('user');
-      // localStorage.removeItem('byProductDetails');
-
-      // this.db.object('products').valueChanges().subscribe(res => { this.setCartItemDefaultValue(res['gadgets'][1]); });
-
-      // localStorage.setItem('cart_item', JSON.stringify([]));
-
-      // localStorage.removeItem('cart_item');
 
       // Custom
       this.headers = new HttpHeaders();
@@ -104,6 +100,19 @@ export class AppService {
       this.appInfoStorage = new AppInfoStorage(this.translate);
 
       this.refreshReferenceData('UserGroup', 'ORDER BY e.name');
+   }
+
+   getUserAgent(): string {
+      const deviceInfo = this.deviceService.getDeviceInfo();
+      const isMobile = this.deviceService.isMobile();
+      const isTablet = this.deviceService.isTablet();
+      const isDesktopDevice = this.deviceService.isDesktop();
+      return 'browser = ' + deviceInfo.browser + ' '
+         + deviceInfo.browser_version + ', os = ' +
+         deviceInfo.os + ' ' + deviceInfo.os_version +
+         ', device = ' + deviceInfo.device +
+         ', Device type = ' + (isMobile ? 'Mobile' : (isTablet ? 'Tablet' : (isDesktopDevice ? 'Desktop' : 'Unkown')));
+
    }
 
    public setCartItemDefaultValue(setCartItemDefaultValue) {
@@ -302,8 +311,10 @@ export class AppService {
             this.navbarCartTotalMap[cartItem.currencyId] = 0;
             this.hasOrderSucceedMap[cartItem.currencyId] = false;
 
-            this.navbarCartCurrencyMap[cartItem.currencyId] = {'currencyCode': cartItem.currencyCode,
-                     'symbolLeft': cartItem.symbolLeft, 'symbolRight': cartItem.symbolRight};
+            this.navbarCartCurrencyMap[cartItem.currencyId] = {
+               'currencyCode': cartItem.currencyCode,
+               'symbolLeft': cartItem.symbolLeft, 'symbolRight': cartItem.symbolRight
+            };
          }
 
          this.navbarCartCountMap[cartItem.currencyId] += 1;
@@ -327,11 +338,11 @@ export class AppService {
          this.navbarCartEstimatedTaxMap[cartItem.currencyId] += cartItem.tax;
 
          this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] =
-               this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
+            this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
                + this.navbarCartShippingMap[cartItem.currencyId]);
          this.navbarCartTotalMap[cartItem.currencyId] =
-               this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId]
-                                       + this.navbarCartEstimatedTaxMap[cartItem.currencyId]);
+            this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId]
+               + this.navbarCartEstimatedTaxMap[cartItem.currencyId]);
 
       });
 
@@ -639,7 +650,7 @@ export class AppService {
       localStorage.setItem('order_id', order.id + '');
    }
 
-    public clearOrderId() {
+   public clearOrderId() {
 
       localStorage.removeItem('order_id');
    }
@@ -841,6 +852,11 @@ export class AppService {
    public getObject = (url: string): Observable<any> => {
       const actionUrl = Constants.apiServer + url;
       return this.http.get<any>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
+
+   public getIp = (): Observable<any> => {
+      return this.http.get('http://api.ipify.org/?format=json')
          .pipe(catchError(this.handleError));
    }
 
@@ -1107,6 +1123,5 @@ export class AppService {
          }
       };
    }
-
 
 }

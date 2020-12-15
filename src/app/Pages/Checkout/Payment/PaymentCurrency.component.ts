@@ -109,7 +109,10 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
-
+      this.order.userAgent = this.appService.getUserAgent();
+      this.appService.getIp()
+         .subscribe((data1: any) => {
+            this.order.ip = data1.ip;
       this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
          .subscribe((data: Order) => {
 
@@ -126,7 +129,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
             if (this.user.paymentMethodCode === 'TMONEY') {
                const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
-               console.info('URL ==== ' + url);
+                     console.log('URL ==== ' + url);
                window.location.href = url;
                return;
             }
@@ -134,6 +137,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          },
             error => console.log(error),
             () => console.log('Changing Payment Method complete'));
+         }, error => console.log(error),
+            () => console.log('Get IP complete'));
    }
 
    processPaymentConfirmation() {

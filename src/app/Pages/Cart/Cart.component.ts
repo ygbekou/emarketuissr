@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewChecked, Input, Output, EventEmitter } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -124,26 +124,35 @@ export class CartComponent implements OnInit, AfterViewChecked {
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
+      this.order.userAgent = this.appService.getUserAgent();
+      this.appService.getIp()
+         .subscribe((data1: any) => {
+            this.order.ip = data1.ip;
+            this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
+               .subscribe((data: Order) => {
 
-      this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-         .subscribe((data: Order) => {
-
-            this.order = data;
-            if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               this.appService.completeOrder(+this.currencyId);
-               this.orderCompleteEvent.emit(this.order);
-            }
+                  this.order = data;
+                  if (data.errors !== null && data.errors !== undefined) {
+                     this.error = data.errors[0];
+                  } else {
+                     this.appService.completeOrder(+this.currencyId);
+                     this.orderCompleteEvent.emit(this.order);
+                  }
 
 
-            if (this.user.paymentMethodCode === 'TMONEY') {
-               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
-               window.location.href = url;
-               return;
-            }
-         },
-            error => console.log(error),
-            () => console.log('Changing Payment Method complete'));
+                  if (this.user.paymentMethodCode === 'TMONEY') {
+                     const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+                     window.location.href = url;
+                     return;
+                  }
+               },
+                  error => console.log(error),
+                  () => console.log('Changing Payment Method complete'));
+
+         }, error => console.log(error),
+            () => console.log('Get IP complete'));
+
+
    }
+
 }
