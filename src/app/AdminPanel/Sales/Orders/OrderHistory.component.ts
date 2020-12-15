@@ -8,7 +8,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 
 @Component({
-  selector: 'app-orderHistory',
+  selector: 'app-order-history',
   templateUrl: './OrderHistory.component.html',
   styleUrls: ['./Orders.component.scss']
 })
@@ -23,22 +23,24 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
 
   orderHistory: OrderHistory = new OrderHistory();
 
-  @Input()
-  orderId: number;
+  @Input() orderType: string;
+  @Input() orderId: number;
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.orderHistory.order.id = this.orderId;
+    this.orderHistory.notify = 0;
     this.getOrderStatuses();
     this.getOrderHistories();
   }
 
   getOrderStatuses() {
     const parameters: string[] = [];
+    parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderStatus', parameters)
       .subscribe((data: OrderStatus[]) => {
         this.orderStatuses = data;
@@ -50,7 +52,7 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   getOrderHistories() {
     const parameters: string[] = [];
     if (this.orderId !== null && this.orderId !== undefined) {
-        parameters.push('e.order.id = |orderId|' + this.orderId + '|Integer');
+      parameters.push('e.order.id = |orderId|' + this.orderId + '|Integer');
     }
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderHistory', parameters)
       .subscribe((data: OrderHistory[]) => {
@@ -106,35 +108,48 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   save() {
     this.messages = '';
     this.errors = '';
-    try {
-
-      this.orderHistory.order.id = this.orderId;
-      console.log(this.orderHistory);
-      this.setToggleValues();
-      const index: number = this.dataSource.data.findIndex(element => element.id === this.orderHistory.id);
-      this.appService.save(this.orderHistory, 'OrderHistory')
-        .subscribe(result => {
-          if (result.id > 0) {
-            this.orderHistory = new OrderHistory();
-            if (index !== -1) {
-              this.dataSource.data.splice(index, 1);
-            }
-            this.dataSource.data.push(result);
-            this.dataSource = new MatTableDataSource<OrderHistory>(this.dataSource.data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-              this.messages = res['MESSAGE.SAVE_SUCCESS'];
-            });
-          } else {
-            this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-              this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
-            });
-          }
+    if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
+      this.translate.get(['VALIDATION.IS_REQUIRED', 'COMMON.SUCCESS']).subscribe(res => {
+        this.translate.get(['COMMON.ORDER_STATUS', 'COMMON.SUCCESS']).subscribe(res1 => {
+          this.messages = res1['COMMON.ORDER_STATUS'] + ' ' + res['VALIDATION.IS_REQUIRED'];
         });
+      });
+    } else if (!this.orderHistory.comment || this.orderHistory.comment.trim() === '') {
+      this.translate.get(['VALIDATION.IS_REQUIRED', 'COMMON.SUCCESS']).subscribe(res => {
+        this.translate.get(['COMMON.COMMENTS', 'COMMON.SUCCESS']).subscribe(res1 => {
+          this.messages = res1['COMMON.COMMENTS'] + ' ' + res['VALIDATION.IS_REQUIRED'];
+        });
+      });
+    } else {
+      try {
+        this.orderHistory.order.id = this.orderId;
+        this.orderHistory.modifiedBy = Number(this.appService.tokenStorage.getUserId());
+        this.setToggleValues();
+        const index: number = this.dataSource.data.findIndex(element => element.id === this.orderHistory.id);
+        this.appService.save(this.orderHistory, 'OrderHistory')
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.orderHistory = new OrderHistory();
+              if (index !== -1) {
+                this.dataSource.data.splice(index, 1);
+              }
+              this.dataSource.data.push(result);
+              this.dataSource = new MatTableDataSource<OrderHistory>(this.dataSource.data);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                this.messages = res['MESSAGE.SAVE_SUCCESS'];
+              });
+            } else {
+              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+              });
+            }
+          });
 
-    } catch (e) {
-      console.log(e);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 

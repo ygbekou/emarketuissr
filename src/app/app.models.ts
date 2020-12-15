@@ -661,6 +661,7 @@ export class Store extends BaseModel {
   description: string;
   sslUrl: string;
   url: string;
+  currency: Currency;
   type = 'Store';
 
   constructor() {
@@ -1165,13 +1166,11 @@ export class OrderHistory {
   order: Order;
   orderStatus: OrderStatus;
   createDate: Date;
-
-  override: boolean;
-
+  modifiedBy: number;
   type = 'OrderHistory';
-
   constructor() {
     this.order = new Order();
+    this.notify = 0;
     this.orderStatus = new OrderStatus();
   }
 }
@@ -1312,6 +1311,8 @@ export class Order {
   storeUrl: string;
   telephone: string;
   total: number;
+  shippingCost: number;
+  taxFees: number;
   tracking: string;
   userAgent: string;
   createDate: Date;
@@ -1499,7 +1500,10 @@ export class TabHdr {
   public price: number;
   public rebate: number;
   public total: number;
+  public taxFees: number;
   public status: number;
+  public createDate: Date;
+  public modDate: Date;
   public tabDtls: TabDtl[] = [];
   public type = 'TabHdr';
 }
@@ -1514,5 +1518,7 @@ export class TabDtl {
   public price: number;
   public quantity: number;
   public total: number;
+  public createDate: Date;
+  public modDate: Date;
   public type = 'TabDtl';
 }

@@ -1,11 +1,18 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <h1 style="color: #283593;">{{'COMMON.ORDER_ID' | translate}} : 
+    {{(orderType==='o'?order.id:storeOrder.id)  | number: '3.0'}} </h1>
+  </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="orderType==='o'">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <div class="tile tile-primary">
       <div class="tile-heading">
+
         <span class="pull-left">
-          <mat-icon>shopping_cart</mat-icon>
+          <mat-icon>cached</mat-icon>
         </span>
-        {{'COMMON.ORDER_DETAILS' | translate}}
+        {{order.orderStatus?.description}} 
       </div>
       <div class="tile-body">
         <span class="pull-left">
@@ -59,14 +66,12 @@
       </div>
       <div class="tile-footer">
         <span class="pull-left">
-          <mat-icon>store</mat-icon>
+          <mat-icon>flag</mat-icon>
         </span>
-        <a href="{{order.storeUrl}}" target="_blank">
-          {{order.storeName}}
-        </a>
+        {{order.paymentCountry}}
       </div>
     </div>
-  </div> 
+  </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <div class="tile tile-primary">
       <div class="tile-heading">
@@ -91,7 +96,7 @@
       </div>
       <div class="tile-footer">
         <span class="pull-left">
-          <mat-icon>store</mat-icon>
+          <mat-icon>flag</mat-icon>
         </span>
         {{order.paymentCountry}}
       </div>
@@ -121,7 +126,7 @@
       </div>
       <div class="tile-footer">
         <span class="pull-left">
-          <mat-icon>store</mat-icon>
+          <mat-icon>flag</mat-icon>
         </span>
         {{order.shippingCountry}}
       </div>
@@ -129,143 +134,393 @@
   </div>
 </div>
 
-<div class="table-wrapper">
-  <mat-card>
-    <h6>{{'COMMON.ORDER' | translate}} (#{{order.id}})</h6>
-    <table mat-table [dataSource]="dataSource" matSort class="w-100">
-      <!-- Product Column -->
-      <ng-container matColumnDef="product">
-        <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.PRODUCT' | translate}} </th>
-        <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.name}} </td>
-        <td mat-footer-cell *matFooterCellDef>
-          <h6>SubTotal</h6>
-        </td>
-      </ng-container>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="orderType==='s'">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <div class="tile tile-primary">
+      <div class="tile-heading">
+        <span class="pull-left">
+          <mat-icon>shopping_cart</mat-icon>
+        </span>
+        {{'COMMON.ORDER_DETAILS' | translate}}
+      </div>
+      <div class="tile-body">
+        <span class="pull-left">
+          <mat-icon>event</mat-icon>
+        </span>
+        {{storeOrder.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}
+        <br />
+        <span class="pull-left">
+          <mat-icon>emoji_people</mat-icon>
+        </span>
+        {{'COMMON.CASHIER'|translate}} : {{storeOrder.cashier}}
+        <br />
+        <span class="pull-left">
+          <mat-icon>event_seat</mat-icon>
+        </span>
+        Table : {{storeOrder.name}}
+      </div>
+      <div class="tile-footer">
+        <span class="pull-left">
+          <mat-icon>store</mat-icon>
+        </span>
+        <a href="{{store.url}}" target="_blank">
+          {{store.name}}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <div class="tile tile-primary">
+      <div class="tile-heading">
+        <span class="pull-left">
+          <mat-icon>cached</mat-icon>
+        </span>
+        {{storeOrder.status===0?('COMMON.IN_PROGRESS'|translate):
+                ('COMMON.COMPLETED'|translate) }}
+      </div>
+      <div class="tile-body">
 
-      <!-- Model Column -->
-      <ng-container matColumnDef="model">
-        <th mat-header-cell *matHeaderCellDef width="25%" mat-sort-header> {{'COMMON.MODEL' | translate}} </th>
-        <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.model}} </td>
-        <td mat-footer-cell *matFooterCellDef> </td>
-      </ng-container>
+        <span class="pull-left">
+          <mat-icon>shopping_cart</mat-icon>
+        </span>
+        {{'COMMON.QTY'|translate}} :
+        {{ storeOrder.quantity }}
+        <br />
+
+        <span class="pull-left">
+          <mat-icon>money_off</mat-icon>
+        </span>
+        {{'COMMON.REBATE'|translate}} :
+        {{store.currency.symbolLeft}}
+        {{ storeOrder.rebate  | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+        <br />
+
+        <span class="pull-left">
+          <mat-icon>monetization_on</mat-icon>
+        </span>
+        Total:
+        {{store.currency.symbolLeft}}
+        {{ storeOrder.total  | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+        <br />
+      </div>
+      <div class="tile-footer">
+        <span class="pull-left">
+          <mat-icon>people</mat-icon>
+        </span>
+        {{storeOrder.guests}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrapper" *ngIf="orderType==='o'">
+  <table mat-table [dataSource]="onlineDS" matSort class="w-100">
+    <!-- Product Column -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> {{'COMMON.PRODUCT' | translate}} </th>
+      <td mat-cell *matCellDef="let orderProduct">
+        <img *ngIf="orderProduct.product.image"
+          [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
+          [style.width.px]="40">
+        {{orderProduct.name}} </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>{{'COMMON.SUB_TOTAL'|translate}}</h6>
+      </td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
+      <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.quantity}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
+      <td mat-cell *matCellDef="let orderProduct">
+        {{store.currency.symbolLeft}}
+        {{ orderProduct.price?orderProduct.price:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TOTAL' | translate}} </th>
+      <td mat-cell *matCellDef="let orderProduct">
+        {{store.currency.symbolLeft}}
+        {{ orderProduct.total?orderProduct.total:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}} </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="mobile-value bold">
+          {{store.currency.symbolLeft}}
+          {{ order.total?(order.total-
+          (order.shippingCost?order.shippingCost:0)
+          -(order.taxFees?order.taxFees:0)):0 | number:'1.0-2'}}
+          {{store.currency.symbolRight}}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- empty footer row-->
+    <ng-container matColumnDef="emptyFooter">
+      <mat-footer-cell *matFooterCellDef class="mobile-hide"></mat-footer-cell>
+    </ng-container>
+
+    <!-- set footer for vat amount-->
+    <ng-container matColumnDef="shippingRateTitle">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>{{'COMMON.SHIPPING_RATE'|translate}}</h6>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter1">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter2">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="shippingAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{ order.shippingCost?order.shippingCost:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
 
 
-      <!-- Quantity Column -->
-      <ng-container matColumnDef="quantity">
-        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
-        <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.quantity}} </td>
-        <td mat-footer-cell *matFooterCellDef> </td>
-      </ng-container>
+    <!-- set footer for tax amount-->
+    <ng-container matColumnDef="taxes">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>Taxes</h6>
+      </td>
+    </ng-container>
 
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
-        <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.price}} </td>
-        <td mat-footer-cell *matFooterCellDef> </td>
-      </ng-container>
+    <ng-container matColumnDef="emptyFooter7">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
 
-      <!-- Total Column -->
-      <ng-container matColumnDef="total">
-        <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TOTAL' | translate}} </th>
-        <td mat-cell *matCellDef="let orderProduct"> {{orderProduct.total}} </td>
-        <td mat-footer-cell *matFooterCellDef>
-          <span class="mobile-value bold"> {{ order.total }}</span>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="emptyFooter8">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
 
-      <!-- empty footer row-->
-      <ng-container matColumnDef="emptyFooter">
-        <mat-footer-cell *matFooterCellDef class="mobile-hide"></mat-footer-cell>
-      </ng-container>
-
-      <!-- set footer for vat amount-->
-      <ng-container matColumnDef="shippingRateTitle">
-        <td mat-footer-cell *matFooterCellDef>
-          <h6>Shipping Rate</h6>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter1">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter2">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter3">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="shippingAmount">
-        <td mat-footer-cell *matFooterCellDef>{{ order.total }}</td>
-      </ng-container>
-
-      <!-- set footer for total amount-->
-      <ng-container matColumnDef="totalAmountTitle">
-        <td mat-footer-cell *matFooterCellDef>
-          <h6>Total</h6>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter4">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter5">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="emptyFooter6">
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="totalAmount">
-        <td mat-footer-cell *matFooterCellDef>
-          {{ order.total }}
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="taxAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{ order.taxFees?order.taxFees:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
 
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let order; columns: displayedColumns;"></tr>
-      <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedColumns"></tr>
-      <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedShippingColumns"></tr>
-      <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedTotalColumns"></tr>
-    </table>
-    <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    <!-- set footer for total amount-->
+    <ng-container matColumnDef="totalAmountTitle">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>Total</h6>
+      </td>
+    </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-  </mat-card>
+    <ng-container matColumnDef="emptyFooter4">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter5">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="totalAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{order.total| number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let order; columns: displayedColumns;"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedShippingColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedTaxesColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedTotalColumns"></tr>
+  </table>
+  <mat-paginator #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div class="table-wrapper" *ngIf="orderType==='s'">
+  <table mat-table [dataSource]="storeDS" matSort class="w-100">
+    <!-- Product Column -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> {{'COMMON.PRODUCT' | translate}} </th>
+      <td mat-cell *matCellDef="let tabDtl">
+        <img *ngIf="tabDtl.pic" [src]="'assets/images/products/'+tabDtl.prdId+'/'+tabDtl.pic" [style.width.px]="40">
+        {{tabDtl.prdName}} </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>{{'COMMON.SUB_TOTAL'|translate}}</h6>
+      </td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
+      <td mat-cell *matCellDef="let tabDtl"> {{tabDtl.quantity}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
+      <td mat-cell *matCellDef="let tabDtl">
+        {{store.currency.symbolLeft}}
+        {{ tabDtl.price?tabDtl.price:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TOTAL' | translate}} </th>
+      <td mat-cell *matCellDef="let tabDtl">
+        {{store.currency.symbolLeft}}
+        {{ tabDtl.total?tabDtl.total:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}} </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="mobile-value bold">
+          {{store.currency.symbolLeft}}
+          {{ storeOrder.price  | number:'1.0-2'}}
+          {{store.currency.symbolRight}}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- empty footer row-->
+    <ng-container matColumnDef="emptyFooter">
+      <mat-footer-cell *matFooterCellDef class="mobile-hide"></mat-footer-cell>
+    </ng-container>
+
+    <!-- set footer for vat amount-->
+    <ng-container matColumnDef="shippingRateTitle">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>{{'COMMON.REBATE'|translate}}</h6>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter1">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter2">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="shippingAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{ storeOrder.rebate?storeOrder.rebate:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
+
+
+    <!-- set footer for tax amount-->
+    <ng-container matColumnDef="taxes">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>Taxes</h6>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter7">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter8">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="taxAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{storeOrder.taxFees?storeOrder.taxFees:0 | number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
+
+    <!-- set footer for total amount-->
+    <ng-container matColumnDef="totalAmountTitle">
+      <td mat-footer-cell *matFooterCellDef>
+        <h6>Total</h6>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter4">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emptyFooter5">
+      <td mat-footer-cell *matFooterCellDef>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="totalAmount">
+      <td mat-footer-cell *matFooterCellDef>
+        {{store.currency.symbolLeft}}
+        {{storeOrder.total| number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let order; columns: displayedColumns;"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedShippingColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedTaxesColumns"></tr>
+    <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedTotalColumns"></tr>
+  </table>
+  <mat-paginator #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
 </div>
 
 <mat-tab-group>
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
-    <app-orderHistory [orderId]="order.id"></app-orderHistory>
+    <app-order-history [orderId]="order.id" [orderType]="orderType"></app-order-history>
   </mat-tab>
   <mat-tab label="{{'COMMON.ADDITIONAL' | translate}}" *ngIf="order.id > 0">
-    <mat-card>
-      <h6>{{'COMMON.BROWSER' | translate}}</h6>
-      <div>
-        <div class="proflie-field mb-12">
-          <label>{{'COMMON.IP_ADDRESS' | translate}}</label> <span>{{order.ip}}</span>
-        </div>
-        <div class="proflie-field mb-12">
-          <label>{{'COMMON.FORWARDED_IP' | translate}}</label> <span>{{order.forwardedIp}}</span>
-        </div>
-        <div class="proflie-field mb-12">
-          <label>{{'COMMON.USER_AGENT' | translate}}</label> <span>{{order.userAgent}}</span>
-        </div>
-        <div class="proflie-field mb-12">
-          <label>{{'COMMON.ACCEPT_LANGUAGE' | translate}}</label> <span>{{order.acceptLanguage}}</span>
-        </div>
-      </div>
-    </mat-card>
+
+    <span class="pull-left">
+      <mat-icon>public</mat-icon>
+    </span>
+    {{'COMMON.IP_ADDRESS' | translate}} : {{order.ip}}
+    <br />
+    <span class="pull-left">
+      <mat-icon>language</mat-icon>
+    </span>
+    {{'COMMON.LANGUAGE' | translate}} : {{order.acceptLanguage}}
+    <br />
+    <span class="pull-left">
+      <mat-icon>web</mat-icon>
+    </span>
+    {{'COMMON.USER_AGENT' | translate}} : {{order.userAgent}}
+
   </mat-tab>
 </mat-tab-group>

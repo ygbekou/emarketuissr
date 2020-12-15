@@ -187,9 +187,6 @@
 
 
 <mat-card class="p-3" id="bottom">
-
-
-
    <mat-tab-group class="table-tab-list" color="accent">
       <mat-tab label="{{'COMMON.ONLINE_ORDERS' | translate}}">
          <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
@@ -199,7 +196,7 @@
                      <ng-container matColumnDef="orderId">
                         <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
                         <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                           <div>{{element.orderId}}</div>
+                           <div>{{element.orderId | number: '3.0'}}</div>
                         </td>
                      </ng-container>
                      <ng-container matColumnDef="createDate">
@@ -241,7 +238,7 @@
                         </td>
                      </ng-container>
                      <tr mat-header-row *matHeaderRowDef="onlineOrdersColumns"></tr>
-                     <tr mat-row *matRowDef="let row; columns: onlineOrdersColumns"  [routerLink]=" (userId?'/account':'/admin/sales')+'/orderView/o'+row.orderId"></tr>
+                     <tr mat-row *matRowDef="let row; columns: onlineOrdersColumns"  [routerLink]=" (userId?'/account/order-detail/o':'/admin/sales/orderView/o')+row.orderId"></tr>
                   </table>
                   <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                </div>
@@ -257,7 +254,7 @@
                         <ng-container matColumnDef="transid">
                            <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>ID</th>
                            <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                              <div>{{element.thId}}</div> 
+                              <div>{{element.thId | number: '3.0'}}</div> 
                            </td>
                         </ng-container>
                         <ng-container matColumnDef="date">
@@ -301,7 +298,7 @@
                            </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="storeOrdersColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: storeOrdersColumns"  [routerLink]=" (userId?'/account':'/admin/sales')+'/orderView/s'+row.thId"></tr>
+                        <tr mat-row *matRowDef="let row; columns: storeOrdersColumns"  [routerLink]=" (userId?'/account/order-detail/s':'/admin/sales/orderView/s')+row.thId"></tr>
                      </table>
                      <mat-paginator [pageSize]="10" #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
                   </div>

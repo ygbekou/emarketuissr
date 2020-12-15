@@ -109,31 +109,36 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
+      this.order.userAgent = this.appService.getUserAgent();
+      this.appService.getIp()
+         .subscribe((data1: any) => {
+            this.order.ip = data1.ip;
+            this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
+               .subscribe((data: Order) => {
 
-      this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-         .subscribe((data: Order) => {
+                  this.order = data;
+                  this.appService.storeOrderId(this.order);
+                  if (data.errors !== null && data.errors !== undefined) {
+                     this.error = data.errors[0];
+                  } else {
+                     if (this.user.paymentMethodCode !== 'TMONEY') {
+                        this.appService.completeOrder(+this.currencyId);
+                        this.orderCompleteEvent.emit(this.order);
+                     }
+                  }
 
-            this.order = data;
-            this.appService.storeOrderId(this.order);
-            if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               if (this.user.paymentMethodCode !== 'TMONEY') {
-                  this.appService.completeOrder(+this.currencyId);
-                  this.orderCompleteEvent.emit(this.order);
-               }
-            }
+                  if (this.user.paymentMethodCode === 'TMONEY') {
+                     const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer + '/#');
+                     console.log('URL ==== ' + url);
+                     window.location.href = url;
+                     return;
+                  }
 
-            if (this.user.paymentMethodCode === 'TMONEY') {
-               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer + '/#');
-               console.info('URL ==== ' + url);
-               window.location.href = url;
-               return;
-            }
-
-         },
-            error => console.log(error),
-            () => console.log('Changing Payment Method complete'));
+               },
+                  error => console.log(error),
+                  () => console.log('Changing Payment Method complete'));
+         }, error => console.log(error),
+            () => console.log('Get IP complete'));
    }
 
    processPaymentConfirmation() {
@@ -142,20 +147,20 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.appService.saveWithUrl('/service/order/payment/confirm/', {
             'identifier': this.appService.getStoredOrderId()
          })
-         .subscribe((data: Order) => {
+            .subscribe((data: Order) => {
 
-            this.order = data;
-            if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               this.appService.completeOrder(+this.currencyId);
-               this.orderCompleteEvent.emit(this.order);
-            }
+               this.order = data;
+               if (data.errors !== null && data.errors !== undefined) {
+                  this.error = data.errors[0];
+               } else {
+                  this.appService.completeOrder(+this.currencyId);
+                  this.orderCompleteEvent.emit(this.order);
+               }
 
-            this.appService.clearOrderId();
-         },
-         error => console.log(error),
-         () => console.log('Changing Payment Method complete'));
+               this.appService.clearOrderId();
+            },
+               error => console.log(error),
+               () => console.log('Changing Payment Method complete'));
       }
    }
 
