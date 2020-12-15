@@ -131,20 +131,21 @@ export class CartComponent implements OnInit, AfterViewChecked {
             this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
                .subscribe((data: Order) => {
 
+                  console.info(data);
                   this.order = data;
                   if (data.errors !== null && data.errors !== undefined) {
                      this.error = data.errors[0];
                   } else {
-                     this.appService.completeOrder(+this.currencyId);
-                     this.orderCompleteEvent.emit(this.order);
+                     if (this.user.paymentMethodCode !== 'TMONEY') {
+                        this.appService.completeOrder(+this.currencyId);
+                        this.orderCompleteEvent.emit(this.order);
+                     } else {
+                        const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+                        window.location.href = url;
+                        return;
+                     }
                   }
 
-
-                  if (this.user.paymentMethodCode === 'TMONEY') {
-                     const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
-                     window.location.href = url;
-                     return;
-                  }
                },
                   error => console.log(error),
                   () => console.log('Changing Payment Method complete'));
