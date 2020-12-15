@@ -46,9 +46,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
 
-      if (this.user.paymentMethodCode === 'TMONEY') {
-         this.processPaymentConfirmation();
-      }
+      
 
    }
 
@@ -69,6 +67,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      },
                         error => console.log(error),
                         () => console.log('Get user active CreditCard complete for userId=' + userId));
+               } else if (this.user.paymentMethodCode === 'TMONEY') {
+                  this.processPaymentConfirmation();
                }
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -125,7 +125,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             }
 
             if (this.user.paymentMethodCode === 'TMONEY') {
-               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer + '/#');
+               const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
                console.info('URL ==== ' + url);
                window.location.href = url;
                return;
