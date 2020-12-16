@@ -13,6 +13,7 @@ import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddre
 import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
 import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
 import { OrderDetailComponent } from './Order-detail/Order-detail.component';
+import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -66,6 +67,10 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'order-detail/:id',
             component: OrderDetailComponent
+         },
+         {
+            path: 'client-dashboard',
+            component: ClientDashboardComponent
          }
       ]
    }

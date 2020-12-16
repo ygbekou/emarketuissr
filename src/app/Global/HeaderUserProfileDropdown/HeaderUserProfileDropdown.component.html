@@ -11,7 +11,7 @@
     [routerLink]="['/account/profile']"><i class="material-icons mr-1">account_circle</i>
     <span>{{appService.tokenStorage.getFirstName() +' '+appService.tokenStorage.getLastName()}}</span>
   </button>
-  <button color="accent" *ngIf="appService.tokenStorage.hasToken()" mat-menu-item [routerLink]="['/account/profile']"><i
+  <button color="accent" *ngIf="appService.tokenStorage.hasToken()" mat-menu-item [routerLink]="['/account/client-dashboard']"><i
       class="material-icons mr-1">shopping_basket</i><span>{{'COMMON.CLIENT_SPACE' | translate }}</span></button>
 
   <button color="accent" *ngIf="appService.tokenStorage.hasToken() " mat-menu-item

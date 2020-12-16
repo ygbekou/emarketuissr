@@ -75,9 +75,9 @@ export class CommonSignInComponent implements OnInit {
               }
 
               if (this.appService.tokenStorage.getRole() === '1') {// client
-                this.router.navigate(['/account/profile']);
+                this.router.navigate(['/account/client-dashboard']);
               } else if (this.appService.tokenStorage.getRole() === '2') { // seller
-                this.router.navigate(['/account/profile']);
+                this.router.navigate(['/account/sales-dashboard']);
               } else if (this.appService.tokenStorage.getRole() === '3') { // admin
                 this.router.navigate(['/admin']);
               }
