@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { OnlineOrderVO, OrdersVO, StoreOrderVO } from 'src/app/app.models';
+import { OnlineOrderVO, OrdersVO, StoreOrderVO, OrderSearchCriteria } from 'src/app/app.models';
 @Component({
    selector: 'app-reports',
    templateUrl: './Reports.component.html',
@@ -30,9 +30,8 @@ export class ReportsComponent implements OnInit {
    ordersVO: OrdersVO;
    colors = ['secondary', 'primary', 'secondary', 'secondary', 'secondary'];
 
-   onlineOrdersColumns: string[] = ['orderId', 'createDate', 'storeName', 'cLastName', 'total', 'phone', 'country'];
-
-   storeOrdersColumns: string[] = ['transid', 'date', 'account', 'type', 'amount', 'balance', 'status'];
+  onlineOrdersColumns: string[] = ['orderId', 'createDate', 'status', 'storeName', 'city', 'country', 'total'];
+   storeOrdersColumns: string[] = ['orderId', 'date', 'status', 'store', 'type', 'price', 'rebate', 'total'];
 
    constructor(private appService: AppService,
       private translate: TranslateService) {
@@ -49,35 +48,45 @@ export class ReportsComponent implements OnInit {
    }
 
    public getDashboard() {
-      this.appService.getObject('/service/catalog/getDashboard/'
-         + this.storeId + '/' + this.userId)
-         .subscribe((data) => {
-            this.dashboard = data;
+
+      const searchCriteria = new OrderSearchCriteria();
+      searchCriteria.userId = this.userId;
+      searchCriteria.storeId = this.storeId;
+      searchCriteria.langId = this.appService.appInfoStorage.language.id;
+      this.appService.saveWithUrl('/service/catalog/getDashboard', searchCriteria)
+         .subscribe((data: any[]) => {
+            this.dashboard = data[0];
             this.chartDataChange(this.tag, this.index);
             console.log(this.dashboard);
-         }, (error) => console.log(error),
-            () => {
-               console.log('Get all getDashboard complete');
-            });
+         },
+            error => console.log(error),
+            () => console.log('Get all getDashboard complete'));
+
    }
 
    public getSalesDtl() {
-      this.appService.getObject('/service/catalog/getSalesDtl/'
-         + this.storeId + '/' + this.userId + '/' + this.tag + '/' + this.tagValue)
-         .subscribe((data) => {
-            this.ordersVO = data;
-            this.onlineDS = new MatTableDataSource(data.online);
+
+      const searchCriteria = new OrderSearchCriteria();
+      searchCriteria.userId = this.userId;
+      searchCriteria.storeId = this.storeId;
+      searchCriteria.miscText1 = this.tag;
+      searchCriteria.miscText2 = this.tagValue;
+      searchCriteria.langId = this.appService.appInfoStorage.language.id;
+
+      this.appService.saveWithUrl('/service/catalog/getSalesDtl', searchCriteria)
+         .subscribe((data: any[]) => {
+            this.ordersVO = data[0];
+            this.onlineDS = new MatTableDataSource(data[0].online);
             this.onlineDS.paginator = this.onlinePG;
             this.onlineDS.sort = this.onlineST;
 
-            this.storeDS = new MatTableDataSource(data.store);
+            this.storeDS = new MatTableDataSource(data[0].store);
             this.storeDS.paginator = this.storePG;
             this.storeDS.sort = this.storeST;
+         },
+            error => console.log(error),
+            () => console.log('Get all getSalesDtl complete'));
 
-         }, (error) => console.log(error),
-            () => {
-               console.log('Get all getDashboard complete');
-            });
    }
 
    chartClick($event) {
@@ -100,6 +109,21 @@ export class ReportsComponent implements OnInit {
                this.getSalesDtl();
             }
          }
+      }
+   }
+
+   filterOnlineOrder(status) {
+      this.onlineDS.filter = status.trim().toLowerCase();
+      if (this.onlineDS.paginator) {
+         this.onlineDS.paginator.firstPage();
+      }
+   }
+
+   filterStoreOrder(status) {
+      console.log(status);
+      this.storeDS.filter = status.trim().toLowerCase();
+      if (this.storeDS.paginator) {
+         this.storeDS.paginator.firstPage();
       }
    }
 }
