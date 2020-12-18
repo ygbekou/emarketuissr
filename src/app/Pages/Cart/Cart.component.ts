@@ -15,6 +15,7 @@ import { Constants } from 'src/app/app.constants';
 })
 export class CartComponent implements OnInit, AfterViewChecked {
    error: string;
+   message: string;
 
    order: Order;
    products: any;
@@ -129,7 +130,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
          .subscribe((data1: any) => {
             this.order.ip = data1.ip;
 
-            this.appService.timerCountDownPopup(120000);
+            this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
 
             this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
                .subscribe((data: Order) => {
@@ -137,7 +138,10 @@ export class CartComponent implements OnInit, AfterViewChecked {
                   this.appService.timerCountDownPopupClose();
                   this.order = data;
                   if (data.errors !== null && data.errors !== undefined) {
-                     this.error = data.errors[0];
+                     this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
+                        this.error = res;
+                     });
+                     this.orderCompleteEvent.emit(this.order);
                   } else {
                      if (this.user.paymentMethodCode !== 'TMONEY') {
                         this.appService.completeOrder(+this.currencyId);
@@ -154,7 +158,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
                      console.log(error);
                      this.appService.timerCountDownPopupClose();
                   },
-                  () => console.log('Changing Payment Method complete'));
+                  () => console.log('Place Order complete'));
 
          }, error => console.log(error),
             () => console.log('Get IP complete'));
