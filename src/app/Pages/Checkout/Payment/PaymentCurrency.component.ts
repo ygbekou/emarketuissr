@@ -113,30 +113,40 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.appService.getIp()
          .subscribe((data1: any) => {
             this.order.ip = data1.ip;
-      this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-         .subscribe((data: Order) => {
 
-            this.order = data;
-            this.appService.storeOrderId(this.order);
-            if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               if (this.user.paymentMethodCode !== 'TMONEY') {
-                  this.appService.completeOrder(+this.currencyId);
-                  this.orderCompleteEvent.emit(this.order);
-               } else {
-                  const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
-                        console.log('URL ==== ' + url);
-                  window.location.href = url;
-                  return;
-               }
-            }
+            this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
 
-         },
-            error => console.log(error),
-            () => console.log('Changing Payment Method complete'));
+            this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
+               .subscribe((data: Order) => {
+
+                  this.appService.timerCountDownPopupClose();
+                  this.order = data;
+                  if (data.errors !== null && data.errors !== undefined) {
+                     this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
+                        this.error = res;
+                     });
+                  } else {
+                     if (this.user.paymentMethodCode !== 'TMONEY') {
+                        this.appService.completeOrder(+this.currencyId);
+                        this.orderCompleteEvent.emit(this.order);
+                     } else {
+                        const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+                        window.location.href = url;
+                        return;
+                     }
+                  }
+
+               },
+                  error => {
+                     console.log(error);
+                     this.appService.timerCountDownPopupClose();
+                  },
+                  () => console.log('Place Order complete'));
+
          }, error => console.log(error),
             () => console.log('Get IP complete'));
+
+
    }
 
    processPaymentConfirmation() {
@@ -165,7 +175,13 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    updateOrder(order: Order) {
 
-      this.orderCompleteEvent.emit(order);
+       if (order.errors !== null && order.errors !== undefined) {
+         this.translate.get('MESSAGE.' + order.errors[0]).subscribe(res => {
+            this.error = res;
+         });
+      } else {
+         this.orderCompleteEvent.emit(order);
+      }
 
 
    }
