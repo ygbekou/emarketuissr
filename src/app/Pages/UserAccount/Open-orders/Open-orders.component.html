@@ -1,0 +1,80 @@
+<div fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <h1 style="color: #283593;">{{'COMMON.OPEN_ORDERS' | translate}} </h1>
+    </div>
+  </div>
+  <mat-card>
+    <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+    </div>
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="67" fxFlex.lg="67" fxFlex.xl="67">
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+            *ngFor="let order of orders">
+            <div class="tile tile-primary">
+              <div class="tile-heading">
+                <div fxLayout="row wrap" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    {{'COMMON.ORDER_PLACED'|translate}} <br />
+                    {{order.createDate | date: 'mediumDate'}}
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    TOTAL<br />
+                    {{order.symbolLeft}}
+                    {{ order.total  | number:'1.0-2'}}
+                    {{order.symbolRight}}
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    {{'COMMON.SHIP_TO'|translate}}<br />
+                    {{order.cFirstName +' '+ order.cLastName}}
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    {{'COMMON.ORDER_ID'|translate}}: {{ order.orderId   | number: '3.0'}}<br />
+
+                    <a [routerLink]="['/account/order-detail', 'o'+order.orderId]" routerLinkActive="tab-active">
+                      {{'COMMON.ORDER_DETAIL'|translate}}
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+              <div class="tile-body">
+                <div fxLayout="row wrap" class="col-gap" *ngFor="let orderProduct of order.orderProducts">
+                  <div fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                    <img *ngIf="orderProduct.product.image"
+                      [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
+                      [style.width.px]="40">
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                    {{orderProduct.name}}
+                    <p class="mb-0">{{'COMMON.SOLD_BY'|translate}} <a [routerLink]="['/products']"
+                        [queryParams]="{storeId:order.storeId}" routerLinkActive="tab-active"> {{order.storeName}}</a>
+                    </p>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="tile-footer">
+                <span class="pull-left">
+                  <mat-icon>store</mat-icon>
+                </span>
+                <!--  <a href="{{order.storeUrl}}" target="_blank">
+          {{order.storeName}}
+        </a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="3">
+
+      </div>
+    </div>
+
+  </mat-card>
+</div>

@@ -1,0 +1,52 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { OrderSearchCriteria, Order, OnlineOrderVO } from 'src/app/app.models';
+import { TranslateService } from '@ngx-translate/core';
+import { AppService } from 'src/app/Services/app.service';
+import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+
+@Component({
+  selector: 'app-open-orders',
+  templateUrl: './Open-orders.component.html',
+  styleUrls: ['./Open-orders.component.scss']
+})
+export class OpenOrdersComponent extends BaseComponent implements OnInit {
+  messages = '';
+  searchCriteria: OrderSearchCriteria;
+  orders: OnlineOrderVO[] = [];
+  constructor(public appService: AppService,
+    public translate: TranslateService) {
+    super(translate);
+  }
+
+  ngOnInit() {
+    this.getOpenOrders();
+  }
+  getOpenOrders() {
+    this.searchCriteria = new OrderSearchCriteria();
+    this.searchCriteria.orderType = 0;
+    this.searchCriteria.miscText1 = "'PENDING','PROCESSING','PROCESSED','SHIPPED'";
+    this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+    this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
+    console.log(this.searchCriteria);
+    this.appService.saveWithUrl('/service/order/onlineOrders', this.searchCriteria)
+      .subscribe((data: any[]) => {
+        this.orders = data;
+        console.log(this.orders);
+        for (const o of this.orders) {
+          this.setOrderDetails(o);
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all Orders complete'));
+  }
+
+  setOrderDetails(order: OnlineOrderVO) {
+    this.appService.getOneWithChildsAndFiles(order.orderId, 'Order')
+      .subscribe(result => {
+        if (result.id > 0) {
+          order.orderProducts = result.orderProducts;
+        }
+      });
+  }
+
+}

@@ -14,6 +14,7 @@ import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.compo
 import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
 import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.component';
+import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -71,7 +72,12 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'client-dashboard',
             component: ClientDashboardComponent
+         },
+         {
+            path: 'open-orders',
+            component: OpenOrdersComponent
          }
+         
       ]
    }
 ];

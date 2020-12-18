@@ -1469,6 +1469,7 @@ export class OnlineOrderVO {
   symbolLeft: string;
   symbolRight: string;
   createDate: Date;
+  orderProducts: OrderProduct[] = [];
 }
 
 export class StoreOrderVO {
