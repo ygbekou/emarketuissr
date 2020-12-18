@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { ActivatedRoute } from '@angular/router';
-import { Constants } from 'src/app/app.constants'; 
+import { Constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-orders-overview',
@@ -15,10 +15,10 @@ import { Constants } from 'src/app/app.constants';
   styleUrls: ['./Orders.component.scss']
 })
 export class OrderViewComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['product',  'quantity', 'price', 'total'];
-  displayedShippingColumns = ['shippingRateTitle', 'emptyFooter1', 'emptyFooter2',  'shippingAmount'];
-  displayedTaxesColumns = ['taxes', 'emptyFooter7', 'emptyFooter8' , 'taxAmount'];
-  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5',  'totalAmount'];
+  displayedColumns: string[] = ['product', 'quantity', 'price', 'total'];
+  displayedShippingColumns = ['shippingRateTitle', 'emptyFooter1', 'emptyFooter2', 'shippingAmount'];
+  displayedTaxesColumns = ['taxes', 'emptyFooter7', 'emptyFooter8', 'taxAmount'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5', 'totalAmount'];
 
   onlineDS: MatTableDataSource<OrderProduct>;
   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
@@ -38,6 +38,7 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
   constants: Constants = new Constants();
   orderType = 'o';
   deviceInfo = null;
+  canEdit = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -62,9 +63,21 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
 
       }
     });
+
+
   }
 
-
+  public setCanEdit() {
+    console.log('current user id:' + this.appService.tokenStorage.getUserId());
+    console.log('store owner:' + this.store.owner.id);
+    console.log('Role:' + this.appService.tokenStorage.getRole());
+    if (Number(this.appService.tokenStorage.getUserId()) === this.store.owner.id ||
+      Number(this.appService.tokenStorage.getRole()) === 3) { // this is the store owner
+      this.canEdit = true;
+    } else {
+      this.canEdit = false;
+    }
+  }
 
   clear() {
     this.order = new Order();
@@ -94,6 +107,7 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
       ' ')
       .subscribe((data: Store[]) => {
         this.store = data[0];
+        this.setCanEdit();
       },
         (error) => console.log(error),
         () => console.log('Get Store complete'));
@@ -156,4 +170,5 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
     const val = value !== null && value !== undefined ? value.trim() : '';
     return val.length === 0;
   }
+
 }

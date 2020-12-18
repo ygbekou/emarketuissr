@@ -9,7 +9,7 @@
 
 .material-icons {
 	font-size: 16px;
-	color: #ff5722;
+	color: #283593;
 }
 
 .mat-tree-node,
@@ -25,11 +25,18 @@ a {
 a:hover {
 	text-decoration: underline;
 	color: #111820;
-	text-decoration-color: #ff5722;
+	text-decoration-color: #283593;
 }
 
 a.tab-active {
 	background-color: #ddd;
 	color: #111820;
 	padding: 3px 16px 3px 0px;
+}
+
+.col-gap > div {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }

@@ -463,6 +463,7 @@
 		"WEIGHT_PREFIX": "Weight Prefix",
 		"DATE_ADDED": "Date Added",
 		"DATE_MODIFIED": "Date Modified",
+		"ADDED_BY": "Added by",
 		"YOUR_STORE": "Your Store",
 		"ORDER": "Order",
 		"ORDER_DETAILS": "Order Details",
@@ -627,6 +628,7 @@
 		"USER_NAME_REQUIRED": "Username required",
 		"USER_TYPE_REQUIRED": "User type required",
 		"PASSWORD_NOT_MATCH": "Password does not match",
+		"COMMENT_OR_STATUS": "Both comment and order status cannot be blank",
 		"EMAIL_INVALID": "Invalid E-mail",
 		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters"
 	},
