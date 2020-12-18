@@ -608,7 +608,9 @@
 		"INVALID_USER_ID": "Invalid User Id",
 		"CART_EMPTY": "Your Shopping Bag is empty",
 		"GO_SHOPPING": "Go for Shopping",
-		"YOUR_ORDER_WAS_SUCCESSFUL": "Your order for currency {{currency}} was successfully completed. To view the order click on order id:  "
+		"YOUR_ORDER_WAS_SUCCESSFUL": "Your order for currency {{currency}} was successfully completed. To view the order click on order id:  ",
+		"PAYMENT_DECLINED": "Your payment was declined. Please verify and try again later. ",
+		"SYSTEM_ERROR": "Error happened in the system. Please contact the administrator. "
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

@@ -247,7 +247,8 @@ import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
    entryComponents: [
       ReviewPopupComponent,
       ConfirmationPopupComponent,
-      ProductReviewComponent
+      ProductReviewComponent,
+      TimerCountDownComponent
    ]
 })
 export class GlobalModule {
