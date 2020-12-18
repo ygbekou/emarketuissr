@@ -118,8 +118,7 @@
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.ORDER_STATUS'|translate}}
               </th>
               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                {{element.status===0?('COMMON.IN_PROGRESS'|translate):
-                ('COMMON.COMPLETED'|translate) }} 
+                {{element.status}} 
               </td>
             </ng-container>
 

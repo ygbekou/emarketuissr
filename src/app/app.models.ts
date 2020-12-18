@@ -1363,6 +1363,10 @@ export class OrderSearchCriteria {
   maxTotal: number;
   beginDate: Date;
   endDate: Date;
+  miscText1: string;
+  miscText2: string;
+  miscNum1: number;
+  miscNum2: number;
 }
 
 export class UserSearchCriteria {
@@ -1479,12 +1483,14 @@ export class StoreOrderVO {
   symbolLeft: string;
   symbolRight: string;
   createDate: Date;
-  status: number;
+  status: string;
 }
 
 export class OrdersVO {
   online: OnlineOrderVO[];
   store: StoreOrderVO[];
+  onlineStatus: Map<String, number>;
+  storeStatus: Map<number, number>;
 }
 
 export class TabHdr {
@@ -1504,6 +1510,7 @@ export class TabHdr {
   public status: number;
   public createDate: Date;
   public modDate: Date;
+  public clientId: number;
   public tabDtls: TabDtl[] = [];
   public type = 'TabHdr';
 }
