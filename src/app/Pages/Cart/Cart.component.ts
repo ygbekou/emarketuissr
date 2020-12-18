@@ -128,10 +128,13 @@ export class CartComponent implements OnInit, AfterViewChecked {
       this.appService.getIp()
          .subscribe((data1: any) => {
             this.order.ip = data1.ip;
+
+            this.appService.timerCountDownPopup(120000);
+
             this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
                .subscribe((data: Order) => {
 
-                  console.info(data);
+                  this.appService.timerCountDownPopupClose();
                   this.order = data;
                   if (data.errors !== null && data.errors !== undefined) {
                      this.error = data.errors[0];
@@ -147,7 +150,10 @@ export class CartComponent implements OnInit, AfterViewChecked {
                   }
 
                },
-                  error => console.log(error),
+                  error => {
+                     console.log(error);
+                     this.appService.timerCountDownPopupClose();
+                  },
                   () => console.log('Changing Payment Method complete'));
 
          }, error => console.log(error),

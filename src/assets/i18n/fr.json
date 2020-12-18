@@ -598,7 +598,9 @@
     "INVALID_USER_ID": "ID d'utilisateur non valide",
     "CART_EMPTY": "Votre panier est vide",
     "GO_SHOPPING": "Continuez le shopping",
-		"YOUR_ORDER_WAS_SUCCESSFUL": "Votre commande pour la devise {{currency}} a √©t√© ex√©cut√©e avec succ√®s. Pour voir la commande, cliquez sur le numÈro de commande:"
+    "YOUR_ORDER_WAS_SUCCESSFUL": "Votre commande pour la devise {{currency}} a √©t√© ex√©cut√©e avec succ√®s. Pour voir la commande, cliquez sur le numÈro de commande:",
+    "PAYMENT_DECLINED": "Votre paiement a ÈtÈ refusÈ. Veuillez vÈrifier et rÈessayer plus tard. ",
+		"SYSTEM_ERROR": "Une erreur s'est produite dans le systËme. Veuillez contacter l'administrateur." 
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

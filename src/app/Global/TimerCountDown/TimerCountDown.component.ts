@@ -3,8 +3,10 @@ import {interval as observableInterval} from 'rxjs';
 
 import {map} from 'rxjs/operators';
 
-import { Component, ElementRef, OnInit, OnDestroy, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, ViewEncapsulation, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'embryo-TimerCountDown',
@@ -27,7 +29,11 @@ export class TimerCountDownComponent implements OnInit, OnDestroy {
    minutes : any;
    seconds : any;
 
-   constructor() {}
+   constructor(public dialogRef: MatDialogRef<TimerCountDownComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+    translate: TranslateService) { 
+       dialogRef.disableClose = true;
+    }
 
    dhms(t) 
    {

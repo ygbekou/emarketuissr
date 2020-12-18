@@ -17,6 +17,7 @@ import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 
 interface Response {
    data: any;
@@ -162,6 +163,23 @@ export class AppService {
 
       return confirmationPopup.afterClosed();
    }
+
+   public timerCountDownPopup(countDownTime: number) {
+      let timerCountDownPopup: MatDialogRef<TimerCountDownComponent>;
+      timerCountDownPopup = this.dialog.open(TimerCountDownComponent);
+      const counterDateTime = new Date(new Date().getTime() + (countDownTime));
+
+      timerCountDownPopup.componentInstance.dateTime = counterDateTime;
+
+      return timerCountDownPopup;
+   }
+
+   public timerCountDownPopupClose() {
+      this.dialog.closeAll();
+   }
+
+   
+
 
    public getProducts() {
       this.products = this.db.object('products');
