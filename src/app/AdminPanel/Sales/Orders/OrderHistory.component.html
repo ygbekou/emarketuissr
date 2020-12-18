@@ -8,17 +8,24 @@
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.ADDED_BY'|translate}} </th>
+          <td mat-cell *matCellDef="let orderHist"> {{
+          orderHist.user? (orderHist.user.firstName
+          +' '+ orderHist.user.lastName):'' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="comment">
-          <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> Note </th>
+          <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> Note </th>
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.comment}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STATUS'|translate}} </th>
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.ORDER_STATUS'|translate}} </th>
           <td mat-cell *matCellDef="let orderHist"> {{orderHist.orderStatus.description}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="notified">
+        <ng-container matColumnDef="notified" *ngIf="canEdit">
           <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CUSTOMER_NOTIFIED'|translate}}
           </th>
           <td mat-cell *matCellDef="let orderHist">
@@ -28,14 +35,9 @@
         </ng-container>
 
         <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef width="15%"> Actions </th>
-          <td mat-cell *matCellDef="let orderHist">
-            <button mat-icon-button color="primary" (click)="edit(orderHist.id)"
-              matTooltip="{{'COMMON.EDIT' | translate}}" class="edit">
-              <mat-icon>edit</mat-icon>
-            </button>
-            &nbsp;&nbsp;
+        <ng-container matColumnDef="actions" *ngIf="canEdit">
+          <th mat-header-cell *matHeaderCellDef width="10%"> {{'COMMON.DELETE' | translate}} </th>
+          <td mat-cell *matCellDef="let orderHist">      
             <button mat-icon-button color="warn" (click)="remove(orderHist.id)"
               matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
               <mat-icon>delete</mat-icon>
@@ -44,7 +46,8 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let order; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let orderHist; columns: displayedColumns;"
+        (click)="edit(orderHist.id)">
         </tr>
       </table>
       <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
@@ -56,10 +59,10 @@
     <mat-card>
       <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
         <div fxLayout="row wrap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngIf="canEdit">
             <mat-form-field class="w-100">
-              <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
-              <mat-select [(ngModel)]="orderHistory.orderStatus" name="food">
+              <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label>
+              <mat-select [(ngModel)]="orderHistory.orderStatus" name="orderStatus">
                 <mat-option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">
                   {{orderStatus.description}}
                 </mat-option>
@@ -70,18 +73,21 @@
                 {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
               </mat-slide-toggle>
             </div>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"  *ngIf="canEdit"></div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="5">
             <div fxLayout="row wrap" class="w-100">
+              <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+              <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="orderHistory.comment"
+                name="comment" #comment="ngModel"></textarea>
+            </div>
+            <div  class="w-100">
+              <br/>
               <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
                 <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                 <mat-icon>save</mat-icon>
               </button>
             </div>
-          </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"></div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="5">
-            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-            <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="orderHistory.comment"
-              name="comment" #comment="ngModel"></textarea>
           </div>
         </div>
         <div class="text-center mt-2" *ngIf="messages">

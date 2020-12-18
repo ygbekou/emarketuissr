@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-    <h1 style="color: #283593;">{{'COMMON.ORDER_ID' | translate}} : 
-    {{(orderType==='o'?order.id:storeOrder.id)  | number: '3.0'}} </h1>
+    <h1 style="color: #283593;">{{'COMMON.ORDER_ID' | translate}} :
+      {{(orderType==='o'?order.id:storeOrder.id)  | number: '3.0'}} </h1>
   </div>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="orderType==='o'">
@@ -12,7 +12,7 @@
         <span class="pull-left">
           <mat-icon>cached</mat-icon>
         </span>
-        {{order.orderStatus?.description}} 
+        {{order.orderStatus?.description}}
       </div>
       <div class="tile-body">
         <span class="pull-left">
@@ -295,7 +295,6 @@
       </td>
     </ng-container>
 
-
     <!-- set footer for tax amount-->
     <ng-container matColumnDef="taxes">
       <td mat-footer-cell *matFooterCellDef>
@@ -321,7 +320,6 @@
       </td>
     </ng-container>
 
-
     <!-- set footer for total amount-->
     <ng-container matColumnDef="totalAmountTitle">
       <td mat-footer-cell *matFooterCellDef>
@@ -339,8 +337,6 @@
       </td>
     </ng-container>
 
-
-
     <ng-container matColumnDef="totalAmount">
       <td mat-footer-cell *matFooterCellDef>
         {{store.currency.symbolLeft}}
@@ -348,7 +344,6 @@
         {{store.currency.symbolRight}}
       </td>
     </ng-container>
-
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let order; columns: displayedColumns;"></tr>
@@ -488,7 +483,6 @@
       </td>
     </ng-container>
 
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let order; columns: displayedColumns;"></tr>
     <tr mat-footer-row class="sticky-footer" *matFooterRowDef="displayedColumns"></tr>
@@ -502,10 +496,9 @@
 
 <mat-tab-group>
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
-    <app-order-history [orderId]="order.id" [orderType]="orderType"></app-order-history>
+    <app-order-history [order]="order" [storeOwnerId]="store.owner.id" [orderType]="orderType"></app-order-history>
   </mat-tab>
-  <mat-tab label="{{'COMMON.ADDITIONAL' | translate}}" *ngIf="order.id > 0">
-
+  <mat-tab label="{{'COMMON.ADDITIONAL' | translate}}" *ngIf="order.id > 0 && canEdit">
     <span class="pull-left">
       <mat-icon>public</mat-icon>
     </span>
@@ -520,6 +513,5 @@
       <mat-icon>web</mat-icon>
     </span>
     {{'COMMON.USER_AGENT' | translate}} : {{order.userAgent}}
-
   </mat-tab>
 </mat-tab-group>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Order, OrderStatus, OrderHistory } from 'src/app/app.models';
+import { Order, OrderStatus, OrderHistory, User } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Orders.component.scss']
 })
 export class OrderHistoryComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['dateAdded', 'comment', 'status', 'notified', 'actions'];
+  displayedColumns: string[] = ['dateAdded', 'user', 'comment', 'status'];
   dataSource: MatTableDataSource<OrderHistory>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -24,7 +24,9 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   orderHistory: OrderHistory = new OrderHistory();
 
   @Input() orderType: string;
-  @Input() orderId: number;
+  @Input() order: Order;
+  @Input() storeOwnerId: number;
+  canEdit = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -32,8 +34,8 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderHistory.order.id = this.orderId;
-    this.orderHistory.notify = 0;
+    this.orderHistory.order.id = this.order.id;
+    this.orderHistory.notify = 1;
     this.getOrderStatuses();
     this.getOrderHistories();
   }
@@ -51,14 +53,15 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
 
   getOrderHistories() {
     const parameters: string[] = [];
-    if (this.orderId !== null && this.orderId !== undefined) {
-      parameters.push('e.order.id = |orderId|' + this.orderId + '|Integer');
+    if (this.order.id !== null && this.order.id !== undefined) {
+      parameters.push('e.order.id = |orderId|' + this.order.id + '|Integer');
     }
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderHistory', parameters)
       .subscribe((data: OrderHistory[]) => {
         this.dataSource = new MatTableDataSource<OrderHistory>(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.setCanEdit();
       },
         error => console.log(error),
         () => console.log('Get all OrderHistory complete'));
@@ -68,13 +71,15 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
     if (orderHistoryId > 0) {
       this.appService.getOne(orderHistoryId, 'com.softenza.emarket.model.OrderHistory')
         .subscribe(result => {
-          if (result.id > 0) {
-            this.orderHistory = result;
-          } else {
-            this.orderHistory = new OrderHistory();
-            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-              this.messages = res['MESSAGE.READ_FAILED'];
-            });
+          if (result) {
+            if (result.id > 0) {
+              this.orderHistory = result;
+            } else {
+              this.orderHistory = new OrderHistory();
+              this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                this.messages = res['MESSAGE.READ_FAILED'];
+              });
+            }
           }
         });
     }
@@ -104,39 +109,50 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
       });
   }
 
-
   save() {
     this.messages = '';
     this.errors = '';
-    if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
-      this.translate.get(['VALIDATION.IS_REQUIRED', 'COMMON.SUCCESS']).subscribe(res => {
-        this.translate.get(['COMMON.ORDER_STATUS', 'COMMON.SUCCESS']).subscribe(res1 => {
-          this.messages = res1['COMMON.ORDER_STATUS'] + ' ' + res['VALIDATION.IS_REQUIRED'];
-        });
+    if ((!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0))
+      && (!this.orderHistory.comment || this.orderHistory.comment.trim() === '')) {
+      this.translate.get(['VALIDATION.COMMENT_OR_STATUS', 'COMMON.SUCCESS']).subscribe(res => {
+        this.messages = res['VALIDATION.COMMENT_OR_STATUS'];
       });
-    } else if (!this.orderHistory.comment || this.orderHistory.comment.trim() === '') {
-      this.translate.get(['VALIDATION.IS_REQUIRED', 'COMMON.SUCCESS']).subscribe(res => {
-        this.translate.get(['COMMON.COMMENTS', 'COMMON.SUCCESS']).subscribe(res1 => {
-          this.messages = res1['COMMON.COMMENTS'] + ' ' + res['VALIDATION.IS_REQUIRED'];
-        });
-      });
+      console.log(this.messages);
     } else {
+      if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
+        this.orderHistory.orderStatus.id = this.order.orderStatus.id;
+      } else if (this.orderHistory.orderStatus.name !== this.order.statusCode) {
+        this.order.orderStatus.id = this.orderHistory.orderStatus.id;
+        this.order.statusCode = this.orderHistory.orderStatus.name;
+        this.appService.save(this.order, 'Order')
+          .subscribe(result => {
+            if (result.id > 0) {
+              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                this.messages = res['MESSAGE.SAVE_SUCCESS'];
+              });
+            } else {
+              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+              });
+            }
+          });
+
+      }
       try {
-        this.orderHistory.order.id = this.orderId;
-        this.orderHistory.modifiedBy = Number(this.appService.tokenStorage.getUserId());
+        this.orderHistory.order.id = this.order.id;
+        if (this.orderHistory.id > 0) {
+          this.order.modifiedBy = Number(this.appService.tokenStorage.getUserId());
+        } else {
+          const user = new User();
+          user.id = Number(this.appService.tokenStorage.getUserId());
+          this.orderHistory.user = user;
+        }
         this.setToggleValues();
-        const index: number = this.dataSource.data.findIndex(element => element.id === this.orderHistory.id);
         this.appService.save(this.orderHistory, 'OrderHistory')
           .subscribe(result => {
             if (result.id > 0) {
               this.orderHistory = new OrderHistory();
-              if (index !== -1) {
-                this.dataSource.data.splice(index, 1);
-              }
-              this.dataSource.data.push(result);
-              this.dataSource = new MatTableDataSource<OrderHistory>(this.dataSource.data);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
+              this.getOrderHistories();
               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
                 this.messages = res['MESSAGE.SAVE_SUCCESS'];
               });
@@ -153,11 +169,23 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
     }
   }
 
-
   setToggleValues() {
     this.orderHistory.notify = (this.orderHistory.notify === null
       || this.orderHistory.notify.toString() === 'false'
       || this.orderHistory.notify.toString() === '0') ? 0 : 1;
+  }
+
+  public setCanEdit() {
+    console.log('current user id:' + this.appService.tokenStorage.getUserId());
+    console.log('store owner:' + this.storeOwnerId);
+    console.log('Role:' + this.appService.tokenStorage.getRole());
+    if (Number(this.appService.tokenStorage.getUserId()) === this.storeOwnerId ||
+      Number(this.appService.tokenStorage.getRole()) === 3) { // this is the store owner
+      this.canEdit = true;
+      this.displayedColumns = ['dateAdded', 'user', 'comment', 'status', 'notified', 'actions'];
+    } else {
+      this.canEdit = false;
+    }
   }
 
 }

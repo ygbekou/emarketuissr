@@ -1164,13 +1164,14 @@ export class OrderHistory {
   comment: string;
   notify: number;
   order: Order;
+  user: User;
   orderStatus: OrderStatus;
   createDate: Date;
   modifiedBy: number;
   type = 'OrderHistory';
   constructor() {
     this.order = new Order();
-    this.notify = 0;
+    this.notify = 1;
     this.orderStatus = new OrderStatus();
   }
 }
@@ -1276,6 +1277,7 @@ export class Order {
   lastName: string;
   marketingId: number;
   orderStatus: OrderStatus;
+  statusCode: string;
   paymentAddress1: string;
   paymentAddress2: string;
   paymentAddressFormat: string;
@@ -1317,6 +1319,7 @@ export class Order {
   userAgent: string;
   createDate: Date;
   modDate: Date;
+  modifiedBy: number;
   paygateGlobalPaymentUrl: string;
   errors: string[];
 

@@ -31,10 +31,8 @@ const TREE_DATA_EN: MenuNode[] = [
     url: '/account/buying',
     icon: '',
     children: [
-      { name: 'Purchase Overview', url: '/account/buy-overview', icon: 'dashboard' },
-      { name: 'Purchase history', url: '/account/order-history', icon: 'history' },
-      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' }
-      // { name: 'Buy again', url: '/account/buy-again', icon: 'add_shopping_cart' }
+      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' },
+      { name: 'Purchase dashboard', url: '/account/client-dashboard', icon: 'dashboard' }
     ]
   }, {
     name: 'Selling',
@@ -42,12 +40,10 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
-      { name: 'Sales Overview', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Sales detail', url: '/account/sales-orders', icon: 'shopping_cart' },
+      { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
+      { name: 'Sales history', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
-
-      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
-      // { name: 'Sold items', url: '/account/sold-item', icon: 'toggle_off' }
+      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' }
     ]
   },
 ];
@@ -68,10 +64,8 @@ const TREE_DATA_FR: MenuNode[] = [
     url: '/account/buying',
     icon: '',
     children: [
-      { name: 'Aperçu des achats', url: '/account/buy-overview', icon: 'dashboard' },
-      { name: 'Historique achats', url: '/account/order-history', icon: 'history' },
-      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' }
-      // { name: 'Acheter encore', url: '/account/buy-again', icon: 'add_shopping_cart' }
+      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' },
+      { name: 'Tableau de bord', url: '/account/client-dashboard', icon: 'dashboard' }
     ]
   }, {
     name: 'Ventes',
@@ -79,12 +73,10 @@ const TREE_DATA_FR: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
-      { name: 'Aperçu des ventes', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Détail des ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
+      { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
+      { name: 'Historique des ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
-      // { name: 'Brouillon', url: '/account/draft-item', icon: 'restore_from_trash' },
       { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' }
-      // { name: 'Produits vendus', url: '/account/sold-item', icon: 'toggle_off' }
     ]
   },
 ];
