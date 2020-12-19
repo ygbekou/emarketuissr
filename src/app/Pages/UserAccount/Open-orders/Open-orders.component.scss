@@ -7,7 +7,7 @@
 }
 
 .mat-row:hover {
-    background-color: #ff5722;
+    background-color: #0066c0;
     cursor: pointer;
 }
 
@@ -31,15 +31,16 @@
 }
 
 .tile-heading a:hover {
-    color: #283593;
+    color: #ff5722;
 }
+
 .tile-heading a {
-    color: #ffffff;
+    color: #0066c0;
 }
 
 .tile-body {
     padding: 15px;
-    color: #283593;
+    color: #0066c0;
     line-height: 48px;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
     background-color: #f5f2f2;
@@ -57,10 +58,11 @@
 }
 
 .tile .tile-body a:hover {
-    color: #283593;
-}
-.tile .tile-body a {
     color: #ff5722;
+}
+
+.tile .tile-body a {
+    color: #0066c0;
 }
 
 .pull-right {
@@ -72,18 +74,9 @@
     opacity: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
+h1,h2,h3,h4,h5,
+h6,.h1,.h2,.h3,
+.h4,.h5,.h6 {
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
@@ -106,4 +99,12 @@ textarea {
     outline: none !important;
     border-color: #719ECE;
     box-shadow: 0 0 10px #719ECE;
+}
+
+.col-gap>div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
 }

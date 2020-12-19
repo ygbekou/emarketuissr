@@ -11,6 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProfileComponent implements OnInit {
   user: User = new User();
   error: string;
+  iconSize = 'lg';
+  iconColor = '';
   constructor(public appService: AppService, public translate: TranslateService) { }
 
   ngOnInit() {

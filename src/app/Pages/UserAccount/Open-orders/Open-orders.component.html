@@ -31,47 +31,70 @@
                     {{order.cFirstName +' '+ order.cLastName}}
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    {{'COMMON.ORDER_ID'|translate}}: {{ order.orderId   | number: '3.0'}}<br />
-
-                    <a [routerLink]="['/account/order-detail', 'o'+order.orderId]" routerLinkActive="tab-active">
-                      {{'COMMON.ORDER_DETAIL'|translate}}
-                    </a>
+                    {{'COMMON.ORDER_ID'|translate}}:
+                    <br />
+                    {{ order.orderId   | number: '3.0'}}<br />
                   </div>
                 </div>
 
               </div>
               <div class="tile-body">
-                <div fxLayout="row wrap" class="col-gap" *ngFor="let orderProduct of order.orderProducts">
-                  <div fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                    <img *ngIf="orderProduct.product.image"
-                      [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
-                      [style.width.px]="40">
+                <div fxLayout="row wrap" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+                    <div fxLayout="row wrap" class="col-gap" *ngFor="let orderProduct of order.orderProducts">
+                      <div fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15"
+                        style="text-align: center!important;">
+
+                        <a class="p-link" *ngIf="orderProduct.product.image"
+                          [routerLink]="['/products/dtl/'+orderProduct.product.id+ '/'+orderProduct.ptsId]">
+                          <img [style.width.px]="40" mat-card-image
+                            [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
+                            alt="Photo">
+                        </a>
+                      </div>
+                      <div fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85">
+                        <a class="p-link"
+                          [routerLink]="['/products/dtl/'+orderProduct.product.id+ '/'+orderProduct.ptsId]">
+                          {{orderProduct.name}} </a><br />
+                        <h6 class="accent-color">
+                          {{'COMMON.PRICE'|translate}}:
+                          {{order.symbolLeft}}
+                          {{ orderProduct.total  | number:'1.0-2'}}
+                          {{order.symbolRight}} | {{'COMMON.QTY'|translate}}: {{orderProduct.quantity}}</h6>
+                        <font style="font-style: italic;">
+                          {{'COMMON.SOLD_BY'|translate}}
+                          <a [routerLink]="['/products']" [queryParams]="{storeId:order.storeId}"
+                            routerLinkActive="tab-active"> {{order.storeName}}</a>
+                        </font>
+                        <br />
+                        <button mat-button color="accent" (click)="addToCart(orderProduct)">
+                          <mat-icon>add_shopping_cart</mat-icon>
+                          {{'COMMON.ORDER_AGAIN'|translate}}
+                        </button>
+
+                      </div>
+                    </div>
                   </div>
-                  <div fxFlex.xs="100" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-                    {{orderProduct.name}}
-                    <p class="mb-0">{{'COMMON.SOLD_BY'|translate}} <a [routerLink]="['/products']"
-                        [queryParams]="{storeId:order.storeId}" routerLinkActive="tab-active"> {{order.storeName}}</a>
-                    </p>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    <button mat-button color="accent"
+                      [routerLink]="['/account/order-detail', 'o'+order.orderId]">{{'COMMON.ORDER_DETAIL'|translate}}</button>
+
+                    <button mat-button color="accent">{{'COMMON.CANCEL_ORDER'|translate}}</button>
 
                   </div>
-
                 </div>
+
               </div>
               <div class="tile-footer">
-                <span class="pull-left">
-                  <mat-icon>store</mat-icon>
-                </span>
-                <!--  <a href="{{order.storeUrl}}" target="_blank">
-          {{order.storeName}}
-        </a> -->
+
               </div>
             </div>
           </div>
         </div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="3">
+
 
       </div>
     </div>

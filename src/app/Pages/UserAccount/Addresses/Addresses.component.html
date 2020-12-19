@@ -1,7 +1,5 @@
 <mat-card>
-
     <div fxLayoutAlign="space-between"><h4>{{'COMMON.MY_ADDRESSES'|translate}}</h4> <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']" [queryParams]="{type:'address', adrId:0}">{{'COMMON.ADD'|translate}}</button></div>
-
   <div fxLayout="row wrap" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="30" fxFlex.xl="30" *ngFor="let addr of addresses">
       <h5 *ngIf="addr.addressType===2">{{'COMMON.BILLING_ADDRESS'|translate}}</h5>

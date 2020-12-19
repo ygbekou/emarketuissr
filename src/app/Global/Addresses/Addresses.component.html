@@ -1,20 +1,18 @@
 <mat-card *ngIf="isForShippingAddresses()">
   <div>
-    <div fxLayout="row wrap"><h5>{{'COMMON.SHIPPING_ADDRESS'|translate}}</h5></div> 
+    <div fxLayout="row wrap"><h1 style="color: #283593;">{{'COMMON.SHIPPING_ADDRESS'|translate}}</h1></div> 
     <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of shippingAddresses">
         <div class="pt-3">
           <address class="mb-4">
             <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
             {{addr.address1}} {{addr.address2}}<br>
-            {{addr.city}}<br>
-            {{addr.postCode}}<br>
-            {{addr.zone.name}}<br>
-            {{addr.country.name}}<br>
+            {{addr.city}}, {{addr.zone.name}} {{addr.postCode}}<br> 
+            {{addr.country.name}}
           </address>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
             <input type="checkbox" class="mb-2 d-block" [disabled]="addr.status === 1" [checked]="addr.status === 1" 
-              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}>
+              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}} 
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
@@ -50,21 +48,19 @@
 <br/>
 <mat-card *ngIf="isForBillingAddresses()">
   <div>
-    <div fxLayout="row wrap"><h5>{{'COMMON.BILLING_ADDRESS'|translate}}</h5></div>
+    <div fxLayout="row wrap"><h1 style="color: #283593;">{{'COMMON.BILLING_ADDRESS'|translate}}</h1></div>
     <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of billingAddresses">
         <div class="pt-3">
           <address class="mb-4">
             <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
             {{addr.address1}} {{addr.address2}}<br>
-            {{addr.city}}<br>
-            {{addr.postCode}}<br>
-            {{addr.zone.name}}<br>
-            {{addr.country.name}}<br>
+            {{addr.city}}, {{addr.zone.name}} {{addr.postCode}} <br/>
+            {{addr.country.name}} 
           </address>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
             <input type="checkbox" class="mb-2 d-block" [disabled]="addr.status === 1" [checked]="addr.status === 1" 
-              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}}>
+              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}} 
           </div>
           <br/>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OrderSearchCriteria, Order, OnlineOrderVO } from 'src/app/app.models';
+import { OrderSearchCriteria, Order, OnlineOrderVO, ProductDescVO, OrderProduct, CartItem } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -13,6 +13,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
   messages = '';
   searchCriteria: OrderSearchCriteria;
   orders: OnlineOrderVO[] = [];
+  products: ProductDescVO[] = [];
   constructor(public appService: AppService,
     public translate: TranslateService) {
     super(translate);
@@ -20,6 +21,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.getOpenOrders();
+    this.getBoughtProducts();
   }
   getOpenOrders() {
     this.searchCriteria = new OrderSearchCriteria();
@@ -47,6 +49,32 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
           order.orderProducts = result.orderProducts;
         }
       });
+  }
+
+  getBoughtProducts() {
+    this.appService.getObjects('/service/catalog/getBoughtProducts/' +
+      this.appService.appInfoStorage.language.id
+      + '/' + this.appService.tokenStorage.getUserId() + '/10')
+      .subscribe((data: ProductDescVO[]) => {
+        this.products = data;
+        console.log(this.products);
+      },
+        error => console.log(error),
+        () => console.log('Get all getBoughtProducts complete'));
+  }
+
+
+  public addToCart(orderProduct: OrderProduct) {
+    this.appService.getObject('/service/catalog/getProductOnSale/' +
+      this.appService.appInfoStorage.language.id + '/' + orderProduct.ptsId)
+      .subscribe((data: ProductDescVO) => {
+        console.log(data);
+        const ci = new CartItem(data);
+        ci.quantity = 1;
+        this.appService.addToCart(ci);
+      },
+        (error) => console.log(error),
+        () => console.log('Get all getProductOnSale complete'));
   }
 
 }

@@ -11,35 +11,29 @@ import { MatExpansionPanel } from '@angular/material';
   styleUrls: ['./Addresses.component.scss']
 })
 export class AddressesComponent implements OnInit {
-
   addresses: Address[] = [];
   shippingAddresses: Address[] = [];
   billingAddresses: Address[] = [];
   error: string;
 
-  @Input()
-  userId;
+  @Input() userId;
 
   addressType = 0;
-  @ViewChild('shippingAddressComponent', {static: false}) shippingAddressComponent: AddressComponent;
-  @ViewChild('billingAddressComponent', {static: false}) billingAddressComponent: AddressComponent;
-  @ViewChild('shippingExpansionPanelElement', {static: false}) shippingExpansionPanelElement: MatExpansionPanel;
-  @ViewChild('billingExpansionPanelElement', {static: false}) billingExpansionPanelElement: MatExpansionPanel;
+  @ViewChild('shippingAddressComponent', { static: false }) shippingAddressComponent: AddressComponent;
+  @ViewChild('billingAddressComponent', { static: false }) billingAddressComponent: AddressComponent;
+  @ViewChild('shippingExpansionPanelElement', { static: false }) shippingExpansionPanelElement: MatExpansionPanel;
+  @ViewChild('billingExpansionPanelElement', { static: false }) billingExpansionPanelElement: MatExpansionPanel;
 
 
   constructor(public appService: AppService, public translate: TranslateService) {
   }
 
   ngOnInit() {
-
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     }
-
     this.getAddresses();
-
   }
-
 
   getAddresses() {
     this.shippingAddresses = [];
@@ -65,7 +59,7 @@ export class AddressesComponent implements OnInit {
           this.getAddresses();
         }
       });
-   }
+  }
 
   isShippingAddr(element, index, array) {
     return element.addressType === 1;
@@ -89,7 +83,6 @@ export class AddressesComponent implements OnInit {
   }
 
   updateTable(address: Address) {
-
     if (address.addressType === 1) {
       const index = this.shippingAddresses.findIndex(x => x.id === address.id);
       if (index === -1) {
@@ -118,25 +111,25 @@ export class AddressesComponent implements OnInit {
 
   setAddressType(addressType: number) {
     setTimeout(() => {
-				this.addressType = addressType;
-      }, 0);
+      this.addressType = addressType;
+    }, 0);
   }
 
   onAddressSaved($event) {
-      this.updateTable($event);
-      this.shippingExpansionPanelElement.close();
-      this.billingExpansionPanelElement.close();
-   }
+    this.updateTable($event);
+    this.shippingExpansionPanelElement.close();
+    this.billingExpansionPanelElement.close();
+  }
 
 
-   editAddress(addressId: number, addressType: number) {
-      if (addressType === 1) {
-        this.shippingAddressComponent.getAddress(addressId);
-        this.shippingExpansionPanelElement.open();
-      }
-      if (addressType === 2) {
-        this.billingAddressComponent.getAddress(addressId);
-        this.billingExpansionPanelElement.open();
-      }
-   }
+  editAddress(addressId: number, addressType: number) {
+    if (addressType === 1) {
+      this.shippingAddressComponent.getAddress(addressId);
+      this.shippingExpansionPanelElement.open();
+    }
+    if (addressType === 2) {
+      this.billingAddressComponent.getAddress(addressId);
+      this.billingExpansionPanelElement.open();
+    }
+  }
 }
