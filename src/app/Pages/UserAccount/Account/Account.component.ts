@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 /**
  * Food data with nested structure.
@@ -120,7 +121,26 @@ export class AccountComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   constructor(public translate: TranslateService, public appService: AppService) {
-    if (appService.appInfoStorage.language.code === 'fr') {
+
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    if (Cookie.get('lang')) {
+      lang = Cookie.get('lang');
+      console.log('Using cookie lang=' + Cookie.get('lang'));
+    } else if (lang) {
+      console.log('Using browser lang=' + lang);
+      // this.translate.use(lang);
+    } else {
+      lang = 'fr';
+      console.log('Using default lang=fr');
+    }
+    if (appService.appInfoStorage.language) {
+      lang = appService.appInfoStorage.language.code;
+    }
+
+    if (lang === 'fr') {
       this.dataSource.data = TREE_DATA_FR;
     } else {
       this.dataSource.data = TREE_DATA_EN;

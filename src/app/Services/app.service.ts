@@ -262,30 +262,6 @@ export class AppService {
       localStorage.setItem('cart_item', JSON.stringify(products));
    }
 
-   // returning LocalCarts Product Count
-   /*    public calculateLocalCartProdCounts() {
-
-         this.localStorageCartProducts = null;
-         this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
-         this.navbarCartCount = +((this.localStorageCartProducts).length);
-
-         this.navbarCartPrice = 0;
-         this.navbarCartShipping = 0;
-         this.navbarCartTotalBeforeTax = 0;
-         this.navbarCartEstimatedTax = 0;
-         this.navbarCartTotal = 0;
-
-         this.localStorageCartProducts.forEach(element => {
-            console.log(element);
-            this.navbarCartPrice += element.price * element.quantity;
-            this.navbarCartShipping += 0;
-            this.navbarCartEstimatedTax += 5;
-         });
-
-         this.navbarCartTotalBeforeTax += this.navbarCartPrice + this.navbarCartShipping;
-         this.navbarCartTotal += this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax;
-      } */
-
    public recalculateCart(needParse: boolean) {
 
       if (needParse) {

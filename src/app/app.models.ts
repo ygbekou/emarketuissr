@@ -1445,6 +1445,7 @@ export class OnlineOrderVO {
   symbolLeft: string;
   symbolRight: string;
   createDate: Date;
+  status: string;
   orderProducts: OrderProduct[] = [];
 }
 

@@ -24,6 +24,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.getBoughtProducts();
   }
   getOpenOrders() {
+    this.messages = '';
     this.searchCriteria = new OrderSearchCriteria();
     this.searchCriteria.orderType = 0;
     this.searchCriteria.miscText1 = "'PENDING','PROCESSING','PROCESSED','SHIPPED'";
@@ -33,9 +34,15 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/order/onlineOrders', this.searchCriteria)
       .subscribe((data: any[]) => {
         this.orders = data;
-        console.log(this.orders);
-        for (const o of this.orders) {
-          this.setOrderDetails(o);
+        console.log(data);
+        if (data.length > 0) {
+          for (const o of this.orders) {
+            this.setOrderDetails(o);
+          }
+        } else {
+          this.translate.get(['MESSAGE.NO_OPEN_ORDER', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+            this.messages = res['MESSAGE.NO_OPEN_ORDER'];
+          });
         }
       },
         error => console.log(error),
@@ -57,7 +64,6 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
       + '/' + this.appService.tokenStorage.getUserId() + '/10')
       .subscribe((data: ProductDescVO[]) => {
         this.products = data;
-        console.log(this.products);
       },
         error => console.log(error),
         () => console.log('Get all getBoughtProducts complete'));
@@ -75,6 +81,34 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
       },
         (error) => console.log(error),
         () => console.log('Get all getProductOnSale complete'));
+  }
+
+  public addPrdToCart(value) {
+    const ci = new CartItem(value);
+    ci.quantity = 1;
+    this.appService.addToCart(ci);
+  }
+
+  public cancel(orderId: number) {
+    const order = new Order();
+    order.id = orderId;
+    const index: number = this.orders.findIndex((ord) => ord.orderId === order.id);
+
+    this.appService.saveWithUrl('/service/order/cancelOrder/', order)
+      .subscribe((data: Order) => {
+        if (data.errors) {
+          // there was an issue.
+          console.log(data.errors);
+        } else {
+          if (index !== -1) {
+            this.orders.splice(index, 1);
+          }
+        }
+      },
+        error => {
+          console.log(error);
+        },
+        () => console.log('Cancel order complete'));
   }
 
 }

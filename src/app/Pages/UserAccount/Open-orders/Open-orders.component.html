@@ -77,10 +77,14 @@
                   </div>
 
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                    
+                    <h6 style="color: #283593;">{{'COMMON.ORDER_STATUS' | translate}}:
+                    {{order.status}} </h6>
+
                     <button mat-button color="accent"
                       [routerLink]="['/account/order-detail', 'o'+order.orderId]">{{'COMMON.ORDER_DETAIL'|translate}}</button>
 
-                    <button mat-button color="accent">{{'COMMON.CANCEL_ORDER'|translate}}</button>
+                    <button mat-button (click)="cancel(order.orderId)" color="accent">{{'COMMON.CANCEL_ORDER'|translate}}</button>
 
                   </div>
                 </div>
@@ -93,8 +97,52 @@
           </div>
         </div>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
 
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <h3 style="color: #283593; text-align: center;">{{'COMMON.ORDER_AGAIN'|translate}} </h3>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+            *ngFor="let prd of products">
+            <div fxLayout="row wrap">
+              <div style="text-align: center!important; vertical-align:middle;" fxFlex.xs="100" fxFlex.sm="100"
+                fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                <br>
+                <a class="p-link" *ngIf="prd.product?.id"
+                  [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
+                  <img [style.width.px]="40" mat-card-image style="vertical-align: middle;"
+                    [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
+                </a>
+              </div>
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="67" fxFlex.lg="67" fxFlex.xl="67">
+
+                <a class="p-link"
+                  [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
+                  {{prd?.name}} </a><br />
+                <h6 class="accent-color">
+                  {{'COMMON.PRICE'|translate}}:
+                  {{prd.product?.symbolLeft}}
+                  {{ prd.product?.price  | number:'1.0-2'}}
+                  {{prd.product?.symbolRight}} </h6>
+                <font style="font-style: italic;">
+                  {{'COMMON.SOLD_BY'|translate}}
+                  <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product?.storeId}"
+                    routerLinkActive="tab-active"> {{prd.product?.storeName}}</a>
+                </font>
+                <br />
+                <button mat-button color="accent" (click)="addPrdToCart(prd)">
+                  <mat-icon>add_shopping_cart</mat-icon>
+                  {{'COMMON.ORDER_AGAIN'|translate}}
+                </button>
+                <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     </div>
