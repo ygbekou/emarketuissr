@@ -115,8 +115,10 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   getStores() {
     const userId = Number(this.appService.tokenStorage.getUserId());
     if (userId > 0) {
+
       const parameters: string[] = [];
-      // parameters.push('e.owner.id = |userId|' + userId + '|Integer');
+      parameters.push('e.aprvStatus = |userId|1|Integer');
+      parameters.push('e.status = |pId|1|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
         .subscribe((data: Store[]) => {
           this.stores = data;
@@ -200,19 +202,21 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
       this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id + '/0/0')
       .subscribe((data: ProductDescVO[]) => {
         this.selectedProducts = data;
-        // console.log(data);
-        const result = this.filterData(data, 2);
-        if (result.data.length === 0) {
-          // this.properties.length = 0;
-          this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
-          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-            this.message = res['MESSAGE.NO_RESULT_FOUND'];
-          });
+        if (this.selectedProducts && this.selectedProducts.length > 0) {
+          // console.log(data);
+          const result = this.filterData(data, 2);
+          if (result.data.length === 0) {
+            // this.properties.length = 0;
+            this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
+            this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+              this.message = res['MESSAGE.NO_RESULT_FOUND'];
+            });
+          }
+          // console.log(result.data);
+          this.dataSource2 = new MatTableDataSource(result.data);
+          this.pagination2 = result.pagination;
+          this.message = null;
         }
-        console.log(result.data);
-        this.dataSource2 = new MatTableDataSource(result.data);
-        this.pagination2 = result.pagination;
-        this.message = null;
       },
         error => console.log(error),
         () => console.log('Get all getProductsOnSale complete'));

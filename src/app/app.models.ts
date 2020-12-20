@@ -53,7 +53,7 @@ export class Pagination {
 
 export class BaseModel {
   lang: string;
-  remainingFileNames: string[];
+  remainingFileNames: string[] =[];
   createDate: Date;
 }
 

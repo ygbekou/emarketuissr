@@ -77,13 +77,17 @@ export class StoreComponent extends BaseComponent implements OnInit {
     this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.formData = new FormData();
 
-    if (this.picture && this.picture.length > 0) {
-      if (this.picture[0].file) {
-        this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
-      } else {
-        const pathSplitArray = this.picture[0].link.split('/');
-        this.store.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
-      }
+    /*   if (this.picture && this.picture.length > 0) {
+        if (this.picture[0].file) {
+          this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+        } else {
+          const pathSplitArray = this.picture[0].link.split('/');
+          this.store.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
+        }
+      } */
+    this.formData = new FormData();
+    if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+      this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
     }
     this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
       .subscribe(data => {

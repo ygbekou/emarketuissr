@@ -1,7 +1,11 @@
-<mat-card>
-  <div fxLayoutAlign="space-between">
-    <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
-  </div>
+<mat-card> 
+
+  <a mat-button [routerLink]="['/account/sell-item']">{{'COMMON.PRODUCT_SALE' | translate}}
+    <mat-icon>navigate_next</mat-icon>
+  </a>
+  <a mat-button color="accent" *ngIf="selectedStore && selectedStore.id>0">
+    <h5>{{'COMMON.STORE' | translate}} : {{selectedStore.name}}</h5>
+  </a>
 
   <div fxLayout="row wrap" class="col-gap">
 
