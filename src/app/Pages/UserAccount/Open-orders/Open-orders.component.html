@@ -99,7 +99,7 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
 
-        <div fxLayout="row wrap">
+        <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <h3 style="color: #283593; text-align: center;">{{'COMMON.ORDER_AGAIN'|translate}} </h3>
           </div>

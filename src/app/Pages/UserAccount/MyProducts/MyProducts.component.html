@@ -16,36 +16,54 @@
           </div>
         </div>
         <div fxLayout="row wrap" class="col-gap">
+
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
             *ngFor="let store of stores">
-            <mat-card>
-              <mat-card-header>
-                <div mat-card-avatar>
-                  <img src="assets/images/stores/{{store.id}}/{{store.image}}">
-                </div>
-                <mat-card-title>{{store.name}}</mat-card-title>
-                <mat-card-subtitle *ngIf="store.address">{{store.address.city +', '+store.address.country.name}}
-                </mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="pt-3">
-                  <div class="saved-card-box text-xl mb-4">
+            <div class="tile tile-primary">
+              <div class="tile-heading">{{store.name}} <span class="pull-right">
+                  <i *ngIf="store.aprvStatus===0" class="fa fa-spinner"></i>
+                  <i *ngIf="store.aprvStatus===1" class="fa fa-check"></i>
+                  {{store.aprvStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
+              </div>
+              <div class="tile-body">
+                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                    <img height="100%" src="assets/images/stores/{{store.id}}/{{store.image}}">
+                    <br />
+                    <span class="pull-left">
+                      <i *ngIf="store.status===0" class="fa fa-exclamation-circle"></i>
+                      <i *ngIf="store.status===1" class="fa fa-check-circle"></i>
+                      {{store.status===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</span>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                    <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{store.phone}}</span><br />
+                    <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{store.email}}</span><br />
+                    <span class="pull-left" *ngIf="store.address"><i class="fa fa-map-marker fa-sm"></i>
+                      {{store.address.city}}, {{store.address.country.name}}</span>
                     <div [innerHTML]="store?.description"></div>
                   </div>
                 </div>
+              </div>
+              <div class="tile-footer">
                 <div fxLayout="row wrap" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <button mat-raised-button color="accent" (click)="getStoreProducts(store)">
-                      <mat-icon>done</mat-icon>
-                      {{'COMMON.SELECT'|translate}}
-                    </button>
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                    <span class="pull-right">
+                      <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap"
+                        *ngIf="store.aprvStatus ===0">
+                        {{'COMMON.STORE_NOT_ACTIVATED'|translate}}
+                      </mat-chip>
+                      <button *ngIf="store.aprvStatus ===1" mat-raised-button color="accent"
+                        (click)="getStoreProducts(store)">
+                        <mat-icon>done</mat-icon>
+                        {{'COMMON.SELECT'|translate}}
+                      </button>
+                    </span>
                   </div>
                 </div>
-              </mat-card-content>
-            </mat-card>
+              </div>
+            </div>
           </div>
         </div>
       </mat-step>
@@ -88,7 +106,7 @@
             </mat-chip>
           </div>
         </div>
-        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="productDesc">
+        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="productDesc && productDesc.id>0">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="relative"
             *ngIf="productDesc.product && productDesc.product.image">
             <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
@@ -185,12 +203,12 @@
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
                     <mat-form-field class="w-30">
                       <mat-label>Pourcentage rabais</mat-label>
-                      <input matInput type="text" class="form-control" id="promo"
-                        [(ngModel)]="productStore.promo" name="promo" #promo="ngModel">
+                      <input matInput type="text" class="form-control" id="promo" [(ngModel)]="productStore.promo"
+                        name="promo" #promo="ngModel">
                     </mat-form-field>
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    
+
                   </div>
                 </div>
                 <div fxLayout="row wrap">

@@ -13,33 +13,39 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Users.component.scss']
 })
 export class StoresComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'phone', 'userName', 'userFullName', 'status', 'dateAdded', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'phone', 'userFullName', 'status', 'aprvStatus', 'dateAdded'];
   dataSource: MatTableDataSource<Store>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   messages = '';
   searchCriteria: StoreSearchCriteria;
-
+  button = 'filter';
   constructor(public appService: AppService,
     public translate: TranslateService) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.searchCriteria = new StoreSearchCriteria();
     this.search();
   }
 
+  private clear() {
+    this.searchCriteria = new StoreSearchCriteria();
+  }
   search() {
-
-    this.appService.saveWithUrl('/service/catalog/stores', this.searchCriteria)
-      .subscribe((data: Store[]) => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-        error => console.log(error),
-        () => console.log('Get all Stores complete'));
+    if (this.button.endsWith('clear')) {
+      this.clear();
+    } else {
+      this.appService.saveWithUrl('/service/catalog/stores', this.searchCriteria)
+        .subscribe((data: Store[]) => {
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+          error => console.log(error),
+          () => console.log('Get all Stores complete'));
+    }
   }
 
   public remove(store: Store) {

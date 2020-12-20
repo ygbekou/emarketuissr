@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, User } from 'src/app/app.models';
+import { Store } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { ActivatedRoute } from '@angular/router';
-import { Constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-store',
@@ -13,17 +12,9 @@ import { Constants } from 'src/app/app.constants';
 export class StoreComponent extends BaseComponent implements OnInit {
   messages = '';
   errors = '';
-
   formData: FormData;
   picture: any[] = [];
-  addresses: any[];
   store: Store;
-  constants: Constants = new Constants();
-
-  userId: number;
-  user: User = new User();
-
-
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
@@ -43,26 +34,6 @@ export class StoreComponent extends BaseComponent implements OnInit {
 
   clear() {
     this.store = new Store();
-  }
-
-  getUser() {
-    this.messages = '';
-
-    if (this.userId > 0) {
-      this.appService.getOne(this.userId, 'User')
-        .subscribe(result => {
-          if (result !== null && result.id > 0) {
-            this.store.owner.id = result.id;
-            this.user = result;
-          } else {
-            this.store.owner.id = undefined;
-            this.user = new User();
-            this.translate.get(['COMMON.READ', 'MESSAGE.INVALID_USER_ID']).subscribe(res => {
-              this.messages = res['MESSAGE.INVALID_USER_ID'];
-            });
-          }
-        });
-    }
   }
 
   getStore(storeId: number) {
@@ -99,9 +70,11 @@ export class StoreComponent extends BaseComponent implements OnInit {
     this.store.status = (this.store.status == null
       || this.store.status.toString() === 'false'
       || this.store.status.toString() === '0') ? 0 : 1;
+
+    this.store.aprvStatus = (this.store.aprvStatus == null
+      || this.store.aprvStatus.toString() === 'false'
+      || this.store.aprvStatus.toString() === '0') ? 0 : 1;
     this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
-    //this.store.owner = this.user;
-    console.log(this.store);
     this.formData = new FormData();
 
     if (this.picture && this.picture.length > 0) {
@@ -120,16 +93,8 @@ export class StoreComponent extends BaseComponent implements OnInit {
   }
 
 
-  setToggleValues(store: Store) {
-    store.status = (store.status === null
-      || store.status === undefined
-      || store.status.toString() === 'false'
-      || store.status.toString() === '0') ? 0 : 1;
-  }
-
   isEmpty(value: string): boolean {
     const val = value !== null && value !== undefined ? value.trim() : '';
-
     return val.length === 0;
   }
 

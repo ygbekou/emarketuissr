@@ -631,6 +631,7 @@ export class Store extends BaseModel {
   image: string;
   phone: string;
   status: number;
+  aprvStatus: number;
   fileNames: string[];
   modifiedBy: number;
   description: string;
@@ -641,6 +642,7 @@ export class Store extends BaseModel {
 
   constructor() {
     super();
+    this.aprvStatus = 0;
     this.owner = new User();
   }
 }
