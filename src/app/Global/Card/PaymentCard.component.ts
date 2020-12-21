@@ -60,7 +60,7 @@ export class PaymentCardComponent implements OnInit {
             this.data = data;
             document.querySelector('button').disabled = false;
 
-            var form = document.getElementById('payment-form');
+            let form = document.getElementById('payment-form');
             form.addEventListener('submit', this.handleCardSave.bind(this));
          });
    }
@@ -75,8 +75,8 @@ export class PaymentCardComponent implements OnInit {
       this.stripe = Stripe(data.publishableKey);
 
       /* ------- Set up Stripe Elements to use in checkout form ------- */
-      var elements = this.stripe.elements();
-      var style = {
+      let elements = this.stripe.elements();
+      let style = {
          base: {
             color: '#32325d',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
@@ -92,7 +92,7 @@ export class PaymentCardComponent implements OnInit {
          }
       };
 
-      var card = elements.create('card', { style: style });
+      let card = elements.create('card', { style: style });
       card.mount('#card-element');
 
       return {
@@ -100,28 +100,27 @@ export class PaymentCardComponent implements OnInit {
          card: card,
          clientSecret: data.clientSecret
       };
-   };
+   }
 
 
    /*
    * Collect card details and pay for the order
    */
    saveCard(stripe, card, clientSecret) {
-      // changeLoadingState(true);
-
-      // Collects card details and creates a PaymentMethod
-
       stripe
          .createPaymentMethod('card', card)
          .then(result => {
             if (result.error) {
                // showError(result.error.message);
             } else {
-               this.saveCustomer(result)
+               this.saveCustomer(result);
             }
          })
          .then(function (result) {
-            return result.json();
+            console.log(result);
+            if (result) {
+               return result.json();
+            }
          })
          .then(function (response) {
             if (response.error) {
@@ -145,7 +144,7 @@ export class PaymentCardComponent implements OnInit {
             nameOnCard: this.card.name
          })
          .subscribe(result2 => {
-            console.log(result2)
+            console.log(result2);
             if (result2.result === 'SUCCESS') {
                this.cardSaveEvent.emit(result2);
             } else {
@@ -165,7 +164,7 @@ export class PaymentCardComponent implements OnInit {
       this.messages = '';
       this.errors = '';
       this.user.id = this.userId;
-      this.card.user = this.user
+      this.card.user = this.user;
       this.card.cardType = CardUtils.getCardType(this.card);
       if (this.card.cardType === '') {
          this.translate.get(['MESSAGE.INVALID_CARD', 'COMMON.ERROR']).subscribe(res => {

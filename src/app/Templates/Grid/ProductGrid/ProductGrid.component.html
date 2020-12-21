@@ -8,11 +8,18 @@
 
       <!-- Multiple show products grid -->
       <mat-card class="product-card" *ngIf="viewType==='grid'">
-         <a class="p-link" *ngIf="prd.product?.id"
+         <a class="p-link" *ngIf="prd.product?.id && fromPage!=='sell'"
             [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
             <img width="626" height="800" mat-card-image
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
          </a>
+
+         <a class="p-link" *ngIf="prd.product?.id && fromPage==='sell'" style="cursor:pointer;"
+            (click)="selectForSaleProduct(prd)">
+            <img width="626" height="800" mat-card-image
+               [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
+         </a>
+
          <a class="p-link" *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']">
             <img width="626" height="800" mat-card-image
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image"
@@ -22,14 +29,22 @@
             <a (click)="productAddToWishlist(prd, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
          </div>
          <mat-card-content class="product-content relative">
-            <h5><a *ngIf="prd.product?.id"
+            <h5><a *ngIf="prd.product?.id && fromPage!=='sell'"
                   [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]"
-                  class="title-link">{{prd?.name}}</a> </h5>
+                  class="title-link">{{prd?.name}}</a>
+
+               <a *ngIf="prd.product?.id && fromPage==='sell'" style="cursor:pointer;" 
+                  (click)="selectForSaleProduct(prd)" class="title-link">{{prd?.name}}</a>
+
+            </h5>
+
+
             <h5><a *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>
             <div>
                <div fxFlex fxLayoutAlign="space-between">
-                  <h6 class="accent-color">{{prd.product.symbolLeft}} {{prd.product?.price}} {{prd.product.symbolRight}}</h6>
+                  <h6 class="accent-color">{{prd.product.symbolLeft}} {{prd.product?.price}} {{prd.product.symbolRight}}
+                  </h6>
                   <div class="rating-star">
                      <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
                   </div>

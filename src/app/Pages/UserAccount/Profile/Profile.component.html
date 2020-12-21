@@ -1,35 +1,82 @@
 <mat-card>
-  <h4>{{'COMMON.PROFILE_INFO'|translate}}</h4>
-  <div class="pt-3">
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.FIRST_NAME'|translate}}:</label>
-      <span>{{user.firstName}}</span>
+  <h1 style="color: #283593;">{{'COMMON.PROFILE_INFO'|translate}}</h1>
+  <div fxLayout="row wrap" class="col-gap">
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+
+      <div class="example-container">
+        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.ACCOUNT_DETAILS' | translate}}</h4>
+
+        <div class="pt-3">
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.FIRST_NAME'|translate}}:</label>
+            <span>{{user.firstName}}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.LAST_NAME'|translate}}:</label>
+            <span>{{user.lastName}}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.GENDER'|translate}}:</label>
+            <span>{{user.sex==='M'?('COMMON.MALE'|translate):('COMMON.FEMALE'|translate) }}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.BIRTH_DATE'|translate}}:</label>
+            <span>{{user.birthDate |date}}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.MOBILE_PHONE'|translate}}:</label>
+            <span>{{user.mobilePhone}}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>{{'COMMON.HOME_PHONE'|translate}}:</label>
+            <span>{{user.homePhone}}</span>
+          </div>
+          <div class="proflie-field mb-3">
+            <label>E-mail:</label>
+            <span>{{user.email}}</span>
+          </div>
+          <button mat-raised-button color="accent" [routerLink]="['edit']"
+            [queryParams]="{type:'info'}">{{'COMMON.EDIT'|translate}}</button>
+        </div>
+      </div>
     </div>
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.LAST_NAME'|translate}}:</label>
-      <span>{{user.lastName}}</span>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <div class="example-container">
+        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.SOCIAL_MEDIA' | translate}}</h4>
+        <div class="proflie-field mb-3">
+          <a href="{{user.facebook?user.facebook:'#/account/profile'}}" target="blank">
+            <mat-icon color="primary">facebook</mat-icon>
+            {{'COMMON.FACEBOOK'|translate}}
+          </a>
+        </div>
+        <div class="proflie-field mb-3">
+          <a href="{{user.twitter?user.twitter:'#/account/profile'}}" target="blank">
+            <mat-icon color="primary">share</mat-icon>
+            {{'COMMON.TWITTER'|translate}}
+          </a>
+        </div>
+        <div class="proflie-field mb-3">
+          <a href="{{user.linkedin?user.linkedin:'#/account/profile'}}" target="blank">
+            <mat-icon color="primary">linkedin</mat-icon>
+            {{'COMMON.LINKEDIN'|translate}}
+          </a>
+        </div>
+        <div class="proflie-field mb-3">
+          <a href="{{user.instagram?user.instagram:'#/account/profile'}}" target="blank">
+            <mat-icon color="primary">perm_media</mat-icon>
+            {{'COMMON.INSTAGRAM'|translate}}
+          </a>
+        </div>
+        <div class="proflie-field mb-3">
+          <a href="{{user.website?user.website:'#/account/profile'}}" target="blank">
+            <mat-icon color="primary">website</mat-icon>
+            {{'COMMON.WEBSITE'|translate}}
+          </a>
+        </div>
+      </div>
     </div>
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.GENDER'|translate}}:</label>
-      <span>{{user.sex==='M'?('COMMON.MALE'|translate):('COMMON.FEMALE'|translate) }}</span>
-    </div>
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.BIRTH_DATE'|translate}}:</label>
-      <span>{{user.birthDate |date}}</span>
-    </div>
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.MOBILE_PHONE'|translate}}:</label>
-      <span>{{user.mobilePhone}}</span>
-    </div>
-    <div class="proflie-field mb-3">
-      <label>{{'COMMON.HOME_PHONE'|translate}}:</label>
-      <span>{{user.homePhone}}</span>
-    </div>
-    <div class="proflie-field mb-3">
-      <label>E-mail:</label>
-      <span>{{user.email}}</span>
-    </div>
-    <button mat-raised-button color="accent" [routerLink]="['edit']"
-      [queryParams]="{type:'info'}">{{'COMMON.EDIT'|translate}}</button>
   </div>
+
 </mat-card>

@@ -30,6 +30,8 @@
   </div>
   <button color="accent" class="button-lg mb-3" mat-raised-button type="submit">
     {{'COMMON.SIGN_IN' | translate }}</button>
+
+  <button mat-button color="accent"  *ngIf="error">{{error}}</button>
   <p> <a mat-button [routerLink]="['/session/signup']" [queryParams]="{fromPage:fromPage}" color="accent"
       class="w-100">{{'COMMON.NEW_REGISTER' | translate }}</a>
   </p>

@@ -23,6 +23,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    card: CreditCard = new CreditCard();
    formData: FormData;
    picture: any[] = [];
+   picture1: any[] = [];
    addresses: Address[] = [];
    store: Store = new Store();
    public addressTypes = [
@@ -141,8 +142,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       this.store.owner = this.user;
       console.log(this.store);
       this.formData = new FormData();
-      if (this.picture && this.picture.length > 0 && this.picture[0].file) {
-         this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+      if (this.picture1 && this.picture1.length > 0 && this.picture1[0].file) {
+         this.formData.append('file[]', this.picture1[0].file, 'picture.' + this.picture1[0].file.name);
       }
       this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
          .subscribe(data => {
@@ -181,17 +182,19 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
    getStore(storeId: number) {
       if (storeId > 0) {
+         this.picture1 = [];
          this.appService.getOneWithChildsAndFiles(storeId, 'Store')
             .subscribe(result => {
                if (result.id > 0) {
                   this.store = result;
+                  console.log(this.store);
                   const images: any[] = [];
                   const image = {
                      link: 'assets/images/stores/' + this.store.id + '/' + this.store.image,
                      preview: 'assets/images/stores/' + this.store.id + '/' + this.store.image
                   };
                   images.push(image);
-                  this.picture = images;
+                  this.picture1 = images;
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
                      this.errors = res['MESSAGE.READ_FAILED'];

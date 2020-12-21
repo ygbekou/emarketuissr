@@ -1,7 +1,11 @@
-<mat-card>
-  <div fxLayoutAlign="space-between">
-    <h4>{{'COMMON.PRODUCT_SALE'|translate}}</h4>
-  </div>
+<mat-card> 
+
+  <a mat-button [routerLink]="['/account/sell-item']">{{'COMMON.PRODUCT_SALE' | translate}}
+    <mat-icon>navigate_next</mat-icon>
+  </a>
+  <a mat-button color="accent" *ngIf="selectedStore && selectedStore.id>0">
+    <h5>{{'COMMON.STORE' | translate}} : {{selectedStore.name}}</h5>
+  </a>
 
   <div fxLayout="row wrap" class="col-gap">
 
@@ -16,42 +20,68 @@
           </div>
         </div>
         <div fxLayout="row wrap" class="col-gap">
+
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
             *ngFor="let store of stores">
-            <mat-card>
-              <mat-card-header>
-                <div mat-card-avatar>
-                  <img src="assets/images/stores/{{store.id}}/{{store.image}}">
-                </div>
-                <mat-card-title>{{store.name}}</mat-card-title>
-                <mat-card-subtitle *ngIf="store.address">{{store.address.city +', '+store.address.country.name}}
-                </mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="pt-3">
-                  <div class="saved-card-box text-xl mb-4">
+            <div class="tile tile-primary">
+              <div class="tile-heading">{{store.name}} <span class="pull-right">
+                  <i *ngIf="store.aprvStatus===0" class="fa fa-spinner"></i>
+                  <i *ngIf="store.aprvStatus===1" class="fa fa-check"></i>
+                  {{store.aprvStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
+              </div>
+              <div class="tile-body">
+                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                    <img height="100%" src="assets/images/stores/{{store.id}}/{{store.image}}">
+                    <br />
+                    <span class="pull-left">
+                      <i *ngIf="store.status===0" class="fa fa-exclamation-circle"></i>
+                      <i *ngIf="store.status===1" class="fa fa-check-circle"></i>
+                      {{store.status===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</span>
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                    <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{store.phone}}</span><br />
+                    <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{store.email}}</span><br />
+                    <span class="pull-left" *ngIf="store.address"><i class="fa fa-map-marker fa-sm"></i>
+                      {{store.address.city}}, {{store.address.country.name}}</span>
                     <div [innerHTML]="store?.description"></div>
                   </div>
                 </div>
+              </div>
+              <div class="tile-footer">
                 <div fxLayout="row wrap" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <button mat-raised-button color="accent" (click)="selectedStore=store;stepper.selectedIndex=1;">
-                      <mat-icon>done</mat-icon>
-                      {{'COMMON.SELECT'|translate}}
-                    </button>
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                    <span class="pull-right">
+                      <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap"
+                        *ngIf="store.status===0 || store.aprvStatus ===0">
+                        {{'COMMON.STORE_NOT_ACTIVATED'|translate}}
+                      </mat-chip>
+
+                      <button *ngIf="store.status===1 && store.aprvStatus ===1" mat-raised-button color="accent"
+                        (click)="selectedStore=store;stepper.selectedIndex=1;">
+                        <mat-icon>done</mat-icon>
+                        {{'COMMON.SELECT'|translate}}
+                      </button>
+                    </span>
                   </div>
                 </div>
-              </mat-card-content>
-            </mat-card>
+              </div>
+            </div>
           </div>
         </div>
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>{{'COMMON.SELECT_CATEGORY'|translate}}</ng-template>
-        <div fxLayout="row wrap">
+        <div fxLayout="row wrap" *ngIf="!(selectedStore.id>0)">
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+              {{'COMMON.SELECT_STORE'|translate}}
+            </mat-chip>
+          </div>
+        </div>
+        <div fxLayout="row wrap" *ngIf="selectedStore.id>0">
           <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
@@ -96,144 +126,6 @@
           [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
         </mat-paginator>
       </mat-step>
-
-      <!--
-      <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELL_PRODUCT'|translate}}</ng-template>
-        <div fxLayout="row wrap" *ngIf="!(productDesc.id>0)">
-          <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'COMMON.SELECT_PRODUCT'|translate}}
-            </mat-chip>
-          </div>
-        </div>
-        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="productDesc">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="relative"
-            *ngIf="productDesc.product && productDesc.product.image">
-            <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
-          </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-            <form name="form" (ngSubmit)="f.form.valid && sell()" #f="ngForm" validate>
-              <div class="product-detail-content">
-                <h3>{{productDesc?.name}}</h3>
-                <div class="product-detail-price">
-                  {{'COMMON.SUGESTED_PRICE'|translate}} : <h4 class="accent-color">
-                    {{productDesc.product.price | currency:appService?.currency}} </h4>
-                </div>
-                <div class="short-des" [innerHTML]="productDesc?.shortDescription"></div>
-
-                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="price" [(ngModel)]="product.price"
-                        name="price" #price="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
-                      <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
-                        [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
-                        <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                          {{taxClass.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
-                        name="quantity" #quantity="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
-                        name="minimum" #minimum="ngModel" required>
-                      <mat-error *ngIf="f.submitted && price.invalid" severity="error">
-                        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-100">
-                      <mat-label> {{'COMMON.DATE_AVAILABLE' | translate}}</mat-label><br />
-                      <input matInput [matDatepicker]="picker" class="form-control" id="dateAvailable"
-                        [(ngModel)]="productStore.dateAvailable" name="dateAvailable" #dateAvailable="ngModel">
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-slide-toggle [(ngModel)]="productStore.status" name="status" #status="ngModel" class="my-2">
-                      {{ (productStore.status?'COMMON.ENABLED':'COMMON.DISABLED') | translate }}
-                    </mat-slide-toggle>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-30">
-                      <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
-                      <input matInput type="text" class="form-control" id="sortOrder"
-                        [(ngModel)]="productStore.sortOrder" name="sortOrder" #sortOrder="ngModel">
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-30">
-                      <mat-label> Points</mat-label>
-                      <input matInput type="text" class="form-control" id="points" [(ngModel)]="productStore.points"
-                        name="points" #points="ngModel">
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                    <mat-form-field class="w-30">
-                      <mat-label>Pourcentage rabais</mat-label>
-                      <input matInput type="text" class="form-control" id="promo" [(ngModel)]="productStore.promo"
-                        name="promo" #promo="ngModel">
-                    </mat-form-field>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-
-                  </div>
-                </div>
-                <div fxLayout="row wrap">
-                  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-                    <div class="text-left mt-2" fxFlex.gt-sm="25">
-                      <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"
-                        type="submit">
-                        <span class="mx-1 uppercase"> {{'COMMON.SELL_PRODUCT'|translate}}</span>
-                        <mat-icon>save</mat-icon>
-                      </button> </div>
-                    <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-                      <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
-                    </div>
-                    <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
-                      <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </mat-step>
--->
     </mat-horizontal-stepper>
   </div>
 </mat-card>

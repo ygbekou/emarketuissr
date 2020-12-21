@@ -66,7 +66,7 @@
             </mat-radio-button>
           </mat-radio-group>
 
-<!--           
+          <!--           
           <div ngModelGroup="passwordGroup" password-matcher #passwordGroup="ngModelGroup">
             <mat-form-field class="w-100 mb-3">
               <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
@@ -434,7 +434,7 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <div class="example-container">
           <h4 class="text-muted text-left fw-600 mb-3"></h4>
-          <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          <input-file [(ngModel)]="picture1" name="gallery1" #gallery1="ngModel" fileLimit="1" fileAccept="image/*"
             [linkEnabled]="true">
           </input-file>
 
@@ -446,7 +446,13 @@
                 {{cat.city +', '+ cat.country.name}}
               </mat-option>
             </mat-select>
+           
           </mat-form-field>
+           <address class="mb-4" *ngIf="store.address">
+              {{store.address.address1}} {{store.address.address2}}<br>
+              {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
+              {{store.address.country.name}}
+            </address>
         </div>
       </div>
 

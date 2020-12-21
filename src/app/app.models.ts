@@ -53,7 +53,7 @@ export class Pagination {
 
 export class BaseModel {
   lang: string;
-  remainingFileNames: string[];
+  remainingFileNames: string[] =[];
   createDate: Date;
 }
 
@@ -195,33 +195,8 @@ export class Product extends BaseModel {
   productVideos: ProductVideo[] = [];
   productDescriptions: ProductDescription[] = [];
   productToCategorys: ProductToCategory[] = [];
-
   type = 'Product';
   action: string;
-
-  /*   cloneWithoutChilds(product: Product) {
-      const copy = { ...product };
-      copy.productDescriptions = [];
-      copy.productVideos = [];
-      copy.productToCategorys = [];
-      console.log('Product copied');
-      console.log(copy);
-      return copy;
-    } */
-
-  /*  clone(): Product {
-     let copy: Product = new Product();
-     copy = JSON.parse(JSON.stringify({ ...this }));
-     copy.productDescriptions = [];
-     copy.productVideos = [];
-     copy.productToCategorys = [];
-     console.log('Product copied');
-     console.log(copy);
-     return copy;
-   }
-   copyData(copyFrom: Product) {
-     this.id = copyFrom.id;
-   } */
 }
 
 export class ProductDescription {
@@ -671,6 +646,7 @@ export class Store extends BaseModel {
   image: string;
   phone: string;
   status: number;
+  aprvStatus: number;
   fileNames: string[];
   modifiedBy: number;
   description: string;
@@ -681,6 +657,7 @@ export class Store extends BaseModel {
 
   constructor() {
     super();
+    this.aprvStatus = 0;
     this.owner = new User();
   }
 }
@@ -1355,6 +1332,7 @@ export class OrderProduct {
   name: string;
   order: Order;
   price: number;
+  ptsId: number;
   product: Product;
   quantity: number;
   reward: number;
@@ -1487,6 +1465,8 @@ export class OnlineOrderVO {
   symbolLeft: string;
   symbolRight: string;
   createDate: Date;
+  status: string;
+  orderProducts: OrderProduct[] = [];
 }
 
 export class StoreOrderVO {
