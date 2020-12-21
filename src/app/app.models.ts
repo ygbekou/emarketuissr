@@ -239,6 +239,21 @@ export class ProductDescription {
   type = 'ProductDescription';
 }
 
+export class ProductDiscount {
+  id: number;
+  productId: number;
+  store: Store;
+  dateEnd: Date;
+  dateStart: Date;
+  price: number;
+  priority: number;
+  quantity: number;
+  percentage: number;
+  status: number;
+  type = 'ProductDiscount';
+}
+
+
 export class ProductAttribute {
   id: number;
   product: Product;
@@ -905,6 +920,9 @@ export class ProductToStore {
   viewed: number;
   modifiedBy: number;
   dateAvailable: Date;
+
+  productDiscounts: ProductDiscount[] = [];
+
   type = 'ProductToStore';
 }
 
