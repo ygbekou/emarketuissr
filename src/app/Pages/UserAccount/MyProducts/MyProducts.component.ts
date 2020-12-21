@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore } from 'src/app/app.models';
+import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, ProductDiscount } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -19,6 +19,12 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
+
+  displayedColumns: string[] = ['quantity', 'priority', 'price', 'percentage', 'dateStart', 'dateEnd', 'status', 'actions'];
+  productDiscountDatasource: MatTableDataSource<ProductDiscount>;
+  @ViewChild(MatPaginator, { static: true }) productDiscountPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
+
   categories: CategoryDescription[][] = [];
   categoryId = 0;
   productId = 0;
@@ -225,21 +231,45 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.applyFilter(data);
   }
 
+  public remove(productDiscount: ProductDiscount) {
+    this.messages = '';
+    this.appService.delete(productDiscount.id, 'com.softenza.emarket.model.ProductDiscount')
+      .subscribe(resp => {
+        if (resp.result === 'SUCCESS') {
+          const index: number = this.productDiscountDatasource.data.indexOf(productDiscount);
+          if (index !== -1) {
+            this.productDiscountDatasource.data.splice(index, 1);
+            this.productDiscountDatasource = new MatTableDataSource<ProductDiscount>(this.productDiscountDatasource.data);
+            this.productDiscountDatasource.paginator = this.productDiscountPaginator;
+            this.productDiscountDatasource.sort = this.productDiscountSort;
+          }
+        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
+          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
+            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
+            this.messages = res['MESSAGE.ERROR_OCCURRED'];
+          });
+        }
+      });
+  }
+
   selectForSaleProduct($event) {
     this.productDesc = $event;
-    const parameters: string[] = [];
-    parameters.push('e.store.id = |stId|' + this.selectedStore.id + '|Integer');
-    parameters.push('e.product.id = |prdId|' + this.productDesc.product.id + '|Integer');
-    this.appService.getAllByCriteria('com.softenza.emarket.model.ProductToStore', parameters)
-      .subscribe((data: ProductToStore[]) => {
-        if (data.length > 0) {
-          this.productStore = data[0];
+    this.appService.getObject('/service/catalog/getProductToStore/' + this.selectedStore.id + '/' + this.productDesc.product.id)
+      .subscribe((data: ProductToStore) => {
+        if (data !== null && data.id > 0) {
+          this.productStore = data;
         } else {
           this.productStore = new ProductToStore();
         }
+        this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
+        this.productDiscountDatasource.paginator = this.productDiscountPaginator;
+        this.productDiscountDatasource.sort = this.productDiscountSort;
       },
         error => console.log(error),
-        () => console.log('Get all ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
+        () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
     this.stepper.selectedIndex = 2;
   }
 
@@ -269,4 +299,14 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   }
 
+
+  addDiscount() {
+    // if (this.productStore.productDiscounts === undefined || this.productStore.productDiscounts === null) {
+    //   this.productStore.productDiscounts = [];
+    // }
+    // this.productStore.productDiscounts.push(new ProductDiscount());
+
+    this.productStore.productDiscounts.push(new ProductDiscount());
+    this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
+  }
 }
