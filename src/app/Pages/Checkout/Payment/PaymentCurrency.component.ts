@@ -24,6 +24,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    order: Order;
    orderTotal: number;
+   pickUp: '0' | '1' = '0';
 
    @Input()
    currencyId: number;
@@ -46,7 +47,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
 
-      
+
 
    }
 
@@ -103,87 +104,100 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
 
    placeYourOrder() {
+      const orderId = this.order ? this.order.id : null;
       this.order = new Order();
-
+      this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
-      this.appService.getIp()
-         .subscribe((data1: any) => {
-            this.order.ip = data1.ip;
 
-            this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
+      if (!this.user.paymentMethodCode) {
+         this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
+            this.error = res;
+         });
+      } else if (!this.user.billingAddress || !this.user.billingAddress.city) {
+         this.translate.get('VALIDATION.SELECT_BILLING_ADDRESS').subscribe(res => {
+            this.error = res;
+         });
+      } else if (this.pickUp === '0' && (!this.user.shippingAddress || !this.user.shippingAddress.city)) {
+         this.translate.get('VALIDATION.SELECT_SHIPPING_ADDRESS').subscribe(res => {
+            this.error = res;
+         });
+      } else {
+         if (this.pickUp === '1') {
+            this.order.shippingMethod = 'PICKUP';
+            this.order.shippingCode = 'PICKUP';
+         }
+         this.appService.getIp()
+            .subscribe((data1: any) => {
+               this.order.ip = data1.ip;
 
-            this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-               .subscribe((data: Order) => {
-
-                  this.appService.timerCountDownPopupClose();
-                  this.order = data;
-                  if (data.errors !== null && data.errors !== undefined) {
-                     this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
-                        this.error = res;
-                     });
-                  } else {
-                     if (this.user.paymentMethodCode !== 'TMONEY') {
-                        this.appService.completeOrder(+this.currencyId);
-                        this.orderCompleteEvent.emit(this.order);
-                     } else {
-                        const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
-                        window.location.href = url;
-                        return;
-                     }
-                  }
-
-               },
-                  error => {
-                     console.log(error);
+               this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
+               console.log('before call');
+               this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
+                  .subscribe((data: Order) => {
+                     console.log(data);
                      this.appService.timerCountDownPopupClose();
+                     this.order = data;
+                     if (data.errors !== null && data.errors !== undefined) {
+                        this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
+                           this.error = res;
+                        });
+                     } else {
+                        if (this.user.paymentMethodCode !== 'TMONEY') {
+                           this.appService.completeOrder(+this.currencyId);
+                           this.orderCompleteEvent.emit(this.order);
+                        } else {
+                           const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+                           window.location.href = url;
+                           return;
+                        }
+                     }
+
                   },
-                  () => console.log('Place Order complete'));
+                     error => {
+                        console.log(error);
+                        console.log('Error');
+                        this.appService.timerCountDownPopupClose();
+                     },
+                     () => console.log('Place Order complete'));
 
-         }, error => console.log(error),
-            () => console.log('Get IP complete'));
-
-
+            }, error => console.log(error),
+               () => console.log('Get IP complete'));
+      }
    }
 
    processPaymentConfirmation() {
-
       if (this.appService.getStoredOrderId() && this.appService.getStoredOrderId() > 0) {
          this.appService.saveWithUrl('/service/order/payment/confirm/', {
             'identifier': this.appService.getStoredOrderId()
          })
-         .subscribe((data: Order) => {
-
-            this.order = data;
-            if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               this.appService.completeOrder(+this.currencyId);
-               this.orderCompleteEvent.emit(this.order);
-            }
-
-            this.appService.clearOrderId();
-         },
-         error => console.log(error),
-         () => console.log('Changing Payment Method complete'));
+            .subscribe((data: Order) => {
+               this.order = data;
+               if (data.errors !== null && data.errors !== undefined) {
+                  this.error = data.errors[0];
+               } else {
+                  this.appService.completeOrder(+this.currencyId);
+                  this.orderCompleteEvent.emit(this.order);
+               }
+               this.appService.clearOrderId();
+            },
+               error => console.log(error),
+               () => console.log('Changing Payment Method complete'));
       }
    }
 
 
    updateOrder(order: Order) {
-
-       if (order.errors !== null && order.errors !== undefined) {
+      if (order.errors !== null && order.errors !== undefined) {
          this.translate.get('MESSAGE.' + order.errors[0]).subscribe(res => {
             this.error = res;
          });
       } else {
          this.orderCompleteEvent.emit(order);
       }
-
-
    }
 }
 

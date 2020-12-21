@@ -1,10 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User, Address, CreditCard, Order } from 'src/app/app.models';
-import { Constants } from 'src/app/app.constants';
 
 @Component({
    selector: 'app-Payment',
@@ -67,13 +66,16 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
 
    updateOrder(order: Order) {
-
       this.order = order;
-
-      this.translate.get('MESSAGE.YOUR_ORDER_WAS_SUCCESSFUL', {currency: order.currencyCode}).subscribe(res => {
-         this.message = res;
-      });
-
+      this.message = '';
+      console.log(this.appService.localStorageCartProducts);
+      if (this.appService.localStorageCartProducts
+         && this.appService.localStorageCartProducts.length > 1) {
+            console.log('more products?');
+         this.translate.get('MESSAGE.PARTIAL_ORDER_SUCCESS', { currency: order.currencyCode }).subscribe(res => {
+            this.message = res;
+         });
+      }
    }
 
 }

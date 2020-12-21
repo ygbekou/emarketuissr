@@ -1,15 +1,16 @@
 <embryo-PageTitle heading="{{'COMMON.ORDER_REVIEW' | translate}}" subHeading=""></embryo-PageTitle>
-<br/>
-<div style="text-align: center; font-size:14px; width:100%;" *ngIf="order !== undefined && order.id > 0">
-  {{message}} <a [routerLink]="['/order']">{{order.id}} </a>
-</div>
 <div class="inner-container section-gap"
   *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
+ <div style="text-align: center; font-size:14px; width:100%;" *ngIf="order !== undefined && order.id > 0 && message">
+  <h4> {{message}} </h4>
+</div>
   <div class="checkout-option">
     <div class="container" *ngIf="isUserLoggedIn()">
       <mat-tab-group>
-        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].currencyCode}}" *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
-          <app-Payment-Currency (orderCompleteEvent)="updateOrder($event)" [currencyId]="item.key"></app-Payment-Currency>
+        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].currencyCode}}"
+          *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
+          <app-Payment-Currency (orderCompleteEvent)="updateOrder($event)" [currencyId]="item.key">
+          </app-Payment-Currency>
         </mat-tab>
       </mat-tab-group>
     </div>
@@ -21,7 +22,12 @@
     <div class="mb-4">
       <img src="assets/images/empty-cart.png" height="128" width="128" alt="cart-empty">
     </div>
-    <h4> {{'MESSAGE.CART_EMPTY'|translate}}.</h4>
+    <h4 *ngIf="!(order&&order.id>0)"> {{'MESSAGE.CART_EMPTY'|translate}}.</h4>
+    <h4 *ngIf="(order&&order.id>0)"> {{'MESSAGE.FULL_ORDER_SUCCESS'|translate}}</h4>
     <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
+    &nbsp; | &nbsp;
+    <a href="javascript:void(0)" class="primary-color"
+      [routerLink]="['/account/open-orders']">{{'COMMON.VIEW_OPEN_ORDERS'|translate}}</a>
+
   </div>
 </ng-template>

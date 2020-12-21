@@ -15,6 +15,7 @@ export class AddressesComponent implements OnInit {
   shippingAddresses: Address[] = [];
   billingAddresses: Address[] = [];
   error: string;
+  indexExpanded = -1;
 
   @Input() userId;
 
@@ -24,7 +25,7 @@ export class AddressesComponent implements OnInit {
   @ViewChild('shippingExpansionPanelElement', { static: false }) shippingExpansionPanelElement: MatExpansionPanel;
   @ViewChild('billingExpansionPanelElement', { static: false }) billingExpansionPanelElement: MatExpansionPanel;
 
-
+  step = 0;
   constructor(public appService: AppService, public translate: TranslateService) {
   }
 
@@ -35,6 +36,9 @@ export class AddressesComponent implements OnInit {
     this.getAddresses();
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
   getAddresses() {
     this.shippingAddresses = [];
     this.billingAddresses = [];
@@ -117,8 +121,15 @@ export class AddressesComponent implements OnInit {
 
   onAddressSaved($event) {
     this.updateTable($event);
-    this.shippingExpansionPanelElement.close();
-    this.billingExpansionPanelElement.close();
+    console.log('onAddressSaved called');
+    console.log($event);
+    // this.setStep(-1);
+    if (this.shippingExpansionPanelElement) {
+      this.shippingExpansionPanelElement.close();
+    }
+    if (this.billingExpansionPanelElement) {
+      this.billingExpansionPanelElement.close();
+    }
   }
 
 
