@@ -225,7 +225,12 @@ export class ProductDiscount {
   quantity: number;
   percentage: number;
   status: number;
+  modifiedBy: number;
   type = 'ProductDiscount';
+
+  // Transient variable
+  disablePrice: boolean;
+  disablePercentage: boolean;
 }
 
 

@@ -623,7 +623,10 @@
 		"GO_SHOPPING": "Go for Shopping",
 		"YOUR_ORDER_WAS_SUCCESSFUL": "Your order for currency {{currency}} was successfully completed. To view the order click on order id:  ",
 		"PAYMENT_DECLINED": "Your payment was declined. Please verify and try again later. ",
-		"SYSTEM_ERROR": "Error happened in the system. Please contact the administrator. "
+		"SYSTEM_ERROR": "Error happened in the system. Please contact the administrator. ",
+		"PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Either Price or Percentage is needed is required",
+		"START_DATE_END_DATE_VALIDATE": "Start Date cannot be greater than End Date."
+
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

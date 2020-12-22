@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, ProductDiscount } from 'src/app/app.models';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CategoryDescription, ProductDescription, Product, Store, Pagination, 
+  ProductToStore, ProductDiscount } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -20,8 +21,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
-  displayedColumns: string[] = ['quantity', 'priority', 'price', 'percentage', 'dateStart', 'dateEnd', 'status', 'actions'];
-  productDiscountDatasource: MatTableDataSource<ProductDiscount>;
+  displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'status', 'actions'];
+  productDiscountDatasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
 
@@ -54,8 +55,13 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   public removedSearchField: string;
   public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
   public message: string;
+  public productDiscountMessage: string;
   public errors: string;
+  public productDiscountErrors: string;
   public watcher: Subscription;
+
+  public disablePrice: boolean;
+  public disablePercentage: boolean;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -231,30 +237,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.applyFilter(data);
   }
 
-  public remove(productDiscount: ProductDiscount) {
-    this.messages = '';
-    this.appService.delete(productDiscount.id, 'com.softenza.emarket.model.ProductDiscount')
-      .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-          const index: number = this.productDiscountDatasource.data.indexOf(productDiscount);
-          if (index !== -1) {
-            this.productDiscountDatasource.data.splice(index, 1);
-            this.productDiscountDatasource = new MatTableDataSource<ProductDiscount>(this.productDiscountDatasource.data);
-            this.productDiscountDatasource.paginator = this.productDiscountPaginator;
-            this.productDiscountDatasource.sort = this.productDiscountSort;
-          }
-        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
-          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
-          });
-        } else {
-          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.ERROR_OCCURRED'];
-          });
-        }
-      });
-  }
-
   selectForSaleProduct($event) {
     this.productDesc = $event;
     this.appService.getObject('/service/catalog/getProductToStore/' + this.selectedStore.id + '/' + this.productDesc.product.id)
@@ -263,6 +245,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
           this.productStore = data;
         } else {
           this.productStore = new ProductToStore();
+          this.productStore.productDiscounts.push(new ProductDiscount());
         }
         this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
         this.productDiscountDatasource.paginator = this.productDiscountPaginator;
@@ -301,12 +284,80 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
 
   addDiscount() {
-    // if (this.productStore.productDiscounts === undefined || this.productStore.productDiscounts === null) {
-    //   this.productStore.productDiscounts = [];
-    // }
-    // this.productStore.productDiscounts.push(new ProductDiscount());
+    this.productDiscountDatasource.data.unshift(new ProductDiscount());
+    this.productDiscountDatasource = new MatTableDataSource(this.productDiscountDatasource.data);
+    this.productDiscountDatasource.paginator = this.productDiscountPaginator;
+    this.productDiscountDatasource.sort = this.productDiscountSort;
 
-    this.productStore.productDiscounts.push(new ProductDiscount());
-    this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
+  }
+
+  public deleteProductDiscount(productDiscount: ProductDiscount, index: number) {
+
+    if (productDiscount.id === undefined || productDiscount.id === null) {
+        this.productDiscountDatasource = this.resetDatasource(this.productDiscountDatasource, index);
+        return;
+    }
+
+    this.appService.delete(productDiscount.id, 'ProductDiscount')
+        .subscribe(data => {
+      this.productDiscountDatasource = this.processDataSourceDeleteResult(data,
+        this.messages, productDiscount, this.productDiscountDatasource);
+    });
+  }
+
+
+  saveProductDiscount(productDiscount: ProductDiscount) {
+    this.productDiscountMessage = '';
+    this.productDiscountErrors = '';
+    this.setToggleValues(productDiscount);
+
+    if (!this.validateProductDiscount(productDiscount)) {
+      return;
+    }
+
+    productDiscount.productId = this.productDesc.product.id;
+    productDiscount.store = this.selectedStore;
+    productDiscount.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    console.info(productDiscount);
+    this.appService.save(productDiscount, 'ProducDiscount')
+      .subscribe(result => {
+        this.processResult(result, productDiscount, null);
+      });
+
+  }
+
+  validateProductDiscount(productDiscount: ProductDiscount) {
+    if (this.isBlank(productDiscount.price) && this.isBlank(productDiscount.percentage)) {
+      this.errors = 'Either Price or Percentage is needed is required';
+      return false;
+    }
+    
+    if (productDiscount.dateStart > productDiscount.dateEnd) {
+      this.errors = 'Start Date cannot be greater than End Date.';
+      return false;
+    }
+
+    return true;
+  }
+
+  setToggleValues(productDiscount: ProductDiscount) {
+    productDiscount.status = (productDiscount.status === null
+      || productDiscount.status.toString() === 'false'
+      || productDiscount.status.toString() === '0') ? 0 : 1;
+  }
+
+  togglePrice(productDiscount: ProductDiscount) {
+    productDiscount.price = undefined;
+    productDiscount.disablePrice = !this.isBlank(productDiscount.percentage);
+  }
+
+  togglePercentage(productDiscount: ProductDiscount) {
+    productDiscount.percentage = undefined;
+    productDiscount.disablePercentage = !this.isBlank(productDiscount.price);
+  }
+
+  isBlank(value) {
+    return value === undefined || value === null || value.toString() === ''
   }
 }

@@ -622,7 +622,9 @@
     "GO_SHOPPING": "Continuez le shopping",
     "YOUR_ORDER_WAS_SUCCESSFUL": "Votre commande pour la devise {{currency}} a Ã©tÃ© exÃ©cutÃ©e avec succÃ¨s. Pour voir la commande, cliquez sur le numéro de commande:",
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
-		"SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur." 
+    "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur." ,
+    "PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Le prix ou le pourcentage est requis.",
+		"START_DATE_END_DATE_VALIDATE": "La date de dÃ©but ne peut pas etre postÃ©rieure à la date de fin."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
