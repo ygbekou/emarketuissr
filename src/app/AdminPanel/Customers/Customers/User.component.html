@@ -1,3 +1,10 @@
+<a mat-button [routerLink]="['/admin/customers/users']">{{'COMMON.CUSTOMER' | translate}}s
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent">
+  <h5>{{user.firstName +' '+ user.lastName}}</h5>
+</a>
+
 <mat-tab-group (selectedTabChange)="tabClick($event)">
   <mat-tab label="{{'COMMON.GENERAL' | translate}}">
     <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
@@ -5,9 +12,9 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <div class="text-center mt-2">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-                <mat-icon>save</mat-icon>
-            </button> 
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button>
           </div>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
@@ -16,7 +23,7 @@
           </div>
         </div>
       </div>
-      
+
       <div fxLayout="row wrap">
         <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.ACCOUNT_DETAILS' | translate}}</h4>
       </div>
@@ -35,16 +42,16 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.USER_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="userName" [(ngModel)]="user.userName" 
-              name="userName" #userName="ngModel">
+            <input matInput type="text" class="form-control" id="userName" [(ngModel)]="user.userName" name="userName"
+              #userName="ngModel">
           </mat-form-field>
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.EMAIL' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="email" [(ngModel)]="user.email" 
-              name="email" #email="ngModel">
+            <input matInput type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email"
+              #email="ngModel">
           </mat-form-field>
         </div>
       </div>
@@ -53,23 +60,23 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.FIRST_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" 
+            <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName"
               name="firstName" #firstName="ngModel">
           </mat-form-field>
         </div>
-        
+
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.LAST_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" 
-              name="lastName" #lastName="ngModel">
+            <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName"
+              #lastName="ngModel">
           </mat-form-field>
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.MIDDLE_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="middleName" [(ngModel)]="user.middleName" 
+            <input matInput type="text" class="form-control" id="middleName" [(ngModel)]="user.middleName"
               name="middleName" #middleName="ngModel">
           </mat-form-field>
         </div>
@@ -98,7 +105,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="18" fxFlex.lg="18" fxFlex.xl="18" class="p-3">
           <mat-radio-group id="sex" class="form-control" [(ngModel)]="user.sex" name="sex" #sex="ngModel" required>
             <mat-radio-button value="F">
               {{'COMMON.MALE' | translate }}
@@ -108,35 +115,7 @@
             </mat-radio-button>
           </mat-radio-group>
         </div>
-      </div>
-
-
-    <div fxLayout="row wrap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
-            <input matInput type="password" class="form-control" id="password" [(ngModel)]="user.password"
-              name="password" #password="ngModel" autocomplete="off" required>
-            <mat-error *ngIf="f.submitted && password.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.CONFIRM_PASSWORD' | translate}}</mat-label>
-            <input matInput type="password" class="form-control" id="confirmPassword"
-              [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" autocomplete="off">
-            <mat-error *ngIf="f.submitted && confirmPassword.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-          <mat-error *ngIf="f.submitted && confirmPassword.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </div>
-        
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-3">
           <mat-form-field class="w-100">
             <input matInput [matDatepicker]="picker" placeholder="{{'COMMON.BIRTH_DATE'|translate}}"
               [(ngModel)]="user.birthDate" name="birthDate" #birthDate="ngModel">
@@ -144,58 +123,77 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
-    </div>
-
-    <div fxLayout="row wrap">
-      <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.SOCIAL_MEDIA' | translate}}</h4>
-    </div>
-
-    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.FACEBOOK' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="facebook" [(ngModel)]="user.facebook" name="facebook"
-            #facebook="ngModel">
-        </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.TWITTER' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="twitter" [(ngModel)]="user.twitter" name="twitter"
-            #twitter="ngModel">
-        </mat-form-field>
+      <div fxLayout="row wrap">
+        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.SOCIAL_MEDIA' | translate}}</h4>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.FACEBOOK' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="facebook" [(ngModel)]="user.facebook" name="facebook"
+              #facebook="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.TWITTER' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="twitter" [(ngModel)]="user.twitter" name="twitter"
+              #twitter="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.LINKEDIN' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="linkedin" [(ngModel)]="user.linkedin" name="linkedin"
               #linkedin="ngModel">
           </mat-form-field>
-      </div>
-    </div>
-
-    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.INSTAGRAM' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="instagram" [(ngModel)]="user.instagram"
-            name="instagram" #instagram="ngModel">
-        </mat-form-field>
+        </div>
       </div>
 
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.WEBSITE' | translate}}</mat-label>
-          <input matInput type="text" class="form-control" id="website" [(ngModel)]="user.website" name="website"
-            #website="ngModel">
-        </mat-form-field>
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.INSTAGRAM' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="instagram" [(ngModel)]="user.instagram"
+              name="instagram" #instagram="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.WEBSITE' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="website" [(ngModel)]="user.website" name="website"
+              #website="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-slide-toggle [(ngModel)]="user.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+        </div>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
-        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
-          [linkEnabled]="true">
-        </input-file>
+
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+          <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+            [linkEnabled]="true">
+          </input-file>
+        </div>
       </div>
-    </div>
 
     </form>
   </mat-tab>
@@ -205,18 +203,16 @@
   <mat-tab label="{{'COMMON.PAYMENT_METHOD' | translate}}" *ngIf="user.id > 0">
     <app-PaymentChangeModel [userId]="user.id" *ngIf="selectedTabIndex === 2"></app-PaymentChangeModel>
   </mat-tab>
-  <mat-tab label="{{'COMMON.HISTORY' | translate}}" *ngIf="user.id > 0">
+  <mat-tab label="{{'COMMON.MESSAGE' | translate}}s" *ngIf="user.id > 0">
     <app-customer-history [userId]="user.id" *ngIf="selectedTabIndex === 3"></app-customer-history>
   </mat-tab>
-  <mat-tab label="{{'COMMON.TRANSACTION' | translate}}" *ngIf="user.id > 0">
+<!--   <mat-tab label="{{'COMMON.ORDER' | translate}}s" *ngIf="user.id > 0">
     <app-customer-transaction [userId]="user.id" *ngIf="selectedTabIndex === 4"></app-customer-transaction>
-  </mat-tab>
+  </mat-tab> -->
   <mat-tab label="{{'COMMON.REWARD_POINTS' | translate}}" *ngIf="user.id > 0">
-    <app-customer-reward [userId]="user.id" *ngIf="selectedTabIndex === 5"></app-customer-reward>
+    <app-customer-reward [userId]="user.id" *ngIf="selectedTabIndex === 4"></app-customer-reward>
   </mat-tab>
-  <mat-tab label="{{'COMMON.STORES' | translate}}" *ngIf="user.id > 0"> 
-    <app-stores [userId]="user.id" *ngIf="selectedTabIndex === 6"></app-stores>
+  <mat-tab label="{{'COMMON.STORES' | translate}}" *ngIf="user.id > 0">
+    <app-stores [userId]="user.id" *ngIf="selectedTabIndex === 5"></app-stores>
   </mat-tab>
 </mat-tab-group>
-        
-    

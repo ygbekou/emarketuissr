@@ -131,7 +131,9 @@
 
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{'COMMON.PARENT' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.CATEGORY' | translate}}" id="parent" name="parent"
+            <mat-select placeholder="{{'COMMON.CATEGORY' | translate}}" 
+             [compareWith]="compareObjects" 
+            id="parent" name="parent"
               [(ngModel)]="category.parent" #parent="ngModel">
               <mat-option *ngFor="let cat of categories" [value]="cat.category">
                 {{cat.name}}

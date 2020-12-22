@@ -427,6 +427,24 @@
           <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
+              name="currency" [(ngModel)]="store.currency" #currency="ngModel">
+              <mat-option *ngFor="let cat of currencies" [value]="cat">
+                {{cat.code +' - '+ cat.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.STORE_CODE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="code" [(ngModel)]="store.code" name="code"
+              #code="ngModel">
+            <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
 
         </div>
       </div>
@@ -440,19 +458,18 @@
 
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.ADDRESS' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" id="address" name="address"
-              [(ngModel)]="store.address" #address="ngModel">
+            <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" [compareWith]="compareObjects" id="address"
+              name="address" [(ngModel)]="store.address" #address="ngModel">
               <mat-option *ngFor="let cat of addresses" [value]="cat">
                 {{cat.city +', '+ cat.country.name}}
               </mat-option>
             </mat-select>
-           
           </mat-form-field>
-           <address class="mb-4" *ngIf="store.address">
-              {{store.address.address1}} {{store.address.address2}}<br>
-              {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
-              {{store.address.country.name}}
-            </address>
+          <address class="mb-4" *ngIf="store.address">
+            {{store.address.address1}} {{store.address.address2}}<br>
+            {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
+            {{store.address.country.name}}
+          </address>
         </div>
       </div>
 

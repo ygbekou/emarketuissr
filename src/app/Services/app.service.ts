@@ -850,7 +850,7 @@ export class AppService {
    }
 
    public getIp = (): Observable<any> => {
-      return this.http.get('http://api.ipify.org/?format=json')
+      return this.http.get('https://api.ipify.org/?format=json')
          .pipe(catchError(this.handleError));
    }
 

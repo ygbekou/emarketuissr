@@ -1,6 +1,6 @@
 <div class="sidenav-scrollbar-container" fxLayout="column">
    <mat-nav-list fxLayout="column" menuToggleDirective class="navigation">
-      <mat-list-item menuToggleLink *ngFor="let menuitem of menuItems.getAll()">
+      <mat-list-item menuToggleLink *ngFor="let menuitem of menuItems.getAll(lang)">
          <a menuToggle class="relative" mat-ripple [routerLink]="['/'+menuitem.state]" routerLinkActive="active-link" *ngIf="menuitem.type === 'link'">
          <mat-icon>{{ menuitem.icon }}</mat-icon>
          <span>{{ menuitem.name | translate }}</span>

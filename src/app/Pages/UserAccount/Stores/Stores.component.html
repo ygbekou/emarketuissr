@@ -1,5 +1,5 @@
 <mat-card>
-  <div fxLayoutAlign="space-between">
+  <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
     <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
       [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
   </div>
@@ -20,8 +20,15 @@
                 <i *ngIf="store.status===0" class="fa fa-exclamation-circle"></i>
                 <i *ngIf="store.status===1" class="fa fa-check-circle"></i>
                 {{store.status===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</span>
+              <br />
+              <span class="pull-left">
+                <i class="fa fa-money-bill"></i>
+                {{store.currency?store.currency.code:''}}</span>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+
+              <span class="pull-left"><i class="fa fa-user-secret"></i>
+                {{'COMMON.STORE_CODE'|translate}} : {{store.code}}</span><br />
               <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{store.phone}}</span><br />
               <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{store.email}}</span><br />
               <span class="pull-left" *ngIf="store.address"><i class="fa fa-map-marker fa-sm"></i>
@@ -37,8 +44,12 @@
             </div>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
               <span class="pull-right">
-                <button mat-raised-button color="primary" [routerLink]="['/account/profile/edit']"
+                <button mat-raised-button color="primary" *ngIf="!fromAdmin"
+                  [routerLink]="['/account/profile/edit']"
                   [queryParams]="{type:'store', sId:store.id}">{{'COMMON.EDIT'|translate}}</button>
+
+                <button mat-raised-button color="primary" *ngIf="fromAdmin"
+                  [routerLink]="['/admin/customers/store/'+store.id]">{{'COMMON.EDIT'|translate}}</button>
               </span>
             </div>
           </div>

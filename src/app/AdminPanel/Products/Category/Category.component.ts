@@ -49,6 +49,10 @@ export class CategoryComponent implements OnInit {
         () => console.log('Get all CategoryDescription complete'));
   }
 
+   compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
+
   clear() {
     this.category = new Category();
     this.catDescs = [];

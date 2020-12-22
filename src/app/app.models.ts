@@ -653,6 +653,7 @@ export class Store extends BaseModel {
   sslUrl: string;
   url: string;
   currency: Currency;
+  code: string;
   type = 'Store';
 
   constructor() {

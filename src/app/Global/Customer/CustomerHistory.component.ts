@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { ReturnHistory, CustomerHistory } from 'src/app/app.models';
+import { CustomerHistory } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,7 +8,8 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 @Component({
   selector: 'app-customer-history',
-  templateUrl: './CustomerHistory.component.html'
+  templateUrl: './CustomerHistory.component.html',
+  styleUrls: ['./CustomerHistory.component.scss']
 })
 export class CustomerHistoryComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['dateAdded', 'comment', 'notified', 'actions'];

@@ -12,18 +12,20 @@ export class StoresComponent implements OnInit {
 
   stores: Store[] = [];
   error: string;
-
+  fromAdmin = false;
   @Input()
   userId;
 
   constructor(public appService: AppService, public translate: TranslateService) {
-    
+
   }
 
   ngOnInit() {
 
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
+    } else {
+      this.fromAdmin = true;
     }
     this.getStores();
 

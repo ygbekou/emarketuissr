@@ -257,9 +257,9 @@
       <td mat-footer-cell *matFooterCellDef>
         <span class="mobile-value bold">
           {{store.currency.symbolLeft}}
-          {{ order.total?(order.total-
+          {{ (order.total?(order.total-
           (order.shippingCost?order.shippingCost:0)
-          -(order.taxFees?order.taxFees:0)):0 | number:'1.0-2'}}
+          -(order.taxFees?order.taxFees:0)):0) | number:'1.0-2'}}
           {{store.currency.symbolRight}}
         </span>
       </td>

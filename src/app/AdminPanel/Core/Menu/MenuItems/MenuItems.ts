@@ -22,16 +22,10 @@ const MENUITEMS = [
     icon: 'poll'
   },
   {
-    state: 'admin/invoices',
-    name: 'Invoices',
-    type: 'link',
-    icon: 'recent_actors'
-  },
-  {
     state: 'admin',
     name: 'Products',
     type: 'sub',
-    icon: 'shopping_cart',
+    icon: 'shopping_basket',
     children: [
       { state: 'categories', name: 'Categories', type: 'link' },
       { state: 'products', name: 'Products', type: 'link' },
@@ -65,7 +59,7 @@ const MENUITEMS = [
     state: 'admin/system',
     name: 'System',
     type: 'sub',
-    icon: 'shopping_cart',
+    icon: 'settings',
     children: [
       { state: 'stores', name: 'Stores', type: 'link' },
       { state: 'configs', name: 'Configuration', type: 'link' },
@@ -78,18 +72,12 @@ const MENUITEMS = [
       { state: 'returnActions', name: 'Return Actions', type: 'link' },
       { state: 'countries', name: 'Countries', type: 'link' },
       { state: 'zones', name: 'Zones', type: 'link' },
-      { state: 'geoZones', name: 'Geo Zones', type: 'link' },
+      { state: 'geoZones', name: 'Shipping Zones', type: 'link' },
       { state: 'lengthClasses', name: 'Length classes', type: 'link' },
       { state: 'weightClasses', name: 'Weight classes', type: 'link' },
       { state: 'taxClasses', name: 'Tax classes', type: 'link' },
       { state: 'taxRates', name: 'Tax rates', type: 'link' }
     ]
-  },
-  {
-    state: 'admin/account/profile',
-    name: 'Profile',
-    type: 'link',
-    icon: 'account_circle'
   },
   {
     state: '/home',
@@ -99,9 +87,85 @@ const MENUITEMS = [
   }
 ];
 
+const MENUITEMS_FR = [
+  {
+    state: 'admin/admindash',
+    name: 'Tableau de board',
+    type: 'link',
+    icon: 'poll'
+  },
+  {
+    state: 'admin',
+    name: 'Produits',
+    type: 'sub',
+    icon: 'shopping_basket',
+    children: [
+      { state: 'categories', name: 'Categories', type: 'link' },
+      { state: 'products', name: 'Produits', type: 'link' },
+      { state: 'marketings', name: 'Marketing', type: 'link' },
+      { state: 'attributes', name: 'Attributs', type: 'link' },
+      { state: 'options', name: 'Options', type: 'link' },
+      { state: 'information', name: 'Information', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/sales',
+    name: 'Ventes',
+    type: 'sub',
+    icon: 'shopping_cart',
+    children: [
+      { state: 'orders', name: 'Commandes', type: 'link' },
+      { state: 'returns', name: 'Retours', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/customers',
+    name: 'Clients',
+    type: 'sub',
+    icon: 'people',
+    children: [
+      { state: 'users', name: 'Utilisateurs', type: 'link' },
+      { state: 'stores/list', name: 'Boutiques', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/system',
+    name: 'Systeme',
+    type: 'sub',
+    icon: 'settings',
+    children: [
+      { state: 'configs', name: 'Configuration', type: 'link' },
+      { state: 'languages', name: 'Langues', type: 'link' },
+      { state: 'currencies', name: 'Monnaies', type: 'link' },
+      { state: 'stockStatuses', name: 'Etat des stocks', type: 'link' },
+      { state: 'orderStatuses', name: 'Etats des commandes', type: 'link' },
+      { state: 'returnStatuses', name: 'Etats des retours', type: 'link' },
+      { state: 'returnReasons', name: 'Raisons des retours', type: 'link' },
+      { state: 'returnActions', name: 'Actions des retours', type: 'link' },
+      { state: 'countries', name: 'Pays', type: 'link' },
+      { state: 'zones', name: 'Zones', type: 'link' },
+      { state: 'geoZones', name: 'Zones d\'expedition', type: 'link' },
+      { state: 'lengthClasses', name: 'Unites de longueur', type: 'link' },
+      { state: 'weightClasses', name: 'Unites de masse', type: 'link' },
+      { state: 'taxClasses', name: 'Classes de taxes', type: 'link' },
+      { state: 'taxRates', name: 'Taux de taxes', type: 'link' }
+    ]
+  },
+  {
+    state: '/home',
+    name: 'Aller sur le site',
+    type: 'link',
+    icon: 'home'
+  }
+];
+
 @Injectable()
 export class AdminMenuItems {
-  getAll(): Menu[] {
-    return MENUITEMS;
+  getAll(lang: string): Menu[] {
+    if (!lang || lang === 'fr') {
+      return MENUITEMS_FR;
+    } else {
+      return MENUITEMS;
+    }
   }
 }
