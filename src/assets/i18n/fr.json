@@ -627,9 +627,10 @@
     "PRODUCT_QUANTITY_ERROR": "Quantité commandee dépasse la quatité disponible",
     "PARTIAL_ORDER_SUCCESS": "Votre commande pour la devise {{currency}} a été placée avec succès. Passez la commande pour le reste des devises.",
     "FULL_ORDER_SUCCESS": "Votre commande a été placée avec succès. Merci.",
-
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
-    "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur."
+    "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur.",
+    "PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Le prix ou le pourcentage est requis.",
+    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

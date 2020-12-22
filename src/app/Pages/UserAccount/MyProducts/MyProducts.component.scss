@@ -108,3 +108,11 @@ textarea {
     margin-top: 0.5rem;
     line-height: 1.5;
 }
+
+mat-form-field {
+    width: 90% !important;
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    max-width: 100px;
+}

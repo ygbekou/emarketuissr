@@ -69,13 +69,12 @@ export class BaseComponent {
 
 
   protected processDataSourceDeleteResult(resp, messages, object, dataSource) {
+
+
     if (resp.result === 'SUCCESS') {
       const index: number = dataSource.data.indexOf(object);
       if (index !== -1) {
-        dataSource.data.splice(index, 1);
-        dataSource = new MatTableDataSource <any>(this.dataSource.data);
-        dataSource.paginator = this.paginator;
-        dataSource.sort = this.sort;
+        this.resetDatasource(dataSource, index);
       }
     } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
       this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
@@ -86,10 +85,23 @@ export class BaseComponent {
         this.messages = res['MESSAGE.ERROR_OCCURRED'];
       });
     }
+
+    return dataSource;
   }
 
   public isBlank(value: any) {
     return value === undefined || value === null || value === '';
+  }
+
+  public resetDatasource(dataSource, index: number) {
+    if (index !== undefined) {
+      dataSource.data.splice(index, 1);
+    }
+    dataSource = new MatTableDataSource <any>(dataSource.data);
+    dataSource.paginator = this.paginator;
+    dataSource.sort = this.sort;
+
+    return dataSource;
   }
 
 }
