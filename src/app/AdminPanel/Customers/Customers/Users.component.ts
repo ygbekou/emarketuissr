@@ -10,10 +10,10 @@ import { BaseComponent } from '../../baseComponent';
 @Component({
   selector: 'app-users',
   templateUrl: './Users.component.html',
-  styleUrls: ['./Users.component.scss'] 
+  styleUrls: ['./Users.component.scss']
 })
 export class UsersComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['groupName', 'name', 'userName', 'email', 'birthDate', 'status', 'dateAdded', 'actions'];
+  displayedColumns: string[] = ['name', 'phone', 'email', 'sex', 'groupName', 'dateAdded', 'status'];
   dataSource: MatTableDataSource<User>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -22,8 +22,8 @@ export class UsersComponent extends BaseComponent implements OnInit {
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.searchCriteria = new UserSearchCriteria();

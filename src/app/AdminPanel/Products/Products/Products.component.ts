@@ -13,7 +13,7 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Products.component.scss']
 })
 export class ProductsComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'image', 'name', 'model', 'price', 'quantity', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'model', 'price', 'quantity', 'status'];
   dataSource: MatTableDataSource<ProductDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

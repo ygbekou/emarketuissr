@@ -12,23 +12,24 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./Categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'image', 'name', 'sortOrder', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'sortOrder', 'status'];
   dataSource: MatTableDataSource<CategoryDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  messages = ''; 
+  messages = '';
   constructor(public appService: AppService,
     private translate: TranslateService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getAll();
   }
+
 
   getAll() {
     const parameters: string[] = [];
     parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters,
-    ' order by e.category.sortOrder ')
+      ' order by e.category.sortOrder ')
       .subscribe((data: CategoryDescription[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;

@@ -50,6 +50,16 @@
         <mat-slide-toggle [(ngModel)]="store.aprvStatus" name="aprvStatus" #aprvStatus="ngModel" class="my-2">
           {{ 'COMMON.APPROVE' | translate }}
         </mat-slide-toggle>
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+          <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}"
+           [compareWith]="compareObjects" id="currency"
+            name="currency" [(ngModel)]="store.currency" #currency="ngModel">
+            <mat-option *ngFor="let cat of currencies" [value]="cat">
+              {{cat.code +' - '+ cat.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
       </div>
     </div>
@@ -73,6 +83,15 @@
           [linkEnabled]="true">
         </input-file>
 
+        <mat-form-field class="w-100 mb-3">
+          <mat-label> {{'COMMON.STORE_CODE' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="code" [(ngModel)]="store.code" name="code"
+            #code="ngModel">
+          <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
 

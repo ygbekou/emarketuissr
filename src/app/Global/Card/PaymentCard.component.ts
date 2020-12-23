@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { CreditCard, User } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,7 @@ declare var Stripe: any;
    templateUrl: './PaymentCard.component.html',
    styleUrls: ['./PaymentCard.component.scss']
 })
-export class PaymentCardComponent implements OnInit {
+export class PaymentCardComponent implements OnInit, AfterViewInit {
 
    card: CreditCard = new CreditCard();
    user: User = new User();
@@ -56,11 +56,10 @@ export class PaymentCardComponent implements OnInit {
             return this.setupElements(data);
          })
          .then(data => {
-            console.info(data);
             this.data = data;
             document.querySelector('button').disabled = false;
 
-            let form = document.getElementById('payment-form');
+            const form = document.getElementById('payment-form');
             form.addEventListener('submit', this.handleCardSave.bind(this));
          });
    }
@@ -75,8 +74,8 @@ export class PaymentCardComponent implements OnInit {
       this.stripe = Stripe(data.publishableKey);
 
       /* ------- Set up Stripe Elements to use in checkout form ------- */
-      let elements = this.stripe.elements();
-      let style = {
+      const elements = this.stripe.elements();
+      const style = {
          base: {
             color: '#32325d',
             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
@@ -92,7 +91,7 @@ export class PaymentCardComponent implements OnInit {
          }
       };
 
-      let card = elements.create('card', { style: style });
+      const card = elements.create('card', { style: style });
       card.mount('#card-element');
 
       return {
@@ -123,9 +122,9 @@ export class PaymentCardComponent implements OnInit {
             }
          })
          .then(function (response) {
-            if (response.error) {
+            if (response && response.error) {
                // showError(response.error);
-            } else if (response.requiresAction) {
+            } else if (response && response.requiresAction) {
                // Request authentication
                // handleAction(response.clientSecret);
             } else {

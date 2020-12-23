@@ -53,7 +53,7 @@ export class Pagination {
 
 export class BaseModel {
   lang: string;
-  remainingFileNames: string[] =[];
+  remainingFileNames: string[] = [];
   createDate: Date;
 }
 
@@ -658,6 +658,7 @@ export class Store extends BaseModel {
   sslUrl: string;
   url: string;
   currency: Currency;
+  code: string;
   type = 'Store';
 
   constructor() {
@@ -1332,6 +1333,7 @@ export class Order {
   createDate: Date;
   modDate: Date;
   modifiedBy: number;
+  failureReason: string;
   paygateGlobalPaymentUrl: string;
   errors: string[];
 

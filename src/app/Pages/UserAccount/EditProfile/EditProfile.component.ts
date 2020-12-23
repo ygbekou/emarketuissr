@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, Address, Country, Zone, CreditCard, Store } from 'src/app/app.models';
+import { User, Address, Country, Zone, CreditCard, Store, Currency } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +26,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    picture1: any[] = [];
    addresses: Address[] = [];
    store: Store = new Store();
+   currencies: Currency[] = [];
    public addressTypes = [
       { id: 1, name: 'Shipping address' },
       { id: 2, name: 'Billing address' }
@@ -58,6 +59,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    }
 
    ngOnInit() {
+      this.getCurrencies();
       this.getUser();
       this.getCountries();
       this.getAddresses();
@@ -84,12 +86,26 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       }
    }
 
+   compareObjects(o1: any, o2: any): boolean {
+      return o1 && o2 ? (o1.id === o2.id) : false;
+   }
    getBackground() {
       this.creditCardBackground = 'background-image: url(assets/images/cards/'
          + this.card.cardNumber.substring(0, 1) + '.png)';
       return this.sanitizer.bypassSecurityTrustStyle(`url(${this.creditCardBackground})`);
    }
 
+   getCurrencies() {
+      const parameters: string[] = [];
+      parameters.push('e.status = |abc|1|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Currency', parameters,
+         ' order by e.code ')
+         .subscribe((data: Currency[]) => {
+            this.currencies = data;
+         },
+            error => console.log(error),
+            () => console.log('Get all CategoryDescription complete'));
+   }
    getZones(country: Country) {
       if (country) {
          const parameters: string[] = [];

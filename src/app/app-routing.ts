@@ -60,6 +60,10 @@ export const AppRoutes: Routes = [
          {
             path: 'account', loadChildren: () =>
                import('./Pages/UserAccount/UserAccount.module').then(m => m.UserAccountModule)
+         },
+         {
+            path: 'terms-conditions', loadChildren: () => import('./pages/terms-conditions/terms-conditions.module')
+               .then(m => m.TermsConditionsModule)
          }
       ]
    },

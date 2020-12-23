@@ -28,7 +28,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.searchCriteria = new OrderSearchCriteria();
     this.searchCriteria.orderType = 0;
     this.searchCriteria.miscText1 = "'PENDING','PROCESSING','PROCESSED','SHIPPED'";
-    this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+    this.searchCriteria.miscNum1 = Number(this.appService.tokenStorage.getUserId());
     this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
     console.log(this.searchCriteria);
     this.appService.saveWithUrl('/service/order/onlineOrders', this.searchCriteria)

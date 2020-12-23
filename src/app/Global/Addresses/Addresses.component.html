@@ -30,10 +30,9 @@
   <br/>
   <div>
     <mat-accordion>
-      <mat-expansion-panel #shippingExpansionPanelElement
+      <mat-expansion-panel #shippingExpansionPanelElement       
         (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
-                        
+        (closed)="panelOpenState = false">                        
         <mat-expansion-panel-header>
           <mat-panel-title>
             <button mat-flat-button color="primary" matTooltip="{{'COMMON.ADD_NEW_SHIPPING_ADDRESS' | translate}}">
@@ -80,7 +79,7 @@
     <mat-accordion>
       <mat-expansion-panel #billingExpansionPanelElement
         (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
+        (closed)="panelOpenState = false">
                         
         <mat-expansion-panel-header>
           <mat-panel-title>

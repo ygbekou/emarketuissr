@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from 'src/app/app.models';
+import { Store, Currency } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
@@ -14,6 +14,7 @@ export class StoreComponent extends BaseComponent implements OnInit {
   errors = '';
   formData: FormData;
   picture: any[] = [];
+  currencies: Currency[] = [];
   store: Store;
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -22,6 +23,7 @@ export class StoreComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCurrencies();
     this.activatedRoute.params.subscribe(params => {
       if (params.id === undefined || params.id === 0) {
         this.clear();
@@ -32,6 +34,9 @@ export class StoreComponent extends BaseComponent implements OnInit {
     });
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
   clear() {
     this.store = new Store();
   }
@@ -76,15 +81,6 @@ export class StoreComponent extends BaseComponent implements OnInit {
       || this.store.aprvStatus.toString() === '0') ? 0 : 1;
     this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.formData = new FormData();
-
-    /*   if (this.picture && this.picture.length > 0) {
-        if (this.picture[0].file) {
-          this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
-        } else {
-          const pathSplitArray = this.picture[0].link.split('/');
-          this.store.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
-        }
-      } */
     this.formData = new FormData();
     if (this.picture && this.picture.length > 0 && this.picture[0].file) {
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
@@ -100,6 +96,18 @@ export class StoreComponent extends BaseComponent implements OnInit {
   isEmpty(value: string): boolean {
     const val = value !== null && value !== undefined ? value.trim() : '';
     return val.length === 0;
+  }
+
+  getCurrencies() {
+    const parameters: string[] = [];
+    parameters.push('e.status = |abc|1|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Currency', parameters,
+      ' order by e.code ')
+      .subscribe((data: Currency[]) => {
+        this.currencies = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all CategoryDescription complete'));
   }
 
 }

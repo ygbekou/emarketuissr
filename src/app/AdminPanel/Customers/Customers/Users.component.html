@@ -1,4 +1,4 @@
-<a mat-button [routerLink]="['/admin/customers/users']">{{'COMMON.CUSTOMERS' | translate}}
+<a mat-button [routerLink]="['/admin/customers/users']">{{'COMMON.CUSTOMER' | translate}}s
   <mat-icon>navigate_next</mat-icon>
 </a>
 <div fxLayout="row wrap">
@@ -25,45 +25,48 @@
     <div class="table-wrapper">
       <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
-
-        <ng-container matColumnDef="groupName" >
-          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> User Group ID </th>
-          <td mat-cell *matCellDef="let user"> {{user.userGroup.name}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> Customer Name </th>
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.NAME'|translate}} </th>
           <td mat-cell *matCellDef="let user"> {{user.firstName}} {{user.middleName}} {{user.lastName}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="userName">
-          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> User Name </th>
-          <td mat-cell *matCellDef="let user"> {{user.userName}} </td>
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.CELL_PHONE'|translate}} </th>
+          <td mat-cell *matCellDef="let user"> {{user.mobilePhone}} </td>
         </ng-container>
 
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef width ="20%" mat-sort-header> Email </th>
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.EMAIL'|translate}} </th>
           <td mat-cell *matCellDef="let user"> {{user.email}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="birthDate">
-          <th mat-header-cell *matHeaderCellDef width ="12%" mat-sort-header> {{'COMMON.BIRTH_DATE' | translate}} </th>
-          <td mat-cell *matCellDef="let user"> {{user.birthDate | date: 'MM/dd/yyyy'}} </td>
+        <ng-container matColumnDef="sex">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SEX'|translate}} </th>
+          <td mat-cell *matCellDef="let user">
+            {{user.sex==='F'?('COMMON.FEMALE'|translate):
+          ('COMMON.MALE'|translate)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="groupName">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.ROLE'|translate}} </th>
+          <td mat-cell *matCellDef="let user"> {{user.userGroup.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef width ="10%" mat-sort-header> Status </th>
-          <td mat-cell *matCellDef="let user"> {{user.status}} </td>
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let user"> {{user.status ===0?('COMMON.INACTIVE'|translate):
+          ('COMMON.ACTIVE'|translate)      
+        }} </td>
         </ng-container>
 
         <ng-container matColumnDef="dateAdded">
-          <th mat-header-cell *matHeaderCellDef width ="12%" mat-sort-header> {{'COMMON.DATE_ADDED' | translate}} </th>
-          <td mat-cell *matCellDef="let user"> {{user.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.DATE_ADDED' | translate}} </th>
+          <td mat-cell *matCellDef="let user"> {{user.createDate | date: 'mediumDate'}} </td>
         </ng-container>
 
         <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef width ="15%"> Actions </th>
+        <!--         <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width="15%"> Actions </th>
           <td mat-cell *matCellDef="let user">
             <a [routerLink]="['/admin/customers/user', user.id]" mat-icon-button color="primary"
               matTooltip="{{'COMMON.EDIT' | translate}}">
@@ -75,15 +78,15 @@
               <mat-icon>delete</mat-icon>
             </button>
           </td>
-        </ng-container>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let orderReturn; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let user; columns: displayedColumns;" [routerLink]="['/admin/customers/user', user.id]">
         </tr>
       </table>
       <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
     </div>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   </div>
 
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
@@ -93,9 +96,9 @@
         <div fxLayout="row wrap">
           <div class="text-center">
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-                <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
-                <mat-icon>save</mat-icon>
-            </button> 
+              <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button>
           </div>
           <div class="text-center" *ngIf="messages">
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
@@ -103,20 +106,20 @@
 
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.LAST_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.lastName" name="lastName"
-                #model="ngModel">
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.lastName"
+              name="lastName" #model="ngModel">
           </mat-form-field>
 
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.FIRST_NAME' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.firstName" name="firstName"
-                #model="ngModel">
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.firstName"
+              name="firstName" #model="ngModel">
           </mat-form-field>
 
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.EMAIL' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.email" name="email"
-                #model="ngModel">
+              #model="ngModel">
           </mat-form-field>
 
           <mat-form-field class="w-100" appearance="fill">
@@ -140,7 +143,7 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.CREATE_DATE' | translate}}</mat-label><br />
             <input matInput [matDatepicker]="addedDatePicker" class="form-control" id="addedDate"
-                [(ngModel)]="searchCriteria.dateAdded" name="addedDate" #addedDate="ngModel">
+              [(ngModel)]="searchCriteria.dateAdded" name="addedDate" #addedDate="ngModel">
             <mat-datepicker-toggle matSuffix [for]="addedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #addedDatePicker></mat-datepicker>
           </mat-form-field>
