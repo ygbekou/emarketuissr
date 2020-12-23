@@ -71,10 +71,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
    public calculateProductSinglePrice(product: any, value: any) {
-      let price = 0;
       product.quantity = value;
-      price = product.price * value;
-
+      const price = this.appService.calculateCartItemTotal(product);
       this.appService.recalculateCart(false);
       return price;
    }
@@ -83,7 +81,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
       let subtotal = 0;
       if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
          for (const product of this.appService.localStorageCartProducts) {
-            subtotal += (product.price * product.quantity);
+            subtotal += this.calculateProductSinglePrice(product, product.quantity);
          }
          return subtotal;
       }

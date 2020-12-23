@@ -307,8 +307,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
 
   saveProductDiscount(productDiscount: ProductDiscount) {
-    this.productDiscountMessage = '';
-    this.productDiscountErrors = '';
+    this.messages = '';
+    this.errors = '';
     this.setToggleValues(productDiscount);
 
     if (!this.validateProductDiscount(productDiscount)) {
@@ -319,7 +319,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     productDiscount.store = this.selectedStore;
     productDiscount.modifiedBy = +this.appService.tokenStorage.getUserId();
 
-    console.info(productDiscount);
     this.appService.save(productDiscount, 'ProducDiscount')
       .subscribe(result => {
         this.processResult(result, productDiscount, null);
@@ -332,8 +331,15 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
       this.errors = 'Either Price or Percentage is needed is required';
       return false;
     }
-    
-    if (productDiscount.dateStart > productDiscount.dateEnd) {
+
+    if ((this.isBlank(productDiscount.price) && !this.isBlank(productDiscount.quantity))
+          || (!this.isBlank(productDiscount.price) && this.isBlank(productDiscount.quantity))
+      ) {
+      this.errors = 'Quantity/Price are required at the same time';
+      return false;
+    }
+
+    if (new Date(productDiscount.dateStart) > new Date(productDiscount.dateEnd)) {
       this.errors = 'Start Date cannot be greater than End Date.';
       return false;
     }
@@ -349,6 +355,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   togglePrice(productDiscount: ProductDiscount) {
     productDiscount.price = undefined;
+    productDiscount.quantity = undefined;
     productDiscount.disablePrice = !this.isBlank(productDiscount.percentage);
   }
 

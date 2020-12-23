@@ -33,7 +33,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
          } else {
             this.hiddenBadge = true;
          }
-      } 
+      }
    }
 
    ngOnChanges() {
@@ -50,7 +50,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
 
    public calculatePrice(product) {
       let total = null;
-      total = product.price * product.quantity;
+      total = this.appService.calculateCartItemTotal(product);
       return total;
    }
 }
