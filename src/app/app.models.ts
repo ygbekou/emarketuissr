@@ -989,7 +989,12 @@ export class CartItem {
   currencyCode: string;
   symbolLeft: string;
   symbolRight: string;
+  productDiscountQuantity: number;
+  productDiscountPrice: number;
+  productDiscountPercentage: number;
+  percentagePrice: number;
   taxRules: TaxRule[];
+
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
     this.ptsId = p.product.ptsId;
@@ -998,7 +1003,7 @@ export class CartItem {
     this.name = p.name;
     this.storeName = p.product.storeName;
     this.quantity = 0;
-    this.price = p.product.price;
+    this.price = p.product.percentagePrice > 0 ? p.product.percentagePrice : p.product.price;
     this.tax = p.product.tax;
     this.total = 0;
     this.storeUrl = Constants.webServer + '/#/products?storeId=' + this.storeId;
@@ -1007,6 +1012,8 @@ export class CartItem {
     this.currencyCode = p.product.currencyCode;
     this.symbolLeft = p.product.symbolLeft;
     this.symbolRight = p.product.symbolRight;
+    this.productDiscountQuantity = p.product.productDiscountQuantity;
+    this.productDiscountPrice = p.product.productDiscountPrice;
   }
 }
 
@@ -1078,6 +1085,11 @@ export class ProductVO {
   taxRules: TaxRule[];
   tax: number;
   total: number;
+  productDiscountQuantity: number;
+  productDiscountPrice: number;
+  productDiscountPercentage: number;
+  currencyDecimalPlace: number;
+  percentagePrice: number;
 }
 
 export class Review {

@@ -258,8 +258,8 @@
                   <th mat-header-cell width="12%"  *matHeaderCellDef mat-sort-header > {{'COMMON.QUANTITY' | translate}} </th>
                   <td mat-cell  *matCellDef="let productDiscount">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.quantity" 
-                          name="quantity" #quantity="ngModel" pattern="^[1-9]+$" required>
+                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.quantity" [disabled]="productDiscount.disablePrice"
+                          name="quantity" #quantity="ngModel" pattern="^[2-9]+$" (change)="togglePercentage(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>
@@ -269,7 +269,7 @@
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field>  
                         <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.price" [disabled]="productDiscount.disablePrice"
-                          name="price" #price="ngModel" pattern="^[1-9]+$" (change)="togglePercentage(productDiscount)">
+                          name="price" #price="ngModel" pattern="([1-9]\d*)" (change)="togglePercentage(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>
@@ -279,7 +279,7 @@
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field class="w-100">
                         <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.percentage" [disabled]="productDiscount.disablePercentage"
-                          name="percentage" #percentage="ngModel" pattern="^[1-9]+$" (change)="togglePrice(productDiscount)">
+                          name="percentage" #percentage="ngModel" pattern="([1-9]\d*)" (change)="togglePrice(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>

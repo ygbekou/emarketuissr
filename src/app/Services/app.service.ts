@@ -215,7 +215,8 @@ export class AppService {
       for (const ci of cartItems) {
          if (ci.ptsId === data.ptsId) {
             cartItems[index].quantity += (data.quantity ? data.quantity : 1);
-            cartItems[index].total += cartItems[index].price;
+            cartItems[index].total = this.calculateCartItemTotal(cartItems[index]);
+
             found = true;
             break;
          }
@@ -224,7 +225,7 @@ export class AppService {
 
       if (!found) {
          data.quantity = (data.quantity ? data.quantity : 1);
-         data.total = data.price;
+         data.total = this.calculateCartItemTotal(data);
          cartItems.push(data);
       }
       if (type === 'wishlist') {
@@ -243,7 +244,7 @@ export class AppService {
       products = JSON.parse(localStorage.getItem('cart_item')) || [];
 
       const found = products.some(function (el, index) {
-         if (el.name == data.name) {
+         if (el.name === data.name) {
             if (!data.quantity) { data.quantity = 1; }
             products[index].quantity = data.quantity;
             return true;
@@ -295,7 +296,7 @@ export class AppService {
 
 
       this.localStorageCartProducts.forEach(cartItem => {
-         this.navbarCartPrice += cartItem.price * cartItem.quantity;
+         this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
          if (!this.navbarCartPriceMap[cartItem.currencyId]) {
             this.navbarCartCountMap[cartItem.currencyId] = 0;
             this.navbarCartPriceMap[cartItem.currencyId] = 0;
@@ -312,7 +313,8 @@ export class AppService {
          }
 
          this.navbarCartCountMap[cartItem.currencyId] += 1;
-         this.navbarCartPriceMap[cartItem.currencyId] += cartItem.price * cartItem.quantity;
+         this.navbarCartPriceMap[cartItem.currencyId] = this.calculateCartItemTotal(cartItem);
+         
 
          this.navbarCartShipping += 0;
          this.navbarCartShippingMap[cartItem.currencyId] += 0;
@@ -327,10 +329,11 @@ export class AppService {
          }
 
          cartItem.tax = this.roundingValue(cartItem.tax);
-         cartItem.total = this.roundingValue(cartItem.price * cartItem.quantity + cartItem.tax);
+         cartItem.total = this.roundingValue(this.calculateCartItemTotal(cartItem) + cartItem.tax);
          this.navbarCartEstimatedTax += cartItem.tax;
          this.navbarCartEstimatedTaxMap[cartItem.currencyId] += cartItem.tax;
 
+         this.navbarCartPriceMap[cartItem.currencyId] = this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]); 
          this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] =
             this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
                + this.navbarCartShippingMap[cartItem.currencyId]);
@@ -343,6 +346,21 @@ export class AppService {
       this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
       this.navbarCartTotalBeforeTax += this.roundingValue(this.navbarCartPrice + this.navbarCartShipping);
       this.navbarCartTotal += this.roundingValue(this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax);
+   }
+
+   calculateCartItemTotal(cartItem: CartItem) {
+      let totalPrice = 0;
+      if (cartItem.productDiscountQuantity > 0 && cartItem.productDiscountPrice > 0) {
+         const nberDiscountQuantity = Math.trunc(cartItem.quantity / cartItem.productDiscountQuantity);
+         const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity;
+
+         totalPrice = cartItem.productDiscountPrice * nberDiscountQuantity
+                                    + cartItem.price * moduloDiscountQuantity;
+      } else {
+         totalPrice = cartItem.price * cartItem.quantity;
+      }
+
+      return this.roundingValue(totalPrice);
    }
 
    roundingValue(value: number) {
@@ -388,7 +406,7 @@ export class AppService {
    }
 
    public completeOrder(currencyId: number) {
-      console.info('Completing order ...');
+      console.log('Completing order ...');
       const products: any = JSON.parse(localStorage.getItem('cart_item'));
       this.hasOrderSucceedMap[currencyId] = true;
 
