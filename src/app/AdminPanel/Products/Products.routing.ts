@@ -13,6 +13,8 @@ import { AttributeGroupsComponent } from './AttributeGroups/AttributeGroups.comp
 import { AttributeComponent } from './Attribute/Attribute.component';
 import { OptionsComponent } from './Options/Options.component';
 import { OptionComponent } from './Option/Option.component';
+import { AuthGuardService } from 'src/app/Services/auth-guard.service';
+import { RoleGuardService } from 'src/app/Services/role-guard.service';
 
 export const ProductsRoutes: Routes = [
    {
@@ -25,67 +27,131 @@ export const ProductsRoutes: Routes = [
       children: [
           {
             path: 'attributes',
-            component: AttributeGroupsComponent
+            component: AttributeGroupsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'attribute-group/:id',
-            component: AttributeGroupComponent
+            component: AttributeGroupComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
 {
             path: 'attribute/:id',
-            component: AttributeComponent
+            component: AttributeComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'product-edit',
-            component: EditProductComponent
+            component: EditProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'product-edit/:type/:id',
-            component: EditProductComponent
+            component: EditProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'product-add',
-            component: ProductComponent
+            component: ProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'products',
-            component: ProductsComponent
+            component: ProductsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'products/:id',
-            component: ProductComponent
+            component: ProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'categories',
-            component: CategoriesComponent
+            component: CategoriesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'categories/:id',
-            component: CategoryComponent
+            component: CategoryComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'marketings',
-            component: MarketingsComponent
+            component: MarketingsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'marketings/:id',
-            component: MarketingComponent
+            component: MarketingComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'information',
-            component: InformationsComponent
+            component: InformationsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'information/:id',
-            component: InformationComponent
+            component: InformationComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '1'
+            }
          },
          {
             path: 'options',
-            component: OptionsComponent
+            component: OptionsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'option/:id',
-            component: OptionComponent
+            component: OptionComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          }
       ]
    }

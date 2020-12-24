@@ -81,6 +81,9 @@ import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
 import { CartModule } from './Pages/Cart/Cart.module';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { LangComponent } from './Layouts/lang/lang.component';
+import { AuthGuardService } from './Services/auth-guard.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { RoleGuardService } from './Services/role-guard.service';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -92,6 +95,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 /********** Custom option for ngx-translate ******/
 export function createTranslateLoader(http: HttpClient) {
    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
 }
 
 @NgModule({
@@ -168,13 +175,21 @@ export function createTranslateLoader(http: HttpClient) {
       DeviceDetectorModule.forRoot(),
       InputFileModule.forRoot(config),
       AdminPanelModule,
-      CartModule
+      CartModule,
+      JwtModule.forRoot({
+         config: {
+            tokenGetter: tokenGetter
+         },
+        })
+
    ],
    providers: [
       TokenStorage,
       AppInfoStorage,
       MenuItems,
       AppService,
+      AuthGuardService,
+      RoleGuardService,
       {
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

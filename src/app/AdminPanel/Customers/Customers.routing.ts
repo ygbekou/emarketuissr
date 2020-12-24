@@ -3,6 +3,8 @@ import { UsersComponent } from './Customers/Users.component';
 import { UserComponent } from './Customers/User.component';
 import { StoresComponent } from './Customers/Stores.component';
 import { StoreComponent } from './Customers/Store.component';
+import { AuthGuardService } from 'src/app/Services/auth-guard.service';
+import { RoleGuardService } from 'src/app/Services/role-guard.service';
 
 export const CustomersRoutes: Routes = [
    {
@@ -15,19 +17,35 @@ export const CustomersRoutes: Routes = [
       children: [
          {
             path: 'users',
-            component: UsersComponent
+            component: UsersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'user/:id',
-            component: UserComponent
+            component: UserComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'stores/list',
-            component: StoresComponent
+            component: StoresComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          },
          {
             path: 'store/:id',
-            component: StoreComponent
+            component: StoreComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: '3'
+            }
          }
       ]
    }
