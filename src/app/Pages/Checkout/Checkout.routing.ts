@@ -5,7 +5,6 @@ import { PaymentComponent } from './Payment/Payment.component';
 import { FinalReceiptComponent } from './FinalReceipt/FinalReceipt.component';
 import { PaymentChangeModelComponent } from 'src/app/Global/PaymentChangeModel/PaymentChangeModel.component';
 import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
-import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 
 export const CheckoutRoutes: Routes = [
    {

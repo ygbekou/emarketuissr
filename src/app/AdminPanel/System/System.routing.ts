@@ -33,7 +33,7 @@ export const SystemRoutes: Routes = [
             component: LanguagesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -41,7 +41,7 @@ export const SystemRoutes: Routes = [
             component: CurrenciesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -49,7 +49,7 @@ export const SystemRoutes: Routes = [
             component: StockStatusesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -57,7 +57,7 @@ export const SystemRoutes: Routes = [
             component: OrderStatusesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -65,7 +65,7 @@ export const SystemRoutes: Routes = [
             component: ReturnStatusesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -73,7 +73,7 @@ export const SystemRoutes: Routes = [
             component: ReturnActionsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -81,7 +81,7 @@ export const SystemRoutes: Routes = [
             component: ReturnReasonsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -89,7 +89,7 @@ export const SystemRoutes: Routes = [
             component: CountriesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -97,7 +97,7 @@ export const SystemRoutes: Routes = [
             component: ZonesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -105,7 +105,7 @@ export const SystemRoutes: Routes = [
             component: GeoZonesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -113,7 +113,7 @@ export const SystemRoutes: Routes = [
             component: TaxRatesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -121,7 +121,7 @@ export const SystemRoutes: Routes = [
             component: TaxClassesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -129,7 +129,7 @@ export const SystemRoutes: Routes = [
             component: WeightClassesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -137,7 +137,7 @@ export const SystemRoutes: Routes = [
             component: WeightClassComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -145,7 +145,7 @@ export const SystemRoutes: Routes = [
             component: LengthClassesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -153,7 +153,7 @@ export const SystemRoutes: Routes = [
             component: LengthClassComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -161,7 +161,7 @@ export const SystemRoutes: Routes = [
             component: ConfigsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          }
       ]

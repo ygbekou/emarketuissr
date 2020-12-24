@@ -15,6 +15,8 @@ import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
 import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.component';
 import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
+import { AuthGuardService } from 'src/app/Services/auth-guard.service';
+import { RoleGuardService } from 'src/app/Services/role-guard.service';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -23,61 +25,116 @@ export const UserAccountRoutes: Routes = [
       children: [
          {
             path: 'profile',
-            component: ProfileComponent
+            component: ProfileComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'cards',
-            component: PaymentChangeModelComponent
+            component: PaymentChangeModelComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'addresses',
-            component: PaymentChangeAddressComponent
+            component: PaymentChangeAddressComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'order-history',
-            component: OrderHistoryComponent
+            component: OrderHistoryComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'profile/edit',
-            component: EditProfileComponent
+            component: EditProfileComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'grid-product',
-            component: GridProductComponent
+            component: GridProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'stores',
-            component: StoresComponent
+            component: StoresComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'sell-item',
-            component: SellProductComponent
+            component: SellProductComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'my-items',
-            component: MyProductsComponent
+            component: MyProductsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'sales-dashboard',
-            component: SalesDashboardComponent
+            component: SalesDashboardComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'sales-orders',
-            component: SalesOrdersComponent
+            component: SalesOrdersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'order-detail/:id',
-            component: OrderDetailComponent
+            component: OrderDetailComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'client-dashboard',
-            component: ClientDashboardComponent
+            component: ClientDashboardComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          },
          {
             path: 'open-orders',
-            component: OpenOrdersComponent
+            component: OpenOrdersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
          }
-         
       ]
    }
 ];

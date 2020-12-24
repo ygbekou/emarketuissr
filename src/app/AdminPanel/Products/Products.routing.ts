@@ -30,7 +30,7 @@ export const ProductsRoutes: Routes = [
             component: AttributeGroupsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -38,7 +38,7 @@ export const ProductsRoutes: Routes = [
             component: AttributeGroupComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
 {
@@ -46,7 +46,7 @@ export const ProductsRoutes: Routes = [
             component: AttributeComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -54,7 +54,7 @@ export const ProductsRoutes: Routes = [
             component: EditProductComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -62,7 +62,7 @@ export const ProductsRoutes: Routes = [
             component: EditProductComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -70,7 +70,7 @@ export const ProductsRoutes: Routes = [
             component: ProductComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -78,7 +78,7 @@ export const ProductsRoutes: Routes = [
             component: ProductsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -86,7 +86,7 @@ export const ProductsRoutes: Routes = [
             component: ProductComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -94,7 +94,7 @@ export const ProductsRoutes: Routes = [
             component: CategoriesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -102,7 +102,7 @@ export const ProductsRoutes: Routes = [
             component: CategoryComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -110,7 +110,7 @@ export const ProductsRoutes: Routes = [
             component: MarketingsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -118,7 +118,7 @@ export const ProductsRoutes: Routes = [
             component: MarketingComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -126,7 +126,7 @@ export const ProductsRoutes: Routes = [
             component: InformationsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -134,7 +134,7 @@ export const ProductsRoutes: Routes = [
             component: InformationComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -142,7 +142,7 @@ export const ProductsRoutes: Routes = [
             component: OptionsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          },
          {
@@ -150,7 +150,7 @@ export const ProductsRoutes: Routes = [
             component: OptionComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: 'Administrator'
+               expectedRole: ['Administrator']
             }
          }
       ]
