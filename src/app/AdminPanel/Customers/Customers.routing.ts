@@ -20,7 +20,7 @@ export const CustomersRoutes: Routes = [
             component: UsersComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: '3'
+               expectedRole: 'Administrator'
             }
          },
          {
@@ -28,7 +28,7 @@ export const CustomersRoutes: Routes = [
             component: UserComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: '3'
+               expectedRole: 'Administrator'
             }
          },
          {
@@ -36,7 +36,7 @@ export const CustomersRoutes: Routes = [
             component: StoresComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: '3'
+               expectedRole: 'Administrator'
             }
          },
          {
@@ -44,7 +44,7 @@ export const CustomersRoutes: Routes = [
             component: StoreComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
-               expectedRole: '3'
+               expectedRole: 'Administrator'
             }
          }
       ]

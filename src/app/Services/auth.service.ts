@@ -5,8 +5,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   constructor(public jwtHelper: JwtHelperService) {}
   // ...
+
   public isAuthenticated(): boolean {
-    console.log('Is Authenticated ... ');
+
+    console.log('Is Authenticated ....')
     const token = sessionStorage.getItem('AuthToken');
     // Check whether the token is expired and return
     // true or false

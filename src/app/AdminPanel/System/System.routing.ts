@@ -16,6 +16,8 @@ import { WeightClassesComponent } from './WeightClasses/WeightClasses.component'
 import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
 import { LengthClassComponent } from './LengthClass/LengthClass.component';
 import { ConfigsComponent } from './configs/configs.component';
+import { AuthGuardService } from 'src/app/Services/auth-guard.service';
+import { RoleGuardService } from 'src/app/Services/role-guard.service';
 
 export const SystemRoutes: Routes = [
    {
@@ -28,71 +30,139 @@ export const SystemRoutes: Routes = [
       children: [
          {
             path: 'languages',
-            component: LanguagesComponent
+            component: LanguagesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'currencies',
-            component: CurrenciesComponent
+            component: CurrenciesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'stockStatuses',
-            component: StockStatusesComponent
+            component: StockStatusesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'orderStatuses',
-            component: OrderStatusesComponent
+            component: OrderStatusesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'returnStatuses',
-            component: ReturnStatusesComponent
+            component: ReturnStatusesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'returnActions',
-            component: ReturnActionsComponent
+            component: ReturnActionsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'returnReasons',
-            component: ReturnReasonsComponent
+            component: ReturnReasonsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'countries',
-            component: CountriesComponent
+            component: CountriesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'zones',
-            component: ZonesComponent
+            component: ZonesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'geoZones',
-            component: GeoZonesComponent
+            component: GeoZonesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'taxRates',
-            component: TaxRatesComponent
+            component: TaxRatesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'taxClasses',
-            component: TaxClassesComponent
+            component: TaxClassesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'weightClasses',
-            component: WeightClassesComponent
+            component: WeightClassesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'weightClasses/:id',
-            component: WeightClassComponent
+            component: WeightClassComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'lengthClasses',
-            component: LengthClassesComponent
+            component: LengthClassesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'lengthClasses/:id',
-            component: LengthClassComponent
+            component: LengthClassComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          },
          {
             path: 'configs',
-            component: ConfigsComponent
+            component: ConfigsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: 'Administrator'
+            }
          }
       ]
    }
