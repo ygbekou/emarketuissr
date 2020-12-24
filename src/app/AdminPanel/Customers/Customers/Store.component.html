@@ -43,6 +43,16 @@
           </mat-error>
         </mat-form-field>
 
+           <mat-form-field class="w-100 mb-3">
+          <mat-label> {{'COMMON.SORT_ORDER' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="store.sortOrder" name="sortOrder"
+            #sortOrder="ngModel">
+          <mat-error *ngIf="f4.submitted && sortOrder.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+
         <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
           {{ 'COMMON.ENABLE' | translate }}
         </mat-slide-toggle>
@@ -50,10 +60,18 @@
         <mat-slide-toggle [(ngModel)]="store.aprvStatus" name="aprvStatus" #aprvStatus="ngModel" class="my-2">
           {{ 'COMMON.APPROVE' | translate }}
         </mat-slide-toggle>
+
+        <mat-slide-toggle [(ngModel)]="store.displayWeb" name="displayWeb" #displayWeb="ngModel" class="my-2">
+          {{ 'COMMON.DISPLAY_WEB' | translate }}
+        </mat-slide-toggle>
+
+        <mat-slide-toggle [(ngModel)]="store.displayMb" name="displayMb" #displayMb="ngModel" class="my-2">
+          {{ 'COMMON.DISPLAY_MB' | translate }}
+        </mat-slide-toggle>
+
         <mat-form-field class="w-100 mb-3">
           <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
-          <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}"
-           [compareWith]="compareObjects" id="currency"
+          <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
             name="currency" [(ngModel)]="store.currency" #currency="ngModel">
             <mat-option *ngFor="let cat of currencies" [value]="cat">
               {{cat.code +' - '+ cat.title}}

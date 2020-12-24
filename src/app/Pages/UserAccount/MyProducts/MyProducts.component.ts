@@ -314,11 +314,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     if (!this.validateProductDiscount(productDiscount)) {
       return;
     }
-
-    productDiscount.productId = this.productDesc.product.id;
-    productDiscount.store = this.selectedStore;
+    productDiscount.ptsId = this.productStore.id;
     productDiscount.modifiedBy = +this.appService.tokenStorage.getUserId();
-
     this.appService.save(productDiscount, 'ProducDiscount')
       .subscribe(result => {
         this.processResult(result, productDiscount, null);

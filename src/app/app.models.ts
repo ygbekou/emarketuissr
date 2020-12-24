@@ -216,8 +216,7 @@ export class ProductDescription {
 
 export class ProductDiscount {
   id: number;
-  productId: number;
-  store: Store;
+  ptsId: number;
   dateEnd: Date;
   dateStart: Date;
   price: number;
@@ -659,6 +658,9 @@ export class Store extends BaseModel {
   url: string;
   currency: Currency;
   code: string;
+  displayWeb: number;
+  displayMb: number;
+  sortOrder: number;
   type = 'Store';
 
   constructor() {
