@@ -33,44 +33,47 @@
                   [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]"
                   class="title-link">{{prd?.name}}</a>
 
-               <a *ngIf="prd.product?.id && fromPage==='sell'" style="cursor:pointer;" 
+               <a *ngIf="prd.product?.id && fromPage==='sell'" style="cursor:pointer;"
                   (click)="selectForSaleProduct(prd)" class="title-link">{{prd?.name}}</a>
 
             </h5>
 
 
-            <h5><a *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']"
+            <h5 *ngIf="!prd.product?.id"><a  [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>
+            <font style="font-style: italic;font-size: 10px;">
+               {{'COMMON.SOLD_BY'|translate}}
+               <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product.storeId}" routerLinkActive="tab-active">
+                  {{prd.product.storeName}}</a>
+            </font>
             <div>
                <div fxFlex fxLayoutAlign="space-between">
-                  <h6 class="accent-color" style="text-decoration: line-through;" *ngIf="prd.product.productDiscountPercentage > 0">
+                  <h6 class="secondary-color" style="text-decoration: line-through;"
+                     *ngIf="prd.product.productDiscountPercentage > 0">
                      {{prd.product.symbolLeft}} {{prd.product?.price}} {{prd.product.symbolRight}}
                   </h6>
-                  <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage === undefined || prd.product.productDiscountPercentage <= 0">
+                  <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage > 0">
+                     {{prd.product.symbolLeft}} {{prd.product?.percentagePrice}} {{prd.product.symbolRight}}
+                  </h6>
+                  <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage > 0">
+                     {{prd.product.productDiscountPercentage}} % OFF
+                  </h6>
+                  <h6 class="accent-color"
+                     *ngIf="prd.product.productDiscountPercentage === undefined || prd.product.productDiscountPercentage <= 0">
                      {{prd.product.symbolLeft}} {{prd.product?.price}} {{prd.product.symbolRight}}
+                  </h6>
+                  <h6 class="accent-color" *ngIf="prd.product.productDiscountQuantity > 0 
+                  && prd.product.productDiscountPrice > 0">
+                     {{'COMMON.BUY'|translate}} {{prd.product.productDiscountQuantity}}
+                     {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}} {{prd.product.productDiscountPrice}}
+                     {{prd.product.symbolRight}}
                   </h6>
                   <div class="rating-star">
                      <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
                   </div>
                </div>
             </div>
-            
-            <div *ngIf="prd.product.productDiscountQuantity > 0 && prd.product.productDiscountPrice > 0">
-               <h6 class="accent-color">BUY {{prd.product.productDiscountQuantity}} 
-                  FOR {{prd.product.symbolLeft}} {{prd.product.productDiscountPrice}} {{prd.product.symbolRight}}
-               </h6>
-            </div>
-            <div *ngIf="prd.product.productDiscountPercentage > 0">
-               <h6 class="accent-color">
-                  {{prd.product.productDiscountPercentage}} % OFF
-               </h6>
-            </div>
-            <div *ngIf="prd.product.productDiscountPercentage > 0">
-               <h6 class="accent-color">
-                  {{prd.product.symbolLeft}} {{prd.product?.percentagePrice}} {{prd.product.symbolRight}}
-               </h6>
-            </div>
-           
+
             <div class="m-icon" *ngIf="fromPage==='buy'">
                <embryo-AddToCardButton [product]="prd" (addToCart)="addToCartProduct($event)">
                </embryo-AddToCardButton>

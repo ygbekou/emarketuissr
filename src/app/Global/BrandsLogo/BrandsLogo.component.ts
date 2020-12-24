@@ -26,6 +26,7 @@ export class BrandslogoComponent implements OnInit, OnChanges {
 
    getStores() {
       const parameters: string[] = [];
+      parameters.push('e.displayWeb = |abc|1|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
          .subscribe((data: Store[]) => {
             this.stores = data;
