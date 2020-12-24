@@ -91,6 +91,9 @@ import { MatPaginatorModule } from '@angular/material';
 import { CustomerTransactionComponent } from './Customer/CustomerTransaction.component';
 import { CustomerRewardComponent } from './Customer/CustomerReward.component';
 import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
+import { AuthGuardService } from '../Services/auth-guard.service';
+import { AuthService } from '../Services/auth.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @NgModule({
    imports: [
@@ -133,7 +136,8 @@ import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
       }),
       FormsModule,
       ReactiveFormsModule,
-      SlickCarouselModule
+      SlickCarouselModule,
+      
    ],
    declarations: [
       BrandslogoComponent,
@@ -249,6 +253,11 @@ import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
       ConfirmationPopupComponent,
       ProductReviewComponent,
       TimerCountDownComponent
+   ],
+   providers: [
+      AuthGuardService,
+      AuthService,
+      JwtHelperService
    ]
 })
 export class GlobalModule {
