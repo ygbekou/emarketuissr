@@ -661,6 +661,7 @@ export class Store extends BaseModel {
   displayWeb: number;
   displayMb: number;
   sortOrder: number;
+  public storeCat: StoreCategory;
   type = 'Store';
 
   constructor() {
@@ -1551,3 +1552,16 @@ export class TabDtl {
   public modDate: Date;
   public type = 'TabDtl';
 }
+
+export class StoreCategory {
+  id: number;
+  sortOrder: number;
+}
+
+export class StoreCategoryDesc {
+  id: number;
+  storeCat: StoreCategory;
+  language: Language;
+  name: string;
+}
+
