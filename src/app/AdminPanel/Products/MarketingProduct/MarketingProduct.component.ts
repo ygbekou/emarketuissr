@@ -117,7 +117,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     if (userId > 0) {
 
       const parameters: string[] = [];
-      parameters.push('e.aprvStatus = |userId|1|Integer');
+      parameters.push('e.aprvStatus = |approveStatus|1|Integer');
       parameters.push('e.status = |pId|1|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
         .subscribe((data: Store[]) => {
@@ -200,11 +200,11 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   getSelectedProducts() {
     this.appService.getObjects('/service/catalog/getProductsOnSale/' +
       this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id + '/0/0')
-      .subscribe((data: ProductDescVO[]) => {
-        this.selectedProducts = data;
+      .subscribe((data: any) => {
+        this.selectedProducts = data.productDescVOs;
         if (this.selectedProducts && this.selectedProducts.length > 0) {
           // console.log(data);
-          const result = this.filterData(data, 2);
+          const result = this.filterData(this.selectedProducts, 2);
           if (result.data.length === 0) {
             // this.properties.length = 0;
             this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
