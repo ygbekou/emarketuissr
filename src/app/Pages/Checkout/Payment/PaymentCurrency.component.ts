@@ -129,6 +129,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          if (this.pickUp === '1') {
             this.order.shippingMethod = 'PICKUP';
             this.order.shippingCode = 'PICKUP';
+         } else {
+            this.order.shippingMethod = 'DELIVERY';
+            this.order.shippingCode = 'DELIVERY';
          }
          this.appService.getIp()
             .subscribe((data1: any) => {

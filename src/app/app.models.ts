@@ -999,6 +999,7 @@ export class CartItem {
   productDiscountPrice: number;
   productDiscountPercentage: number;
   percentagePrice: number;
+  productDiscountId: number;
   taxRules: TaxRule[];
 
   public constructor(p: ProductDescVO) {
@@ -1020,6 +1021,7 @@ export class CartItem {
     this.symbolRight = p.product.symbolRight;
     this.productDiscountQuantity = p.product.productDiscountQuantity;
     this.productDiscountPrice = p.product.productDiscountPrice;
+    this.productDiscountId = p.product.productDiscountId;
   }
 }
 
@@ -1096,6 +1098,7 @@ export class ProductVO {
   productDiscountPercentage: number;
   currencyDecimalPlace: number;
   percentagePrice: number;
+  productDiscountId: number;
 }
 
 export class Review {
