@@ -245,6 +245,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
           this.productStore = data;
         } else {
           this.productStore = new ProductToStore();
+          this.productStore.availableOnline = this.selectedStore.onlineStore;
           this.productStore.productDiscounts.push(new ProductDiscount());
         }
         this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
@@ -265,6 +266,9 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.productStore.status = (this.productStore.status == null
       || this.productStore.status.toString() === 'false'
       || this.productStore.status.toString() === '0') ? 0 : 1;
+    this.productStore.availableOnline = (this.productStore.availableOnline == null
+      || this.productStore.availableOnline.toString() === 'false'
+      || this.productStore.availableOnline.toString() === '0') ? 0 : 1;
     this.appService.save(this.productStore, 'ProductStore')
       .subscribe(result => {
         if (result.id > 0) {

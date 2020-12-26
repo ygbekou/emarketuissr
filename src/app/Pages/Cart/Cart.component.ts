@@ -142,7 +142,11 @@ export class CartComponent implements OnInit, AfterViewChecked {
          if (this.pickUp === '1') {
             this.order.shippingMethod = 'PICKUP';
             this.order.shippingCode = 'PICKUP';
+         } else {
+            this.order.shippingMethod = 'DELIVERY';
+            this.order.shippingCode = 'DELIVERY';
          }
+         
          this.appService.getIp()
             .subscribe((data1: any) => {
                this.order.ip = data1.ip;

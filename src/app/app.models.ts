@@ -660,6 +660,7 @@ export class Store extends BaseModel {
   code: string;
   displayWeb: number;
   displayMb: number;
+  onlineStore:  number;
   sortOrder: number;
   public storeCat: StoreCategory;
   type = 'Store';
@@ -667,6 +668,7 @@ export class Store extends BaseModel {
   constructor() {
     super();
     this.aprvStatus = 0;
+    this.onlineStore = 1;
     this.owner = new User();
   }
 }
@@ -906,6 +908,7 @@ export class ProductToStore {
   viewed: number;
   modifiedBy: number;
   dateAvailable: Date;
+  availableOnline: number;
 
   productDiscounts: ProductDiscount[] = [];
 
@@ -996,6 +999,7 @@ export class CartItem {
   productDiscountPrice: number;
   productDiscountPercentage: number;
   percentagePrice: number;
+  productDiscountId: number;
   taxRules: TaxRule[];
 
   public constructor(p: ProductDescVO) {
@@ -1017,6 +1021,7 @@ export class CartItem {
     this.symbolRight = p.product.symbolRight;
     this.productDiscountQuantity = p.product.productDiscountQuantity;
     this.productDiscountPrice = p.product.productDiscountPrice;
+    this.productDiscountId = p.product.productDiscountId;
   }
 }
 
@@ -1093,6 +1098,7 @@ export class ProductVO {
   productDiscountPercentage: number;
   currencyDecimalPlace: number;
   percentagePrice: number;
+  productDiscountId: number;
 }
 
 export class Review {
@@ -1410,6 +1416,22 @@ export class StoreSearchCriteria {
   lastName: string;
   status: number;
   createDate: Date;
+}
+
+export class ProductSearchCriteria {
+
+  constructor(public languageId: number,
+    public storeId: number,
+    public marketingId: number,
+    public catId: number,
+    public searchText: string,
+    public fromWeb = 1,
+    public productId: number,
+    public topN: number,
+    public userId: number
+  ) {
+
+  }
 }
 
 export class PaymentMethodChangeVO {

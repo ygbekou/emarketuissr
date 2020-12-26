@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem, Store } from 'src/app/app.models';
+import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem, Store, ProductSearchCriteria } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -139,8 +139,10 @@ export class ProductsListComponent implements OnInit {
 
 
    getProducts() {
-      this.appService.getObject('/service/catalog/getProductsOnSale/' +
-         this.appService.appInfoStorage.language.id + '/' + this.storeId + '/' + this.marketId + '/' + this.catId + '/' + this.searchText)
+
+      this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
+         this.appService.appInfoStorage.language.id, this.storeId, this.marketId, this.catId, this.searchText)
+      )
          .subscribe((data: ProductListVO) => {
             this.productList = data;
             this.translate.get(['COMMON.ALL_CATEGORIES', 'COMMON.ALL_CATEGORIES']).subscribe(res => {

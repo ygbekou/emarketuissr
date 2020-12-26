@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { MarketingDescription, Language, ProductDescVO } from 'src/app/app.models';
+import { MarketingDescription, Language, ProductDescVO, ProductSearchCriteria } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -78,8 +78,8 @@ export class HomeTwoComponent implements OnInit {
          .subscribe((data: MarketingDescription[]) => {
             // console.log(data);
             if (data && data.length > 0) {
-               this.appService.getObjects('/service/catalog/getProductsOnSale/' +
-                  langId + '/0/' + data[0].marketing.id + '/0/0')
+               this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
+         this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0'))
                   .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);

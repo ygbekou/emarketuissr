@@ -573,7 +573,9 @@
     "REBATE": "Remise",
     "CUSTOMER": "Client",
     "SHIP_TO_ME": "Expedier le moi",
-    "I_PICKUP": "Je passe le prendre"
+    "I_PICKUP": "Je passe le prendre",
+		"ONLINE_STORE": "Boutique en ligne",
+		"AVAILABLE_ONLINE": "Disponible en ligne"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

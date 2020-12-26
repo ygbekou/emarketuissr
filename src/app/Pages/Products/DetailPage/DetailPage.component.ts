@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { ProductDescVO, Pagination, Language, Product, CartItem } from 'src/app/app.models';
+import { ProductDescVO, Pagination, Language, Product, CartItem, ProductSearchCriteria } from 'src/app/app.models';
 import { MatTableDataSource } from '@angular/material';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -56,8 +56,9 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
    }
 
    getRelatedProducts(langId: number) {
-      this.appService.getObjects('/service/catalog/getRelatedProductsOnSale/' +
-         langId + '/' + this.product.product.id + '/' + this.topN)
+      this.appService.saveWithUrl('/service/catalog/getRelatedProductsOnSale/', new ProductSearchCriteria(
+         langId, 0, 0, 0, '0', 1, this.product.product.id, this.topN
+      ))
          .subscribe((data: ProductDescVO[]) => {
             this.products = data;
             console.log(this.products);

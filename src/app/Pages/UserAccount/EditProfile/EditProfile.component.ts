@@ -154,6 +154,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       this.store.status = (this.store.status == null
          || this.store.status.toString() === 'false'
          || this.store.status.toString() === '0') ? 0 : 1;
+      this.store.onlineStore = (this.store.onlineStore == null
+         || this.store.onlineStore.toString() === 'false'
+         || this.store.onlineStore.toString() === '0') ? 0 : 1;
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);
