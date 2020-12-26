@@ -1,4 +1,4 @@
-import { Constants } from "./app.constants";
+import { Constants } from './app.constants';
 
 export class Area {
   constructor(public id: number,
