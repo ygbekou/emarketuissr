@@ -574,7 +574,9 @@
 		"REBATE": "Discount",
 		"CUSTOMER": "Customer",
 		"SHIP_TO_ME": "Ship it to me",
-		"I_PICKUP": "I will pick it up"
+		"I_PICKUP": "I will pick it up",
+		"ONLINE_STORE": "Online Store",
+		"AVAILABLE_ONLINE": "Available Online"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

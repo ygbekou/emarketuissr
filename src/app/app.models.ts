@@ -660,6 +660,7 @@ export class Store extends BaseModel {
   code: string;
   displayWeb: number;
   displayMb: number;
+  onlineStore:  number;
   sortOrder: number;
   public storeCat: StoreCategory;
   type = 'Store';
@@ -667,6 +668,7 @@ export class Store extends BaseModel {
   constructor() {
     super();
     this.aprvStatus = 0;
+    this.onlineStore = 1;
     this.owner = new User();
   }
 }
@@ -906,6 +908,7 @@ export class ProductToStore {
   viewed: number;
   modifiedBy: number;
   dateAvailable: Date;
+  availableOnline: number;
 
   productDiscounts: ProductDiscount[] = [];
 
@@ -1410,6 +1413,22 @@ export class StoreSearchCriteria {
   lastName: string;
   status: number;
   createDate: Date;
+}
+
+export class ProductSearchCriteria {
+
+  constructor(public languageId: number,
+    public storeId: number,
+    public marketingId: number,
+    public catId: number,
+    public searchText: string,
+    public fromWeb = 1,
+    public productId: number,
+    public topN: number,
+    public userId: number
+  ) {
+
+  }
 }
 
 export class PaymentMethodChangeVO {

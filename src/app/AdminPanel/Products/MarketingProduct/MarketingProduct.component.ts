@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO } from 'src/app/app.models';
+import { CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO, ProductSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -198,8 +198,9 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    this.appService.getObjects('/service/catalog/getProductsOnSale/' +
-      this.appService.appInfoStorage.language.id + '/0/' + this.marketing.id + '/0/0')
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
+      this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '0'
+    ))
       .subscribe((data: any) => {
         this.selectedProducts = data.productDescVOs;
         if (this.selectedProducts && this.selectedProducts.length > 0) {

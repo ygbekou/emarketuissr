@@ -424,9 +424,16 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.ENABLE' | translate }}
-          </mat-slide-toggle>
+          
+            <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
+              {{ 'COMMON.ENABLE' | translate }}
+            </mat-slide-toggle>
+            <div class="divider"></div>
+            <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
+              {{ 'COMMON.ONLINE_STORE' | translate }}
+            </mat-slide-toggle>
+          
+
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"

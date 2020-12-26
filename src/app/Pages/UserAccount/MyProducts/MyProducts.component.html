@@ -209,6 +209,9 @@
                       </mat-form-field>
                     </div>
                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                      <mat-slide-toggle [(ngModel)]="productStore.availableOnline" name="availableOnline" #availableOnline="ngModel" class="my-2">
+                        {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
+                      </mat-slide-toggle>
                     </div>
                   </div>
 

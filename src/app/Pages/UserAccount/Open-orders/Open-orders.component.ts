@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { OrderSearchCriteria, Order, OnlineOrderVO, ProductDescVO, OrderProduct, CartItem } from 'src/app/app.models';
+import { OrderSearchCriteria, Order, OnlineOrderVO, ProductDescVO, OrderProduct, CartItem, ProductSearchCriteria } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -59,9 +59,9 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
   }
 
   getBoughtProducts() {
-    this.appService.getObjects('/service/catalog/getBoughtProducts/' +
-      this.appService.appInfoStorage.language.id
-      + '/' + this.appService.tokenStorage.getUserId() + '/10')
+    this.appService.saveWithUrl('/service/catalog/getBoughtProducts/', new ProductSearchCriteria(
+      this.appService.appInfoStorage.language.id, 0, 0, 0, '0', 1, 0, 10, Number(this.appService.tokenStorage.getUserId())
+    ))
       .subscribe((data: ProductDescVO[]) => {
         this.products = data;
       },
