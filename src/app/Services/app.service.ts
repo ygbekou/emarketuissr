@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -178,7 +178,7 @@ export class AppService {
       this.dialog.closeAll();
    }
 
-   
+
 
 
    public getProducts() {
@@ -210,7 +210,7 @@ export class AppService {
          theme: 'material'
       };
 
-      
+
       let found = false;
       let index = 0;
       for (const ci of cartItems) {
@@ -280,7 +280,7 @@ export class AppService {
 
       }
 
-      this.navbarCartCount = +((this.localStorageCartProducts).length);
+      this.navbarCartCount = 0;
 
       this.navbarCartPrice = 0;
       this.navbarCartShipping = 0;
@@ -313,9 +313,10 @@ export class AppService {
             };
          }
 
-         this.navbarCartCountMap[cartItem.currencyId] += 1;
-         this.navbarCartPriceMap[cartItem.currencyId] = this.calculateCartItemTotal(cartItem);
-         
+         this.navbarCartCountMap[cartItem.currencyId] += cartItem.quantity;
+         this.navbarCartCount += cartItem.quantity;
+         this.navbarCartPriceMap[cartItem.currencyId] += this.calculateCartItemTotal(cartItem);
+
 
          this.navbarCartShipping += 0;
          this.navbarCartShippingMap[cartItem.currencyId] += 0;
@@ -334,7 +335,7 @@ export class AppService {
          this.navbarCartEstimatedTax += cartItem.tax;
          this.navbarCartEstimatedTaxMap[cartItem.currencyId] += cartItem.tax;
 
-         this.navbarCartPriceMap[cartItem.currencyId] = this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]); 
+         this.navbarCartPriceMap[cartItem.currencyId] = this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]);
          this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] =
             this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
                + this.navbarCartShippingMap[cartItem.currencyId]);
@@ -356,7 +357,7 @@ export class AppService {
          const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity;
 
          totalPrice = cartItem.productDiscountPrice * nberDiscountQuantity
-                                    + cartItem.price * moduloDiscountQuantity;
+            + cartItem.price * moduloDiscountQuantity;
       } else {
          totalPrice = cartItem.price * cartItem.quantity;
       }
@@ -905,6 +906,7 @@ export class AppService {
             console.log('Using language :' + lang);
             this.translate.use(lang);
             this.getDropDownCategories();
+            this.getStoreCategories();
             this.getMenus(this.appInfoStorage.language.id, 1)
                .subscribe((menus: Menu[]) => {
                   this.appInfoStorage.mainMenus = menus;
@@ -968,6 +970,18 @@ export class AppService {
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
 
+   }
+
+   public getStoreCategories() {
+      const parameters: string[] = [];
+      parameters.push('e.language.id = |langCode|' + this.appInfoStorage.language.id + '|Integer');
+      this.getAllByCriteria('com.softenza.emarket.model.StoreCategoryDesc', parameters,
+         ' order by e.storeCat.sortOrder ')
+         .subscribe((data: StoreCategoryDesc[]) => {
+            this.appInfoStorage.storeCategories = data;
+         },
+            (error) => console.log(error),
+            () => console.log('Get all StoreCategoryDesc complete'));
    }
 
    getDropDownCategories() {

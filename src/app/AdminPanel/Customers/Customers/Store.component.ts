@@ -79,6 +79,15 @@ export class StoreComponent extends BaseComponent implements OnInit {
     this.store.aprvStatus = (this.store.aprvStatus == null
       || this.store.aprvStatus.toString() === 'false'
       || this.store.aprvStatus.toString() === '0') ? 0 : 1;
+
+    this.store.displayWeb = (this.store.displayWeb == null
+      || this.store.displayWeb.toString() === 'false'
+      || this.store.displayWeb.toString() === '0') ? 0 : 1;
+
+    this.store.displayMb = (this.store.displayMb == null
+      || this.store.displayMb.toString() === 'false'
+      || this.store.displayMb.toString() === '0') ? 0 : 1;
+
     this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.formData = new FormData();
     this.formData = new FormData();

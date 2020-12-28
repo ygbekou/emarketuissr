@@ -34,7 +34,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    }
 
    ngAfterViewInit() {
-      this.paymentAddresses.setAddressType(this.addressType);
+      // this.paymentAddresses.setAddressType(this.addressType);
 
       if (this.userId === undefined) {
          this.userId = Number(this.appService.tokenStorage.getUserId());
@@ -43,7 +43,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    }
 
    onAddressSaved($event) {
-      this.paymentAddresses.updateTable($event);
+      // this.paymentAddresses.updateTable($event);
    }
 }
 

@@ -43,6 +43,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngAfterViewInit() {
+      // this.getUser(Number(this.appService.tokenStorage.getUserId()));
    }
 
 

@@ -24,7 +24,7 @@
                   <i *ngIf="store.aprvStatus===0" class="fa fa-spinner"></i>
                   <i *ngIf="store.aprvStatus===1" class="fa fa-check"></i>
                   {{store.aprvStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
-                </div>
+              </div>
               <div class="tile-body">
                 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
@@ -56,14 +56,14 @@
                       </mat-chip>
                       <button *ngIf="store.aprvStatus ===1" mat-raised-button color="accent"
                         (click)="getStoreProducts(store)">
-                      <mat-icon>done</mat-icon>
-                      {{'COMMON.SELECT'|translate}}
-                    </button>
+                        <mat-icon>done</mat-icon>
+                        {{'COMMON.SELECT'|translate}}
+                      </button>
                     </span>
                   </div>
                 </div>
-          </div>
-        </div>
+              </div>
+            </div>
           </div>
         </div>
       </mat-step>
@@ -106,15 +106,17 @@
             </mat-chip>
           </div>
         </div>
-        <div fxLayout="row wrap" class="col-gap position-relative" *ngIf="productDesc && productDesc.id>0">
-          <form name="form" (ngSubmit)="f.form.valid && sell()" #f="ngForm" validate>
-            <div fxLayout="row wrap">
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="relative"
+        <form name="form" (ngSubmit)="f.form.valid && sell()" #f="ngForm" validate>
+           
+
+            <div fxLayout="row wrap" *ngIf="productDesc && productDesc.id>0">
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="relative"
                 *ngIf="productDesc.product && productDesc.product.image">
-                <img [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
+                <img
+                  [src]="'assets/images/products/' + this.productDesc.product.id + '/' + productDesc.product.image" />
               </div>
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-              
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+
                 <div class="product-detail-content">
                   <h3>{{productDesc?.name}}</h3>
                   <div class="product-detail-price">
@@ -138,7 +140,8 @@
                         <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
                         <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
                           [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
-                          <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
+                          <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses"
+                            [value]="taxClass.id">
                             {{taxClass.name}}
                           </mat-option>
                         </mat-select>
@@ -149,8 +152,8 @@
                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
                       <mat-form-field class="w-100">
                         <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
-                        <input matInput type="text" class="form-control" id="quantity" [(ngModel)]="productStore.quantity"
-                          name="quantity" #quantity="ngModel" required>
+                        <input matInput type="text" class="form-control" id="quantity"
+                          [(ngModel)]="productStore.quantity" name="quantity" #quantity="ngModel" required>
                         <mat-error *ngIf="f.submitted && price.invalid" severity="error">
                           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                         </mat-error>
@@ -204,12 +207,13 @@
                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
                       <mat-form-field class="w-30">
                         <mat-label>Pourcentage rabais</mat-label>
-                      <input matInput type="text" class="form-control" id="promo" [(ngModel)]="productStore.promo"
-                        name="promo" #promo="ngModel">
+                        <input matInput type="text" class="form-control" id="promo" [(ngModel)]="productStore.promo"
+                          name="promo" #promo="ngModel">
                       </mat-form-field>
                     </div>
                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
-                      <mat-slide-toggle [(ngModel)]="productStore.availableOnline" name="availableOnline" #availableOnline="ngModel" class="my-2">
+                      <mat-slide-toggle [(ngModel)]="productStore.availableOnline" name="availableOnline"
+                        #availableOnline="ngModel" class="my-2">
                         {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
                       </mat-slide-toggle>
                     </div>
@@ -220,9 +224,10 @@
                       <div class="text-left mt-2" fxFlex.gt-sm="25">
                         <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"
                           type="submit">
-                          <span class="mx-1 uppercase"> {{'COMMON.SELL_PRODUCT'|translate}}</span>
+                          <span class="mx-1 uppercase"> {{'COMMON.SAVE'|translate}}</span>
                           <mat-icon>save</mat-icon>
-                        </button> </div>
+                        </button> 
+                      </div>
                       <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
                         <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
                       </div>
@@ -236,9 +241,9 @@
               </div>
             </div>
 
-          </form>
-        </div>
 
+        
+        </form>
 
         <!-- Add discount table section -->
 
@@ -248,41 +253,48 @@
               <table mat-table [dataSource]="productDiscountDatasource" matSort class="w-100">
 
                 <ng-container matColumnDef="priority">
-                  <th mat-header-cell width="12%"  *matHeaderCellDef mat-sort-header> {{'COMMON.PRIORITY' | translate}} </th>
+                  <th mat-header-cell width="12%" *matHeaderCellDef mat-sort-header> {{'COMMON.PRIORITY' | translate}}
+                  </th>
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.priority" 
-                          name="priority" #priority="ngModel" pattern="^[1-9]+$" required>
+                      <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.priority"
+                        name="priority" #priority="ngModel" pattern="^[1-9]+$" required>
                     </mat-form-field>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="quantity">
-                  <th mat-header-cell width="12%"  *matHeaderCellDef mat-sort-header > {{'COMMON.QUANTITY' | translate}} </th>
-                  <td mat-cell  *matCellDef="let productDiscount">
+                  <th mat-header-cell width="12%" *matHeaderCellDef mat-sort-header> {{'COMMON.QUANTITY' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field>
-                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.quantity" [disabled]="productDiscount.disablePrice"
-                          name="quantity" #quantity="ngModel" pattern="^[2-9]+$" (change)="togglePercentage(productDiscount)">
+                      <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.quantity"
+                        [disabled]="productDiscount.disablePrice" name="quantity" #quantity="ngModel" pattern="^[2-9]+$"
+                        (change)="togglePercentage(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="price">
-                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.PRICE' | translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.PRICE' | translate}}
+                  </th>
                   <td mat-cell *matCellDef="let productDiscount">
-                    <mat-form-field>  
-                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.price" [disabled]="productDiscount.disablePrice"
-                          name="price" #price="ngModel" pattern="([1-9]\d*)" (change)="togglePercentage(productDiscount)">
+                    <mat-form-field>
+                      <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.price"
+                        [disabled]="productDiscount.disablePrice" name="price" #price="ngModel" pattern="([1-9]\d*)"
+                        (change)="togglePercentage(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="percentage">
-                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.PERCENTAGE' | translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.PERCENTAGE' | translate}}
+                  </th>
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field class="w-100">
-                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.percentage" [disabled]="productDiscount.disablePercentage"
-                          name="percentage" #percentage="ngModel" pattern="([1-9]\d*)" (change)="togglePrice(productDiscount)">
+                      <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.percentage"
+                        [disabled]="productDiscount.disablePercentage" name="percentage" #percentage="ngModel"
+                        pattern="([1-9]\d*)" (change)="togglePrice(productDiscount)">
                     </mat-form-field>
                   </td>
                 </ng-container>
@@ -292,7 +304,7 @@
                   </th>
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field class="w-100">
-                      <input matInput [matDatepicker]="dateStartPicker" class="form-control" 
+                      <input matInput [matDatepicker]="dateStartPicker" class="form-control"
                         [(ngModel)]="productDiscount.dateStart" name="dateStart" #dateStart="ngModel" required>
                       <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
                       <mat-datepicker #dateStartPicker></mat-datepicker>
@@ -305,7 +317,7 @@
                   </th>
                   <td mat-cell *matCellDef="let productDiscount">
                     <mat-form-field class="w-100">
-                      <input matInput [matDatepicker]="dateEndPicker" class="form-control" 
+                      <input matInput [matDatepicker]="dateEndPicker" class="form-control"
                         [(ngModel)]="productDiscount.dateEnd" name="dateEnd" #dateEnd="ngModel" required>
                       <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
                       <mat-datepicker #dateEndPicker></mat-datepicker>
@@ -314,28 +326,30 @@
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
+                  </th>
                   <td mat-cell *matCellDef="let productDiscount">
-                    <mat-slide-toggle [(ngModel)]="productDiscount.status" name="status" #status="ngModel" class="my-2">                   
+                    <mat-slide-toggle [(ngModel)]="productDiscount.status" name="status" #status="ngModel" class="my-2">
                     </mat-slide-toggle>
                   </td>
                 </ng-container>
 
                 <!-- Actions Column -->
                 <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef> Actions 
-                    <a (click)="addDiscount()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+                  <th mat-header-cell *matHeaderCellDef> Actions
+                    <a (click)="addDiscount()" mat-icon-button color="primary"
+                      matTooltip="{{'COMMON.ADD' | translate}}">
                       <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-                    </a>  
+                    </a>
                   </th>
                   <td mat-cell *matCellDef="let productDiscount; let i = index;">
-                    <button mat-icon-button color="primary" (click)="saveProductDiscount(productDiscount)" matTooltip="{{'COMMON.SAVE' | translate}}"
-                      class="save">
+                    <button mat-icon-button color="primary" (click)="saveProductDiscount(productDiscount)"
+                      matTooltip="{{'COMMON.SAVE' | translate}}" class="save">
                       <mat-icon>save</mat-icon>
                     </button>
                     &nbsp;&nbsp;
-                    <button mat-icon-button color="warn" (click)="deleteProductDiscount(productDiscount, i)" matTooltip="{{'COMMON.DELETE' | translate}}"
-                      class="remove">
+                    <button mat-icon-button color="warn" (click)="deleteProductDiscount(productDiscount, i)"
+                      matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>
@@ -345,7 +359,8 @@
                 <tr mat-row *matRowDef="let productDesc; columns: displayedColumns;">
                 </tr>
               </table>
-              <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+              <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}
+              </p>
             </div>
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
           </div>

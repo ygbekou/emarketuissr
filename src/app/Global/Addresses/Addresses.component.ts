@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Address } from 'src/app/app.models';
 import { AddressComponent } from '../Address/Address.component';
 import { MatExpansionPanel } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addresses',
@@ -12,24 +13,23 @@ import { MatExpansionPanel } from '@angular/material';
 })
 export class AddressesComponent implements OnInit {
   addresses: Address[] = [];
-  shippingAddresses: Address[] = [];
-  billingAddresses: Address[] = [];
   error: string;
   indexExpanded = -1;
 
   @Input() userId;
-
-  addressType = 0;
+  @Input() addressType;
   @ViewChild('shippingAddressComponent', { static: false }) shippingAddressComponent: AddressComponent;
-  @ViewChild('billingAddressComponent', { static: false }) billingAddressComponent: AddressComponent;
   @ViewChild('shippingExpansionPanelElement', { static: false }) shippingExpansionPanelElement: MatExpansionPanel;
-  @ViewChild('billingExpansionPanelElement', { static: false }) billingExpansionPanelElement: MatExpansionPanel;
 
   step = 0;
-  constructor(public appService: AppService, public translate: TranslateService) {
+  constructor(public appService: AppService,
+    public router: Router,
+    public translate: TranslateService) {
   }
 
   ngOnInit() {
+    console.log('address type =' + this.addressType);
+
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     }
@@ -40,16 +40,12 @@ export class AddressesComponent implements OnInit {
     this.step = index;
   }
   getAddresses() {
-    this.shippingAddresses = [];
-    this.billingAddresses = [];
-
     if (this.userId > 0) {
       const parameters: string[] = [];
       parameters.push('e.user.id = |userId|' + this.userId + '|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
         .subscribe((data: Address[]) => {
-          this.shippingAddresses = data.filter(this.isShippingAddr);
-          this.billingAddresses = data.filter(this.isBillingAddr);
+          this.addresses = data;
         },
           error => console.log(error),
           () => console.log('Get all addresses complete for userId=' + this.userId));
@@ -65,58 +61,24 @@ export class AddressesComponent implements OnInit {
       });
   }
 
-  isShippingAddr(element, index, array) {
-    return element.addressType === 1;
-  }
-
-  isBillingAddr(element, index, array) {
-    return element.addressType === 2;
-  }
-
-  changePaymentAddress(address: Address) {
-    this.appService.saveWithUrl('/service/catalog/changePaymentAddress/', address)
-      .subscribe((data: Address[]) => {
-        if (address.addressType === 1 || address.addressType === 0) {
-          this.shippingAddresses = data.filter(this.isShippingAddr);
-        } else if (address.addressType === 2 || address.addressType === 0) {
-          this.billingAddresses = data.filter(this.isBillingAddr);
-        }
+  selectAddress(address: Address) {
+    address.addressType = this.addressType;
+    this.appService.saveWithUrl('/service/catalog/setShipPayAddress/', address)
+      .subscribe((data) => {
+        this.router.navigate(['/checkout/payment']);
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));
   }
 
+
   updateTable(address: Address) {
-    if (address.addressType === 1) {
-      const index = this.shippingAddresses.findIndex(x => x.id === address.id);
-      if (index === -1) {
-        this.shippingAddresses.push(address);
-      } else {
-        this.shippingAddresses[index] = address;
-      }
-    } else if (address.addressType === 2) {
-      const index = this.billingAddresses.findIndex(x => x.id === address.id);
-      if (index === -1) {
-        this.billingAddresses.push(address);
-      } else {
-        this.billingAddresses[index] = address;
-      }
+    const index = this.addresses.findIndex(x => x.id === address.id);
+    if (index === -1) {
+      this.addresses.push(address);
+    } else {
+      this.addresses[index] = address;
     }
-
-  }
-
-  isForShippingAddresses() {
-    return this.addressType === 1 || this.addressType === 0 || this.addressType === undefined;
-  }
-
-  isForBillingAddresses() {
-    return this.addressType === 2 || this.addressType === 0 || this.addressType === undefined;
-  }
-
-  setAddressType(addressType: number) {
-    setTimeout(() => {
-      this.addressType = addressType;
-    }, 0);
   }
 
   onAddressSaved($event) {
@@ -127,20 +89,10 @@ export class AddressesComponent implements OnInit {
     if (this.shippingExpansionPanelElement) {
       this.shippingExpansionPanelElement.close();
     }
-    if (this.billingExpansionPanelElement) {
-      this.billingExpansionPanelElement.close();
-    }
   }
 
-
-  editAddress(addressId: number, addressType: number) {
-    if (addressType === 1) {
-      this.shippingAddressComponent.getAddress(addressId);
-      this.shippingExpansionPanelElement.open();
-    }
-    if (addressType === 2) {
-      this.billingAddressComponent.getAddress(addressId);
-      this.billingExpansionPanelElement.open();
-    }
+  editAddress(addressId: number) {
+    this.shippingAddressComponent.getAddress(addressId);
+    this.shippingExpansionPanelElement.open();
   }
 }

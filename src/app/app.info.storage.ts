@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language, CategoryDescription, Menu, Company, Country, Zone } from './app.models';
+import { Language, CategoryDescription, Menu, Company, Country, Zone, StoreCategoryDesc } from './app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -21,6 +21,7 @@ export class AppInfoStorage {
   public USER_GROUPS: any = [];
   public language: Language;
   public searchCategories: CategoryDescription[] = [];
+  public storeCategories: StoreCategoryDesc[] = [];
   public selectedSearchCategory: CategoryDescription;
   public mainMenus: Menu[] = [];
   public footerMenus: Menu[] = [];
@@ -38,8 +39,8 @@ export class AppInfoStorage {
 
     this.updateInfo();
 
-    this.activeStatuses.push({'id': 1, 'label': 'Actif'});
-    this.activeStatuses.push({'id': 0, 'label': 'Inactif'});
+    this.activeStatuses.push({ 'id': 1, 'label': 'Actif' });
+    this.activeStatuses.push({ 'id': 0, 'label': 'Inactif' });
   }
 
   updateInfo() {

@@ -1,5 +1,15 @@
 img {
-  height: 50px;  
-  vertical-align: middle;
-  align-self: center;
+  height: 50px;
+  display:unset;
+}
+.mat-card {
+    margin: 0.875rem;
+    height: 160px;
+    text-align: center;
+}
+.slick-slide {
+      margin: 0.5rem 0.5rem;  
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
 }

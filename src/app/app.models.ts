@@ -660,9 +660,10 @@ export class Store extends BaseModel {
   code: string;
   displayWeb: number;
   displayMb: number;
-  onlineStore:  number;
+  onlineStore: number;
   sortOrder: number;
   public storeCat: StoreCategory;
+  catName: string;
   type = 'Store';
 
   constructor() {
@@ -700,6 +701,8 @@ export class Address {
   postCode: string;
   middleName: string;
   addressType: number;
+  billTo: number;
+  shipTo: number;
   zone: Zone;
   status = 0;
   type = 'Address';

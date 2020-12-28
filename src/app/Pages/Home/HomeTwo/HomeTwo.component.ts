@@ -78,8 +78,10 @@ export class HomeTwoComponent implements OnInit {
          .subscribe((data: MarketingDescription[]) => {
             // console.log(data);
             if (data && data.length > 0) {
-               this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
-         this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0'))
+               this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+                new ProductSearchCriteria(
+                  this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0',
+                  0, 0, 0, 0))
                   .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);

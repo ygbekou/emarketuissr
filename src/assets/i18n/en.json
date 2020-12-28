@@ -35,6 +35,8 @@
 		"ABOUT": "About",
 		"ORDER_PLACED": "Order placed",
 		"SHIP_TO": "Ship to",
+		"ADD_ADDRESS": "Add address",
+		"SELECT_ADDRESS": "Select this address",
 		"ORDER_DETAIL": "Order details",
 		"OPEN_ORDERS": "Open orders",
 		"VIEW_OPEN_ORDERS": "View my open orders",
@@ -662,6 +664,10 @@
 		"PASSWORD_NOT_MATCH": "Password does not match",
 		"COMMENT_OR_STATUS": "Both comment and order status cannot be blank",
 		"EMAIL_INVALID": "Invalid E-mail",
+		"PRICE_OR_PERCENT":"Either Price or Percentage is needed",
+		"PRICE_AND_QTY": "Quantity must be populated when the price is populated and vice versa",
+		"BEGIN_G_END":"Begin date must be less than the end date",
+		"DUPLICATE_PRIORITY": "Priorities must be different for active discounts",
 		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters"
 	},
 	"DATE": {

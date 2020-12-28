@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, Store, Pagination, 
-  ProductToStore, ProductDiscount } from 'src/app/app.models';
+import {
+  CategoryDescription, ProductDescription, Product, Store, Pagination,
+  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO
+} from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -40,9 +42,9 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
   currentOption: string;
-  products: ProductDescription[] = [];
+  products: ProductDescVO[] = [];
   stores: Store[] = [];
-  dataSource: MatTableDataSource<ProductDescription>;
+  dataSource: MatTableDataSource<ProductDescVO>;
   productStore: ProductToStore = new ProductToStore();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
@@ -92,7 +94,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.product = new Product();
 
     for (let counter = 0; counter < 10; counter++) {
-      console.log('for loop executed : ' + counter);
+      // console.log('for loop executed : ' + counter);
       this.categories[counter] = [];
     }
 
@@ -129,12 +131,13 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     console.log(store);
     console.log(this.selectedStore);
     console.log(this.appService.appInfoStorage.language);
-    this.appService.getObjects('/service/catalog/getMyProductsOnSale/' + this.appService.appInfoStorage.language.id
-      + '/' + store.id)
-      .subscribe((data: ProductDescription[]) => {
-        this.products = data;
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+      new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
+        store.id, 0, 0, '0', 0, 0, 0, 0))
+      .subscribe((data: ProductListVO) => {
+        this.products = data.productDescVOs;
         this.stepper.selectedIndex = 1;
-        const result = this.filterData(data);
+        const result = this.filterData(data.productDescVOs);
         if (result.data.length === 0) {
           // this.properties.length = 0;
           this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -298,15 +301,15 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   public deleteProductDiscount(productDiscount: ProductDiscount, index: number) {
 
     if (productDiscount.id === undefined || productDiscount.id === null) {
-        this.productDiscountDatasource = this.resetDatasource(this.productDiscountDatasource, index);
-        return;
+      this.productDiscountDatasource = this.resetDatasource(this.productDiscountDatasource, index);
+      return;
     }
 
     this.appService.delete(productDiscount.id, 'ProductDiscount')
-        .subscribe(data => {
-      this.productDiscountDatasource = this.processDataSourceDeleteResult(data,
-        this.messages, productDiscount, this.productDiscountDatasource);
-    });
+      .subscribe(data => {
+        this.productDiscountDatasource = this.processDataSourceDeleteResult(data,
+          this.messages, productDiscount, this.productDiscountDatasource);
+      });
   }
 
 
@@ -329,20 +332,36 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   validateProductDiscount(productDiscount: ProductDiscount) {
     if (this.isBlank(productDiscount.price) && this.isBlank(productDiscount.percentage)) {
-      this.errors = 'Either Price or Percentage is needed is required';
+      this.translate.get(['VALIDATION.PRICE_OR_PERCENT', 'COMMON.ERROR']).subscribe(res => {
+        this.errors = res['VALIDATION.PRICE_OR_PERCENT'];
+      });
       return false;
     }
 
     if ((this.isBlank(productDiscount.price) && !this.isBlank(productDiscount.quantity))
-          || (!this.isBlank(productDiscount.price) && this.isBlank(productDiscount.quantity))
-      ) {
-      this.errors = 'Quantity/Price are required at the same time';
+      || (!this.isBlank(productDiscount.price) && this.isBlank(productDiscount.quantity))
+    ) {
+      this.translate.get(['VALIDATION.PRICE_AND_QTY', 'COMMON.ERROR']).subscribe(res => {
+        this.errors = res['VALIDATION.PRICE_AND_QTY'];
+      });
       return false;
     }
 
     if (new Date(productDiscount.dateStart) > new Date(productDiscount.dateEnd)) {
-      this.errors = 'Start Date cannot be greater than End Date.';
+      this.translate.get(['VALIDATION.BEGIN_G_END', 'COMMON.ERROR']).subscribe(res => {
+        this.errors = res['VALIDATION.BEGIN_G_END'];
+      });
       return false;
+    }
+
+    for (const pd of this.productStore.productDiscounts) {
+      if (pd.priority === productDiscount.quantity
+        && productDiscount.status === 1 && pd.status === 1) {
+        this.translate.get(['VALIDATION.DUPLICATE_PRIORITY', 'COMMON.ERROR']).subscribe(res => {
+          this.errors = res['VALIDATION.DUPLICATE_PRIORITY'];
+        });
+        return false;
+      }
     }
 
     return true;

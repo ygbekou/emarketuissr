@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct, ProductDescVO, ProductSearchCriteria } from 'src/app/app.models';
+import {
+  CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct,
+  ProductDescVO, ProductSearchCriteria, ProductListVO
+} from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -173,12 +176,15 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     // console.log(cat);
     // console.log(this.selectedStore);
     // console.log(this.appService.appInfoStorage.language);
-    this.appService.getObjects('/service/catalog/getProductsForMarketing/' + this.appService.appInfoStorage.language.id
-      + '/' + cat.category.id + '/' + this.selectedStore.id)
-      .subscribe((data: ProductDescVO[]) => {
-        this.products = data;
+        this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+      new ProductSearchCriteria(
+        this.appService.appInfoStorage.language.id, this.selectedStore.id,
+        0, cat.category.id, '0', 0, 0, 0, 0
+      ))
+      .subscribe((data: ProductListVO[]) => {
+        this.products =  data.productDescVOs;
         this.stepper.selectedIndex = 2;
-        const result = this.filterData(data, 1);
+        const result = this.filterData(data.productDescVOs, 1);
         if (result.data.length === 0) {
           // this.properties.length = 0;
           this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -198,9 +204,10 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getSelectedProducts() {
-    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
-      this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '0'
-    ))
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+      new ProductSearchCriteria(
+        this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '0', 0, 0, 0, 0
+      ))
       .subscribe((data: any) => {
         this.selectedProducts = data.productDescVOs;
         if (this.selectedProducts && this.selectedProducts.length > 0) {

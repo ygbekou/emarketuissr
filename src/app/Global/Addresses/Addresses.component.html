@@ -1,50 +1,57 @@
-<mat-card *ngIf="isForShippingAddresses()">
+<mat-card>
   <div>
-    <div fxLayout="row wrap"><h1 style="color: #283593;">{{'COMMON.SHIPPING_ADDRESS'|translate}}</h1></div> 
     <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of shippingAddresses">
+      <h1 style="color: #283593;">{{'COMMON.ADDRESS'|translate}}s</h1>
+    </div>
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of addresses">
         <div class="pt-3">
           <address class="mb-4">
             <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
             {{addr.address1}} {{addr.address2}}<br>
-            {{addr.city}}, {{addr.zone.name}} {{addr.postCode}}<br> 
+            {{addr.city}}, {{addr.zone.name}} {{addr.postCode}}<br>
             {{addr.country.name}}
           </address>
-          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <input type="checkbox" class="mb-2 d-block" [disabled]="addr.status === 1" [checked]="addr.status === 1" 
-              (click)="changePaymentAddress(addr)">{{'COMMON.DELIVER_TO_THIS_ADDRESS'|translate}} 
+          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px" *ngIf="addressType>0">
+            <button mat-button color="warn" (click)="selectAddress(addr)">
+              <mat-icon>check_circle_outline</mat-icon>
+              {{'COMMON.SELECT_ADDRESS'|translate}}
+            </button>
           </div>
-          <br/>
+          <br />
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id, 1)" 
-                matTooltip="{{'COMMON.EDIT' | translate}}">
+            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id)"
+              matTooltip="{{'COMMON.EDIT' | translate}}">
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-raised-button color="accent" (click)="removeAddress(addr.id)"
-                matTooltip="{{'COMMON.REMOVE' | translate}}"><mat-icon>remove</mat-icon></button>
+              matTooltip="{{'COMMON.REMOVE' | translate}}">
+              <mat-icon>remove</mat-icon>
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <br/>
+  <br />
   <div>
     <mat-accordion>
-      <mat-expansion-panel #shippingExpansionPanelElement       
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">                        
+      <mat-expansion-panel #shippingExpansionPanelElement (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <button mat-flat-button color="primary" matTooltip="{{'COMMON.ADD_NEW_SHIPPING_ADDRESS' | translate}}">
-              <mat-icon>add</mat-icon></button>
+            <button mat-flat-button color="primary" matTooltip="{{'COMMON.ADD_ADDRESS' | translate}}">
+              <mat-icon>add</mat-icon>
+            </button>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-address #shippingAddressComponent [userId]="userId" [selectedAddressType]="1" (addressSaveEvent)="onAddressSaved($event)"></app-address>
+        <app-address #shippingAddressComponent [userId]="userId" [selectedAddressType]="addressType"
+          (addressSaveEvent)="onAddressSaved($event)"></app-address>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 </mat-card>
-<br/>
+<!-- <br/>
 <mat-card *ngIf="isForBillingAddresses()">
   <div>
     <div fxLayout="row wrap"><h1 style="color: #283593;">{{'COMMON.BILLING_ADDRESS'|translate}}</h1></div>
@@ -91,4 +98,4 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-</mat-card>
+</mat-card> -->

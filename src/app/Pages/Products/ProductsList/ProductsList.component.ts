@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria, ProductListVO, CartItem, Store, ProductSearchCriteria } from 'src/app/app.models';
+import {
+   Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
+   ProductListVO, CartItem, Store, ProductSearchCriteria
+} from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -92,7 +95,7 @@ export class ProductsListComponent implements OnInit {
 
       this.activatedRoute.queryParams.subscribe(params => {
 
-         console.info(this.activatedRoute.queryParams);
+         console.log(this.activatedRoute.queryParams);
          this.activatedRoute.queryParams.forEach(queryParams => {
             if (queryParams['searchText'] !== undefined) {
                this.searchText = queryParams['searchText'];
@@ -139,11 +142,10 @@ export class ProductsListComponent implements OnInit {
 
 
    getProducts() {
-
-      this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', new ProductSearchCriteria(
-         this.appService.appInfoStorage.language.id, this.storeId, this.marketId, this.catId, this.searchText)
-      )
-         .subscribe((data: ProductListVO) => {
+      this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+         new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
+            this.storeId, this.marketId, this.catId, this.searchText, 0, 0, 0, 0)
+      ).subscribe((data: ProductListVO) => {
             this.productList = data;
             this.translate.get(['COMMON.ALL_CATEGORIES', 'COMMON.ALL_CATEGORIES']).subscribe(res => {
                this.dummyCat = res['COMMON.ALL_CATEGORIES'];
@@ -328,11 +330,11 @@ export class ProductsListComponent implements OnInit {
    }
 
    public resetPagination() {
-      console.log( 'resetPagination called');
+      console.log('resetPagination called');
       if (this.paginator) {
          this.paginator.pageIndex = 0;
       }
-      
+
       this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
    }
 
@@ -359,7 +361,7 @@ export class ProductsListComponent implements OnInit {
 
       this.searchCriteria.text = data.trim().toLowerCase();
       this.applyAllFilter();
-      console.log('After applyAllFilter.' + this.dataSource.data.length );
+      console.log('After applyAllFilter.' + this.dataSource.data.length);
       this.pagination = this.appService.paginator(this.dataSource.data, 1, this.count).pagination;
       // this.resetPagination();
    }

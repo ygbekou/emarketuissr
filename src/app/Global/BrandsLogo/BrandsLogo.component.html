@@ -4,7 +4,9 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title>{{store.name}}</mat-card-title>
-          <mat-card-subtitle *ngIf="store.address">{{store.address.city +', '+store.address.country.name}}
+          <mat-card-subtitle *ngIf="store.address">
+           <font style="color: #283593;"> {{store.catName}} </font><br/>
+            {{store.address.city +', '+store.address.country.name}}
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>

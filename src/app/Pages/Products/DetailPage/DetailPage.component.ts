@@ -55,10 +55,22 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
             () => console.log('Get all getProductOnSale complete'));
    }
 
+   /*   constructor(public languageId: number,
+              public storeId: number,
+              public marketingId: number,
+              public catId: number,
+              public searchText: string,
+              public fromWeb = 1,
+              public productId: number,
+              public topN: number,
+              public userId: number,
+  ) */
+
    getRelatedProducts(langId: number) {
-      this.appService.saveWithUrl('/service/catalog/getRelatedProductsOnSale/', new ProductSearchCriteria(
-         langId, 0, 0, 0, '0', 1, this.product.product.id, this.topN
-      ))
+      this.appService.saveWithUrl('/service/catalog/getRelatedProductsOnSale/',
+         new ProductSearchCriteria(
+            langId, 0, 0, 0, '0', 1, this.product.product.id, this.topN, 0
+         ))
          .subscribe((data: ProductDescVO[]) => {
             this.products = data;
             console.log(this.products);

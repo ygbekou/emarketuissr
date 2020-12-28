@@ -32,15 +32,11 @@ export class TmoneysComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.tmoneysDataSource = new MatTableDataSource();
-    
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     }
-
     this.getTmoneys();
-
   }
 
   public delete(tmoneyId: number) {
