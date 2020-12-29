@@ -34,6 +34,15 @@ export class StoreComponent extends BaseComponent implements OnInit {
     });
   }
 
+  generateStoreCode() {
+    const d = new Date();
+    this.store.code = (this.store.owner.firstName ?
+      this.store.owner.firstName.charAt(0) : ''
+    ) + (this.store.owner.lastName ?
+      this.store.owner.lastName.charAt(0) : '')
+      + d.getTime();
+  }
+
   compareObjects(o1: any, o2: any): boolean {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }

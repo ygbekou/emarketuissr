@@ -418,7 +418,7 @@ export class AppService {
 
       delete this.localStorageCartProductsMap[currencyId];
 
-      const title = 'Updating Cart';
+     /*  const title = 'Updating Cart';
       const msg = '';
 
       const toastOption: ToastOptions = {
@@ -429,7 +429,7 @@ export class AppService {
          theme: 'material'
       };
 
-      this.toastyService.wait(toastOption);
+      this.toastyService.wait(toastOption); */
       setTimeout(() => {
          // ReAdding the products after remove
          localStorage.setItem('cart_item', JSON.stringify(filteredProducts));

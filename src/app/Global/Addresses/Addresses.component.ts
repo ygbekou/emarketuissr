@@ -15,7 +15,7 @@ export class AddressesComponent implements OnInit {
   addresses: Address[] = [];
   error: string;
   indexExpanded = -1;
-
+  panelOpenState = false;
   @Input() userId;
   @Input() addressType;
   @ViewChild('shippingAddressComponent', { static: false }) shippingAddressComponent: AddressComponent;

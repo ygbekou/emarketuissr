@@ -43,7 +43,7 @@
           </mat-error>
         </mat-form-field>
 
-           <mat-form-field class="w-100 mb-3">
+        <mat-form-field class="w-100 mb-3">
           <mat-label> {{'COMMON.SORT_ORDER' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="store.sortOrder" name="sortOrder"
@@ -101,15 +101,21 @@
           [linkEnabled]="true">
         </input-file>
 
-        <mat-form-field class="w-100 mb-3">
+        <mat-form-field class="w-50 mb-3">
           <mat-label> {{'COMMON.STORE_CODE' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="code" [(ngModel)]="store.code" name="code"
-            #code="ngModel">
+          <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+            name="code" #code="ngModel">
+            
           <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
           </mat-error>
+
         </mat-form-field>
+        <button mat-fab color="warn" (click)="generateStoreCode()">
+          <mat-icon>cached</mat-icon>
+        </button>
+        
       </div>
     </div>
 
