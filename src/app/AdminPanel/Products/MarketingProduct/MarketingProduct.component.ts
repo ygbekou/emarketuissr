@@ -176,15 +176,15 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     // console.log(cat);
     // console.log(this.selectedStore);
     // console.log(this.appService.appInfoStorage.language);
-        this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
       new ProductSearchCriteria(
         this.appService.appInfoStorage.language.id, this.selectedStore.id,
         0, cat.category.id, '0', 0, 0, 0, 0
       ))
-      .subscribe((data: ProductListVO[]) => {
-        this.products =  data.productDescVOs;
+      .subscribe((productListVO: ProductListVO) => {
+        this.products = productListVO.productDescVOs;
         this.stepper.selectedIndex = 2;
-        const result = this.filterData(data.productDescVOs, 1);
+        const result = this.filterData(productListVO.productDescVOs, 1);
         if (result.data.length === 0) {
           // this.properties.length = 0;
           this.pagination = new Pagination(1, this.count, null, 2, 0, 0);

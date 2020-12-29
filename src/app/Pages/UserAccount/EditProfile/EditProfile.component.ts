@@ -49,6 +49,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                { id: 2, name: 'Adresse de Facturation' }
             ];
          }
+         this.generateStoreCode();
          this.route.queryParams.forEach(queryParams => {
             this.type = queryParams['type'];
             this.getAddress(queryParams['adrId']);
@@ -147,6 +148,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          });
    }
 
+   generateStoreCode() {
+      const d = new Date();
+      this.store.code = (this.user.firstName ?
+         this.user.firstName.charAt(0) : ''
+      ) + (this.user.lastName ?
+         this.user.lastName.charAt(0) : '')
+         + d.getTime();
+   }
 
    submitStoreInfo() {
       this.messages = '';

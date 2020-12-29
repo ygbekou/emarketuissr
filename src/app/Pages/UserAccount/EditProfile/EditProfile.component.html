@@ -65,31 +65,6 @@
               {{'COMMON.FEMALE' | translate }}
             </mat-radio-button>
           </mat-radio-group>
-
-          <!--           
-          <div ngModelGroup="passwordGroup" password-matcher #passwordGroup="ngModelGroup">
-            <mat-form-field class="w-100 mb-3">
-              <mat-label> {{'COMMON.PASSWORD' | translate}} </mat-label>
-              <input matInput type="password" class="form-control" id="password" [(ngModel)]="user.password"
-                name="password" #password="ngModel" autocomplete="off" required>
-              <mat-error *ngIf="f1.submitted && password.invalid" severity="error">
-                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="w-100 mb-3">
-              <mat-label> {{'COMMON.CONFIRM_PASSWORD' | translate}}</mat-label>
-              <input matInput type="password" class="form-control" id="confirmPassword"
-                [(ngModel)]="user.confirmPassword" name="confirmPassword" #confirmPassword="ngModel" autocomplete="off">
-              <mat-error *ngIf="f1.submitted && confirmPassword.invalid" severity="error">
-                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-              </mat-error>
-            </mat-form-field>
-            <mat-error *ngIf="passwordGroup.control?.errors" [ngStyle]="{'color': '#ff5252'}">
-              <div [hidden]="!passwordGroup.control?.errors.noMatch">Passwords do not match</div>
-            </mat-error>
-          </div>
- -->
           <mat-form-field class="w-100 mb-3">
             <input matInput [matDatepicker]="picker" placeholder="{{'COMMON.BIRTH_DATE'|translate}}"
               [(ngModel)]="user.birthDate" name="birthDate" #birthDate="ngModel">
@@ -424,15 +399,15 @@
             </mat-error>
           </mat-form-field>
 
-          
-            <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
-              {{ 'COMMON.ENABLE' | translate }}
-            </mat-slide-toggle>
-            <div class="divider"></div>
-            <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
-              {{ 'COMMON.ONLINE_STORE' | translate }}
-            </mat-slide-toggle>
-          
+
+          <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+          <div class="divider"></div>
+          <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
+            {{ 'COMMON.ONLINE_STORE' | translate }}
+          </mat-slide-toggle>
+
 
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
@@ -443,15 +418,19 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="w-100 mb-3">
+          <mat-form-field class="w-50 mb-3">
             <mat-label> {{'COMMON.STORE_CODE' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="code" [(ngModel)]="store.code" name="code"
+            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code" name="code"
               #code="ngModel">
             <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
+
+          <button mat-fab color="warn" (click)="generateStoreCode()">
+            <mat-icon>cached</mat-icon>
+          </button>
 
         </div>
       </div>
