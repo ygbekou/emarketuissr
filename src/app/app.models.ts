@@ -1348,6 +1348,7 @@ export class Order {
   failureReason: string;
   paygateGlobalPaymentUrl: string;
   errors: string[];
+  paymentInfo: string;
 
   type = 'Order';
 
@@ -1537,7 +1538,7 @@ export class StoreOrderVO {
 export class OrdersVO {
   online: OnlineOrderVO[];
   store: StoreOrderVO[];
-  onlineStatus: Map<String, number>;
+  onlineStatus: Map<string, number>;
   storeStatus: Map<number, number>;
 }
 

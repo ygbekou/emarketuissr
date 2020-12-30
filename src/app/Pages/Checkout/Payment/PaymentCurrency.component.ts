@@ -133,6 +133,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.order.shippingMethod = 'DELIVERY';
             this.order.shippingCode = 'DELIVERY';
          }
+         if (this.user.paymentMethodCode === 'CREDIT_CARD' && this.user.creditCard) {
+            this.order.paymentInfo = this.user.creditCard.cardType +
+               ' - xxx' + this.user.creditCard.last4Digits +
+               ' - Exp: ' + this.user.creditCard.expMonth + '/' +
+               this.user.creditCard.expYear;
+         }
          this.appService.getIp()
             .subscribe((data1: any) => {
                this.order.ip = data1.ip;
