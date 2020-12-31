@@ -1196,6 +1196,7 @@ export class OrderHistory {
   type = 'OrderHistory';
   constructor() {
     this.order = new Order();
+    this.user = new User();
     this.notify = 1;
     this.orderStatus = new OrderStatus();
   }

@@ -62,7 +62,7 @@
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngIf="canEdit">
             <mat-form-field class="w-100">
               <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label>
-              <mat-select [(ngModel)]="orderHistory.orderStatus" name="orderStatus">
+              <mat-select [(ngModel)]="orderHistory.orderStatus" name="orderStatus" [compareWith]="compareObjects">
                 <mat-option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">
                   {{orderStatus.description}}
                 </mat-option>

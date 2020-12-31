@@ -89,23 +89,8 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
     this.messages = '';
     this.appService.delete(orderHistoryId, 'OrderHistory')
       .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.findIndex(element => element.id === orderHistoryId);
-          if (index !== -1) {
-            this.dataSource.data.splice(index, 1);
-            this.dataSource = new MatTableDataSource<OrderHistory>(this.dataSource.data);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }
-        } else if (resp.result === 'FOREIGN_KEY_FAILURE') {
-          this.translate.get(['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_UNSUCCESS_FOREIGN_KEY'];
-          });
-        } else {
-          this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
-            this.messages = res['MESSAGE.ERROR_OCCURRED'];
-          });
-        }
+
+        this.processDataSourceDeleteResult(resp, this.messages, this.orderHistory, this.dataSource);
       });
   }
 
@@ -117,49 +102,22 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
       this.translate.get(['VALIDATION.COMMENT_OR_STATUS', 'COMMON.SUCCESS']).subscribe(res => {
         this.messages = res['VALIDATION.COMMENT_OR_STATUS'];
       });
-      console.log(this.messages);
     } else {
-      if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
-        this.orderHistory.orderStatus.id = this.order.orderStatus.id;
-      } else if (this.orderHistory.orderStatus.name !== this.order.statusCode) {
-        this.order.orderStatus.id = this.orderHistory.orderStatus.id;
-        this.order.statusCode = this.orderHistory.orderStatus.name;
-        this.appService.save(this.order, 'Order')
-          .subscribe(result => {
-            if (result.id > 0) {
-              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_SUCCESS'];
-              });
-            } else {
-              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
-              });
-            }
-          });
 
-      }
       try {
         this.orderHistory.order.id = this.order.id;
-        if (this.orderHistory.id > 0) {
-          this.order.modifiedBy = Number(this.appService.tokenStorage.getUserId());
-        } else {
-          const user = new User();
-          user.id = Number(this.appService.tokenStorage.getUserId());
-          this.orderHistory.user = user;
+        this.orderHistory.user.id = Number(this.appService.tokenStorage.getUserId());
+        if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
+          this.orderHistory.orderStatus.id = this.order.orderStatus.id;
         }
+
         this.setToggleValues();
-        this.appService.save(this.orderHistory, 'OrderHistory')
+        this.appService.saveWithUrl('/service/order/saveOrderHistory', this.orderHistory)
           .subscribe(result => {
+            this.processResult(result, this.order, null);
             if (result.id > 0) {
               this.orderHistory = new OrderHistory();
               this.getOrderHistories();
-              this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_SUCCESS'];
-              });
-            } else {
-              this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
-              });
             }
           });
 
