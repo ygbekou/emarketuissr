@@ -159,7 +159,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.appService.completeOrder(+this.currencyId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
-                           const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.apiServer);
+                           const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
                            window.location.href = url;
                            return;
                         }
