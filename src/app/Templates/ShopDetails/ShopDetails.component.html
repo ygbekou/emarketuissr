@@ -64,9 +64,9 @@
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div>
-              <a href="javascript:void(0)" class="a-link-normal" (click)="reviewPopup(detailData)">
-                {{detailData.product.reviews.length}} {{'COMMON.REVIEW'|translate}}
-                {{detailData.product.reviews.length>1?'s':''}}
+              <a [routerLink]="['/products/dtl/'+detailData.product?.id+(detailData.product?.ptsId?'/'+detailData.product?.ptsId:'')]"
+               fragment="reviews" class="a-link-normal">
+                {{detailData.product.reviews.length}} {{'COMMON.REVIEW'|translate}}{{detailData.product.reviews.length > 1 ? 's' : ''}}
               </a>
             </div>
           </div>

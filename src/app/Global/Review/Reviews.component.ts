@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-ProductReview',
-  templateUrl: './ProductReview.component.html',
-  styleUrls: ['./ProductReview.component.scss']
+  selector: 'app-Reviews',
+  templateUrl: './Reviews.component.html',
+  styleUrls: ['./Review.component.scss']
 })
-export class ProductReviewComponent implements OnInit {
+export class ReviewsComponent implements OnInit {
 
    @Input()
    singleProductDetails: any;

@@ -1,0 +1,75 @@
+.a-button .a-button-text {
+    color: #111;
+}
+
+.a-button a, .a-button:hover a {
+    color: #111;
+    text-decoration: none!important;
+}
+
+a.a-button-text, button.a-button-text {
+    width: 100%;
+    height: 100%;
+}
+
+.a-button-text {
+    background-color: transparent;
+    border: 0;
+    display: block;
+    font-size: 13px;
+    line-height: 29px;
+    margin: 0;
+    outline: 0;
+    padding: 0 10px 0 11px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+a-button .a-button-inner {
+    background: #eff1f3;
+    background: -webkit-linear-gradient(top,#f7f8fa,#e7e9ec);
+    background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
+}
+
+.a-button-inner {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    height: 29px;
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset;
+    border-radius: 2px;
+}
+
+.review-button {
+    width: 300px;
+}
+.a-button {
+    background: #e7e9ec;
+    border-radius: 3px;
+    border-color: #ADB1B8 #A2A6AC #8D9096;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    text-align: center;
+    text-decoration: none!important;
+    vertical-align: middle;
+}
+
+
+textarea:focus { 
+    outline: none !important;
+    border-color: #1b80c2;
+    box-shadow: 0 0 10px #1b80c2;
+}
+textarea{ 
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+a {
+    cursor: pointer;
+}
+ 

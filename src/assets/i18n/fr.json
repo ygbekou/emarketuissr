@@ -574,10 +574,18 @@
     "CASHIER": "Caissier(e)",
     "REBATE": "Remise",
     "CUSTOMER": "Client",
-    "SHIP_TO_ME": "Expedier le moi",
+    "SHIP_TO_ME": "Expédier le moi",
     "I_PICKUP": "Je passe le prendre",
     "ONLINE_STORE": "Boutique en ligne",
-    "AVAILABLE_ONLINE": "Disponible en ligne"
+    "AVAILABLE_ONLINE": "Disponible en ligne",
+		"HEADLINE": "Titre",
+		"OVERALL_RATING": "Note globale",
+		"ADD_PHOTO": "Ajouter une photo",
+		"NO_CUSTOMER_REVIEWS": "Aucun commentaire client",
+		"REVIEW_THIS_PRODUCT": "Evaluer ce produit",
+		"SHARE_YOUR_THOUGHTS": "Partagez vos pensées avec d'autres clients",
+		"REVIEW_PRODUCT": "Evaluer produit",
+		"CREATE_REVIEW": "Ajouter une évaluation"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

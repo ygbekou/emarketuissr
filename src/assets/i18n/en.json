@@ -578,7 +578,15 @@
 		"SHIP_TO_ME": "Ship it to me",
 		"I_PICKUP": "I will pick it up",
 		"ONLINE_STORE": "Online Store",
-		"AVAILABLE_ONLINE": "Available Online"
+		"AVAILABLE_ONLINE": "Available Online",
+		"HEADLINE": "Headline",
+		"OVERALL_RATING": "Overall rating",
+		"ADD_PHOTO": "Add a photo",
+		"NO_CUSTOMER_REVIEWS": "No customer reviews",
+		"REVIEW_THIS_PRODUCT": "Review this product",
+		"SHARE_YOUR_THOUGHTS": "Share your thoughts with other customers",
+		"REVIEW_PRODUCT": "Review product",
+		"CREATE_REVIEW": "Create Review"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

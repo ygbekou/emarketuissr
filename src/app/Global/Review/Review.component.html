@@ -1,0 +1,90 @@
+<div class="inner-container bg-white section-gap-lg">
+    <div class="container">
+      <div fxLayout="row wrap" fxLayoutAlign="center center"> 
+        
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="productDesc">
+          <mat-card>
+            <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+              <h5>{{'COMMON.CREATE_REVIEW' | translate}}</h5>
+              <div fxLayout="row wrap"> 
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+                  <img [src]="'assets/images/products/'+productDesc.product.id+'/'+productDesc.product.image"
+                    [style.width.px]="50" class="d-block">
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90">
+                    {{productDesc.name}}
+                </div>
+              </div>
+              <hr class="spacer">
+          
+              <div fxLayout="row wrap">
+                {{'COMMON.OVERALL_RATING' | translate}}
+              </div>
+              <div fxLayout="row wrap">
+                <a color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="updateRating(1)">
+                    <mat-icon color="accent" *ngIf="review.rating < 1">star_border</mat-icon>
+                    <mat-icon color="accent" *ngIf="review.rating >= 1">star</mat-icon>
+                </a> 
+                <a color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="updateRating(2)">
+                    <mat-icon color="accent" *ngIf="review.rating < 2">star_border</mat-icon>
+                    <mat-icon color="accent" *ngIf="review.rating >= 2">star</mat-icon>
+                </a>
+                <a color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="updateRating(3)">
+                    <mat-icon color="accent" *ngIf="review.rating < 3">star_border</mat-icon>
+                    <mat-icon color="accent" *ngIf="review.rating >= 3">star</mat-icon>
+                </a>
+                <a color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="updateRating(4)">
+                    <mat-icon color="accent" *ngIf="review.rating < 4">star_border</mat-icon>
+                    <mat-icon color="accent" *ngIf="review.rating >= 4">star</mat-icon>
+                </a>
+                <a color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="updateRating(5)">
+                    <mat-icon color="accent" *ngIf="review.rating < 5">star_border</mat-icon>
+                    <mat-icon color="accent" *ngIf="review.rating === 5">star</mat-icon>
+                </a>
+              </div>
+              <!-- <br/>
+              <div fxLayout="row wrap" class="w-100">
+                <mat-slide-toggle [(ngModel)]="review.status" name="status" #status="ngModel" class="my-2">
+                  {{ 'COMMON.STATUS' | translate }}
+                </mat-slide-toggle>
+              </div> -->
+              <br/>
+              <h6 class="text-muted text-left fw-600 mb-3">{{'COMMON.ADD_PHOTO' | translate}}</h6>
+              <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*" 
+                [linkEnabled]="true">
+              </input-file>
+              <div fxLayout="row wrap" class="w-100">
+                <mat-form-field   class="w-100">
+                    <mat-label> {{'COMMON.HEADLINE' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="headline" [(ngModel)]="review.headline"
+                      name="headline" #headline="ngModel">
+                </mat-form-field>
+              </div>
+              <br/>
+              <div fxLayout="row wrap" class="w-100">
+                <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+                <textarea matInput rows="5" cols="25" class="form-control" id="text" [(ngModel)]="review.comments"
+                  name="text" #text="ngModel"></textarea>
+              </div>
+
+              <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                  <div class="text-left mt-2" fxFlex.gt-sm="25">
+                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
+                      <mat-icon>save</mat-icon>
+                    </button> </div>
+                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+                    <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+                  </div>
+                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+                    <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+</div>

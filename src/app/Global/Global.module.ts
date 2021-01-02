@@ -77,7 +77,7 @@ import { HomePageThreeSliderComponent } from './Slider/HomePageThreeSlider/HomeP
 import { NewProductsCardComponent } from './NewProductsCard/NewProductsCard.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
-import { ProductReviewComponent } from './ProductReview/ProductReview.component';
+import { ReviewsComponent } from './Review/Reviews.component';
 import { PaymentCardsComponent } from './Cards/PaymentCards.component';
 import { PaymentCardComponent } from './Card/PaymentCard.component';
 import { AddressComponent } from './Address/Address.component';
@@ -94,6 +94,8 @@ import { StoreHeaderComponent } from './StoreHeader/StoreHeader.component';
 import { AuthGuardService } from '../Services/auth-guard.service';
 import { AuthService } from '../Services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ReviewComponent } from './Review/Review.component';
+import { InputFileModule } from 'ngx-input-file';
 
 @NgModule({
    imports: [
@@ -129,6 +131,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
       MatSlideToggleModule,
       TranslateModule,
       PipesModule,
+      InputFileModule,
       MatPaginatorModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyC9PnuRk42kbCPMOvsfHpn40r5SoyN38zI',
@@ -148,6 +151,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
       SocialShareComponent,
       RatingComponent,
       AddToCardButtonComponent,
+      ReviewComponent,
       ReviewPopupComponent,
       HeaderCartComponent,
       WishListComponent,
@@ -180,7 +184,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
       DownloadAppSectionComponent,
       HomePageThreeSliderComponent,
       NewProductsCardComponent,
-      ProductReviewComponent,
+      ReviewsComponent,
       PaymentCardsComponent,
       PaymentCardComponent,
       TmoneysComponent,
@@ -234,7 +238,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
       HomePageThreeSliderComponent,
       NewProductsCardComponent,
       ReviewPopupComponent,
-      ProductReviewComponent,
+      ReviewComponent,
+      ReviewsComponent,
       PaymentCardsComponent,
       PaymentCardComponent,
       TmoneysComponent,
@@ -251,7 +256,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
    entryComponents: [
       ReviewPopupComponent,
       ConfirmationPopupComponent,
-      ProductReviewComponent,
+      ReviewsComponent,
       TimerCountDownComponent
    ],
    providers: [

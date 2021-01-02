@@ -1109,11 +1109,23 @@ export class Review {
   user: User;
   product: Product;
   author: string;
-  rating: number;
+  rating = 0;
   status: number;
-  text: string;
+  headline: string;
+  comments: string;
+  image: string;
   createDate: Date;
+
+  type = 'ProductReview';
+
+  constructor() {
+    this.user = new User();
+    this.product = new Product();
+    this.status = 0;
+  }
+
 }
+
 export class Company {
   id: number;
   name: string;
