@@ -3,6 +3,7 @@ import { OrderSearchCriteria, Order, OnlineOrderVO, ProductDescVO, OrderProduct,
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-open-orders',
@@ -15,13 +16,21 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
   orders: OnlineOrderVO[] = [];
   products: ProductDescVO[] = [];
   constructor(public appService: AppService,
+    public router: Router,
     public translate: TranslateService) {
     super(translate);
   }
 
   ngOnInit() {
-    this.getOpenOrders();
-    this.getBoughtProducts();
+    console.log('login : ' + this.appService.tokenStorage.getUserId());
+    if (!this.appService.tokenStorage.getUserId()) {
+      console.log('navigating.. to signin');
+      this.router.navigate(['/session/signin'],
+        { queryParams: { fromPage: '/account/open-orders' } });
+    } else {
+      this.getOpenOrders();
+      this.getBoughtProducts();
+    }
   }
   getOpenOrders() {
     this.messages = '';
@@ -34,11 +43,12 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/order/onlineOrders', this.searchCriteria)
       .subscribe((data: any[]) => {
         this.orders = data;
-        console.log(data);
+        // console.log(data);
         if (data.length > 0) {
           for (const o of this.orders) {
             this.setOrderDetails(o);
           }
+          // console.log(this.orders);
         } else {
           this.translate.get(['MESSAGE.NO_OPEN_ORDER', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
             this.messages = res['MESSAGE.NO_OPEN_ORDER'];
@@ -74,7 +84,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.appService.getObject('/service/catalog/getProductOnSale/' +
       this.appService.appInfoStorage.language.id + '/' + orderProduct.ptsId)
       .subscribe((data: ProductDescVO) => {
-        console.log(data);
+        // console.log(data);
         const ci = new CartItem(data);
         ci.quantity = 1;
         this.appService.addToCart(ci);

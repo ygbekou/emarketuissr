@@ -106,6 +106,7 @@ export class User extends BaseModel {
   modifiedBy: number;
   stripeCustomerId: string;
   fileNames: string[];
+  language: Language;
   type = 'User';
 
   // transient
@@ -535,6 +536,7 @@ export class Country {
   addressFormat: string;
   isoCode2: string;
   isoCode3: string;
+  code: string;
   name: string;
   postcodeRequired: number;
   status: number;
@@ -664,6 +666,10 @@ export class Store extends BaseModel {
   sortOrder: number;
   public storeCat: StoreCategory;
   catName: string;
+  sendSMSNewOrder: number;
+  sendSMSOrderCancel: number;
+  sendSMSLowInventory: number;
+  cellPhone: string;
   type = 'Store';
 
   constructor() {
@@ -903,6 +909,7 @@ export class ProductToStore {
   points: number;
   price: number;
   quantity: number;
+  maxQty: number;
   sortOrder: number;
   status: number;
   stockStatusId: number;

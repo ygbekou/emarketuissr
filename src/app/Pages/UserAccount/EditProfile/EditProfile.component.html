@@ -7,6 +7,16 @@
           <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.ACCOUNT_DETAILS' | translate}}</h4>
 
           <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" [compareWith]="compareObjects"
+              id="language" name="language" [(ngModel)]="user.language" #language="ngModel" required>
+              <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
+                {{  cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
             <mat-label> {{'COMMON.FIRST_NAME' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName"
@@ -369,6 +379,16 @@
           <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE' | translate}}</h4>
 
           <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.STORE_CATEGORY' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.STORE_CATEGORY' | translate}}" [compareWith]="compareObjects"
+              id="storeCat" name="storecat" [(ngModel)]="store.storeCat" #storecat="ngModel" required>
+              <mat-option *ngFor="let cat of appService.appInfoStorage.storeCategories" [value]="cat.storeCat">
+                {{  cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mb-3">
             <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
@@ -391,14 +411,27 @@
 
           <mat-form-field class="w-100 mb-3">
             <mat-label> {{'COMMON.PHONE' | translate}}
+              {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
             </mat-label>
             <input matInput type="text" class="form-control" id="phone" [(ngModel)]="store.phone" name="phone"
-              #phone="ngModel">
+              #phone="ngModel" required phone>
             <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
 
+          <mat-form-field class="w-100 mb-3">
+
+            <mat-label> {{'COMMON.CELL_PHONE' | translate}}
+              {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
+            </mat-label>
+
+            <input matInput type="text" class="form-control" id="cellPhone" [(ngModel)]="store.cellPhone"
+              name="cellPhone" #cellPhone="ngModel" required phone>
+            <mat-error *ngIf="f4.submitted && cellPhone.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
 
           <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
@@ -412,17 +445,20 @@
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
-              name="currency" [(ngModel)]="store.currency" #currency="ngModel">
+              name="currency" [(ngModel)]="store.currency" #currency="ngModel" required>
               <mat-option *ngFor="let cat of currencies" [value]="cat">
                 {{cat.code +' - '+ cat.title}}
               </mat-option>
             </mat-select>
           </mat-form-field>
+
+
+
           <mat-form-field class="w-50 mb-3">
             <mat-label> {{'COMMON.STORE_CODE' | translate}}
             </mat-label>
-            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code" name="code"
-              #code="ngModel">
+            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+              name="code" #code="ngModel" required>
             <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
@@ -445,7 +481,7 @@
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.ADDRESS' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" [compareWith]="compareObjects" id="address"
-              name="address" [(ngModel)]="store.address" #address="ngModel">
+              name="address" [(ngModel)]="store.address" #address="ngModel" required>
               <mat-option *ngFor="let cat of addresses" [value]="cat">
                 {{cat.city +', '+ cat.country.name}}
               </mat-option>
@@ -456,6 +492,24 @@
             {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
             {{store.address.country.name}}
           </address>
+
+          <br />
+
+          <mat-slide-toggle [(ngModel)]="store.sendSMSNewOrder" name="sendSMSNewOrder" #sendSMSNewOrder="ngModel"
+            class="my-2">
+            {{ 'COMMON.SEND_SMS_NEW_ORDER' | translate }}
+          </mat-slide-toggle>
+          <br />
+          <mat-slide-toggle [(ngModel)]="store.sendSMSOrderCancel" name="sendSMSNewOrder" #sendSMSOrderCancel="ngModel"
+            class="my-2">
+            {{ 'COMMON.SEND_SMS_ORDER_CANCEL' | translate }}
+          </mat-slide-toggle>
+          <br />
+          <mat-slide-toggle [(ngModel)]="store.sendSMSLowInventory" name="sendSMSLowInventory"
+            #sendSMSLowInventory="ngModel" class="my-2">
+            {{ 'COMMON.SEND_SMS_LOW_INVN' | translate }}
+          </mat-slide-toggle>
+
         </div>
       </div>
 

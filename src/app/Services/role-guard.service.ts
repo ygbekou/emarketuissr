@@ -22,6 +22,7 @@ export class RoleGuardService implements CanActivate {
     if (
       !this.auth.isAuthenticated() || !expectedRole.includes(tokenPayload.role)
     ) {
+      console.log('current location: ' + window.location);
       this.router.navigate(['home']);
       return false;
     }

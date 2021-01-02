@@ -160,12 +160,27 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    submitStoreInfo() {
       this.messages = '';
       this.errors = '';
+
       this.store.status = (this.store.status == null
          || this.store.status.toString() === 'false'
          || this.store.status.toString() === '0') ? 0 : 1;
+
       this.store.onlineStore = (this.store.onlineStore == null
          || this.store.onlineStore.toString() === 'false'
          || this.store.onlineStore.toString() === '0') ? 0 : 1;
+
+      this.store.sendSMSNewOrder = (this.store.sendSMSNewOrder == null
+         || this.store.sendSMSNewOrder.toString() === 'false'
+         || this.store.sendSMSNewOrder.toString() === '0') ? 0 : 1;
+
+      this.store.sendSMSOrderCancel = (this.store.sendSMSOrderCancel == null
+         || this.store.sendSMSOrderCancel.toString() === 'false'
+         || this.store.sendSMSOrderCancel.toString() === '0') ? 0 : 1;
+
+      this.store.sendSMSLowInventory = (this.store.sendSMSLowInventory == null
+         || this.store.sendSMSLowInventory.toString() === 'false'
+         || this.store.sendSMSLowInventory.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);
