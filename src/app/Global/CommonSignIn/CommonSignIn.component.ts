@@ -72,6 +72,8 @@ export class CommonSignInComponent implements OnInit {
               if (this.fromPage === 'checkout') {
                 this.router.navigate(['/checkout/payment']);
                 return;
+              } else if (this.fromPage) {
+                this.router.navigate([this.fromPage]);
               }
 
               if (this.appService.tokenStorage.getRole() === '1') {// client

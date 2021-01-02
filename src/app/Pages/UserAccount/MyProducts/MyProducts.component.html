@@ -149,22 +149,32 @@
                     </div>
                   </div>
                   <div fxLayout="row wrap">
-                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                       <mat-form-field class="w-100">
                         <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
                         <input matInput type="text" class="form-control" id="quantity"
                           [(ngModel)]="productStore.quantity" name="quantity" #quantity="ngModel" required>
-                        <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                        <mat-error *ngIf="f.submitted && quantity.invalid" severity="error">
                           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                       <mat-form-field class="w-100">
                         <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
                         <input matInput type="text" class="form-control" id="minimum" [(ngModel)]="productStore.minimum"
                           name="minimum" #minimum="ngModel" required>
-                        <mat-error *ngIf="f.submitted && price.invalid" severity="error">
+                        <mat-error *ngIf="f.submitted && minimum.invalid" severity="error">
+                          {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+                      <mat-form-field class="w-100">
+                        <mat-label> {{'COMMON.MAXIMUM_QUANTITY' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="maximum" [(ngModel)]="productStore.maxQty"
+                          name="maximum" #maximum="ngModel" required>
+                        <mat-error *ngIf="f.submitted && maximum.invalid" severity="error">
                           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                         </mat-error>
                       </mat-form-field>

@@ -114,6 +114,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     if (userId > 0) {
       const parameters: string[] = [];
       parameters.push('e.owner.id = |userId|' + userId + '|Integer');
+      parameters.push('e.status = |xyz|1|Integer');
+      parameters.push('e.aprvStatus = |klm|1|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
         .subscribe((data: Store[]) => {
           this.stores = data;
@@ -263,7 +265,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   sell() {
     this.messages = '';
     this.errors = '';
-    this.productStore.product = this.productDesc.product;
+    this.productStore.product = new Product();
+    this.productStore.product.id = this.productDesc.product.id;
     this.productStore.store = this.selectedStore;
     this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.productStore.status = (this.productStore.status == null
@@ -272,6 +275,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.productStore.availableOnline = (this.productStore.availableOnline == null
       || this.productStore.availableOnline.toString() === 'false'
       || this.productStore.availableOnline.toString() === '0') ? 0 : 1;
+
+    console.log(this.productStore);
     this.appService.save(this.productStore, 'ProductStore')
       .subscribe(result => {
         if (result.id > 0) {

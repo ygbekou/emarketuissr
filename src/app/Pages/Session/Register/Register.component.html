@@ -15,6 +15,18 @@
                   class="w-100">{{'COMMON.NOTNEW_SIGN_IN' | translate }}</a>
               </div>
               <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
+                  <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}"  
+                    formControlName="language" required>
+                    <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
+                      {{  cat.name}}
+                    </mat-option>
+                  </mat-select>
+                    <mat-error *ngIf="registerForm.controls.language.errors?.required">
+                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
                 <mat-form-field appearance="outline" class="w-100 mt-2">
                   <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                   <mat-label>{{'COMMON.FIRST_NAME' | translate }}</mat-label>
@@ -31,7 +43,7 @@
                   <mat-error *ngIf="registerForm.controls.lastName.errors?.required">
                     {{'VALIDATION.FIELD_REQUIRED' | translate }}
                   </mat-error>
-                </mat-form-field> 
+                </mat-form-field>
                 <mat-form-field appearance="outline" class="w-100 mt-1">
                   <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                   <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
