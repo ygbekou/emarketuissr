@@ -1,4 +1,4 @@
-<div class="inner-container bg-white section-gap-lg">
+<div class="inner-container bg-white section-gap-lg" *ngIf="action === 'saving'; else elseBlock">
     <div class="container" >
       <div fxLayout="row wrap" fxLayoutAlign="center center" > 
         
@@ -90,5 +90,70 @@
       </div>
     </div>
 
-
 </div>
+
+   <ng-template #elseBlock>
+      <div class="section-gap-lg text-center">
+        <mat-card>
+          <mat-icon color="accent" class="review-icon"> rate_review</mat-icon>
+          <h4> 
+            {{'MESSAGE.REVIEW_SUBMITTED'|translate}}
+          </h4>
+          <span>
+            {{'MESSAGE.REVIEW_UNDER_PROCESS'|translate}}
+          </span>
+        </mat-card>
+        
+
+        <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
+        &nbsp; | &nbsp;
+        <a href="javascript:void(0)" class="primary-color"
+          [routerLink]="['/account/open-orders']">{{'COMMON.VIEW_OPEN_ORDERS'|translate}}</a>
+
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
+            *ngFor="let prd of products">
+          <div fxLayout="row wrap">
+            <div style="text-align: center!important; vertical-align:middle;" fxFlex.xs="100" fxFlex.sm="100"
+              fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+              <br>
+              <a class="p-link" *ngIf="prd.product?.id"
+                [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
+                <img [style.width.px]="40" mat-card-image style="vertical-align: middle;"
+                  [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image" alt="Photo">
+              </a>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="67" fxFlex.lg="67" fxFlex.xl="67">
+
+              <a class="p-link"
+                [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
+                {{prd?.name}} </a><br />
+              <h6 class="accent-color">
+                {{'COMMON.PRICE'|translate}}:
+                {{prd.product?.symbolLeft}}
+                {{ prd.product?.price  | number:'1.0-2'}}
+                {{prd.product?.symbolRight}} </h6>
+              <font style="font-style: italic;">
+                {{'COMMON.SOLD_BY'|translate}}
+                <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product?.storeId}"
+                  routerLinkActive="tab-active"> {{prd.product?.storeName}}</a>
+              </font>
+              <br />
+              <div fxLayout="row wrap" fxLayoutAlign="none"> 
+                <span class="a-button a-button-base review-button">
+                  <span class="a-button-inner">
+                    <a role="button" class="a-button-text" [routerLink]="['/products/product/' + prd.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
+                  </span>
+                </span>
+              </div>
+              
+              <mat-progress-bar mode="determinate" value="0"></mat-progress-bar>
+            </div>
+          </div>
+          <br/>
+        </div>
+      </div>
+        
+    </ng-template>
