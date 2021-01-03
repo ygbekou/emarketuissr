@@ -23,7 +23,7 @@ export const ProductsRoutes: Routes = [
 		component: ProductsListComponent
 	},
 	{
-		path: ':productId/review/:reviewId',
+		path: ':reviewType/:reviewTypeId/review/:reviewId',
 		component: ReviewComponent
 	}
 ]

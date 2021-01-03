@@ -75,7 +75,7 @@
         <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
           
             <div id="reviews" fxLayout="row wrap">
-              <app-Reviews [singleProductDetails]="product"></app-Reviews>
+              <app-Reviews [reviewType]="'product'" [details]="product.product"></app-Reviews>
             </div>
           
         </div>

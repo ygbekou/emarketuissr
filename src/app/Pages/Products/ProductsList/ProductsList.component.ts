@@ -130,11 +130,13 @@ export class ProductsListComponent implements OnInit {
    }
 
    getStore() {
+      alert(this.storeId);
       if (this.storeId > 0) {
-         this.appService.getOne(this.storeId, 'Store')
+         this.appService.saveWithUrl('/service/catalog/getStore', {'type': 'Store', 'id': this.storeId})
             .subscribe(result => {
                if (result.id > 0) {
                   this.store = result;
+                  console.log(this.store);
                }
             });
       }

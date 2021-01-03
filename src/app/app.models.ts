@@ -670,6 +670,10 @@ export class Store extends BaseModel {
   sendSMSOrderCancel: number;
   sendSMSLowInventory: number;
   cellPhone: string;
+  rating: number;
+  ratingCount: number;
+  ratingAverage: number;
+  reviews: Review[];
   type = 'Store';
 
   constructor() {
@@ -1115,6 +1119,7 @@ export class Review {
   id: number;
   user: User;
   product: Product;
+  store: Store;
   author: string;
   rating = 0;
   status: number;
@@ -1128,6 +1133,7 @@ export class Review {
   constructor() {
     this.user = new User();
     this.product = new Product();
+    this.store = new Store();
     this.status = 0;
   }
 
