@@ -1,24 +1,22 @@
-<hr class="spacer">
-
 
 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-  <div fxLayout="row wrap" fxLayoutAlign="none">
-    <embryo-Rating [rate]="details.rating"></embryo-Rating> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;<h5>{{details.ratingAverage}} out of 5</h5>
+  <div fxLayout="row wrap" fxLayoutAlign="none" >
+  <embryo-Rating [rate]="details.rating"></embryo-Rating> &nbsp;&nbsp;&nbsp; {{details.rating?'|':'-'}}  &nbsp;&nbsp;&nbsp;<h5>{{details.ratingAverage}} {{'COMMON.OUT_OF'|translate}} 5</h5>
   </div>
 
-    <div fxLayout="row wrap">5 star &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+    <div fxLayout="row wrap">5 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
         [value]="details.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
       {{details.ratingCountMaps[5]}}%</div><br />
-    <div fxLayout="row wrap">4 star &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+    <div fxLayout="row wrap">4 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
         [value]="details.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
       {{details.ratingCountMaps[4]}}%</div><br />
-    <div fxLayout="row wrap">3 star &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+    <div fxLayout="row wrap">3 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
         [value]="details.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
       {{details.ratingCountMaps[3]}}%</div><br />
-    <div fxLayout="row wrap">2 star &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+    <div fxLayout="row wrap">2 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
         [value]="details.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
       {{details.ratingCountMaps[2]}}%</div><br />
-    <div fxLayout="row wrap">1 star &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+    <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
         [value]="details.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
       {{details.ratingCountMaps[1]}}%</div><br />
   

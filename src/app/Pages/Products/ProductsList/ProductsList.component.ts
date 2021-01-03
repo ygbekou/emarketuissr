@@ -130,7 +130,7 @@ export class ProductsListComponent implements OnInit {
    }
 
    getStore() {
-      alert(this.storeId);
+      // alert(this.storeId);
       if (this.storeId > 0) {
          this.appService.saveWithUrl('/service/catalog/getStore', {'type': 'Store', 'id': this.storeId})
             .subscribe(result => {
