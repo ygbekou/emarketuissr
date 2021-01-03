@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Review, Product, ProductDescription } from 'src/app/app.models';
+import { Review, Product, ProductDescription, Store } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -22,7 +22,9 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   @Input() reviewType: string;
 
   productDesc: ProductDescription;
+  store: Store;
   canEdit = false;
+  reviewClass: string;
 
   constructor(public appService: AppService,
       public translate: TranslateService,
@@ -32,10 +34,36 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
+      this.review.id = params.reviewId;
+      this.reviewType = params.reviewType;
       this.getReview(params.reviewId);
-      this.getProductDescriptions(params.productId);
+      
+
+      if ('store' === this.reviewType) {
+        this.reviewClass = 'StoreReview';
+        this.getStore(params.reviewTypeId);
+      } else {
+        this.reviewClass = 'ProductReview';
+        this.getProductDescriptions(params.reviewTypeId);
+      }
     });
   }
+
+
+  public getStore(id: number) {
+    const parameters: string[] = [];
+    parameters.push('e.id = |storeId|' + id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters,
+      ' ')
+      .subscribe((data: Store[]) => {
+        this.store = data[0];
+        this.review.store.id = this.store.id;
+        this.review.type = this.reviewClass;
+      },
+        (error) => console.log(error),
+        () => console.log('Get Store complete'));
+  }
+
 
   getProductDescriptions(productId: number) {
     const parameters: string[] = [];
@@ -49,6 +77,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
         if (data !== null && data.length > 0) {
           this.productDesc = data[0];
           this.review.product.id = this.productDesc.product.id;
+          this.review.type = this.reviewClass;
         }
       },
         error => console.log(error),
@@ -110,7 +139,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   save() {
     this.messages = '';
     this.errors = '';
-    
+
     try {
       this.formData = new FormData();
       if (this.picture && this.picture.length > 0 && this.picture[0].file) {
@@ -118,19 +147,19 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       }
       this.setToggleValues();
       this.review.user.id = +this.appService.tokenStorage.getUserId();
-      this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName
-      this.appService.saveWithFileUsingUrl('/service/catalog/submitReview/', this.review, this.formData)
+      this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName;
+      this.appService.saveWithFileUsingUrl('/service/catalog/submit' + this.reviewClass + '/', this.review, this.formData)
         .subscribe(result => {
           this.processResult(result, this.review, null);
           if (result.id > 0) {
-            
+
           }
         });
 
     } catch (e) {
       console.log(e);
     }
-    
+
   }
 
   setToggleValues() {

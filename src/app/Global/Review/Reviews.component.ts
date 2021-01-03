@@ -8,7 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ReviewsComponent implements OnInit {
 
    @Input()
-   singleProductDetails: any;
+   reviewType: string;
+
+   @Input()
+   details: any;
+
    @Input()
    reviews: any;
 

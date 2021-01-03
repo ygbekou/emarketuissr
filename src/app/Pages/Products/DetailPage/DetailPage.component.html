@@ -72,12 +72,13 @@
       </div>
 
       <div class="container">
-       
+        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
           
-              <app-Reviews [singleProductDetails]="product"></app-Reviews>
-           
+            <div id="reviews" fxLayout="row wrap">
+              <app-Reviews [reviewType]="'product'" [details]="product.product"></app-Reviews>
+            </div>
           
-    
+        </div>
       </div>
 
     </div>
