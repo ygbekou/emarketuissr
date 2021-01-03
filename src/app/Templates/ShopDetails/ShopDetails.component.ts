@@ -78,18 +78,6 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       this.totalPrice = detailData.product.price * value;
    }
 
-   public reviewPopup() {
-      //window.location.href = 'http://localhost:4200/#/products/dtl/138/70#reviews';
-
-      var myElement = document.getElementById('#reviews');
-      var topPos = myElement.offsetTop;
-      document.po = topPos;
-
-      // window.scrollY + document.querySelector('#elementId').getBoundingClientRect().top // Y
-      // window.scrollX + document.querySelector('#elementId').getBoundingClientRect().left // X
-
-   }
-
    public addToWishlist(value: any) {
       const ci = new CartItem(value);
       this.appService.addToWishlist(ci);
