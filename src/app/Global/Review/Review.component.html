@@ -1,7 +1,6 @@
 <div class="inner-container bg-white section-gap-lg">
-  {{review.id}}
-    <div class="container" *ngIf="review.id === 0;">
-      <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf=""> 
+    <div class="container" >
+      <div fxLayout="row wrap" fxLayoutAlign="center center" > 
         
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="productDesc || store">
           <mat-card>
@@ -91,17 +90,5 @@
       </div>
     </div>
 
-    <ng-template *ngIf="review.id > 0;">
-      <div class="section-gap-lg text-center">
-        <div class="mb-4">
-          <img src="assets/images/empty-cart.png" height="128" width="128" alt="cart-empty">
-        </div>
-        <h4 *ngIf="(review && review.id > 0)"> {{'MESSAGE.FULL_ORDER_SUCCESS'|translate}}</h4>
-        <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
-        &nbsp; | &nbsp;
-        <a href="javascript:void(0)" class="primary-color"
-          [routerLink]="['/account/open-orders']">{{'COMMON.VIEW_OPEN_ORDERS'|translate}}</a>
 
-      </div>
-    </ng-template>
 </div>
