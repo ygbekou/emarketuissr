@@ -37,17 +37,21 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.activatedRoute.params.subscribe(params => {
 
       this.action = 'saving';
+      this.messages = '';
+      this.errors = '';
       this.reviewType = params.reviewType;
       this.getReview(params.reviewId);
 
       if ('store' === this.reviewType) {
+        this.productDesc = undefined;
         this.reviewClass = 'StoreReview';
         this.getStore(params.reviewTypeId);
       } else {
+        this.store = undefined;
         this.reviewClass = 'ProductReview';
         this.getProductDescriptions(params.reviewTypeId);
       }

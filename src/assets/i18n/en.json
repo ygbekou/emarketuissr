@@ -592,7 +592,9 @@
 		"REVIEW_THIS_PRODUCT": "Review this product",
 		"SHARE_YOUR_THOUGHTS": "Share your thoughts with other customers",
 		"REVIEW_PRODUCT": "Review product",
-		"CREATE_REVIEW": "Create Review"
+		"REVIEW_STORE": "Review Store",
+		"CREATE_REVIEW": "Create Review",
+		"CONTINUE_SHOPPING_FROM": "Continue shopping from"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

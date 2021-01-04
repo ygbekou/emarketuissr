@@ -591,8 +591,10 @@
 		"NO_CUSTOMER_REVIEWS": "Aucun commentaire client",
 		"REVIEW_THIS_PRODUCT": "Evaluer ce produit",
 		"SHARE_YOUR_THOUGHTS": "Partagez vos pensées avec d'autres clients",
-		"REVIEW_PRODUCT": "Evaluer produit",
-    "CREATE_REVIEW": "Ajouter une évaluation"
+    "REVIEW_PRODUCT": "Evaluer produit",
+		"REVIEW_STORE": "Evaluer boutique",
+    "CREATE_REVIEW": "Ajouter une évaluation",
+    "CONTINUE_SHOPPING_FROM": "Continuer vos achats avec "
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

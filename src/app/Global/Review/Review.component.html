@@ -10,11 +10,14 @@
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
                   <img *ngIf="productDesc" [src]="'assets/images/products/'+productDesc.product.id+'/'+productDesc.product.image"
                     [style.width.px]="50" class="d-block">
-                  <img *ngIf="store" [src]="'assets/images/stores/'+store.id+'/'+store.image"
-                    [style.width.px]="50" class="d-block">
+                  <a href="javascript:void(0)" *ngIf="store" class="primary-color" [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
+                    <img *ngIf="store" [src]="'assets/images/stores/'+store.id+'/'+store.image" [style.width.px]="100" class="d-block">
+                  </a>
                 </div>
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90">
-                    {{productDesc ? productDesc.name : store.name}}
+                    <a href="javascript:void(0)" *ngIf="store" class="primary-color" [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
+                      {{productDesc ? productDesc.name : store.name}}
+                    </a>
                 </div>
               </div>
               <hr class="spacer">
@@ -105,6 +108,9 @@
         </mat-card>
         
 
+        <a href="javascript:void(0)" *ngIf="store" class="primary-color" [routerLink]="['/products']" 
+          [queryParams]="{storeId:store.id}">{{'COMMON.CONTINUE_SHOPPING_FROM'|translate}} {{store.name}}</a>
+        <span *ngIf="store">&nbsp; | &nbsp;</span>
         <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
         &nbsp; | &nbsp;
         <a href="javascript:void(0)" class="primary-color"
@@ -144,7 +150,7 @@
               <div fxLayout="row wrap" fxLayoutAlign="none"> 
                 <span class="a-button a-button-base review-button">
                   <span class="a-button-inner">
-                    <a role="button" class="a-button-text" [routerLink]="['/products/product/' + prd.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
+                    <a role="button" class="a-button-text" [routerLink]="['/products/product/' + prd.product.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
                   </span>
                 </span>
               </div>
