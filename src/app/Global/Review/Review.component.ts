@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Review, Product, ProductDescription, Store } from 'src/app/app.models';
+import { Review, ProductDescription, Store, ProductDescVO, ProductSearchCriteria } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -22,9 +22,13 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   @Input() reviewType: string;
 
   productDesc: ProductDescription;
+  products: ProductDescVO[] = [];
+  
   store: Store;
   canEdit = false;
   reviewClass: string;
+
+  action = 'saving';
 
   constructor(public appService: AppService,
       public translate: TranslateService,
@@ -33,16 +37,21 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.params.subscribe(params => {
-      this.review.id = params.reviewId;
+
+      this.action = 'saving';
+      this.messages = '';
+      this.errors = '';
       this.reviewType = params.reviewType;
       this.getReview(params.reviewId);
-      
 
       if ('store' === this.reviewType) {
+        this.productDesc = undefined;
         this.reviewClass = 'StoreReview';
         this.getStore(params.reviewTypeId);
       } else {
+        this.store = undefined;
         this.reviewClass = 'ProductReview';
         this.getProductDescriptions(params.reviewTypeId);
       }
@@ -152,7 +161,9 @@ export class ReviewComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           this.processResult(result, this.review, null);
           if (result.id > 0) {
-
+            this.action = 'saved';
+            this.review = new Review();
+            this.getBoughtProducts();
           }
         });
 
@@ -179,5 +190,18 @@ export class ReviewComponent extends BaseComponent implements OnInit {
     //   this.canEdit = false;
     // }
   }
+
+  getBoughtProducts() {
+    this.appService.saveWithUrl('/service/catalog/getBoughtProducts/', new ProductSearchCriteria(
+      this.appService.appInfoStorage.language.id, 0, 0, 0, '0', 1, 0, 10, Number(this.appService.tokenStorage.getUserId())
+    ))
+      .subscribe((data: ProductDescVO[]) => {
+        this.products = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all getBoughtProducts complete'));
+  }
+
+
 
 }

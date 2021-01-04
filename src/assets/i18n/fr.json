@@ -591,8 +591,10 @@
 		"NO_CUSTOMER_REVIEWS": "Aucun commentaire client",
 		"REVIEW_THIS_PRODUCT": "Evaluer ce produit",
 		"SHARE_YOUR_THOUGHTS": "Partagez vos pensées avec d'autres clients",
-		"REVIEW_PRODUCT": "Evaluer produit",
-		"CREATE_REVIEW": "Ajouter une évaluation"
+    "REVIEW_PRODUCT": "Evaluer produit",
+		"REVIEW_STORE": "Evaluer boutique",
+    "CREATE_REVIEW": "Ajouter une évaluation",
+    "CONTINUE_SHOPPING_FROM": "Continuer vos achats avec "
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
@@ -654,7 +656,9 @@
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
     "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur.",
     "PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Le prix ou le pourcentage est requis.",
-    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin."
+    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin.",
+    "REVIEW_SUBMITTED": "Votre avis a été soumis avec succès. Je vous remercie!",
+		"REVIEW_UNDER_PROCESS": "Votre suggestion est en cours de traitement et une fois terminé, une notification vous sera envoyée. Merci pour votre patience."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

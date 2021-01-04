@@ -1081,6 +1081,7 @@ export class ProductVO {
   viewCount: number;
   ratingCount: number;
   rating: number;
+  ratingAverage: number;
   storeId: number;
   storeName: string;
   currencyId: number;

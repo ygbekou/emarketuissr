@@ -592,7 +592,9 @@
 		"REVIEW_THIS_PRODUCT": "Review this product",
 		"SHARE_YOUR_THOUGHTS": "Share your thoughts with other customers",
 		"REVIEW_PRODUCT": "Review product",
-		"CREATE_REVIEW": "Create Review"
+		"REVIEW_STORE": "Review Store",
+		"CREATE_REVIEW": "Create Review",
+		"CONTINUE_SHOPPING_FROM": "Continue shopping from"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -655,7 +657,9 @@
 		"PAYMENT_DECLINED": "Your payment was declined. Please verify and try again later. ",
 		"SYSTEM_ERROR": "Error happened in the system. Please contact the administrator. ",
 		"PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Either Price or Percentage is needed is required",
-		"START_DATE_END_DATE_VALIDATE": "Start Date cannot be greater than End Date."
+		"START_DATE_END_DATE_VALIDATE": "Start Date cannot be greater than End Date.",
+		"REVIEW_SUBMITTED": "Your review is successfully submited. Thank You!",
+		"REVIEW_UNDER_PROCESS": "The review is under process and once it is completed a notification will be sent to you. Thank you for your patience."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

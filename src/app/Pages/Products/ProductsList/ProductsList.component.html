@@ -119,13 +119,7 @@
 </div>
 
 <div class="container">
-  <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
-    
-      <div id="reviews" fxLayout="row wrap">
-        <app-Reviews *ngIf="store.id > 0" [reviewType]="'store'" [details]="store"></app-Reviews>
-      </div>
-    
-  </div>
+  <app-Reviews *ngIf="store.id > 0" [reviewType]="'store'" [details]="store"></app-Reviews>
 </div>
 
  
