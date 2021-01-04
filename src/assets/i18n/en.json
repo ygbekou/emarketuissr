@@ -648,6 +648,7 @@
 		"INVALID_USER_ID": "Invalid User Id",
 		"CART_EMPTY": "Your Shopping Bag is empty",
 		"GO_SHOPPING": "Go for Shopping",
+		"ORDER_REOPENED": "This order has been reopened. Here is the history:",
 		"PRODUCT_QUANTITY_ERROR": "Quantity more than the available quantity",
 		"PARTIAL_ORDER_SUCCESS": "Your order for currency {{currency}} was successfully processed. Submit the order for the remaining currencies.",
 		"FULL_ORDER_SUCCESS": "Your order has been processed successfully. Thank you.",
