@@ -42,7 +42,8 @@ const MENUITEMS = [
     icon: 'shopping_cart',
     children: [
       { state: 'orders', name: 'Orders', type: 'link' },
-      { state: 'returns', name: 'Returns', type: 'link' }
+      { state: 'returns', name: 'Returns', type: 'link' },
+      { state: 'reviews', name: 'Reviews', type: 'link' }
     ]
   },
   {

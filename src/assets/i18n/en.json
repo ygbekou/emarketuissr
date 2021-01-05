@@ -594,7 +594,12 @@
 		"REVIEW_PRODUCT": "Review product",
 		"REVIEW_STORE": "Review Store",
 		"CREATE_REVIEW": "Create Review",
-		"CONTINUE_SHOPPING_FROM": "Continue shopping from"
+		"CONTINUE_SHOPPING_FROM": "Continue shopping from",
+		"REVIEWS": "Reviews",
+		"PRODUCT_REVIEWS": "Product Reviews",
+		"STORE_REVIEWS": "Store Reviews",
+		"REVIEW_DATE": "Rev. Date",
+		"STORE_NAME": "Store Name"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -658,7 +663,9 @@
 		"PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Either Price or Percentage is needed is required",
 		"START_DATE_END_DATE_VALIDATE": "Start Date cannot be greater than End Date.",
 		"REVIEW_SUBMITTED": "Your review is successfully submited. Thank You!",
-		"REVIEW_UNDER_PROCESS": "The review is under process and once it is completed a notification will be sent to you. Thank you for your patience."
+		"REVIEW_UNDER_PROCESS": "The review is under process and once it is completed a notification will be sent to you. Thank you for your patience.",
+		"REVIEW_APPROVED": "Review successfully approved. Thank You!",
+		"INVALID_RATING": "Rating must be greater than 0."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

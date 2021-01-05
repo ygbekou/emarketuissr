@@ -5,6 +5,8 @@ import { ReturnsComponent } from './Returns/Returns.component';
 import { ReturnComponent } from './Returns/Return.component';
 import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
+import { AdminReviewsComponent } from './Reviews/AdminReviews.component';
+import { ReviewComponent } from 'src/app/Global/Review/Review.component';
 
 export const SalesRoutes: Routes = [
    {
@@ -34,6 +36,22 @@ export const SalesRoutes: Routes = [
          {
             path: 'returns',
             component: ReturnsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'reviews',
+            component: AdminReviewsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: ':reviewType/:reviewTypeId/review/:reviewId',
+            component: ReviewComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']

@@ -1,0 +1,72 @@
+
+        <div class="table-wrapper" *ngIf="productReviewsDatasource && productReviewsDatasource?.data">
+          <table mat-table [dataSource]="productReviewsDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>Id </th>
+              <td mat-cell *matCellDef="let review"> {{review.id | number: '3.0'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.PRODUCT' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let review"> {{review.productName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="storeName">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let review"> {{review.storeName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.AUTHOR'|translate}} </th>
+              <td mat-cell *matCellDef="let review"> {{review.author}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="headline">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.HEADLINE'|translate}} </th>
+              <td mat-cell *matCellDef="let review" class="comment" matTooltip="{{review.headline}}"> {{review.headline}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="comments">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.COMMENTS'|translate}} </th>
+              <td mat-cell *matCellDef="let review" class="comment" matTooltip="{{review.comments}}">
+                {{review.comments}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="enabled">
+              <th mat-header-cell *matHeaderCellDef width="7%" mat-sort-header> {{'COMMON.ENABLED'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let review"> 
+                <mat-slide-toggle [(ngModel)]="review.status">
+                </mat-slide-toggle> 
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="approved">
+              <th mat-header-cell *matHeaderCellDef width="7%" mat-sort-header> {{'COMMON.APPROVED'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let review"> 
+                <mat-slide-toggle [(ngModel)]="review.approvalStatus">
+                </mat-slide-toggle> 
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createDate">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.REVIEW_DATE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let review"> {{review.createDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+ 
+            <tr mat-header-row *matHeaderRowDef="productReviewsColumns"></tr>
+            <tr mat-row *matRowDef="let review; columns: productReviewsColumns;"
+              [routerLink]="['/admin/sales/' + searchCriteria.reviewTypeString + '/' + (searchCriteria.reviewType === 0 ? review.productId : review.storeId) + '/review/' + review.id]">
+            </tr>
+          </table>
+        </div>
+        <p *ngIf="productReviewsDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+       
+        <mat-paginator [pageSize]="10" #ProductMatPaginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      

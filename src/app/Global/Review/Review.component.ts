@@ -23,12 +23,13 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   productDesc: ProductDescription;
   products: ProductDescVO[] = [];
-  
+
   store: Store;
   canEdit = false;
   reviewClass: string;
 
   action = 'saving';
+  isAdmin = false;
 
   constructor(public appService: AppService,
       public translate: TranslateService,
@@ -38,13 +39,16 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
 
+    this.activatedRoute.data.subscribe(value => {
+      this.isAdmin = value.expectedRole[0] === 'Administrator';
+    });
+
     this.activatedRoute.params.subscribe(params => {
 
       this.action = 'saving';
       this.messages = '';
       this.errors = '';
       this.reviewType = params.reviewType;
-      this.getReview(params.reviewId);
 
       if ('store' === this.reviewType) {
         this.productDesc = undefined;
@@ -55,6 +59,8 @@ export class ReviewComponent extends BaseComponent implements OnInit {
         this.reviewClass = 'ProductReview';
         this.getProductDescriptions(params.reviewTypeId);
       }
+      this.getReview(params.reviewId);
+
     });
   }
 
@@ -66,6 +72,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       ' ')
       .subscribe((data: Store[]) => {
         this.store = data[0];
+        this.review.store = new Store();
         this.review.store.id = this.store.id;
         this.review.type = this.reviewClass;
       },
@@ -95,7 +102,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   getReview(reviewId: number) {
     if (reviewId > 0) {
-      this.appService.getOneWithChildsAndFiles(reviewId, 'ProductReview')
+      this.appService.getOneWithChildsAndFiles(reviewId, this.reviewClass)
         .subscribe(result => {
           if (result.id > 0) {
             this.review = result;
@@ -119,35 +126,16 @@ export class ReviewComponent extends BaseComponent implements OnInit {
     this.review.rating = rating;
   }
 
-  edit(reviewId: number) {
-    if (reviewId > 0) {
-      this.appService.getOne(reviewId, 'ProductReview')
-        .subscribe(result => {
-          if (result) {
-            if (result.id > 0) {
-              this.review = result;
-            } else {
-              this.review = new Review();
-              this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-                this.messages = res['MESSAGE.READ_FAILED'];
-              });
-            }
-          }
-        });
-    }
-  }
-
-  public remove(reviewId: number) {
-    this.messages = '';
-    this.appService.delete(reviewId, 'ProductReview')
-      .subscribe(resp => {
-        //this.processDataSourceDeleteResult(resp, this.messages, this.orderHistory, this.dataSource);
-      });
-  }
-
   save() {
     this.messages = '';
     this.errors = '';
+
+    if (this.review.rating === 0) {
+      this.translate.get(['MESSAGE.INVALID_RATING']).subscribe(res => {
+            this.messages = res['MESSAGE.INVALID_RATING'];
+          });
+      return;
+    }
 
     try {
       this.formData = new FormData();
@@ -161,9 +149,11 @@ export class ReviewComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           this.processResult(result, this.review, null);
           if (result.id > 0) {
-            this.action = 'saved';
-            this.review = new Review();
-            this.getBoughtProducts();
+            if (!this.isAdmin) {
+              this.action = 'saved';
+              this.review = new Review();
+              this.getBoughtProducts();
+            }
           }
         });
 
@@ -177,19 +167,12 @@ export class ReviewComponent extends BaseComponent implements OnInit {
     this.review.status = (this.review.status === null
       || this.review.status.toString() === 'false'
       || this.review.status.toString() === '0') ? 0 : 1;
+
+    this.review.approvalStatus = (this.review.approvalStatus === null
+      || this.review.approvalStatus.toString() === 'false'
+      || this.review.approvalStatus.toString() === '0') ? 0 : 1;
   }
 
-  public setCanEdit() {
-    // console.log('current user id:' + this.appService.tokenStorage.getUserId());
-    // console.log('Role:' + this.appService.tokenStorage.getRole());
-    // if (Number(this.appService.tokenStorage.getUserId()) === this.storeOwnerId ||
-    //   Number(this.appService.tokenStorage.getRole()) === 3) { // this is the store owner
-    //   this.canEdit = true;
-    //   this.displayedColumns = ['dateAdded', 'user', 'comment', 'status', 'notified', 'actions'];
-    // } else {
-    //   this.canEdit = false;
-    // }
-  }
 
   getBoughtProducts() {
     this.appService.saveWithUrl('/service/catalog/getBoughtProducts/', new ProductSearchCriteria(

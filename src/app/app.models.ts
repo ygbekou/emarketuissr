@@ -1124,6 +1124,7 @@ export class Review {
   author: string;
   rating = 0;
   status: number;
+  approvalStatus: number;
   headline: string;
   comments: string;
   image: string;
@@ -1404,6 +1405,21 @@ export class SearchCriteria {
   priceMax: number;
   category: string;
   text: string;
+}
+
+export class ReviewSearchCriteria {
+  id: number;
+  reviewType: number; // 0 -- product review, 1-- store review
+  reviewTypeString: string;
+  productName: string;
+  storeName: string;
+  storeId: number;
+  languageId: number;
+  status: number;
+  approvalStatus: number;
+  author: string;
+  beginReviewDate: Date;
+  endReviewDate: Date;
 }
 
 export class OrderSearchCriteria {

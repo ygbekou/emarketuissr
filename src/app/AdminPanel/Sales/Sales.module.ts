@@ -44,6 +44,8 @@ import { OrderHistoryComponent } from './Orders/OrderHistory.component';
 import { ReturnsComponent } from './Returns/Returns.component';
 import { ReturnComponent } from './Returns/Return.component';
 import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
+import { AdminReviewsComponent } from './Reviews/AdminReviews.component';
+import { ReviewsTableComponent } from './Reviews/ReviewsTable.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
     OrderHistoryComponent,
     ReturnsComponent,
     ReturnComponent,
-    ReturnHistoryComponent
+    ReturnHistoryComponent,
+    AdminReviewsComponent,
+    ReviewsTableComponent
   ],
   imports: [
     CommonModule,

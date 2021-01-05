@@ -1,0 +1,113 @@
+<a mat-button [routerLink]="['/admin/sales/reviews']">{{'COMMON.REVIEWS' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85">
+
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeReviewType($event)">
+      <mat-tab label="{{'COMMON.PRODUCT_REVIEWS' | translate}}">
+        <app-reviews-table #ProductReviewComponent></app-reviews-table>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.STORE_REVIEWS' | translate}}">
+        <app-reviews-table #StoreReviewComponent></app-reviews-table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+    <mat-card>
+      <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+        <div fxLayout="row wrap">
+          <div class="text-center">
+            <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+          </div>
+          <div class="text-center" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+
+          <mat-form-field class="w-100">
+            <mat-label>Id</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.id"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" *ngIf="searchCriteria.reviewType === 0">
+            <mat-label> {{'COMMON.PRODUCT_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.productName"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" *ngIf="searchCriteria.reviewType === 1">
+            <mat-label> {{'COMMON.STORE_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.storeName"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.reviewType === 1">
+            <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
+              <mat-option *ngFor="let store of stores" [value]="store.id">
+                {{store.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="w-100">
+            <mat-slide-toggle [(ngModel)]="searchCriteria.status" name="status" #status="ngModel" class="my-2">
+              {{ 'COMMON.ENABLED' | translate }}
+            </mat-slide-toggle>
+          </div>
+          <div class="w-100">
+            <mat-slide-toggle [(ngModel)]="searchCriteria.approvalStatus" name="approvalStatus" #approvalStatus="ngModel" class="my-2">
+              {{ 'COMMON.APPROVED' | translate }}
+            </mat-slide-toggle>
+          </div>
+          
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginReviewDatePicker" class="form-control" id="beginDate"
+              [(ngModel)]="searchCriteria.beginReviewDate" name="beginDate" #beginDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="beginReviewDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginReviewDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endReviewDatePicker" class="form-control" id="endDate"
+              [(ngModel)]="searchCriteria.endReviewDate" name="endReviewDate" #endReviewDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="endReviewDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endReviewDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <div class="text-center">
+            <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>
