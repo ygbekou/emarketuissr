@@ -40,7 +40,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   ngOnInit() {
 
     this.activatedRoute.data.subscribe(value => {
-      this.isAdmin = value.expectedRole[0] === 'Administrator';
+      this.isAdmin = (value && value.expectedRole && value.expectedRole[0] === 'Administrator');
     });
 
     this.activatedRoute.params.subscribe(params => {
@@ -165,10 +165,12 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   setToggleValues() {
     this.review.status = (this.review.status === null
+      || this.review.status === undefined
       || this.review.status.toString() === 'false'
       || this.review.status.toString() === '0') ? 0 : 1;
 
     this.review.approvalStatus = (this.review.approvalStatus === null
+      || this.review.approvalStatus === undefined
       || this.review.approvalStatus.toString() === 'false'
       || this.review.approvalStatus.toString() === '0') ? 0 : 1;
   }
