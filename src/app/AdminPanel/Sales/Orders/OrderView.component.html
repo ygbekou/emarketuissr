@@ -355,6 +355,14 @@
   <mat-paginator #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
 </div>
 
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="orderType==='s' && storeOrder.comments">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+    {{'MESSAGE.ORDER_REOPENED'|translate}}
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+    {{storeOrder.comments}}
+  </div>
+</div>
 <div class="table-wrapper" *ngIf="orderType==='s'">
   <table mat-table [dataSource]="storeDS" matSort class="w-100">
     <!-- Product Column -->
@@ -493,6 +501,9 @@
   <mat-paginator #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
 
 </div>
+
+
+
 
 <mat-tab-group>
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">

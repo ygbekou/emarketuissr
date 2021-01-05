@@ -654,6 +654,7 @@
     "INVALID_USER_ID": "ID d'utilisateur non valide",
     "CART_EMPTY": "Votre panier est vide",
     "GO_SHOPPING": "Continuez le shopping",
+    "ORDER_REOPENED": "Cette commande a été ré-vouverte. Voici l'historique:",
     "PRODUCT_QUANTITY_ERROR": "Quantité commandee dépasse la quatité disponible",
     "PARTIAL_ORDER_SUCCESS": "Votre commande pour la devise {{currency}} a été placée avec succès. Passez la commande pour le reste des devises.",
     "FULL_ORDER_SUCCESS": "Votre commande a été placée avec succès. Merci.",

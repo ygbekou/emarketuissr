@@ -1602,6 +1602,7 @@ export class TabHdr {
   public status: number;
   public createDate: Date;
   public modDate: Date;
+  public comments: string;
   public clientId: number;
   public tabDtls: TabDtl[] = [];
   public type = 'TabHdr';
