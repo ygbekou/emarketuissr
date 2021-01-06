@@ -1136,7 +1136,7 @@ export class Review {
     this.user = new User();
     this.product = new Product();
     this.store = new Store();
-    this.status = 0;
+    this.status = 1;
   }
 
 }
