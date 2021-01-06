@@ -59,7 +59,7 @@
             <embryo-Rating [rate]="review.rating"></embryo-Rating>
             <h6>{{review?.headline}}</h6>
           </div>
-          <div fxLayout="row wrap">Reviewed on <span>{{ review.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span></div>
+          <div fxLayout="row wrap">Reviewed on <span>&nbsp;{{review.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span></div>
           <div fxLayout="row wrap">
             <p>{{review?.comments}}</p>
           </div>
