@@ -599,7 +599,10 @@
 		"PRODUCT_REVIEWS": "Evaluations des produits",
 		"STORE_REVIEWS": "Evaluations des boutiques",
 		"REVIEW_DATE": "Date d'év.",
-		"STORE_NAME": "Nom de la boutique"
+		"STORE_NAME": "Nom de la boutique",
+		"REJECT": "Rejéter",
+		"SUBMITTED": "Soumise",
+		"REJECTED": "Rejété"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

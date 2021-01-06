@@ -599,7 +599,10 @@
 		"PRODUCT_REVIEWS": "Product Reviews",
 		"STORE_REVIEWS": "Store Reviews",
 		"REVIEW_DATE": "Rev. Date",
-		"STORE_NAME": "Store Name"
+		"STORE_NAME": "Store Name",
+		"REJECT": "Reject",
+		"SUBMITTED": "Submitted",
+		"REJECTED": "Rejected"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

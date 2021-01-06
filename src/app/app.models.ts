@@ -1127,6 +1127,7 @@ export class Review {
   approvalStatus: number;
   headline: string;
   comments: string;
+  approverComments: string;
   image: string;
   createDate: Date;
 
