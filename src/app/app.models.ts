@@ -1138,6 +1138,7 @@ export class Review {
     this.product = new Product();
     this.store = new Store();
     this.status = 1;
+    this.approvalStatus = 0;
   }
 
 }
