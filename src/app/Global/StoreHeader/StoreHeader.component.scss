@@ -18,10 +18,17 @@ h1,
 
 h6,
 .h6 {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: #fff !important;
     font-weight: 500;
     margin: 0!important;
+}
+
+a:hover {
+    color: #0066c0;
+}
+a {
+    color: #ff5722;
 }
 
 .mb-3, .my-3 {

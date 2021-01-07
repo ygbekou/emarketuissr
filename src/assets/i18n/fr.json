@@ -6,6 +6,8 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "SHOP_NOW": "Acheter",
+    "CUSTOMER_REVIEW": "Evaluation des clients",
+    "REVIEWED_ON":"Evalué le",
     "STORE_CATEGORY": "Catégorie de boutique",
     "PRODUCT DETAILS": "détails du produit",
     "CART": "Chariot",
@@ -664,11 +666,11 @@
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
     "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur.",
     "PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Le prix ou le pourcentage est requis.",
-    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin.",
+    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin.",
     "REVIEW_SUBMITTED": "Votre avis a été soumis avec succès. Je vous remercie!",
     "REVIEW_UNDER_PROCESS": "Votre suggestion est en cours de traitement et une fois terminé, une notification vous sera envoyée. Merci pour votre patience.",
     "REVIEW_APPROVED": "Evaluation approuvé avec succès. Merci!",
-		"INVALID_RATING": "La note doit être supérieure � 0."
+		"INVALID_RATING": "La note doit être supérieure � 0."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
