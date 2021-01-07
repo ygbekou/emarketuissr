@@ -1,78 +1,75 @@
-
 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-  <div fxLayout="row wrap" fxLayoutAlign="none" >
-  <embryo-Rating [rate]="details.rating"></embryo-Rating> &nbsp;&nbsp;&nbsp; {{details.rating?'|':'-'}}  &nbsp;&nbsp;&nbsp;<h5>{{details.ratingAverage}} {{'COMMON.OUT_OF'|translate}} 5</h5>
+  <div fxLayout="row wrap" fxLayoutAlign="none">
+    <embryo-Rating [rate]="details.rating"></embryo-Rating> &nbsp;&nbsp;&nbsp; {{details.rating?'|':'-'}}
+    &nbsp;&nbsp;&nbsp;<h5>{{details.ratingAverage}} {{'COMMON.OUT_OF'|translate}} 5</h5>
   </div>
-
-    <div fxLayout="row wrap">5 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
-        [value]="details.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
-      {{details.ratingCountMaps[5]}}%</div><br />
-    <div fxLayout="row wrap">4 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
-        [value]="details.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
-      {{details.ratingCountMaps[4]}}%</div><br />
-    <div fxLayout="row wrap">3 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
-        [value]="details.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
-      {{details.ratingCountMaps[3]}}%</div><br />
-    <div fxLayout="row wrap">2 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
-        [value]="details.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
-      {{details.ratingCountMaps[2]}}%</div><br />
-    <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
-        [value]="details.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
-      {{details.ratingCountMaps[1]}}%</div><br />
-  
-
-
+  <div fxLayout="row wrap">5 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+      [value]="details.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
+    {{details.ratingCountMaps[5]}}%</div><br />
+  <div fxLayout="row wrap">4 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+      [value]="details.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
+    {{details.ratingCountMaps[4]}}%</div><br />
+  <div fxLayout="row wrap">3 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+      [value]="details.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
+    {{details.ratingCountMaps[3]}}%</div><br />
+  <div fxLayout="row wrap">2 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+      [value]="details.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
+    {{details.ratingCountMaps[2]}}%</div><br />
+  <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
+      [value]="details.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
+    {{details.ratingCountMaps[1]}}%</div><br />
   <div fxLayout="row wrap" fxLayoutAlign="none">
     <h5>{{'COMMON.REVIEW_THIS_PRODUCT' | translate}}</h5>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="none">
     <span>{{'COMMON.SHARE_YOUR_THOUGHTS' | translate}}</span>
-  </div>  
-  <div fxLayout="row wrap" fxLayoutAlign="none"> 
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="none">
     <span class="a-button a-button-base review-button">
       <span class="a-button-inner">
-        <a role="button" class="a-button-text" [routerLink]="['/products/' + reviewType + '/' + details.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
+        <a role="button" class="a-button-text"
+          [routerLink]="['/products/' + reviewType + '/' + details.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
       </span>
     </span>
   </div>
-  <br/>
+  <br />
 </div>
 
 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
 
 </div>
 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
-  <h4>Customer reviews</h4>
+  <h4>{{'COMMON.CUSTOMER_REVIEW'|translate}}</h4>
   <div *ngIf="details.reviews && details.reviews.length>0">
-      <div class="user-list" *ngFor="let review of details.reviews">
-          <div fxLayout="row wrap">
-            <button mat-mini-fab class="log-in-user">
-              <img *ngIf="!review.user.image || review.user.image === 'null'"
-                src="assets/images/users/user_gray.jpg" width="250" height="250" alt="log-in-user">
-              <img *ngIf="review.user.image && review.user.image !== 'null'"
-                src="assets/images/users/{{review.user.id}}/{{review.user.image}}"
-                alt="user-image" width="50">
-            </button>
-            <h6>{{review.author}}</h6>
-          </div>
-          <div fxLayout="row wrap">
-            <embryo-Rating [rate]="review.rating"></embryo-Rating>
-            <h6>{{review?.headline}}</h6>
-          </div>
-          <div fxLayout="row wrap">Reviewed on <span>&nbsp;{{review.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span></div>
-          <div fxLayout="row wrap">
-            <p>{{review?.comments}}</p>
-          </div>
-          <div fxLayout="row wrap" *ngIf="review.image">
-            <img [src]="'assets/images/' + (review.type === 'StoreReview' ? 'storereviews/' : 'productreviews/') + review.id + '/' + review.image" width="90" alt="">
-          </div>
-             
-          <br/>
-          <br/>
-        </div>    
+    <div class="user-list" *ngFor="let review of details.reviews">
+      <div fxLayout="row wrap">
+        <button mat-mini-fab class="log-in-user">
+          <img *ngIf="!review.user.image || review.user.image === 'null'" src="assets/images/users/user_gray.jpg"
+            width="250" height="250" alt="log-in-user">
+          <img *ngIf="review.user.image && review.user.image !== 'null'"
+            src="assets/images/users/{{review.user.id}}/{{review.user.image}}" alt="user-image" width="50">
+        </button>
+        <h6>{{review.author}}</h6>
       </div>
+      <div fxLayout="row wrap">
+        <embryo-Rating [rate]="review.rating"></embryo-Rating>
+        <h6>{{review?.headline}}</h6>
+      </div>
+      <div fxLayout="row wrap">{{'COMMON.REVIEWED_ON'|translate}} <span>&nbsp;{{review.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span></div>
+      <div fxLayout="row wrap">
+        <p>{{review?.comments}}</p>
+      </div>
+      <div fxLayout="row wrap" *ngIf="review.image">
+        <img
+          [src]="'assets/images/' + (review.type === 'StoreReview' ? 'storereviews/' : 'productreviews/') + review.id + '/' + review.image"
+          width="90" alt="">
+      </div>
+      <br />
+      <br />
+    </div>
+  </div>
   <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap"
-      *ngIf="!details.reviews || details.reviews.length === 0">
+    *ngIf="!details.reviews || details.reviews.length === 0">
     {{'COMMON.NO_CUSTOMER_REVIEWS' | translate}}
   </div>
 </div>
