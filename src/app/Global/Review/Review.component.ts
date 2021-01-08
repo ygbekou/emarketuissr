@@ -128,6 +128,18 @@ export class ReviewComponent extends BaseComponent implements OnInit {
     }
   }
 
+  approve() {
+
+    this.review.approvalStatus = 1;
+    this.save();
+  }
+
+  reject() {
+
+    this.review.approvalStatus = 2;
+    this.save();
+  }
+
   save() {
     this.messages = '';
     this.errors = '';

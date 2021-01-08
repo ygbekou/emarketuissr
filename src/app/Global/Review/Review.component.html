@@ -107,13 +107,15 @@
                     </button> 
                   </div>
                   <div class="text-left mt-2" fxFlex.gt-sm="25" *ngIf="isAdmin">
-                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="review.approvalStatus = 1">
+                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" 
+                      (click)="approve()" [disabled]="review.approvalStatus === 1">
                       <span class="mx-1 uppercase">{{'COMMON.APPROVE' | translate}}</span>
                       <mat-icon>check</mat-icon>
                     </button> 
                   </div>
                   <div class="text-left mt-2" fxFlex.gt-sm="25" *ngIf="isAdmin">
-                    <button mat-raised-button color="" fxLayout="row" fxLayoutAlign="center center" (click)="review.approvalStatus = 2">
+                    <button mat-raised-button color="" fxLayout="row" fxLayoutAlign="center center" 
+                    (click)="reject()" [disabled]="review.approvalStatus === 2">
                       <span class="mx-1 uppercase" style="color:darkslateblue">{{'COMMON.REJECT' | translate}}</span>
                       <mat-icon color="primary">cancel</mat-icon>
                     </button> 
