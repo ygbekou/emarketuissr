@@ -8,5 +8,5 @@ export class Constants {
 	public static WARN = 'warn';
 	public static ERROR = 'error';
 	public static DATE_FORMAT = 'MM/dd/yyyy';
-	public static ORDER_WAIT_TIME = 120000; 
+	public static ORDER_WAIT_TIME = 120000;
 }

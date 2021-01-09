@@ -169,6 +169,10 @@ export class CategoryComponent implements OnInit {
           || this.category.showInSearch.toString() === 'false'
           || this.category.showInSearch.toString() === '0') ? 0 : 1;
 
+        this.category.showInKitchen = (this.category.showInKitchen == null
+          || this.category.showInKitchen.toString() === 'false'
+          || this.category.showInKitchen.toString() === '0') ? 0 : 1;
+
         if (this.categoryImages.length > 0) {
           this.appService.saveWithFile(this.category, 'Category', this.formData, 'saveWithFile')
             .subscribe(result => {
