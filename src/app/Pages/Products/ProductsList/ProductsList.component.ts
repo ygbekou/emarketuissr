@@ -21,6 +21,7 @@ export class ProductsListComponent implements OnInit {
    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
+
    dataSource: MatTableDataSource<ProductDescVO>;
    public viewType = 'grid';
    public viewCol = 33.3;
@@ -43,8 +44,8 @@ export class ProductsListComponent implements OnInit {
    dummyCat = '';
 
    productList: ProductListVO = new ProductListVO();
+   currentFilteredProductList: ProductListVO = new ProductListVO();
    public searchCriteria: SearchCriteria = new SearchCriteria();
-
 
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
@@ -70,8 +71,6 @@ export class ProductsListComponent implements OnInit {
 
 
       this.activatedRoute.params.subscribe(params => {
-         console.log(params);
-         console.log(params.type);
 
          this.catId = 0;
          this.marketId = 0;
@@ -109,10 +108,7 @@ export class ProductsListComponent implements OnInit {
             }
 
          });
-
-
       });
-
 
 
       this.watcher = this.mediaObserver.media$.subscribe((change: MediaChange) => {
@@ -134,79 +130,41 @@ export class ProductsListComponent implements OnInit {
       if (this.storeId > 0) {
          this.appService.saveWithUrl('/service/catalog/getStore', {'type': 'Store', 'id': this.storeId})
             .subscribe(result => {
-               if (result.id > 0) {
-                  this.store = result;
-                  console.log(this.store);
-               }
-            });
+            if (result.id > 0) {
+               this.store = result;
+               console.log(this.store);
+            }
+         });
       }
    }
 
 
+   // Getting all the product based on the Top Search
    getProducts() {
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
          new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             this.storeId, this.marketId, this.catId, this.searchText, 0, 0, 0, 0)
       ).subscribe((data: ProductListVO) => {
-            this.productList = data;
-            this.translate.get(['COMMON.ALL_CATEGORIES', 'COMMON.ALL_CATEGORIES']).subscribe(res => {
-               this.dummyCat = res['COMMON.ALL_CATEGORIES'];
-            });
-            if (this.productList && this.productList.categories) {
-               this.productList.categories.unshift(this.dummyCat);
-            }
-
-            // console.log(data);
-            const result = this.filterData(data.productDescVOs);
-            if (result.data.length === 0) {
-               // this.properties.length = 0;
-               this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-               this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-                  this.message = res['MESSAGE.NO_RESULT_FOUND'];
-               });
-            }
-            // console.log(result.data.categories);
-            this.dataSource = new MatTableDataSource(result.data);
-            this.pagination = result.pagination;
-            this.message = null;
-
-            this.dataSource.filterPredicate = (data, filter) => {
-               let found = true;
-               if (this.searchCriteria.priceMin && this.searchCriteria.priceMax) {
-
-                  if (!(data.product.price >= this.searchCriteria.priceMin
-                     && data.product.price <= this.searchCriteria.priceMax)) {
-                     found = false;
-                  }
-               } else if (this.searchCriteria.priceMin && !this.searchCriteria.priceMax) {
-                  if (!(data.product.price >= this.searchCriteria.priceMin)) {
-                     found = false;
-                  }
-               } else if (!this.searchCriteria.priceMin && this.searchCriteria.priceMax) {
-                  if (!(data.product.price <= this.searchCriteria.priceMax)) {
-                     found = false;
-                  }
-               }
-
-               if (this.searchCriteria.category) {
-                  if (!(this.searchCriteria.category === data.category) &&
-                     this.searchCriteria.category !== this.dummyCat) {
-                     found = false;
-                  }
-               }
-
-               if (this.searchCriteria.text) {
-                  if (!(data.name.toLowerCase().indexOf(this.searchCriteria.text.toLowerCase()) > -1)) {
-                     found = false;
-                  }
-               }
-               console.log('Filter Predicate called.');
-               return found;
-            }
-
+            this.applyGridFilter(data);
          },
             error => console.log(error),
             () => console.log('Get all getProductsOnSale complete'));
+   }
+
+   applyGridFilter(data) {
+      // Make a copy of the backend returned data to avoid going to backend when a filtering is made.
+      this.productList = data;
+      this.currentFilteredProductList = undefined;
+      this.translate.get(['COMMON.ALL_CATEGORIES', 'COMMON.ALL_CATEGORIES']).subscribe(res => {
+         this.dummyCat = res['COMMON.ALL_CATEGORIES'];
+      });
+
+      // Making the category list.
+      if (this.productList && this.productList.categories) {
+         this.productList.categories.unshift(this.dummyCat);
+      }
+
+      this.createDatasource(data.productDescVOs);
    }
 
    public getData() {
@@ -341,7 +299,59 @@ export class ProductsListComponent implements OnInit {
    }
 
    public filterProducts() {
-      const result = this.filterData(this.productList.productDescVOs);
+      this.createDatasource(this.currentFilteredProductList && this.currentFilteredProductList.productDescVOs
+         ? this.currentFilteredProductList.productDescVOs : this.productList.productDescVOs);
+   }
+
+   public searchClicked(data: string) {
+      this.searchCriteria.text = data.trim().toLowerCase();
+      this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria));
+
+   }
+
+   filterDataBySearchCriteria(searchCriteria) {
+      const filteredData = this.productList.productDescVOs.filter(function (data) {
+         let found = true;
+         if (searchCriteria.priceMin && searchCriteria.priceMax) {
+
+            if (!(data.product.price >= searchCriteria.priceMin
+               && data.product.price <= searchCriteria.priceMax)) {
+               found = false;
+            }
+         } else if (searchCriteria.priceMin && !searchCriteria.priceMax) {
+            if (!(data.product.price >= searchCriteria.priceMin)) {
+               found = false;
+            }
+         } else if (!searchCriteria.priceMin && searchCriteria.priceMax) {
+            if (!(data.product.price <= searchCriteria.priceMax)) {
+               found = false;
+            }
+         }
+
+         if (searchCriteria.category) {
+            if (!(searchCriteria.category === data.category) &&
+               searchCriteria.category !== this.dummyCat) {
+               found = false;
+            }
+         }
+
+         if (searchCriteria.text) {
+            if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+               found = false;
+            }
+         }
+         console.log('Filter Predicate called.');
+         return found;
+      });
+
+      this.currentFilteredProductList = new ProductListVO();
+      this.currentFilteredProductList.productDescVOs = filteredData;
+      return filteredData;
+   }
+
+
+   createDatasource(listData) {
+      const result = this.filterData(listData);
       if (result.data.length === 0) {
          // this.properties.length = 0;
          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -354,21 +364,9 @@ export class ProductsListComponent implements OnInit {
       this.message = null;
    }
 
-
    public filterData(data) {
       return this.appService.filterData(data, this.searchFields, this.sort.code, this.pagination.page, this.pagination.perPage);
    }
-
-   public searchClicked(data: string) {
-
-      this.searchCriteria.text = data.trim().toLowerCase();
-      this.applyAllFilter();
-      console.log('After applyAllFilter.' + this.dataSource.data.length);
-      this.pagination = this.appService.paginator(this.dataSource.data, 1, this.count).pagination;
-      // this.resetPagination();
-   }
-
-
 
    selectForSaleProduct($event) {
       console.log($event);
