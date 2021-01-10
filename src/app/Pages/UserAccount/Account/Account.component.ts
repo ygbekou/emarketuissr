@@ -23,7 +23,7 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: '',
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
-      { name: 'Addresses', url: '/account/address', icon: 'location_on' },
+      { name: 'Addresses', url: '/account/addresses', icon: 'location_on' },
       { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' }
     ]
   },
