@@ -268,10 +268,12 @@ export class ProductsListComponent implements OnInit {
       this.resetPagination();
       this.filterProducts();
    }
+
    public changeSorting(sort) {
       this.sort = sort;
       this.filterProducts();
    }
+
    public changeViewType(obj) {
       if (obj.viewType === 'list') {
          this.changeCount(1);
@@ -295,6 +297,7 @@ export class ProductsListComponent implements OnInit {
          this.paginator.pageIndex = 0;
       }
 
+      this.pagination.totalPages = Math.ceil(this.pagination.total / this.count);
       this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
    }
 
