@@ -14,90 +14,183 @@
                 <a mat-button routerLink="/session/signin" color="accent"
                   class="w-100">{{'COMMON.NOTNEW_SIGN_IN' | translate }}</a>
               </div>
-              <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
-                <mat-form-field class="w-100 mb-3">
-                  <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
-                  <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}"  
-                    formControlName="language" required>
-                    <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
-                      {{  cat.name}}
-                    </mat-option>
-                  </mat-select>
-                    <mat-error *ngIf="registerForm.controls.language.errors?.required">
-                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                  <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
-                  <mat-label>{{'COMMON.FIRST_NAME' | translate }}</mat-label>
-                  <input matInput placeholder="{{'COMMON.FIRST_NAME' | translate }}" formControlName="firstName"
-                    required>
-                  <mat-error *ngIf="registerForm.controls.firstName.errors?.required">
-                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-2">
-                  <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
-                  <mat-label>{{'COMMON.LAST_NAME' | translate }}</mat-label>
-                  <input matInput placeholder="{{'COMMON.LAST_NAME' | translate }}" formControlName="lastName" required>
-                  <mat-error *ngIf="registerForm.controls.lastName.errors?.required">
-                    {{'VALIDATION.FIELD_REQUIRED' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                  <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
-                  <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
-                  <input matInput placeholder="Email" formControlName="email" required>
-                  <mat-error *ngIf="registerForm.controls.email.errors?.required">
-                    {{'VALIDATION.EMAIL_REQUIRED' | translate }}</mat-error>
-                  <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">
-                    {{'VALIDATION.EMAIL_INVALID' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                  <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
-                  <mat-label>{{'COMMON.PASSWORD' | translate }}</mat-label>
-                  <input matInput placeholder="Password" formControlName="password" type="password" minlength="6"
-                    required [type]="hide ? 'password' : 'text'">
-                  <mat-error *ngIf="registerForm.controls.password.errors?.required">
-                    {{'VALIDATION.PASSWORD_REQUIRED' | translate }}
-                  </mat-error>
-                  <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">
-                    {{'VALIDATION.MINIMUM_LENGTH' | translate }} 6</mat-error>
-                  <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  </button>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-100 mt-1">
-                  <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
-                  <mat-label>{{'COMMON.CONFIRM_PASSWORD' | translate }}</mat-label>
-                  <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"
-                    required [type]="hide ? 'password' : 'text'">
-                  <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.required">
-                    {{'VALIDATION.FIELD_REQUIRED' | translate }}</mat-error>
-                  <mat-error *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')">
-                    {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}</mat-error>
-                  <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  </button>
-                </mat-form-field>
-                <mat-radio-group formControlName="sex" class="my-3">
-                  <mat-radio-button value="M">
-                    {{'COMMON.MALE' | translate }}
-                  </mat-radio-button>
-                  <mat-radio-button value="F">
-                    {{'COMMON.FEMALE' | translate }}
-                  </mat-radio-button>
-                </mat-radio-group>
-                <div class="text-center mt-2">
-                  <button mat-raised-button color="accent" class="uppercase" type="submit">
-                    {{'COMMON.REGISTER' | translate }}
-                  </button>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
-                  <a mat-button color="accent" class="w-100">{{error}}</a>
-                </div>
-              </form>
+
+              <div *ngIf="isVerifyEmail()">
+                 <form [formGroup]="emailForm" (ngSubmit)="verifyEmail(emailForm.value)">
+                   
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                    <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                    <mat-error *ngIf="emailForm.controls.email.errors?.required">
+                      {{'VALIDATION.EMAIL_REQUIRED' | translate }}</mat-error>
+                    <mat-error *ngIf="emailForm.controls.email.hasError('invalidEmail')">
+                      {{'VALIDATION.EMAIL_INVALID' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                    <mat-label>{{'COMMON.CONFIRM_EMAIL' | translate }}</mat-label>
+                    <input matInput placeholder="Confirm Email" formControlName="confirmEmail" required>
+                    <mat-error *ngIf="emailForm.controls.confirmEmail.errors?.required">
+                      {{'VALIDATION.EMAIL_REQUIRED' | translate }}</mat-error>
+                    <mat-error *ngIf="emailForm.controls.confirmEmail.hasError('invalidEmail')">
+                      {{'VALIDATION.EMAIL_INVALID' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="emailForm.controls.confirmEmail.hasError('mismatchedStrings')">
+                      {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <div class="text-center mt-2">
+                    <button mat-raised-button color="accent" class="uppercase" type="submit">
+                      {{'COMMON.REGISTER' | translate }}
+                    </button>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
+                    <a mat-button color="accent" class="w-100">{{error}}</a>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="message">
+                    <a mat-button color="primary" class="w-100">{{message}}</a>
+                  </div>
+
+                </form>
+              </div>
+
+              <div *ngIf="isVerifyCode()">
+                 <form [formGroup]="verificationCodeForm" (ngSubmit)="verifyCode(verificationCodeForm.value)">
+                  
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                    <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
+                    <input matInput placeholder="Email" formControlName="email">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-label>{{'COMMON.CODE' | translate }}</mat-label>
+                    <input matInput placeholder="Verification Code" formControlName="verificationCode" required>
+                    <mat-error *ngIf="verificationCodeForm.controls.verificationCode.errors?.required">
+                      {{'VALIDATION.REQUIRED' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-label>{{'COMMON.CONFIRM_CODE' | translate }}</mat-label>
+                    <input matInput placeholder="Confirm Verification Code" formControlName="confirmVerificationCode" required>
+                    <mat-error *ngIf="verificationCodeForm.controls.confirmVerificationCode.errors?.required">
+                      {{'VALIDATION.EMAIL_REQUIRED' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="verificationCodeForm.controls.confirmVerificationCode.hasError('mismatchedStrings')">
+                      {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+
+                  <div class="text-center mt-2">
+                    <button mat-raised-button color="accent" class="uppercase" type="submit">
+                      {{'COMMON.REGISTER' | translate }}
+                    </button>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
+                    <a mat-button color="accent" class="w-100">{{error}}</a>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="message">
+                    <a mat-button color="primary" class="w-100">{{message}}</a>
+                  </div>
+
+                </form>
+              </div>
+
+
+              <div *ngIf="isSubmitRegistration()">
+                <form [formGroup]="registerForm" (ngSubmit)="onRegisterFormSubmit(registerForm.value)">
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                    <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                    <mat-error *ngIf="registerForm.controls.email.errors?.required">
+                      {{'VALIDATION.EMAIL_REQUIRED' | translate }}</mat-error>
+                    <mat-error *ngIf="registerForm.controls.email.hasError('invalidEmail')">
+                      {{'VALIDATION.EMAIL_INVALID' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="w-100 mb-3">
+                    <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
+                    <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}"  
+                      formControlName="language" required>
+                      <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
+                        {{  cat.name}}
+                      </mat-option>
+                    </mat-select>
+                      <mat-error *ngIf="registerForm.controls.language.errors?.required">
+                      {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100 mt-2">
+                    <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                    <mat-label>{{'COMMON.FIRST_NAME' | translate }}</mat-label>
+                    <input matInput placeholder="{{'COMMON.FIRST_NAME' | translate }}" formControlName="firstName"
+                      required>
+                    <mat-error *ngIf="registerForm.controls.firstName.errors?.required">
+                      {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100 mt-2">
+                    <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                    <mat-label>{{'COMMON.LAST_NAME' | translate }}</mat-label>
+                    <input matInput placeholder="{{'COMMON.LAST_NAME' | translate }}" formControlName="lastName" required>
+                    <mat-error *ngIf="registerForm.controls.lastName.errors?.required">
+                      {{'VALIDATION.FIELD_REQUIRED' | translate }}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+                    <mat-label>{{'COMMON.PASSWORD' | translate }}</mat-label>
+                    <input matInput placeholder="Password" formControlName="password" type="password" minlength="6"
+                      required [type]="hide ? 'password' : 'text'">
+                    <mat-error *ngIf="registerForm.controls.password.errors?.required">
+                      {{'VALIDATION.PASSWORD_REQUIRED' | translate }}
+                    </mat-error>
+                    <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">
+                      {{'VALIDATION.MINIMUM_LENGTH' | translate }} 6</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100 mt-1">
+                    <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+                    <mat-label>{{'COMMON.CONFIRM_PASSWORD' | translate }}</mat-label>
+                    <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"
+                      required [type]="hide ? 'password' : 'text'">
+                    <mat-error *ngIf="registerForm.controls.confirmPassword.errors?.required">
+                      {{'VALIDATION.FIELD_REQUIRED' | translate }}</mat-error>
+                    <mat-error *ngIf="registerForm.controls.confirmPassword.hasError('mismatchedPasswords')">
+                      {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  <mat-radio-group formControlName="sex" class="my-3">
+                    <mat-radio-button value="M">
+                      {{'COMMON.MALE' | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button value="F">
+                      {{'COMMON.FEMALE' | translate }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <div class="text-center mt-2">
+                    <button mat-raised-button color="accent" class="uppercase" type="submit">
+                      {{'COMMON.REGISTER' | translate }}
+                    </button>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
+                    <a mat-button color="accent" class="w-100">{{error}}</a>
+                  </div>
+                </form>
+              </div>
+
+
+
               <div class="divider mt-4"></div>
               <mat-card-actions fxLayoutAlign="center center" class="text-center">
                 <small class="my-3">{{'MESSAGE.AGREEMENT' | translate }} <a mat-button routerLink="/terms-conditions"

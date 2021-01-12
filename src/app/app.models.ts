@@ -1638,3 +1638,11 @@ export class StoreCategoryDesc {
   name: string;
 }
 
+export class EmailVerification {
+  id: number;
+  email: string;
+  confirmEmail: string;
+  expirationDate: Date;
+
+  type = 'EmailVerification';
+}
