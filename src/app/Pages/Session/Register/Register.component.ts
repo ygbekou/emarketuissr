@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     }, { validator: this.matchingStr('email', 'confirmEmail') });
 
     this.verificationCodeForm = this.fb.group({
-      email: new FormControl({value: '', disabled: true}, Validators.compose([Validators.required, emailValidator])),
+      email: new FormControl({ value: '', disabled: true }, Validators.compose([Validators.required, emailValidator])),
       verificationCode: ['', Validators.required],
       confirmVerificationCode: ['', Validators.required]
     }, { validator: this.matchingStr('verificationCode', 'confirmVerificationCode') }
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
       language: ['', Validators.required],
       sex: ['', Validators.required],
       // userName: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
-      email: new FormControl({value: '', disabled: true}, Validators.compose([Validators.required, emailValidator])),
+      email: new FormControl({ value: '', disabled: true }, Validators.compose([Validators.required, emailValidator])),
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       receiveNewsletter: true
@@ -109,23 +109,29 @@ export class RegisterComponent implements OnInit {
 
   matchingStr(str1Key: string, str2Key: string) {
     return (group: FormGroup) => {
-        let str1 = group.controls[str1Key];
-        let str2 = group.controls[str2Key];
-        if (str1.value !== str2.value) {
-            return str2.setErrors({mismatchedStrings: true})
-        }
-    }
+      const str1 = group.controls[str1Key];
+      const str2 = group.controls[str2Key];
+      if (str1.value !== str2.value) {
+        return str2.setErrors({ mismatchedStrings: true });
+      }
+    };
   }
 
-  verifyEmail( values: EmailVerification) {
+  verifyEmail(values: EmailVerification) {
     this.message = '';
     this.error = '';
     values.type = 'EmailVerification';
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    values.lang = lang;
+    console.log(values);
     if (this.emailForm.valid) {
       this.appService.saveWithUrl('/service/user/forgot/registration/verifyEmail', values)
-      .subscribe((data: any) => {
-        if (!data.errors || data.errors.length === 0) {
-          this.translate.get(['MESSAGE.EMAIL_VERIFICATION_CODE_SENT', 'COMMON.ERROR']).subscribe(res => {
+        .subscribe((data: any) => {
+          if (!data.errors || data.errors.length === 0) {
+            this.translate.get(['MESSAGE.EMAIL_VERIFICATION_CODE_SENT', 'COMMON.ERROR']).subscribe(res => {
               this.message = res['MESSAGE.EMAIL_VERIFICATION_CODE_SENT'];
             });
 
@@ -136,39 +142,44 @@ export class RegisterComponent implements OnInit {
                 confirmVerificationCode: ''
               }
             );
-          this.pageStatus = 'verify_code';
-        }
-      },
-        error => console.log(error),
-        () => console.log('Verify Email complete'));
+            this.pageStatus = 'verify_code';
+          }
+        },
+          error => console.log(error),
+          () => console.log('Verify Email complete'));
     }
   }
 
 
-  verifyCode( values: EmailVerification) {
+  verifyCode(values: EmailVerification) {
     this.message = '';
     this.error = '';
+    let lang = navigator.language;
+    if (lang) {
+      lang = lang.substring(0, 2);
+    }
+    values.lang = lang;
     values.type = 'EmailVerification';
     values.email = this.emailForm.controls.email.value;
-
+    console.log(values);
     if (this.emailForm.valid) {
       this.appService.saveWithUrl('/service/user/forgot/registration/verifyCode', values)
-      .subscribe((data: any) => {
-        if (!data.errors || data.errors.length === 0) {
-          this.translate.get(['MESSAGE.EMAIL_VERIFICATION_CODE_SENT', 'COMMON.ERROR']).subscribe(res => {
+        .subscribe((data: any) => {
+          if (!data.errors || data.errors.length === 0) {
+            this.translate.get(['MESSAGE.EMAIL_VERIFICATION_CODE_SENT', 'COMMON.ERROR']).subscribe(res => {
               this.message = res['MESSAGE.EMAIL_VERIFICATION_CODE_SENT'];
             });
 
-          this.registerForm.controls.email.setValue(values.email);
-          this.pageStatus = 'submit_registration';
-        } else {
-          this.translate.get(['MESSAGE.INVALID_VERIFICATION_CODE', 'COMMON.ERROR']).subscribe(res => {
+            this.registerForm.controls.email.setValue(values.email);
+            this.pageStatus = 'submit_registration';
+          } else {
+            this.translate.get(['MESSAGE.INVALID_VERIFICATION_CODE', 'COMMON.ERROR']).subscribe(res => {
               this.error = res['MESSAGE.INVALID_VERIFICATION_CODE'];
             });
-        }
-      },
-        error => console.log(error),
-        () => console.log('Verification code complete'));
+          }
+        },
+          error => console.log(error),
+          () => console.log('Verification code complete'));
     }
   }
 

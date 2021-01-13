@@ -676,7 +676,7 @@
 		"REVIEW_UNDER_PROCESS": "The review is under process and once it is completed a notification will be sent to you. Thank you for your patience.",
 		"REVIEW_APPROVED": "Review successfully approved. Thank You!",
 		"INVALID_RATING": "Rating must be greater than 0.",
-		"EMAIL_VERIFICATION_CODE_SENT": "A verification code is sent to your email address. Use it to verify your email. Thanks.",
+		"EMAIL_VERIFICATION_CODE_SENT": "A verification code is sent to your email address. Enter it below to proceed.",
 		"INVALID_VERIFICATION_CODE": "Invalid verification code"
 	},
 	"VALIDATION": {
@@ -698,6 +698,7 @@
 		"USER_NAME_REQUIRED": "Username required",
 		"USER_TYPE_REQUIRED": "User type required",
 		"PASSWORD_NOT_MATCH": "Password does not match",
+		"EMAIL_NOT_MATCH": "E-mail does not match",
 		"COMMENT_OR_STATUS": "Both comment and order status cannot be blank",
 		"EMAIL_INVALID": "Invalid E-mail",
 		"PRICE_OR_PERCENT": "Either Price or Percentage is needed",

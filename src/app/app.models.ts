@@ -1643,6 +1643,6 @@ export class EmailVerification {
   email: string;
   confirmEmail: string;
   expirationDate: Date;
-
+  lang = 'fr';
   type = 'EmailVerification';
 }
