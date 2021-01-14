@@ -18,7 +18,10 @@
   <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 70%" mode="determinate"
       [value]="details.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
     {{details.ratingCountMaps[1]}}%</div><br />
-  <div fxLayout="row wrap" fxLayoutAlign="none">
+  <div fxLayout="row wrap" fxLayoutAlign="none" *ngIf="reviewType==='store'">
+    <h5>{{'COMMON.REVIEW_THIS_STORE' | translate}}</h5>
+  </div>
+    <div fxLayout="row wrap" fxLayoutAlign="none" *ngIf="reviewType==='product'">
     <h5>{{'COMMON.REVIEW_THIS_PRODUCT' | translate}}</h5>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="none">
@@ -28,7 +31,8 @@
     <span class="a-button a-button-base review-button">
       <span class="a-button-inner">
         <a role="button" class="a-button-text"
-          [routerLink]="['/products/' + reviewType + '/' + details.id + '/review', 0]">{{'COMMON.REVIEW_PRODUCT' | translate}}</a>
+          [routerLink]="['/products/' + reviewType + '/' + details.id + '/review', 0]">
+          {{reviewType==='product'? ('COMMON.REVIEW_THIS_PRODUCT' | translate) :('COMMON.REVIEW_THIS_STORE' | translate) }}</a>
       </span>
     </span>
   </div>
