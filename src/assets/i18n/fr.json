@@ -675,7 +675,7 @@
     "REVIEW_UNDER_PROCESS": "Votre suggestion est en cours de traitement et une fois terminé, une notification vous sera envoyée. Merci pour votre patience.",
     "REVIEW_APPROVED": "Evaluation approuvé avec succès. Merci!",
     "INVALID_RATING": "La note doit être supérieure � 0.",
-    "EMAIL_VERIFICATION_CODE_SENT": "Un code de v�rification est envoyé � votre adresse e-mail. Utilisez-le pour vérifier votre e-mail. Merci.",
+    "EMAIL_VERIFICATION_CODE_SENT": "Un code de v�rification est envoyé � votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
 		"INVALID_VERIFICATION_CODE": "Code de verification invalide"
   },
   "VALIDATION": {
@@ -701,6 +701,7 @@
     "SELECT_BILLING_ADDRESS": "Veuillez sélectionner l'adresse  de facturation",
     "SELECT_SHIPPING_ADDRESS": "Veuillez sélectionner l'adresse d'expédition",
     "PASSWORD_NOT_MATCH": "Mot de passe ne correspond pas au premier",
+    "EMAIL_NOT_MATCH": "Le e-mail ne correspond pas au premier",
     "COMMENT_OR_STATUS": "Renseignez l'etat de la commande or le commentaire",
     "EMAIL_INVALID": "Cet E-mail est invalide",
     "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères"

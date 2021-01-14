@@ -16,8 +16,8 @@
               </div>
 
               <div *ngIf="isVerifyEmail()">
-                 <form [formGroup]="emailForm" (ngSubmit)="verifyEmail(emailForm.value)">
-                   
+                <form [formGroup]="emailForm" (ngSubmit)="verifyEmail(emailForm.value)">
+
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
@@ -39,7 +39,7 @@
                       {{'VALIDATION.EMAIL_INVALID' | translate }}
                     </mat-error>
                     <mat-error *ngIf="emailForm.controls.confirmEmail.hasError('mismatchedStrings')">
-                      {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}
+                      {{'VALIDATION.EMAIL_NOT_MATCH' | translate }}
                     </mat-error>
                   </mat-form-field>
 
@@ -59,13 +59,17 @@
               </div>
 
               <div *ngIf="isVerifyCode()">
-                 <form [formGroup]="verificationCodeForm" (ngSubmit)="verifyCode(verificationCodeForm.value)">
-                  
+                <form [formGroup]="verificationCodeForm" (ngSubmit)="verifyCode(verificationCodeForm.value)">
+
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
                     <mat-label>{{'COMMON.E_MAIL' | translate }}</mat-label>
                     <input matInput placeholder="Email" formControlName="email">
                   </mat-form-field>
+
+                  <mat-error *ngIf="message">
+                     {{message}} 
+                  </mat-error>
 
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-label>{{'COMMON.CODE' | translate }}</mat-label>
@@ -74,7 +78,7 @@
                       {{'VALIDATION.REQUIRED' | translate }}
                     </mat-error>
                   </mat-form-field>
-
+                  <!-- 
                   <mat-form-field appearance="outline" class="w-100 mt-1">
                     <mat-label>{{'COMMON.CONFIRM_CODE' | translate }}</mat-label>
                     <input matInput placeholder="Confirm Verification Code" formControlName="confirmVerificationCode" required>
@@ -84,7 +88,7 @@
                     <mat-error *ngIf="verificationCodeForm.controls.confirmVerificationCode.hasError('mismatchedStrings')">
                       {{'VALIDATION.PASSWORD_NOT_MATCH' | translate }}
                     </mat-error>
-                  </mat-form-field>
+                  </mat-form-field> -->
 
                   <div class="text-center mt-2">
                     <button mat-raised-button color="accent" class="uppercase" type="submit">
@@ -94,10 +98,6 @@
                   <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="error">
                     <a mat-button color="accent" class="w-100">{{error}}</a>
                   </div>
-                  <div fxLayout="column" fxLayoutAlign="center center" class="text-center" *ngIf="message">
-                    <a mat-button color="primary" class="w-100">{{message}}</a>
-                  </div>
-
                 </form>
               </div>
 
@@ -116,13 +116,12 @@
                   </mat-form-field>
                   <mat-form-field class="w-100 mb-3">
                     <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
-                    <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}"  
-                      formControlName="language" required>
+                    <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" formControlName="language" required>
                       <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
                         {{  cat.name}}
                       </mat-option>
                     </mat-select>
-                      <mat-error *ngIf="registerForm.controls.language.errors?.required">
+                    <mat-error *ngIf="registerForm.controls.language.errors?.required">
                       {{'VALIDATION.FIELD_REQUIRED' | translate }}
                     </mat-error>
                   </mat-form-field>
@@ -138,7 +137,8 @@
                   <mat-form-field appearance="outline" class="w-100 mt-2">
                     <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
                     <mat-label>{{'COMMON.LAST_NAME' | translate }}</mat-label>
-                    <input matInput placeholder="{{'COMMON.LAST_NAME' | translate }}" formControlName="lastName" required>
+                    <input matInput placeholder="{{'COMMON.LAST_NAME' | translate }}" formControlName="lastName"
+                      required>
                     <mat-error *ngIf="registerForm.controls.lastName.errors?.required">
                       {{'VALIDATION.FIELD_REQUIRED' | translate }}
                     </mat-error>
