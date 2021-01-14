@@ -239,7 +239,7 @@ export class ProductsListComponent implements OnInit {
    }
 
    public applyAllFilter() {
-      this.dataSource.filter = '' + Math.random();
+      this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
    }
 
 
@@ -308,11 +308,11 @@ export class ProductsListComponent implements OnInit {
 
    public searchClicked(data: string) {
       this.searchCriteria.text = data.trim().toLowerCase();
-      this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria));
+      this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
 
    }
 
-   filterDataBySearchCriteria(searchCriteria) {
+   filterDataBySearchCriteria(searchCriteria, dummyCat) {
       const filteredData = this.productList.productDescVOs.filter(function (data) {
          let found = true;
          if (searchCriteria.priceMin && searchCriteria.priceMax) {
@@ -333,7 +333,7 @@ export class ProductsListComponent implements OnInit {
 
          if (searchCriteria.category) {
             if (!(searchCriteria.category === data.category) &&
-               searchCriteria.category !== this.dummyCat) {
+               searchCriteria.category !== dummyCat) {
                found = false;
             }
          }
