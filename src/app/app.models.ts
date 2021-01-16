@@ -520,6 +520,18 @@ export class ReturnReason {
   }
 }
 
+export class CancellationReason {
+  id: number;
+  name: string;
+  language: Language;
+  description: string;
+  type = 'CancellationReason';
+
+  constructor() {
+    this.language = new Language();
+  }
+}
+
 export class ReturnAction {
   id: number;
   name: string;
@@ -1380,12 +1392,17 @@ export class Order {
   paygateGlobalPaymentUrl: string;
   errors: string[];
   paymentInfo: string;
+  cancellationReason: CancellationReason;
 
   type = 'Order';
 
   totalRewardPoints: number;
   orderProducts: OrderProduct[] = [];
   products: Product[] = [];
+
+  constructor() {
+    this.type = 'Order';
+  }
 
 }
 
@@ -1560,6 +1577,7 @@ export class OnlineOrderVO {
   symbolRight: string;
   createDate: Date;
   status: string;
+  isCancellable: boolean;
   orderProducts: OrderProduct[] = [];
 }
 

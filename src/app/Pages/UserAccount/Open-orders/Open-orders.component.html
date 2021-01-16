@@ -84,7 +84,8 @@
                     <button mat-button color="accent"
                       [routerLink]="['/account/order-detail', 'o'+order.orderId]">{{'COMMON.ORDER_DETAIL'|translate}}</button>
 
-                    <button mat-button (click)="cancel(order.orderId)" color="accent">{{'COMMON.CANCEL_ORDER'|translate}}</button>
+                    <button mat-button color="accent" *ngIf="order.isCancellable"
+                      [routerLink]="['/account/order-cancel', +order.orderId]">{{'COMMON.CANCEL_ORDER'|translate}}</button>
 
                   </div>
                 </div>

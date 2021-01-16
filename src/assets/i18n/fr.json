@@ -609,7 +609,8 @@
 		"SUBMITTED": "Soumise",
 		"REJECTED": "Rejété",
 		"CODE": "Code",
-		"CONFIRM_CODE": "Confirmer Code"
+		"CONFIRM_CODE": "Confirmer Code",
+		"CANCELLATION_REASON": "Raison de l'annulation"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

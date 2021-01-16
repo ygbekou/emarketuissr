@@ -45,9 +45,9 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
         this.orders = data;
         // console.log(data);
         if (data.length > 0) {
-          for (const o of this.orders) {
-            this.setOrderDetails(o);
-          }
+          // for (const o of this.orders) {
+          //   this.setOrderDetails(o);
+          // }
           // console.log(this.orders);
         } else {
           this.translate.get(['MESSAGE.NO_OPEN_ORDER', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
@@ -99,26 +99,8 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.appService.addToCart(ci);
   }
 
-  public cancel(orderId: number) {
-    const order = new Order();
-    order.id = orderId;
-    const index: number = this.orders.findIndex((ord) => ord.orderId === order.id);
-
-    this.appService.saveWithUrl('/service/order/cancelOrder/', order)
-      .subscribe((data: Order) => {
-        if (data.errors) {
-          // there was an issue.
-          console.log(data.errors);
-        } else {
-          if (index !== -1) {
-            this.orders.splice(index, 1);
-          }
-        }
-      },
-        error => {
-          console.log(error);
-        },
-        () => console.log('Cancel order complete'));
+  public cancel() {
+    this.router.navigate(['/checkout']);
   }
 
 }

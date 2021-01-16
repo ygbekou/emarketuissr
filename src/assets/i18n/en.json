@@ -609,7 +609,8 @@
 		"SUBMITTED": "Submitted",
 		"REJECTED": "Rejected",
 		"CODE": "Code",
-		"CONFIRM_CODE": "Confirm Code"
+		"CONFIRM_CODE": "Confirm Code",
+		"CANCELLATION_REASON": "Cancellation Reason"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

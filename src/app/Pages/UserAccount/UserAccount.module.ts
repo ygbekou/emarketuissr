@@ -59,6 +59,7 @@ import { SalesModule } from 'src/app/AdminPanel/Sales/Sales.module';
 import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.component';
 import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
+import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 
 @NgModule({
   imports: [
@@ -141,7 +142,8 @@ import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
     SalesOrdersComponent,
     OrderDetailComponent,
     ClientDashboardComponent,
-    OpenOrdersComponent
+    OpenOrdersComponent,
+    OrderCancelComponent
   ],
   exports: [
     CardsComponent,
