@@ -85,7 +85,9 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
       .subscribe((data: Order) => {
         if (data.errors) {
           // there was an issue.
-          this.errors = data.errors[0];
+          this.translate.get(['MESSAGE.' + data.errors[0]]).subscribe(res => {
+            this.errors = res['MESSAGE.' + data.errors[0]];
+          });
         } else {
           this.action = 'cancelled';
         }

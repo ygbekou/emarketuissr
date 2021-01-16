@@ -678,7 +678,9 @@
     "REVIEW_APPROVED": "Evaluation approuvé avec succès. Merci!",
     "INVALID_RATING": "La note doit être supérieure � 0.",
     "EMAIL_VERIFICATION_CODE_SENT": "Un code de v�rification est envoyé � votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
-		"INVALID_VERIFICATION_CODE": "Code de verification invalide"
+		"INVALID_VERIFICATION_CODE": "Code de verification invalide",
+		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
+		"CANCELLATION_DECLINED": "Annulation Déclinée"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
