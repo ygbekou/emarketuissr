@@ -610,7 +610,8 @@
 		"SUBMITTED": "Submitted",
 		"REJECTED": "Rejected",
 		"CODE": "Code",
-		"CONFIRM_CODE": "Confirm Code"
+		"CONFIRM_CODE": "Confirm Code",
+		"CANCELLATION_REASON": "Cancellation Reason"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -679,7 +680,9 @@
 		"REVIEW_APPROVED": "Review successfully approved. Thank You!",
 		"INVALID_RATING": "Rating must be greater than 0.",
 		"EMAIL_VERIFICATION_CODE_SENT": "A verification code is sent to your email address. Enter it below to proceed.",
-		"INVALID_VERIFICATION_CODE": "Invalid verification code"
+		"INVALID_VERIFICATION_CODE": "Invalid verification code",
+		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Order Not Eligible for Cancellation",
+		"CANCELLATION_DECLINED": "Cancellation Declined"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

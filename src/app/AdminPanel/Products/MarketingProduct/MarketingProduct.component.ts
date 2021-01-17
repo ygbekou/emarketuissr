@@ -206,7 +206,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   getSelectedProducts() {
     this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
       new ProductSearchCriteria(
-        this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '  0', 0, 0, 0, 0
+        this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '0', 0, 0, 0, 0
       ))
       .subscribe((data: any) => {
         this.selectedProducts = data.productDescVOs;

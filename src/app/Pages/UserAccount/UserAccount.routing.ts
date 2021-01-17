@@ -17,6 +17,7 @@ import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.co
 import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
 import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
+import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -114,6 +115,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'order-detail/:id',
             component: OrderDetailComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'order-cancel/:orderId',
+            component: OrderCancelComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
