@@ -1,4 +1,4 @@
-<a mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
+<!-- <a mat-button [matMenuTriggerFor]="langMenu" #langMenuTrigger="matMenuTrigger">
     <span fxShow="false" fxShow.gt-md class="uppercase flag-name">{{flag.code}}</span>
     <mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
 </a>
@@ -8,4 +8,10 @@
             <span class="flag-name">{{flag.name}}</span>
         </button>
     </span>
-</mat-menu>
+</mat-menu> -->
+ 
+<mat-select [(value)]="flag.code" color="accent" style="text-align: right;">
+<mat-option [value]="flag.code" *ngFor="let flag of flags" (click)="changeLang(flag)">
+    {{flag.code}}
+</mat-option>
+</mat-select> 

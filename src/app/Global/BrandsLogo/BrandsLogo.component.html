@@ -2,16 +2,20 @@
   <div ngxSlickItem *ngFor="let store of stores">
     <a [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
       <mat-card>
-        <mat-card-header>
-          <mat-card-title>{{store.name}}</mat-card-title>
+        <!--  <mat-card-header>
+           <mat-card-title>{{store.name}}</mat-card-title>  
           <mat-card-subtitle *ngIf="store.address">
            <font style="color: #283593;"> {{store.catName}} </font><br/>
             {{store.address.city +', '+store.address.country.name}}
           </mat-card-subtitle>
-        </mat-card-header>
+        </mat-card-header> -->
         <mat-card-content>
           <img src="assets/images/stores/{{store.id}}/{{store.image}}">
-        </mat-card-content>
+          <div class="myOverlay">
+             {{store.catName}}  <br />
+            {{store.address.city +', '+store.address.country.name}}
+          </div>
+        </mat-card-content> 
       </mat-card>
     </a>
   </div>

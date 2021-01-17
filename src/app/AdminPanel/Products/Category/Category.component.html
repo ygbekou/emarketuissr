@@ -139,6 +139,9 @@
              [compareWith]="compareObjects" 
             id="parent" name="parent"
               [(ngModel)]="category.parent" #parent="ngModel">
+               <mat-option   [value]="">
+                {{'COMMON.NONE'|translate}}
+              </mat-option>
               <mat-option *ngFor="let cat of categories" [value]="cat.category">
                 {{cat.name}}
               </mat-option>
