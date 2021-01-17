@@ -41,7 +41,7 @@
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
                   <mat-form-field class="w-100 mb-3">
                     <mat-label>{{'COMMON.CANCELLATION_REASON'|translate}}</mat-label>
-                    <mat-select placeholder="{{'COMMON.CANCELLATION_REASON' | translate}}" id="cancelReason" 
+                    <mat-select placeholder="{{'COMMON.CANCELLATION_REASON' | translate}}" [compareWith]="compareObjects" id="cancelReason" 
                       name="cancelReason" [(ngModel)]="cancellationReason" #cancelReason="ngModel">
                       <mat-option *ngFor="let reason of cancellationReasons" [value]="reason">
                         {{reason.description}}
@@ -80,17 +80,10 @@
     <mat-card>
       <mat-icon color="accent" class="review-icon"> rate_review</mat-icon>
       <h4> 
-        {{'MESSAGE.REVIEW_SUBMITTED'|translate}}
+        {{messages}}
       </h4>
-      <span>
-        {{'MESSAGE.REVIEW_UNDER_PROCESS'|translate}}
-      </span>
     </mat-card>
     
-
-    <a href="javascript:void(0)" *ngIf="store" class="primary-color" [routerLink]="['/products']" 
-      [queryParams]="{storeId:store.id}">{{'COMMON.CONTINUE_SHOPPING_FROM'|translate}} {{store.name}}</a>
-    <span *ngIf="store">&nbsp; | &nbsp;</span>
     <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
     &nbsp; | &nbsp;
     <a href="javascript:void(0)" class="primary-color"

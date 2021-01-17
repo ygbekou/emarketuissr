@@ -192,6 +192,7 @@ export class Product extends BaseModel {
   modifiedBy: number;
   rating: number;
   ratingCount: number;
+  currency: Currency;
   fileNames: string[];
   productVideos: ProductVideo[] = [];
   productDescriptions: ProductDescription[] = [];

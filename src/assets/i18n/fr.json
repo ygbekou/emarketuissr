@@ -680,7 +680,8 @@
     "EMAIL_VERIFICATION_CODE_SENT": "Un code de v�rification est envoyé � votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
 		"INVALID_VERIFICATION_CODE": "Code de verification invalide",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
-		"CANCELLATION_DECLINED": "Annulation Déclinée"
+		"CANCELLATION_DECLINED": "Annulation Déclinée",
+		"ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

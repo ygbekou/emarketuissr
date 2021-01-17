@@ -90,6 +90,9 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
           });
         } else {
           this.action = 'cancelled';
+          this.translate.get('MESSAGE.ORDER_CANCELLATION_SUCCESSFUL', { order_number: order.id }).subscribe(res => {
+            this.messages = res;
+          });
         }
       },
         error => {

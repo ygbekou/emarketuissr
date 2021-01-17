@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, ProductDescription } from 'src/app/app.models';
+import { Product, ProductDescription, Currency } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductDescriptionComponent } from '../ProductDescription/ProductDescription.component';
@@ -23,7 +23,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
   @ViewChild(ProductLinkComponent, { static: false }) prodLinkComponent: ProductLinkComponent;
 
   product: Product;
-
+  currencies: Currency[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,6 +34,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
 
+    this.getCurrencies();
     this.activatedRoute.params.subscribe(params => {
       if (params.id === undefined || params.id === 0) {
         this.clear();
@@ -43,6 +44,18 @@ export class ProductComponent extends BaseComponent implements OnInit {
       }
     });
 
+  }
+
+  getCurrencies() {
+    const parameters: string[] = [];
+    parameters.push('e.status = |statusParam|1|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Currency', parameters,
+      ' order by e.code ')
+      .subscribe((data: Currency[]) => {
+        this.currencies = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Currency complete'));
   }
 
   clearMessages($event) {
