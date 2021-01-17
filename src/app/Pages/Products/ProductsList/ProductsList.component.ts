@@ -239,7 +239,9 @@ export class ProductsListComponent implements OnInit {
    }
 
    public applyAllFilter() {
+      this.firstPagePagination();
       this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
+      this.resetPagination();
    }
 
 
@@ -361,7 +363,6 @@ export class ProductsListComponent implements OnInit {
 
    createDatasource(listData) {
       const result = this.filterData(listData);
-      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
       if (result.data.length === 0) {
          // this.properties.length = 0;
          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
