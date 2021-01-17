@@ -2,17 +2,16 @@
   <mat-toolbar-row class="header-v2-top">
     <div class="container">
       <div fxLayout="row wrap">
-        <div class="logo-site" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="35" fxFlex.lg="25%" fxFlex.xl="25%">
+        <div class="logo-site" fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="35" fxFlex.lg="25%" fxFlex.xl="25%">
           <embryo-AppLogo></embryo-AppLogo>
         </div>
-        <div fxFlex.sm="60" fxHide.xs="true" fxHide.sm="true" fxFlex.md="40" fxFlex.sm.hdie fxFlex.lg="60%"
-          fxFlex.xl="60%" class="align-center">
+        <div fxFlex.sm="0" fxHide.xs="0" fxHide.sm="true" fxFlex.md="35" fxFlex.sm.hdie fxFlex.lg="55%"
+          fxFlex.xl="55%" class="align-center">
 
           <form name="form" (ngSubmit)="f.form.valid && searchProducts()" #f="ngForm" validate>
             <div fxLayout="row wrap" style="align-items: baseline;">
               <div fxFlex.xs="20%" fxFlex.sm="20%" style="vertical-align: middle;" fxFlex.md="20%" fxFlex.lg="20%"
                 fxFlex.xl="20%">
-
                 <mat-form-field appearance="fill">
                   <mat-select [(value)]="appService.appInfoStorage.selectedSearchCategory" color="accent">
                     <mat-option [value]="cat" *ngFor="let cat of appService.appInfoStorage.searchCategories">
@@ -30,19 +29,20 @@
               </div>
               <div fxFlex.xs="15%" fxFlex.sm="15%" fxFlex.md="15%" fxFlex.lg="15%" fxFlex.xl="15%"
                 style="vertical-align: middle;">
-                <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;" type="submit">
+                <button mat-flat-button color="primary" aria-label="search" style="vertical-align: middle;"
+                  type="submit">
                   <mat-icon>search</mat-icon> Search
                 </button>
               </div>
-              <div fxFlex.xs="10%" fxFlex.sm="10%" fxFlex.md="10%" fxFlex.lg="10%" fxFlex.xl="10%"
-                style="vertical-align: middle;"> 
-                <app-lang></app-lang>
-              </div>
+
             </div>
           </form>
 
         </div>
-        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
+        <div fxFlex.xs="30%" fxFlex.sm="30%" fxFlex.md="5%" fxFlex.lg="5%" fxFlex.xl="5%" style="vertical-align: middle;">
+          <app-lang></app-lang>
+        </div>
+        <div fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
           <span fxFlex></span>
           <div class="list-flex user-tool">
             <embryo-HeaderCart [currency]="appService?.currency" [cartProducts]="appService?.localStorageCartProducts"
@@ -81,11 +81,13 @@
             </button>
           </div>
           <div class="search-form">
-            <form>
-              <input type="text" placeholder="Search and hit enter">
+            <form name="form2" (ngSubmit)="f2.form.valid && searchProducts()" #f2="ngForm" validate>
+
+              <input matInput type="text" [(ngModel)]="searchText" name="searchText"
+                placeholder="{{'COMMON.SEARCH'|translate}}">
               <button type="button" mat-fab class="close-btn" (click)="toggleSearch()">
-                <i class="material-icons">
-                  close
+                <i class="material-icons" (click)="searchProducts()">
+                  search
                 </i>
               </button>
             </form>
