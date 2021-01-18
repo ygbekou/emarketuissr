@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CategoryDescription, ProductDescription, Product, Store, Pagination,
-  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO
+  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO, SearchCriteria
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,14 +18,14 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 })
 export class MyProductsComponent extends BaseComponent implements OnInit {
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
   displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'status', 'actions'];
   productDiscountDatasource: MatTableDataSource<any>;
-  @ViewChild(MatPaginator, { static: true }) productDiscountPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
 
   categories: CategoryDescription[][] = [];
@@ -42,9 +42,13 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
   currentOption: string;
+
   products: ProductDescVO[] = [];
+  currentFilteredProducts: ProductDescVO[] = [];
+  productSearchCriteria: SearchCriteria = new SearchCriteria();
+
   stores: Store[] = [];
-  dataSource: MatTableDataSource<ProductDescVO>;
+  productDataSource: MatTableDataSource<ProductDescVO>;
   productStore: ProductToStore = new ProductToStore();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
@@ -64,6 +68,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   public disablePrice: boolean;
   public disablePercentage: boolean;
+
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -94,7 +99,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.product = new Product();
 
     for (let counter = 0; counter < 10; counter++) {
-      // console.log('for loop executed : ' + counter);
       this.categories[counter] = [];
     }
 
@@ -130,28 +134,14 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   getProducts(store: Store) {
-    console.log(store);
-    console.log(this.selectedStore);
-    console.log(this.appService.appInfoStorage.language);
     this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
       new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
         store.id, 0, 0, '0', 0, 0, 0, 0))
       .subscribe((data: ProductListVO) => {
+        this.currentFilteredProducts = undefined;
         this.products = data.productDescVOs;
         this.stepper.selectedIndex = 1;
-        const result = this.filterData(data.productDescVOs);
-        if (result.data.length === 0) {
-          // this.properties.length = 0;
-          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-            this.message = res['MESSAGE.NO_RESULT_FOUND'];
-          });
-        }
-        this.dataSource = new MatTableDataSource(result.data);
-        // console.log('These are the products');
-        // console.log(this.dataSource.filteredData);
-        this.pagination = result.pagination;
-        this.message = null;
+        this.createDatasource(data.productDescVOs);
 
       },
         error => console.log(error),
@@ -159,11 +149,42 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
 
-  public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  createDatasource(listData) {
+    this.message = null;
+    const result = this.filterData(listData);
+    if (result.data.length === 0) {
+        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+        this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+          this.message = res['MESSAGE.NO_RESULT_FOUND'];
+        });
     }
+
+    this.productDataSource = new MatTableDataSource(result.data);
+    this.pagination = result.pagination;
+  }
+
+  filterProductDataBySearchCriteria(searchCriteria) {
+    const filteredData = this.products.filter(function (data) {
+        let found = true;
+        if (searchCriteria.text) {
+          if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+              found = false;
+          }
+        }
+        console.log('Filter Predicate called.');
+        return found;
+    });
+
+    this.currentFilteredProducts = filteredData;
+    return filteredData;
+  }
+
+  public searchClicked(data: string) {
+    this.productSearchCriteria.text = data.trim().toLowerCase();
+    this.firstPagePagination();
+    this.createDatasource(this.filterProductDataBySearchCriteria(this.productSearchCriteria));
+    this.resetPagination();
+
   }
 
   public addToCart(value) {
@@ -213,33 +234,26 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   public resetPagination() {
-    if (this.paginator) {
-      this.paginator.pageIndex = 0;
-    }
+    console.log('resetPagination called');
+    this.firstPagePagination();
+    this.pagination.totalPages = Math.ceil(this.pagination.total / this.count);
     this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
   }
 
-  public filterProducts() {
-    const result = this.filterData(this.products);
-    if (result.data.length === 0) {
-      // this.properties.length = 0;
-      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-      this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-        this.message = res['MESSAGE.NO_RESULT_FOUND'];
-      });
+  public firstPagePagination() {
+    if (this.paginator) {
+        this.paginator.pageIndex = 0;
+        this.paginator.firstPage();
     }
-    this.dataSource = new MatTableDataSource(result.data);
-    this.pagination = result.pagination;
-    this.message = null;
   }
 
+
+  public filterProducts() {
+    this.createDatasource(this.currentFilteredProducts && this.currentFilteredProducts ? this.currentFilteredProducts : this.products);
+  }
 
   public filterData(data) {
     return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
-  }
-
-  public searchClicked(data: string) {
-    this.applyFilter(data);
   }
 
   selectForSaleProduct($event) {

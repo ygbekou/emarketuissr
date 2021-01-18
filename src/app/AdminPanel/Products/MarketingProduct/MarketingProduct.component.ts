@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct,
-  ProductDescVO, ProductSearchCriteria, ProductListVO
+  ProductDescVO, ProductSearchCriteria, ProductListVO, SearchCriteria
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,8 +19,8 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 export class MarketingProductComponent extends BaseComponent implements OnInit {
 
   @Input() marketing: Marketing;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatPaginator, { static: true }) paginator2: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator2: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatSort, { static: true }) sort2: MatSort;
 
@@ -39,11 +39,20 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   options = ['One', 'Two'];
   filteredOptions: Observable<string[]>;
   currentOption: string;
+
   products: ProductDescVO[] = [];
+  currentFilteredProducts: ProductDescVO[] = [];
+  productSearchCriteria: SearchCriteria = new SearchCriteria();
+
   selectedProducts: ProductDescVO[] = [];
+  currentFilteredSelectedProducts: ProductDescVO[] = [];
+  productSearchCriteria2: SearchCriteria = new SearchCriteria();
+
+
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescVO>;
   dataSource2: MatTableDataSource<ProductDescVO>;
+
   productStore: ProductToStore = new ProductToStore();
   marketingProduct: MarketingProduct = new MarketingProduct();
   public sidenavOpen = true;
@@ -173,35 +182,86 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   getProducts(cat: CategoryDescription) {
-    // console.log(cat);
-    // console.log(this.selectedStore);
-    // console.log(this.appService.appInfoStorage.language);
-        this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
       new ProductSearchCriteria(
         this.appService.appInfoStorage.language.id, this.selectedStore.id,
         0, cat.category.id, '0', 0, 0, 0, 0
       ))
       .subscribe((productListVO: ProductListVO) => {
+
+        this.currentFilteredProducts = undefined;
         this.products = productListVO.productDescVOs;
         this.stepper.selectedIndex = 2;
-        const result = this.filterData(productListVO.productDescVOs, 1);
-        if (result.data.length === 0) {
-          // this.properties.length = 0;
-          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-            this.message = res['MESSAGE.NO_RESULT_FOUND'];
-          });
-        }
-        this.dataSource = new MatTableDataSource(result.data);
-        // console.log('These are the products');
-        // console.log(this.dataSource.filteredData);
-        this.pagination = result.pagination;
-        this.message = null;
+        this.createDatasource(productListVO.productDescVOs, 1);
 
       },
         error => console.log(error),
         () => console.log('Get all getProductsForCategoryForSale complete'));
   }
+
+  createDatasource(listData, opt: number) {
+    this.message = null;
+    const result = this.filterData(listData, opt);
+    if (result.data.length === 0) {
+        this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+          this.message = res['MESSAGE.NO_RESULT_FOUND'];
+        });
+    }
+
+    if (opt === 1) {
+      this.dataSource = new MatTableDataSource(result.data);
+      this.pagination = result.pagination;
+    } else {
+      this.dataSource2 = new MatTableDataSource(result.data);
+      this.pagination2 = result.pagination;
+    }
+  }
+
+  filterProductDataBySearchCriteria(searchCriteria) {
+    const filteredData = this.products.filter(function (data) {
+        let found = true;
+        if (searchCriteria.text) {
+          if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+              found = false;
+          }
+        }
+        return found;
+    });
+
+    this.currentFilteredProducts = filteredData;
+    return filteredData;
+  }
+
+  filterProductDataBySearchCriteria2(searchCriteria) {
+    const filteredData = this.selectedProducts.filter(function (data) {
+        let found = true;
+        if (searchCriteria.text) {
+          if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+              found = false;
+          }
+        }
+        return found;
+    });
+
+    this.currentFilteredSelectedProducts = filteredData;
+    return filteredData;
+  }
+
+
+  public searchClicked(data: string, opt: number) {
+    this.firstPagePagination(opt);
+    if (opt === 1) {
+      this.productSearchCriteria.text = data.trim().toLowerCase();
+      this.createDatasource(this.filterProductDataBySearchCriteria(this.productSearchCriteria), opt);
+    } else {
+      this.productSearchCriteria2.text = data.trim().toLowerCase();
+      this.createDatasource(this.filterProductDataBySearchCriteria2(this.productSearchCriteria2), opt);
+    }
+    this.resetPagination(opt);
+
+  }
+
+
 
   getSelectedProducts() {
     this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
@@ -304,22 +364,40 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
 
   public resetPagination(opt: number) {
     if (opt === 1) {
-      if (this.paginator) {
-        this.paginator.pageIndex = 0;
-      }
+      this.firstPagePagination(opt);
+      this.pagination.totalPages = Math.ceil(this.pagination.total / this.count);
       this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
 
     } else {
-      if (this.paginator2) {
-        this.paginator2.pageIndex = 0;
-      }
+      this.firstPagePagination(opt);
+      this.pagination2.totalPages = Math.ceil(this.pagination2.total / this.count);
       this.pagination2 = new Pagination(1, this.count, null, null, this.pagination2.total, this.pagination2.totalPages);
 
     }
   }
 
+  public firstPagePagination(opt: number) {
+    if (opt === 1) {
+      if (this.paginator) {
+          this.paginator.pageIndex = 0;
+          this.paginator.firstPage();
+      }
+    } else {
+      if (this.paginator2) {
+          this.paginator2.pageIndex = 0;
+          this.paginator2.firstPage();
+      }
+    }
+  }
+
+
   public filterProducts(opt: number) {
-    const result = this.filterData(this.products, opt);
+    let result = null;
+    if (opt === 1) {
+      result = this.filterData(this.products, opt);
+    } else {
+      result = this.filterData(this.selectedProducts, opt);
+    }
     if (result.data.length === 0) {
       // this.properties.length = 0;
       if (opt === 1) {
@@ -353,9 +431,6 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public searchClicked(data: string, opt: number) {
-    this.applyFilter(data, opt);
-  }
 
   selectForMarketing($event) {
     this.prodDescVO = $event;

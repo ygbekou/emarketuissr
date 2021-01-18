@@ -116,7 +116,7 @@
           </div>
         </div>
         <mat-paginator *ngIf="products && products.length>0" [length]="pagination?.total"
-          [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
+          [pageSize]="pagination?.perPage" (page)="onPageChange($event, 1)" class="w-100 mat-elevation-z1">
         </mat-paginator>
       </mat-step>
 

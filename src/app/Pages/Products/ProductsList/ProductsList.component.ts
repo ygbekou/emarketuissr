@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
-   ProductListVO, CartItem, Store, ProductSearchCriteria
+   ProductListVO, Store, ProductSearchCriteria
 } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
@@ -45,7 +45,7 @@ export class ProductsListComponent implements OnInit {
 
    productList: ProductListVO = new ProductListVO();
    currentFilteredProductList: ProductListVO = new ProductListVO();
-   public searchCriteria: SearchCriteria = new SearchCriteria();
+   searchCriteria: SearchCriteria = new SearchCriteria();
 
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
@@ -362,9 +362,9 @@ export class ProductsListComponent implements OnInit {
 
 
    createDatasource(listData) {
+      this.message = null;
       const result = this.filterData(listData);
       if (result.data.length === 0) {
-         // this.properties.length = 0;
          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
             this.message = res['MESSAGE.NO_RESULT_FOUND'];
@@ -373,8 +373,6 @@ export class ProductsListComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(result.data);
       this.pagination = result.pagination;
-      this.message = null;
-
    }
 
    public filterData(data) {

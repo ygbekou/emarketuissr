@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material';
+import { Pagination, ProductListVO } from '../app.models';
 @Component({
 	template: ``,
   providers: []
@@ -107,4 +108,5 @@ export class BaseComponent {
   compareObjects(o1: any, o2: any): boolean {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
+
 }
