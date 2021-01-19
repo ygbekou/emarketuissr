@@ -74,6 +74,7 @@ export class CommonSignInComponent implements OnInit {
                 return;
               } else if (this.fromPage) {
                 this.router.navigate([this.fromPage]);
+                return;
               }
 
               if (this.appService.tokenStorage.getRole() === '1') {// client

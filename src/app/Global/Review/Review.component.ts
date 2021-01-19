@@ -3,7 +3,7 @@ import { Review, ProductDescription, Store, ProductDescVO, ProductSearchCriteria
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-review',
@@ -33,17 +33,26 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
   constructor(public appService: AppService,
       public translate: TranslateService,
+      public router: Router,
       private activatedRoute: ActivatedRoute) {
     super(translate);
   }
 
   ngOnInit() {
 
+
     this.activatedRoute.data.subscribe(value => {
       this.isAdmin = (value && value.expectedRole && value.expectedRole[0] === 'Administrator');
     });
 
     this.activatedRoute.params.subscribe(params => {
+
+      if (!this.appService.tokenStorage.getUserId()) {
+      console.log('navigating.. to signin');
+      this.router.navigate(['/session/signin'],
+          { queryParams: { fromPage: '/products/product/' + params.reviewTypeId + '/review/' + params.reviewId} });
+      }
+
 
       this.action = 'saving';
       this.messages = '';
