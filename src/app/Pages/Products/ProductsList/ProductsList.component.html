@@ -48,10 +48,10 @@
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
             <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-              <h2 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">{{'COMMON.CATEGORY'|translate}} :
+              <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">{{'COMMON.CATEGORY'|translate}} :
                 {{ catDesc.name}}
-              </h2>
-              <h2 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h2>
+              </h6>
+              <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h6>
             </div>
             <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <mat-form-field class="w-100">
@@ -62,7 +62,7 @@
             <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
               <!-- <span *ngIf="isHomePage"> -->
               <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-                Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+               {{'COMMON.SHOW'|translate}}   {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
               </a>
               <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
                 <span (mouseleave)="countsMenuTrigger.closeMenu()">

@@ -36,6 +36,9 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       public router: Router,
       private activatedRoute: ActivatedRoute) {
     super(translate);
+    if (this.appService.tokenStorage.getUserId() === null) {
+      this.router.navigate(['/session/signin']);
+  }
   }
 
   ngOnInit() {
@@ -167,7 +170,9 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       }
       this.setToggleValues();
       this.review.user.id = +this.appService.tokenStorage.getUserId();
-      this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName;
+      // this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName;
+      this.review.author =   this.appService.tokenStorage.getUser().firstName;
+
       this.appService.saveWithFileUsingUrl('/service/catalog/submit' + this.reviewClass + '/', this.review, this.formData)
         .subscribe(result => {
           this.processResult(result, this.review, null);

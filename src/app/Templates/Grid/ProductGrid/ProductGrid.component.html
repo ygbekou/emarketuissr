@@ -25,6 +25,9 @@
                [src]="'assets/images/products/'+prd.product.id+'/'+prd.product?.image"
                [ngClass]="{ transparent: !loaded }" (load)="onLoad()" alt="Photo">
          </a>
+         <div class="rating-star">
+            <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
+         </div>
          <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist" *ngIf="fromPage==='buy'">
             <a (click)="productAddToWishlist(prd, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
          </div>
@@ -39,11 +42,12 @@
             </h5>
 
 
-            <h5 *ngIf="!prd.product?.id"><a  [routerLink]="['/products/accessories/17']"
+            <h5 *ngIf="!prd.product?.id"><a [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>
             <font style="font-style: italic;font-size: 10px;">
                {{'COMMON.SOLD_BY'|translate}}
-               <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product.storeId}" routerLinkActive="tab-active">
+               <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product.storeId}"
+                  routerLinkActive="tab-active">
                   {{prd.product.storeName}}</a>
             </font>
             <div>
@@ -68,9 +72,7 @@
                      {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}} {{prd.product.productDiscountPrice}}
                      {{prd.product.symbolRight}}
                   </h6>
-                  <div class="rating-star">
-                     <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
-                  </div>
+
                </div>
             </div>
 

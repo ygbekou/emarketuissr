@@ -11,7 +11,7 @@
           {{store.phone? ('| '+ ('COMMON.PHONE'|translate) +': '+ store.phone):'' }} |
           <a [routerLink]="['/products']" fragment="reviews" class="a-link-normal">
             {{store.reviews.length}}
-            {{'COMMON.REVIEW'|translate}}{{store.reviews.length > 1 ? 's ('+store.ratingAverage+'/5)' : ''}}
+            {{'COMMON.REVIEW'|translate}}{{store.reviews.length > 0 ? 's ('+store.ratingAverage+'/5)' : ''}}
           </a>
         </h6>
       </div>

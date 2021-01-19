@@ -116,7 +116,8 @@ const MENUITEMS_FR = [
     icon: 'shopping_cart',
     children: [
       { state: 'orders', name: 'Commandes', type: 'link' },
-      { state: 'returns', name: 'Retours', type: 'link' }
+      { state: 'returns', name: 'Retours', type: 'link' },
+      { state: 'reviews', name: 'Reviews', type: 'link' }
     ]
   },
   {

@@ -265,6 +265,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                      images.push(image);
                   });
                   this.picture = images;
+                  console.log(this.user);
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
                      this.errors = res['MESSAGE.READ_FAILED'];
