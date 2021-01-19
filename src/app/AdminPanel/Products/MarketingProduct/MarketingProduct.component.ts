@@ -200,6 +200,11 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   createDatasource(listData, opt: number) {
+    if (opt === 1) {
+      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+    } else {
+      this.pagination2 = new Pagination(1, this.count, null, 2, 0, 0);
+    }
     this.message = null;
     const result = this.filterData(listData, opt);
     if (result.data.length === 0) {
