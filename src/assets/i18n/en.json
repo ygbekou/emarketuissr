@@ -682,7 +682,8 @@
 		"EMAIL_VERIFICATION_CODE_SENT": "A verification code is sent to your email address. Enter it below to proceed.",
 		"INVALID_VERIFICATION_CODE": "Invalid verification code",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Order Not Eligible for Cancellation",
-		"CANCELLATION_DECLINED": "Cancellation Declined"
+		"CANCELLATION_DECLINED": "Cancellation Declined",
+		"ORDER_CANCELLATION_SUCCESSFUL": "Your order # {{order_number}} is successfully cancelled. Thank You!"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

@@ -78,7 +78,7 @@
         </div>
         <div fxLayout="row wrap" *ngIf="products && products.length>0">
           <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
+            <app-products-toolbar [showSidenavToggle]="false" [dataSource]="productDataSource"
               (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
               (onSearchClick)="searchClicked($event)" (onChangeSorting)="changeSorting($event)"
               (onChangeViewType)="changeViewType($event)">
@@ -86,8 +86,8 @@
           </div>
         </div>
         <div fxLayout="row wrap" *ngIf="products && products.length>0">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
-            <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="productDataSource">
+            <embryo-ProductGrid [currency]="appService?.currency" [products]="productDataSource.filteredData"
               [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
               (addToWishList)="addToWishList($event)" (selectProduct)="selectForSaleProduct($event)" gridThree="true">
             </embryo-ProductGrid>

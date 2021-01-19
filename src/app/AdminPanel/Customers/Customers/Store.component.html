@@ -73,8 +73,8 @@
           <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
           <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
             name="currency" [(ngModel)]="store.currency" #currency="ngModel">
-            <mat-option *ngFor="let cat of currencies" [value]="cat">
-              {{cat.code +' - '+ cat.title}}
+            <mat-option *ngFor="let cur of currencies" [value]="cur">
+              {{cur.code +' - '+ cur.title}}
             </mat-option>
           </mat-select>
         </mat-form-field>

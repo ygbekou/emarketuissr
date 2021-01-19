@@ -99,6 +99,17 @@
                </mat-form-field>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100 mb-3">
+                  <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+                  <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
+                     name="currency" [(ngModel)]="product.currency" #currency="ngModel">
+                     <mat-option *ngFor="let cur of currencies" [value]="cur">
+                     {{cur.code +' - '+ cur.title}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
                <mat-form-field class="w-100">
                   <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
                   <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId"
@@ -106,17 +117,6 @@
                      <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers"
                         [value]="manufacturer.id">
                         {{manufacturer.name}}
-                     </mat-option>
-                  </mat-select>
-               </mat-form-field>
-            </div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-               <mat-form-field class="w-100">
-                  <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
-                  <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
-                     [(ngModel)]="product.taxClassId" #taxClass="ngModel">
-                     <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                        {{taxClass.name}}
                      </mat-option>
                   </mat-select>
                </mat-form-field>
@@ -166,22 +166,33 @@
                   <mat-datepicker #picker></mat-datepicker>
                </mat-form-field>
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
                <mat-label> {{'COMMON.DIMENSIONS' | translate}}</mat-label><br />
-               <mat-form-field class="w-30">
+               <mat-form-field class="w-20" style="width: 33%">
                   <mat-label> {{'COMMON.LENGTH' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="" [(ngModel)]="product.length" name="length"
                      #length="ngModel">
                </mat-form-field>
-               <mat-form-field class="w-30">
+               <mat-form-field class="w-20"  style="width: 33%">
                   <mat-label> {{'COMMON.WIDTH' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="" [(ngModel)]="product.width" name="width"
                      #width="ngModel">
                </mat-form-field>
-               <mat-form-field class="w-30">
+               <mat-form-field class="w-20"  style="width: 33%">
                   <mat-label> {{'COMMON.HEIGHT' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="" [(ngModel)]="product.height" name="height"
                      #height="ngModel">
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
+                     [(ngModel)]="product.taxClassId" #taxClass="ngModel">
+                     <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
+                        {{taxClass.name}}
+                     </mat-option>
+                  </mat-select>
                </mat-form-field>
             </div>
          </div>

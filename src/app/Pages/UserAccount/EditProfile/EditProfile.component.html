@@ -40,7 +40,7 @@
             <mat-label> {{'COMMON.EMAIL' | translate}}
             </mat-label>
             <input matInput type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email"
-              #email="ngModel" autocomplete="off" required email>
+              #email="ngModel" autocomplete="off" required email [disabled]="true">
             <mat-error *ngIf="f1.submitted && email.invalid && email.errors.required" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
             <mat-error *ngIf="f1.submitted && email.invalid && email.errors.email" severity="error">
@@ -135,7 +135,10 @@
             <mat-icon>save</mat-icon>
           </button> </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          <p>
+            <a mat-button color="primary" class="w-100" *ngIf="!hasError">{{messages}}</a>
+            <a mat-button color="accent" class="w-100" *ngIf="hasError">{{messages}}</a>
+          </p>
         </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
           <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
@@ -259,7 +262,10 @@
             <mat-icon>save</mat-icon>
           </button> </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          <p>
+            <a mat-button color="primary" class="w-100" *ngIf="!hasError">{{messages}}</a>
+            <a mat-button color="accent" class="w-100" *ngIf="hasError">{{messages}}</a>
+          </p>
         </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
           <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
@@ -360,7 +366,10 @@
             <mat-icon>save</mat-icon>
           </button> </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          <p>
+            <a mat-button color="primary" class="w-100" *ngIf="!hasError">{{messages}}</a>
+            <a mat-button color="accent" class="w-100" *ngIf="hasError">{{messages}}</a>
+          </p>
         </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
           <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
@@ -531,7 +540,10 @@
             <mat-icon>save</mat-icon>
           </button> </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-          <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          <p>
+            <a mat-button color="primary" class="w-100" *ngIf="!hasError">{{messages}}</a>
+            <a mat-button color="accent" class="w-100" *ngIf="hasError">{{messages}}</a>
+          </p>
         </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
           <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>

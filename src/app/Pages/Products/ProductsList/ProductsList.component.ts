@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
-   ProductListVO, CartItem, Store, ProductSearchCriteria
+   ProductListVO, Store, ProductSearchCriteria
 } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductsListComponent implements OnInit {
 
-   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
 
@@ -45,7 +45,7 @@ export class ProductsListComponent implements OnInit {
 
    productList: ProductListVO = new ProductListVO();
    currentFilteredProductList: ProductListVO = new ProductListVO();
-   public searchCriteria: SearchCriteria = new SearchCriteria();
+   searchCriteria: SearchCriteria = new SearchCriteria();
 
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
@@ -239,7 +239,9 @@ export class ProductsListComponent implements OnInit {
    }
 
    public applyAllFilter() {
+      this.firstPagePagination();
       this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
+      this.resetPagination();
    }
 
 
@@ -293,12 +295,16 @@ export class ProductsListComponent implements OnInit {
 
    public resetPagination() {
       console.log('resetPagination called');
-      if (this.paginator) {
-         this.paginator.pageIndex = 0;
-      }
-
+      this.firstPagePagination();
       this.pagination.totalPages = Math.ceil(this.pagination.total / this.count);
       this.pagination = new Pagination(1, this.count, null, null, this.pagination.total, this.pagination.totalPages);
+   }
+
+   public firstPagePagination() {
+      if (this.paginator) {
+         this.paginator.pageIndex = 0;
+         this.paginator.firstPage();
+      }
    }
 
    public filterProducts() {
@@ -308,7 +314,9 @@ export class ProductsListComponent implements OnInit {
 
    public searchClicked(data: string) {
       this.searchCriteria.text = data.trim().toLowerCase();
+      this.firstPagePagination();
       this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
+      this.resetPagination();
 
    }
 
@@ -354,17 +362,17 @@ export class ProductsListComponent implements OnInit {
 
 
    createDatasource(listData) {
+      this.message = null;
       const result = this.filterData(listData);
       if (result.data.length === 0) {
-         // this.properties.length = 0;
          this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
          this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
             this.message = res['MESSAGE.NO_RESULT_FOUND'];
          });
       }
+
       this.dataSource = new MatTableDataSource(result.data);
       this.pagination = result.pagination;
-      this.message = null;
    }
 
    public filterData(data) {
