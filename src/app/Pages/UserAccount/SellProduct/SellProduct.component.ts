@@ -184,6 +184,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   }
 
   createDatasource(listData) {
+    this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
     this.message = null;
     const result = this.filterData(listData);
     if (result.data.length === 0) {
