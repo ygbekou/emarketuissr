@@ -32,22 +32,27 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   isAdmin = false;
 
   constructor(public appService: AppService,
-    public translate: TranslateService,
-    public router: Router,
-    private activatedRoute: ActivatedRoute) {
+      public translate: TranslateService,
+      public router: Router,
+      private activatedRoute: ActivatedRoute) {
     super(translate);
-    if (this.appService.tokenStorage.getUserId() === null) {
-      this.router.navigate(['/session/signin']);
-    }
   }
 
   ngOnInit() {
+
 
     this.activatedRoute.data.subscribe(value => {
       this.isAdmin = (value && value.expectedRole && value.expectedRole[0] === 'Administrator');
     });
 
     this.activatedRoute.params.subscribe(params => {
+
+      if (!this.appService.tokenStorage.getUserId()) {
+        console.log('navigating.. to signin');
+        this.router.navigate(['/session/signin'],
+          { queryParams: { fromPage: '/products/product/' + params.reviewTypeId + '/review/' + params.reviewId} });
+      }
+
 
       this.action = 'saving';
       this.messages = '';
@@ -150,8 +155,8 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
     if (this.review.rating === 0) {
       this.translate.get(['MESSAGE.INVALID_RATING']).subscribe(res => {
-        this.messages = res['MESSAGE.INVALID_RATING'];
-      });
+            this.messages = res['MESSAGE.INVALID_RATING'];
+          });
       return;
     }
 

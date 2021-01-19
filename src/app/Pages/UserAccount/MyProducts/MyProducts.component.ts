@@ -151,6 +151,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   createDatasource(listData) {
     this.message = null;
+    this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
     const result = this.filterData(listData);
     if (result.data.length === 0) {
         this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
