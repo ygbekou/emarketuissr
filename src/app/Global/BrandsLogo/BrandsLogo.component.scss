@@ -1,22 +1,24 @@
 img {
   //height: 50px;
   width: 100%;
-  display:unset;
+  display: unset;
 }
-.mat-card {
-    margin: 0.875rem;
-    height: 160px;
-    width: 300px;
-        padding: 0px;
 
-    vertical-align: bottom;
-    text-align: center;
+.mat-card {
+  margin: 0.875rem;
+  height: 160px;
+  width: 300px;
+  padding: 0px;
+
+  vertical-align: bottom;
+  text-align: center;
 }
+
 .slick-slide {
-      margin: 0.5rem 0.5rem;  
-    border-radius: 10px;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease-in-out;
+  margin: 0.5rem 0.5rem;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .myOverlay {

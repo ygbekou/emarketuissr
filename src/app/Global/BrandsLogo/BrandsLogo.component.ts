@@ -16,9 +16,81 @@ export class BrandslogoComponent implements OnInit, OnChanges {
 
    stores: Store[] = [];
    error: string;
-   slideConfig: any;
    appInfoStorage: any;
    storeCategories: StoreCategoryDesc[] = [];
+/*
+   slideConfig = {
+         infinite: true,
+         centerMode: true,
+         slidesToShow: 5,
+         slidesToScroll: 2,
+         autoplay: true,
+         autoplaySpeed: 2000,
+         rtl: this.isRTL,
+         responsive: [
+            {
+               breakpoint: 768,
+               settings: {
+                  centerMode: true,
+                  slidesToShow: 4,
+                  slidesToScroll: 2,
+                  autoplay: true,
+                  autoplaySpeed: 2000
+               }
+            },
+            {
+               breakpoint: 480,
+               settings: {
+                  centerMode: true,
+                  slidesToShow: 1,
+                  autoplay: true,
+                  autoplaySpeed: 2000
+               }
+            }
+         ]
+      }; */
+
+   slideConfig = {
+      'slidesToShow': 6,
+      'slidesToScroll': 1,
+      'arrows': true,
+      'swipeToSlide': true,
+      'infinite': true,
+      'autoplay': true,
+      'autoplaySpeed': 2000,
+      'responsive': [
+         {
+            breakpoint: 1200,
+            settings: {
+               slidesToShow: 5
+            }
+         },
+          {
+            breakpoint: 1024,
+            settings: {
+               slidesToShow: 4
+            }
+         },
+          {
+            breakpoint: 800,
+            settings: {
+               slidesToShow: 3
+            }
+         },
+         {
+            breakpoint: 600,
+            settings: {
+               slidesToShow: 2
+            }
+         },
+         {
+            breakpoint: 480,
+            settings: {
+               slidesToShow: 1
+            }
+         }
+      ]
+   };
 
    constructor(public appService: AppService, public translate: TranslateService) {
    }
@@ -96,36 +168,7 @@ export class BrandslogoComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges() {
-      this.slideConfig = {
-         infinite: true,
-         centerMode: true,
-         slidesToShow: 5,
-         slidesToScroll: 2,
-         autoplay: true,
-         autoplaySpeed: 2000,
-         rtl: this.isRTL,
-         responsive: [
-            {
-               breakpoint: 768,
-               settings: {
-                  centerMode: true,
-                  slidesToShow: 4,
-                  slidesToScroll: 2,
-                  autoplay: true,
-                  autoplaySpeed: 2000
-               }
-            },
-            {
-               breakpoint: 480,
-               settings: {
-                  centerMode: true,
-                  slidesToShow: 1,
-                  autoplay: true,
-                  autoplaySpeed: 2000
-               }
-            }
-         ]
-      };
+
    }
 
 

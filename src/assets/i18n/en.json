@@ -678,7 +678,7 @@
 		"REVIEW_SUBMITTED": "Your review is successfully submited. Thank You!",
 		"REVIEW_UNDER_PROCESS": "The review is under process and once it is completed a notification will be sent to you. Thank you for your patience.",
 		"REVIEW_APPROVED": "Review successfully approved. Thank You!",
-		"INVALID_RATING": "Rating must be greater than 0.",
+		"INVALID_RATING": "Give a rating please",
 		"EMAIL_VERIFICATION_CODE_SENT": "A verification code is sent to your email address. Enter it below to proceed.",
 		"INVALID_VERIFICATION_CODE": "Invalid verification code",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Order Not Eligible for Cancellation",

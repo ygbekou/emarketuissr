@@ -3,7 +3,7 @@ import { Review, ProductDescription, Store, ProductDescVO, ProductSearchCriteria
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-review',
@@ -32,9 +32,13 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   isAdmin = false;
 
   constructor(public appService: AppService,
-      public translate: TranslateService,
-      private activatedRoute: ActivatedRoute) {
+    public translate: TranslateService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute) {
     super(translate);
+    if (this.appService.tokenStorage.getUserId() === null) {
+      this.router.navigate(['/session/signin']);
+    }
   }
 
   ngOnInit() {
@@ -146,8 +150,8 @@ export class ReviewComponent extends BaseComponent implements OnInit {
 
     if (this.review.rating === 0) {
       this.translate.get(['MESSAGE.INVALID_RATING']).subscribe(res => {
-            this.messages = res['MESSAGE.INVALID_RATING'];
-          });
+        this.messages = res['MESSAGE.INVALID_RATING'];
+      });
       return;
     }
 
@@ -158,7 +162,9 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       }
       this.setToggleValues();
       this.review.user.id = +this.appService.tokenStorage.getUserId();
-      this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName;
+      // this.review.author = this.appService.tokenStorage.getUser().lastName + ' ' + this.appService.tokenStorage.getUser().firstName;
+      this.review.author =   this.appService.tokenStorage.getUser().firstName;
+
       this.appService.saveWithFileUsingUrl('/service/catalog/submit' + this.reviewClass + '/', this.review, this.formData)
         .subscribe(result => {
           this.processResult(result, this.review, null);
