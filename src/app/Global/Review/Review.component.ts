@@ -36,9 +36,6 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       public router: Router,
       private activatedRoute: ActivatedRoute) {
     super(translate);
-    if (this.appService.tokenStorage.getUserId() === null) {
-      this.router.navigate(['/session/signin']);
-  }
   }
 
   ngOnInit() {
@@ -51,8 +48,8 @@ export class ReviewComponent extends BaseComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
 
       if (!this.appService.tokenStorage.getUserId()) {
-      console.log('navigating.. to signin');
-      this.router.navigate(['/session/signin'],
+        console.log('navigating.. to signin');
+        this.router.navigate(['/session/signin'],
           { queryParams: { fromPage: '/products/product/' + params.reviewTypeId + '/review/' + params.reviewId} });
       }
 
