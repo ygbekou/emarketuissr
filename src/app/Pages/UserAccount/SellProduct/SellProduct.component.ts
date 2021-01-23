@@ -188,10 +188,10 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.message = null;
     const result = this.filterData(listData);
     if (result.data.length === 0) {
-        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-        this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-          this.message = res['MESSAGE.NO_RESULT_FOUND'];
-        });
+      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+        this.message = res['MESSAGE.NO_RESULT_FOUND'];
+      });
     }
 
     this.dataSource = new MatTableDataSource(result.data);
@@ -200,14 +200,14 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   filterProductDataBySearchCriteria(searchCriteria) {
     const filteredData = this.products.filter(function (data) {
-        let found = true;
-        if (searchCriteria.text) {
-          if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
-              found = false;
-          }
+      let found = true;
+      if (searchCriteria.text) {
+        if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+          found = false;
         }
-        console.log('Filter Predicate called.');
-        return found;
+      }
+      console.log('Filter Predicate called.');
+      return found;
     });
 
     this.currentFilteredProducts = filteredData;
@@ -285,8 +285,8 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
   public firstPagePagination() {
     if (this.paginator) {
-        this.paginator.pageIndex = 0;
-        this.paginator.firstPage();
+      this.paginator.pageIndex = 0;
+      this.paginator.firstPage();
     }
   }
 
@@ -315,9 +315,13 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.dateAvailable = new Date();
     this.productStore.minimum = 0;
     this.productStore.quantity = 0;
+    this.productStore.maxQty = 0;
     this.productStore.sortOrder = 0;
-    this.productStore.price = this.productDesc.product.price;
-    this.productStore.points = Number(this.productDesc.product.price.toFixed(0));
+    this.productStore.price = this.productDesc.product.price ?
+      this.productDesc.product.price : 0;
+    this.productStore.points = Number(
+      this.productDesc.product.price ?
+        this.productDesc.product.price.toFixed(0) : 0);
     this.productStore.status = 1;
     this.stepper.selectedIndex = 3;
   }
@@ -329,10 +333,14 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore = new ProductToStore();
     this.productStore.dateAvailable = new Date();
     this.productStore.minimum = 0;
+    this.productStore.maxQty = 0;
     this.productStore.quantity = 0;
     this.productStore.sortOrder = 0;
-    this.productStore.price = this.productDesc.product.price;
-    this.productStore.points = Number(this.productDesc.product.price.toFixed(0));
+    this.productStore.price = this.productDesc.product.price ?
+      this.productDesc.product.price : 0;
+    this.productStore.points = Number(
+      this.productDesc.product.price ?
+        this.productDesc.product.price.toFixed(0) : 0);
     this.productStore.status = 1;
     // this.stepper.selectedIndex = 3;
     this.productStore.product = this.productDesc.product;
