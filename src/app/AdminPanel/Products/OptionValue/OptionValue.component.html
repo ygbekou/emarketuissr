@@ -21,9 +21,10 @@
    </div>
    <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="75" fxFlex.xl="50" class="p-9">
-         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.IMAGE' | translate}}</span><span
+         <p class="mb-0"><span class="uppercase fw-500">Image</span><span
                class="text-muted mx-3">(max: 1 image)</span></p>
-         <input-file [(ngModel)]="optionValue.imageFiles" name="image" #image="ngModel" fileLimit="1" fileAccept="image/*"
+         <input-file [(ngModel)]="optionValue.imageFiles" name="image"
+          #image="ngModel" fileLimit="1" fileAccept="image/*"
             [linkEnabled]="false" multiple>
          </input-file>
       </div> 
@@ -31,7 +32,8 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
          <mat-form-field appearance="outline" class="w-30">
             <mat-label> {{'COMMON.SORT_ORDER' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="optionValue.sortOrder" name="sortOrder" #sortOrder="ngModel">
+            <input matInput type="text" class="form-control" id="sortOrder"
+             [(ngModel)]="optionValue.sortOrder" name="sortOrder" #sortOrder="ngModel"  required>
          </mat-form-field>
       </div>
    </div>
@@ -40,7 +42,7 @@
          <mat-form-field appearance="outline" class="w-100" >
             <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
             <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="optionValue.optionValueDescriptions[i].name" 
-               name="name{{i}}">
+               name="name{{i}}" required>
          </mat-form-field>
          <div fxFlex="5"></div>
       </div>

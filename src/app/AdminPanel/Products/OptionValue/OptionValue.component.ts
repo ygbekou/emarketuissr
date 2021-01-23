@@ -91,13 +91,15 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
 
 
   cleanOptionValueDescriptions(optionValue: OptionValue) {
-    optionValue.optionValueDescriptions.forEach(element => {
-       element.option = undefined;
-       const language = element.language;
-       element.language = new Language();
-       element.language.id = language.id;
-       element.option = new Options();
-       element.option.id = this.optionId;
+    optionValue.optionValueDescriptions.forEach((ovd) => {
+       ovd.option = null;
+       const language = ovd.language;
+       ovd.language = new Language();
+       ovd.language.id = language.id;
+       ovd.option = new Options();
+       ovd.option.id = this.optionId;
+       ovd.optionValue = new OptionValue();
+       ovd.optionValue.id = this.optionValue.id;
     });
   }
 
@@ -126,6 +128,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
           this.optionValue.id = result.id;
           this.processResult(result, this.optionValue, null);
           this.optionValueSaveEvent.emit(this.optionValue);
+          this.clear();
         }
       });
     } else {
@@ -135,6 +138,7 @@ export class OptionValueComponent extends BaseComponent implements OnInit {
               this.optionValue.id = result.id;
               this.processResult(result, this.optionValue, null);
               this.optionValueSaveEvent.emit(this.optionValue);
+              this.clear();
             }
           });
     }
