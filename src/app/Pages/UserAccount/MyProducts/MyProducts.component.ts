@@ -10,6 +10,7 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { ProductStoreOptionsComponent } from 'src/app/AdminPanel/Products/ProductStoreOptions/ProductStoreOptions.component';
 
 @Component({
   selector: 'app-my-products',
@@ -27,6 +28,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   productDiscountDatasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
+
+  @ViewChild(ProductStoreOptionsComponent, { static: false }) prdStoreOptView: ProductStoreOptionsComponent;
 
   categories: CategoryDescription[][] = [];
   categoryId = 0;
@@ -263,6 +266,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
       .subscribe((data: ProductToStore) => {
         if (data !== null && data.id > 0) {
           this.productStore = data;
+          this.prdStoreOptView.getProductToStoreSelectedOptions(data.id);
+          this.prdStoreOptView.getProductToStoreUnselectedOptions(data.id);
         } else {
           this.productStore = new ProductToStore();
           this.productStore.availableOnline = this.selectedStore.onlineStore;
@@ -407,4 +412,10 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   isBlank(value) {
     return value === undefined || value === null || value.toString() === ''
   }
+
+  changeTab($event) {
+    console.log('Tab changed');
+    this.messages = '';
+  }
+
 }

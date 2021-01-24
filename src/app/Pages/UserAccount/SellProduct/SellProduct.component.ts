@@ -348,7 +348,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
     console.log(this.productStore);
     // const index: number = this.products.indexOf(this.productDesc);
-    this.appService.save(this.productStore, 'ProductStore')
+    this.appService.saveWithUrl('/service/catalog/quickSellProduct', this.productStore)
       .subscribe(result => {
         if (result.id > 0) {
           if (result.id > 0) {

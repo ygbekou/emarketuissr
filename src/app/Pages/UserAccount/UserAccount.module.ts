@@ -60,6 +60,7 @@ import { OrderDetailComponent } from './Order-detail/Order-detail.component';
 import { ClientDashboardComponent } from './Client-dashboard/Client-dashboard.component';
 import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
 import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
+import { ProductsModule } from 'src/app/AdminPanel/Products/Products.module';
 
 @NgModule({
   imports: [
@@ -104,6 +105,7 @@ import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
     ReportsModule,
     SalesModule,
     MatPaginatorModule,
+    ProductsModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
