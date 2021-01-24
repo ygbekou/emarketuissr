@@ -13,7 +13,7 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Options.component.scss']
 })
 export class OptionsComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'type', 'sortOrder', 'actions'];
+  displayedColumns: string[] = ['name', 'type', 'sortOrder'];
   dataSource: MatTableDataSource<OptionDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

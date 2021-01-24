@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
 import { MatTableDataSource } from '@angular/material';
-import { Pagination, ProductListVO } from '../app.models';
 @Component({
 	template: ``,
   providers: []
