@@ -992,6 +992,56 @@ export class ProductOptionValue {
   }
 }
 
+
+export class ProductStoreOption {
+  id: number;
+  productToStore: ProductToStore;
+  option: Options;
+  required: number;
+  value: string;
+  optionName: string;
+
+  valueDate: Date;
+  timeMinute: number;
+  timeHour: number;
+
+  productStoreOptionValues: ProductStoreOptionValue[];
+
+  type = 'ProductStoreOption';
+
+  constructor() {
+    this.productToStore = new ProductToStore();
+    this.option = new Options();
+    this.required = 0;
+  }
+}
+
+export class ProductStoreOptionValue {
+  id: number;
+  productToStore: ProductToStore;
+  option: Options;
+  productStoreOption: ProductStoreOption;
+  optionValue: OptionValue;
+  points: number;
+  pointsPrefix: string;
+  price: number;
+  pricePrefix: string;
+  weight: number;
+  weightPrefix: string;
+  quantity: number;
+  subtract: number;
+
+  type = 'ProductStoreOptionValue';
+
+  constructor() {
+    this.productToStore = new ProductToStore();
+    this.option = new Options();
+    this.optionValue = new OptionValue();
+    this.productStoreOption = new ProductStoreOption();
+  }
+}
+
+
 export class ProductDescVO {
   id: number;
   product: ProductVO;

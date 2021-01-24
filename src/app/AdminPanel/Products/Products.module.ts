@@ -66,6 +66,7 @@ import { ProductOptionsComponent } from './ProductOptions/ProductOptions.compone
 import { MarketingProductComponent } from './MarketingProduct/MarketingProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { ProductToProductComponent } from './ProductLink/ProductToProduct.component';
+import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStoreOptions.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
@@ -73,7 +74,7 @@ import { ProductToProductComponent } from './ProductLink/ProductToProduct.compon
     MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
     AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
     OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent,
-    OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,
+    OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,  ProductStoreOptionsComponent, 
     MarketingProductComponent],
   imports: [
     CommonModule,
@@ -137,6 +138,9 @@ import { ProductToProductComponent } from './ProductLink/ProductToProduct.compon
       }
     })
 
-  ]
+  ],
+   exports: [
+     ProductStoreOptionsComponent
+   ]
 })
 export class ProductsModule { }
