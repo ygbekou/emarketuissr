@@ -46,7 +46,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { environment } from '../environments/environment';
 
-import { AppRoutes } from './app-routing';
+import { AppRoutes, AppRoutingModule } from './app-routing';
 import { GlobalModule } from './Global/Global.module';
 import { TemplatesModule } from './Templates/Templates.module';
 import { MenuItems } from './Core/menu/menu-items/menu-items';
@@ -98,7 +98,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 export function tokenGetter() {
-  return localStorage.getItem("access_token");
+  return localStorage.getItem('access_token');
 }
 
 @NgModule({
@@ -157,6 +157,7 @@ export function tokenGetter() {
       ReactiveFormsModule,
       LoadingBarRouterModule,
       LoadingBarModule,
+      AppRoutingModule,
       AngularFireModule.initializeApp(environment.firebase, 'embryo'),
       AngularFirestoreModule,
       AngularFireDatabaseModule,

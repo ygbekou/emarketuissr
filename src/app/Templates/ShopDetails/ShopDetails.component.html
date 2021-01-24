@@ -136,8 +136,8 @@
             <button mat-raised-button color="accent" class="button-lg mr-3"
               (click)="submitProductForSale(detailData)">{{'COMMON.SELL_PRODUCT'|translate}}</button>
           </div>
-          <div fxLayoutAlign="start center" *ngIf="fromPage==='buy'">
-            <div class="mr-3"> <span>Share Now</span></div>
+          <div fxLayoutAlign="start center">
+            <div class="mr-3"> <span>{{'COMMON.SHARE_NOW'|translate}}</span></div>
             <div class="detail-product-share">
               <embryo-SocialShare></embryo-SocialShare>
             </div>

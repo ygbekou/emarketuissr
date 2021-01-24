@@ -35,7 +35,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    ngOnInit() {
-      console.log('ngOnInit called');
+      console.log('ngOnInit called - from page = ' + this.fromPage);
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
       this.queryParams = {
