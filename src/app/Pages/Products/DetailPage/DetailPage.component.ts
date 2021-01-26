@@ -48,6 +48,7 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
       this.appService.getObject('/service/catalog/getProductOnSale/' +
          langId + '/' + this.ptsId)
          .subscribe((data: ProductDescVO) => {
+            console.log(data)
             this.product = data;
             this.getRelatedProducts(langId);
          },
