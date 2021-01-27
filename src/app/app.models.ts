@@ -1167,7 +1167,7 @@ export class ProductVO {
   fileNames: string[];
   reviews: Review[];
   ratingCountMaps: Map<number, number>;
-  optionValueDescriptionMaps: Map<string, OptionValueDescription[]>;
+  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
   productDimensions: string;
   taxRules: TaxRule[];
   tax: number;
@@ -1178,6 +1178,16 @@ export class ProductVO {
   currencyDecimalPlace: number;
   percentagePrice: number;
   productDiscountId: number;
+}
+
+export class ProductStoreOptionValueVO {
+  id: number;
+	languageId: number;
+	optionId: number;
+	optionType: string;
+	optionDescriptionName: string;
+	optionValueId: number;
+  optionValueDescriptionName: string;
 }
 
 export class Review {

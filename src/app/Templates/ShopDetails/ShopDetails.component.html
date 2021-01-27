@@ -107,17 +107,93 @@
           </ul>
           <div class="short-des" [innerHTML]="detailData?.description | safehtml"></div>
           <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue">
-            <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-            <div fxLayout="row wrap">
-              <div *ngFor="let optionValueDescription of mapEntry.value">
-                <div fxLayout="row wrap">
-                  <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
-                    {{optionValueDescription.name}}
+
+            <!-- <div *ngIf="mapEntry.value[0].optionType == 'Radio'">
+              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+              <div fxLayout="row wrap">
+                <div *ngFor="let prdStoreOptionValue of mapEntry.value">
+                  <div fxLayout="row wrap">
+                    <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
+                      {{prdStoreOptionValue.optionValueDescriptionName}}
+                    </div>
+                    <span style="width:10px;"></span>
                   </div>
-                  <span style="width:10px;"></span>
+                </div>
+              </div>
+            </div> -->
+
+            <div *ngIf="mapEntry.value[0].optionType == 'Radio'">
+              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+              <div fxLayout="row wrap">
+                <mat-radio-group>
+                  <mat-radio-button class="mb-2" *ngFor="let prdStoreOptionValue of mapEntry.value" [value]="prdStoreOptionValue">
+                      {{prdStoreOptionValue.optionValueDescriptionName}} &nbsp;&nbsp;&nbsp;&nbsp;
+                      
+                  </mat-radio-button>
+                 
+                </mat-radio-group>
+                
+              </div>
+            </div>
+
+            <div *ngIf="mapEntry.value[0].optionType == 'Text'">
+              <div fxLayout="row wrap">
+                <div *ngFor="let prdStoreOptionValue of mapEntry.value">
+                  <div fxLayout="row wrap">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{mapEntry.key}}</mat-label>
+                      <input matInput type="text" class="form-control" id="model" name="model">
+                    </mat-form-field>
+                    <span style="width:10px;"></span>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div *ngIf="mapEntry.value[0].optionType == 'Checkbox'">
+              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+              <div fxLayout="row wrap">
+                <div *ngFor="let prdStoreOptionValue of mapEntry.value">
+                  <div fxLayout="row wrap">
+                    <mat-checkbox class="mb-2 d-block">{{prdStoreOptionValue.optionValueDescriptionName}}</mat-checkbox>
+                    <span style="width:10px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mapEntry.value[0].optionType == 'Date'">
+              <div fxLayout="row wrap">
+                <div *ngFor="let prdStoreOptionValue of mapEntry.value">
+                  <div fxLayout="row wrap">
+                    <mat-form-field class="w-100">
+                      <mat-label> {{prdStoreOptionValue.optionDescriptionName}}</mat-label>
+                      <input matInput [matDatepicker]="picker" class="form-control" id="value" name="value">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <span style="width:10px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="mapEntry.value[0].optionType == 'Select'">
+              <div fxLayout="row wrap">
+                
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label>{{mapEntry.key}}</mat-label>
+                  <mat-select placeholder="prdStoreOptionValue.optionValueDescriptionName" id="currency" name="currency">
+                    <mat-option *ngFor="let prdStoreOptionValue of mapEntry.value" [value]="prdStoreOptionValue">
+                      {{prdStoreOptionValue.optionValueDescriptionName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <span style="width:10px;"></span>
+              </div>
+            </div>
+
+
           </div>
           <div class="mb-4" *ngIf="fromPage==='buy'">
             <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
