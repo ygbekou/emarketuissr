@@ -46,7 +46,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { environment } from '../environments/environment';
 
-import { AppRoutes, AppRoutingModule } from './app-routing';
+import { AppRoutes } from './app-routing';
 import { GlobalModule } from './Global/Global.module';
 import { TemplatesModule } from './Templates/Templates.module';
 import { MenuItems } from './Core/menu/menu-items/menu-items';
@@ -64,7 +64,6 @@ import { MenuComponent } from './Layouts/Menu/Menu/Menu.component';
 import { HomeoneComponent } from './Pages/Home/HomeOne/HomeOne.component';
 import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
 import { HomeThreeComponent } from './Pages/Home/HomeThree/HomeThree.component';
-import { CartComponent } from './Pages/Cart/Cart.component';
 import { NotFoundComponent } from './Pages/NotFound/NotFound.component';
 import { SideBarMenuComponent } from './Layouts/Menu/SidebarMenu/SidebarMenu.component';
 import { PaymentDetailSideBarComponent } from './Layouts/PaymentDetailSideBar/PaymentDetailSideBar.component';
@@ -157,7 +156,6 @@ export function tokenGetter() {
       ReactiveFormsModule,
       LoadingBarRouterModule,
       LoadingBarModule,
-      AppRoutingModule,
       AngularFireModule.initializeApp(environment.firebase, 'embryo'),
       AngularFirestoreModule,
       AngularFireDatabaseModule,

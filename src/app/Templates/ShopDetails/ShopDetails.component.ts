@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AppService } from '../../Services/app.service';
 import { ProductDescription, ProductDescVO, CartItem } from 'src/app/app.models';
+import { Constants } from 'src/app/app.constants';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -20,6 +22,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    totalPrice: any;
    type: any;
    qty = 1;
+   url = '';
    colorsArray: string[] = ['Red', 'Blue', 'Yellow', 'Green'];
    sizeArray: number[] = [36, 38, 40, 42, 44, 46, 48];
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -29,13 +32,16 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
    constructor(private route: ActivatedRoute,
       private router: Router,
+
+      private titleService: Title,
+      private metaService: Meta,
       public appService: AppService
    ) {
-      console.log('constructor called');
+      console.log(' ShopDetailsComponent - constructor called');
    }
 
    ngOnInit() {
-      console.log('ngOnInit called - from page = ' + this.fromPage);
+      console.log(' ShopDetailsComponent- ngOnInit called - from page = ' + this.fromPage);
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
       this.totalPrice = this.detailData.product.price;
       this.queryParams = {
@@ -53,6 +59,38 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       } else {
          console.log(this.detailData);
       }
+
+      this.titleService.setTitle(this.detailData.name);
+
+      this.url = Constants.webServer + '/#/products/dtl/'
+         + this.detailData.product.id + '/' + this.detailData.product.ptsId;
+      const descTag = { property: 'og:description', content: this.detailData.description };
+      const descSel = 'property="og:description"';
+      this.metaService.removeTag(descSel);
+      this.metaService.addTag(descTag, false);
+
+      const imgTag = {
+         property: 'og:image', content: Constants.webServer
+            + '/assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image
+      };
+      const imgSel = 'property="og:image"';
+      this.metaService.removeTag(imgSel);
+      this.metaService.addTag(imgTag, false);
+
+      const urlTag = { property: 'og:url', content: this.url };
+      const urlSel = 'property="og:url"';
+      this.metaService.removeTag(urlSel);
+      this.metaService.addTag(urlTag, false);
+
+      const titleTag = { property: 'og:title', content: this.detailData.name };
+      const titleSel = 'property="og:title"';
+      this.metaService.removeTag(titleSel);
+      this.metaService.addTag(titleTag, false);
+
+      const typeTag = { property: 'og:type', content: 'Article' };
+      const typeSel = 'property="og:type"';
+      this.metaService.removeTag(typeSel);
+      this.metaService.addTag(typeTag, false);
    }
 
    ngOnChanges() {

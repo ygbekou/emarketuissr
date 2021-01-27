@@ -43,20 +43,20 @@
                 <mat-card style="width: 500px">
                   <mat-card-content>
                     <h3>{{detailData.product.rating}} {{'COMMON.OUT_OF'|translate}} 5</h3>
-                    <div fxLayout="row wrap">5 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
-                        [value]="detailData.product.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
+                    <div fxLayout="row wrap">5 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%"
+                        mode="determinate" [value]="detailData.product.ratingCountMaps[5]"></mat-progress-bar>&nbsp;
                       {{detailData.product.ratingCountMaps[5]}}%</div><br />
-                    <div fxLayout="row wrap">4 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
-                        [value]="detailData.product.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
+                    <div fxLayout="row wrap">4 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%"
+                        mode="determinate" [value]="detailData.product.ratingCountMaps[4]"></mat-progress-bar>&nbsp;
                       {{detailData.product.ratingCountMaps[4]}}%</div><br />
-                    <div fxLayout="row wrap">3 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
-                        [value]="detailData.product.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
+                    <div fxLayout="row wrap">3 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%"
+                        mode="determinate" [value]="detailData.product.ratingCountMaps[3]"></mat-progress-bar>&nbsp;
                       {{detailData.product.ratingCountMaps[3]}}%</div><br />
-                    <div fxLayout="row wrap">2 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
-                        [value]="detailData.product.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
+                    <div fxLayout="row wrap">2 {{'COMMON.STAR'|translate}}s &nbsp; <mat-progress-bar style="width: 80%"
+                        mode="determinate" [value]="detailData.product.ratingCountMaps[2]"></mat-progress-bar>&nbsp;
                       {{detailData.product.ratingCountMaps[2]}}%</div><br />
-                    <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 80%" mode="determinate"
-                        [value]="detailData.product.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
+                    <div fxLayout="row wrap">1 {{'COMMON.STAR'|translate}} &nbsp; <mat-progress-bar style="width: 80%"
+                        mode="determinate" [value]="detailData.product.ratingCountMaps[1]"></mat-progress-bar>&nbsp;
                       {{detailData.product.ratingCountMaps[1]}}%</div><br />
                   </mat-card-content>
                 </mat-card>
@@ -65,34 +65,36 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div>
               <a [routerLink]="['/products/dtl/'+detailData.product?.id+(detailData.product?.ptsId?'/'+detailData.product?.ptsId:'')]"
-               fragment="reviews" class="a-link-normal">
-                {{detailData.product.reviews.length}} {{'COMMON.REVIEW'|translate}}{{detailData.product.reviews.length > 1 ? 's' : ''}}
+                fragment="reviews" class="a-link-normal">
+                {{detailData.product.reviews.length}}
+                {{'COMMON.REVIEW'|translate}}{{detailData.product.reviews.length > 1 ? 's' : ''}}
               </a>
             </div>
           </div>
-          <div class="product-detail-price"> 
-               <div fxFlex>
-                  <span class="secondary-color" style="text-decoration: line-through;"
-                     *ngIf="detailData.product.productDiscountPercentage > 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
-                  </span>
-                  <span class="accent-color"
-                     *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
+          <div class="product-detail-price">
+            <div fxFlex>
+              <span class="secondary-color" style="text-decoration: line-through;"
+                *ngIf="detailData.product.productDiscountPercentage > 0">
+                {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}}
+                {{detailData.product.symbolRight}}
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
+              </span>
+              <span class="accent-color"
+                *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
+                {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
-                    &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
-                     {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} {{detailData.product.productDiscountPrice}}
-                     {{detailData.product.symbolRight}}
-                  </span> 
-               </div>  
+                &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
+                {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} {{detailData.product.productDiscountPrice}}
+                {{detailData.product.symbolRight}}
+              </span>
+            </div>
           </div>
           <ul class="no-style mb-4">
             <li>
@@ -139,37 +141,39 @@
           <div fxLayoutAlign="start center">
             <div class="mr-3"> <span>{{'COMMON.SHARE_NOW'|translate}}</span></div>
             <div class="detail-product-share">
-              <embryo-SocialShare></embryo-SocialShare>
+              <embryo-SocialShare [url]="url"></embryo-SocialShare>
             </div>
           </div>
         </div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" style="font-size:12px;">
         <mat-card>
-          <div   class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
+          <div class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                   <div fxFlex>
-                  <span class="secondary-color" style="text-decoration: line-through;"
-                     *ngIf="detailData.product.productDiscountPercentage > 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
-                  </span>
-                  <span class="accent-color"
-                     *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
+              <div fxFlex>
+                <span class="secondary-color" style="text-decoration: line-through;"
+                  *ngIf="detailData.product.productDiscountPercentage > 0">
+                  {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                  &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}}
+                  {{detailData.product.symbolRight}}
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                  &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
+                </span>
+                <span class="accent-color"
+                  *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
+                  {{detailData.product.symbolLeft}} {{detailData.product?.price}} {{detailData.product.symbolRight}}
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
-                    &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
-                     {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} {{detailData.product.productDiscountPrice}}
-                     {{detailData.product.symbolRight}}
-                  </span> 
-               </div>  
+                  &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
+                  {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}}
+                  {{detailData.product.productDiscountPrice}}
+                  {{detailData.product.symbolRight}}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -213,7 +217,7 @@
             </div>
           </div>
 
-          <div  class="col-gap">
+          <div class="col-gap">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <button mat-raised-button color="secondary" class="w-100" (click)="addToWishlist(detailData)">
                 <mat-icon>favorite</mat-icon>

@@ -1,4 +1,4 @@
-import { Routes, Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { MainComponent } from './Main/Main.component';
 import { HomeoneComponent } from './Pages/Home/HomeOne/HomeOne.component';
@@ -6,10 +6,6 @@ import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
 import { HomeThreeComponent } from './Pages/Home/HomeThree/HomeThree.component';
 import { CartComponent } from './Pages/Cart/Cart.component';
 import { NotFoundComponent } from './Pages/NotFound/NotFound.component';
-import { TranslateService } from '@ngx-translate/core';
-import { Title, Meta } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { routes } from './pages/terms-conditions/terms-conditions.module';
 
 export const AppRoutes: Routes = [
    {
@@ -77,15 +73,16 @@ export const AppRoutes: Routes = [
    }
 ];
 
+/*
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+   imports: [RouterModule.forRoot(AppRoutes)],
+   exports: [RouterModule]
 })
 export class AppRoutingModule {
    constructor(
       private router: Router,
       private activatedRoute: ActivatedRoute,
-      private translateService: TranslateService,
+      private appService: AppService,
       private titleService: Title,
       private metaService: Meta
    ) {
@@ -100,18 +97,36 @@ export class AppRoutingModule {
          .mergeMap(route => route.data)
          .subscribe((event) => {
             console.log('What is happening *****************');
-            translateService.get(event['titleTranslationPath'])
-               .subscribe((res: string) => {
-                  this.titleService.setTitle(res);
-               });
-            translateService.get(event['metaDescriptionTranslationPath'])
-               .subscribe((res: string) => {
-                  const tag = { name: 'description', content: res };
-                  const attributeSelector = 'name="description"';
-                  this.metaService.removeTag(attributeSelector);
-                  this.metaService.addTag(tag, false);
-               });
+            console.log(appService.ssImage);
+            console.log(appService.ssTitle);
+            console.log(appService.ssUrl);
+            this.titleService.setTitle(appService.ssTitle);
+            const tag = { name: 'description', content: appService.ssTitle };
+            const attributeSelector = 'name="description"';
+            this.metaService.removeTag(attributeSelector);
+            this.metaService.addTag(tag, false);
+
+const descTag = { property: 'og:description', content: 'Voici une description' };
+      const descSel = 'property="og:description"';
+      this.metaService.removeTag(descSel);
+      this.metaService.addTag(descTag, false);
+
+      const imgTag = {
+         property: 'og:image', content: 'https://www.kekouda.com/assets/images/products/219/product_219_0.jpg'
+      };
+      const imgSel = 'property="og:image"';
+      this.metaService.removeTag(imgSel);
+      this.metaService.addTag(imgTag, false);
+
+      const urlTag = { property: 'og:url', content: 'https://www.kekouda.com/#/products/dtl/219/321' };
+      const urlSel = 'property="og:url"';
+      this.metaService.removeTag(urlSel);
+      this.metaService.addTag(urlTag, false);
+
+
+
          });
    }
 
 }
+ */

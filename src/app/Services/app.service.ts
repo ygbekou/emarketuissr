@@ -74,6 +74,12 @@ export class AppService {
    private headers: HttpHeaders;
    appInfoStorage: AppInfoStorage;
 
+   // Social Share
+   ssTitle = 'Kekouda';
+   ssImage = 'https://www.kekouda.com/assets/images/company/logo.png';
+   ssUrl = 'https://www.kekouda.com';
+   ssDescription ='Kekouda';
+
    constructor(private http: HttpClient,
       private dialog: MatDialog,
       private db: AngularFireDatabase,
