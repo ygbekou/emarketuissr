@@ -14,7 +14,7 @@ import { ProductDescription } from 'src/app/app.models';
 export class ProductsToolbarComponent implements OnInit {
   @Input() isHomePage: boolean = false;
   @Input() showSidenavToggle: boolean = false;
-  @Input() color: string ;
+  @Input() color: string;
   @Input() dataSource: MatTableDataSource<ProductDescription>;
   @Output() onSidenavToggle: EventEmitter<any> = new EventEmitter<any>();
   @Output() onChangeCount: EventEmitter<any> = new EventEmitter<any>();
@@ -27,6 +27,8 @@ export class ProductsToolbarComponent implements OnInit {
   public counts = [1, 6, 12, 18, 24, 36];
   public count: any;
   public sortings = [
+    { code: 'nameasc', name: 'Nom ascendant' },
+    { code: 'namedesc', name: 'Nom descendant' },
     { code: 'priceasc', name: 'Prix ascendant' },
     { code: 'pricedesc', name: 'Prix descendant' },
     { code: 'rating', name: 'Rating' }];
@@ -41,6 +43,8 @@ export class ProductsToolbarComponent implements OnInit {
     this.sort = this.sortings[0];
     if (this.appService.appInfoStorage.language.code === 'en') {
       this.sortings = [
+        { code: 'nameasc', name: 'Name ascending' },
+        { code: 'namedesc', name: 'Name descending' },
         { code: 'priceasc', name: 'Price ascending' },
         { code: 'pricedesc', name: 'Price descending' },
         { code: 'rating', name: 'Rating' }];

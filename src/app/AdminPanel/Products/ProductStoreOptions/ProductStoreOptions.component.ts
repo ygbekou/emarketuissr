@@ -33,8 +33,8 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
 
    ngOnInit() {
       this.productStoreOption = new ProductStoreOption();
-      //this.getProductToStoreSelectedOptions(this.pro);
-      //this.getProductToStoreUnselectedOptions();
+      // this.getProductToStoreSelectedOptions(this.pro);
+      // this.getProductToStoreUnselectedOptions();
    }
 
    getProductToStoreUnselectedOptions(productToStoreId: number) {
@@ -42,6 +42,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
          + '/' + productToStoreId)
          .subscribe((data: OptionDescription[]) => {
             this.optionOptions = data;
+            this.filteredOptionOptions = data;
             this.optionOptions.forEach(element => {
                element.id = element.option.id;
             });
@@ -74,8 +75,10 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
       if (val) {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredOptionOptions = this.optionOptions.filter(attrDesc => attrDesc.name.toLowerCase().startsWith(filterValue));
+      } else {
+         this.filteredOptionOptions = this.optionOptions;
       }
-     return this.optionOptions;
+     // return this.optionOptions;
    }
 
 
@@ -163,7 +166,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
          .subscribe(data => {
             this.removeItem(this.productStoreOptions, productStoreOption.id);
             this.processDeleteResult(data, this.messages);
-      });
+         });
    }
 
    getProductStoreOption(productStoreOptionId: number) {
@@ -225,9 +228,9 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
 
       this.appService.delete(productStoreOptionValue.id, 'ProductStoreOptionValue')
          .subscribe(data => {
-         this.removeItem(this.productStoreOptionValues, productStoreOptionValue.id);
-         this.processDeleteResult(data, this.messages);
-      });
+            this.removeItem(this.productStoreOptionValues, productStoreOptionValue.id);
+            this.processDeleteResult(data, this.messages);
+         });
    }
 
    public addProductStoreOptionValue(productStoreOptionValue: ProductStoreOptionValue): void {

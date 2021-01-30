@@ -1725,3 +1725,20 @@ export class EmailVerification {
   lang = 'fr';
   type = 'EmailVerification';
 }
+
+export class ProductOptionVO {
+  id: number;
+  ptsId: number;
+  ptsoId: number;
+  option: Options;
+  productStoreOption: ProductStoreOption;
+  optionValue: OptionValue;
+  points: number;
+  pointsPrefix: string;
+  price: number;
+  pricePrefix: string;
+  weight: number;
+  weightPrefix: string;
+  quantity: number;
+  subtract: number;
+}
