@@ -1,30 +1,33 @@
 <div fxLayout="row">
    <div fxFlex="20">
       <div *ngFor="let productOption of productOptions; let i = index;" class="step-section">
-         <div [ngStyle]="getStyle(productOption)">
-            <button mat-icon-button color="warn" (click)="deleteProductOption(productOption, i)"
-               matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
-               <mat-icon>delete</mat-icon>
-            </button>
-            <a (click)="getProductOption(productOption.id)" mat-icon-button color="primary" matTooltip="{{productOption.optionName}}">
-               {{productOption.optionName}}
-            </a>
+          <div [ngStyle]="getStyle(productOption)" fxLayout="row">
+            <div fxFlex="30">
+               <button mat-icon-button color="warn" (click)="deleteProductOption(productOption, i)"
+                  matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+                  <mat-icon>delete</mat-icon>
+               </button>
+            </div>
+            <div fxFlex="70">
+               <a (click)="getProductOption(productOption.id)" mat-icon-button color="primary"
+                  matTooltip="{{productOption.optionName}}">
+                  {{productOption.optionName}}
+               </a>
+            </div>
          </div>
       </div>
 
-      
-      <mat-form-field appearance="outline" class="w-100">
-         <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
-            [(ngModel)]="currentOption" required
+       <mat-form-field appearance="outline" class="w-100">
+         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
+            matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required
             (ngModelChange)="filterOptions(currentOption)">
-         <mat-autocomplete id="option1" #auto="matAutocomplete" >
-            <mat-option *ngFor="let option of filteredOptionOptions" 
-               (onSelectionChange)="saveProductOption(option)" 
-               [value]="option.name">
+         <mat-autocomplete id="option1" #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionOptions "
+               (onSelectionChange)="saveProductOption(option)" [value]="option.name">
                {{option.name}}
-            </mat-option>ng 
+            </mat-option>
          </mat-autocomplete>
-      </mat-form-field>
+      </mat-form-field> 
 
    </div> 
 
@@ -165,8 +168,8 @@
                      <div fxFlex="3" class="text-center"></div>
                      <div fxFlex="10" fxLayout="row wrap">
                         <mat-form-field class="w-100">
-                           <mat-label>{{'COMMON.PRICE_PREFIX' | translate }}</mat-label>
-                           <mat-select placeholder="{{'COMMON.PRICE_PREFIX' | translate }}" id="pricePrefix"
+                           <mat-label>+ {{'COMMON.OR'|translate}} -</mat-label>
+                           <mat-select placeholder="+ {{'COMMON.OR'|translate}} -" id="pricePrefix"
                               name="pricePrefix" [(ngModel)]="productOptionValue.pricePrefix" #pricePrefix="ngModel">
                               <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
                                  [value]="optionPrefix">
@@ -183,8 +186,8 @@
                      <div fxFlex="3" class="text-center"></div>
                      <div fxFlex="10" fxLayout="row wrap">
                         <mat-form-field class="w-100">
-                           <mat-label>{{'COMMON.POINTS_PREFIX' | translate }}</mat-label>
-                           <mat-select placeholder="{{'COMMON.POINTS_PREFIX' | translate }}" id="pointsPrefix"
+                           <mat-label>+ {{'COMMON.OR'|translate}} -</mat-label>
+                           <mat-select placeholder="+ {{'COMMON.OR'|translate}} -" id="pointsPrefix"
                               name="pointsPrefix" [(ngModel)]="productOptionValue.pointsPrefix" #pointsPrefix="ngModel">
                               <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
                                  [value]="optionPrefix">
@@ -201,8 +204,8 @@
                      <div fxFlex="3" class="text-center"></div>
                      <div fxFlex="10" fxLayout="row wrap">
                         <mat-form-field class="w-100">
-                           <mat-label>{{'COMMON.WEIGHT_PREFIX' | translate }}</mat-label>
-                           <mat-select placeholder="{{'COMMON.WEIGHTS_PREFIX' | translate }}" id="weightsPrefix"
+                           <mat-label>+ {{'COMMON.OR'|translate}} -</mat-label>
+                           <mat-select placeholder="+ {{'COMMON.OR'|translate}} -" id="weightsPrefix"
                               name="weightsPrefix" [(ngModel)]="productOptionValue.weightPrefix" #weightsPrefix="ngModel">
                               <mat-option *ngFor="let optionPrefix of appService.appInfoStorage.optionPrefixes"
                                  [value]="optionPrefix">

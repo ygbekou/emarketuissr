@@ -51,7 +51,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   productSearchCriteria: SearchCriteria = new SearchCriteria();
 
   stores: Store[] = [];
-  productDataSource: MatTableDataSource<ProductDescVO>;
+  dataSource: MatTableDataSource<ProductDescVO>;
   productStore: ProductToStore = new ProductToStore();
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
@@ -153,30 +153,31 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
 
   createDatasource(listData) {
+    console.log('createDatasource');
     this.message = null;
     this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
     const result = this.filterData(listData);
     if (result.data.length === 0) {
-        this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
-        this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
-          this.message = res['MESSAGE.NO_RESULT_FOUND'];
-        });
+      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+        this.message = res['MESSAGE.NO_RESULT_FOUND'];
+      });
     }
 
-    this.productDataSource = new MatTableDataSource(result.data);
+    this.dataSource = new MatTableDataSource(result.data);
     this.pagination = result.pagination;
   }
 
   filterProductDataBySearchCriteria(searchCriteria) {
     const filteredData = this.products.filter(function (data) {
-        let found = true;
-        if (searchCriteria.text) {
-          if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
-              found = false;
-          }
+      let found = true;
+      if (searchCriteria.text) {
+        if (!(data.name.toLowerCase().indexOf(searchCriteria.text.toLowerCase()) > -1)) {
+          found = false;
         }
-        console.log('Filter Predicate called.');
-        return found;
+      }
+      console.log('Filter Predicate called.');
+      return found;
     });
 
     this.currentFilteredProducts = filteredData;
@@ -211,6 +212,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   public changeCount(count) {
+    console.log('changeCount');
     this.count = count;
     // this.products.length = 0;
     this.resetPagination();
@@ -231,6 +233,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
 
+
   public onPageChange(e) {
     this.pagination.page = e.pageIndex + 1;
     this.filterProducts();
@@ -246,20 +249,35 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   public firstPagePagination() {
     if (this.paginator) {
-        this.paginator.pageIndex = 0;
-        this.paginator.firstPage();
+      this.paginator.pageIndex = 0;
+      this.paginator.firstPage();
     }
   }
 
-
   public filterProducts() {
-    this.createDatasource(this.currentFilteredProducts && this.currentFilteredProducts ? this.currentFilteredProducts : this.products);
+    const result = this.filterData(this.products);
+    if (result.data.length === 0) {
+      // this.properties.length = 0;
+      this.pagination = new Pagination(1, this.count, null, 2, 0, 0);
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
+        this.message = res['MESSAGE.NO_RESULT_FOUND'];
+      });
+    }
+    this.dataSource = new MatTableDataSource(result.data);
+    this.pagination = result.pagination;
+    this.message = null;
   }
 
   public filterData(data) {
     return this.appService.filterData(data, this.searchFields, this.sort, this.pagination.page, this.pagination.perPage);
   }
 
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
   selectForSaleProduct($event) {
     this.productDesc = $event;
     this.appService.getObject('/service/catalog/getProductToStore/' + this.selectedStore.id + '/' + this.productDesc.product.id)
@@ -410,7 +428,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   isBlank(value) {
-    return value === undefined || value === null || value.toString() === ''
+    return value === undefined || value === null || value.toString() === '';
   }
 
   changeTab($event) {

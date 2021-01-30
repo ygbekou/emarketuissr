@@ -78,7 +78,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
       } else {
          this.filteredOptionOptions = this.optionOptions;
       }
-     // return this.optionOptions;
+      // return this.optionOptions;
    }
 
 
@@ -95,18 +95,32 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
             productStoreOption.optionName = optDesc.name;
             productStoreOption.id = data.id;
             this.addOption(productStoreOption);
-
             // Removing the just saved option from dropdown
             const index = this.optionOptions.findIndex(x => x.id === optDesc.id);
             this.optionOptions.splice(index, 1);
             this.currentOption = '';
-
             this.getProductStoreOption(data.id);
+            this.updateOptionField();
          },
             error => console.log(error),
             () => console.log('Save selected product option complete'));
 
    }
+
+   updateOptionField() {
+      let val = 0;
+      if (this.productStoreOptions && this.productStoreOptions.length > 0) {
+         val = 1;
+      }
+      this.appService.getObjects('/service/catalog/updateOptionField/' +
+         this.productToStoreId + '/' + val)
+         .subscribe((data) => {
+            // we're good. Boldly assuming everything is fine.
+         },
+            error => console.log(error),
+            () => console.log('updateOptionField complete'));
+   }
+
 
    saveProductStoreOption2() {
 
@@ -166,6 +180,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
          .subscribe(data => {
             this.removeItem(this.productStoreOptions, productStoreOption.id);
             this.processDeleteResult(data, this.messages);
+            this.updateOptionField();
          });
    }
 

@@ -1,5 +1,5 @@
 <mat-card fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center"
-    class="w-100 p-2 filter-row mat-elevation-z1 text-muted" >
+    class="w-100 p-2 filter-row mat-elevation-z1 text-muted">
 
     <div>
         <a mat-button [matMenuTriggerFor]="sortMenu" #sortMenuTrigger="matMenuTrigger">
@@ -9,9 +9,9 @@
             <span (mouseleave)="sortMenuTrigger.closeMenu()">
                 <button mat-menu-item *ngFor="let sort of sortings" (click)="changeSorting(sort)">
                     <span>{{sort.name}}</span>
-                </button> 
-            </span> 
-        </mat-menu> 
+                </button>
+            </span>
+        </mat-menu>
     </div>
     <div fxShow="true" fxShow.gt-xs>
         <mat-form-field class="w-100">
@@ -21,7 +21,7 @@
     </div>
     <div fxShow="false" fxShow.gt-xs>
         <!-- <span *ngIf="isHomePage"> -->
-        <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
+         <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
             Show {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
         </a>
         <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
@@ -30,7 +30,15 @@
                     <span>{{count}}</span>
                 </button>
             </span>
-        </mat-menu>
+        </mat-menu> 
+
+      <!--   <mat-select [(value)]="count" color="accent" style="text-align: right;">
+            <mat-option [value]="count" *ngFor="let count of counts"  (click)="changeCount(count)">
+                {{count}}
+            </mat-option>
+        </mat-select> -->
+
+
         <!-- </span>        -->
         <button mat-icon-button (click)="changeViewType('list', 100)">
             <mat-icon>view_list</mat-icon>
