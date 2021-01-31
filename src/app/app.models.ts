@@ -1079,6 +1079,8 @@ export class CartItem {
   percentagePrice: number;
   productDiscountId: number;
   taxRules: TaxRule[];
+  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
+  selectedOptions: ProductStoreOptionValueVO [];
 
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -1089,6 +1091,7 @@ export class CartItem {
     this.storeName = p.product.storeName;
     this.quantity = 0;
     this.price = p.product.percentagePrice > 0 ? p.product.percentagePrice : p.product.price;
+    this.price = p.product.totalPrice > 0 ? p.product.totalPrice : this.price;
     this.tax = p.product.tax;
     this.total = 0;
     this.storeUrl = Constants.webServer + '/#/products?storeId=' + this.storeId;
@@ -1100,6 +1103,8 @@ export class CartItem {
     this.productDiscountQuantity = p.product.productDiscountQuantity;
     this.productDiscountPrice = p.product.productDiscountPrice;
     this.productDiscountId = p.product.productDiscountId;
+    this.optionValueDescriptionMaps = p.product.optionValueDescriptionMaps;
+    this.selectedOptions = Object.values(p.product.selectedOptionsMap);
   }
 }
 
@@ -1128,6 +1133,7 @@ export class ProductVO {
   promo: number;
   points: number;
   price: number;
+  totalPrice: number;
   quantity: number;
   shipping: number;
   sku: string;
@@ -1178,6 +1184,8 @@ export class ProductVO {
   currencyDecimalPlace: number;
   percentagePrice: number;
   productDiscountId: number;
+
+  selectedOptionsMap: Map<number, ProductStoreOptionValueVO> = new Map();
 }
 
 export class ProductStoreOptionValueVO {
@@ -1188,6 +1196,16 @@ export class ProductStoreOptionValueVO {
 	optionDescriptionName: string;
 	optionValueId: number;
   optionValueDescriptionName: string;
+  points: number;
+	pointsPrefix: string;
+	price: number;
+	pricePrefix: string;
+	quantity: number;
+	subtract: number;
+	weight: number;
+  weightPrefix: string;
+  value: string;
+  checked: boolean;
 }
 
 export class Review {

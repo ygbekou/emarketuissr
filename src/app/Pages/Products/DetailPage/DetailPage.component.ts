@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { ProductDescVO, Pagination, Language, Product, CartItem, ProductSearchCriteria } from 'src/app/app.models';
-import { MatTableDataSource } from '@angular/material';
+import { ProductDescVO, Language, ProductSearchCriteria } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 

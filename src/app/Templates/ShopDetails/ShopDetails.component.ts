@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, OnChanges, Renderer2, ElementRef, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../../Services/app.service';
-import { ProductDescription, ProductDescVO, CartItem } from 'src/app/app.models';
+import { ProductDescVO, CartItem, ProductStoreOptionValueVO } from 'src/app/app.models';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -45,6 +44,11 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
       this.route.params.subscribe(res => {
          this.type = null;
          this.type = res.type;
+
+         if (!this.detailData.product.selectedOptionsMap) {
+            this.detailData.product.selectedOptionsMap = new Map();
+         }
+         this.detailData.product.totalPrice = this.detailData.product.price;
       });
 
       if (this.detailData && this.detailData.product) {
@@ -84,7 +88,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    public addToCart(value: any) {
-      const ci = new CartItem(value);
+      const ci = new CartItem(this.detailData);
       ci.quantity = this.qty;
       this.appService.addToCart(ci);
    }
@@ -100,6 +104,51 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
    public submitProductForSale(product: any) {
       this.sellProduct.emit(product);
+   }
+
+   checkboxChange(event, prdStoreOptionValue: ProductStoreOptionValueVO ) {
+      const optionKey = prdStoreOptionValue.optionId + '|' + prdStoreOptionValue.optionValueId;
+      if (this.detailData.product.selectedOptionsMap[optionKey] === undefined) {
+         if (event.checked) {
+            this.detailData.product.selectedOptionsMap[optionKey] = prdStoreOptionValue;
+         }
+      } else {
+         if (!event.checked) {
+            delete this.detailData.product.selectedOptionsMap[optionKey];
+         }
+      }
+
+      this.updatePriceWithOptions();
+   }
+
+   radioButtonChange( event, prdStoreOptionValue: ProductStoreOptionValueVO ) {
+      const optionKey = prdStoreOptionValue.optionId;
+      this.detailData.product.selectedOptionsMap[optionKey] = prdStoreOptionValue;
+
+      this.updatePriceWithOptions();
+   }
+
+   singleSelectionChange(event, prdStoreOptionValue: ProductStoreOptionValueVO ) {
+      const optionKey = prdStoreOptionValue.optionId;
+      this.detailData.product.selectedOptionsMap[optionKey] = prdStoreOptionValue;
+
+      this.updatePriceWithOptions();
+   }
+
+   public updatePriceWithOptions() {
+      let totalOptionPrice = 0;
+      for (const [key, optionDesc] of Object.entries(this.detailData.product.selectedOptionsMap)) {
+         if (optionDesc.price !== undefined && optionDesc.price > 0 ) {
+            if (optionDesc.pricePrefix === '+') {
+               totalOptionPrice += optionDesc.price;
+            } else if (optionDesc.pricePrefix === '-') {
+               totalOptionPrice -= optionDesc.price;
+            }
+         }
+      }
+
+      this.detailData.product.totalPrice = (this.detailData.product.percentagePrice > 0 ? this.detailData.product.percentagePrice
+                                    : this.detailData.product.price) + totalOptionPrice;
    }
 
 }
