@@ -57,13 +57,34 @@ export class ProductDescriptionComponent implements OnInit {
 
    onLangChanged(event) {
       this.messages = '';
-      console.log('tab changed');
+      let found = false;
+      console.log('tab changed lang =' + event.tab.textLabel);
+      console.log(this.product.productDescriptions);
       this.product.productDescriptions.forEach(prodDesc => {
          if (prodDesc.language.name === event.tab.textLabel) {
+            console.log('Found : ' + prodDesc.language.name + ' : ' + prodDesc.name);
             this.productDescription = prodDesc;
+            found = true;
             return;
          }
       });
+
+      if (!found) {
+         this.appService.appInfoStorage.languages.forEach(language => {
+            console.log('creating product desc');
+            console.log(language.name + 'creating product desc' + event.tab.textLabel);
+            if (language.name === event.tab.textLabel) {
+               const pd = new ProductDescription();
+               pd.language = language;
+               this.product.productDescriptions.push(pd);
+               this.productDescription = pd;
+               console.log('new Product desc created');
+               console.log(this.product.productDescriptions);
+               return;
+            }
+         });
+      }
+
    }
 
    save() {
@@ -74,7 +95,7 @@ export class ProductDescriptionComponent implements OnInit {
          // prod.id = this.product.id;
          // prod.status = 1;
          console.log(this.product);
-         this.productDescription.product =   this.appService.cloneProduct(this.product);
+         this.productDescription.product = this.appService.cloneProduct(this.product);
          this.appService.save(this.productDescription, 'ProductDescription')
             .subscribe(result => {
                if (result.id > 0) {

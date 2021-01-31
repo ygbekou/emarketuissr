@@ -74,6 +74,12 @@ export class AppService {
    private headers: HttpHeaders;
    appInfoStorage: AppInfoStorage;
 
+   // Social Share
+   ssTitle = 'Kekouda';
+   ssImage = 'https://www.kekouda.com/assets/images/company/logo.png';
+   ssUrl = 'https://www.kekouda.com';
+   ssDescription = 'Kekouda';
+
    constructor(private http: HttpClient,
       private dialog: MatDialog,
       private db: AngularFireDatabase,
@@ -438,18 +444,18 @@ export class AppService {
 
       delete this.localStorageCartProductsMap[currencyId];
 
-     /*  const title = 'Updating Cart';
-      const msg = '';
-
-      const toastOption: ToastOptions = {
-         title: title,
-         msg: msg,
-         showClose: true,
-         timeout: 1000,
-         theme: 'material'
-      };
-
-      this.toastyService.wait(toastOption); */
+      /*  const title = 'Updating Cart';
+       const msg = '';
+ 
+       const toastOption: ToastOptions = {
+          title: title,
+          msg: msg,
+          showClose: true,
+          timeout: 1000,
+          theme: 'material'
+       };
+ 
+       this.toastyService.wait(toastOption); */
       setTimeout(() => {
          // ReAdding the products after remove
          localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
@@ -1132,6 +1138,30 @@ export class AppService {
                   return 0;
                });
                console.log('Which one? views');
+               break;
+            case 'namedesc':
+               data = data.sort((a, b) => {
+                  if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                     return 1;
+                  }
+                  if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                     return -1;
+                  }
+                  return 0;
+               });
+               console.log('Which one? name asc');
+               break;
+            case 'nameasc':
+               data = data.sort((a, b) => {
+                  if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                     return 1;
+                  }
+                  if (a.name.toLowerCase() < b.name.toLowerCase()) {
+                     return -1;
+                  }
+                  return 0;
+               });
+               console.log('Which one? name asc');
                break;
             case 'pricedesc':
                data = data.sort((a, b) => {

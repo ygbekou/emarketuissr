@@ -64,7 +64,6 @@ import { MenuComponent } from './Layouts/Menu/Menu/Menu.component';
 import { HomeoneComponent } from './Pages/Home/HomeOne/HomeOne.component';
 import { HomeTwoComponent } from './Pages/Home/HomeTwo/HomeTwo.component';
 import { HomeThreeComponent } from './Pages/Home/HomeThree/HomeThree.component';
-import { CartComponent } from './Pages/Cart/Cart.component';
 import { NotFoundComponent } from './Pages/NotFound/NotFound.component';
 import { SideBarMenuComponent } from './Layouts/Menu/SidebarMenu/SidebarMenu.component';
 import { PaymentDetailSideBarComponent } from './Layouts/PaymentDetailSideBar/PaymentDetailSideBar.component';
@@ -98,7 +97,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 export function tokenGetter() {
-  return localStorage.getItem("access_token");
+  return localStorage.getItem('access_token');
 }
 
 @NgModule({

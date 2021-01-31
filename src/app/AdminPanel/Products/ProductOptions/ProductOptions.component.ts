@@ -43,6 +43,7 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
          + '/' + this.productId)
          .subscribe((data: OptionDescription[]) => {
             this.optionOptions = data;
+            this.filteredOptionOptions = data;
             this.optionOptions.forEach(element => {
                element.id = element.option.id;
             });
@@ -73,8 +74,10 @@ export class ProductOptionsComponent extends BaseComponent implements OnInit {
       if (val) {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredOptionOptions = this.optionOptions.filter(attrDesc => attrDesc.name.toLowerCase().startsWith(filterValue));
+      } else {
+         this.filteredOptionOptions = this.optionOptions;
       }
-     return this.optionOptions;
+      // return this.optionOptions;
    }
 
 

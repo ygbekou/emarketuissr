@@ -71,4 +71,62 @@ export const AppRoutes: Routes = [
       path: '**',
       redirectTo: 'not-found'
    }
-]
+];
+
+/*
+@NgModule({
+   imports: [RouterModule.forRoot(AppRoutes)],
+   exports: [RouterModule]
+})
+export class AppRoutingModule {
+   constructor(
+      private router: Router,
+      private activatedRoute: ActivatedRoute,
+      private appService: AppService,
+      private titleService: Title,
+      private metaService: Meta
+   ) {
+      this.router.events
+         .filter(event => event instanceof NavigationEnd)
+         .map(() => this.activatedRoute)
+         .map(route => {
+            while (route.firstChild) { route = route.firstChild; }
+            return route;
+         })
+         .filter(route => route.outlet === 'primary')
+         .mergeMap(route => route.data)
+         .subscribe((event) => {
+            console.log('What is happening *****************');
+            console.log(appService.ssImage);
+            console.log(appService.ssTitle);
+            console.log(appService.ssUrl);
+            this.titleService.setTitle(appService.ssTitle);
+            const tag = { name: 'description', content: appService.ssTitle };
+            const attributeSelector = 'name="description"';
+            this.metaService.removeTag(attributeSelector);
+            this.metaService.addTag(tag, false);
+
+const descTag = { property: 'og:description', content: 'Voici une description' };
+      const descSel = 'property="og:description"';
+      this.metaService.removeTag(descSel);
+      this.metaService.addTag(descTag, false);
+
+      const imgTag = {
+         property: 'og:image', content: 'https://www.kekouda.com/assets/images/products/219/product_219_0.jpg'
+      };
+      const imgSel = 'property="og:image"';
+      this.metaService.removeTag(imgSel);
+      this.metaService.addTag(imgTag, false);
+
+      const urlTag = { property: 'og:url', content: 'https://www.kekouda.com/#/products/dtl/219/321' };
+      const urlSel = 'property="og:url"';
+      this.metaService.removeTag(urlSel);
+      this.metaService.addTag(urlTag, false);
+
+
+
+         });
+   }
+
+}
+ */
