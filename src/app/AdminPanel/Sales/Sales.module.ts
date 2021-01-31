@@ -46,12 +46,14 @@ import { ReturnComponent } from './Returns/Return.component';
 import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
 import { AdminReviewsComponent } from './Reviews/AdminReviews.component';
 import { ReviewsTableComponent } from './Reviews/ReviewsTable.component';
+import { OrderOptionComponent } from './Orders/OrderOption.component';
 
 @NgModule({
   declarations: [
     OrdersComponent,
     OrderViewComponent,
     OrderHistoryComponent,
+    OrderOptionComponent,
     ReturnsComponent,
     ReturnComponent,
     ReturnHistoryComponent,

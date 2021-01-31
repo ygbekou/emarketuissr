@@ -1324,6 +1324,27 @@ export class OrderHistory {
 }
 
 
+export class OrderOption {
+  id: number;
+  name: string;
+  orderId: number;
+  orderProductId: number;
+  optionId: number;
+  optionValueId: number;
+  optiionType: string;
+  value: string;
+  points: number;
+  pointsPrefix: string;
+  price: number;
+  pricePrefix: string;
+  weight: number;
+  weightPrefix: string;
+
+  constructor() {
+
+  }
+}
+
 export class Return {
 
   id: number;

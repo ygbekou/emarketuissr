@@ -506,6 +506,9 @@
 
 
 <mat-tab-group>
+  <mat-tab label="{{'COMMON.OPTION' | translate}}" *ngIf="order.id > 0">
+    <app-order-option [order]="order" [storeOwnerId]="store.owner.id" [orderType]="orderType"></app-order-option>
+  </mat-tab>
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
     <app-order-history [order]="order" [storeOwnerId]="store.owner.id" [orderType]="orderType"></app-order-history>
   </mat-tab>
