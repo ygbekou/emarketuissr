@@ -16,6 +16,15 @@
           <div fxLayout="row wrap" fxLayoutAlign="center center" class="cart-product-info">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
               <h5>{{product?.name}}</h5>
+              <div fxLayout="row wrap">
+                <div *ngFor="let mapEntry of product.selectedOptionMap | keyvalue; let i = index;">
+                    <label style="font-weight: bold;">{{mapEntry.key}}: </label>
+                    <span *ngFor="let option of mapEntry.value">
+                      {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
+                    </span>
+                    <span>&nbsp;&nbsp;</span>
+                </div>
+              </div>
               <p class="mb-0">{{'COMMON.SOLD_BY'|translate}} <a [routerLink]="['/products']"
                   [queryParams]="{storeId:product.storeId}" routerLinkActive="tab-active"> {{product.storeName}}</a></p>
             </div>

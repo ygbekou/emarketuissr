@@ -136,8 +136,16 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           if (result.id > 0) {
             this.order = result;
-            console.log(this.order);
             this.getStore(this.order.storeId);
+            this.order.orderOptionMap = {};
+            this.order.orderOptions.forEach(item => {
+              if (this.order.orderOptionMap[item.name] === undefined) {
+                this.order.orderOptionMap[item.name] = [];
+              }
+
+              this.order.orderOptionMap[item.name].push(item);
+            });
+
             this.onlineDS = new MatTableDataSource(this.order.orderProducts);
             this.onlineDS.paginator = this.onlinePG;
             this.onlineDS.sort = this.onlineST;

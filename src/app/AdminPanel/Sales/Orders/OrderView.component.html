@@ -220,10 +220,24 @@
     <ng-container matColumnDef="product">
       <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> {{'COMMON.PRODUCT' | translate}} </th>
       <td mat-cell *matCellDef="let orderProduct">
-        <img *ngIf="orderProduct.product.image"
-          [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
-          [style.width.px]="40">
-        {{orderProduct.name}} </td>
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+            <img *ngIf="orderProduct.product.image"
+              [src]="'assets/images/products/'+orderProduct.product.id+'/'+orderProduct.product.image"
+              [style.width.px]="40">
+          </div>
+          <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90">
+            <span>{{orderProduct.name}}</span><br/>
+            <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
+              <label>{{mapEntry.key}}: </label>
+              <span *ngFor="let option of mapEntry.value">
+                {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
+              </span>
+              <span>&nbsp;&nbsp;</span>
+            </span>
+          </div>
+        </div>
+      </td>
       <td mat-footer-cell *matFooterCellDef>
         <h6>{{'COMMON.SUB_TOTAL'|translate}}</h6>
       </td>
@@ -506,9 +520,9 @@
 
 
 <mat-tab-group>
-  <mat-tab label="{{'COMMON.OPTION' | translate}}" *ngIf="order.id > 0">
+  <!-- <mat-tab label="{{'COMMON.OPTION' | translate}}" *ngIf="order.id > 0">
     <app-order-option [order]="order" [storeOwnerId]="store.owner.id" [orderType]="orderType"></app-order-option>
-  </mat-tab>
+  </mat-tab> -->
   <mat-tab label="{{'COMMON.ORDER_HISTORY' | translate}}" *ngIf="order.id > 0">
     <app-order-history [order]="order" [storeOwnerId]="store.owner.id" [orderType]="orderType"></app-order-history>
   </mat-tab>

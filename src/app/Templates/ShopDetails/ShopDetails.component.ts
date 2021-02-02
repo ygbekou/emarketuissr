@@ -98,8 +98,6 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges() {
-      console.log('ngOnChanges called');
-      console.log(this.detailData);
       this.mainImgPath = null;
       this.totalPrice = null;
       this.mainImgPath = 'assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image;
@@ -126,6 +124,18 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    }
 
    public addToCart(value: any) {
+      const optionMaps = new Map(Object.entries(this.detailData.product.optionValueDescriptionMaps));
+      optionMaps.forEach(optionValueDescs => {
+         optionValueDescs.forEach(optionDesc => {
+            if (
+               (optionDesc.value !== undefined && optionDesc.value !== null && String(optionDesc.value).trim() !== '')
+            && (optionDesc.optionType === 'Text' || optionDesc.optionType === 'Textarea')
+             ) {
+               this.detailData.product.selectedOptionsMap[optionDesc.optionId] = optionDesc
+            }
+         });
+      });
+
       const ci = new CartItem(this.detailData);
       ci.quantity = this.qty;
       this.appService.addToCart(ci);

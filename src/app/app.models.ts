@@ -1081,6 +1081,7 @@ export class CartItem {
   taxRules: TaxRule[];
   optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
   selectedOptions: ProductStoreOptionValueVO [];
+  selectedOptionMap = {};
 
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -1105,6 +1106,14 @@ export class CartItem {
     this.productDiscountId = p.product.productDiscountId;
     this.optionValueDescriptionMaps = p.product.optionValueDescriptionMaps;
     this.selectedOptions = Object.values(p.product.selectedOptionsMap);
+
+    this.selectedOptions.forEach(item => {
+      if (this.selectedOptionMap[item.optionDescriptionName] === undefined) {
+        this.selectedOptionMap[item.optionDescriptionName] = [];
+      }
+
+      this.selectedOptionMap[item.optionDescriptionName].push(item);
+    });
   }
 }
 
@@ -1331,7 +1340,7 @@ export class OrderOption {
   orderProductId: number;
   optionId: number;
   optionValueId: number;
-  optiionType: string;
+  optionType: string;
   value: string;
   points: number;
   pointsPrefix: string;
@@ -1498,6 +1507,8 @@ export class Order {
 
   totalRewardPoints: number;
   orderProducts: OrderProduct[] = [];
+  orderOptions: OrderOption[] = [];
+  orderOptionMap = {};
   products: Product[] = [];
 
   constructor() {
@@ -1518,6 +1529,8 @@ export class OrderProduct {
   reward: number;
   tax: number;
   total: number;
+
+  orderOptionMap = {};
 }
 
 export class SearchCriteria {
