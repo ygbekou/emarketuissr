@@ -358,10 +358,12 @@ export class AppService {
 
    calculateCartItemTotal(cartItem: CartItem) {
       let totalPrice = 0;
+      const optionMaps = new Map(Object.entries(cartItem.optionValueDescriptionMaps));
+      //const totalOptionPrice = this.calculateOptionTotal(optionMaps);
+
       if (cartItem.productDiscountQuantity > 0 && cartItem.productDiscountPrice > 0) {
          const nberDiscountQuantity = Math.trunc(cartItem.quantity / cartItem.productDiscountQuantity);
-         const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity;
-
+         const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity
          totalPrice = cartItem.productDiscountPrice * nberDiscountQuantity
             + cartItem.price * moduloDiscountQuantity;
       } else {
@@ -369,6 +371,24 @@ export class AppService {
       }
 
       return this.roundingValue(totalPrice);
+   }
+
+   calculateOptionTotal (optionMaps) {
+      let totalOptionPrice = 0;
+      optionMaps.forEach(optionValueDescs => {
+         optionValueDescs.forEach(optionDesc => {
+            if ((optionDesc.value !== undefined || optionDesc.checked !== undefined)
+               && optionDesc.price !== undefined && optionDesc.price > 0 ) {
+               if (optionDesc.pricePrefix === '+') {
+                  totalOptionPrice += optionDesc.price;
+               } else if (optionDesc.pricePrefix === '-') {
+                  totalOptionPrice -= optionDesc.price;
+               }
+            }
+         });
+      });
+
+      return totalOptionPrice;
    }
 
    roundingValue(value: number) {

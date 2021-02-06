@@ -56,6 +56,13 @@
                         <a class="p-link"
                           [routerLink]="['/products/dtl/'+orderProduct.product.id+ '/'+orderProduct.ptsId]">
                           {{orderProduct.name}} </a><br />
+                          <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
+                            <label>{{mapEntry.key}}: </label>
+                            <span *ngFor="let option of mapEntry.value">
+                              {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
+                            </span>
+                            <span>&nbsp;&nbsp;</span>
+                          </span>
                         <h6 class="accent-color">
                           {{'COMMON.PRICE'|translate}}:
                           {{order.symbolLeft}}

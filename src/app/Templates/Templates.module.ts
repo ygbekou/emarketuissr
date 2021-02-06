@@ -28,7 +28,7 @@ import {
    MatGridListModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GlobalModule } from '../Global/Global.module';
 import { ProductGridComponent } from './Grid/ProductGrid/ProductGrid.component';
 import { Grid3Component } from './Grid/Grid3/Grid3.component';
@@ -69,6 +69,8 @@ import { PipesModule } from '../pipes/pipes.module';
       MatDialogModule,
       MatGridListModule,
       TranslateModule,
+      FormsModule,
+      ReactiveFormsModule,
       GlobalModule,
       PipesModule,
       MdePopoverModule
