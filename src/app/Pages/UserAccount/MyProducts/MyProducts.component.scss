@@ -74,9 +74,18 @@
     opacity: 1;
 }
 
-h1,h2,h3,h4,h5,
-h6,.h1,.h2,.h3,
-.h4,.h5,.h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
@@ -113,6 +122,8 @@ mat-form-field {
     width: 90% !important;
 }
 
-td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
     max-width: 100px;
-}
+} 

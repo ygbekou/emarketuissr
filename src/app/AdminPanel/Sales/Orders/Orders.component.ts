@@ -60,6 +60,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
 
   private getStores() {
     this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = this.userId;
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;

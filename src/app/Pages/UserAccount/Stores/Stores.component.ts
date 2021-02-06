@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Store } from 'src/app/app.models';
+import { Store, StoreSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -40,7 +40,20 @@ export class StoresComponent implements OnInit {
       });
   }
 
-  getStores() {
+  private getStores() {
+    const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+    storeSearchCriteria.status = 1;
+    storeSearchCriteria.userId = this.userId;
+    console.log(storeSearchCriteria);
+    this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
+  }
+
+/*   getStores() {
     if (this.userId > 0) {
       const parameters: string[] = [];
       parameters.push('e.owner.id = |userId|' + this.userId + '|Integer');
@@ -51,5 +64,5 @@ export class StoresComponent implements OnInit {
           error => console.log(error),
           () => console.log('Get all Store complete for userId=' + this.userId));
     }
-  }
+  } */
 }

@@ -930,6 +930,7 @@ export class ProductToStore {
   maxQty: number;
   sortOrder: number;
   status: number;
+  vipPrice: number;
   stockStatusId: number;
   taxClassId: number;
   promo: number;
@@ -1543,6 +1544,7 @@ export class StoreSearchCriteria {
   firstName: string;
   lastName: string;
   status: number;
+  aprvStatus: number;
   createDate: Date;
 }
 
