@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
+import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 
 interface Response {
    data: any;
@@ -160,6 +161,17 @@ export class AppService {
       review.componentInstance.reviews = reviews;
 
       return review.afterClosed();
+   }
+
+   public productOptionPopup(detailData) {
+      let productOptionPopup: MatDialogRef<ProductOptionPopupComponent>;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.direction = this.isDirectionRtl ? 'rtl' : 'ltr';
+
+      productOptionPopup = this.dialog.open(ProductOptionPopupComponent, dialogConfig);
+      productOptionPopup.componentInstance.productDesc = detailData;
+
+      return productOptionPopup.afterClosed();
    }
 
    public confirmationPopup(message: string) {
@@ -358,8 +370,6 @@ export class AppService {
 
    calculateCartItemTotal(cartItem: CartItem) {
       let totalPrice = 0;
-      const optionMaps = new Map(Object.entries(cartItem.optionValueDescriptionMaps));
-      //const totalOptionPrice = this.calculateOptionTotal(optionMaps);
 
       if (cartItem.productDiscountQuantity > 0 && cartItem.productDiscountPrice > 0) {
          const nberDiscountQuantity = Math.trunc(cartItem.quantity / cartItem.productDiscountQuantity);

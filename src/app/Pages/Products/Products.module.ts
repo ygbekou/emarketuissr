@@ -90,6 +90,12 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 		ProductsListComponent,
 		DetailPageComponent,
 		ViewAllComponent
-	]
+	],
+	entryComponents: [
+
+   ],
+   exports: [
+
+   ]
 })
 export class ProductsModule { }

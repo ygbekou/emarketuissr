@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
-   ProductListVO, Store, ProductSearchCriteria
+   ProductListVO, Store, ProductSearchCriteria, CartItem
 } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
@@ -42,6 +42,7 @@ export class ProductsListComponent implements OnInit {
    height = { 'height': '70px' };
    public counts = [2, 3, 6, 12, 24, 36];
    dummyCat = '';
+   popupResponse: any;
 
    productList: ProductListVO = new ProductListVO();
    currentFilteredProductList: ProductListVO = new ProductListVO();
@@ -144,7 +145,7 @@ export class ProductsListComponent implements OnInit {
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
          new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             this.storeId, this.marketId, this.catId, this.searchText, 0, 0, 0, 0)
-      ).subscribe((data: ProductListVO) => {
+      ).subscribe((data: ProductListVO) => {;
             this.applyGridFilter(data);
          },
             error => console.log(error),
@@ -246,7 +247,23 @@ export class ProductsListComponent implements OnInit {
 
 
    public addToCart(value) {
-      this.appService.addToCart(value);
+      if (value.product.hasOption === 1) {
+         this.appService.productOptionPopup(value).
+         subscribe(res => { this.popupResponse = res; },
+            err => console.log(err),
+            () => this.getPopupResponse(this.popupResponse, value)
+         );
+      } else {
+         const ci = new CartItem(value);
+         this.appService.addToCart(ci);
+      }
+   }
+
+   public getPopupResponse(response: any, value: any) {
+      if (response) {
+         const ci = new CartItem(value);
+         this.appService.addToCart(ci);
+      }
    }
 
    public addToWishList(value) {

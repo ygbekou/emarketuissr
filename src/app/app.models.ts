@@ -957,6 +957,7 @@ export class ProductOption {
   timeHour: number;
 
   productOptionValues: ProductOptionValue[];
+  povs: ProductOptionValue[];
 
   type = 'ProductOption';
 
@@ -969,10 +970,10 @@ export class ProductOption {
 
 export class ProductOptionValue {
   id: number;
-  product: Product;
-  option: Options;
-  productOption: ProductOption;
-  optionValue: OptionValue;
+	ovId: number;
+	name: string;
+	image: string;
+	sortOrder: number;
   points: number;
   pointsPrefix: string;
   price: number;
@@ -981,6 +982,14 @@ export class ProductOptionValue {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+
+  product: Product;
+  option: Options;
+  productOption: ProductOption;
+  optionValue: OptionValue;
+
+  value: string;
+  check: boolean;
 
   type = 'ProductOptionValue';
 
@@ -1055,6 +1064,8 @@ export class ProductDescVO {
   shortDescription: string;
   mediumDescription: string;
   category: string;
+
+  povos: ProductOptionVO[];
 }
 
 export class CartItem {
@@ -1080,8 +1091,11 @@ export class CartItem {
   productDiscountId: number;
   taxRules: TaxRule[];
   optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
-  selectedOptions: ProductStoreOptionValueVO [];
+  selectedOptions: ProductOptionValue [];
   selectedOptionMap = {};
+
+  povos: ProductOptionVO[];
+  hasOption: number;
 
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -1105,15 +1119,21 @@ export class CartItem {
     this.productDiscountPrice = p.product.productDiscountPrice;
     this.productDiscountId = p.product.productDiscountId;
     this.optionValueDescriptionMaps = p.product.optionValueDescriptionMaps;
-    this.selectedOptions = Object.values(p.product.selectedOptionsMap);
+    if (p.product.selectedOptionsMap) {
+      this.selectedOptions = Object.values(p.product.selectedOptionsMap);
+    }
 
-    this.selectedOptions.forEach(item => {
-      if (this.selectedOptionMap[item.optionDescriptionName] === undefined) {
-        this.selectedOptionMap[item.optionDescriptionName] = [];
-      }
+    if (this.selectedOptions) {
+      this.selectedOptions.forEach(item => {
+        if (this.selectedOptionMap[item.name] === undefined) {
+          this.selectedOptionMap[item.name] = [];
+        }
 
-      this.selectedOptionMap[item.optionDescriptionName].push(item);
-    });
+        this.selectedOptionMap[item.name].push(item);
+      });
+    }
+    this.hasOption = p.product.hasOption;
+    this.povos = p.povos;
   }
 }
 
@@ -1193,8 +1213,9 @@ export class ProductVO {
   currencyDecimalPlace: number;
   percentagePrice: number;
   productDiscountId: number;
+  hasOption: number;
 
-  selectedOptionsMap: Map<number, ProductStoreOptionValueVO> = new Map();
+  selectedOptionsMap: Map<number, any> = new Map();
 }
 
 export class ProductStoreOptionValueVO {
@@ -1793,4 +1814,6 @@ export class ProductOptionVO {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+
+  povs: ProductOptionValue[];
 }
