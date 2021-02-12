@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { ProductOptionValue, ProductOption, CartItem } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
@@ -10,6 +10,7 @@ import { AppService } from 'src/app/Services/app.service';
 })
 export class ProductOptionPopupComponent implements OnInit {
 
+  @Input()
   productDesc: any;
   popupResponse: any;
 

@@ -948,6 +948,7 @@ export class ProductOption {
   id: number;
   product: Product;
   option: Options;
+  optionType: string;
   required: number;
   value: string;
   optionName: string;
@@ -970,7 +971,8 @@ export class ProductOption {
 
 export class ProductOptionValue {
   id: number;
-	ovId: number;
+  ovId: number;
+  optionName: string;
 	name: string;
 	image: string;
 	sortOrder: number;
@@ -1090,7 +1092,7 @@ export class CartItem {
   percentagePrice: number;
   productDiscountId: number;
   taxRules: TaxRule[];
-  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
+  optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
   selectedOptions: ProductOptionValue [];
   selectedOptionMap = {};
 
@@ -1125,11 +1127,11 @@ export class CartItem {
 
     if (this.selectedOptions) {
       this.selectedOptions.forEach(item => {
-        if (this.selectedOptionMap[item.name] === undefined) {
-          this.selectedOptionMap[item.name] = [];
+        if (this.selectedOptionMap[item.optionName] === undefined) {
+          this.selectedOptionMap[item.optionName] = [];
         }
 
-        this.selectedOptionMap[item.name].push(item);
+        this.selectedOptionMap[item.optionName].push(item);
       });
     }
     this.hasOption = p.product.hasOption;
@@ -1202,7 +1204,7 @@ export class ProductVO {
   fileNames: string[];
   reviews: Review[];
   ratingCountMaps: Map<number, number>;
-  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
+  optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
   productDimensions: string;
   taxRules: TaxRule[];
   tax: number;
@@ -1216,26 +1218,6 @@ export class ProductVO {
   hasOption: number;
 
   selectedOptionsMap: Map<number, any> = new Map();
-}
-
-export class ProductStoreOptionValueVO {
-  id: number;
-	languageId: number;
-	optionId: number;
-	optionType: string;
-	optionDescriptionName: string;
-	optionValueId: number;
-  optionValueDescriptionName: string;
-  points: number;
-	pointsPrefix: string;
-	price: number;
-	pricePrefix: string;
-	quantity: number;
-	subtract: number;
-	weight: number;
-  weightPrefix: string;
-  value: string;
-  checked: boolean;
 }
 
 export class Review {
@@ -1803,6 +1785,7 @@ export class ProductOptionVO {
   id: number;
   ptsId: number;
   ptsoId: number;
+  optionType: string;
   option: Options;
   productStoreOption: ProductStoreOption;
   optionValue: OptionValue;
