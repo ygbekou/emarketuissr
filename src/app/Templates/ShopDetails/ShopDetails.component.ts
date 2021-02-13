@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppService } from '../../Services/app.service';
-import { ProductDescVO, CartItem, ProductStoreOptionValueVO, ProductOption, ProductOptionValue } from 'src/app/app.models';
+import { ProductDescVO, CartItem, ProductOption, ProductOptionValue } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 import { Title, Meta } from '@angular/platform-browser';
 
@@ -127,7 +127,11 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
       this.detailData.povos.forEach(optionDesc => {
             if (optionDesc.optionType === 'Text' || optionDesc.optionType === 'Textarea') {
-               this.detailData.product.selectedOptionsMap[optionDesc.id] = optionDesc
+               optionDesc.povs.forEach(optionValueDesc => {
+                  if (optionValueDesc.value !== undefined && optionValueDesc.value !== null) {
+                     this.detailData.product.selectedOptionsMap[optionDesc.id] = optionValueDesc;
+                  }
+               });
             }
          });
 
