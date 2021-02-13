@@ -96,6 +96,7 @@ import { AuthService } from '../Services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ReviewComponent } from './Review/Review.component';
 import { InputFileModule } from 'ngx-input-file';
+import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 
 @NgModule({
    imports: [
@@ -196,7 +197,8 @@ import { InputFileModule } from 'ngx-input-file';
       CustomerHistoryComponent,
       CustomerTransactionComponent,
       CustomerRewardComponent,
-      StoreHeaderComponent
+      StoreHeaderComponent,
+      ProductOptionPopupComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -251,13 +253,15 @@ import { InputFileModule } from 'ngx-input-file';
       CustomerHistoryComponent,
       CustomerTransactionComponent,
       CustomerRewardComponent,
-      StoreHeaderComponent
+      StoreHeaderComponent,
+      ProductOptionPopupComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
       ConfirmationPopupComponent,
       ReviewsComponent,
-      TimerCountDownComponent
+      TimerCountDownComponent,
+      ProductOptionPopupComponent
    ],
    providers: [
       AuthGuardService,

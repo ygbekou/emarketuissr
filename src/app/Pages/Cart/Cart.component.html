@@ -19,8 +19,8 @@
               <div fxLayout="row wrap">
                 <div *ngFor="let mapEntry of product.selectedOptionMap | keyvalue; let i = index;">
                     <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-                    <span *ngFor="let option of mapEntry.value">
-                      {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
+                    <span *ngFor="let optionValue of mapEntry.value">
+                      {{optionValue.name}}{{optionValue.value}}&nbsp;
                     </span>
                     <span>&nbsp;&nbsp;</span>
                 </div>

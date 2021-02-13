@@ -50,8 +50,8 @@ export class ProductGridComponent implements OnInit {
    }
 
    public addToCartProduct(value: any) {
-      const ci = new CartItem(value);
-      this.addToCart.emit(ci);
+      //const ci = new CartItem(value);
+      this.addToCart.emit(value);
    }
 
    public onLoad() {

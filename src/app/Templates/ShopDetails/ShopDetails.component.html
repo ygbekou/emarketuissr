@@ -106,109 +106,103 @@
             </li>
           </ul>
           <div class="short-des" [innerHTML]="detailData?.description | safehtml"></div>
-          <div *ngFor="let mapEntry of detailData?.product.optionValueDescriptionMaps | keyvalue; let i = index;">
+          
+          
+            <div *ngFor="let povo of detailData?.povos; let i = index;">
 
-            <!-- <div *ngIf="mapEntry.value[0].optionType == 'Radio'">
-              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-              <div fxLayout="row wrap">
-                <div *ngFor="let prdStoreOptionValue of mapEntry.value">
-                  <div fxLayout="row wrap">
-                    <div style="border: 1px solid #808080; min-width: 108px; max-width: 1px; min-height: 60px">
-                      {{prdStoreOptionValue.optionValueDescriptionName}}
+    <div *ngIf="povo.optionType == 'Radio'">
+      <label style="font-weight: bold;">{{povo.name}}: </label>
+      
+      <div fxLayout="row wrap">
+        <mat-radio-group class="w-100">
+          
+            <div *ngFor="let prdOptionValue of povo.povs" style="width: 500px; height: 50px;">
+              <mat-radio-button class="w-100" 
+                  [value]="prdOptionValue.id" (click)="radioButtonChange($event, povo, prdOptionValue);">
+                
+                    <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                      {{prdOptionValue.name}}
                     </div>
-                    <span style="width:10px;"></span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-            <div *ngIf="mapEntry.value[0].optionType == 'Radio'">
-              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-              <div fxLayout="row wrap">
-                <mat-radio-group [(ngModel)]="mapEntry.value[i].value">
-                  <mat-radio-button class="mb-2" *ngFor="let prdStoreOptionValue of mapEntry.value" 
-                     [value]="prdStoreOptionValue.id" (click)="radioButtonChange($event, prdStoreOptionValue);">
-                      {{prdStoreOptionValue.optionValueDescriptionName}} ({{prdStoreOptionValue.pricePrefix}}
-                      {{prdStoreOptionValue.price}}) &nbsp;&nbsp;&nbsp;&nbsp;
-                  </mat-radio-button>
-                </mat-radio-group>
+              </mat-radio-button>
+              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}}) 
               </div>
             </div>
+        </mat-radio-group>
+      </div>
+    </div>
 
-            <div *ngIf="mapEntry.value[0].optionType == 'Text'">
-              <div *ngFor="let prdStoreOptionValue of mapEntry.value">
-                <div fxLayout="row wrap">
-                  <mat-form-field class="w-100 mb-3">
-                    <mat-label> {{mapEntry.key}}</mat-label>
-                    <input matInput type="text" class="form-control" id="model" name="mapEntry.value[i].textOption" 
-                      [(ngModel)]="prdStoreOptionValue.value">
-                  </mat-form-field>
-                  <span style="width:10px;"></span>
-                </div>
-              </div>
-            </div>
+    <div *ngIf="povo.optionType == 'Text'">
+      <div *ngFor="let prdOptionValue of povo.povs">
+        <div fxLayout="row wrap">
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{povo.name}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption" 
+              [(ngModel)]="prdOptionValue.value">
+          </mat-form-field>
+          <span style="width:10px;"></span>
+        </div>
+      </div>
+    </div>
 
-            <div *ngIf="mapEntry.value[0].optionType == 'Textarea'">
-              <div *ngFor="let prdStoreOptionValue of mapEntry.value">
-                <div fxLayout="row wrap">
-                  <mat-form-field class="w-100 mb-3">
-                    <mat-label> {{mapEntry.key}}</mat-label>
-                    <textarea matInput rows="5" cols="25" name="mapEntry.value[i].textArea" [(ngModel)]="prdStoreOptionValue.value"></textarea>
-                  </mat-form-field>
-                  <span style="width:10px;"></span>
-                </div>
-              </div>
-            </div>
+    <div *ngIf="povo.optionType == 'Textarea'">
+      <div *ngFor="let prdOptionValue of povo.povs">
+        <div fxLayout="row wrap">
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{povo.name}}</mat-label>
+            <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea" [(ngModel)]="prdOptionValue.value"></textarea>
+          </mat-form-field>
+          <span style="width:10px;"></span>
+        </div>
+      </div>
+    </div>
 
-            <div *ngIf="mapEntry.value[0].optionType == 'Checkbox'">
-              <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-              <div fxLayout="row wrap">
-                <div *ngFor="let prdStoreOptionValue of mapEntry.value; let i=index;">
-                  <mat-checkbox class="mb-2 d-block" [(ngModel)]="mapEntry.value[i].checked" 
-                  id="{{prdStoreOptionValue.optionValueDescriptionName}}"
-                   name="{{prdStoreOptionValue.optionValueDescriptionName}}" (change)="checkboxChange($event, prdStoreOptionValue);">
-                    {{prdStoreOptionValue.optionValueDescriptionName}} ({{prdStoreOptionValue.pricePrefix}}
-                      {{prdStoreOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
-                  </mat-checkbox>
-                </div>
-                
-              </div>
-            </div>
+    <div *ngIf="povo.optionType == 'Checkbox'">
+      <label style="font-weight: bold;">{{povo.name}}: </label>
+      <div fxLayout="row wrap">
+        <div  class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
+          <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" 
+          id="{{prdOptionValue.name}}" name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
+            {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
 
-            <div *ngIf="mapEntry.value[0].optionType == 'Date'">
-              <div *ngFor="let prdStoreOptionValue of mapEntry.value">
-                <div fxLayout="row wrap">
-                  <mat-form-field class="w-100 mb-3">
-                    <mat-label> {{prdStoreOptionValue.optionDescriptionName}}</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="prdStoreOptionValue.value"
-                      class="form-control" id="value" name="value">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                  <span style="width:10px;"></span>
-                </div>
-              </div>
-            </div>
+    <div *ngIf="povo.optionType == 'Date'">
+      <div *ngFor="let prdOptionValue of povo.povs">
+        <div fxLayout="row wrap">
+          <mat-form-field class="w-100 mb-3">
+            <mat-label> {{prdOptionValue.name}}</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value"
+              class="form-control" id="value" name="value">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <span style="width:10px;"></span>
+        </div>
+      </div>
+    </div>
 
-            <div *ngIf="mapEntry.value[0].optionType == 'Select'">
-              <div fxLayout="row wrap">
-                
-                <mat-form-field class="w-100 mb-3">
-                  <mat-label>{{mapEntry.key}}</mat-label>
-                  <mat-select placeholder="prdStoreOptionValue.optionValueDescriptionName" id="currency" name="currency">
-                    <mat-option *ngFor="let prdStoreOptionValue of mapEntry.value" [value]="prdStoreOptionValue"
-                      (click)="singleSelectionChange($event, prdStoreOptionValue)" >
-                      {{prdStoreOptionValue.optionValueDescriptionName}} ({{prdStoreOptionValue.pricePrefix}}
-                      {{prdStoreOptionValue.price}})
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <span style="width:10px;"></span>
-              </div>
-            </div>
+    <div *ngIf="povo.optionType == 'Select'">
+      <div fxLayout="row wrap">
+        
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>{{povo.name}}</mat-label>
+          <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
+            <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
+              (click)="singleSelectionChange($event, povo, prdOptionValue)" >
+              {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span style="width:10px;"></span>
+      </div>
+    </div>
 
+  </div>
 
-          </div>
+          
           <div class="mb-4" *ngIf="fromPage==='buy'">
             <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
           </div>

@@ -949,6 +949,7 @@ export class ProductOption {
   id: number;
   product: Product;
   option: Options;
+  optionType: string;
   required: number;
   value: string;
   optionName: string;
@@ -958,6 +959,7 @@ export class ProductOption {
   timeHour: number;
 
   productOptionValues: ProductOptionValue[];
+  povs: ProductOptionValue[];
 
   type = 'ProductOption';
 
@@ -970,10 +972,11 @@ export class ProductOption {
 
 export class ProductOptionValue {
   id: number;
-  product: Product;
-  option: Options;
-  productOption: ProductOption;
-  optionValue: OptionValue;
+  ovId: number;
+  optionName: string;
+	name: string;
+	image: string;
+	sortOrder: number;
   points: number;
   pointsPrefix: string;
   price: number;
@@ -982,6 +985,14 @@ export class ProductOptionValue {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+
+  product: Product;
+  option: Options;
+  productOption: ProductOption;
+  optionValue: OptionValue;
+
+  value: string;
+  check: boolean;
 
   type = 'ProductOptionValue';
 
@@ -1056,6 +1067,8 @@ export class ProductDescVO {
   shortDescription: string;
   mediumDescription: string;
   category: string;
+
+  povos: ProductOptionVO[];
 }
 
 export class CartItem {
@@ -1080,9 +1093,12 @@ export class CartItem {
   percentagePrice: number;
   productDiscountId: number;
   taxRules: TaxRule[];
-  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
-  selectedOptions: ProductStoreOptionValueVO [];
+  optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
+  selectedOptions: ProductOptionValue [];
   selectedOptionMap = {};
+
+  povos: ProductOptionVO[];
+  hasOption: number;
 
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -1106,15 +1122,21 @@ export class CartItem {
     this.productDiscountPrice = p.product.productDiscountPrice;
     this.productDiscountId = p.product.productDiscountId;
     this.optionValueDescriptionMaps = p.product.optionValueDescriptionMaps;
-    this.selectedOptions = Object.values(p.product.selectedOptionsMap);
+    if (p.product.selectedOptionsMap) {
+      this.selectedOptions = Object.values(p.product.selectedOptionsMap);
+    }
 
-    this.selectedOptions.forEach(item => {
-      if (this.selectedOptionMap[item.optionDescriptionName] === undefined) {
-        this.selectedOptionMap[item.optionDescriptionName] = [];
-      }
+    if (this.selectedOptions) {
+      this.selectedOptions.forEach(item => {
+        if (this.selectedOptionMap[item.optionName] === undefined) {
+          this.selectedOptionMap[item.optionName] = [];
+        }
 
-      this.selectedOptionMap[item.optionDescriptionName].push(item);
-    });
+        this.selectedOptionMap[item.optionName].push(item);
+      });
+    }
+    this.hasOption = p.product.hasOption;
+    this.povos = p.povos;
   }
 }
 
@@ -1183,7 +1205,7 @@ export class ProductVO {
   fileNames: string[];
   reviews: Review[];
   ratingCountMaps: Map<number, number>;
-  optionValueDescriptionMaps: Map<string, ProductStoreOptionValueVO[]>;
+  optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
   productDimensions: string;
   taxRules: TaxRule[];
   tax: number;
@@ -1194,28 +1216,9 @@ export class ProductVO {
   currencyDecimalPlace: number;
   percentagePrice: number;
   productDiscountId: number;
+  hasOption: number;
 
-  selectedOptionsMap: Map<number, ProductStoreOptionValueVO> = new Map();
-}
-
-export class ProductStoreOptionValueVO {
-  id: number;
-	languageId: number;
-	optionId: number;
-	optionType: string;
-	optionDescriptionName: string;
-	optionValueId: number;
-  optionValueDescriptionName: string;
-  points: number;
-	pointsPrefix: string;
-	price: number;
-	pricePrefix: string;
-	quantity: number;
-	subtract: number;
-	weight: number;
-  weightPrefix: string;
-  value: string;
-  checked: boolean;
+  selectedOptionsMap: Map<number, any> = new Map();
 }
 
 export class Review {
@@ -1784,6 +1787,7 @@ export class ProductOptionVO {
   id: number;
   ptsId: number;
   ptsoId: number;
+  optionType: string;
   option: Options;
   productStoreOption: ProductStoreOption;
   optionValue: OptionValue;
@@ -1795,4 +1799,6 @@ export class ProductOptionVO {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+
+  povs: ProductOptionValue[];
 }
