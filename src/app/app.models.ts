@@ -971,6 +971,7 @@ export class ProductOption {
 
 export class ProductOptionValue {
   id: number;
+  optionId: number;
   ovId: number;
   optionName: string;
 	name: string;
@@ -1786,6 +1787,7 @@ export class ProductOptionVO {
   ptsId: number;
   ptsoId: number;
   optionType: string;
+  name: string;
   option: Options;
   productStoreOption: ProductStoreOption;
   optionValue: OptionValue;
