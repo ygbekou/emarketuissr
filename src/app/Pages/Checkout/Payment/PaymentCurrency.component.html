@@ -49,10 +49,10 @@
         <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
           {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
         </div>
-        <div *ngIf="user.paymentMethodCode === 'TMONEY'">
+        <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
           {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
         </div>
-        <div *ngIf="user.paymentMethodCode === 'FLOOZ'">
+        <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
           {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
         </div>
       </div>
