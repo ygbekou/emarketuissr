@@ -6,7 +6,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
-import { TranslateUniversalLoader } from './Services/translate-universal-loader.service'
+import { TranslateUniversalLoader } from './Services/translate-universal-loader.service';
 
 
 export function translateFactory() {
