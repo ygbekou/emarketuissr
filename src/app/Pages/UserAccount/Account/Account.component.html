@@ -23,7 +23,7 @@
             </div>
             <div fxLayout="row wrap" class="col-gap mx-0">
 
-               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="user-nav-list"
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="15" fxFlex.xl="15" class="user-nav-list"
                   *ngIf="showMenu">
 
                   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="1>0">
@@ -52,7 +52,7 @@
                      </mat-tree-node>
                   </mat-tree>
                </div>
-               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{showMenu?85:100}}" fxFlex.lg="{{showMenu?85:100}}"
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="{{showMenu?85:100}}"
                   fxFlex.xl="{{showMenu?85:100}}" class="user-content-wrapper">
                   <div class="tab-container">
                      <router-outlet></router-outlet>
