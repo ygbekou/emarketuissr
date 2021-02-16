@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { OrderSearchCriteria, Order, OnlineOrderVO, ProductDescVO, OrderProduct, CartItem, ProductSearchCriteria } from 'src/app/app.models';
+import { Component, OnInit } from '@angular/core';
+import { OrderSearchCriteria, OnlineOrderVO, ProductDescVO, OrderProduct, CartItem, ProductSearchCriteria } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';

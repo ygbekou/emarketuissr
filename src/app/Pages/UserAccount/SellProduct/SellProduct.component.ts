@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, SearchCriteria } from 'src/app/app.models';
+import { CategoryDescription, ProductDescription, Product, ProductToCategory, Category, Store, Pagination, ProductToStore, SearchCriteria, StoreSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
@@ -111,19 +111,34 @@ export class SellProductComponent extends BaseComponent implements OnInit {
         () => console.log('Get all CategoryDescription complete'));
   }
 
-  getStores() {
-    const userId = Number(this.appService.tokenStorage.getUserId());
-    if (userId > 0) {
-      const parameters: string[] = [];
-      parameters.push('e.owner.id = |userId|' + userId + '|Integer');
-      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
-        .subscribe((data: Store[]) => {
-          this.stores = data;
-        },
-          error => console.log(error),
-          () => console.log('Get all Store complete for userId=' + userId));
-    }
+  /*   getStores() {
+      const userId = Number(this.appService.tokenStorage.getUserId());
+      if (userId > 0) {
+        const parameters: string[] = [];
+        parameters.push('e.owner.id = |userId|' + userId + '|Integer');
+        this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
+          .subscribe((data: Store[]) => {
+            this.stores = data;
+          },
+            error => console.log(error),
+            () => console.log('Get all Store complete for userId=' + userId));
+      }
+    } */
+
+  private getStores() {
+    const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+    storeSearchCriteria.status = 1;
+    storeSearchCriteria.aprvStatus = 1;
+    storeSearchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+    console.log(storeSearchCriteria);
+    this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
   }
+
   getParentCategoryDescriptions() {
     this.depth = 0;
     this.categories = [];
@@ -319,6 +334,8 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.sortOrder = 0;
     this.productStore.price = this.productDesc.product.price ?
       this.productDesc.product.price : 0;
+    this.productStore.vipPrice = this.productDesc.product.price ?
+      this.productDesc.product.price : 0;
     this.productStore.points = Number(
       this.productDesc.product.price ?
         this.productDesc.product.price.toFixed(0) : 0);
@@ -337,6 +354,8 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.quantity = 0;
     this.productStore.sortOrder = 0;
     this.productStore.price = this.productDesc.product.price ?
+      this.productDesc.product.price : 0;
+    this.productStore.vipPrice = this.productDesc.product.price ?
       this.productDesc.product.price : 0;
     this.productStore.points = Number(
       this.productDesc.product.price ?

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CategoryDescription, ProductDescription, Product, Store, Pagination,
-  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO, SearchCriteria
+  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO, SearchCriteria, StoreSearchCriteria
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -115,7 +115,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     this.getProducts(store);
   }
-
+/* 
   getStores() {
     const userId = Number(this.appService.tokenStorage.getUserId());
     if (userId > 0) {
@@ -134,7 +134,27 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
           error => console.log(error),
           () => console.log('Get all Store complete for userId=' + userId));
     }
+  } */
+
+  private getStores() {
+    const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+    storeSearchCriteria.status = 1;
+    storeSearchCriteria.aprvStatus = 1;
+    storeSearchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+    console.log(storeSearchCriteria);
+    this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+        if (this.stores.length > 0) {
+          this.selectedStore = this.stores[0];
+          this.getProducts(this.stores[0]);
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
   }
+
+
 
   getProducts(store: Store) {
     this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',

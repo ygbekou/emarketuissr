@@ -108,7 +108,7 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
         this.orderHistory.order.id = this.order.id;
         this.orderHistory.user.id = Number(this.appService.tokenStorage.getUserId());
         if (!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0)) {
-          this.orderHistory.orderStatus.id = this.order.orderStatus.id;
+          this.orderHistory.orderStatus = this.order.orderStatus;
         }
 
         this.setToggleValues();

@@ -27,8 +27,8 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
   isAdmin = false;
 
   constructor(public appService: AppService,
-      public translate: TranslateService,
-      private activatedRoute: ActivatedRoute) {
+    public translate: TranslateService,
+    private activatedRoute: ActivatedRoute) {
     super(translate);
   }
 
@@ -53,7 +53,7 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
       .subscribe((data: any[]) => {
         this.order = data[0];
         if (data.length > 0) {
-          console.log(this.order)
+          console.log(this.order);
         } else {
           this.translate.get(['MESSAGE.NO_OPEN_ORDER', 'MESSAGE.NO_RESULT_FOUND']).subscribe(res => {
             this.messages = res['MESSAGE.NO_OPEN_ORDER'];
@@ -71,8 +71,8 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
       .subscribe((data: CancellationReason[]) => {
         this.cancellationReasons = data;
       },
-    error => console.log(error),
-    () => console.log('Get all CancellationReasons complete'));
+        error => console.log(error),
+        () => console.log('Get all CancellationReasons complete'));
   }
 
 
@@ -87,6 +87,9 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
           // there was an issue.
           this.translate.get(['MESSAGE.' + data.errors[0]]).subscribe(res => {
             this.errors = res['MESSAGE.' + data.errors[0]];
+            if (data.errors[0] === 'ORDER_CANCELLED_NO_REFUND') {
+              this.action = 'cancelled';
+            }
           });
         } else {
           this.action = 'cancelled';
