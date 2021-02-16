@@ -1,7 +1,7 @@
 <div class="container">
   <div fxLayout="row wrap" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <app-PaymentCards [paymentType]="'CREDIT_CARD'" [userId]="userId"
+      <app-PaymentCards [paymentType]="'CREDIT_CARD'" [userId]="userId" [deliveryMode]="deliveryMode"
         (changePaymentMethodEvent)="onCardMethodSelected($event)"></app-PaymentCards>
       <div>
         <mat-accordion>
@@ -17,7 +17,7 @@
       </div>
 
       <br />
-      <app-Tmoneys #TmoneysComponent [paymentType]="'Tmoney'" [userId]="userId"
+      <app-Tmoneys #TmoneysComponent [paymentType]="'Tmoney'" [userId]="userId" [deliveryMode]="deliveryMode"
         (changePaymentMethodEvent)="onTmoneyMethodSelected($event)"></app-Tmoneys>
       <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -32,7 +32,7 @@
       </mat-accordion>
 
       <br />
-      <app-Tmoneys #FloozsComponent [paymentType]="'Flooz'" [userId]="userId"
+      <app-Tmoneys #FloozsComponent [paymentType]="'Flooz'" [userId]="userId" [deliveryMode]="deliveryMode"
         (changePaymentMethodEvent)="onFloozMethodSelected($event)"></app-Tmoneys>
       <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -58,11 +58,5 @@
       </ng-container>
 
     </div>
-
-    <!-- 
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-      <button mat-flat-button color="primary"
-        [routerLink]="['/checkout/payment']">{{'COMMON.CONTINUE'|translate}}</button>
-    </div> -->
   </div>
 </div>

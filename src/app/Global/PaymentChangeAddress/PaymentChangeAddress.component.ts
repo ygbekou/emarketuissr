@@ -13,6 +13,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
 
    @ViewChild(AddressesComponent, { static: false }) paymentAddresses: AddressesComponent;
    addressType = 0;
+   deliveryMode: string;
    panelOpenState = false;
    @Input() userId: number;
 
@@ -21,16 +22,16 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
       private route: ActivatedRoute,
       public translate: TranslateService
    ) {
-      this.route.queryParams.forEach(queryParams => {
-         if (+queryParams['addressType'] > 0) {
-            this.addressType = +queryParams['addressType'];
-         }
-      });
 
    }
 
    ngOnInit() {
-
+      this.route.queryParams.forEach(queryParams => {
+         if (+queryParams['addressType'] > 0) {
+            this.addressType = +queryParams['addressType'];
+            this.deliveryMode = queryParams['deliveryMode'];
+         }
+      });
    }
 
    ngAfterViewInit() {

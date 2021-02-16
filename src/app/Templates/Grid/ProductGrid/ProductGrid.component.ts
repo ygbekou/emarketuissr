@@ -62,8 +62,8 @@ export class ProductGridComponent implements OnInit {
       if (!(document.getElementById(parentClass).classList.contains('wishlist-active'))) {
          let element = document.getElementById(parentClass).className += " wishlist-active";
       }
-      const ci = new CartItem(value);
-      this.addToWishList.emit(ci);
+      //const ci = new CartItem(value);
+      this.addToWishList.emit(value);
    }
 
    public checkCartAlready(singleProduct) {

@@ -251,7 +251,7 @@ export class ProductsListComponent implements OnInit {
          this.appService.productOptionPopup(value).
          subscribe(res => { this.popupResponse = res; },
             err => console.log(err),
-            () => this.getPopupResponse(this.popupResponse, value)
+            () => this.getCartPopupResponse(this.popupResponse, value)
          );
       } else {
          const ci = new CartItem(value);
@@ -259,7 +259,7 @@ export class ProductsListComponent implements OnInit {
       }
    }
 
-   public getPopupResponse(response: any, value: any) {
+   public getCartPopupResponse(response: any, value: any) {
       if (response) {
          const ci = new CartItem(value);
          this.appService.addToCart(ci);
@@ -267,7 +267,23 @@ export class ProductsListComponent implements OnInit {
    }
 
    public addToWishList(value) {
-      this.appService.addToWishlist(value);
+      if (value.product.hasOption === 1) {
+         this.appService.productOptionPopup(value).
+         subscribe(res => { this.popupResponse = res; },
+            err => console.log(err),
+            () => this.getWishPopupResponse(this.popupResponse, value)
+         );
+      } else {
+         const ci = new CartItem(value);
+         this.appService.addToWishlist(ci);
+      }
+   }
+
+   public getWishPopupResponse(response: any, value: any) {
+      if (response) {
+         const ci = new CartItem(value);
+         this.appService.addToWishlist(ci);
+      }
    }
 
    public transformHits(hits) {

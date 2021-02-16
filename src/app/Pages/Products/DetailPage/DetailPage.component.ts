@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { ProductDescVO, Language, ProductSearchCriteria } from 'src/app/app.models';
+import { ProductDescVO, Language, ProductSearchCriteria, CartItem } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
@@ -21,6 +21,7 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
    public viewCol = 25;
    products: ProductDescVO[] = [];
    product: ProductDescVO;
+   popupResponse: any;
 
    constructor(public appService: AppService,
       public translate: TranslateService,
@@ -114,14 +115,43 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
 
 
    public addToCart(value) {
-      /* const ci = new CartItem(value);
-      ci.quantity = 1; */
-      this.appService.addToCart(value);
+      if (value.product.hasOption === 1) {
+         this.appService.productOptionPopup(value).
+         subscribe(res => { this.popupResponse = res; },
+            err => console.log(err),
+            () => this.getCartPopupResponse(this.popupResponse, value)
+         );
+      } else {
+         const ci = new CartItem(value);
+         this.appService.addToCart(ci);
+      }
    }
 
-   public addToWishList(value) {/* 
-      const ci = new CartItem(value); */
-      this.appService.addToWishlist(value);
+   public getCartPopupResponse(response: any, value: any) {
+      if (response) {
+         const ci = new CartItem(value);
+         this.appService.addToCart(ci);
+      }
+   }
+
+   public addToWishList(value) {
+      if (value.product.hasOption === 1) {
+         this.appService.productOptionPopup(value).
+         subscribe(res => { this.popupResponse = res; },
+            err => console.log(err),
+            () => this.getWishPopupResponse(this.popupResponse, value)
+         );
+      } else {
+         const ci = new CartItem(value);
+         this.appService.addToWishlist(ci);
+      }
+   }
+
+   public getWishPopupResponse(response: any, value: any) {
+      if (response) {
+         const ci = new CartItem(value);
+         this.appService.addToWishlist(ci);
+      }
    }
 
 }

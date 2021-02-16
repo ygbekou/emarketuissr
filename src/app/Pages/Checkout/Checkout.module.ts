@@ -25,7 +25,8 @@ import { MatButtonModule,
 	MatSliderModule,
 	MatRadioModule,
 	MatDialogModule,
-	MatGridListModule
+	MatGridListModule,
+   MatStepperModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardModule } from 'ngx-card/ngx-card';
@@ -39,8 +40,8 @@ import { FinalReceiptComponent } from './FinalReceipt/FinalReceipt.component';
 import { GlobalModule } from '../../Global/Global.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CartModule } from '../Cart/Cart.module';
-import { PaymentChangeAddressComponent } from 'src/app/Global/PaymentChangeAddress/PaymentChangeAddress.component';
 import { PaymentCurrencyComponent } from './Payment/PaymentCurrency.component';
+import { PaymentDeliveryStepper } from './Payment/PaymentDeliveryStepper.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { PaymentCurrencyComponent } from './Payment/PaymentCurrency.component';
       MatDialogModule,
       MatGridListModule,
       MatSlideToggleModule,
+      MatStepperModule,
       RouterModule.forChild(CheckoutRoutes),
       GlobalModule,
       FormsModule,
@@ -84,7 +86,8 @@ import { PaymentCurrencyComponent } from './Payment/PaymentCurrency.component';
       PaymentComponent,
       SigninComponent,
       FinalReceiptComponent,
-      PaymentCurrencyComponent
+      PaymentCurrencyComponent,
+      PaymentDeliveryStepper
    ]
 })
 export class CheckoutModule { }

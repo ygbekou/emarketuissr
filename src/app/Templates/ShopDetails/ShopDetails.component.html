@@ -124,7 +124,7 @@
                       {{prdOptionValue.name}}
                     </div>
               </mat-radio-button>
-              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
                 ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}}) 
               </div>
             </div>
@@ -163,7 +163,10 @@
         <div  class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" 
           id="{{prdOptionValue.name}}" name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
-            {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
+            {{prdOptionValue.name}} 
+            <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
+              ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
+            </div>
           </mat-checkbox>
         </div>
       </div>

@@ -16,13 +16,11 @@ export class PaymentCardsComponent implements OnInit {
   creditCardsDataSource: MatTableDataSource<CreditCard>;
   selectedCard: CreditCard;
 
-  @Input()
-  paymentType: string;
+  @Input() paymentType: string;
   panelOpenState = false;
-  @Output()
-  changePaymentMethodEvent = new EventEmitter<any>();
-  @Input()
-  userId;
+  @Output() changePaymentMethodEvent = new EventEmitter<any>();
+  @Input() userId;
+  @Input() deliveryMode;
 
   creditCards: CreditCard[] = [];
   error: string;
@@ -35,16 +33,13 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.creditCardsDataSource = new MatTableDataSource();
-
 
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     }
 
     this.getCreditCards();
-
   }
 
   public delete(cardId: string) {

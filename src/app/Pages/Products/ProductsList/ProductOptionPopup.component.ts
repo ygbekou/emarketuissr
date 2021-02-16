@@ -41,12 +41,12 @@ export class ProductOptionPopupComponent implements OnInit {
     this.updatePriceWithOptions();
   }
 
-   radioButtonChange( event, prdOption: ProductOption, prdOptionValue: ProductOptionValue ) {
-      const optionKey = prdOption.id;
-      this.productDesc.product.selectedOptionsMap[optionKey] = prdOptionValue;
+  radioButtonChange( event, prdOption: ProductOption, prdOptionValue: ProductOptionValue ) {
+    const optionKey = prdOption.id;
+    this.productDesc.product.selectedOptionsMap[optionKey] = prdOptionValue;
 
-      this.updatePriceWithOptions();
-   }
+    this.updatePriceWithOptions();
+  }
 
    singleSelectionChange(event, prdOption: ProductOption, prdOptionValue: ProductOptionValue ) {
       const optionKey = prdOption.id;

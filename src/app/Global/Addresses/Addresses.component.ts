@@ -18,6 +18,7 @@ export class AddressesComponent implements OnInit {
   panelOpenState = false;
   @Input() userId;
   @Input() addressType;
+  @Input() deliveryMode;
   @ViewChild('shippingAddressComponent', { static: false }) shippingAddressComponent: AddressComponent;
   @ViewChild('shippingExpansionPanelElement', { static: false }) shippingExpansionPanelElement: MatExpansionPanel;
 
@@ -65,7 +66,7 @@ export class AddressesComponent implements OnInit {
     address.addressType = this.addressType;
     this.appService.saveWithUrl('/service/catalog/setShipPayAddress/', address)
       .subscribe((data) => {
-        this.router.navigate(['/checkout/payment']);
+        this.router.navigate(['/checkout/payment'], { queryParams: { deliveryMode: this.deliveryMode } });
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));

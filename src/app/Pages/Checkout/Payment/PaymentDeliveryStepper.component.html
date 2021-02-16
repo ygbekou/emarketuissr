@@ -1,0 +1,75 @@
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step >
+        <ng-template matStepLabel>{{'COMMON.DELIVERY_MODE'|translate}}</ng-template>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
+            <mat-radio-button  value="0" >
+              {{'COMMON.SHIP_TO_ME'|translate}}
+            </mat-radio-button>
+            <mat-radio-button  value="1">
+              {{'COMMON.I_PICKUP'|translate}}
+            </mat-radio-button> 
+          </mat-radio-group> 
+        </div>
+      </mat-step>
+      <mat-step [optional]="true" *ngIf="!user.shippingAddress && pickUp === '0'">
+        <ng-template matStepLabel>{{'COMMON.SHIPPING_ADDRESS'|translate}}</ng-template>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
+            <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1, deliveryMode: pickUp}"
+              routerLinkActive="tab-active">{{'COMMON.ADD' | translate}}</a>
+          </div>
+          <div *ngIf="user.shippingAddress && pickUp==='0'">
+            {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
+            {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
+            {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
+            {{user.shippingAddress.postCode}}<br />
+            {{user.shippingAddress.country.name}}<br />
+          </div>
+        </div>
+      </mat-step>
+      <mat-step [optional]="true" *ngIf="!user.billingAddress">
+        <ng-template matStepLabel>{{'COMMON.BILLING_ADDRESS'|translate}}</ng-template>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2, deliveryMode: pickUp}"
+              routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
+          </div>
+          <div *ngIf="user.billingAddress">
+            {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
+            {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br />
+            {{user.billingAddress.city}}, {{user.billingAddress.zone.name}}
+            {{user.billingAddress.postCode}}<br />
+            {{user.billingAddress.country.name}}<br>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step *ngIf="!hasPaymentMethod()">
+        <ng-template matStepLabel>{{'COMMON.PAYMENT_METHOD'|translate}}</ng-template>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{
+                  user.paymentMethodCode==='CREDIT_CARD'?('COMMON.CREDIT_CARD' | translate):
+                  user.paymentMethodCode}}</h6>
+            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
+              routerLinkActive="tab-active" *ngIf="hasPaymentMethod()">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode, deliveryMode: pickUp}"
+              routerLinkActive="tab-active" *ngIf="!hasPaymentMethod()">{{'COMMON.ADD' | translate}}</a>
+          </div>
+          <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
+            {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
+          </div>
+          <div *ngIf="user.paymentMethodCode === 'TMONEY'">
+            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
+          </div>
+          <div *ngIf="user.paymentMethodCode === 'FLOOZ'">
+            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+

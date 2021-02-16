@@ -3,7 +3,7 @@
    {{count}}" matBadgePosition="after" matBadgeColor="accent">
       <i class="material-icons notranslate">
          shopping_cart
-      </i>
+      </i>     
    </button>
    <mat-menu #viewdropmenu="matMenu">
       <ng-container *ngIf="(cartProducts && cartProducts.length > 0); else elseBlock">
@@ -25,7 +25,8 @@
                         class="material-icons">
                         remove_shopping_cart
                      </i> </button>
-                  <button mat-mini-fab mat-raised-button color="primary" [routerLink]="['/checkout/payment']"><i
+                  <button mat-mini-fab mat-raised-button color="primary" 
+                  [routerLink]="['/checkout/payment']" [queryParams]="{deliveryMode: '0'}"><i
                         class="material-icons">
                         edit
                      </i></button>
@@ -34,10 +35,10 @@
          </div>
          <div class="footer-menu px-3 pb-2 pt-2">
             <button mat-raised-button color="accent" class="w-100" *ngIf="appService.tokenStorage.getUserId() !== null"
-               [routerLink]="['/checkout']">{{'COMMON.CHECKOUT'|translate}}</button>
+               [routerLink]="['/checkout/payment']" [queryParams]="">{{'COMMON.CHECKOUT'|translate}}</button>
             <button mat-raised-button color="accent" class="w-100" *ngIf="appService.tokenStorage.getUserId() === null"
                [routerLink]="['/session/signin']"
-               [queryParams]="{fromPage:'checkout'}">{{'COMMON.CHECKOUT'|translate}}</button>
+               [queryParams]="{fromPage:'checkout', deliveryMode: '0'}">{{'COMMON.CHECKOUT'|translate}}</button>
          </div>
       </ng-container>
       <ng-template #elseBlock>

@@ -17,13 +17,10 @@ export class TmoneysComponent implements OnInit {
 
   panelOpenState = false;
 
-  @Input()
-  paymentType: string;
-  @Input()
-  userId;
-
-  @Output()
-  changePaymentMethodEvent = new EventEmitter<any>();
+  @Input() paymentType: string;
+  @Input() userId;
+  @Input() deliveryMode: string;
+  @Output() changePaymentMethodEvent = new EventEmitter<any>();
 
   tmoneys: Tmoney[] = [];
   error: string;

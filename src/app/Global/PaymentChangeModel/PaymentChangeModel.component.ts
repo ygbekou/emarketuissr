@@ -19,6 +19,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    paymentMethodChange: PaymentMethodChangeVO = new PaymentMethodChangeVO();
    paypalMethodStatus: number;
+   deliveryMode: string;
    panelOpenState = false;
 
    @Input()
@@ -31,6 +32,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    ) {
       this.activatedRoute.queryParams.forEach(queryParams => {
          this.paypalMethodStatus = queryParams['paymentMethodCode'] === 'PAYPAL' ? 1 : undefined;
+         this.deliveryMode = queryParams['deliveryMode'];
       });
    }
 
@@ -55,7 +57,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
       this.floozsComponent.getTmoneys();
       this.tmoneysComponent.getTmoneys();
       this.paypalMethodStatus = 0;
-      this.router.navigate(['/checkout/payment']);
+      this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
    }
 
 

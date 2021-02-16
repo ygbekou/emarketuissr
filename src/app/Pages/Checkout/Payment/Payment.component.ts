@@ -1,9 +1,11 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User, Address, CreditCard, Order } from 'src/app/app.models';
+import { PaymentCurrencyComponent } from './PaymentCurrency.component';
+import { OptionValueComponent } from 'src/app/AdminPanel/Products/OptionValue/OptionValue.component';
 
 @Component({
    selector: 'app-Payment',
@@ -11,6 +13,8 @@ import { User, Address, CreditCard, Order } from 'src/app/app.models';
    styleUrls: ['./Payment.component.scss']
 })
 export class PaymentComponent implements OnInit, AfterViewInit {
+
+   @ViewChild(PaymentCurrencyComponent, { static: false }) paymentCurrencyComponent: PaymentCurrencyComponent;
 
    step = 0;
    isDisabledPaymentStepTwo = true;
@@ -24,10 +28,13 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    order: Order;
    orderTotal: number;
+   allStepDone: boolean;
+   deliveryMode: '0'|'1';
 
    constructor(public appService: AppService,
       public router: Router,
-      public translate: TranslateService
+      public translate: TranslateService,
+      private activatedRoute: ActivatedRoute
    ) {
 
       this.appService.removeBuyProducts();
@@ -39,7 +46,19 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
+      this.deliveryMode = undefined;
+      this.activatedRoute.params.subscribe(params => {
+         this.activatedRoute.queryParams.forEach(queryParams => {
+            if (queryParams['deliveryMode'] !== undefined) {
+               this.deliveryMode = queryParams['deliveryMode'];
+               this.paymentCurrencyComponent.pickUp = this.deliveryMode;
+            }
+         });
+      });
+
+
       this.appService.recalculateCart(true);
+
    }
 
    ngAfterViewInit() {
@@ -78,6 +97,13 @@ export class PaymentComponent implements OnInit, AfterViewInit {
          });
       }
    }
+
+
+   setAllStepDone(deliveryInfo: any) {
+      this.allStepDone = deliveryInfo.status;
+      this.deliveryMode = deliveryInfo.deliveryMode;
+   }
+
 
 }
 

@@ -6,10 +6,11 @@
 </div>
   <div class="checkout-option">
     <div class="container" *ngIf="isUserLoggedIn()">
-      <mat-tab-group>
+      <app-Payment-DeliveryStepper [pickUp]="deliveryMode" (setAllStepDone)="setAllStepDone($event)" *ngIf="!allStepDone"></app-Payment-DeliveryStepper>
+      <mat-tab-group  *ngIf="allStepDone">
         <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].currencyCode}}"
           *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
-          <app-Payment-Currency (orderCompleteEvent)="updateOrder($event)" [currencyId]="item.key">
+          <app-Payment-Currency [pickUp]="deliveryMode" (orderCompleteEvent)="updateOrder($event)" [currencyId]="item.key">
           </app-Payment-Currency>
         </mat-tab>
       </mat-tab-group>

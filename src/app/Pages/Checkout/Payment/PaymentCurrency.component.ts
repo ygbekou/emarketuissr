@@ -24,7 +24,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    order: Order;
    orderTotal: number;
-   pickUp: '0' | '1' = '0';
+   @Input() pickUp: '0' | '1';
+   allStepDone = false;
 
    @Input()
    currencyId: number;
@@ -208,6 +209,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.orderCompleteEvent.emit(order);
       }
    }
+
 }
 
 

@@ -232,7 +232,7 @@ export class AppService {
       let found = false;
       let index = 0;
       for (const ci of cartItems) {
-         if (ci.ptsId === data.ptsId) {
+         if (data.hasOption === 0 && ci.ptsId === data.ptsId) {
             cartItems[index].quantity += (data.quantity ? data.quantity : 1);
             cartItems[index].total = this.calculateCartItemTotal(cartItems[index]);
 
