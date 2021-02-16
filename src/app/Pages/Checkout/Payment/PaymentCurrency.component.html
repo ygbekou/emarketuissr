@@ -16,7 +16,7 @@
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1, deliveryMode: pickUp}"
               routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1, deliveryMode: pickUp}"
-              routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.ADD' | translate}}</a>
+              routerLinkActive="tab-active" *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
 
           </div>
           <div *ngIf="user.shippingAddress && pickUp==='0'">
