@@ -28,7 +28,7 @@ export class ProductOptionPopupComponent implements OnInit {
   checkboxChange(event, prdOption: ProductOption, prdOptionValue: ProductOptionValue ) {
 
     const optionKey = prdOption.id + '|' + prdOptionValue.ovId;
-    if (this.productDesc.product.product.selectedOptionsMap[optionKey] === undefined) {
+    if (this.productDesc.product.selectedOptionsMap[optionKey] === undefined) {
         if (event.checked) {
           this.productDesc.product.selectedOptionsMap[optionKey] = prdOptionValue;
         }
@@ -76,8 +76,5 @@ export class ProductOptionPopupComponent implements OnInit {
     const ci = new CartItem(value);
     this.appService.addToCart(ci);
   }
-
-  
-
 
 }
