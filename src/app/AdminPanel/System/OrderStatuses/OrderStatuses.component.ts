@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./OrderStatuses.component.scss']
 })
 export class OrderStatusesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'language', 'description', 'status', 'actions'];
   dataSource: MatTableDataSource<OrderStatus>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -88,7 +88,7 @@ export class OrderStatusesComponent implements OnInit {
     this.errors = '';
     try {
       this.messages = '';
-      console.log(this.orderStatus);
+      this.orderStatus.status = (this.orderStatus.status == null || this.orderStatus.status.toString() === 'false') ? 0 : 1;
       const index: number = this.dataSource.data.indexOf(this.orderStatus);
       this.appService.save(this.orderStatus, 'OrderStatus')
         .subscribe(result => {

@@ -43,6 +43,7 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   getOrderStatuses() {
     const parameters: string[] = [];
     parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
+    parameters.push('e.status = |staCode|1|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderStatus', parameters)
       .subscribe((data: OrderStatus[]) => {
         this.orderStatuses = data;
