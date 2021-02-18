@@ -494,6 +494,7 @@ export class OrderStatus {
   name: string;
   language: Language;
   description: string;
+  status: number;
   type = 'OrderStatus';
 }
 
