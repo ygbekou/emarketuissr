@@ -1612,7 +1612,7 @@ export class ProductSearchCriteria {
     public marketingId: number,
     public catId: number,
     public searchText: string,
-    public fromWeb = 1,
+    public fromWeb: number,
     public productId: number,
     public topN: number,
     public userId: number

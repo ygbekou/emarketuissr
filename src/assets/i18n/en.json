@@ -34,6 +34,7 @@
 		"SEND_SMS_NEW_ORDER": "Send SMS for new orders", 
 		"SEND_SMS_ORDER_CANCEL": "Send SMS for cancelled orders",
 		"SEND_SMS_LOW_INVN": "Send SMS for low inventory",
+		"LOW_STOCK":"Low stock",
 		"GADGETS": "Gadgets",
 		"ACCESSORIES": "Accessories",
 		"CATEGORIES": "Categories",

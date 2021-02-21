@@ -6,6 +6,7 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "LOW_STOCK":"Inventaire bas",
     "NONE": "Aucun",
     "HOUR": "Heure", 
     "USE_CARD": "Utiliser la carte",

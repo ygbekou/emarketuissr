@@ -144,8 +144,8 @@ export class ProductsListComponent implements OnInit {
    getProducts() {
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
          new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
-            this.storeId, this.marketId, this.catId, this.searchText, 0, 0, 0, 0)
-      ).subscribe((data: ProductListVO) => {;
+            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0)
+      ).subscribe((data: ProductListVO) => {
             this.applyGridFilter(data);
          },
             error => console.log(error),

@@ -11,16 +11,21 @@
          <div style="text-align: center; width: 100%!important; box-sizing: border-box;">
             <a class="p-link" *ngIf="prd.product?.id && fromPage!=='sell'"
                [routerLink]="['/products/dtl/'+prd.product?.id+(prd.product?.ptsId?'/'+prd.product?.ptsId:'')]">
-               <img mat-card-image [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')" alt="Photo">
+               <img mat-card-image
+                  [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')"
+                  alt="Photo">
             </a>
 
             <a class="p-link" *ngIf="prd.product?.id && fromPage==='sell'" style="cursor:pointer;"
                (click)="selectForSaleProduct(prd)">
-               <img mat-card-image [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')" alt="Photo">
+               <img mat-card-image
+                  [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')"
+                  alt="Photo">
             </a>
 
             <a class="p-link" *ngIf="!prd.product?.id" [routerLink]="['/products/accessories/17']">
-               <img mat-card-image [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')"
+               <img mat-card-image
+                  [src]="'assets/images/products/'+(prd.product?.image?(prd.product.id+'/'+prd.product?.image):'default.png')"
                   [ngClass]="{ transparent: !loaded }" (load)="onLoad()" alt="Photo">
             </a>
          </div>
@@ -41,6 +46,26 @@
             </h5>
             <h5 *ngIf="!prd.product?.id"><a [routerLink]="['/products/accessories/17']"
                   class="title-link">{{prd?.name}}</a> </h5>
+
+            <h6 class="danger-color" *ngIf="fromPage==='sell' && prd.product.quantity<=0">
+               
+               <font style="color: red;">
+                  {{'COMMON.OUT_OF_STOCK'|translate}}: {{prd.product.quantity}}
+               </font>
+            </h6>
+
+            <h6 class="accent-color"
+               *ngIf="fromPage==='sell' && prd.product.quantity>0 && prd.product.quantity<prd.product.minimum">
+               {{'COMMON.LOW_STOCK'|translate}}: {{prd.product.quantity}}
+            </h6>
+
+            <h6 class="success-color" *ngIf="fromPage==='sell'&& prd.product.quantity>prd.product.minimum">
+               <font style="color: green;">
+                  Stock: {{prd.product.quantity}}
+               </font>
+
+            </h6>
+
             <font style="font-style: italic;font-size: 10px;">
                {{'COMMON.SOLD_BY'|translate}}
                <a [routerLink]="['/products']" [queryParams]="{storeId:prd.product.storeId}"
