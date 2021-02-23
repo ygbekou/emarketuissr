@@ -23,6 +23,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    error: string;
 
    order: Order;
+   shouldNotify: false;
    orderTotal: number;
    @Input() pickUp: '0' | '1';
    allStepDone = false;
@@ -48,7 +49,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
 
-
+      if (!this.order) {
+         this.order = new Order();
+      }
 
    }
 
@@ -106,7 +109,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    placeYourOrder() {
       const orderId = this.order ? this.order.id : null;
-      this.order = new Order();
+      //this.order = new Order();
       this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
@@ -211,7 +214,52 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       }
    }
 
+   public setDestMessage() {
+      console.log(this.notify);
+      if (this.notify) {
+         if (this.user.shippingAddress && this.user.shippingAddress.phone) {
+            this.order.shippingCustomField = ('+' + this.user.shippingAddress.country.code) +
+               this.user.shippingAddress.phone;
+         } else {
+            this.order.shippingCustomField =
+
+               (this.user.shippingAddress && this.user.shippingAddress.country) ?
+                  ('+' + this.user.shippingAddress.country.code) : '';
+         }
+
+         this.order.customField = this.getNoteToRecipient();
+      } else {
+         this.order.customField = '';
+      }
+
+   }
+
+
+   public getNoteToRecipient(): string {
+
+      let hi = '';
+      let thank = '';
+      let pickup = '';
+      let delivery = '';
+
+      this.translate.get(['COMMON.HI', 'COMMON.ERROR']).subscribe((res) => {
+         hi = res['COMMON.HI'];
+      });
+      this.translate.get(['COMMON.THANK_YOU', 'COMMON.ERROR']).subscribe((res) => {
+         thank = res['COMMON.THANK_YOU'];
+      });
+      this.translate.get(['MESSAGE.BOUGHT_FOR_PICKUP', 'COMMON.ERROR']).subscribe((res) => {
+         pickup = res['MESSAGE.BOUGHT_FOR_PICKUP'];
+      });
+      this.translate.get(['MESSAGE.BOUGHT_FOR_DELIVERY', 'COMMON.ERROR']).subscribe((res) => {
+         delivery = res['MESSAGE.BOUGHT_FOR_DELIVERY'];
+      });
+
+      let buff = hi + ' '
+         + (this.user.shippingAddress ? this.user.shippingAddress.firstName : '') + '. '
+         + (this.pickUp ? pickup : delivery) + ' '
+      return buff;
+   }
+
 }
-
-
 

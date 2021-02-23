@@ -19,7 +19,8 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   messages = '';
   errors = '';
-  orderStatuses: OrderStatus[];
+  orderStatuses: OrderStatus[] = [];
+  filteredOrderStatuses: OrderStatus[] = [];
 
   orderHistory: OrderHistory = new OrderHistory();
 
@@ -47,6 +48,7 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
     this.appService.getAllByCriteria('com.softenza.emarket.model.OrderStatus', parameters)
       .subscribe((data: OrderStatus[]) => {
         this.orderStatuses = data;
+        this.filterOrderStatuses();
       },
         error => console.log(error),
         () => console.log('Get all OrderStatus complete'));
@@ -98,6 +100,8 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   save() {
     this.messages = '';
     this.errors = '';
+
+    console.log(this.orderHistory)
     if ((!this.orderHistory.orderStatus || !(this.orderHistory.orderStatus.id > 0))
       && (!this.orderHistory.comment || this.orderHistory.comment.trim() === '')) {
       this.translate.get(['VALIDATION.COMMENT_OR_STATUS', 'COMMON.SUCCESS']).subscribe(res => {
@@ -117,8 +121,10 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
           .subscribe(result => {
             this.processResult(result, this.order, null);
             if (result.id > 0) {
+              this.order.orderStatus = this.orderHistory.orderStatus;
               this.orderHistory = new OrderHistory();
               this.getOrderHistories();
+              this.filterOrderStatuses();
             }
           });
 
@@ -145,6 +151,37 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
     } else {
       this.canEdit = false;
     }
+  }
+
+  public filterOrderStatuses() {
+    this.filteredOrderStatuses = [];
+    this.orderStatuses.forEach( orderStatus => {
+      if (orderStatus.name === 'SHIPPED' || orderStatus.name === 'DELIVERED' || orderStatus.name === 'PROCESSING') {
+        this.filteredOrderStatuses.push(orderStatus);
+      }
+    });
+    // }
+    // if (this.order.orderStatus.name === 'SHIPPED') {
+    //   this.orderStatuses.forEach( orderStatus => {
+    //     if (orderStatus.name === 'PROCESSING' || orderStatus.name === 'DELIVERED') {
+    //       this.filteredOrderStatuses.push(orderStatus);
+    //     }
+    //   });
+    // }
+    // if (this.order.orderStatus.name === 'DELIVERED') {
+    //   this.orderStatuses.forEach( orderStatus => {
+    //     if (orderStatus.name === 'PROCESSING' || orderStatus.name === 'SHIPPED') {
+    //       this.filteredOrderStatuses.push(orderStatus);
+    //     }
+    //   });
+    // }
+    return this.filteredOrderStatuses;
+  }
+
+
+  public onToggleGroupChange(event) {
+    this.orderHistory.orderStatus = event.value;
+
   }
 
 }

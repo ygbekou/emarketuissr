@@ -729,6 +729,7 @@ export class Address {
   billTo: number;
   shipTo: number;
   zone: Zone;
+  phone: string;
   status = 0;
   type = 'Address';
 
@@ -1098,6 +1099,7 @@ export class CartItem {
   optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
   selectedOptions: ProductOptionValue[];
   selectedOptionMap = {};
+  itemIndex: number;
 
   povos: ProductOptionVO[];
   hasOption: number;
@@ -1802,6 +1804,7 @@ export class ProductOptionVO {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+  required: number;
 
   povs: ProductOptionValue[];
 }

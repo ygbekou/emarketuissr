@@ -20,11 +20,12 @@ export class HeaderCartComponent implements OnInit, OnChanges {
 
    hiddenBadge = true;
 
-   constructor(private appService: AppService) {
+   constructor(public appService: AppService) {
       this.mobWidth = window.screen.width;
    }
 
    ngOnInit() {
+
       this.cartProducts = JSON.parse(localStorage.getItem('cart_item'));
       if (this.cartProducts) {
          this.count = this.cartProducts.length;
@@ -35,6 +36,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
          }
       }
    }
+
 
    ngOnChanges() {
       if (this.count && this.count != 0) {

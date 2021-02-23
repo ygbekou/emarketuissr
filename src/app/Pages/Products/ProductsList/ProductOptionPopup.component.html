@@ -2,7 +2,9 @@
 
   <h2 mat-dialog-title>{{productDesc?.name}}</h2>
   <mat-dialog-content class="mat-typography">
-  <img mat-card-image [src]="'assets/images/products/'+(productDesc.product?.image?(productDesc.product.id+'/'+productDesc.product?.image):'default.png')" alt=mage>
+    <img mat-card-image height="300"
+        [src]="'assets/images/products/'+(productDesc.product?.image?(productDesc.product.id+'/'+productDesc.product?.image):'default.png')" alt=mage>
+  
 
   <div fxLayout="row wrap">
     <font style="font-weight: bold; font-size: 15px;">
@@ -26,7 +28,7 @@
                       {{prdOptionValue.name}}
                     </div>
               </mat-radio-button>
-              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
                 ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}}) 
               </div>
             </div>
@@ -106,17 +108,31 @@
 
   </mat-dialog-content>
   <mat-dialog-actions style="min-height: 80px;">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <h6 class="accent-color"
           *ngIf="productDesc.product.productDiscountPercentage === undefined || productDesc.product.productDiscountPercentage <= 0">
-          {{productDesc.product.symbolLeft}} {{productDesc.product?.totalPrice}} {{productDesc.product.symbolRight}}
+          {{productDesc.product.symbolLeft}} {{productDesc.quantity * productDesc.product?.totalPrice}} {{productDesc.product.symbolRight}}
         </h6>
       </div>
-      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" style="float: right;">
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <button mat (click)="productDesc.quantity = productDesc.quantity - 1" [disabled]="qty === 1"><i class="material-icons"> remove
+              </i></button>
+        <mat-form-field   class="w-15" style="width: 60px !important;">
+          <input matInput type="text" class="form-control" id="qty" [(ngModel)]="productDesc.quantity" name="qty" style="text-align: center" required>
+        </mat-form-field>
+       <button mat (click)="productDesc.quantity = productDesc.quantity + 1"><i class="material-icons"> add_box
+              </i></button>
       </div>
-   
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <button mat-button mat-dialog-close>Cancel</button>
+      </div>
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"  style="align-items: right">
+        <button mat-raised-button color="accent" class="w-50" [mat-dialog-close]="true" cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
+      </div>
+    </div>
   </mat-dialog-actions>
 
   

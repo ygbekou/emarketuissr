@@ -33,6 +33,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
       private loadingBar: LoadingBarService,
       private cdRef: ChangeDetectorRef) {
       this.getUser(Number(this.appService.tokenStorage.getUserId()));
+
    }
 
    ngOnInit() {
@@ -188,6 +189,19 @@ export class CartComponent implements OnInit, AfterViewChecked {
                () => console.log('Get IP complete'));
 
       }
+   }
+
+
+   updateCartProducts() { 
+      const cartProducts = [];
+      for (const [key, value] of Object.entries(this.appService.localStorageCartProductsMap)) {
+         cartProducts.push(...value);
+      }
+
+      setTimeout(() => {
+         localStorage.setItem('cart_item', JSON.stringify(cartProducts));
+      }, 500);
+
    }
 
 }

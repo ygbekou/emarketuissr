@@ -60,14 +60,19 @@
       <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
         <div fxLayout="row wrap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngIf="canEdit">
-            <mat-form-field class="w-100">
+            
               <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label>
-              <mat-select [(ngModel)]="orderHistory.orderStatus" name="orderStatus" [compareWith]="compareObjects">
-                <mat-option *ngFor="let orderStatus of orderStatuses" [value]="orderStatus">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{orderHistory.orderStatus.description}}</span><br/>
+              <mat-button-toggle-group name="fontStyle" aria-label="Font Style" 
+                    (change)="onToggleGroupChange($event)" [disabled]="orderHistory.id > 0">
+                <mat-button-toggle *ngFor="let orderStatus of filteredOrderStatuses" [disabled]="order.orderStatus.name === orderStatus.name" 
+                  [value]="orderStatus">
                   {{orderStatus.description}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+
+            
             <div fxLayout="row wrap" class="w-100">
               <mat-slide-toggle [(ngModel)]="orderHistory.notify" name="notify" #notify="ngModel" class="my-2">
                 {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
@@ -75,7 +80,7 @@
             </div>
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"  *ngIf="canEdit"></div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="5">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="45">
             <div fxLayout="row wrap" class="w-100">
               <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
               <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="orderHistory.comment"

@@ -628,7 +628,9 @@
 		"REJECTED": "Rejété",
 		"CODE": "Code",
 		"CONFIRM_CODE": "Confirmer Code",
-		"CANCELLATION_REASON": "Raison de l'annulation"
+		"CANCELLATION_REASON": "Raison de l'annulation",
+		"NOTE_FOR_STORE":"Note pour la boutique",
+    "NOTE_FOR_DEST":"Note pour le destinataire"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

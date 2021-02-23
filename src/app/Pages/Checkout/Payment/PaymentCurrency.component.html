@@ -132,5 +132,30 @@
       </div>
 
     </mat-card>
+
+    <mat-card>
+      <div fxLayout="row wrap" class="w-100">
+        <mat-label> {{'COMMON.NOTE_FOR_STORE' | translate}}</mat-label>
+        <textarea matInput rows="5" cols="50" class="form-control" id="comments"
+            [(ngModel)]="order.comment" name="comments" #comments="ngModel"></textarea>
+      </div>
+      
+      <div fxLayout="row wrap" class="w-100">
+        <mat-slide-toggle [(ngModel)]="shouldNotify" name="notify" #notify="ngModel" (change)="setDestMessage()">
+          {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
+        </mat-slide-toggle>
+        <mat-form-field class="w-100 mb-3" *ngIf="shouldNotify">
+            <mat-label> {{'COMMON.PHONE' | translate}}(E.x. +22890......)</mat-label>
+            <input matInput type="text" class="form-control" id="phone" [(ngModel)]="order.shippingCustomField"
+              name="phone" #phone="ngModel" required>
+          </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" class="w-100">
+        <mat-label> {{'COMMON.NOTE_FOR_DEST' | translate}}</mat-label>
+        <textarea matInput rows="5" cols="50" class="form-control" id="customField" [disabled]="!shouldNotify"
+            [(ngModel)]="order.customField" name="customField"
+            #customField="ngModel"></textarea>
+      </div>
+    </mat-card>
   </div>
 </div>
