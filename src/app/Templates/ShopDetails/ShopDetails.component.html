@@ -235,6 +235,9 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" style="font-size:12px;">
         <mat-card>
+          <mat-error *ngIf="error" severity="error">
+              {{ error }}
+          </mat-error>
           <div   class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                    <div fxFlex>
@@ -314,6 +317,7 @@
           </div>
 
         </mat-card>
+        
       </div>
     </div>
   </div>

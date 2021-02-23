@@ -7,8 +7,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="cart-product-image">
           <div class="cart-item-thumb">
             <a href="javascript:void(0)" class="p-link">
-              <img class="card-shadow" [src]="'assets/images/products/' + product?.prdId + '/' + product?.image"
-                alt="cart image">
+              <img class="card-shadow" [src]="'assets/images/products/' + product?.prdId + '/' + product?.image" alt="cart image">
             </a>
           </div>
         </div>
@@ -29,15 +28,18 @@
                   [queryParams]="{storeId:product.storeId}" routerLinkActive="tab-active"> {{product.storeName}}</a></p>
             </div>
             <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-              <mat-form-field class="w-100">
-                <input matInput type="number" #quantity [value]="getQuantityValue(product)" min="1" max="10"
-                  placeholder="Quantity">
+              <button mat (click)="product.quantity = product.quantity - 1; updateCartProducts();" [disabled]="product.quantity === 1"><i class="material-icons"> remove
+              </i></button>
+              <mat-form-field   class="w-15" style="width: 60px !important;">
+                <input matInput type="text" class="form-control" id="qty" [(ngModel)]="product.quantity" name="qty" style="text-align: center" required>
               </mat-form-field>
+              <button mat (click)="product.quantity = product.quantity + 1; updateCartProducts();"><i class="material-icons"> add_box
+                    </i></button>
             </div>
             <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
               <div class="cart-item-price">
                 <h4>{{appService?.navbarCartCurrencyMap[currencyId].symbolLeft}}
-                  {{ calculateProductSinglePrice(product, quantity.value)}}
+                  {{ calculateProductSinglePrice(product, product?.quantity)}}
                   {{appService?.navbarCartCurrencyMap[currencyId].symbolRight}}</h4>
               </div>
             </div>

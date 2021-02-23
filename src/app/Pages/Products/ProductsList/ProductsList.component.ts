@@ -262,6 +262,7 @@ export class ProductsListComponent implements OnInit {
    public getCartPopupResponse(response: any, value: any) {
       if (response) {
          const ci = new CartItem(value);
+         ci.quantity = value.quantity;
          this.appService.addToCart(ci);
       }
    }
@@ -282,6 +283,7 @@ export class ProductsListComponent implements OnInit {
    public getWishPopupResponse(response: any, value: any) {
       if (response) {
          const ci = new CartItem(value);
+         ci.quantity = value.quantity;
          this.appService.addToWishlist(ci);
       }
    }

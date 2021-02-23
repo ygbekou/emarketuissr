@@ -43,7 +43,7 @@ export class AppService {
    products: AngularFireObject<any>;
 
    localStorageCartProducts: any;
-   localStorageCartProductsMap: any;
+   localStorageCartProductsMap: any = {};
    localStorageWishlist: any;
 
    navbarCartCount = 0;

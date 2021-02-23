@@ -13,6 +13,7 @@ export class ProductOptionPopupComponent implements OnInit {
   @Input()
   productDesc: any;
   popupResponse: any;
+  qty = 1;
 
   constructor(public appService: AppService,
     public dialogRef: MatDialogRef<ProductOptionPopupComponent>) {
@@ -21,6 +22,7 @@ export class ProductOptionPopupComponent implements OnInit {
 
   ngOnInit() {
     this.productDesc.product.totalPrice = this.productDesc.product.price;
+    this.productDesc.quantity = 1;
     this.productDesc.product.selectedOptionsMap = {};
   }
 
@@ -70,11 +72,5 @@ export class ProductOptionPopupComponent implements OnInit {
       this.productDesc.product.totalPrice = (this.productDesc.product.percentagePrice > 0 ? this.productDesc.product.percentagePrice
                                     : this.productDesc.product.price) + totalOptionPrice;
    }
-
-
-  public addToCart(value) {
-    const ci = new CartItem(value);
-    this.appService.addToCart(ci);
-  }
 
 }

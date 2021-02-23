@@ -28,6 +28,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    productReviews: any;
 
    queryParams: any;
+   error: string;
 
    constructor(private route: ActivatedRoute,
       private router: Router,
@@ -125,15 +126,26 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
 
    public addToCart(value: any) {
 
+      let errorFound = false;
+      this.error = '';
       this.detailData.povos.forEach(optionDesc => {
-            if (optionDesc.optionType === 'Text' || optionDesc.optionType === 'Textarea') {
-               optionDesc.povs.forEach(optionValueDesc => {
-                  if (optionValueDesc.value !== undefined && optionValueDesc.value !== null) {
-                     this.detailData.product.selectedOptionsMap[optionDesc.id] = optionValueDesc;
-                  }
-               });
-            }
-         });
+         if (optionDesc.optionType === 'Text' || optionDesc.optionType === 'Textarea') {
+            optionDesc.povs.forEach(optionValueDesc => {
+               if (optionValueDesc.value !== undefined && optionValueDesc.value !== null) {
+                  this.detailData.product.selectedOptionsMap[optionDesc.id] = optionValueDesc;
+               }
+            });
+         }
+
+         if (optionDesc.required === 1 && !this.detailData.product.selectedOptionsMap[optionDesc.id]) {
+            this.error = 'The option: ' + optionDesc.name + ' is required.';
+            errorFound = true;
+         }
+      });
+
+      if (errorFound) {
+         return;
+      }
 
       const ci = new CartItem(this.detailData);
       ci.quantity = this.qty;
