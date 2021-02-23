@@ -976,9 +976,9 @@ export class ProductOptionValue {
   optionId: number;
   ovId: number;
   optionName: string;
-	name: string;
-	image: string;
-	sortOrder: number;
+  name: string;
+  image: string;
+  sortOrder: number;
   points: number;
   pointsPrefix: string;
   price: number;
@@ -1096,7 +1096,7 @@ export class CartItem {
   productDiscountId: number;
   taxRules: TaxRule[];
   optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
-  selectedOptions: ProductOptionValue [];
+  selectedOptions: ProductOptionValue[];
   selectedOptionMap = {};
 
   povos: ProductOptionVO[];
@@ -1804,4 +1804,17 @@ export class ProductOptionVO {
   subtract: number;
 
   povs: ProductOptionValue[];
+}
+
+export class RunReportVO {
+  reportName: string;
+  parameters: Parameter[];
+}
+export class Parameter {
+  name: string;
+  value: string;
+  constructor(n: string, v: string) {
+    this.name = n;
+    this.value = v;
+  }
 }
