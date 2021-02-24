@@ -95,8 +95,6 @@
 					target="_blank">{{'COMMON.CLICK_TO_VIEW_RPT'|translate}}</a> 
         </div>
       </div>
-
-
       <div fxLayout="row wrap" *ngIf="products && products.length>0">
         <div fxFlex="100" class="px-2 pb-2 pt-0">
           <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
@@ -164,6 +162,14 @@
                     <mat-error *ngIf="f.submitted && vipPrice.invalid" severity="error">
                       {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
                     </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.BUY_PRICE' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="buyPrice" [(ngModel)]="productStore.buyPrice"
+                      name="buyPrice" #buyPrice="ngModel"> 
                   </mat-form-field>
                 </div>
 

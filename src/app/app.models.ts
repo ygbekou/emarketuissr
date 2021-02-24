@@ -933,6 +933,7 @@ export class ProductToStore {
   sortOrder: number;
   status: number;
   vipPrice: number;
+  buyPrice: number;
   stockStatusId: number;
   taxClassId: number;
   promo: number;
