@@ -480,14 +480,20 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);
-        if (type === 1) { // all inventory
+        this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+       /*  if (type === 1) { // all inventory
           this.allInvnReport = Constants.webServer + '/assets/reports/' + data[0];
         } else {
           this.lowInvnReport = Constants.webServer + '/assets/reports/' + data[0];
-        }
+        } */
       },
         error => console.log(error),
         () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
 
+  }
+
+  openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    win.focus();
   }
 }

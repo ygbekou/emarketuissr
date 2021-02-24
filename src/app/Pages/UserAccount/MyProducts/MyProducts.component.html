@@ -82,18 +82,17 @@
             <mat-icon>reorder</mat-icon>
           </button>
           <a mat-button *ngIf="allInvnReport"  style="color:#ff5722;" onMouseOver="this.style.color='goldenrod'"
-									onMouseOut="this.style.color='#ff5722'" [href]="allInvnReport"
-									target="_blank">{{'COMMON.CLICK_TO_VIEW_RPT'|translate}}</a>
+					onMouseOut="this.style.color='#ff5722'" [href]="allInvnReport"
+					target="_blank">{{'COMMON.CLICK_TO_VIEW_RPT'|translate}}</a>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
           <button (click)="runReport(2)" mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" type="submit">
             <span class="mx-1 uppercase"> {{'COMMON.LOW_INVENTORY_RPT'|translate}}</span>
             <mat-icon>segment</mat-icon>
-          </button>
-           
-            <a mat-button *ngIf="lowInvnReport"  style="color:#ff5722;" onMouseOver="this.style.color='goldenrod'"
-									onMouseOut="this.style.color='#ff5722'" [href]="lowInvnReport"
-									target="_blank">{{'COMMON.CLICK_TO_VIEW_RPT'|translate}}</a> 
+          </button>           
+          <a mat-button *ngIf="lowInvnReport"  style="color:#ff5722;" onMouseOver="this.style.color='goldenrod'"
+					onMouseOut="this.style.color='#ff5722'" [href]="lowInvnReport"
+					target="_blank">{{'COMMON.CLICK_TO_VIEW_RPT'|translate}}</a> 
         </div>
       </div>
 
