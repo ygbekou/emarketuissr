@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CategoryDescription, ProductDescription, Product, Store, Pagination,
-  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO, ProductDescVO, SearchCriteria, StoreSearchCriteria
+  ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO,
+  ProductDescVO, SearchCriteria, StoreSearchCriteria, RunReportVO, Parameter
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +12,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ProductStoreOptionsComponent } from 'src/app/AdminPanel/Products/ProductStoreOptions/ProductStoreOptions.component';
+import { Constants } from 'src/app/app.constants';
 
 @Component({
   selector: 'app-my-products',
@@ -68,7 +70,9 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   public errors: string;
   public productDiscountErrors: string;
   public watcher: Subscription;
-
+  public allInvnReport = '';
+  public lowInvnReport = '';
+  public reportRun = false;
   public disablePrice: boolean;
   public disablePercentage: boolean;
 
@@ -115,26 +119,26 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     this.getProducts(store);
   }
-/* 
-  getStores() {
-    const userId = Number(this.appService.tokenStorage.getUserId());
-    if (userId > 0) {
-      const parameters: string[] = [];
-      parameters.push('e.owner.id = |userId|' + userId + '|Integer');
-      parameters.push('e.status = |xyz|1|Integer');
-      parameters.push('e.aprvStatus = |klm|1|Integer');
-      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
-        .subscribe((data: Store[]) => {
-          this.stores = data;
-          if (this.stores.length > 0) {
-            this.selectedStore = this.stores[0];
-            this.getProducts(this.stores[0]);
-          }
-        },
-          error => console.log(error),
-          () => console.log('Get all Store complete for userId=' + userId));
-    }
-  } */
+  /* 
+    getStores() {
+      const userId = Number(this.appService.tokenStorage.getUserId());
+      if (userId > 0) {
+        const parameters: string[] = [];
+        parameters.push('e.owner.id = |userId|' + userId + '|Integer');
+        parameters.push('e.status = |xyz|1|Integer');
+        parameters.push('e.aprvStatus = |klm|1|Integer');
+        this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
+          .subscribe((data: Store[]) => {
+            this.stores = data;
+            if (this.stores.length > 0) {
+              this.selectedStore = this.stores[0];
+              this.getProducts(this.stores[0]);
+            }
+          },
+            error => console.log(error),
+            () => console.log('Get all Store complete for userId=' + userId));
+      }
+    } */
 
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
@@ -456,4 +460,39 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.messages = '';
   }
 
+  runReport(type: number) {
+    this.reportRun = false;
+    this.allInvnReport = '';
+    this.lowInvnReport = '';
+    let qtyMax = 0;
+    if (type === 1) { // all inventory
+      qtyMax = 999999999;
+    }
+
+    const rep = new RunReportVO();
+    rep.reportName = 'inventory';
+    const parm1 = new Parameter('pStoreId', this.selectedStore.id + '');
+    const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
+    const parm3 = new Parameter('pQtyMax', qtyMax + '');
+    rep.parameters = [];
+    rep.parameters.push(parm1, parm2, parm3);
+
+    this.appService.saveWithUrl('/service/report/run/', rep)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+       /*  if (type === 1) { // all inventory
+          this.allInvnReport = Constants.webServer + '/assets/reports/' + data[0];
+        } else {
+          this.lowInvnReport = Constants.webServer + '/assets/reports/' + data[0];
+        } */
+      },
+        error => console.log(error),
+        () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
+
+  }
+  openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    win.focus();
+  }
 }

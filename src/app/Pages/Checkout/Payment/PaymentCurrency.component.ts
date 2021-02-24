@@ -21,7 +21,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    user: User = new User();
    error: string;
-
+   notify = false;
    order: Order;
    shouldNotify: false;
    orderTotal: number;
@@ -109,7 +109,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    placeYourOrder() {
       const orderId = this.order ? this.order.id : null;
-      //this.order = new Order();
+      // this.order = new Order();
       this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
       this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
@@ -255,9 +255,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          delivery = res['MESSAGE.BOUGHT_FOR_DELIVERY'];
       });
 
-      let buff = hi + ' '
+      const buff = hi + ' '
          + (this.user.shippingAddress ? this.user.shippingAddress.firstName : '') + '. '
-         + (this.pickUp ? pickup : delivery) + ' '
+         + (this.pickUp ? pickup : delivery) + ' ';
       return buff;
    }
 

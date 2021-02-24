@@ -933,6 +933,7 @@ export class ProductToStore {
   sortOrder: number;
   status: number;
   vipPrice: number;
+  buyPrice: number;
   stockStatusId: number;
   taxClassId: number;
   promo: number;
@@ -977,9 +978,9 @@ export class ProductOptionValue {
   optionId: number;
   ovId: number;
   optionName: string;
-	name: string;
-	image: string;
-	sortOrder: number;
+  name: string;
+  image: string;
+  sortOrder: number;
   points: number;
   pointsPrefix: string;
   price: number;
@@ -1097,7 +1098,7 @@ export class CartItem {
   productDiscountId: number;
   taxRules: TaxRule[];
   optionValueDescriptionMaps: Map<string, ProductOptionValue[]>;
-  selectedOptions: ProductOptionValue [];
+  selectedOptions: ProductOptionValue[];
   selectedOptionMap = {};
   itemIndex: number;
 
@@ -1807,4 +1808,17 @@ export class ProductOptionVO {
   required: number;
 
   povs: ProductOptionValue[];
+}
+
+export class RunReportVO {
+  reportName: string;
+  parameters: Parameter[];
+}
+export class Parameter {
+  name: string;
+  value: string;
+  constructor(n: string, v: string) {
+    this.name = n;
+    this.value = v;
+  }
 }
