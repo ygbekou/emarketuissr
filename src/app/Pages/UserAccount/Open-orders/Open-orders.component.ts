@@ -15,6 +15,8 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
   searchCriteria: OrderSearchCriteria;
   orders: OnlineOrderVO[] = [];
   products: ProductDescVO[] = [];
+  popupResponse: any;
+
   constructor(public appService: AppService,
     public router: Router,
     public translate: TranslateService) {
@@ -94,10 +96,25 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
   }
 
   public addPrdToCart(value) {
-    const ci = new CartItem(value);
-    ci.quantity = 1;
-    this.appService.addToCart(ci);
+    if (value.product.hasOption === 1) {
+      this.appService.productOptionPopup(value).subscribe(res => { this.popupResponse = res; },
+        err => console.log(err),
+        () => this.getCartPopupResponse(this.popupResponse, value)
+      );
+    } else {
+      const ci = new CartItem(value);
+      ci.quantity = 1;
+      this.appService.addToCart(ci);
+    }
   }
+
+  public getCartPopupResponse(response: any, value: any) {
+      if (response) {
+         const ci = new CartItem(value);
+         ci.quantity = value.quantity;
+         this.appService.addToCart(ci);
+      }
+   }
 
   public cancel() {
     this.router.navigate(['/checkout']);
