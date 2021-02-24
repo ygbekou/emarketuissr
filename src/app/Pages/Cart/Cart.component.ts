@@ -192,7 +192,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
 
-   updateCartProducts() { 
+   updateCartProducts() {
       const cartProducts = [];
       for (const [key, value] of Object.entries(this.appService.localStorageCartProductsMap)) {
          cartProducts.push(...value);

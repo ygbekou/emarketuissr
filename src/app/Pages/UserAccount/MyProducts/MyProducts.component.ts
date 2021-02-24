@@ -491,7 +491,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
         () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
 
   }
-
   openInNewTab(url) {
     const win = window.open(url, '_blank');
     win.focus();

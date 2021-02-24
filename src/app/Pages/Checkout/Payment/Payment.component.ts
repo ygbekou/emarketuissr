@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User, Address, CreditCard, Order } from 'src/app/app.models';
 import { PaymentCurrencyComponent } from './PaymentCurrency.component';
-import { OptionValueComponent } from 'src/app/AdminPanel/Products/OptionValue/OptionValue.component';
 
 @Component({
    selector: 'app-Payment',
@@ -47,7 +46,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
       this.deliveryMode = undefined;
-      this.activatedRoute.params.subscribe(params => {
+      this.activatedRoute.params.subscribe(() => {
          this.activatedRoute.queryParams.forEach(queryParams => {
             if (queryParams['deliveryMode'] !== undefined) {
                this.deliveryMode = queryParams['deliveryMode'];
