@@ -100,7 +100,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.orderTotal = total;
       return total;
    }
-
+ 
 
    isUserLoggedIn() {
       return this.appService.tokenStorage.getUserId() !== null;
@@ -215,8 +215,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public setDestMessage() {
-      console.log(this.notify);
-      if (this.notify) {
+      console.log(this.shouldNotify);
+      if (this.shouldNotify) {
          if (this.user.shippingAddress && this.user.shippingAddress.phone) {
             this.order.shippingCustomField = ('+' + this.user.shippingAddress.country.code) +
                this.user.shippingAddress.phone;

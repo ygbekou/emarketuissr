@@ -116,7 +116,7 @@
         </h6>
       </div>
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <button mat (click)="productDesc.quantity = productDesc.quantity - 1" [disabled]="qty === 1"><i class="material-icons"> remove
+        <button mat (click)="productDesc.quantity = productDesc.quantity - 1" [disabled]="productDesc.quantity === 1"><i class="material-icons"> remove
               </i></button>
         <mat-form-field   class="w-15" style="width: 60px !important;">
           <input matInput type="text" class="form-control" id="qty" [(ngModel)]="productDesc.quantity" name="qty" style="text-align: center" required>
