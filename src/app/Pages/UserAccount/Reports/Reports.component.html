@@ -1,0 +1,55 @@
+<mat-card>
+  <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+    <h4>{{'COMMON.REPORTS'|translate}}</h4>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5">
+      <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
+        {{'COMMON.INVENTORY_RPT' | translate}}
+      </a>
+      <span>
+        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+          <a mat-button (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
+            [routerLinkActiveOptions]="{exact:true}">
+            <mat-icon>done</mat-icon>
+            <span>{{'COMMON.ALL_INVENTORY_RPT'|translate}}</span>            
+          </a>
+        </p>
+      </span>
+      <span>
+        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+          <a mat-button (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
+            [routerLinkActiveOptions]="{exact:true}">
+            <mat-icon>done</mat-icon>
+            <span>{{'COMMON.LOW_INVENTORY_RPT'|translate}}</span> 
+          </a>
+        </p>
+      </span>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5">
+      <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
+        {{'COMMON.SALES_RPT' | translate}}
+      </a>
+      <span>
+        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+          <a mat-button (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
+            [routerLinkActiveOptions]="{exact:true}">
+            <mat-icon>done</mat-icon>
+            <span>{{'COMMON.MARGIN_ANALYSIS_RPT'|translate}}</span>            
+          </a>
+        </p>
+      </span>
+      <span>
+        <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+          <a mat-button (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
+            [routerLinkActiveOptions]="{exact:true}">
+            <mat-icon>done</mat-icon>
+            <span>{{'COMMON.SALES_SUMMARY_RPT'|translate}}</span> 
+          </a>
+        </p>
+      </span>
+    </div>
+
+  </div>
+</mat-card>
