@@ -13,7 +13,12 @@ export class ReportsComponent implements OnInit {
 
   stores: Store[] = [];
   error: string;
+  showParams = false;
   fromAdmin = false;
+  beginDate: Date;
+  endDate: Date;
+  subRpt = 1;
+
   @Input()
   userId;
 
@@ -22,7 +27,7 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.showParams = false;
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     } else {
@@ -55,6 +60,11 @@ export class ReportsComponent implements OnInit {
   }
 
   runInvnReport(type: number) {
+    this.showParams = false;
+    if (type === 3 || type === 4) {
+      this.showParams = true;
+      this.subRpt = type;
+    }
     let qtyMax = 0;
     if (type === 1) { // all inventory
       qtyMax = 999999999;
@@ -72,11 +82,6 @@ export class ReportsComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
-        /*  if (type === 1) { // all inventory
-           this.allInvnReport = Constants.webServer + '/assets/reports/' + data[0];
-         } else {
-           this.lowInvnReport = Constants.webServer + '/assets/reports/' + data[0];
-         } */
       },
         error => console.log(error),
         () => console.log('runInvnReport complete '));
@@ -85,6 +90,29 @@ export class ReportsComponent implements OnInit {
   openInNewTab(url) {
     const win = window.open(url, '_blank');
     win.focus();
+  }
+
+  runRpt() {
+
+    const rep = new RunReportVO();
+    rep.reportName = 'sales';
+    const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
+    const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
+    const parm3 = new Parameter('dateDebut', this.beginDate.toLocaleString());
+    const parm4 = new Parameter('dateFin', this.endDate.toLocaleString());
+    const parm5 = new Parameter('subRptId', '' + this.subRpt);
+    rep.parameters = [];
+    rep.parameters.push(parm1, parm2, parm3, parm4, parm5);
+    console.log(rep);
+
+    this.appService.saveWithUrl('/service/report/run/', rep)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.showParams = false;
+        this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+      },
+        error => console.log(error),
+        () => console.log('runInvnReport complete '));
   }
 
 }

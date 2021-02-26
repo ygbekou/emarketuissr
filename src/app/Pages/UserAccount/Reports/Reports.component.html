@@ -33,22 +33,47 @@
       </a>
       <span>
         <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-          <a mat-button (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
+          <a mat-button (click)="runInvnReport(3)" routerLinkActive="horizontal-active-link"
             [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>done</mat-icon>
-            <span>{{'COMMON.MARGIN_ANALYSIS_RPT'|translate}}</span>            
+            <span>{{'COMMON.SALES_SUMMARY_PRD'|translate}}</span>            
           </a>
         </p>
       </span>
       <span>
         <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-          <a mat-button (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
+          <a mat-button (click)="runInvnReport(4)" routerLinkActive="horizontal-active-link"
             [routerLinkActiveOptions]="{exact:true}">
             <mat-icon>done</mat-icon>
-            <span>{{'COMMON.SALES_SUMMARY_RPT'|translate}}</span> 
+            <span>{{'COMMON.SALES_SUMMARY_EMP'|translate}}</span> 
           </a>
         </p>
       </span>
+
+       <mat-form-field class="w-100" *ngIf="showParams">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+              [(ngModel)]="beginDate" name="beginDate" #beginDate="ngModel" required>
+            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100"  *ngIf="showParams">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+              [(ngModel)]="endDate" name="endDate" #endDate="ngModel" required>
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
+           <div class="text-center"  *ngIf="showParams">
+            <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row"
+            [disabled] = "!beginDate && endDate"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+          </div>
     </div>
 
   </div>
