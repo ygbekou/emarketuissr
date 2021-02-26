@@ -3,11 +3,13 @@ import { Store, StoreSearchCriteria, RunReportVO, Parameter } from 'src/app/app.
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/app.constants';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-reports',
   templateUrl: './Reports.component.html',
-  styleUrls: ['./Reports.component.scss']
+  styleUrls: ['./Reports.component.scss'],
+  providers: [DatePipe],
 })
 export class ReportsComponent implements OnInit {
 
@@ -18,11 +20,12 @@ export class ReportsComponent implements OnInit {
   beginDate: Date;
   endDate: Date;
   subRpt = 1;
-
   @Input()
   userId;
 
-  constructor(public appService: AppService, public translate: TranslateService) {
+  constructor(public appService: AppService,
+    private datePipe: DatePipe,
+    public translate: TranslateService) {
 
   }
 
@@ -64,6 +67,7 @@ export class ReportsComponent implements OnInit {
     if (type === 3 || type === 4) {
       this.showParams = true;
       this.subRpt = type;
+      return;
     }
     let qtyMax = 0;
     if (type === 1) { // all inventory
@@ -98,8 +102,10 @@ export class ReportsComponent implements OnInit {
     rep.reportName = 'sales';
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
-    const parm3 = new Parameter('dateDebut', this.beginDate.toLocaleString());
-    const parm4 = new Parameter('dateFin', this.endDate.toLocaleString());
+    const parm3 = new Parameter('dateDebut',
+      this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
+    const parm4 = new Parameter('dateFin',
+      this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
     const parm5 = new Parameter('subRptId', '' + this.subRpt);
     rep.parameters = [];
     rep.parameters.push(parm1, parm2, parm3, parm4, parm5);

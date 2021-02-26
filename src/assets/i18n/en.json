@@ -8,6 +8,7 @@
 		"STAR":"star",
 		"NONE": "None",
 		"HOUR": "Hour",
+		"RUN":"Run",
 		"MARGIN_PERC":"Margin %",
 		"BUY_PRICE":"Purchase price",
 		"INVENTORY_RPT": "Inventory reports",
