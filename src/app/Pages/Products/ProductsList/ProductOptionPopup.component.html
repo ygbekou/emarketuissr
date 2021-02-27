@@ -15,15 +15,13 @@
   <div *ngFor="let povo of productDesc?.povos; let i = index;">
 
     <div *ngIf="povo.optionType == 'Radio'">
-      <label style="font-weight: bold;">{{povo.name}}: </label>
+      <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></label>
       
       <div fxLayout="row wrap">
         <mat-radio-group class="w-100">
-          
             <div *ngFor="let prdOptionValue of povo.povs" style="width: 500px; height: 50px;">
               <mat-radio-button class="w-100" 
                   [value]="prdOptionValue.id" (click)="radioButtonChange($event, povo, prdOptionValue);">
-                
                     <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
                       {{prdOptionValue.name}}
                     </div>
@@ -40,7 +38,7 @@
       <div *ngFor="let prdOptionValue of povo.povs">
         <div fxLayout="row wrap">
           <mat-form-field class="w-100 mb-3">
-            <mat-label> {{povo.name}}</mat-label>
+            <mat-label> {{povo.name}}<span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
             <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption" 
               [(ngModel)]="prdOptionValue.value">
           </mat-form-field>
@@ -53,7 +51,7 @@
       <div *ngFor="let prdOptionValue of povo.povs">
         <div fxLayout="row wrap">
           <mat-form-field class="w-100 mb-3">
-            <mat-label> {{povo.name}}</mat-label>
+            <mat-label> {{povo.name}}<span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
             <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea" [(ngModel)]="prdOptionValue.value"></textarea>
           </mat-form-field>
           <span style="width:10px;"></span>
@@ -62,7 +60,7 @@
     </div>
 
     <div *ngIf="povo.optionType == 'Checkbox'">
-      <label style="font-weight: bold;">{{povo.name}}: </label>
+      <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></label>
       <div fxLayout="row wrap">
         <div  class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" 
@@ -77,7 +75,7 @@
       <div *ngFor="let prdOptionValue of povo.povs">
         <div fxLayout="row wrap">
           <mat-form-field class="w-100 mb-3">
-            <mat-label> {{prdOptionValue.name}}</mat-label>
+            <mat-label> {{prdOptionValue.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
             <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value"
               class="form-control" id="value" name="value">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -92,7 +90,7 @@
       <div fxLayout="row wrap">
         
         <mat-form-field class="w-100 mb-3">
-          <mat-label>{{povo.name}}</mat-label>
+          <mat-label>{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
           <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
             <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
               (click)="singleSelectionChange($event, povo, prdOptionValue)" >
@@ -130,7 +128,10 @@
         <button mat-button mat-dialog-close>Cancel</button>
       </div>
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"  style="align-items: right">
-        <button mat-raised-button color="accent" class="w-50" [mat-dialog-close]="true" cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
+        <mat-error *ngIf="error" severity="error">
+            {{ error }}
+        </mat-error>
+        <button (click)="shouldClose()" mat-raised-button color="accent" class="w-50" cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
       </div>
     </div>
   </mat-dialog-actions>

@@ -4,6 +4,7 @@ import { AppService } from '../../Services/app.service';
 import { ProductDescVO, CartItem, ProductOption, ProductOptionValue } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 import { Title, Meta } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'embryo-ShopDetails',
@@ -31,6 +32,7 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
    error: string;
 
    constructor(private route: ActivatedRoute,
+      public translate: TranslateService,
       private router: Router,
 
       private titleService: Title,
@@ -138,7 +140,9 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
          }
 
          if (optionDesc.required === 1 && !this.detailData.product.selectedOptionsMap[optionDesc.id]) {
-            this.error = 'The option: ' + optionDesc.name + ' is required.';
+            this.translate.get('VALIDATION.OPTION_IS_REQUIRED', { option_description: optionDesc.name }).subscribe(res => {
+               this.error = res;
+            });
             errorFound = true;
          }
       });

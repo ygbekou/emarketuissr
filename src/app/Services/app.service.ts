@@ -332,7 +332,7 @@ export class AppService {
          }
 
          this.navbarCartCountMap[cartItem.currencyId] += cartItem.quantity;
-         this.navbarCartCount += cartItem.quantity;
+         this.navbarCartCount += Number(cartItem.quantity);
          this.navbarCartPriceMap[cartItem.currencyId] += this.calculateCartItemTotal(cartItem);
 
 

@@ -94,7 +94,7 @@ export class PaymentDeliveryStepper implements OnInit, AfterViewInit {
 
    hasPaymentMethod() {
       return ((this.user.paymentMethodCode === 'CREDIT_CARD' && this.user.creditCard !== null)
-         || (this.user.paymentMethodCode === 'FLOOZ' && this.user.tmoney.phoneNumber !== null)
+         || (this.user.paymentMethodCode === 'FLOOZ' && this.user.flooz.phoneNumber !== null)
          || (this.user.paymentMethodCode === 'TMONEY' && this.user.tmoney.phoneNumber !== null)
          )
    }

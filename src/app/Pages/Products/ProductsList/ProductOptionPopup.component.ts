@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { ProductOptionValue, ProductOption, CartItem } from 'src/app/app.models';
+import { ProductOptionValue, ProductOption } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ProductOptionPopup',
@@ -14,8 +15,10 @@ export class ProductOptionPopupComponent implements OnInit {
   productDesc: any;
   popupResponse: any;
   qty = 1;
+  error = '';
 
   constructor(public appService: AppService,
+    public translate: TranslateService,
     public dialogRef: MatDialogRef<ProductOptionPopupComponent>) {
 
     }
@@ -73,4 +76,28 @@ export class ProductOptionPopupComponent implements OnInit {
                                     : this.productDesc.product.price) + totalOptionPrice;
    }
 
+  public shouldClose() {
+    let errorFound = false;
+    this.error = '';
+    this.productDesc.povos.forEach(optionDesc => {
+        if (optionDesc.optionType === 'Text' || optionDesc.optionType === 'Textarea') {
+          optionDesc.povs.forEach(optionValueDesc => {
+              if (optionValueDesc.value !== undefined && optionValueDesc.value !== null) {
+                this.productDesc.product.selectedOptionsMap[optionDesc.id] = optionValueDesc;
+              }
+          });
+        }
+
+        if (optionDesc.required === 1 && !this.productDesc.product.selectedOptionsMap[optionDesc.id]) {
+          this.translate.get('VALIDATION.OPTION_IS_REQUIRED', { option_description: optionDesc.name }).subscribe(res => {
+            this.error = res;
+          });
+          errorFound = true;
+        }
+    });
+
+    if (!errorFound) {
+      this.dialogRef.close(this.productDesc);
+    }
+  }
 }
