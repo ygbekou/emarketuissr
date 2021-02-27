@@ -28,12 +28,12 @@
                   [queryParams]="{storeId:product.storeId}" routerLinkActive="tab-active"> {{product.storeName}}</a></p>
             </div>
             <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-              <button mat (click)="product.quantity = product.quantity - 1; updateCartProducts();" [disabled]="product.quantity === 1"><i class="material-icons"> remove
+              <button mat color="accent"  (click)="product.quantity = product.quantity - 1; updateCartProducts();" [disabled]="product.quantity === 1"><i class="material-icons"> remove
               </i></button>
               <mat-form-field   class="w-15" style="width: 60px !important;">
                 <input matInput type="text" class="form-control" id="qty" [(ngModel)]="product.quantity" name="qty" style="text-align: center" required>
               </mat-form-field>
-              <button mat (click)="product.quantity = product.quantity + 1; updateCartProducts();"><i class="material-icons"> add_box
+              <button mat color="primary" (click)="product.quantity = product.quantity + 1; updateCartProducts();"><i class="material-icons"> add_box
                     </i></button>
             </div>
             <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">

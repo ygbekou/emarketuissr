@@ -570,6 +570,11 @@ export class Zone {
 export class GeoZone {
   id: number;
   name: String;
+  store: Store;
+  shippingMode: number;
+  flatRate: number;
+  weightRate: number;
+  weight: number;
   description: string;
   type = 'GeoZone';
 }
@@ -577,6 +582,7 @@ export class GeoZone {
 export class ZoneToGeoZone {
   id: number;
   zone: Zone;
+  store: Store;
   geoZone: GeoZone;
   country: Country;
   type = 'ZoneToGeoZone';

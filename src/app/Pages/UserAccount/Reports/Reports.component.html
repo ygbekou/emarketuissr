@@ -51,6 +51,15 @@
             </a>
           </p>
         </span>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(5)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_CAT'|translate}}</span>
+            </a>
+          </p>
+        </span>
 
         <mat-form-field class="w-100" *ngIf="showParams">
           <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />

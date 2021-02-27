@@ -64,7 +64,7 @@ export class ReportsComponent implements OnInit {
 
   runInvnReport(type: number) {
     this.showParams = false;
-    if (type === 3 || type === 4) {
+    if (type === 3 || type === 4 || type === 5) {
       this.showParams = true;
       this.subRpt = type;
       return;

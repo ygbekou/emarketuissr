@@ -19,6 +19,7 @@ import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
 import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 import { ReportsComponent } from './Reports/Reports.component';
+import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -148,6 +149,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'reports',
             component: ReportsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'shipping-zones',
+            component: ShippingZonesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

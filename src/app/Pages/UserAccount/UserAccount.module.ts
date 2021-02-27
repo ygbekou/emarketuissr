@@ -62,6 +62,7 @@ import { OpenOrdersComponent } from './Open-orders/Open-orders.component';
 import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 import { ProductsModule } from 'src/app/AdminPanel/Products/Products.module';
 import { ReportsComponent } from './Reports/Reports.component';
+import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 
 @NgModule({
   imports: [
@@ -147,7 +148,8 @@ import { ReportsComponent } from './Reports/Reports.component';
     ClientDashboardComponent,
     OpenOrdersComponent,
     OrderCancelComponent,
-    ReportsComponent
+    ReportsComponent,
+    ShippingZonesComponent
   ],
   exports: [
     CardsComponent,

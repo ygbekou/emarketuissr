@@ -1,0 +1,247 @@
+<a mat-button [routerLink]="['/account/shipping-zones']">{{'COMMON.SHIPPING_ZONE' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/account/shipping-zones']" *ngIf="store">
+  <h5>{{store.name}}</h5>
+</a>
+
+<mat-form-field class="w-100 mb-3">
+  <mat-label>{{'COMMON.STORE' | translate}}</mat-label>
+  <mat-select placeholder="{{'COMMON.STORE' | translate}}" [compareWith]="compareObjects" id="store1" name="store1"
+    [(ngModel)]="store" #store1="ngModel" (valueChange)="getAll()" required>
+    <mat-option *ngFor="let cat of stores" [value]="cat">
+      {{  cat.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-tab-group [(selectedIndex)]="selectedTab" *ngIf="store">
+  <mat-tab label="{{'COMMON.LIST' | translate}}">
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+            autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+        <a (click)="addSectionItem()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+          <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.id}} </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.name}}
+          </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.description}}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let geoZone">
+            <a (click)="edit(geoZone)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+            <button mat-icon-button color="warn" (click)="remove(geoZone)" matTooltip="{{'COMMON.DELETE' | translate}}"
+              class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let geoZone; columns: displayedColumns;">
+        </tr>
+      </table>
+      <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+  </mat-tab>
+  <mat-tab label="{{'COMMON.DETAILS' | translate}}" *ngIf="geoZone">
+    <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.NAME' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="geoZone.name" name="name"
+              #name="ngModel" required>
+            <mat-error *ngIf="ff.submitted && name.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> Description
+            </mat-label>
+            <input matInput type="text" class="form-control" id="description" [(ngModel)]="geoZone.description"
+              name="description" #description="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row wrap">
+
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-radio-group class="form-control"
+          id="shippingMode" [(ngModel)]="geoZone.shippingMode"
+              name="shippingMode" #shippingMode="ngModel" class="my-3">
+            <mat-radio-button value="0">
+              {{'COMMON.FLAT_RATE' | translate }}
+            </mat-radio-button>
+            <br/>
+            <mat-radio-button value="1">
+              {{'COMMON.PER_WEIGHT' | translate }}
+            </mat-radio-button>
+            <br/>
+            <mat-radio-button value="2">
+              {{'COMMON.RATE_SHOP' | translate }}
+            </mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+
+
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" *ngIf="geoZone.shippingMode==0">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.FLAT_RATE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="flatRate" [(ngModel)]="geoZone.flatRate"
+              name="flatRate" #flatRate="ngModel" required>
+            <mat-error *ngIf="ff.submitted && flatRate.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.WEIGHT_RATE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="weightRate" [(ngModel)]="geoZone.weightRate"
+              name="weightRate" #weightRate="ngModel" required>
+            <mat-error *ngIf="ff.submitted && weightRate.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3"  *ngIf="geoZone.shippingMode==1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.WEIGHT' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="weight" [(ngModel)]="geoZone.weight" name="weight"
+              #weight="ngModel" required>
+            <mat-error *ngIf="ff.submitted && weight.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="table-wrapper" *ngIf="geoZone.id>0">
+      <table mat-table [dataSource]="zoneToGeoZoneDS" matSort class="w-100">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let zoneToGeoZone"> {{zoneToGeoZone.id}} </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="country">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.COUNTRY' | translate}} </th>
+          <td mat-cell *matCellDef="let zoneToGeoZone">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
+              <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" [compareWith]="compareObjects" id="country"
+                name="country" [(ngModel)]="zoneToGeoZone.country" #country="ngModel"
+                (selectionChange)="getZones(zoneToGeoZone.country)">
+                <mat-option *ngFor="let ctry of countries" [value]="ctry">
+                  {{ctry.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="zone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone </th>
+          <td mat-cell *matCellDef="let zoneToGeoZone">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Zone</mat-label>
+              <mat-select placeholder="Zone" id="zone" [compareWith]="compareObjects" name="zone"
+                [(ngModel)]="zoneToGeoZone.zone" #zone="ngModel">
+                <mat-option *ngFor="let zone of zones" [value]="zone">
+                  {{zone.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions
+            <a (click)="addNewZoneToGeoZone()" mat-icon-button color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+            </a>
+          </th>
+          <td mat-cell *matCellDef="let zoneToGeoZone">
+            <a (click)="saveZoneToGeoZone(zoneToGeoZone)" mat-icon-button color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon>save</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+            <button mat-icon-button color="warn" (click)="deleteZoneToGeoZone(zoneToGeoZone)"
+              matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let geoZone; columns: displayedColumns2;">
+        </tr>
+      </table>
+      <p *ngIf="zoneToGeoZoneDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator *ngIf="geoZone.id>0" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </mat-tab>
+</mat-tab-group>
