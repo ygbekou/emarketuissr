@@ -44,7 +44,8 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Sales history', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
-      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' }
+      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
+      { name: 'Reports', url: '/account/reports', icon: 'segment' }
     ]
   },
 ];
@@ -77,7 +78,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Historique des ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
-      { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' }
+      { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' },
+      { name: 'Etats', url: '/account/reports', icon: 'segment' }
     ]
   },
 ];

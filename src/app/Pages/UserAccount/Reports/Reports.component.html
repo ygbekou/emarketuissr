@@ -1,0 +1,82 @@
+<mat-card>
+  <form name="form" #f="ngForm" validate>
+    <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+      <h4>{{'COMMON.REPORTS'|translate}}</h4>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5">
+        <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
+          {{'COMMON.INVENTORY_RPT' | translate}}
+        </a>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.ALL_INVENTORY_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.LOW_INVENTORY_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5">
+
+        <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
+          {{'COMMON.SALES_RPT' | translate}}
+        </a>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(3)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_PRD'|translate}}</span>
+            </a>
+          </p>
+        </span>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(4)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_EMP'|translate}}</span>
+            </a>
+          </p>
+        </span>
+
+        <mat-form-field class="w-100" *ngIf="showParams">
+          <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"
+            name="beginDate1" #beginDate1="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #beginDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="w-100" *ngIf="showParams">
+          <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate1" [(ngModel)]="endDate"
+            name="endDate1" #endDate1="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="text-center" *ngIf="showParams">
+          <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row" [disabled]="!beginDate && endDate"
+            fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.RUN' | translate}}</span>
+            <mat-icon>filter_alt</mat-icon>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+</mat-card>

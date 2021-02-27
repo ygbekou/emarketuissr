@@ -941,6 +941,7 @@ export class ProductToStore {
   modifiedBy: number;
   dateAvailable: Date;
   availableOnline: number;
+  marginPerc: number;
 
   productDiscounts: ProductDiscount[] = [];
 
@@ -1101,7 +1102,7 @@ export class CartItem {
   selectedOptions: ProductOptionValue[];
   selectedOptionMap = {};
   itemIndex: number;
-
+  adjTotal: number;
   povos: ProductOptionVO[];
   hasOption: number;
 
@@ -1222,7 +1223,7 @@ export class ProductVO {
   percentagePrice: number;
   productDiscountId: number;
   hasOption: number;
-
+  buyPrice: number;
   selectedOptionsMap: Map<number, any> = new Map();
 }
 

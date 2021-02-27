@@ -149,7 +149,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
                this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
                console.log('before call');
-               console.log(this.order);
                this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
                   .subscribe((data: Order) => {
                      console.log(data);
