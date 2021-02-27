@@ -42,11 +42,14 @@
                   <mat-form-field class="w-100 mb-3">
                     <mat-label>{{'COMMON.CANCELLATION_REASON'|translate}}</mat-label>
                     <mat-select placeholder="{{'COMMON.CANCELLATION_REASON' | translate}}" [compareWith]="compareObjects" id="cancelReason" 
-                      name="cancelReason" [(ngModel)]="cancellationReason" #cancelReason="ngModel">
+                      name="cancelReason" [(ngModel)]="cancellationReason" #cancelReason="ngModel" required>
                       <mat-option *ngFor="let reason of cancellationReasons" [value]="reason">
                         {{reason.description}}
                       </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="f.submitted && cancelReason.invalid" severity="error">
+                      {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>

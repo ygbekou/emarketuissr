@@ -730,7 +730,8 @@
     "EMAIL_NOT_MATCH": "Le e-mail ne correspond pas au premier",
     "COMMENT_OR_STATUS": "Renseignez l'etat de la commande or le commentaire",
     "EMAIL_INVALID": "Cet E-mail est invalide",
-    "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères"
+    "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères",
+		"OPTION_IS_REQUIRED": "The option {{option_description}} is required"
   },
   "DATE": {
     "1": "Jan",

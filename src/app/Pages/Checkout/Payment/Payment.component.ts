@@ -55,27 +55,25 @@ export class PaymentComponent implements OnInit, AfterViewInit {
          });
       });
 
-
       this.appService.recalculateCart(true);
-
    }
 
    ngAfterViewInit() {
-      // this.getUser(Number(this.appService.tokenStorage.getUserId()));
+      
    }
 
 
    getUser(userId: number) {
       this.appService.getOneWithChildsAndFiles(userId, 'User')
-         .subscribe(result => {
-            if (result.id > 0) {
-               this.user = result;
-            } else {
-               this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-                  this.error = res['MESSAGE.READ_FAILED'];
-               });
-            }
-         });
+      .subscribe(result => {
+         if (result.id > 0) {
+            this.user = result;
+         } else {
+            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+               this.error = res['MESSAGE.READ_FAILED'];
+            });
+         }
+      });
 
    }
 
@@ -97,12 +95,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }
    }
 
-
    setAllStepDone(deliveryInfo: any) {
       this.allStepDone = deliveryInfo.status;
       this.deliveryMode = deliveryInfo.deliveryMode;
    }
-
 
 }
 

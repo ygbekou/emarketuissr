@@ -70,7 +70,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
       this.floozsComponent.getTmoneys();
       this.paymentCardsComponent.getCreditCards();
       this.paypalMethodStatus = 0;
-      this.router.navigate(['/checkout/payment']);
+      this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
    }
 
    onFloozSaved($event) {

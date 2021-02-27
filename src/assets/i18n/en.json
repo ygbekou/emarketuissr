@@ -731,7 +731,8 @@
 		"PRICE_AND_QTY": "Quantity must be populated when the price is populated and vice versa",
 		"BEGIN_G_END": "Begin date must be less than the end date",
 		"DUPLICATE_PRIORITY": "Priorities must be different for active discounts",
-		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters"
+		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters",
+		"OPTION_IS_REQUIRED": "The option {{option_description}} is required"
 	},
 	"DATE": {
 		"1": "Jan",
