@@ -75,7 +75,7 @@
         </div>
       </div>
 
-     <div fxLayout="row wrap" *ngIf="products && products.length>0">
+      <div fxLayout="row wrap" *ngIf="products && products.length>0">
         <div fxFlex="100" class="px-2 pb-2 pt-0">
           <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
             (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
@@ -149,7 +149,7 @@
                   <mat-form-field class="w-100">
                     <mat-label> {{'COMMON.BUY_PRICE' | translate}}</mat-label>
                     <input matInput type="text" class="form-control" id="buyPrice" [(ngModel)]="productStore.buyPrice"
-                      name="buyPrice" #buyPrice="ngModel"> 
+                      name="buyPrice" #buyPrice="ngModel">
                   </mat-form-field>
                 </div>
               </div>
@@ -211,29 +211,38 @@
                   </mat-form-field>
                 </div>
               </div>
-              <div fxLayout="row wrap">
 
-                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                   <mat-slide-toggle [(ngModel)]="productStore.status" name="status" #status="ngModel" class="my-2">
                     {{ (productStore.status?'COMMON.ENABLED':'COMMON.DISABLED') | translate }}
                   </mat-slide-toggle>
                 </div>
-                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                   <mat-slide-toggle [(ngModel)]="productStore.availableOnline" name="availableOnline"
                     #availableOnline="ngModel" class="my-2">
                     {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
                   </mat-slide-toggle>
-                </div>                
-
-                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+                  <mat-form-field class="w-30">
+                    <mat-label> {{'COMMON.SHIPPING_WEIGHT' | translate}}
+                    </mat-label>
+                    <input matInput type="text" class="form-control" id="weight" [(ngModel)]="productStore.shippingWeight"
+                      name="weight" #weight="ngModel"> 
+                  </mat-form-field>
+                </div>
+              </div>
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                   <mat-form-field class="w-30">
                     <mat-label> {{'COMMON.MARGIN_PERC'|translate}}</mat-label>
-                    <input matInput type="text" class="form-control" id="marginPerc" [(ngModel)]="productStore.marginPerc"
-                      name="marginPerc" #marginPerc="ngModel">
+                    <input matInput type="text" class="form-control" id="marginPerc"
+                      [(ngModel)]="productStore.marginPerc" name="marginPerc" #marginPerc="ngModel">
                   </mat-form-field>
                 </div>
 
-                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
                   <mat-form-field class="w-100">
                     <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
                     <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"

@@ -251,6 +251,14 @@
                </mat-form-field>
             </div>
 
+             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-form-field class="w-30">
+                    <mat-label> {{'COMMON.SHIPPING_WEIGHT' | translate}}
+                    </mat-label>
+                    <input matInput type="text" class="form-control" id="weight" [(ngModel)]="product.shippingWeight"
+                      name="weight" #weight="ngModel"> 
+                  </mat-form-field>
+             </div>  
             <div fxLayout="row wrap">
                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
                   <div class="text-center mt-2">

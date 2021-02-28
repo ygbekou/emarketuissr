@@ -8,8 +8,8 @@
 
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" [compareWith]="compareObjects"
-              id="language" name="language" [(ngModel)]="user.language" #language="ngModel" required>
+            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" [compareWith]="compareObjects" id="language"
+              name="language" [(ngModel)]="user.language" #language="ngModel" required>
               <mat-option *ngFor="let cat of appService.appInfoStorage.languages" [value]="cat">
                 {{  cat.name}}
               </mat-option>
@@ -441,17 +441,7 @@
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
-
-          <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.ENABLE' | translate }}
-          </mat-slide-toggle>
-          <div class="divider"></div>
-          <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
-            {{ 'COMMON.ONLINE_STORE' | translate }}
-          </mat-slide-toggle>
-
-
-          <mat-form-field class="w-100 mb-3">
+            <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
               name="currency" [(ngModel)]="store.currency" #currency="ngModel" required>
@@ -460,23 +450,15 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          
 
-
-
-          <mat-form-field class="w-50 mb-3">
-            <mat-label> {{'COMMON.STORE_CODE' | translate}}
-            </mat-label>
-            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
-              name="code" #code="ngModel" required>
-            <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <button mat-fab color="warn" (click)="generateStoreCode()">
-            <mat-icon>cached</mat-icon>
-          </button>
-
+          <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+          <div class="divider"></div>
+          <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
+            {{ 'COMMON.ONLINE_STORE' | translate }}
+          </mat-slide-toggle> 
         </div>
       </div>
 
@@ -522,6 +504,51 @@
         </div>
       </div>
 
+    </div>
+
+
+    <div fxLayout="row wrap">
+
+      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.OPEN_TIME' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="openTime"
+            [(ngModel)]="store.openTime" name="openTime" #openTime="ngModel" required>
+          <mat-error *ngIf="f4.submitted && openTime.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.CLOSE_TIME' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="closeTime"
+            [(ngModel)]="store.closeTime" name="closeTime" #closeTime="ngModel" required>
+          <mat-error *ngIf="f4.submitted && closeTime.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+
+        <mat-form-field class="w-50 mb-3">
+          <mat-label> {{'COMMON.STORE_CODE' | translate}}
+          </mat-label>
+          <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+            name="code" #code="ngModel" required>
+          <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-fab color="warn" (click)="generateStoreCode()">
+          <mat-icon>cached</mat-icon>
+        </button>
+      </div>
     </div>
 
     <div fxLayout="row wrap">

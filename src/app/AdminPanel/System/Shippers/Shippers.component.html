@@ -1,8 +1,8 @@
-<a mat-button [routerLink]="['/admin/system']">{{'COMMON.SYSTEM' | translate}}
+<a mat-button [routerLink]="['/admin/system/shippers']">{{'COMMON.SYSTEM' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-<a mat-button color="accent" [routerLink]="['/admin/system/countryes']">
-  <h5>{{'COMMON.COUNTRY' | translate}}</h5>
+<a mat-button color="accent" [routerLink]="['/admin/system/shippers']">
+  <h5>{{'COMMON.SHIPPER' | translate}}s</h5>
 </a>
 <mat-tab-group [(selectedIndex)]="selectedTab">
   <mat-tab label="{{'COMMON.LIST' | translate}}">
@@ -25,49 +25,39 @@
         <!-- ID Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td mat-cell *matCellDef="let country"> {{country.id}} </td>
+          <td mat-cell *matCellDef="let shipper"> {{shipper.id}} </td>
         </ng-container>
 
         <!-- Image Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
-          <td mat-cell *matCellDef="let country"> {{country.name}}
+          <td mat-cell *matCellDef="let shipper"> {{shipper.name}}
+          </td>
+        </ng-container>
+
+        <!-- Image Column 'phone', 'status', 'sortOrder'-->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.PHONE' | translate}} </th>
+          <td mat-cell *matCellDef="let shipper"> {{shipper.phone}}
           </td>
         </ng-container>
 
         <!-- Image Column -->
-        <ng-container matColumnDef="isoCode2">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.ISO_CODE' | translate}} (2) </th>
-          <td mat-cell *matCellDef="let country"> {{country.isoCode2}}
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+          <td mat-cell *matCellDef="let shipper">  
+             {{shipper.status===1?('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}}
           </td>
         </ng-container>
 
-        <!-- Image Column -->
-        <ng-container matColumnDef="isoCode3">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.ISO_CODE' | translate}} (3) </th>
-          <td mat-cell *matCellDef="let country"> {{country.isoCode3}}
-          </td>
-        </ng-container>
-
-
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
-          <td mat-cell *matCellDef="let country">
-            <a (click)="edit(country)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
-              <mat-icon>edit</mat-icon>
-            </a>
-            &nbsp;&nbsp;
-            <button mat-icon-button color="warn" (click)="remove(country)" matTooltip="{{'COMMON.DELETE' | translate}}"
-              class="remove">
-              <mat-icon>delete</mat-icon>
-            </button>
+        <ng-container matColumnDef="sortOrder">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SORT_ORDER' | translate}} </th>
+          <td mat-cell *matCellDef="let shipper"> {{shipper.sortOrder}}
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let country; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let shipper; columns: displayedColumns;" (click)="edit(shipper)">
         </tr>
       </table>
       <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
@@ -78,49 +68,83 @@
   <mat-tab label="{{'COMMON.DETAILS' | translate}}">
     <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
       <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="name" [(ngModel)]="country.name" name="name"
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="shipper.name" name="name"
               #name="ngModel" required>
             <mat-error *ngIf="ff.submitted && name.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.ISO_CODE' | translate}} (2)
+            <mat-label> {{'COMMON.PHONE' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="isoCode2" [(ngModel)]="country.isoCode2"
-              name="isoCode2" #isoCode2="ngModel">
+            <input matInput type="text" placeholder ="+22890111213" class="form-control" id="phone" [(ngModel)]="shipper.phone" name="phone"
+              #phone="ngModel" required>
+            <mat-error *ngIf="ff.submitted && description.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
           </mat-form-field>
-          <mat-slide-toggle [(ngModel)]="country.status" name="status" #status="ngModel" class="my-2">
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="20" class="p-3">
+          <mat-slide-toggle [(ngModel)]="shipper.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
-          &nbsp;&nbsp;
-          <mat-slide-toggle [(ngModel)]="country.postcodeRequired" name="postcodeRequired" #postcodeRequired="ngModel"
-            class="my-2">
-            {{ 'COMMON.POSTAL_CODE_REQUIRED' | translate }}
-          </mat-slide-toggle>
         </div>
-
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>{{'COMMON.ADDRESS_FORMAT'|translate}}</mat-label>
-            <textarea matInput name="addressFormat" #addressFormat="ngModel" class="form-control" id="addressFormat"
-              [(ngModel)]="country.addressFormat" rows="6"></textarea>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.ISO_CODE' | translate}} (3)
-            </mat-label>
-            <input matInput type="text" class="form-control" id="isoCode3" [(ngModel)]="country.isoCode3"
-              name="isoCode3" #isoCode3="ngModel">
-          </mat-form-field>
-        </div>
-
       </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.E_MAIL' | translate}}
+            </mat-label>
+            <input matInput type="mail" class="form-control" id="email" [(ngModel)]="shipper.email" name="email"
+              #email="ngModel" required>
+            <mat-error *ngIf="ff.submitted && email.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description
+            </mat-label>
+            <input matInput type="text" class="form-control" id="description" [(ngModel)]="shipper.description"
+              name="description" #description="ngModel">
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="20" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{'COMMON.SORT_ORDER'|translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="shipper.sortOrder"
+              name="sortOrder" #sortOrder="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>URL
+            </mat-label>
+            <input matInput type="text" class="form-control" id="url" [(ngModel)]="shipper.url"
+              name="url" #url="ngModel">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="shipper.ratingCount > 0">
+          {{'COMMON.REVIEW'|translate}}{{shipper.ratingCount > 0 ? 's ('+shipper.rating+'/5)' : ''}}
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="shipper.deliveryCount>0">
+          {{'COMMON.SHIPPED'|translate}} : {{shipper.deliveryCount}}
+        </div>
+      </div>
+
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
           <div class="text-left mt-2" fxFlex.gt-sm="25">

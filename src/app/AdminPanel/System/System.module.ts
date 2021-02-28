@@ -51,13 +51,14 @@ import { LengthClassesComponent } from './LengthClasses/LengthClasses.component'
 import { LengthClassComponent } from './LengthClass/LengthClass.component';
 import { ConfigsComponent } from './configs/configs.component';
 import { StoresComponent } from './Stores/Stores.component';
+import { ShippersComponent } from './Shippers/Shippers.component';
 
 @NgModule({
   declarations: [LanguagesComponent, CurrenciesComponent, OrderStatusesComponent,
     StockStatusesComponent, ReturnStatusesComponent, ReturnActionsComponent,
     ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent,
     TaxRatesComponent, TaxClassesComponent, WeightClassComponent, WeightClassesComponent,
-    LengthClassesComponent, LengthClassComponent, ConfigsComponent, StoresComponent],
+    LengthClassesComponent, LengthClassComponent, ConfigsComponent, StoresComponent, ShippersComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

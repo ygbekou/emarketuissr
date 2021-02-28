@@ -1851,5 +1851,7 @@ export class Shipper {
   sortOrder: number;
   ratingCount: number;
   rating: number;
+  deliveryCount: number;
   url: number;
+  type = 'Shipper';
 }

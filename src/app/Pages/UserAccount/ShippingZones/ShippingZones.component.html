@@ -94,7 +94,7 @@
 
   </mat-tab>
   <mat-tab label="{{'COMMON.DETAILS' | translate}}" *ngIf="geoZone">
-    <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
+    <form name="fform" #ff="ngForm" validate>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
@@ -125,7 +125,6 @@
       </div>
 
       <div fxLayout="row wrap">
-
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.DELIVERY_START' | translate}}
@@ -152,8 +151,8 @@
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects" id="shipper"
-              name="shipper" [(ngModel)]="geoZone.shipper" #shipper="ngModel"  >
+            <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
+              id="shipper" name="shipper" [(ngModel)]="geoZone.shipper" #shipper="ngModel">
               <mat-option *ngFor="let cat of shippers" [value]="cat">
                 {{  cat.name}}
               </mat-option>
@@ -164,20 +163,25 @@
       <div fxLayout="row wrap">
 
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-          <mat-radio-group class="form-control" id="shippingMode" [(ngModel)]="geoZone.shippingMode" name="shippingMode"
-            #shippingMode="ngModel" class="my-3">
-            <mat-radio-button value="0">
-              {{'COMMON.FLAT_RATE' | translate }}
-            </mat-radio-button>
-            <br />
-            <mat-radio-button value="1">
-              {{'COMMON.PER_WEIGHT' | translate }}
-            </mat-radio-button>
-            <br />
-            <mat-radio-button value="2">
-              {{'COMMON.RATE_SHOP' | translate }}
-            </mat-radio-button>
-          </mat-radio-group>
+
+          <button mat-stroked-button [color]="geoZone.shippingMode==0?'accent':'secondary'"
+            (click)="geoZone.shippingMode=0">
+            <mat-icon *ngIf="geoZone.shippingMode==0">check</mat-icon>
+            {{'COMMON.FLAT_RATE' | translate }}
+          </button>
+          <br /> <br />
+          <button mat-stroked-button [color]="geoZone.shippingMode==1?'accent':'secondary'"
+            (click)="geoZone.shippingMode=1">
+            <mat-icon *ngIf="geoZone.shippingMode==1">check</mat-icon>
+            {{'COMMON.PER_WEIGHT' | translate }}
+          </button>
+          <br /> <br />
+          <button mat-stroked-button [color]="geoZone.shippingMode==2?'accent':'secondary'"
+            (click)="geoZone.shippingMode=2">
+            <mat-icon *ngIf="geoZone.shippingMode==2">check</mat-icon>
+            {{'COMMON.RATE_SHOP' | translate }}
+          </button>
+
 
         </div>
 
@@ -209,8 +213,8 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.SHIPPING_WEIGHT' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="weight" [(ngModel)]="geoZone.shippingWeight" name="weight"
-              #weight="ngModel" required>
+            <input matInput type="text" class="form-control" id="weight" [(ngModel)]="geoZone.shippingWeight"
+              name="weight" #weight="ngModel" required>
             <mat-error *ngIf="ff.submitted && weight.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
@@ -221,7 +225,8 @@
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
           <div class="text-left mt-2" fxFlex.gt-sm="25">
-            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <button mat-raised-button (click)="save()" color="primary" fxLayout="row" fxLayoutAlign="center center"
+              type="submit">
               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
               <mat-icon>save</mat-icon>
             </button> </div>
@@ -266,10 +271,10 @@
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Zone</mat-label>
-              <mat-select placeholder="Zone" id="zone" [compareWith]="compareObjects" name="zone"
+              <mat-select placeholder="Zone" id="zone" [compareWith]="compareZones" name="zone"
                 [(ngModel)]="zoneToGeoZone.zone" #zone="ngModel">
                 <mat-option *ngFor="let zone of zones" [value]="zone">
-                  {{zone.name}}
+                  {{zone?zone.name:''}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -289,7 +294,7 @@
               matTooltip="{{'COMMON.ADD' | translate}}">
               <mat-icon>save</mat-icon>
             </a>
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <button mat-icon-button color="warn" (click)="deleteZoneToGeoZone(zoneToGeoZone)"
               matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
               <mat-icon>delete</mat-icon>

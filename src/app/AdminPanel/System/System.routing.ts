@@ -7,7 +7,6 @@ import { ReturnStatusesComponent } from './ReturnStatuses/ReturnStatuses.compone
 import { ReturnActionsComponent } from './ReturnActions/ReturnActions.component';
 import { ReturnReasonsComponent } from './ReturnReasons/ReturnReasons.component';
 import { CountriesComponent } from './Countries/Countries.component';
-import { ZonesComponent } from './Zones/Zones.component';
 import { GeoZonesComponent } from './GeoZones/GeoZones.component';
 import { TaxRatesComponent } from './TaxRates/TaxRates.component';
 import { TaxClassesComponent } from './TaxClasses/TaxClasses.component';
@@ -18,6 +17,7 @@ import { LengthClassComponent } from './LengthClass/LengthClass.component';
 import { ConfigsComponent } from './configs/configs.component';
 import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
+import { ShippersComponent } from './Shippers/Shippers.component';
 
 export const SystemRoutes: Routes = [
    {
@@ -93,8 +93,16 @@ export const SystemRoutes: Routes = [
             }
          },
          {
-            path: 'zones',
-            component: ZonesComponent,
+            path: 'countries',
+            component: CountriesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'shippers',
+            component: ShippersComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']

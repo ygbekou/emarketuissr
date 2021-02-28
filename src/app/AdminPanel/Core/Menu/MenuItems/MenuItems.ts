@@ -63,6 +63,7 @@ const MENUITEMS = [
     icon: 'settings',
     children: [
       { state: 'stores', name: 'Stores', type: 'link' },
+      { state: 'shippers', name: 'Shippers', type: 'link' },
       { state: 'configs', name: 'Configuration', type: 'link' },
       { state: 'languages', name: 'Languages', type: 'link' },
       { state: 'currencies', name: 'Currencies', type: 'link' },
@@ -137,6 +138,7 @@ const MENUITEMS_FR = [
     icon: 'settings',
     children: [
       { state: 'configs', name: 'Configuration', type: 'link' },
+      { state: 'shippers', name: 'Expediteurs', type: 'link' },
       { state: 'languages', name: 'Langues', type: 'link' },
       { state: 'currencies', name: 'Monnaies', type: 'link' },
       { state: 'stockStatuses', name: 'Etat des stocks', type: 'link' },

@@ -23,6 +23,7 @@ export class ShippingZonesComponent implements OnInit {
   zones: Zone[] = [];
   messages = '';
   errors = '';
+  allZones = new Zone();
   stores: Store[] = [];
   shippers: Shipper[] = [];
   store: Store = new Store();
@@ -31,6 +32,9 @@ export class ShippingZonesComponent implements OnInit {
     private translate: TranslateService) { }
 
   ngOnInit() {
+    this.translate.get(['COMMON.ALL_ZONES', 'COMMON.ERROR']).subscribe(res => {
+      this.allZones.name = res['COMMON.ALL_ZONES'];
+    });
     this.getCountries();
     this.getStores();
     this.getShippers();
@@ -39,6 +43,14 @@ export class ShippingZonesComponent implements OnInit {
   compareObjects(o1: any, o2: any): boolean {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
+
+  compareZones(o1: any, o2: any): boolean {
+    if ((!o1 && o2 && !(o2.id > 0)) || (!o2 && o1 && !(o1.id > 0))) {
+      return true;
+    }
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
+
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
     storeSearchCriteria.status = 1;
@@ -59,6 +71,7 @@ export class ShippingZonesComponent implements OnInit {
 
   getShippers() {
     const parameters: string[] = [];
+    parameters.push('e.status= |abc|1|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.Shipper', parameters)
       .subscribe((data: Shipper[]) => {
         this.shippers = data;
@@ -87,6 +100,7 @@ export class ShippingZonesComponent implements OnInit {
       this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
         .subscribe((data: Zone[]) => {
           this.zones = data;
+          this.zones.unshift(this.allZones);
         },
           error => console.log(error),
           () => console.log('Get all GeoZone complete'));
@@ -105,6 +119,7 @@ export class ShippingZonesComponent implements OnInit {
           data.forEach((a) => {
             this.zones.push(a.zone);
           });
+          this.zones.unshift(this.allZones);
         }
         this.zoneToGeoZoneDS = new MatTableDataSource(data);
         this.zoneToGeoZoneDS.paginator = this.paginator;
@@ -131,6 +146,9 @@ export class ShippingZonesComponent implements OnInit {
     this.messages = '';
     this.errors = '';
     if (zoneToGeoZone.country && zoneToGeoZone.zone) {
+      if (!zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {
+        zoneToGeoZone.zone = null;
+      }
       zoneToGeoZone.geoZone = this.geoZone;
       zoneToGeoZone.store = this.store;
       try {
@@ -156,10 +174,16 @@ export class ShippingZonesComponent implements OnInit {
                 this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
               });
             }
-          });
+          },
+            (error) => console.log(error),
+            () => console.log('Get Tab Dtl complete'));
 
       } catch (e) {
         console.log(e);
+        this.selectedTab = 1;
+        this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+          this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+        });
       }
     }
   }
