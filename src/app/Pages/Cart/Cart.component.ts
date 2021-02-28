@@ -23,7 +23,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    quantityArray: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
    popupResponse: any;
    @Input()
-   currencyId: number;
+   storeId: number;
    @Input() pickUp;
    @Output() orderCompleteEvent = new EventEmitter<Order>();
 
@@ -122,8 +122,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
       const orderId = this.order ? this.order.id : null;
       this.order = new Order();
       this.order.id = orderId;
-      this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
-      this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
+      this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
+      this.order.total = this.appService.navbarCartTotalMap[this.storeId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
@@ -169,7 +169,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
                         this.orderCompleteEvent.emit(this.order);
                      } else {
                         if (this.user.paymentMethodCode !== 'TMONEY') {
-                           this.appService.completeOrder(+this.currencyId);
+                           this.appService.completeOrder(+this.storeId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
                            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);

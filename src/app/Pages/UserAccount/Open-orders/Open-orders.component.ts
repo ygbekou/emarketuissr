@@ -86,10 +86,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
     this.appService.getObject('/service/catalog/getProductOnSale/' +
       this.appService.appInfoStorage.language.id + '/' + orderProduct.ptsId)
       .subscribe((data: ProductDescVO) => {
-        // console.log(data);
-        const ci = new CartItem(data);
-        ci.quantity = 1;
-        this.appService.addToCart(ci);
+        this.addPrdToCart(data);
       },
         (error) => console.log(error),
         () => console.log('Get all getProductOnSale complete'));

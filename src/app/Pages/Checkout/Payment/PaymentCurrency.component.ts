@@ -29,7 +29,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    allStepDone = false;
 
    @Input()
-   currencyId: number;
+   storeId: number;
    @Output() orderCompleteEvent = new EventEmitter<Order>();
 
    hasOrderSucceed: boolean;
@@ -111,8 +111,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       const orderId = this.order ? this.order.id : null;
       // this.order = new Order();
       this.order.id = orderId;
-      this.order.products = this.appService.localStorageCartProductsMap[this.currencyId];
-      this.order.total = this.appService.navbarCartTotalMap[this.currencyId];
+      this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
+      this.order.total = this.appService.navbarCartTotalMap[this.storeId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
@@ -160,7 +160,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                         });
                      } else {
                         if (this.user.paymentMethodCode !== 'TMONEY') {
-                           this.appService.completeOrder(+this.currencyId);
+                           this.appService.completeOrder(+this.storeId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
                            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
@@ -192,7 +192,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                if (data.errors !== null && data.errors !== undefined) {
                   this.error = data.errors[0];
                } else {
-                  this.appService.completeOrder(+this.currencyId);
+                  this.appService.completeOrder(+this.storeId);
                   this.orderCompleteEvent.emit(this.order);
                }
                this.appService.clearOrderId();

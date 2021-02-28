@@ -8,9 +8,9 @@
     <div class="container" *ngIf="isUserLoggedIn()">
       <app-Payment-DeliveryStepper [pickUp]="deliveryMode" (setAllStepDone)="setAllStepDone($event)" *ngIf="!allStepDone"></app-Payment-DeliveryStepper>
       <mat-tab-group  *ngIf="allStepDone">
-        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].currencyCode}}"
+        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].storeName}}"
           *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
-          <app-Payment-Currency [pickUp]="deliveryMode" (orderCompleteEvent)="updateOrder($event)" [currencyId]="item.key">
+          <app-Payment-Currency [pickUp]="deliveryMode" (orderCompleteEvent)="updateOrder($event)" [storeId]="item.key">
           </app-Payment-Currency>
         </mat-tab>
       </mat-tab-group>
