@@ -8,7 +8,7 @@
 <mat-form-field class="w-100 mb-3">
   <mat-label>{{'COMMON.STORE' | translate}}</mat-label>
   <mat-select placeholder="{{'COMMON.STORE' | translate}}" [compareWith]="compareObjects" id="store1" name="store1"
-    [(ngModel)]="store" #store1="ngModel" (valueChange)="getAll()" required>
+    [(ngModel)]="store" #store1="ngModel" (valueChange)="geozone=null;getAll();" required>
     <mat-option *ngFor="let cat of stores" [value]="cat">
       {{  cat.name}}
     </mat-option>
@@ -45,31 +45,48 @@
           </td>
         </ng-container>
 
-        <!-- Image Column -->
+        <!--   Column -->
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
           <td mat-cell *matCellDef="let geoZone"> {{geoZone.description}}
           </td>
         </ng-container>
 
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <!--   Column -->
+        <ng-container matColumnDef="shippingMode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SHIPPING_MODE'|translate}} </th>
           <td mat-cell *matCellDef="let geoZone">
-            <a (click)="edit(geoZone)" mat-icon-button color="primary" matTooltip="{{'COMMON.EDIT' | translate}}">
-              <mat-icon>edit</mat-icon>
-            </a>
-            &nbsp;&nbsp;
-            <button mat-icon-button color="warn" (click)="remove(geoZone)" matTooltip="{{'COMMON.DELETE' | translate}}"
-              class="remove">
-              <mat-icon>delete</mat-icon>
-            </button>
+            {{geoZone.shippingMode==0?('COMMON.FLAT_RATE' | translate ):
+            (geoZone.shippingMode==1?('COMMON.PER_WEIGHT' | translate):
+            ('COMMON.RATE_SHOP' | translate)
+            )}}
+          </td>
+        </ng-container>
+
+        <!--   Column -->
+        <ng-container matColumnDef="flatRate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.FLAT_RATE'|translate}} </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.flatRate}}
+          </td>
+        </ng-container>
+
+        <!--   Column -->
+        <ng-container matColumnDef="weightRate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.WEIGHT_RATE'|translate}} </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.weightRate}}
+          </td>
+        </ng-container>
+        <!--   Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.SHIPPING_WEIGHT'|translate}} </th>
+          <td mat-cell *matCellDef="let geoZone"> {{geoZone.shippingWeight}}
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let geoZone; columns: displayedColumns;">
+        <tr mat-row *matRowDef="let geoZone; columns: displayedColumns;" (click)="edit(geoZone)">
         </tr>
+
       </table>
       <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
     </div>
@@ -79,7 +96,7 @@
   <mat-tab label="{{'COMMON.DETAILS' | translate}}" *ngIf="geoZone">
     <form name="fform" (ngSubmit)="ff.form.valid && save()" #ff="ngForm" validate>
       <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
@@ -90,7 +107,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> Description
             </mat-label>
@@ -98,22 +115,65 @@
               name="description" #description="ngModel">
           </mat-form-field>
         </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="20" class="p-3">
+          <mat-slide-toggle [(ngModel)]="geoZone.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.ENABLE' | translate }}
+          </mat-slide-toggle>
+        </div>
+
       </div>
 
       <div fxLayout="row wrap">
 
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-          <mat-radio-group class="form-control"
-          id="shippingMode" [(ngModel)]="geoZone.shippingMode"
-              name="shippingMode" #shippingMode="ngModel" class="my-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.DELIVERY_START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="deliveryStart"
+              [(ngModel)]="geoZone.deliveryStart" name="deliveryStart" #deliveryStart="ngModel">
+            <mat-error *ngIf="ff.submitted && deliveryStart.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.DELIVERY_END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="deliveryEnd"
+              [(ngModel)]="geoZone.deliveryEnd" name="deliveryEnd" #deliveryEnd="ngModel">
+            <mat-error *ngIf="ff.submitted && deliveryEnd.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects" id="shipper"
+              name="shipper" [(ngModel)]="geoZone.shipper" #shipper="ngModel"  >
+              <mat-option *ngFor="let cat of shippers" [value]="cat">
+                {{  cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-radio-group class="form-control" id="shippingMode" [(ngModel)]="geoZone.shippingMode" name="shippingMode"
+            #shippingMode="ngModel" class="my-3">
             <mat-radio-button value="0">
               {{'COMMON.FLAT_RATE' | translate }}
             </mat-radio-button>
-            <br/>
+            <br />
             <mat-radio-button value="1">
               {{'COMMON.PER_WEIGHT' | translate }}
             </mat-radio-button>
-            <br/>
+            <br />
             <mat-radio-button value="2">
               {{'COMMON.RATE_SHOP' | translate }}
             </mat-radio-button>
@@ -145,11 +205,11 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3"  *ngIf="geoZone.shippingMode==1">
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==1">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.WEIGHT' | translate}}
+            <mat-label> {{'COMMON.SHIPPING_WEIGHT' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="weight" [(ngModel)]="geoZone.weight" name="weight"
+            <input matInput type="text" class="form-control" id="weight" [(ngModel)]="geoZone.shippingWeight" name="weight"
               #weight="ngModel" required>
             <mat-error *ngIf="ff.submitted && weight.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GeoZone, Country, ZoneToGeoZone, Zone, Store, StoreSearchCriteria } from 'src/app/app.models';
+import { GeoZone, Country, ZoneToGeoZone, Zone, Store, StoreSearchCriteria, Shipper } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./ShippingZones.component.scss']
 })
 export class ShippingZonesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'description', 'shippingMode', 'flatRate', 'weightRate', 'weight'];
   displayedColumns2: string[] = ['id', 'country', 'zone', 'actions'];
   dataSource: MatTableDataSource<GeoZone>;
   zoneToGeoZoneDS: MatTableDataSource<ZoneToGeoZone>;
@@ -24,6 +24,7 @@ export class ShippingZonesComponent implements OnInit {
   messages = '';
   errors = '';
   stores: Store[] = [];
+  shippers: Shipper[] = [];
   store: Store = new Store();
   selectedTab = 0;
   constructor(public appService: AppService,
@@ -32,6 +33,7 @@ export class ShippingZonesComponent implements OnInit {
   ngOnInit() {
     this.getCountries();
     this.getStores();
+    this.getShippers();
   }
 
   compareObjects(o1: any, o2: any): boolean {
@@ -53,6 +55,16 @@ export class ShippingZonesComponent implements OnInit {
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
+  }
+
+  getShippers() {
+    const parameters: string[] = [];
+    this.appService.getAllByCriteria('com.softenza.emarket.model.Shipper', parameters)
+      .subscribe((data: Shipper[]) => {
+        this.shippers = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Shipper complete'));
   }
 
   getAll() {
@@ -253,6 +265,9 @@ export class ShippingZonesComponent implements OnInit {
       this.messages = '';
       console.log(this.geoZone);
       this.geoZone.store = this.store;
+      this.geoZone.status = (this.geoZone.status == null
+        || this.geoZone.status.toString() === 'false'
+        || this.geoZone.status.toString() === '0') ? 0 : 1;
       const index: number = this.dataSource.data.indexOf(this.geoZone);
       this.appService.save(this.geoZone, 'GeoZone')
         .subscribe(result => {

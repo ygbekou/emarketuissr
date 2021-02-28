@@ -197,6 +197,7 @@ export class Product extends BaseModel {
   productVideos: ProductVideo[] = [];
   productDescriptions: ProductDescription[] = [];
   productToCategorys: ProductToCategory[] = [];
+  shippingWeight: number;
   type = 'Product';
   action: string;
 }
@@ -574,8 +575,15 @@ export class GeoZone {
   shippingMode: number;
   flatRate: number;
   weightRate: number;
-  weight: number;
+  shippingWeight: number;
+  status: number;
+  deliveryStart: string;
+  deliveryEnd: string;
   description: string;
+  shipper: Shipper;
+  constructor() {
+    this.status = 1;
+  }
   type = 'GeoZone';
 }
 
@@ -694,6 +702,8 @@ export class Store extends BaseModel {
   rating: number;
   ratingCount: number;
   ratingAverage: number;
+  openTime: string;
+  closeTime: string;
   reviews: Review[];
   type = 'Store';
 
@@ -948,7 +958,7 @@ export class ProductToStore {
   dateAvailable: Date;
   availableOnline: number;
   marginPerc: number;
-
+  shippingWeight: number;
   productDiscounts: ProductDiscount[] = [];
 
   type = 'ProductToStore';
@@ -1828,4 +1838,18 @@ export class Parameter {
     this.name = n;
     this.value = v;
   }
+}
+
+export class Shipper {
+  id: number;
+  name: number;
+  image: number;
+  description: number;
+  phone: number;
+  email: number;
+  status: number;
+  sortOrder: number;
+  ratingCount: number;
+  rating: number;
+  url: number;
 }
