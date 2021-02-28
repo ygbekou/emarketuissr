@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { MatDialogRef, MatDialog, MatDialogConfig, MatSidenav } from '@angular/material';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+import { Observable, throwError } from 'rxjs';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { ToastaService, ToastaConfig, ToastOptions, ToastData } from 'ngx-toasta';
 import { ReviewPopupComponent } from '../Global/ReviewPopup/ReviewPopup.component';
 import { ConfirmationPopupComponent } from '../Global/ConfirmationPopup/ConfirmationPopup.component';
 import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
-   GenericResponse, User, AuthToken, SearchAttribute, TaxClass, Language, StockStatus, GenericVO,
+   GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
    CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc
 } from '../app.models';
 import { Constants } from '../app.constants';
@@ -290,10 +290,10 @@ export class AppService {
 
          this.localStorageCartProductsMap = {};
          this.localStorageCartProducts.forEach(cartItem => {
-            if (!this.localStorageCartProductsMap[cartItem.currencyId]) {
-               this.localStorageCartProductsMap[cartItem.currencyId] = new Array();
+            if (!this.localStorageCartProductsMap[cartItem.storeId]) {
+               this.localStorageCartProductsMap[cartItem.storeId] = new Array();
             }
-            this.localStorageCartProductsMap[cartItem.currencyId].push(cartItem);
+            this.localStorageCartProductsMap[cartItem.storeId].push(cartItem);
          });
 
       }
@@ -443,16 +443,16 @@ export class AppService {
       }, 500);
    }
 
-   public completeOrder(currencyId: number) {
+   public completeOrder(storeId: number) {
       console.log('Completing order ...');
       const products: any = JSON.parse(localStorage.getItem('cart_item'));
-      this.hasOrderSucceedMap[currencyId] = true;
+      this.hasOrderSucceedMap[storeId] = true;
 
       const filteredProducts = products.filter(p => {
-         return p.currencyId !== currencyId;
+         return p.storeId !== storeId;
       });
 
-      delete this.localStorageCartProductsMap[currencyId];
+      delete this.localStorageCartProductsMap[storeId];
 
       /*  const title = 'Updating Cart';
        const msg = '';
