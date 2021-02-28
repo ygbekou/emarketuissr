@@ -316,28 +316,30 @@ export class AppService {
 
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
-         if (!this.navbarCartPriceMap[cartItem.currencyId]) {
-            this.navbarCartCountMap[cartItem.currencyId] = 0;
-            this.navbarCartPriceMap[cartItem.currencyId] = 0;
-            this.navbarCartShippingMap[cartItem.currencyId] = 0;
-            this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] = 0;
-            this.navbarCartEstimatedTaxMap[cartItem.currencyId] = 0;
-            this.navbarCartTotalMap[cartItem.currencyId] = 0;
-            this.hasOrderSucceedMap[cartItem.currencyId] = false;
+         if (!this.navbarCartPriceMap[cartItem.storeId]) {
+            this.navbarCartCountMap[cartItem.storeId] = 0;
+            this.navbarCartPriceMap[cartItem.storeId] = 0;
+            this.navbarCartShippingMap[cartItem.storeId] = 0;
+            this.navbarCartTotalBeforeTaxMap[cartItem.storeId] = 0;
+            this.navbarCartEstimatedTaxMap[cartItem.storeId] = 0;
+            this.navbarCartTotalMap[cartItem.storeId] = 0;
+            this.hasOrderSucceedMap[cartItem.storeId] = false;
 
-            this.navbarCartCurrencyMap[cartItem.currencyId] = {
+            this.navbarCartCurrencyMap[cartItem.storeId] = {
+               'storeName': cartItem.storeName,
                'currencyCode': cartItem.currencyCode,
-               'symbolLeft': cartItem.symbolLeft, 'symbolRight': cartItem.symbolRight
+               'symbolLeft': cartItem.symbolLeft,
+               'symbolRight': cartItem.symbolRight
             };
          }
 
-         this.navbarCartCountMap[cartItem.currencyId] += cartItem.quantity;
+         this.navbarCartCountMap[cartItem.storeId] += cartItem.quantity;
          this.navbarCartCount += Number(cartItem.quantity);
-         this.navbarCartPriceMap[cartItem.currencyId] += this.calculateCartItemTotal(cartItem);
+         this.navbarCartPriceMap[cartItem.storeId] += this.calculateCartItemTotal(cartItem);
 
 
          this.navbarCartShipping += 0;
-         this.navbarCartShippingMap[cartItem.currencyId] += 0;
+         this.navbarCartShippingMap[cartItem.storeId] += 0;
 
          if (cartItem.taxRules) {
             cartItem.tax = 0;
@@ -351,15 +353,15 @@ export class AppService {
          cartItem.tax = this.roundingValue(cartItem.tax);
          cartItem.total = this.roundingValue(this.calculateCartItemTotal(cartItem) + cartItem.tax);
          this.navbarCartEstimatedTax += cartItem.tax;
-         this.navbarCartEstimatedTaxMap[cartItem.currencyId] += cartItem.tax;
+         this.navbarCartEstimatedTaxMap[cartItem.storeId] += cartItem.tax;
 
-         this.navbarCartPriceMap[cartItem.currencyId] = this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]);
-         this.navbarCartTotalBeforeTaxMap[cartItem.currencyId] =
-            this.roundingValue(this.navbarCartPriceMap[cartItem.currencyId]
-               + this.navbarCartShippingMap[cartItem.currencyId]);
-         this.navbarCartTotalMap[cartItem.currencyId] =
-            this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.currencyId]
-               + this.navbarCartEstimatedTaxMap[cartItem.currencyId]);
+         this.navbarCartPriceMap[cartItem.storeId] = this.roundingValue(this.navbarCartPriceMap[cartItem.storeId]);
+         this.navbarCartTotalBeforeTaxMap[cartItem.storeId] =
+            this.roundingValue(this.navbarCartPriceMap[cartItem.storeId]
+               + this.navbarCartShippingMap[cartItem.storeId]);
+         this.navbarCartTotalMap[cartItem.storeId] =
+            this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.storeId]
+               + this.navbarCartEstimatedTaxMap[cartItem.storeId]);
 
       });
 
