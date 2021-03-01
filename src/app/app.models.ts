@@ -570,7 +570,7 @@ export class Zone {
 
 export class GeoZone {
   id: number;
-  name: String;
+  name: string;
   store: Store;
   shippingMode: number;
   flatRate: number;
@@ -1528,15 +1528,13 @@ export class Order {
   errors: string[];
   paymentInfo: string;
   cancellationReason: CancellationReason;
-
+  shipper: Shipper;
   type = 'Order';
-
   totalRewardPoints: number;
   orderProducts: OrderProduct[] = [];
   orderOptions: OrderOption[] = [];
   orderOptionMap = {};
   products: Product[] = [];
-
   constructor() {
     this.type = 'Order';
   }
