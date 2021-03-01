@@ -698,6 +698,7 @@ export class Store extends BaseModel {
   sendSMSNewOrder: number;
   sendSMSOrderCancel: number;
   sendSMSLowInventory: number;
+  sendSMSShipper: number;
   cellPhone: string;
   rating: number;
   ratingCount: number;

@@ -500,6 +500,11 @@
             #sendSMSLowInventory="ngModel" class="my-2">
             {{ 'COMMON.SEND_SMS_LOW_INVN' | translate }}
           </mat-slide-toggle>
+          <br />
+          <mat-slide-toggle [(ngModel)]="store.sendSMSShipper" name="sendSMSShipper"
+            #sendSMSShipper="ngModel" class="my-2">
+            {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
+          </mat-slide-toggle>
 
         </div>
       </div>
