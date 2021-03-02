@@ -65,15 +65,25 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    getUser(userId: number) {
       this.appService.getOneWithChildsAndFiles(userId, 'User')
-      .subscribe(result => {
-         if (result.id > 0) {
-            this.user = result;
-         } else {
-            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
-               this.error = res['MESSAGE.READ_FAILED'];
-            });
-         }
-      });
+         .subscribe(result => {
+            if (result.id > 0) {
+               this.user = result;
+               if (this.user.paymentMethodCode === 'CREDIT_CARD') {
+                  this.appService.getObject('/service/order/customer/' + userId + '/active_card')
+                     .subscribe((data: CreditCard) => {
+                        this.user.creditCard = data;
+                     },
+                        error => console.log(error),
+                        () => console.log('Get user active CreditCard complete for userId=' + userId));
+               } else if (this.user.paymentMethodCode === 'TMONEY') {
+                  //this.processPaymentConfirmation();
+               }
+            } else {
+               this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+                  this.error = res['MESSAGE.READ_FAILED'];
+               });
+            }
+         });
 
    }
 

@@ -1121,6 +1121,7 @@ export class CartItem {
   adjTotal: number;
   povos: ProductOptionVO[];
   hasOption: number;
+  shippingWeight: number;
 
   public constructor(p: ProductDescVO) {
     this.prdId = p.product.id;
@@ -1159,6 +1160,7 @@ export class CartItem {
     }
     this.hasOption = p.product.hasOption;
     this.povos = p.povos;
+    this.shippingWeight = p.product.shippingWeight;
   }
 }
 
@@ -1240,6 +1242,7 @@ export class ProductVO {
   productDiscountId: number;
   hasOption: number;
   buyPrice: number;
+  shippingWeight: number;
   selectedOptionsMap: Map<number, any> = new Map();
 }
 
@@ -1528,6 +1531,7 @@ export class Order {
   errors: string[];
   paymentInfo: string;
   cancellationReason: CancellationReason;
+  zoneToGeoZone: ZoneToGeoZone;
 
   type = 'Order';
 

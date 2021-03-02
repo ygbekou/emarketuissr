@@ -3,7 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, Address, CreditCard, Order, Currency } from 'src/app/app.models';
+import { User, Address, CreditCard, Order, Currency, ZoneToGeoZone } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
@@ -19,6 +19,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    emailPattern: any = /\S+@\S+\.\S+/;
    paymentFormOne: FormGroup;
 
+   @Input()
    user: User = new User();
    error: string;
    notify = false;
@@ -34,16 +35,23 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    hasOrderSucceed: boolean;
 
+
    constructor(public appService: AppService,
       public router: Router,
       public translate: TranslateService
    ) {
 
-      this.appService.removeBuyProducts();
-      this.user.shippingAddress = new Address();
-      this.user.billingAddress = new Address();
-      this.user.creditCard = new CreditCard();
-      this.getUser(Number(this.appService.tokenStorage.getUserId()));
+      // this.appService.removeBuyProducts();
+      // this.user.shippingAddress = new Address();
+      // this.user.billingAddress = new Address();
+      // this.user.creditCard = new CreditCard();
+      // this.getUser(Number(this.appService.tokenStorage.getUserId()));
+
+      this.processPaymentConfirmation();
+      // setTimeout(() => {
+      //    this.getZoneToGeoZone();
+      // }, 1000);
+
 
    }
 
@@ -56,9 +64,26 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    ngAfterViewInit() {
-
+      this.getZoneToGeoZone();
    }
 
+   getZoneToGeoZone() {
+
+      console.log(this.storeId);
+      console.log(this.user.shippingAddress.zone.id);
+
+      const parameters: string[] = [];
+      parameters.push('e.store.id = |storeId|' + this.storeId + '|Integer');
+      parameters.push('e.zone.id IN |zoneIdList|0;' + this.user.shippingAddress.zone.id + '|List<Integer>');
+      this.appService.getAllByCriteria('ZoneToGeoZone', parameters)
+         .subscribe((data: ZoneToGeoZone[]) => {
+            console.log(data);
+            this.order.zoneToGeoZone = data[0];
+         },
+         error => console.log(error),
+         () => console.log('Get all ZoneToGeoZone complete'));
+
+   }
 
    getUser(userId: number) {
       this.appService.getOneWithChildsAndFiles(userId, 'User')
