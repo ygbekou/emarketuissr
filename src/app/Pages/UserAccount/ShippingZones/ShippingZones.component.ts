@@ -85,6 +85,7 @@ export class ShippingZonesComponent implements OnInit {
     parameters.push('e.store.id = |abc|' + this.store.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.GeoZone', parameters)
       .subscribe((data: GeoZone[]) => {
+        console.log(data);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -145,8 +146,9 @@ export class ShippingZonesComponent implements OnInit {
   saveZoneToGeoZone(zoneToGeoZone: ZoneToGeoZone) {
     this.messages = '';
     this.errors = '';
-    if (zoneToGeoZone.country && zoneToGeoZone.zone) {
-      if (!zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {
+    console.log(zoneToGeoZone);
+    if (zoneToGeoZone.country) {
+      if (!zoneToGeoZone.zone || !zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {
         zoneToGeoZone.zone = null;
       }
       zoneToGeoZone.geoZone = this.geoZone;
