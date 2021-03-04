@@ -52,8 +52,9 @@ export class AppService {
    navbarCartPrice = 0;
    navbarCartPriceMap = {};
 
-   navbarCartShipping = 0;
+   navbarCartShippingWeightMap = {};
    navbarCartShippingMap = {};
+   navbarCartShippingGeoZoneMap = {};
 
    navbarCartTotalBeforeTax = 0;
    navbarCartTotalBeforeTaxMap = {};
@@ -301,7 +302,6 @@ export class AppService {
       this.navbarCartCount = 0;
 
       this.navbarCartPrice = 0;
-      this.navbarCartShipping = 0;
       this.navbarCartTotalBeforeTax = 0;
       this.navbarCartEstimatedTax = 0;
       this.navbarCartTotal = 0;
@@ -309,10 +309,13 @@ export class AppService {
       this.navbarCartCountMap = {};
       this.navbarCartPriceMap = {};
       this.navbarCartShippingMap = {};
+      this.navbarCartShippingWeightMap = {};
       this.navbarCartTotalBeforeTaxMap = {};
       this.navbarCartEstimatedTaxMap = {};
       this.navbarCartTotalMap = {};
 
+      console.log('Product List ...');
+      console.log(this.localStorageCartProducts);
 
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
@@ -320,6 +323,7 @@ export class AppService {
             this.navbarCartCountMap[cartItem.storeId] = 0;
             this.navbarCartPriceMap[cartItem.storeId] = 0;
             this.navbarCartShippingMap[cartItem.storeId] = 0;
+            this.navbarCartShippingWeightMap[cartItem.storeId] = 0;
             this.navbarCartTotalBeforeTaxMap[cartItem.storeId] = 0;
             this.navbarCartEstimatedTaxMap[cartItem.storeId] = 0;
             this.navbarCartTotalMap[cartItem.storeId] = 0;
@@ -338,8 +342,9 @@ export class AppService {
          this.navbarCartPriceMap[cartItem.storeId] += this.calculateCartItemTotal(cartItem);
 
 
-         this.navbarCartShipping += 0;
-         this.navbarCartShippingMap[cartItem.storeId] += 0;
+         // this.navbarCartShipping += 0;
+         this.navbarCartShippingWeightMap[cartItem.storeId] += (cartItem.shippingWeight ? cartItem.shippingWeight : 0)
+                                    * Number(cartItem.quantity);
 
          if (cartItem.taxRules) {
             cartItem.tax = 0;
@@ -356,18 +361,26 @@ export class AppService {
          this.navbarCartEstimatedTaxMap[cartItem.storeId] += cartItem.tax;
 
          this.navbarCartPriceMap[cartItem.storeId] = this.roundingValue(this.navbarCartPriceMap[cartItem.storeId]);
-         this.navbarCartTotalBeforeTaxMap[cartItem.storeId] =
-            this.roundingValue(this.navbarCartPriceMap[cartItem.storeId]
-               + this.navbarCartShippingMap[cartItem.storeId]);
-         this.navbarCartTotalMap[cartItem.storeId] =
-            this.roundingValue(this.navbarCartTotalBeforeTaxMap[cartItem.storeId]
-               + this.navbarCartEstimatedTaxMap[cartItem.storeId]);
 
       });
 
-      this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
-      this.navbarCartTotalBeforeTax += this.roundingValue(this.navbarCartPrice + this.navbarCartShipping);
-      this.navbarCartTotal += this.roundingValue(this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax);
+      console.log('Calculating Shipping Cost ...' + Object.entries(this.navbarCartShippingWeightMap));
+      for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
+         if (this.navbarCartShippingGeoZoneMap[storeId]) {
+            console.log('This is where I am ...');
+            this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
+                     Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight);
+
+            this.navbarCartTotalBeforeTaxMap[storeId] = this.roundingValue(this.navbarCartPriceMap[storeId]
+                                 + this.navbarCartShippingMap[storeId]);
+            this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
+                                 + this.navbarCartEstimatedTaxMap[storeId]);
+         }
+      }
+
+      // this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
+      // this.navbarCartTotalBeforeTax += this.roundingValue(this.navbarCartPrice + this.navbarCartShipping);
+      // this.navbarCartTotal += this.roundingValue(this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax);
    }
 
    calculateCartItemTotal(cartItem: CartItem) {
@@ -375,7 +388,7 @@ export class AppService {
 
       if (cartItem.productDiscountQuantity > 0 && cartItem.productDiscountPrice > 0) {
          const nberDiscountQuantity = Math.trunc(cartItem.quantity / cartItem.productDiscountQuantity);
-         const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity
+         const moduloDiscountQuantity = cartItem.quantity % cartItem.productDiscountQuantity;
          totalPrice = cartItem.productDiscountPrice * nberDiscountQuantity
             + cartItem.price * moduloDiscountQuantity;
       } else {
@@ -458,7 +471,7 @@ export class AppService {
 
       /*  const title = 'Updating Cart';
        const msg = '';
- 
+
        const toastOption: ToastOptions = {
           title: title,
           msg: msg,
@@ -466,7 +479,7 @@ export class AppService {
           timeout: 1000,
           theme: 'material'
        };
- 
+
        this.toastyService.wait(toastOption); */
       setTimeout(() => {
          // ReAdding the products after remove

@@ -192,6 +192,7 @@
     "SEND_SMS_NEW_ORDER":"Envoyer un SMS pour une nouvelle commande",
     "SEND_SMS_ORDER_CANCEL": "Envoyer un SMS pour une commande annullée",
     "SEND_SMS_LOW_INVN": "Envoyer un SMS quand le niveau d'inventaire est bas", 
+    "SEND_SMS_SHIPPER": "Envoyer un SMS aux expéditeurs",
     "CHANGE_PRODUCT": "Changer le produit",
     "CHECKED_BY": "Lu par",
     "CHOOSE_COLOR": "Choisir la couleur",

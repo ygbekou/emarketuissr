@@ -570,7 +570,7 @@ export class Zone {
 
 export class GeoZone {
   id: number;
-  name: String;
+  name: string;
   store: Store;
   shippingMode: number;
   flatRate: number;
@@ -593,6 +593,7 @@ export class ZoneToGeoZone {
   store: Store;
   geoZone: GeoZone;
   country: Country;
+  errors: string[];
   type = 'ZoneToGeoZone';
 }
 
@@ -698,6 +699,7 @@ export class Store extends BaseModel {
   sendSMSNewOrder: number;
   sendSMSOrderCancel: number;
   sendSMSLowInventory: number;
+  sendSMSShipper: number;
   cellPhone: string;
   rating: number;
   ratingCount: number;
@@ -1088,6 +1090,7 @@ export class ProductDescVO {
   shortDescription: string;
   mediumDescription: string;
   category: string;
+  shippingWeight: number;
 
   povos: ProductOptionVO[];
 }
@@ -1124,6 +1127,7 @@ export class CartItem {
   shippingWeight: number;
 
   public constructor(p: ProductDescVO) {
+    console.log('Here ....')
     this.prdId = p.product.id;
     this.ptsId = p.product.ptsId;
     this.storeId = p.product.storeId;
@@ -1160,6 +1164,7 @@ export class CartItem {
     }
     this.hasOption = p.product.hasOption;
     this.povos = p.povos;
+    alert('Shipping Weight ..' + p.product.shippingWeight);
     this.shippingWeight = p.product.shippingWeight;
   }
 }
@@ -1531,16 +1536,15 @@ export class Order {
   errors: string[];
   paymentInfo: string;
   cancellationReason: CancellationReason;
+  shipper: Shipper;
   zoneToGeoZone: ZoneToGeoZone;
 
   type = 'Order';
-
   totalRewardPoints: number;
   orderProducts: OrderProduct[] = [];
   orderOptions: OrderOption[] = [];
   orderOptionMap = {};
   products: Product[] = [];
-
   constructor() {
     this.type = 'Order';
   }

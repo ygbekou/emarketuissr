@@ -34,6 +34,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    @Output() orderCompleteEvent = new EventEmitter<Order>();
 
    hasOrderSucceed: boolean;
+   zoneToGeoZone: ZoneToGeoZone;
 
 
    constructor(public appService: AppService,
@@ -61,27 +62,32 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.order = new Order();
       }
 
+      this.getZoneToGeoZone();
+
    }
 
    ngAfterViewInit() {
-      this.getZoneToGeoZone();
+      
    }
 
    getZoneToGeoZone() {
 
-      console.log(this.storeId);
-      console.log(this.user.shippingAddress.zone.id);
-
-      const parameters: string[] = [];
-      parameters.push('e.store.id = |storeId|' + this.storeId + '|Integer');
-      parameters.push('e.zone.id IN |zoneIdList|0;' + this.user.shippingAddress.zone.id + '|List<Integer>');
-      this.appService.getAllByCriteria('ZoneToGeoZone', parameters)
-         .subscribe((data: ZoneToGeoZone[]) => {
-            console.log(data);
-            this.order.zoneToGeoZone = data[0];
+      this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
+            'storeId': this.storeId, 'zoneId': this.user.billingAddress.zone.id
+         })
+         .subscribe((data: ZoneToGeoZone) => {
+            if (data.errors !== null && data.errors !== undefined) {
+               this.error = data.errors[0];
+            } else {
+               this.zoneToGeoZone = data;
+               this.appService.navbarCartShippingGeoZoneMap[this.storeId] = this.zoneToGeoZone;
+               console.log(this.zoneToGeoZone);
+            }
+            console.log('Calling Recalculate ...');
+            this.appService.recalculateCart(false);
          },
          error => console.log(error),
-         () => console.log('Get all ZoneToGeoZone complete'));
+         () => console.log('ZoneToGeoZone retrieved '));
 
    }
 
@@ -112,14 +118,20 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    public getCartProducts() {
       let total = 0;
+      let totalShippingWeight = 0;
+      let shippingPrice = 0;
       if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
          for (const product of this.appService.localStorageCartProducts) {
             if (!product.quantity) {
                product.quantity = 1;
             }
             total += (product.price * product.quantity);
+            totalShippingWeight += product.shippingWeight;
          }
-         total += (this.appService.shipping + this.appService.tax);
+
+         shippingPrice = this.zoneToGeoZone.geoZone.weightRate * Math.ceil(totalShippingWeight / this.zoneToGeoZone.geoZone.shippingWeight);
+         this.appService.navbarCartShippingMap[this.storeId] = shippingPrice;
+         total += (shippingPrice + this.appService.tax);
          return total;
       }
       this.orderTotal = total;

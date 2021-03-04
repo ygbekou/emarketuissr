@@ -181,6 +181,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.sendSMSLowInventory.toString() === 'false'
          || this.store.sendSMSLowInventory.toString() === '0') ? 0 : 1;
 
+      this.store.sendSMSShipper = (this.store.sendSMSShipper == null
+         || this.store.sendSMSShipper.toString() === 'false'
+         || this.store.sendSMSShipper.toString() === '0') ? 0 : 1;
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);

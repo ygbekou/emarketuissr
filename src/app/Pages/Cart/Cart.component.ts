@@ -4,7 +4,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ChangeDetectorRef } from '@angular/core';
 
 import { AppService } from '../../Services/app.service';
-import { Order, User } from 'src/app/app.models';
+import { Order, User, ZoneToGeoZone } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/app.constants';
 
@@ -24,8 +24,12 @@ export class CartComponent implements OnInit, AfterViewChecked {
    popupResponse: any;
    @Input()
    storeId: number;
-   @Input() pickUp;
-   @Output() orderCompleteEvent = new EventEmitter<Order>();
+   @Input()
+   pickUp;
+   @Output()
+   orderCompleteEvent = new EventEmitter<Order>();
+   @Input()
+   zoneToGeoZone: ZoneToGeoZone;
 
    constructor(public appService: AppService,
       private router: Router,
@@ -93,6 +97,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
 
    public getTotalPrice() {
       let total = 0;
+      let totalShippingWeight = 0;
+      let shippingPrice = 0;
       if (this.appService.localStorageCartProducts && this.appService.localStorageCartProducts.length > 0) {
          for (const product of this.appService.localStorageCartProducts) {
             total += (product.price * product.quantity);
@@ -195,9 +201,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    updateCartProducts() {
       const cartProducts = [];
       for (const [key, value] of Object.entries(this.appService.localStorageCartProductsMap)) {
-         
-            cartProducts.push(...<[]>value);
-         
+         cartProducts.push(...<[]>value);
       }
       setTimeout(() => {
          localStorage.setItem('cart_item', JSON.stringify(cartProducts));
