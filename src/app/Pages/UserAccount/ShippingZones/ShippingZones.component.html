@@ -8,7 +8,7 @@
 <mat-form-field class="w-100 mb-3">
   <mat-label>{{'COMMON.STORE' | translate}}</mat-label>
   <mat-select placeholder="{{'COMMON.STORE' | translate}}" [compareWith]="compareObjects" id="store1" name="store1"
-    [(ngModel)]="store" #store1="ngModel" (valueChange)="geozone=null;getAll();" required>
+    [(ngModel)]="store" #store1="ngModel" (selectionChange)="geoZone=null;getAll();" required>
     <mat-option *ngFor="let cat of stores" [value]="cat">
       {{  cat.name}}
     </mat-option>
