@@ -364,12 +364,14 @@ export class AppService {
 
       });
 
-      console.log('Calculating Shipping Cost ...' + Object.entries(this.navbarCartShippingWeightMap));
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
          if (this.navbarCartShippingGeoZoneMap[storeId]) {
-            console.log('This is where I am ...');
-            this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
+            if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
+               this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.flatRate;
+            } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 1) {
+               this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
                      Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+            }
          } else {
             this.navbarCartShippingMap[storeId] = 0;
          }
@@ -377,12 +379,7 @@ export class AppService {
                               + this.navbarCartShippingMap[storeId]);
          this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
                               + this.navbarCartEstimatedTaxMap[storeId]);
-         
       }
-
-      // this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);
-      // this.navbarCartTotalBeforeTax += this.roundingValue(this.navbarCartPrice + this.navbarCartShipping);
-      // this.navbarCartTotal += this.roundingValue(this.navbarCartTotalBeforeTax + this.navbarCartEstimatedTax);
    }
 
    calculateCartItemTotal(cartItem: CartItem) {
