@@ -296,7 +296,6 @@ export class AppService {
             }
             this.localStorageCartProductsMap[cartItem.storeId].push(cartItem);
          });
-
       }
 
       this.navbarCartCount = 0;
