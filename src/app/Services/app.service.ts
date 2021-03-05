@@ -368,14 +368,16 @@ export class AppService {
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
          if (this.navbarCartShippingGeoZoneMap[storeId]) {
             console.log('This is where I am ...');
-            this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
-                     Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight);
-
-            this.navbarCartTotalBeforeTaxMap[storeId] = this.roundingValue(this.navbarCartPriceMap[storeId]
-                                 + this.navbarCartShippingMap[storeId]);
-            this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
-                                 + this.navbarCartEstimatedTaxMap[storeId]);
+            this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
+                     Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+         } else {
+            this.navbarCartShippingMap[storeId] = 0;
          }
+         this.navbarCartTotalBeforeTaxMap[storeId] = this.roundingValue(this.navbarCartPriceMap[storeId]
+                              + this.navbarCartShippingMap[storeId]);
+         this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
+                              + this.navbarCartEstimatedTaxMap[storeId]);
+         
       }
 
       // this.navbarCartEstimatedTax = this.roundingValue(this.navbarCartEstimatedTax);

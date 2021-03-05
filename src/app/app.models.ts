@@ -1164,7 +1164,6 @@ export class CartItem {
     }
     this.hasOption = p.product.hasOption;
     this.povos = p.povos;
-    alert('Shipping Weight ..' + p.product.shippingWeight);
     this.shippingWeight = p.product.shippingWeight;
   }
 }

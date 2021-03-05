@@ -72,11 +72,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    getZoneToGeoZone() {
 
+      console.log('Calling Geozone');
+      console.log(this.storeId);
+      console.log(this.user.shippingAddress.zone.id);
       this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
-            'storeId': this.storeId, 'zoneId': this.user.billingAddress.zone.id
+            'storeId': this.storeId, 'zoneId': this.user.shippingAddress.zone.id
          })
          .subscribe((data: ZoneToGeoZone) => {
-            if (data.errors !== null && data.errors !== undefined) {
+            if (data !== null && data.errors !== null && data.errors !== undefined) {
                this.error = data.errors[0];
             } else {
                this.zoneToGeoZone = data;
