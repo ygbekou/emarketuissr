@@ -18,6 +18,7 @@ import { ConfigsComponent } from './configs/configs.component';
 import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
 import { ShippersComponent } from './Shippers/Shippers.component';
+import { ZonesComponent } from './Zones/Zones.component';
 
 export const SystemRoutes: Routes = [
    {
@@ -103,6 +104,14 @@ export const SystemRoutes: Routes = [
          {
             path: 'shippers',
             component: ShippersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'zones',
+            component: ZonesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']
