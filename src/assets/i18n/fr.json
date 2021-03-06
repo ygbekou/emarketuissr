@@ -727,7 +727,8 @@
     "ORDER_CANCELLED_NO_REFUND": "Votre commande a été annulée. Veuillez appeler pour le remboursement",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
 		"CANCELLATION_DECLINED": "Annulation Déclinée",
-		"ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!"
+    "ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!",
+    "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

@@ -18,7 +18,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1, deliveryMode: pickUp}"
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
               routerLinkActive="tab-active">{{'COMMON.ADD' | translate}}</a>
           </div>
           <div *ngIf="user.shippingAddress && pickUp==='0'">
@@ -35,7 +35,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2, deliveryMode: pickUp}"
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
               routerLinkActive="tab-active">{{'COMMON.CHANGE' | translate}}</a>
           </div>
           <div *ngIf="user.billingAddress">
@@ -56,7 +56,7 @@
                   user.paymentMethodCode}}</h6>
             <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
               routerLinkActive="tab-active" *ngIf="hasPaymentMethod()">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode, deliveryMode: pickUp}"
+            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
               routerLinkActive="tab-active" *ngIf="!hasPaymentMethod()">{{'COMMON.ADD' | translate}}</a>
           </div>
           <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
