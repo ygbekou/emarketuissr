@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User, Address, Country, Zone, CreditCard, Store, Currency, TimeZone } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
@@ -39,6 +39,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
    constructor(private route: ActivatedRoute,
       public appService: AppService,
+      public router: Router,
       public translate: TranslateService,
       private sanitizer: DomSanitizer,
       private formGroup: FormBuilder) {
@@ -240,8 +241,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       }
    }
 
-
    getStore(storeId: number) {
+      console.log(storeId);
       if (storeId > 0) {
          this.picture1 = [];
          this.appService.getOneWithChildsAndFiles(storeId, 'Store')
@@ -262,6 +263,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                   });
                }
             });
+      } else if (storeId == 0) {
+         if (!this.addresses || this.addresses.length === 0) {
+            console.log('rerouting');
+            this.router.navigate(['/account/addresses'], { queryParams: {} });
+         }
       }
    }
 

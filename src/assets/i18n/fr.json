@@ -726,7 +726,7 @@
     "REVIEW_UNDER_PROCESS": "Votre suggestion est en cours de traitement et une fois terminé, une notification vous sera envoyée. Merci pour votre patience.",
     "REVIEW_APPROVED": "Evaluation approuvé avec succès. Merci!",
     "INVALID_RATING": "Donnez une note SVP",
-    "EMAIL_VERIFICATION_CODE_SENT": "Un code de v�rification est envoyé � votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
+    "EMAIL_VERIFICATION_CODE_SENT": "Un code de vérification est envoyé a votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
     "INVALID_VERIFICATION_CODE": "Code de verification invalide",
     "ORDER_CANCELLED_NO_REFUND": "Votre commande a été annulée. Veuillez appeler pour le remboursement",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
