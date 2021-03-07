@@ -9,6 +9,9 @@
 		"NONE": "None",
 		"HOUR": "Hour",
 		"RUN":"Run",
+		"START":"Start",
+		"STORE_HOURS": "Store hours",
+		"DELIVERY_HOURS":"Delivery hours",
 		"OPEN_TIME":"Store open time",
 		"CLOSE_TIME":"Store close time",
 		"ALL_ZONES": "All zones",
@@ -772,6 +775,15 @@
 		"10": "Oct",
 		"11": "Nov",
 		"12": "Dec"
+	},
+	"WEEKDAY": {
+		"1": "Mon",
+		"2": "Tue",
+		"3": "Wed",
+		"4": "Thu",
+		"5": "Fri",
+		"6": "Sat",
+		"7": "Sun" 
 	},
 	"COLOR": {
 		"BLUE": "Blue",

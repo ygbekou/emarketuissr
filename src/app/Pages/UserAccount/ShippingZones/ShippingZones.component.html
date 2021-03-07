@@ -96,7 +96,7 @@
   <mat-tab label="{{'COMMON.DETAILS' | translate}}" *ngIf="geoZone">
     <form name="fform" #ff="ngForm" validate>
       <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}}
             </mat-label>
@@ -107,7 +107,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="40" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> Description
             </mat-label>
@@ -115,40 +115,15 @@
               name="description" #description="ngModel">
           </mat-form-field>
         </div>
+      </div>
 
-        <div fxFlex="100" fxFlex.gt-sm="20" class="p-3">
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-slide-toggle [(ngModel)]="geoZone.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
         </div>
-
-      </div>
-
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.DELIVERY_START' | translate}}
-            </mat-label>
-            <input matInput type="text" placeholder="00:00" class="form-control" id="deliveryStart"
-              [(ngModel)]="geoZone.deliveryStart" name="deliveryStart" #deliveryStart="ngModel">
-            <mat-error *ngIf="ff.submitted && deliveryStart.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label> {{'COMMON.DELIVERY_END' | translate}}
-            </mat-label>
-            <input matInput type="text" placeholder="23:59" class="form-control" id="deliveryEnd"
-              [(ngModel)]="geoZone.deliveryEnd" name="deliveryEnd" #deliveryEnd="ngModel">
-            <mat-error *ngIf="ff.submitted && deliveryEnd.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
@@ -162,30 +137,23 @@
       </div>
       <div fxLayout="row wrap">
 
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-
+        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <button mat-stroked-button [color]="geoZone.shippingMode==0?'accent':'secondary'"
             (click)="geoZone.shippingMode=0">
             <mat-icon *ngIf="geoZone.shippingMode==0">check</mat-icon>
             {{'COMMON.FLAT_RATE' | translate }}
-          </button>
-          <br /> <br />
+          </button> 
           <button mat-stroked-button [color]="geoZone.shippingMode==1?'accent':'secondary'"
             (click)="geoZone.shippingMode=1">
             <mat-icon *ngIf="geoZone.shippingMode==1">check</mat-icon>
             {{'COMMON.PER_WEIGHT' | translate }}
-          </button>
-          <br /> <br />
+          </button> 
           <button mat-stroked-button [color]="geoZone.shippingMode==2?'accent':'secondary'"
             (click)="geoZone.shippingMode=2">
             <mat-icon *ngIf="geoZone.shippingMode==2">check</mat-icon>
             {{'COMMON.RATE_SHOP' | translate }}
           </button>
-
-
         </div>
-
-
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" *ngIf="geoZone.shippingMode==0">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.FLAT_RATE' | translate}}
@@ -222,6 +190,120 @@
         </div>
       </div>
 
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <h4 color="primary">{{'COMMON.DELIVERY_HOURS'|translate}}</h4>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart1"
+              [(ngModel)]="geoZone.delStart1" name="delStart1" #delStart1="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd1"
+              [(ngModel)]="geoZone.delEnd1" name="delEnd1" #delEnd1="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart2"
+              [(ngModel)]="geoZone.delStart2" name="delStart2" #delStart2="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd2"
+              [(ngModel)]="geoZone.delEnd2" name="delEnd2" #delEnd2="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart3"
+              [(ngModel)]="geoZone.delStart3" name="delStart3" #delStart3="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd3"
+              [(ngModel)]="geoZone.delEnd3" name="delEnd3" #delEnd3="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart4"
+              [(ngModel)]="geoZone.delStart4" name="delStart4" #delStart4="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd4"
+              [(ngModel)]="geoZone.delEnd4" name="delEnd4" #delEnd4="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart5"
+              [(ngModel)]="geoZone.delStart5" name="delStart5" #delStart5="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd5"
+              [(ngModel)]="geoZone.delEnd5" name="delEnd5" #delEnd5="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart6"
+              [(ngModel)]="geoZone.delStart6" name="delStart6" #delStart6="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd6"
+              [(ngModel)]="geoZone.delEnd6" name="delEnd6" #delEnd6="ngModel">
+          </mat-form-field>
+        </div>
+           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+           <h6 color="primary">{{'WEEKDAY.7'|translate}}</h6>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="00:00" class="form-control" id="delStart7"
+              [(ngModel)]="geoZone.delStart7" name="delStart7" #delStart7="ngModel">
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END' | translate}}
+            </mat-label>
+            <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd7"
+              [(ngModel)]="geoZone.delEnd7" name="delEnd7" #delEnd7="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
           <div class="text-left mt-2" fxFlex.gt-sm="25">

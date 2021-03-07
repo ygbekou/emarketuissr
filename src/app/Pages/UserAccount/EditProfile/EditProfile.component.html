@@ -441,7 +441,7 @@
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
-            <mat-form-field class="w-100 mb-3">
+          <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
               name="currency" [(ngModel)]="store.currency" #currency="ngModel" required>
@@ -450,7 +450,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          
+
 
           <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.ENABLE' | translate }}
@@ -458,7 +458,23 @@
           <div class="divider"></div>
           <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
             {{ 'COMMON.ONLINE_STORE' | translate }}
-          </mat-slide-toggle> 
+          </mat-slide-toggle>
+
+<br/>
+          <mat-form-field class="w-50 mb-3">
+            <mat-label> {{'COMMON.STORE_CODE' | translate}}
+            </mat-label>
+            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+              name="code" #code="ngModel" required>
+            <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-fab color="warn" (click)="generateStoreCode()">
+            <mat-icon>cached</mat-icon>
+          </button>
+
         </div>
       </div>
 
@@ -501,8 +517,8 @@
             {{ 'COMMON.SEND_SMS_LOW_INVN' | translate }}
           </mat-slide-toggle>
           <br />
-          <mat-slide-toggle [(ngModel)]="store.sendSMSShipper" name="sendSMSShipper"
-            #sendSMSShipper="ngModel" class="my-2">
+          <mat-slide-toggle [(ngModel)]="store.sendSMSShipper" name="sendSMSShipper" #sendSMSShipper="ngModel"
+            class="my-2">
             {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
           </mat-slide-toggle>
 
@@ -511,48 +527,117 @@
 
     </div>
 
-
     <div fxLayout="row wrap">
-
       <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.OPEN_TIME' | translate}}
+        <h4 color="primary">{{'COMMON.STORE_HOURS'|translate}}</h4>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
           </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="openTime"
-            [(ngModel)]="store.openTime" name="openTime" #openTime="ngModel" required>
-          <mat-error *ngIf="f4.submitted && openTime.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart1"
+            [(ngModel)]="store.openTime1" name="delStart1" #delStart1="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd1"
+            [(ngModel)]="store.closeTime1" name="delEnd1" #delEnd1="ngModel">
         </mat-form-field>
       </div>
-
-      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.CLOSE_TIME' | translate}}
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
           </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="closeTime"
-            [(ngModel)]="store.closeTime" name="closeTime" #closeTime="ngModel" required>
-          <mat-error *ngIf="f4.submitted && closeTime.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart2"
+            [(ngModel)]="store.openTime2" name="delStart2" #delStart2="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd2"
+            [(ngModel)]="store.closeTime2" name="delEnd2" #delEnd2="ngModel">
         </mat-form-field>
       </div>
-
-      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-
-        <mat-form-field class="w-50 mb-3">
-          <mat-label> {{'COMMON.STORE_CODE' | translate}}
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
           </mat-label>
-          <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
-            name="code" #code="ngModel" required>
-          <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart3"
+            [(ngModel)]="store.openTime3" name="delStart3" #delStart3="ngModel">
         </mat-form-field>
-
-        <button mat-fab color="warn" (click)="generateStoreCode()">
-          <mat-icon>cached</mat-icon>
-        </button>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd3"
+            [(ngModel)]="store.closeTime3" name="delEnd3" #delEnd3="ngModel">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart4"
+            [(ngModel)]="store.openTime4" name="delStart4" #delStart4="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd4"
+            [(ngModel)]="store.closeTime4" name="delEnd4" #delEnd4="ngModel">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart5"
+            [(ngModel)]="store.openTime5" name="delStart5" #delStart5="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd5"
+            [(ngModel)]="store.closeTime5" name="delEnd5" #delEnd5="ngModel">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart6"
+            [(ngModel)]="store.openTime6" name="delStart6" #delStart6="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd6"
+            [(ngModel)]="store.closeTime6" name="delEnd6" #delEnd6="ngModel">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+        <h6 color="primary">{{'WEEKDAY.7'|translate}}</h6>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart7"
+            [(ngModel)]="store.openTime7" name="delStart7" #delStart7="ngModel">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END' | translate}}
+          </mat-label>
+          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd7"
+            [(ngModel)]="store.closeTime7" name="delEnd7" #delEnd7="ngModel">
+        </mat-form-field>
       </div>
     </div>
 

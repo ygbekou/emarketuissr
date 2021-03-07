@@ -581,6 +581,20 @@ export class GeoZone {
   deliveryEnd: string;
   description: string;
   shipper: Shipper;
+  delStart1: string;
+  delEnd1: string;
+  delStart2: string;
+  delEnd2: string;
+  delStart3: string;
+  delEnd3: string;
+  delStart4: string;
+  delEnd4: string;
+  delStart5: string;
+  delEnd5: string;
+  delStart6: string;
+  delEnd6: string;
+  delStart7: string;
+  delEnd7: string;
   constructor() {
     this.status = 1;
   }
@@ -707,6 +721,21 @@ export class Store extends BaseModel {
   openTime: string;
   closeTime: string;
   reviews: Review[];
+  openTime1: string;
+  closeTime1: string;
+  openTime2: string;
+  closeTime2: string;
+  openTime3: string;
+  closeTime3: string;
+  openTime4: string;
+  closeTime4: string;
+  openTime5: string;
+  closeTime5: string;
+  openTime6: string;
+  closeTime6: string;
+  openTime7: string;
+  closeTime7: string;
+
   type = 'Store';
 
   constructor() {
@@ -1127,7 +1156,6 @@ export class CartItem {
   shippingWeight: number;
 
   public constructor(p: ProductDescVO) {
-    console.log('Here ....')
     this.prdId = p.product.id;
     this.ptsId = p.product.ptsId;
     this.storeId = p.product.storeId;

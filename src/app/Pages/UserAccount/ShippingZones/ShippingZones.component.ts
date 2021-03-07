@@ -131,6 +131,8 @@ export class ShippingZonesComponent implements OnInit {
   }
 
   addNewZoneToGeoZone() {
+    this.errors = '';
+    this.messages = '';
     if (!this.zoneToGeoZoneDS || this.zoneToGeoZoneDS == null || !this.zoneToGeoZoneDS.data) {
       const data: ZoneToGeoZone[] = [];
       this.zoneToGeoZoneDS = new MatTableDataSource(data);
@@ -271,16 +273,28 @@ export class ShippingZonesComponent implements OnInit {
     this.geoZone = new GeoZone();
     this.geoZone.store = this.store;
     this.dataSource = new MatTableDataSource();
-    this.zoneToGeoZoneDS = new MatTableDataSource();
+    const data: ZoneToGeoZone[] = [];
+    this.zoneToGeoZoneDS = new MatTableDataSource(data);
+    this.zoneToGeoZoneDS.data = [];
   }
 
   addSectionItem() {
+    this.errors = '';
+    this.messages = '';
     this.selectedTab = 1;
     this.geoZone = new GeoZone();
     this.geoZone.store = this.store;
+    const data: ZoneToGeoZone[] = [];
+    this.zoneToGeoZoneDS = new MatTableDataSource(data);
+    this.zoneToGeoZoneDS.data = [];
   }
   edit(si: GeoZone) {
+    this.errors = '';
+    this.messages = '';
     this.geoZone = si;
+    const data: ZoneToGeoZone[] = [];
+    this.zoneToGeoZoneDS = new MatTableDataSource(data);
+    this.zoneToGeoZoneDS.data = [];
     this.getZoneToGeoZone();
     this.selectedTab = 1;
   }

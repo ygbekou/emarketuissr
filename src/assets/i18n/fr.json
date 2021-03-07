@@ -6,6 +6,9 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "START":"Début",
+    "STORE_HOURS": "Heures de la boutique",
+    "DELIVERY_HOURS":"Heures de livraison",
     "OPEN_TIME":"Heure d'ouvertue",
 		"CLOSE_TIME":"Heure fermeture",
     "ALL_ZONES": "Toutes les zones",
@@ -772,6 +775,15 @@
     "11": "Nov",
     "12": "Dec"
   },
+	"WEEKDAY": {
+		"1": "Lun",
+		"2": "Mar",
+		"3": "Mer",
+		"4": "Jeu",
+		"5": "Ven",
+		"6": "Sat",
+		"7": "Dim" 
+	},
   "COLOR": {
     "BLUE": "Bleu",
     "GREEN": "Vert",
