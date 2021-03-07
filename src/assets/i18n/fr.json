@@ -7,6 +7,7 @@
     "OUT_OF": "sur",
     "OR": "ou",
     "START":"Début",
+    "TIME_ZONE":"Fuseau horaire",
     "STORE_HOURS": "Heures de la boutique",
     "DELIVERY_HOURS":"Heures de livraison",
     "OPEN_TIME":"Heure d'ouvertue",

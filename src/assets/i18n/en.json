@@ -9,6 +9,7 @@
 		"NONE": "None",
 		"HOUR": "Hour",
 		"RUN":"Run",
+		"TIME_ZONE":"Time zone",
 		"START":"Start",
 		"STORE_HOURS": "Store hours",
 		"DELIVERY_HOURS":"Delivery hours",

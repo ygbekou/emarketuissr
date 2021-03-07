@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, Address, Country, Zone, CreditCard, Store, Currency } from 'src/app/app.models';
+import { User, Address, Country, Zone, CreditCard, Store, Currency, TimeZone } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,6 +27,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    addresses: Address[] = [];
    store: Store = new Store();
    currencies: Currency[] = [];
+   timeZones: TimeZone[] = [];
    public addressTypes = [
       { id: 1, name: 'Shipping address' },
       { id: 2, name: 'Billing address' }
@@ -64,6 +65,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       this.getUser();
       this.getCountries();
       this.getAddresses();
+      this.getTimeZones();
       this.cardForm = this.formGroup.group({
          card_number: ['', [Validators.required]],
          cvv: ['', [Validators.required]],
@@ -107,6 +109,19 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
             error => console.log(error),
             () => console.log('Get all CategoryDescription complete'));
    }
+
+
+   getTimeZones() {
+      const parameters: string[] = [];
+      this.appService.getAllByCriteria('com.softenza.emarket.model.TimeZone', parameters,
+         ' order by e.description ')
+         .subscribe((data: TimeZone[]) => {
+            this.timeZones = data;
+         },
+            error => console.log(error),
+            () => console.log('Get all TimeZone complete'));
+   }
+
    getZones(country: Country) {
       if (country) {
          const parameters: string[] = [];

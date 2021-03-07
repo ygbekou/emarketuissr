@@ -735,7 +735,7 @@ export class Store extends BaseModel {
   closeTime6: string;
   openTime7: string;
   closeTime7: string;
-
+  timeZone: TimeZone;
   type = 'Store';
 
   constructor() {
@@ -1889,4 +1889,11 @@ export class Shipper {
   deliveryCount: number;
   url: number;
   type = 'Shipper';
+}
+
+export class TimeZone {
+  id: number;
+  name: string;
+  description: string;
+  gmtOffset: number;
 }
