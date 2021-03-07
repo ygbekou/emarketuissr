@@ -55,6 +55,7 @@ export class AppService {
    navbarCartShippingWeightMap = {};
    navbarCartShippingMap = {};
    navbarCartShippingGeoZoneMap = {};
+   navbarCartDeliveryMap = {};
 
    navbarCartTotalBeforeTax = 0;
    navbarCartTotalBeforeTaxMap = {};
@@ -299,7 +300,6 @@ export class AppService {
       }
 
       this.navbarCartCount = 0;
-
       this.navbarCartPrice = 0;
       this.navbarCartTotalBeforeTax = 0;
       this.navbarCartEstimatedTax = 0;
@@ -632,6 +632,12 @@ export class AppService {
          this.recalculateCart(true);
          this.calculateLocalWishlistProdCounts();
       }, 500);
+   }
+
+   public canPlaceOrder(storeId: number) {
+      const deliveryMode = this.navbarCartDeliveryMap[storeId] ? this.navbarCartDeliveryMap[storeId] : localStorage.getItem('deliveryMode');
+      console.log('Delivery Mode' +deliveryMode)
+      return (deliveryMode === '0' && !this.navbarCartShippingGeoZoneMap[storeId])
    }
 
    /**

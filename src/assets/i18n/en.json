@@ -731,7 +731,8 @@
 		"ORDER_CANCELLED_NO_REFUND": "Your order was cancelled. Call for refund",
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Order Not Eligible for Cancellation",
 		"CANCELLATION_DECLINED": "Cancellation Declined",
-		"ORDER_CANCELLATION_SUCCESSFUL": "Your order # {{order_number}} is successfully cancelled. Thank You!"
+		"ORDER_CANCELLATION_SUCCESSFUL": "Your order # {{order_number}} is successfully cancelled. Thank You!",
+		"STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} does not ship to this address."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

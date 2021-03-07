@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, Address, CreditCard, Order, Currency, ZoneToGeoZone } from 'src/app/app.models';
+import { User, CreditCard, Order, ZoneToGeoZone } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
@@ -22,6 +22,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    @Input()
    user: User = new User();
    error: string;
+   message: string;
    notify = false;
    order: Order;
    shouldNotify: false;
@@ -42,41 +43,37 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       public translate: TranslateService
    ) {
 
-      // this.appService.removeBuyProducts();
-      // this.user.shippingAddress = new Address();
-      // this.user.billingAddress = new Address();
-      // this.user.creditCard = new CreditCard();
-      // this.getUser(Number(this.appService.tokenStorage.getUserId()));
-
       this.processPaymentConfirmation();
-      // setTimeout(() => {
-      //    this.getZoneToGeoZone();
-      // }, 1000);
-
-
    }
 
    ngOnInit() {
 
+      this.error = '';
       if (!this.order) {
          this.order = new Order();
       }
 
-      this.getZoneToGeoZone();
-
+      if (!localStorage.getItem('deliveryMode')) {
+         localStorage.setItem('deliveryMode', '0');
+      }
+      this.appService.navbarCartDeliveryMap[this.storeId] = localStorage.getItem('deliveryMode');
+      if (this.pickUp === '0') {
+         this.getZoneToGeoZone();
+      }
    }
 
    ngAfterViewInit() {
-      
+
    }
 
    getZoneToGeoZone() {
 
-      console.log('Calling Geozone');
-      console.log(this.storeId);
-      console.log(this.user.shippingAddress.zone.id);
+      console.log('Calling Geozone for Store id: ' + this.storeId + ' and Shipping Address id ' + this.user.shippingAddress.zone.id);
+
       this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
-            'storeId': this.storeId, 'zoneId': this.user.shippingAddress.zone.id
+            'storeId': this.storeId,
+            'zoneId': this.user.shippingAddress.zone.id,
+            'countryId': this.user.shippingAddress.country.id
          })
          .subscribe((data: ZoneToGeoZone) => {
             if (data !== null && data.errors !== null && data.errors !== undefined) {
@@ -85,7 +82,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                this.zoneToGeoZone = data;
                this.appService.navbarCartShippingGeoZoneMap[this.storeId] = this.zoneToGeoZone;
                console.log(this.zoneToGeoZone);
+               if (data === null) {
+                  this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
+                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe(res => {
+                     this.error = res;
+                  });
+               }
             }
+
             console.log('Calling Recalculate ...');
             this.appService.recalculateCart(false);
          },
@@ -140,7 +144,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.orderTotal = total;
       return total;
    }
- 
+
 
    isUserLoggedIn() {
       return this.appService.tokenStorage.getUserId() !== null;
@@ -153,6 +157,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
       this.order.total = this.appService.navbarCartTotalMap[this.storeId];
+      this.order.shippingCost = this.appService.navbarCartShippingMap[this.storeId];
+      this.order.taxFees = this.appService.navbarCartShippingMap[this.storeId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
@@ -298,6 +304,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          + (this.user.shippingAddress ? this.user.shippingAddress.firstName : '') + '. '
          + (this.pickUp ? pickup : delivery) + ' ';
       return buff;
+   }
+
+
+   deliveryOptionChange(event) {
+      this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
+      localStorage.setItem('deliveryMode', this.pickUp);
    }
 
 }

@@ -45,16 +45,10 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-      this.deliveryMode = undefined;
-      this.activatedRoute.params.subscribe(() => {
-         this.activatedRoute.queryParams.forEach(queryParams => {
-            if (queryParams['deliveryMode'] !== undefined) {
-               this.deliveryMode = queryParams['deliveryMode'];
-               this.paymentCurrencyComponent.pickUp = this.deliveryMode;
-            }
-         });
-      });
-
+      this.deliveryMode = <'0' | '1'> localStorage.getItem('deliveryMode');
+      if (!this.deliveryMode) {
+         this.deliveryMode = '0';
+      }
       this.appService.recalculateCart(true);
    }
 

@@ -26,7 +26,7 @@
                         remove_shopping_cart
                      </i> </button>
                   <button mat-mini-fab mat-raised-button color="primary" 
-                  [routerLink]="['/checkout/payment']" [queryParams]="{deliveryMode: '0'}"><i
+                  [routerLink]="['/checkout/payment']" [queryParams]="{}"><i
                         class="material-icons">
                         edit
                      </i></button>
@@ -38,7 +38,7 @@
                [routerLink]="['/checkout/payment']" [queryParams]="">{{'COMMON.CHECKOUT'|translate}}</button>
             <button mat-raised-button color="accent" class="w-100" *ngIf="appService.tokenStorage.getUserId() === null"
                [routerLink]="['/session/signin']"
-               [queryParams]="{fromPage:'checkout', deliveryMode: '0'}">{{'COMMON.CHECKOUT'|translate}}</button>
+               [queryParams]="{fromPage:'checkout'}">{{'COMMON.CHECKOUT'|translate}}</button>
          </div>
       </ng-container>
       <ng-template #elseBlock>
