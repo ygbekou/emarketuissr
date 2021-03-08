@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { AppService } from '../../../Services/app.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, CreditCard, Order, ZoneToGeoZone } from 'src/app/app.models';
+import { User, CreditCard, Order, ZoneToGeoZone, Store } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
@@ -23,10 +23,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    user: User = new User();
    error: string;
    message: string;
+   storeHoursMessage: string;
    notify = false;
    order: Order;
    shouldNotify: false;
    orderTotal: number;
+   pickUpDatetime: Date;
    @Input() pickUp: '0' | '1';
    allStepDone = false;
 
@@ -34,8 +36,10 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    storeId: number;
    @Output() orderCompleteEvent = new EventEmitter<Order>();
 
+   store: Store;
    hasOrderSucceed: boolean;
    zoneToGeoZone: ZoneToGeoZone;
+   storeOpen: boolean;
 
 
    constructor(public appService: AppService,
@@ -59,11 +63,56 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.appService.navbarCartDeliveryMap[this.storeId] = localStorage.getItem('deliveryMode');
       if (this.pickUp === '0') {
          this.getZoneToGeoZone();
+      } else {
+         this.getStore();
       }
    }
 
    ngAfterViewInit() {
 
+   }
+
+   getStore() {
+    if (this.storeId > 0) {
+      this.appService.getOne(this.storeId, 'Store')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.store = result;
+            this.isStoreOpen();
+          }
+        });
+    }
+  }
+
+   isStoreOpen() {
+      const dayNumber = new Date().getDay();
+      let openTime = JSON.parse(JSON.stringify(this.store))['openTime' + dayNumber];
+      let closeTime = JSON.parse(JSON.stringify(this.store))['closeTime' + dayNumber];
+
+      if (openTime == null) {
+         openTime = '00:00';
+      }
+      if (closeTime == null) {
+         closeTime = '23:59';
+      }
+
+
+      const now = new Date();
+      const utcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
+      const storeUtcOpenDatetime = this.appService.getUtcDatetime(Number(openTime.split(':')[0]),
+               Number(openTime.split(':')[1]), 0, this.store.timeZone.gmtOffset);
+      const storeUtcCloseDatetime = this.appService.getUtcDatetime(Number(closeTime.split(':')[0]),
+               Number(closeTime.split(':')[1]), 59, this.store.timeZone.gmtOffset);
+
+      this.storeOpen = storeUtcOpenDatetime <= utcDatetime && storeUtcCloseDatetime >= utcDatetime;
+      if (!this.storeOpen) {
+         this.translate.get('MESSAGE.STORE_CLOSED',
+                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                     open_time: openTime, close_time: closeTime }).subscribe(res => {
+            this.storeHoursMessage = res;
+         });
+      }
    }
 
    getZoneToGeoZone() {
@@ -162,6 +211,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
+      this.order.pickupDatetime = this.pickUpDatetime;
 
       if (!this.user.paymentMethodCode) {
          this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
@@ -310,6 +360,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    deliveryOptionChange(event) {
       this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
       localStorage.setItem('deliveryMode', this.pickUp);
+      this.getStore();
    }
 
 }

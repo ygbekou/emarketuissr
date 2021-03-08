@@ -732,7 +732,8 @@
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
 		"CANCELLATION_DECLINED": "Annulation Déclinée",
     "ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!",
-    "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse."
+    "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse.",
+    "STORE_CLOSED": "La boutique {{store_name}} est fermée en ce moment.  Elle sera ouverte demain de {{open_time}} a {{close_time}}. "
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

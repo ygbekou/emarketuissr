@@ -593,8 +593,8 @@ export class GeoZone {
   delEnd5: string;
   delStart6: string;
   delEnd6: string;
-  delStart7: string;
-  delEnd7: string;
+  delStart0: string;
+  delEnd0: string;
   constructor() {
     this.status = 1;
   }
@@ -733,8 +733,8 @@ export class Store extends BaseModel {
   closeTime5: string;
   openTime6: string;
   closeTime6: string;
-  openTime7: string;
-  closeTime7: string;
+  openTime0: string;
+  closeTime0: string;
   timeZone: TimeZone;
   type = 'Store';
 
@@ -744,6 +744,7 @@ export class Store extends BaseModel {
     this.onlineStore = 1;
     this.owner = new User();
   }
+
 }
 
 export class SeoUrl {
@@ -1565,6 +1566,7 @@ export class Order {
   cancellationReason: CancellationReason;
   shipper: Shipper;
   zoneToGeoZone: ZoneToGeoZone;
+  pickupDatetime: Date;
 
   type = 'Order';
   totalRewardPoints: number;

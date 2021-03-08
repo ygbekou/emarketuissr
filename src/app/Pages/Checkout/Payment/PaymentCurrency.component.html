@@ -18,14 +18,16 @@
               routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
               routerLinkActive="tab-active" *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
-
           </div>
-          <div *ngIf="user.shippingAddress && pickUp==='0'">
+          <div *ngIf="user.shippingAddress && pickUp === '0'">
             {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
             {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
             {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
             {{user.shippingAddress.postCode}}<br />
             {{user.shippingAddress.country.name}}<br />
+          </div>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='1' && !storeOpen">
+            <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
           </div>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">

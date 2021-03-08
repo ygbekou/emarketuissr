@@ -634,10 +634,16 @@ export class AppService {
       }, 500);
    }
 
-   public canPlaceOrder(storeId: number) {
-      const deliveryMode = this.navbarCartDeliveryMap[storeId] ? this.navbarCartDeliveryMap[storeId] : localStorage.getItem('deliveryMode');
-      console.log('Delivery Mode' +deliveryMode)
-      return (deliveryMode === '0' && !this.navbarCartShippingGeoZoneMap[storeId])
+   public getUtcDatetime(hours: number, minutes: number, seconds: number, timeZoneOffset: number) {
+      const now = new Date();
+      const actualUtcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      actualUtcDatetime.setHours(hours);
+      actualUtcDatetime.setMinutes(minutes);
+      actualUtcDatetime.setSeconds(seconds);
+      actualUtcDatetime.setMilliseconds(0);
+      const storeUtcDatetime = new Date(actualUtcDatetime.getTime() + timeZoneOffset * 60000);
+
+      return storeUtcDatetime;
    }
 
    /**
