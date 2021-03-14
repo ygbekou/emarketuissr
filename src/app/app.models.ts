@@ -590,8 +590,6 @@ export class GeoZone {
   weightRate: number;
   shippingWeight: number;
   status: number;
-  deliveryStart: string;
-  deliveryEnd: string;
   description: string;
   shipper: Shipper;
   delStart1: string;
