@@ -659,7 +659,10 @@
 		"CONFIRM_CODE": "Confirm Code",
 		"CANCELLATION_REASON": "Cancellation Reason",
 		"NOTE_FOR_STORE":"Note for store",
-		"NOTE_FOR_DEST":"Note for recipient"
+		"NOTE_FOR_DEST":"Note for recipient",
+		"PRESENT_PREORDER_SCREEN":"Present Pre-Order Screen",
+		"CARRYOUT_DATE":"Carryout date",
+		"TIME_PERIOD": "Time Period"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

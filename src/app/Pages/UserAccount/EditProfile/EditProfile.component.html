@@ -459,6 +459,15 @@
           <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
             {{ 'COMMON.ONLINE_STORE' | translate }}
           </mat-slide-toggle>
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}" [compareWith]="compareObjects" id="presentPreorderScreen"
+              name="presentPreorderScreen" [(ngModel)]="store.presentPreorderScreen" #presentPreorderScreen="ngModel" required>
+              <mat-option *ngFor="let presentPreorderScreen of presentPreorderScreens" [value]="presentPreorderScreen">
+                {{presentPreorderScreen.description}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
           <br />
           <mat-form-field class="w-50 mb-3">

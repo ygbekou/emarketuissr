@@ -22,6 +22,7 @@ export class PaymentDeliveryStepper implements OnInit, AfterViewInit {
    user: User = new User();
    error: string;
    @Input() pickUp: '0' | '1';
+   @Input() scheduleForLater: boolean;
    @Output() setAllStepDone: EventEmitter<any> = new EventEmitter();
 
    constructor(public appService: AppService,
@@ -110,6 +111,9 @@ export class PaymentDeliveryStepper implements OnInit, AfterViewInit {
             && this.user.billingAddress !== null;
    }
 
+   scheduleForLaterChecked(event) {
+
+  }
 }
 
 

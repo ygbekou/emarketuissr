@@ -535,6 +535,19 @@ export class CancellationReason {
   }
 }
 
+export class PresentPreorderScreen {
+  id: number;
+  name: string;
+  language: Language;
+  description: string;
+  status: number;
+  type = 'PresentPreorderScreen';
+
+  constructor() {
+    this.language = new Language();
+  }
+}
+
 export class ReturnAction {
   id: number;
   name: string;
@@ -735,6 +748,7 @@ export class Store extends BaseModel {
   closeTime6: string;
   openTime0: string;
   closeTime0: string;
+  presentPreorderScreen: PresentPreorderScreen;
   timeZone: TimeZone;
   type = 'Store';
 

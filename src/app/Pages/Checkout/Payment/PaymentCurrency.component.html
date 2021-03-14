@@ -67,8 +67,58 @@
           </div>
         </div>
       </div>
-
     </mat-card>
+    <mat-card *ngIf="showPreorder()">
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
+            id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
+            Yes! I want to schedule this order for later
+          </mat-checkbox>
+        </div>
+        <div fxLayout="row wrap" *ngIf="scheduleForLater">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+            <mat-form-field class="w-90">
+              <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="order.pickupDatetime"
+                class="form-control" id="pickupDatetime" name="pickupDatetime" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>  
+        
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+            <mat-form-field class="w-90">
+              <mat-select placeholder="HH" id="hrs" name="hrs" [(ngModel)]="orderHours" #hrs="ngModel"
+                (selectionChange)="hourSelectionChange($event)" required>
+                <mat-option *ngFor="let hr of hours" [value]="hr">
+                  {{hr}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+            <mat-form-field class="w-90">
+              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="orderMinutes" #mns="ngModel" required>
+                <mat-option *ngFor="let minute of minutes" [value]="minute">
+                  {{minute}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> 
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+            <mat-form-field class="w-90">
+              <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" name="timePrds"
+               [(ngModel)]="orderTimePeriod" #timePrds="ngModel" required>
+                <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
+                  {{timePeriod}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> 
+        </div> 
+      
+    </mat-card>
+
     <embryo-Cart [pickUp] ="pickUp" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
   </div>
   <div fxFlex.xs="0" fxFlex.sm="0" fxHide.xs="true" fxHide.sm="true" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">

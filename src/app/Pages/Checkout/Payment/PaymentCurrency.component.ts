@@ -30,6 +30,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    orderTotal: number;
    pickUpDatetime: Date;
    @Input() pickUp: '0' | '1';
+   @Input() scheduleForLater: boolean;
    allStepDone = false;
 
    @Input()
@@ -40,7 +41,16 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    hasOrderSucceed: boolean;
    zoneToGeoZone: ZoneToGeoZone;
    storeOpen: boolean;
+   deliveryOpen: boolean;
+   hours: number[];
+   minutes: string[];
+   timePeriods = ['AM', 'PM'];
 
+   orderHours: number;
+   orderMinutes: string;
+   orderTimePeriod: string;
+
+   timePeriodMap = new Map();
 
    constructor(public appService: AppService,
       public router: Router,
@@ -63,13 +73,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.appService.navbarCartDeliveryMap[this.storeId] = localStorage.getItem('deliveryMode');
       if (this.pickUp === '0') {
          this.getZoneToGeoZone();
-      } else {
-         this.getStore();
       }
+      this.getStore();
    }
 
    ngAfterViewInit() {
-
+      this.minutes = ['00', '15', '30', '45'];
    }
 
    getStore() {
@@ -83,6 +92,41 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
         });
     }
   }
+
+   getHours() {
+      this.hours = [];
+      console.log(this.hours);
+      console.log(this.minutes);
+      const dayNumber = new Date().getDay();
+      const openTime = JSON.parse(JSON.stringify(this.store))['openTime' + dayNumber];
+      const closeTime = JSON.parse(JSON.stringify(this.store))['closeTime' + dayNumber];
+      const openHour = Number(openTime.split(':')[0]);
+      const closeHour = Number(closeTime.split(':')[0]);
+      let j = 0;
+      for (let i = openHour; i < 22; i++) {
+         if (i > 12) {
+            let periodValue = this.timePeriodMap.get(Number(i - 12));
+            if (!periodValue) {
+               periodValue = [];
+               this.hours[j] = Number(i - 12);
+            }
+            periodValue.push('PM');
+            this.timePeriodMap.set(Number(i - 12), periodValue);
+         } else {
+            let periodValue = this.timePeriodMap.get(i);
+            if (!periodValue) {
+               periodValue = [];
+               this.hours[j] = Number(i);
+            }
+            periodValue.push('AM');
+            this.timePeriodMap.set(i, periodValue);
+         }
+         j++;
+      }
+
+      this.hours.sort(function(a, b) { return a - b });
+      console.log(this.hours);
+   }
 
    isStoreOpen() {
       const dayNumber = new Date().getDay();
@@ -115,6 +159,38 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       }
    }
 
+   isDeliveryOpen() {
+      const dayNumber = new Date().getDay();
+      let openTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + dayNumber];
+      let closeTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + dayNumber];
+
+      if (openTime == null) {
+         openTime = '00:00';
+      }
+      if (closeTime == null) {
+         closeTime = '23:59';
+      }
+
+
+      const now = new Date();
+      const utcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
+      const storeUtcOpenDatetime = this.appService.getUtcDatetime(Number(openTime.split(':')[0]),
+               Number(openTime.split(':')[1]), 0, this.store.timeZone.gmtOffset);
+      const storeUtcCloseDatetime = this.appService.getUtcDatetime(Number(closeTime.split(':')[0]),
+               Number(closeTime.split(':')[1]), 59, this.store.timeZone.gmtOffset);
+
+      this.deliveryOpen = storeUtcOpenDatetime <= utcDatetime && storeUtcCloseDatetime >= utcDatetime;
+      if (!this.deliveryOpen) {
+         this.translate.get('MESSAGE.STORE_CLOSED',
+                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                     open_time: openTime, close_time: closeTime }).subscribe(res => {
+            this.storeHoursMessage = res;
+         });
+      }
+   }
+
+
    getZoneToGeoZone() {
 
       console.log('Calling Geozone for Store id: ' + this.storeId + ' and Shipping Address id ' + this.user.shippingAddress.zone.id);
@@ -136,6 +212,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe(res => {
                      this.error = res;
                   });
+               } else {
+                  this.isDeliveryOpen();
                }
             }
 
@@ -360,7 +438,29 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    deliveryOptionChange(event) {
       this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
       localStorage.setItem('deliveryMode', this.pickUp);
-      this.getStore();
+      if (this.pickUp === '1') {
+         if (this.store === null || this.store === undefined) {
+            this.getStore();
+         } else {
+            this.isStoreOpen();
+         }
+      }
+   }
+
+   scheduleForLaterChecked(event) {
+      if (event.checked) {
+         this.getHours();
+      }
+   }
+
+   hourSelectionChange(event) {
+      console.log(this.timePeriodMap.get(event.value));
+      this.timePeriods = this.timePeriodMap.get(event.value);
+   }
+
+   showPreorder() {
+      const canShowPreorder = (this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS');
+      return canShowPreorder;
    }
 
 }
