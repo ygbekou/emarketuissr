@@ -140,7 +140,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          closeTime = '23:59';
       }
 
-
       const now = new Date();
       const utcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 

@@ -735,8 +735,14 @@
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
 		"CANCELLATION_DECLINED": "Annulation Déclinée",
     "ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!",
-    "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse.",
-    "STORE_CLOSED": "La boutique {{store_name}} est fermée en ce moment.  Elle sera ouverte demain de {{open_time}} a {{close_time}}. "
+    "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas a cette adresse.",
+    "STORE_PICKUP_NOT_AVAILABLE": "{{store_name}} ne permet pas les prises en boutique.",
+    "STORE_CLOSED": "{{store_name}} est fermée en ce moment.  Elle sera ouverte demain de {{open_time}} a {{close_time}}. ",
+    "STORE_CLOSED1": "{{store_name}} est fermée en ce moment.  Elle sera ouverte aujourd'hui de {{open_time}} a {{close_time}}. ",
+    "STORE_CLOSED2": "{{store_name}} est fermée en ce moment.  Elle sera ouverte {{day}} de {{open_time}} a {{close_time}}. ",
+    "NO_DELIVERY_PERIOD": "{{store_name}} ne livre plus en ce moment.  La livraison reprend demain de {{open_time}} a {{close_time}}. ",
+    "NO_DELIVERY_PERIOD1": "{{store_name}} ne livre plus en ce moment.  La livraison reprend aujourd'hui demain de {{open_time}} a {{close_time}}. ",
+	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre plus en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. "
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
@@ -787,8 +793,17 @@
 		"3": "Mer",
 		"4": "Jeu",
 		"5": "Ven",
-		"6": "Sat",
-		"7": "Dim" 
+		"6": "Sam",
+		"0": "Dim" 
+  },
+	"WEEKDAYLONG": {
+		"1": "Lundi",
+		"2": "Mardi",
+		"3": "Mercredi",
+		"4": "Jeudi",
+		"5": "Vendredi",
+		"6": "Samedi",
+		"0": "Dimanche" 
 	},
   "COLOR": {
     "BLUE": "Bleu",

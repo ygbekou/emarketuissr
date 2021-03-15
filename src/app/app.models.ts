@@ -1579,6 +1579,7 @@ export class Order {
   shipper: Shipper;
   zoneToGeoZone: ZoneToGeoZone;
   pickupDatetime: Date;
+  expected: Date;
 
   type = 'Order';
   totalRewardPoints: number;
