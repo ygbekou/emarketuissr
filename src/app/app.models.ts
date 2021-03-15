@@ -548,6 +548,18 @@ export class PresentPreorderScreen {
   }
 }
 
+export class TimePeriod {
+  id: number;
+  name: string;
+  language: Language;
+  description: string;
+  type = 'TimePeriod';
+
+  constructor() {
+    this.language = new Language();
+  }
+}
+
 export class ReturnAction {
   id: number;
   name: string;
@@ -1580,7 +1592,10 @@ export class Order {
   cancellationReason: CancellationReason;
   shipper: Shipper;
   zoneToGeoZone: ZoneToGeoZone;
-  pickupDatetime: Date;
+	preorderDate: Date;
+	preorderHour: number;
+  preorderMinute: string;
+  preorderTimePeriod: TimePeriod;
 
   type = 'Order';
   totalRewardPoints: number;

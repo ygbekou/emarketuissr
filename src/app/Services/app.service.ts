@@ -1017,6 +1017,12 @@ export class AppService {
          }, error => console.log(error),
             () => console.log('Get AttibuteGroup complete'));
 
+      this.getAllByCriteria('TimePeriod', parameters, ' order by e.name ')
+         .subscribe((data: any[]) => {
+            this.appInfoStorage.timePeriods = data;
+         }, error => console.log(error),
+            () => console.log('Get TimePeriod complete'));
+
 
       this.getCachedReferences('taxclass')
          .subscribe((data: GenericVO[]) => {
@@ -1118,6 +1124,18 @@ export class AppService {
                error => console.log(error),
                () => console.log('Get all GeoZone complete'));
       }
+   }
+
+   getTimePeriod(timePeriodName: string) {
+      let timePeriod;
+
+      this.appInfoStorage.timePeriods.forEach((element) => {
+         if (element.name === timePeriodName && element.language.id === this.appInfoStorage.language.id) {
+            timePeriod = element;
+         }
+      });
+
+      return timePeriod;
    }
 
    // Error handling

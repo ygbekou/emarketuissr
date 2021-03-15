@@ -719,7 +719,7 @@
     "GO_SHOPPING": "Continuez le shopping",
     "ORDER_REOPENED": "Cette commande a été ré-vouverte. Voici l'historique:",
     "PRODUCT_QUANTITY_ERROR": "Quantité commandee dépasse la quatité disponible",
-    "PARTIAL_ORDER_SUCCESS": "Votre commande pour la devise {{currency}} a été placée avec succès. Passez la commande pour le reste des devises.",
+    "PARTIAL_ORDER_SUCCESS": "Votre commande pour la boutique {{storeName}} a été placée avec succès. Passez la commande pour le reste des boutiques.",
     "FULL_ORDER_SUCCESS": "Votre commande a été placée avec succès. Merci.",
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
     "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur.",
