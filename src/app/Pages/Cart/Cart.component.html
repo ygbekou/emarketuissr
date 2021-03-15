@@ -110,8 +110,9 @@
           </div>
         </div>
         <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-            [disabled]="appService.hasOrderSucceedMap[storeId] === true || (appService.navbarCartDeliveryMap[storeId] === '0'
-             && !appService.navbarCartShippingGeoZoneMap[storeId])" (click)="placeYourOrder()" type="button"
+            [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
+        (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
+        || appService.navbarCartStoreAllowOrderMap[storeId]" (click)="placeYourOrder()" type="button"
             style="width:100%;">
             <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
           </button></div>

@@ -98,7 +98,8 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
-              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="order.preorderMinute" #mns="ngModel" required>
+              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="order.preorderMinute" #mns="ngModel" 
+                 (selectionChange)="minuteSelectionChange($event)"required>
                 <mat-option *ngFor="let minute of minutes" [value]="minute">
                   {{minute}}
                 </mat-option>
@@ -107,7 +108,8 @@
           </div> 
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
-              <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" name="timePrds"
+              <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" 
+                 (selectionChange)="timePeriodSelectionChange($event)" name="timePrds"
                [(ngModel)]="order.preorderTimePeriod" #timePrds="ngModel" required>
                 <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
                   {{timePeriod.description}}
@@ -129,7 +131,7 @@
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
         type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
-        || disableForStoreClose()">
+        || appService.navbarCartStoreAllowOrderMap[storeId]">
         <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
       </button>
 

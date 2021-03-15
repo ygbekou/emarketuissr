@@ -159,6 +159,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.storeHoursMessage = res;
          });
       }
+      this.disableForStoreClose();
    }
 
    isDeliveryOpen() {
@@ -190,6 +191,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.storeHoursMessage = res;
          });
       }
+      this.disableForStoreClose();
    }
 
 
@@ -439,6 +441,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    deliveryOptionChange(event) {
       this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
+      this.scheduleForLaterChecked(null);
       localStorage.setItem('deliveryMode', this.pickUp);
       if (this.pickUp === '1') {
          if (this.store === null || this.store === undefined) {
@@ -462,7 +465,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    scheduleForLaterChecked(event) {
-      if (event.checked) {
+      if (event && event.checked) {
          this.getHours();
       } else {
          this.order.preorderDate = null;
@@ -470,13 +473,22 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.order.preorderMinute = null;
          this.order.preorderTimePeriod = null;
       }
+      this.disableForStoreClose();
    }
 
    hourSelectionChange(event) {
-      console.log(this.timePeriodMap.get(event.value));
       this.timePeriods = this.timePeriodMap.get(event.value);
+      this.disableForStoreClose();
    }
 
+   minuteSelectionChange(event) {
+      this.disableForStoreClose();
+   }
+
+   timePeriodSelectionChange(event) {
+      this.disableForStoreClose();
+   }
+   
    showPreorder() {
       const canShowPreorder = (
                         (this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS')
@@ -486,12 +498,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    disableForStoreClose() {
-      const disable = !this.storeOpen && !this.deliveryOpen
+      const disable = ((!this.storeOpen && this.pickUp === '1') || (!this.deliveryOpen && this.pickUp === '0'))
                   && ((this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS')
                      || (this.store && this.store.presentPreorderScreen &&  this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
                      )
                   && (!this.order.preorderDate || !this.order.preorderHour
                      || !this.order.preorderMinute || !this.order.preorderTimePeriod)
+
+      this.appService.navbarCartStoreAllowOrderMap[this.store.id] = disable;
 
       return disable;
    }
