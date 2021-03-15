@@ -720,7 +720,7 @@
 		"GO_SHOPPING": "Go for Shopping",
 		"ORDER_REOPENED": "This order has been reopened. Here is the history:",
 		"PRODUCT_QUANTITY_ERROR": "Quantity more than the available quantity",
-		"PARTIAL_ORDER_SUCCESS": "Your order for currency {{currency}} was successfully processed. Submit the order for the remaining currencies.",
+		"PARTIAL_ORDER_SUCCESS": "Your order for store {{storeName}} was successfully processed. Submit the order for the remaining stores.",
 		"FULL_ORDER_SUCCESS": "Your order has been processed successfully. Thank you.",
 		"PAYMENT_DECLINED": "Your payment was declined. Please verify and try again later. ",
 		"SYSTEM_ERROR": "Error happened in the system. Please contact the administrator. ",

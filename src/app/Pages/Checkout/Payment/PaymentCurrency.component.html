@@ -79,7 +79,7 @@
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
               <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="order.pickupDatetime"
+              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate"
                 class="form-control" id="pickupDatetime" name="pickupDatetime" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -88,7 +88,7 @@
         
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
-              <mat-select placeholder="HH" id="hrs" name="hrs" [(ngModel)]="orderHours" #hrs="ngModel"
+              <mat-select placeholder="HH" id="hrs" name="hrs" [(ngModel)]="order.preorderHour" #hrs="ngModel"
                 (selectionChange)="hourSelectionChange($event)" required>
                 <mat-option *ngFor="let hr of hours" [value]="hr">
                   {{hr}}
@@ -98,7 +98,7 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
-              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="orderMinutes" #mns="ngModel" required>
+              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="order.preorderMinute" #mns="ngModel" required>
                 <mat-option *ngFor="let minute of minutes" [value]="minute">
                   {{minute}}
                 </mat-option>
@@ -108,9 +108,9 @@
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
               <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" name="timePrds"
-               [(ngModel)]="orderTimePeriod" #timePrds="ngModel" required>
+               [(ngModel)]="order.preorderTimePeriod" #timePrds="ngModel" required>
                 <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
-                  {{timePeriod}}
+                  {{timePeriod.description}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -127,8 +127,9 @@
         <mat-error *ngIf="error">{{error}}</mat-error>
       </div>
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
-        type="button" style="width:100%;" [disabled]="appService.hasOrderSucceedMap[storeId] === true || 
-        (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId])">
+        type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
+        (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
+        || disableForStoreClose()">
         <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
       </button>
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language, CategoryDescription, Menu, Company, Country, Zone, StoreCategoryDesc } from './app.models';
+import { Language, CategoryDescription, Menu, Company, Country, Zone, StoreCategoryDesc, TimePeriod } from './app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -9,6 +9,7 @@ export class AppInfoStorage {
   public CURRENCY_MASK_INTEGER;
   public CURRENCY_MASK_DECIMAL;
   public CURRENCY_FORMAT;
+  public timePeriods: TimePeriod[] = [];
   public languages: Language[] = [];
   public taxClasses: any = [];
   public stockStatuses: any = [];
