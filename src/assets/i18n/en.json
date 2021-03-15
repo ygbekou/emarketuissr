@@ -737,7 +737,13 @@
 		"CANCELLATION_DECLINED": "Cancellation Declined",
 		"ORDER_CANCELLATION_SUCCESSFUL": "Your order # {{order_number}} is successfully cancelled. Thank You!",
 		"STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} does not ship to this address.",
-		"STORE_CLOSED": "The store {{store_name}} is closed at this moment. It will be open tomorrow from {{open_time}} to {{close_time}}. "
+		"STORE_PICKUP_NOT_AVAILABLE": "{{store_name}} does not allow pickups.",
+		"STORE_CLOSED": "{{store_name}} is closed at this moment. It will be open tomorrow from {{open_time}} to {{close_time}}. ",
+		"STORE_CLOSED1": "{{store_name}} is closed at this moment. It will be open today from {{open_time}} to {{close_time}}. ",
+		"STORE_CLOSED2": "{{store_name}} is closed at this moment. It will be open {{day}} from {{open_time}} to {{close_time}}. ",
+		"NO_DELIVERY_PERIOD": "{{store_name}} does not deliver at this moment. The delivery resumes tomorrow from {{open_time}} to {{close_time}}. ",
+		"NO_DELIVERY_PERIOD1": "{{store_name}} does not deliver at this moment. The delivery resumes today from {{open_time}} to {{close_time}}. ",
+		"NO_DELIVERY_PERIOD2": "{{store_name}} does not deliver at this moment. The delivery resumes {{day}} from {{open_time}} to {{close_time}}. "
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",
@@ -789,7 +795,16 @@
 		"4": "Thu",
 		"5": "Fri",
 		"6": "Sat",
-		"7": "Sun" 
+		"0": "Sun" 
+	},
+	"WEEKDAYLONG": {
+		"1": "Monday",
+		"2": "Tueday",
+		"3": "Wednesday",
+		"4": "Thursday",
+		"5": "Friday",
+		"6": "Saturday",
+		"0": "Sunday" 
 	},
 	"COLOR": {
 		"BLUE": "Blue",
