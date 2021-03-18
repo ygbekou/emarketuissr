@@ -79,7 +79,7 @@
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
               <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate"
+              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate" [min]="nextOpenDateTime" [max]="maxScheduleDate"
                 class="form-control" id="pickupDatetime" name="pickupDatetime" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -106,7 +106,7 @@
               </mat-select>
             </mat-form-field>
           </div> 
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngIf="none">
             <mat-form-field class="w-90">
               <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" 
                  (selectionChange)="timePeriodSelectionChange($event)" name="timePrds"
@@ -121,7 +121,7 @@
       
     </mat-card>
 
-    <embryo-Cart [pickUp] ="pickUp" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
+    <embryo-Cart [pickUp] ="pickUp" (placeYourOrderEvent)="placeYourOrder($event)" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
   </div>
   <div fxFlex.xs="0" fxFlex.sm="0" fxHide.xs="true" fxHide.sm="true" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <mat-card>

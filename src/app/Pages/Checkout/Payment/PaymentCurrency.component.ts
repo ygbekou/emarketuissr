@@ -1,15 +1,20 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
+import { DatePipe } from '@angular/common';
+
+import * as moment from 'moment';
+import 'moment-timezone';
+import { CartComponent } from '../../Cart/Cart.component';
 
 @Component({
    selector: 'app-Payment-Currency',
    templateUrl: './PaymentCurrency.component.html',
-   styleUrls: ['./Payment.component.scss']
+   styleUrls: ['./Payment.component.scss'],
+   providers: [DatePipe]
 })
 export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
@@ -17,10 +22,10 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    isDisabledPaymentStepTwo = true;
    isDisabledPaymentStepThree = false;
    emailPattern: any = /\S+@\S+\.\S+/;
-   paymentFormOne: FormGroup;
 
-   @Input()
-   user: User = new User();
+   @ViewChild(CartComponent, { static: false }) cartComponent: CartComponent;
+
+   @Input() user: User = new User();
    error: string;
    message: string;
    storeHoursMessage: string;
@@ -42,6 +47,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    zoneToGeoZone: ZoneToGeoZone;
    storeOpen: boolean;
    deliveryOpen: boolean;
+   purchasePossible: boolean;
    hours: number[];
    minutes: string[];
    timePeriods: TimePeriod[];
@@ -52,12 +58,16 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    timePeriodMap = new Map();
 
-   openTime: any;
-   closeTime: any;
+   nextOpenDateTime: Date;
+   nextCloseDateTime: Date;
+   openLater: boolean;
+   minScheduleDate: Date;
+   maxScheduleDate: Date;
 
    constructor(public appService: AppService,
       public router: Router,
-      public translate: TranslateService
+      public translate: TranslateService,
+      private datePipe: DatePipe
    ) {
 
       this.processPaymentConfirmation();
@@ -103,96 +113,266 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    getHours() {
       this.hours = [];
       this.timePeriodMap = new Map();
-      const dayNumber = new Date().getDay();
-      const openHour = Number(this.openTime.split(':')[0]);
-      const closeHour = Number(this.closeTime.split(':')[0]);
+      const openHour = this.storeOpen ? new Date().getHours() : this.nextOpenDateTime.getHours();
+      const closeHour = this.nextCloseDateTime.getHours();
+
+      this.minScheduleDate = new Date(this.nextOpenDateTime);
+      this.maxScheduleDate = new Date(this.nextOpenDateTime);
+      this.maxScheduleDate.setDate(this.maxScheduleDate.getDate() + 7);
+
+      console.log(this.maxScheduleDate);
+
       let j = 0;
       for (let i = openHour; i < closeHour; i++) {
-         if (i > 12) {
-            let periodValue = this.timePeriodMap.get(Number(i - 12));
-            if (!periodValue) {
-               periodValue = [];
-               this.hours[j] = Number(i - 12);
-            }
-            periodValue.push(this.appService.getTimePeriod('PM'));
-            this.timePeriodMap.set(Number(i - 12), periodValue);
-         } else {
-            let periodValue = this.timePeriodMap.get(i);
-            if (!periodValue) {
-               periodValue = [];
-               this.hours[j] = Number(i);
-            }
-            periodValue.push(this.appService.getTimePeriod('AM'));
-            this.timePeriodMap.set(i, periodValue);
-         }
+         // if (i > 12) {
+         //    let periodValue = this.timePeriodMap.get(Number(i - 12));
+         //    if (!periodValue) {
+         //       periodValue = [];
+         //       this.hours[j] = Number(i - 12);
+         //    }
+         //    periodValue.push(this.appService.getTimePeriod('PM'));
+         //    this.timePeriodMap.set(Number(i - 12), periodValue);
+         // } else {
+         //    let periodValue = this.timePeriodMap.get(i);
+         //    if (!periodValue) {
+         //       periodValue = [];
+         //       this.hours[j] = Number(i);
+         //    }
+         //    periodValue.push(this.appService.getTimePeriod('AM'));
+         //    this.timePeriodMap.set(i, periodValue);
+         // }
+         this.hours[j] = Number(i);
          j++;
       }
 
       this.hours.sort(function(a, b) { return a - b; });
    }
 
-   isStoreOpen() {
+   public isStoreOpen() {
+
+      this.nextOpenDateTime = undefined;
+      this.nextCloseDateTime = undefined;
+      this.storeOpen = false;
       const dayNumber = new Date().getDay();
-      this.openTime = JSON.parse(JSON.stringify(this.store))['openTime' + dayNumber];
-      this.closeTime = JSON.parse(JSON.stringify(this.store))['closeTime' + dayNumber];
 
-      if (this.openTime == null) {
-         this.openTime = '00:00';
-      }
-      if (this.closeTime == null) {
-         this.closeTime = '23:59';
-      }
+      const openTime = JSON.parse(JSON.stringify(this.store))['openTime' + dayNumber];
+      const closeTime = JSON.parse(JSON.stringify(this.store))['closeTime' + dayNumber];
 
+      let nextDayNumber = dayNumber === 6 ? 0 : dayNumber + 1;
+      let nextOpenTime = null;
+      let nextCloseTime = null;
+      let iterCount = 0;
+      for (let i = 0; i <= 6; i++) {
+         iterCount++;
+         console.log('i= ' + i + ', iterCount =' + iterCount + ', nextDayNumber =' + nextDayNumber);
+         nextOpenTime = JSON.parse(JSON.stringify(this.store))['openTime' + nextDayNumber];
+         nextCloseTime = JSON.parse(JSON.stringify(this.store))['closeTime' + nextDayNumber];
+         if (nextOpenTime != null && nextOpenTime.length >= 3 &&
+            nextCloseTime !== null || nextCloseTime.length >= 3) {
+            break;
+         } else {
+            nextDayNumber += i;
+            nextDayNumber = nextDayNumber === 7 ? 0 : nextDayNumber;
+         }
+      }
       const now = new Date();
-      const utcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      this.openLater = false;
+      let openDateTime = null;
+      let closeDateTime = null;
+      if (openTime != null && openTime.length >= 3 &&
+         closeTime !== null || closeTime.length >= 3) {
 
-      const storeUtcOpenDatetime = this.appService.getUtcDatetime(Number(this.openTime.split(':')[0]),
-               Number(this.openTime.split(':')[1]), 0, this.store.timeZone.gmtOffset);
-      const storeUtcCloseDatetime = this.appService.getUtcDatetime(Number(this.closeTime.split(':')[0]),
-               Number(this.closeTime.split(':')[1]), 59, this.store.timeZone.gmtOffset);
+         const today = this.datePipe.transform(now, 'yyyy-MM-dd ');
+         openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         if (openDateTime.getTime() <= now.getTime() && now.getTime() <= closeDateTime.getTime()) {
+            this.storeOpen = true;
+            this.nextOpenDateTime = openDateTime;
+            this.nextCloseDateTime = closeDateTime;
+         }
+         if (now.getTime() < closeDateTime.getTime() && now.getTime() < openDateTime.getTime()) {
+            this.openLater = true;
+            this.nextOpenDateTime = openDateTime;
+            this.nextCloseDateTime = closeDateTime;
+         }
+         console.log('openDateTime = ' + openDateTime);
+         console.log('closeDateTime = ' + closeDateTime);
+      }
 
-      this.storeOpen = storeUtcOpenDatetime <= utcDatetime && storeUtcCloseDatetime >= utcDatetime;
-      if (!this.storeOpen) {
-         this.translate.get('MESSAGE.STORE_CLOSED',
-                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
-                     open_time: this.openTime, close_time: this.closeTime }).subscribe(res => {
-            this.storeHoursMessage = res;
+      console.log('nextOpenDateTime = ' + nextOpenTime);
+      console.log('nextCloseDateTime = ' + nextCloseTime);
+      if (nextOpenTime != null && nextOpenTime.length >= 3 &&
+         nextCloseTime !== null && nextCloseTime.length >= 3) {
+         const tomorrow = new Date();
+         tomorrow.setDate(tomorrow.getDate() + iterCount);
+         const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
+         const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         const nextCloseDateTime = new Date(moment.tz(tomorrowD + nextCloseTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+
+         if (!this.storeOpen) {
+            if (this.openLater) {
+               // same day
+               this.translate.get('MESSAGE.STORE_CLOSED1', {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(openDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(closeDateTime, 'HH:mm'),
+               }).subscribe((res) => {
+               this.storeHoursMessage = res;
+                  console.log(this.storeHoursMessage);
+               });
+            } else if (iterCount === 1) {
+               this.translate.get('MESSAGE.STORE_CLOSED', {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
+               }).subscribe((res) => {
+               this.storeHoursMessage = res;
+               console.log(this.storeHoursMessage);
+               });
+               this.nextOpenDateTime = nextOpenDateTime;
+               this.nextCloseDateTime = nextCloseDateTime;
+            } else {
+               this.translate.get('WEEKDAYLONG.' + nextDayNumber).subscribe((res1) => {
+               this.translate.get('MESSAGE.STORE_CLOSED2', {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
+                  day: res1,
+               }).subscribe((res) => {
+                  this.storeHoursMessage = res;
+                  console.log(this.storeHoursMessage);
+               });
+               });
+               this.nextOpenDateTime = nextOpenDateTime;
+               this.nextCloseDateTime = nextCloseDateTime;
+            }
+         }
+      } else {
+         this.purchasePossible = false;
+         this.translate.get('MESSAGE.STORE_PICKUP_NOT_AVAILABLE',
+            { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe((res) => {
+            this.error = res;
          });
       }
-      this.disableForStoreClose();
    }
 
-   isDeliveryOpen() {
+
+   public isDeliveryOpen() {
+
+      this.nextOpenDateTime = undefined;
+      this.nextCloseDateTime = undefined;
+      this.deliveryOpen = false;
       const dayNumber = new Date().getDay();
-      this.openTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + dayNumber];
-      this.closeTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + dayNumber];
 
-      if (this.openTime == null) {
-         this.openTime = '00:00';
+      const openTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + dayNumber];
+      const closeTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + dayNumber];
+
+    let nextDayNumber = dayNumber === 6 ? 0 : dayNumber + 1;
+    let nextOpenTime = null;
+    let nextCloseTime = null;
+    let iterCount = 0;
+    for (let i = 0; i <= 6; i++) {
+      iterCount++;
+      console.log('i= ' + i + ', iterCount =' + iterCount + ', nextDayNumber =' + nextDayNumber);
+      nextOpenTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + nextDayNumber];
+      nextCloseTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + nextDayNumber];
+      if (nextOpenTime != null && nextOpenTime.length >= 3 &&
+        nextCloseTime !== null && nextCloseTime.length >= 3) {
+        break;
+      } else {
+        nextDayNumber += i;
+        nextDayNumber = nextDayNumber === 7 ? 0 : nextDayNumber;
       }
-      if (this.closeTime == null) {
-         this.closeTime = '23:59';
+    }
+
+    const now = new Date();
+    this.openLater = false;
+    let openDateTime = null;
+    let closeDateTime = null;
+    if (openTime != null && openTime.length >= 3 &&
+      closeTime !== null && closeTime.length >= 3) {
+      const today = this.datePipe.transform(now, 'yyyy-MM-dd ');
+      openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+      closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+      if (openDateTime.getTime() <= now.getTime() && now.getTime() <= closeDateTime.getTime()) {
+         this.deliveryOpen = true;
+         this.nextOpenDateTime = openDateTime;
+         this.nextCloseDateTime = closeDateTime;
       }
 
+      if (now.getTime() < closeDateTime.getTime() && now.getTime() < openDateTime.getTime()) {
+         this.openLater = true;
+         this.nextOpenDateTime = openDateTime;
+         this.nextCloseDateTime = closeDateTime;
+      }
+      console.log('openDateTime = ' + openDateTime);
+      console.log('closeDateTime = ' + closeDateTime);
+    }
 
-      const now = new Date();
-      const utcDatetime = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    console.log('nextOpenDateTime = ' + nextOpenTime);
+    console.log('nextCloseDateTime = ' + nextCloseTime);
+    if (nextOpenTime != null && nextOpenTime.length >= 3 &&
+      nextCloseTime !== null && nextCloseTime.length >= 3) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + iterCount);
+      const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
+      const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+      const nextCloseDateTime = new Date(moment.tz(tomorrowD + nextCloseTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
 
-      const storeUtcOpenDatetime = this.appService.getUtcDatetime(Number(this.openTime.split(':')[0]),
-               Number(this.openTime.split(':')[1]), 0, this.store.timeZone.gmtOffset);
-      const storeUtcCloseDatetime = this.appService.getUtcDatetime(Number(this.closeTime.split(':')[0]),
-               Number(this.closeTime.split(':')[1]), 59, this.store.timeZone.gmtOffset);
-
-      this.deliveryOpen = storeUtcOpenDatetime <= utcDatetime && storeUtcCloseDatetime >= utcDatetime;
       if (!this.deliveryOpen) {
-         this.translate.get('MESSAGE.STORE_CLOSED',
-                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
-                     open_time: this.openTime, close_time: this.closeTime }).subscribe(res => {
-            this.storeHoursMessage = res;
-         });
+        console.log(this.datePipe.transform(now, 'yyyy-MM-dd'));
+        console.log(this.datePipe.transform(nextOpenDateTime, 'yyyy-MM-dd'));
+        if (this.openLater) {
+          // same day
+          this.translate.get('MESSAGE.NO_DELIVERY_PERIOD1',
+            {
+              store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+              open_time: this.datePipe.transform(openDateTime, 'HH:mm'),
+              close_time: this.datePipe.transform(closeDateTime, 'HH:mm'),
+            }).subscribe((res) => {
+              this.storeHoursMessage = res;
+              console.log(this.storeHoursMessage);
+            });
+        } else
+          if (iterCount === 1) {
+            this.translate.get('MESSAGE.NO_DELIVERY_PERIOD',
+              {
+                store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
+                close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
+              }).subscribe((res) => {
+                this.storeHoursMessage = res;
+                console.log(this.storeHoursMessage);
+              });
+              this.nextOpenDateTime = nextOpenDateTime;
+              this.nextCloseDateTime = nextCloseDateTime;
+          } else {
+            this.translate.get('WEEKDAYLONG.' + nextDayNumber).subscribe((res1) => {
+              this.translate.get('MESSAGE.NO_DELIVERY_PERIOD2',
+                {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
+                  day: res1,
+                }).subscribe((res) => {
+                  this.storeHoursMessage = res;
+                  console.log(this.storeHoursMessage);
+                });
+            });
+
+            this.nextOpenDateTime = nextOpenDateTime;
+            this.nextCloseDateTime = nextCloseDateTime;
+          }
       }
-      this.disableForStoreClose();
-   }
+    } else {
+      this.purchasePossible = false;
+      this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
+        { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe((res) => {
+          this.error = res;
+        });
+    }
+  }
+
 
 
    getZoneToGeoZone() {
@@ -295,17 +475,28 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();
 
+      const preorderDate = this.datePipe.transform(this.order.preorderDate, 'yyyy-MM-dd ');
+      const storeTimeZoneMoment =  moment(preorderDate + this.order.preorderHour + ':'
+               + this.order.preorderMinute, null)
+               .tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm');
+      const preorderDatetime = new Date(storeTimeZoneMoment);
+      this.order.expected = preorderDatetime;
+
+
       if (!this.user.paymentMethodCode) {
          this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
             this.error = res;
+            this.cartComponent.error = res;
          });
       } else if (!this.user.billingAddress || !this.user.billingAddress.city) {
          this.translate.get('VALIDATION.SELECT_BILLING_ADDRESS').subscribe(res => {
             this.error = res;
+            this.cartComponent.error = res;
          });
       } else if (this.pickUp === '0' && (!this.user.shippingAddress || !this.user.shippingAddress.city)) {
          this.translate.get('VALIDATION.SELECT_SHIPPING_ADDRESS').subscribe(res => {
             this.error = res;
+            this.cartComponent.error = res;
          });
       } else {
          if (this.pickUp === '1') {
@@ -335,6 +526,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      if (data.errors !== null && data.errors !== undefined) {
                         this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
                            this.error = res;
+                           this.cartComponent.error = res;
                         });
                      } else {
                         if (this.user.paymentMethodCode !== 'TMONEY') {
@@ -364,19 +556,19 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.appService.getStoredOrderId() && this.appService.getStoredOrderId() > 0) {
          this.appService.saveWithUrl('/service/order/payment/confirm/', {
             'identifier': this.appService.getStoredOrderId()
-         })
-            .subscribe((data: Order) => {
-               this.order = data;
-               if (data.errors !== null && data.errors !== undefined) {
-                  this.error = data.errors[0];
-               } else {
-                  this.appService.completeOrder(+this.storeId);
-                  this.orderCompleteEvent.emit(this.order);
-               }
-               this.appService.clearOrderId();
-            },
-               error => console.log(error),
-               () => console.log('Changing Payment Method complete'));
+      }).subscribe((data: Order) => {
+         this.order = data;
+         if (data.errors !== null && data.errors !== undefined) {
+            this.error = data.errors[0];
+            this.cartComponent.error = data.errors[0];
+         } else {
+            this.appService.completeOrder(+this.storeId);
+            this.orderCompleteEvent.emit(this.order);
+         }
+         this.appService.clearOrderId();
+      },
+         error => console.log(error),
+         () => console.log('Changing Payment Method complete'));
       }
    }
 
@@ -488,7 +680,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    timePeriodSelectionChange(event) {
       this.disableForStoreClose();
    }
-   
+
    showPreorder() {
       const canShowPreorder = (
                         (this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS')
@@ -502,8 +694,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                   && ((this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS')
                      || (this.store && this.store.presentPreorderScreen &&  this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
                      )
-                  && (!this.order.preorderDate || !this.order.preorderHour
-                     || !this.order.preorderMinute || !this.order.preorderTimePeriod)
+                  && (!this.order.preorderDate || !this.order.preorderHour || !this.order.preorderMinute);
+                     //|| !this.order.preorderTimePeriod)
 
       this.appService.navbarCartStoreAllowOrderMap[this.store.id] = disable;
 

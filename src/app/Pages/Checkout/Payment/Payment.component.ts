@@ -93,7 +93,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       if (this.appService.localStorageCartProducts
          && this.appService.localStorageCartProducts.length > 1) {
             console.log('more products?');
-         this.translate.get('MESSAGE.PARTIAL_ORDER_SUCCESS', { currency: order.currencyCode }).subscribe(res => {
+         this.translate.get('MESSAGE.PARTIAL_ORDER_SUCCESS', { storeName: order.storeName }).subscribe(res => {
             this.message = res;
          });
       }

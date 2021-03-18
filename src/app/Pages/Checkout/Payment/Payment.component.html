@@ -2,7 +2,7 @@
 <div class="inner-container section-gap"
   *ngIf="(appService.localStorageCartProducts && appService.localStorageCartProducts.length>0); else elseBlock">
  <div style="text-align: center; font-size:14px; width:100%;" *ngIf="order !== undefined && order.id > 0 && message">
-  <h4> {{message}} </h4>
+  <h4> <span style="color: #007FFF">{{message}}</span> </h4>
 </div>
   <div class="checkout-option">
     <div class="container" *ngIf="isUserLoggedIn()">

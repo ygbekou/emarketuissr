@@ -1594,6 +1594,7 @@ export class Order {
 	preorderHour: number;
   preorderMinute: string;
   preorderTimePeriod: TimePeriod;
+  expected: Date;
 
   type = 'Order';
   totalRewardPoints: number;

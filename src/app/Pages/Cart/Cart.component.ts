@@ -28,6 +28,8 @@ export class CartComponent implements OnInit, AfterViewChecked {
    pickUp;
    @Output()
    orderCompleteEvent = new EventEmitter<Order>();
+   @Output()
+   placeYourOrderEvent = new EventEmitter<any>();
    @Input()
    zoneToGeoZone: ZoneToGeoZone;
 
@@ -125,76 +127,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    }
 
    placeYourOrder() {
-      const orderId = this.order ? this.order.id : null;
-      this.order = new Order();
-      this.order.id = orderId;
-      this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
-      this.order.total = this.appService.navbarCartTotalMap[this.storeId];
-      this.order.userId = this.user.id;
-      this.order.language = this.appService.appInfoStorage.language;
-      this.order.userAgent = this.appService.getUserAgent();
-      if (!this.user.paymentMethodCode) {
-         this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
-            this.error = res;
-         });
-      } else if (!this.user.billingAddress || !this.user.billingAddress.city) {
-         this.translate.get('VALIDATION.SELECT_BILLING_ADDRESS').subscribe(res => {
-            this.error = res;
-         });
-      } else if (this.pickUp === '0' && (!this.user.shippingAddress || !this.user.shippingAddress.city)) {
-         this.translate.get('VALIDATION.SELECT_SHIPPING_ADDRESS').subscribe(res => {
-            this.error = res;
-         });
-      } else {
-         if (this.pickUp === '1') {
-            this.order.shippingMethod = 'PICKUP';
-            this.order.shippingCode = 'PICKUP';
-         } else {
-            this.order.shippingMethod = 'DELIVERY';
-            this.order.shippingCode = 'DELIVERY';
-         }
-         if (this.user.paymentMethodCode === 'CREDIT_CARD' && this.user.creditCard) {
-            this.order.paymentInfo = this.user.creditCard.cardType +
-               ' - xxx' + this.user.creditCard.last4Digits +
-               ' - Exp: ' + this.user.creditCard.expMonth + '/' +
-               this.user.creditCard.expYear;
-         }
-         this.appService.getIp()
-            .subscribe((data1: any) => {
-               this.order.ip = data1.ip;
-               this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
-               this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
-                  .subscribe((data: Order) => {
-
-                     this.appService.timerCountDownPopupClose();
-                     this.order = data;
-                     if (data.errors !== null && data.errors !== undefined) {
-                        this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
-                           this.error = res;
-                        });
-                        this.orderCompleteEvent.emit(this.order);
-                     } else {
-                        if (this.user.paymentMethodCode !== 'TMONEY') {
-                           this.appService.completeOrder(+this.storeId);
-                           this.orderCompleteEvent.emit(this.order);
-                        } else {
-                           const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
-                           window.location.href = url;
-                           return;
-                        }
-                     }
-
-                  },
-                     error => {
-                        console.log(error);
-                        this.appService.timerCountDownPopupClose();
-                     },
-                     () => console.log('Place Order complete'));
-
-            }, error => console.log(error),
-               () => console.log('Get IP complete'));
-
-      }
+      this.placeYourOrderEvent.emit();
    }
 
 
