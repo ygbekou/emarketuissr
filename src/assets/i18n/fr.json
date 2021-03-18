@@ -740,9 +740,9 @@
     "STORE_CLOSED": "{{store_name}} est fermée en ce moment.  Elle sera ouverte demain de {{open_time}} a {{close_time}}. ",
     "STORE_CLOSED1": "{{store_name}} est fermée en ce moment.  Elle sera ouverte aujourd'hui de {{open_time}} a {{close_time}}. ",
     "STORE_CLOSED2": "{{store_name}} est fermée en ce moment.  Elle sera ouverte {{day}} de {{open_time}} a {{close_time}}. ",
-    "NO_DELIVERY_PERIOD": "{{store_name}} ne livre plus en ce moment.  La livraison reprend demain de {{open_time}} a {{close_time}}. ",
-    "NO_DELIVERY_PERIOD1": "{{store_name}} ne livre plus en ce moment.  La livraison reprend aujourd'hui demain de {{open_time}} a {{close_time}}. ",
-	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre plus en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. "
+    "NO_DELIVERY_PERIOD": "{{store_name}} ne livre pas en ce moment.  La livraison reprend demain de {{open_time}} a {{close_time}}. ",
+    "NO_DELIVERY_PERIOD1": "{{store_name}} ne livre pas en ce moment.  La livraison reprend aujourd'hui de {{open_time}} a {{close_time}}. ",
+	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre pas en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. "
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
