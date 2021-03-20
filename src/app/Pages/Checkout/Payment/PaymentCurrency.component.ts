@@ -267,97 +267,98 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       const openTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + dayNumber];
       const closeTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + dayNumber];
 
-    let nextDayNumber = dayNumber === 6 ? 0 : dayNumber + 1;
-    let nextOpenTime = null;
-    let nextCloseTime = null;
-    let iterCount = 0;
-    for (let i = 0; i <= 6; i++) {
-      iterCount++;
-      console.log('i= ' + i + ', iterCount =' + iterCount + ', nextDayNumber =' + nextDayNumber);
-      nextOpenTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + nextDayNumber];
-      nextCloseTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + nextDayNumber];
+      let nextDayNumber = dayNumber === 6 ? 0 : dayNumber + 1;
+      let nextOpenTime = null;
+      let nextCloseTime = null;
+      let iterCount = 0;
+      for (let i = 0; i <= 6; i++) {
+         iterCount++;
+         console.log('i= ' + i + ', iterCount =' + iterCount + ', nextDayNumber =' + nextDayNumber);
+         nextOpenTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + nextDayNumber];
+         nextCloseTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + nextDayNumber];
+         if (nextOpenTime != null && nextOpenTime.length >= 3 &&
+            nextCloseTime !== null && nextCloseTime.length >= 3) {
+            break;
+         } else {
+            nextDayNumber += i;
+            nextDayNumber = nextDayNumber === 7 ? 0 : nextDayNumber;
+         }
+      }
+
+      const now = new Date();
+      this.openLater = false;
+      let openDateTime = null;
+      let closeDateTime = null;
+      if (openTime != null && openTime.length >= 3 &&
+         closeTime !== null && closeTime.length >= 3) {
+         const today = this.datePipe.transform(now, 'yyyy-MM-dd ');
+         openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+
+         if (openDateTime.getTime() <= now.getTime() && now.getTime() <= closeDateTime.getTime()) {
+            this.deliveryOpen = true;
+            this.nextOpenDateTime = openDateTime;
+            this.nextCloseDateTime = closeDateTime;
+         }
+
+         if (now.getTime() < closeDateTime.getTime() && now.getTime() < openDateTime.getTime()) {
+            this.openLater = true;
+            this.nextOpenDateTime = openDateTime;
+            this.nextCloseDateTime = closeDateTime;
+         }
+         console.log('openDateTime = ' + openDateTime);
+         console.log('closeDateTime = ' + closeDateTime);
+      }
+
+      console.log('nextOpenDateTime = ' + nextOpenTime);
+      console.log('nextCloseDateTime = ' + nextCloseTime);
       if (nextOpenTime != null && nextOpenTime.length >= 3 &&
-        nextCloseTime !== null && nextCloseTime.length >= 3) {
-        break;
-      } else {
-        nextDayNumber += i;
-        nextDayNumber = nextDayNumber === 7 ? 0 : nextDayNumber;
-      }
-    }
+         nextCloseTime !== null && nextCloseTime.length >= 3) {
+         const tomorrow = new Date();
+         tomorrow.setDate(tomorrow.getDate() + iterCount);
+         const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
+         const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         const nextCloseDateTime = new Date(moment.tz(tomorrowD + nextCloseTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
 
-    const now = new Date();
-    this.openLater = false;
-    let openDateTime = null;
-    let closeDateTime = null;
-    if (openTime != null && openTime.length >= 3 &&
-      closeTime !== null && closeTime.length >= 3) {
-      const today = this.datePipe.transform(now, 'yyyy-MM-dd ');
-      openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
-      closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
-      if (openDateTime.getTime() <= now.getTime() && now.getTime() <= closeDateTime.getTime()) {
-         this.deliveryOpen = true;
-         this.nextOpenDateTime = openDateTime;
-         this.nextCloseDateTime = closeDateTime;
-      }
-
-      if (now.getTime() < closeDateTime.getTime() && now.getTime() < openDateTime.getTime()) {
-         this.openLater = true;
-         this.nextOpenDateTime = openDateTime;
-         this.nextCloseDateTime = closeDateTime;
-      }
-      console.log('openDateTime = ' + openDateTime);
-      console.log('closeDateTime = ' + closeDateTime);
-    }
-
-    console.log('nextOpenDateTime = ' + nextOpenTime);
-    console.log('nextCloseDateTime = ' + nextCloseTime);
-    if (nextOpenTime != null && nextOpenTime.length >= 3 &&
-      nextCloseTime !== null && nextCloseTime.length >= 3) {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + iterCount);
-      const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
-      const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
-      const nextCloseDateTime = new Date(moment.tz(tomorrowD + nextCloseTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
-
-      if (!this.deliveryOpen) {
-        console.log(this.datePipe.transform(now, 'yyyy-MM-dd'));
-        console.log(this.datePipe.transform(nextOpenDateTime, 'yyyy-MM-dd'));
-        if (this.openLater) {
-          // same day
-          this.translate.get('MESSAGE.NO_DELIVERY_PERIOD1',
-            {
-              store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
-              open_time: this.datePipe.transform(openDateTime, 'HH:mm'),
-              close_time: this.datePipe.transform(closeDateTime, 'HH:mm'),
-            }).subscribe((res) => {
-              this.storeHoursMessage = res;
-              console.log(this.storeHoursMessage);
-            });
-        } else
-          if (iterCount === 1) {
-            this.translate.get('MESSAGE.NO_DELIVERY_PERIOD',
-              {
-                store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
-                open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
-                close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
-              }).subscribe((res) => {
-                this.storeHoursMessage = res;
-                console.log(this.storeHoursMessage);
-              });
-              this.nextOpenDateTime = nextOpenDateTime;
-              this.nextCloseDateTime = nextCloseDateTime;
-          } else {
-            this.translate.get('WEEKDAYLONG.' + nextDayNumber).subscribe((res1) => {
-              this.translate.get('MESSAGE.NO_DELIVERY_PERIOD2',
-                {
+         if (!this.deliveryOpen) {
+            console.log(this.datePipe.transform(now, 'yyyy-MM-dd'));
+            console.log(this.datePipe.transform(nextOpenDateTime, 'yyyy-MM-dd'));
+            if (this.openLater) {
+               // same day
+               this.translate.get('MESSAGE.NO_DELIVERY_PERIOD1',
+                  {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(openDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(closeDateTime, 'HH:mm'),
+               }).subscribe((res) => {
+                  this.storeHoursMessage = res;
+                  console.log(this.storeHoursMessage);
+               });
+            } else
+            if (iterCount === 1) {
+               this.translate.get('MESSAGE.NO_DELIVERY_PERIOD',
+               {
+                  store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
+                  open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
+                  close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
+               }).subscribe((res) => {
+                  this.storeHoursMessage = res;
+                  console.log(this.storeHoursMessage);
+               });
+               this.nextOpenDateTime = nextOpenDateTime;
+               this.nextCloseDateTime = nextCloseDateTime;
+            } else {
+               this.translate.get('WEEKDAYLONG.' + nextDayNumber).subscribe((res1) => {
+               this.translate.get('MESSAGE.NO_DELIVERY_PERIOD2',
+               {
                   store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName,
                   open_time: this.datePipe.transform(nextOpenDateTime, 'HH:mm'),
                   close_time: this.datePipe.transform(nextCloseDateTime, 'HH:mm'),
                   day: res1,
-                }).subscribe((res) => {
+               }).subscribe((res) => {
                   this.storeHoursMessage = res;
                   console.log(this.storeHoursMessage);
-                });
+               });
             });
 
             this.nextOpenDateTime = nextOpenDateTime;
