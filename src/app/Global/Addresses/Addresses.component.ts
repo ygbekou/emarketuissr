@@ -80,13 +80,11 @@ export class AddressesComponent implements OnInit {
     } else {
       this.addresses[index] = address;
     }
+    this.selectAddress(address);
   }
 
   onAddressSaved($event) {
     this.updateTable($event);
-    console.log('onAddressSaved called');
-    console.log($event);
-    // this.setStep(-1);
     if (this.shippingExpansionPanelElement) {
       this.shippingExpansionPanelElement.close();
     }

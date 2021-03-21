@@ -85,7 +85,7 @@
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
               <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
-                [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(null, indexOfelement)"
+                [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(indexOfelement)"
                 name="category" #category="ngModel">
                 <mat-option *ngFor="let category of cats" [value]="category">
                   {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>

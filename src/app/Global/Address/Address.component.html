@@ -77,8 +77,8 @@
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" id="country" name="country"
-              [(ngModel)]="address.country.id" #country="ngModel" required (selectionChange)="appService.getZones(address.country)">
-              <mat-option *ngFor="let ctry of appService.appInfoStorage.getCountries()" [value]="ctry.id">
+              [(ngModel)]="address.country" #country="ngModel" required (selectionChange)="appService.getZones(address.country)">
+              <mat-option *ngFor="let ctry of appService.appInfoStorage.getCountries()" [value]="ctry">
                 {{ctry.name}}
               </mat-option>
             </mat-select>
@@ -86,8 +86,8 @@
 
           <mat-form-field class="w-100 mb-3">
             <mat-label>Zone/State</mat-label>
-            <mat-select placeholder="Zone" id="zone" name="zone" [(ngModel)]="address.zone.id" #zone="ngModel">
-              <mat-option *ngFor="let zone of appService.appInfoStorage.getZones()" [value]="zone.id">
+            <mat-select placeholder="Zone" id="zone" name="zone" [(ngModel)]="address.zone" #zone="ngModel">
+              <mat-option *ngFor="let zone of appService.appInfoStorage.getZones()" [value]="zone">
                 {{zone.name}}
               </mat-option>
             </mat-select>
@@ -106,7 +106,14 @@
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
             <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
             <mat-icon>save</mat-icon>
-          </button> </div>
+          </button> 
+        </div>
+        <div class="text-left mt-2" fxFlex.gt-sm="25">
+          <button mat-raised-button color="accent" (click)="clear()"
+            matTooltip="{{'COMMON.CLEAR' | translate}}">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
           <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
         </div>

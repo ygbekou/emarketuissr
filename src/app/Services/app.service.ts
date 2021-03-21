@@ -314,8 +314,8 @@ export class AppService {
       this.navbarCartEstimatedTaxMap = {};
       this.navbarCartTotalMap = {};
 
-      console.log('Product List ...');
-      console.log(this.localStorageCartProducts);
+      //console.log('Product List ...');
+      //console.log(this.localStorageCartProducts);
 
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
@@ -365,12 +365,19 @@ export class AppService {
       });
 
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
-         if (this.navbarCartShippingGeoZoneMap[storeId]) {
-            if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
-               this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.flatRate;
-            } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 1) {
-               this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
-                     Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+         const deliveryMode = this.navbarCartDeliveryMap[storeId] === undefined ? 
+                              localStorage.getItem('deliveryMode') : this.navbarCartDeliveryMap[storeId];
+
+         if (deliveryMode === '0') {
+            if (this.navbarCartShippingGeoZoneMap[storeId]) {
+               if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
+                  this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.flatRate;
+               } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 1) {
+                  this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
+                        Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+               }
+            } else {
+               this.navbarCartShippingMap[storeId] = 0;
             }
          } else {
             this.navbarCartShippingMap[storeId] = 0;

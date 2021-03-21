@@ -80,13 +80,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.order = new Order();
       }
 
-      if (!localStorage.getItem('deliveryMode')) {
-         localStorage.setItem('deliveryMode', '0');
-      }
       this.appService.navbarCartDeliveryMap[this.storeId] = localStorage.getItem('deliveryMode');
-      if (this.pickUp === '0') {
-         this.getZoneToGeoZone();
-      }
       this.getStore();
    }
 
@@ -633,6 +627,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
 
    deliveryOptionChange(event) {
+      this.error = '';
       this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
       this.scheduleForLaterChecked(null);
       localStorage.setItem('deliveryMode', this.pickUp);
@@ -645,7 +640,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       } else {
          if (this.store === null || this.store === undefined) {
             this.getStore();
-            this.getZoneToGeoZone();
+            //this.getZoneToGeoZone();
          } else {
             if (!this.zoneToGeoZone) {
                this.getZoneToGeoZone();
@@ -655,6 +650,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          }
       }
       this.getHours();
+
+      this.appService.recalculateCart(false);
    }
 
    scheduleForLaterChecked(event) {

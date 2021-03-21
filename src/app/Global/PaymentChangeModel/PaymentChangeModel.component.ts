@@ -63,6 +63,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    onTmoneySaved($event) {
       this.tmoneysComponent.updateTable($event);
+      this.tmoneysComponent.changePaymentMethod($event);
       // this.router.navigate(['/checkout/payment']);
    }
 
@@ -75,6 +76,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    onFloozSaved($event) {
       this.floozsComponent.updateTable($event);
+	  this.floozsComponent.changePaymentMethod($event);
       // this.router.navigate(['/checkout/payment']);
    }
 

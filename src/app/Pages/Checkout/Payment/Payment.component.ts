@@ -46,9 +46,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
       this.deliveryMode = <'0' | '1'> localStorage.getItem('deliveryMode');
-      if (!this.deliveryMode) {
-         this.deliveryMode = '0';
-      }
       this.appService.recalculateCart(true);
    }
 

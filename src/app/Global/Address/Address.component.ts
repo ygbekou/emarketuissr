@@ -1,8 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { CreditCard, User, Address } from 'src/app/app.models';
+import { User, Address } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import CardUtils from 'src/app/Services/cardUtils';
 
 
@@ -48,7 +47,7 @@ export class AddressComponent implements OnInit {
       this.messages = '';
       this.errors = '';
       this.user.id = +this.userId;
-      this.address.user = this.user
+      this.address.user = this.user;
 
       if (!this.isNotAddressTypePreSelected()) {
          this.address.addressType = this.selectedAddressType;
@@ -68,7 +67,6 @@ export class AddressComponent implements OnInit {
                });
             }
          });
-      
    }
 
    isNotAddressTypePreSelected() {
@@ -84,5 +82,8 @@ export class AddressComponent implements OnInit {
           error => console.log(error),
           () => console.log('Get address complete for addressId=' + addressId));
    }
-  
+
+   clear() {
+      this.address = new Address();
+   }
 }

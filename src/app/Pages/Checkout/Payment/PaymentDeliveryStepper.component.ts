@@ -78,18 +78,32 @@ export class PaymentDeliveryStepper implements OnInit, AfterViewInit {
    }
 
    deliveryOptionChange(event) {
+      localStorage.setItem('deliveryMode', this.pickUp);
       if (this.pickUp === '1') {
          if (this.hasAllPickupInfoSet()) {
             this.setAllStepDone.emit({status: true, deliveryMode: this.pickUp});
          } else {
-            this.stepper.selectedIndex ++;
+            this.setSelectedIndex();
          }
       } else if (this.pickUp === '0') {
          if (this.hasAllDeliveryInfoSet()) {
             this.setAllStepDone.emit({status: true, deliveryMode: this.pickUp});
          } else {
-            this.stepper.selectedIndex ++;
+            this.setSelectedIndex();
          }
+      }
+   }
+
+   setSelectedIndex() {
+      if (!this.user.shippingAddress) {
+         this.stepper.selectedIndex++;
+      } else if (!this.user.billingAddress) {
+         this.stepper.selectedIndex++;
+         this.stepper.selectedIndex++;
+      } else {
+         this.stepper.selectedIndex++;
+         this.stepper.selectedIndex++;
+         this.stepper.selectedIndex++;
       }
    }
 

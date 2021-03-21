@@ -1,74 +1,11 @@
 <mat-error severity="error">{{error}}</mat-error>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-    <mat-card>
-      <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-          <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
-            <mat-radio-button  value="0">
-              {{'COMMON.SHIP_TO_ME'|translate}}
-            </mat-radio-button>
-            <mat-radio-button  value="1">
-              {{'COMMON.I_PICKUP'|translate}}
-            </mat-radio-button> 
-          </mat-radio-group> 
-          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
-              routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
-              routerLinkActive="tab-active" *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
-          </div>
-          <div *ngIf="user.shippingAddress && pickUp === '0'">
-            {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
-            {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
-            {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
-            {{user.shippingAddress.postCode}}<br />
-            {{user.shippingAddress.country.name}}<br />
-          </div>
-          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='1' && !storeOpen">
-            <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
-          </div>
+
+      <mat-card *ngIf="showPreorder()">
+        <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='1' && !storeOpen">
+          <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-          <div fxLayout="row wrap" fxLayoutGap="10px grid">
-            <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
-              routerLinkActive="tab-active" *ngIf="user.billingAddress && user.billingAddress.address1 !== undefined ">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
-              routerLinkActive="tab-active" *ngIf="!(user.billingAddress && user.billingAddress.address1 !== undefined)">{{'COMMON.ADD' | translate}}</a>
-          </div>
-          <div *ngIf="user.billingAddress">
-            {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
-            {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br />
-            {{user.billingAddress.city}}, {{user.billingAddress.zone.name}}
-            {{user.billingAddress.postCode}}<br />
-            {{user.billingAddress.country.name}}<br>
-          </div>
-        </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-          <div fxLayout="row wrap" fxLayoutGap="10px grid">
-            <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{
-                  user.paymentMethodCode==='CREDIT_CARD'?('COMMON.CREDIT_CARD' | translate):
-                  user.paymentMethodCode}}</h6>
-            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
-              routerLinkActive="tab-active" *ngIf="user.paymentMethodCode">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
-              routerLinkActive="tab-active" *ngIf="!user.paymentMethodCode">{{'COMMON.ADD' | translate}}</a>
-          </div>
-          <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
-            {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
-          </div>
-        <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
-            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
-          </div>
-        <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
-            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
-          </div>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card *ngIf="showPreorder()">
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
             id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
@@ -119,6 +56,71 @@
           </div> 
         </div> 
       
+    </mat-card>
+
+    <mat-card>
+      <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
+            <mat-radio-button  value="0">
+              {{'COMMON.SHIP_TO_ME'|translate}}
+            </mat-radio-button>
+            <mat-radio-button  value="1">
+              {{'COMMON.I_PICKUP'|translate}}
+            </mat-radio-button> 
+          </mat-radio-group> 
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
+            <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
+              routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
+              routerLinkActive="tab-active" *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
+          </div>
+          <div *ngIf="user.shippingAddress && pickUp === '0'">
+            {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
+            {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
+            {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
+            {{user.shippingAddress.postCode}}<br />
+            {{user.shippingAddress.country.name}}<br />
+          </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
+              routerLinkActive="tab-active" *ngIf="user.billingAddress && user.billingAddress.address1 !== undefined ">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
+              routerLinkActive="tab-active" *ngIf="!(user.billingAddress && user.billingAddress.address1 !== undefined)">{{'COMMON.ADD' | translate}}</a>
+          </div>
+          <div *ngIf="user.billingAddress">
+            {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
+            {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br />
+            {{user.billingAddress.city}}, {{user.billingAddress.zone.name}}
+            {{user.billingAddress.postCode}}<br />
+            {{user.billingAddress.country.name}}<br>
+          </div>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{
+                  user.paymentMethodCode==='CREDIT_CARD'?('COMMON.CREDIT_CARD' | translate):
+                  user.paymentMethodCode}}</h6>
+            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
+              routerLinkActive="tab-active" *ngIf="user.paymentMethodCode">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
+              routerLinkActive="tab-active" *ngIf="!user.paymentMethodCode">{{'COMMON.ADD' | translate}}</a>
+          </div>
+          <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
+            {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
+          </div>
+        <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
+            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
+          </div>
+        <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
+            {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
+          </div>
+        </div>
+      </div>
     </mat-card>
 
     <embryo-Cart [pickUp] ="pickUp" (placeYourOrderEvent)="placeYourOrder($event)" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
