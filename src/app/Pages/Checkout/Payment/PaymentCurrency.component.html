@@ -9,7 +9,7 @@
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
             id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
-            Yes! I want to schedule this order for later
+            {{'COMMON.SCHEDULE_FOR_LATER' | translate}}
           </mat-checkbox>
         </div>
         <div fxLayout="row wrap" *ngIf="scheduleForLater">
@@ -43,7 +43,7 @@
               </mat-select>
             </mat-form-field>
           </div> 
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngIf="none">
+          <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngIf="none">
             <mat-form-field class="w-90">
               <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" 
                  (selectionChange)="timePeriodSelectionChange($event)" name="timePrds"
@@ -53,7 +53,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div> 
+          </div>  -->
         </div> 
       
     </mat-card>

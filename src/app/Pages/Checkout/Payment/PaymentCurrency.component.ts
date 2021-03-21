@@ -161,7 +161,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          nextOpenTime = JSON.parse(JSON.stringify(this.store))['openTime' + nextDayNumber];
          nextCloseTime = JSON.parse(JSON.stringify(this.store))['closeTime' + nextDayNumber];
          if (nextOpenTime != null && nextOpenTime.length >= 3 &&
-            nextCloseTime !== null || nextCloseTime.length >= 3) {
+            nextCloseTime !== null && nextCloseTime.length >= 3) {
             break;
          } else {
             nextDayNumber += i;
@@ -173,7 +173,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       let openDateTime = null;
       let closeDateTime = null;
       if (openTime != null && openTime.length >= 3 &&
-         closeTime !== null || closeTime.length >= 3) {
+         closeTime !== null && closeTime.length >= 3) {
 
          const today = this.datePipe.transform(now, 'yyyy-MM-dd ');
          openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
@@ -299,12 +299,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.nextOpenDateTime = openDateTime;
             this.nextCloseDateTime = closeDateTime;
          }
-         console.log('openDateTime = ' + openDateTime);
-         console.log('closeDateTime = ' + closeDateTime);
       }
 
-      console.log('nextOpenDateTime = ' + nextOpenTime);
-      console.log('nextCloseDateTime = ' + nextCloseTime);
       if (nextOpenTime != null && nextOpenTime.length >= 3 &&
          nextCloseTime !== null && nextCloseTime.length >= 3) {
          const tomorrow = new Date();
@@ -639,7 +635,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       } else {
          if (this.store === null || this.store === undefined) {
             this.getStore();
-            //this.getZoneToGeoZone();
          } else {
             if (!this.zoneToGeoZone) {
                this.getZoneToGeoZone();
@@ -681,7 +676,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    showPreorder() {
       const canShowPreorder = (
                         (this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'ALWAYS')
-                        || (!this.storeOpen && this.store && this.store.presentPreorderScreen && this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
+                        || (!this.storeOpen && this.store && this.store.presentPreorderScreen
+                           && this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
                         );
       return canShowPreorder;
    }

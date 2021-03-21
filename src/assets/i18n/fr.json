@@ -662,7 +662,8 @@
     "NOTE_FOR_DEST":"Note pour le destinataire",
 		"PRESENT_PREORDER_SCREEN":"Présenter l'écran de précommande",
 		"CARRYOUT_DATE":"Date de réception",
-		"TIME_PERIOD": "Periode de temps"
+    "TIME_PERIOD": "Periode de temps",
+    "SCHEDULE_FOR_LATER": "Oui! Je souhaite planifier cette commande pour plus tard"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

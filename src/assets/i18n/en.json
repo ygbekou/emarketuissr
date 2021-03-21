@@ -662,7 +662,8 @@
 		"NOTE_FOR_DEST":"Note for recipient",
 		"PRESENT_PREORDER_SCREEN":"Present Pre-Order Screen",
 		"CARRYOUT_DATE":"Carryout date",
-		"TIME_PERIOD": "Time Period"
+		"TIME_PERIOD": "Time Period",
+		"SCHEDULE_FOR_LATER": "Yes! I want to schedule this order for later"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
