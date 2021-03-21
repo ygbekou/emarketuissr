@@ -6,8 +6,7 @@ import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod } from 'src/a
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
 
-import * as moment from 'moment';
-import 'moment-timezone';
+import moment from 'moment-timezone';
 import { CartComponent } from '../../Cart/Cart.component';
 
 @Component({
@@ -693,8 +692,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      || (this.store && this.store.presentPreorderScreen &&  this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
                      )
                   && (!this.order.preorderDate || !this.order.preorderHour || !this.order.preorderMinute);
-                     //|| !this.order.preorderTimePeriod)
-
       this.appService.navbarCartStoreAllowOrderMap[this.store.id] = disable;
 
       return disable;

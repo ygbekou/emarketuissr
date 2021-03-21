@@ -32,6 +32,7 @@ export class ProductsListComponent implements OnInit {
    public errors: string;
    public watcher: Subscription;
    catId = 0;
+   storeCatId = 0;
    marketId = 0;
    searchText = '0';
    storeId = 0;
@@ -75,33 +76,35 @@ export class ProductsListComponent implements OnInit {
 
          this.catId = 0;
          this.marketId = 0;
-
+         this.storeCatId = 0;
+         console.log(params.type);
          if (params.type) {
             const type = params.type.substring(0, 3);
             if (type === 'cat') {
                this.catId = params.type.substring(3);
             } else if (type === 'mak') {
                this.marketId = params.type.substring(3);
+            } else if (type === 'stc') {
+               this.storeCatId = params.type.substring(3);
             }
 
-            if (this.catId > 0 || this.marketId > 0) {
-               console.log('catId=' + this.catId + ', marketId=' + this.marketId);
+            if (this.catId > 0 || this.marketId > 0 || this.storeCatId > 0) {
+               console.log('catId=' + this.catId
+               + ', marketId=' + this.marketId
+               + ', storeCatId=' + this.storeCatId);
                this.getData();
             }
          }
 
       });
 
-
       this.activatedRoute.queryParams.subscribe(params => {
-
          console.log(this.activatedRoute.queryParams);
          this.activatedRoute.queryParams.forEach(queryParams => {
             if (queryParams['searchText'] !== undefined) {
                this.searchText = queryParams['searchText'];
                this.getData();
             }
-
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
                this.getStore();
@@ -144,7 +147,7 @@ export class ProductsListComponent implements OnInit {
    getProducts() {
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
          new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
-            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0)
+            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId)
       ).subscribe((data: ProductListVO) => {
             this.applyGridFilter(data);
          },

@@ -72,7 +72,7 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
 
   getBoughtProducts() {
     this.appService.saveWithUrl('/service/catalog/getBoughtProducts/', new ProductSearchCriteria(
-      this.appService.appInfoStorage.language.id, 0, 0, 0, '0', 1, 0, 10, Number(this.appService.tokenStorage.getUserId())
+      this.appService.appInfoStorage.language.id, 0, 0, 0, '0', 1, 0, 10, Number(this.appService.tokenStorage.getUserId()), 0
     ))
       .subscribe((data: ProductDescVO[]) => {
         this.products = data;

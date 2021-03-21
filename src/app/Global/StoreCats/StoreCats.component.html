@@ -1,0 +1,32 @@
+<div class="section-gap pb-0" *ngIf="storeCats">
+  <div class="container">
+    <mat-toolbar color="primary" style="height:220px" class="section-title-toolbar">
+      <mat-toolbar-row>
+        <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+          <div class="block-title">
+            <h2 class="text-inverse mb-0 text-xxl">{{'COMMON.CATEGORIES'|translate}}</h2>
+          </div>
+        <!--   <a  [routerLink]="['/products/viewAll']" [queryParams]="{id:3}"
+            class="text-sm text-uppercase">{{'COMMON.VIEW_ALL'|translate}}</a> -->
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="shop-card-gap px-4">
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
+          *ngFor="let slide of storeCats">
+          <a [routerLink]="['/products'+'/stc'+slide.id]">
+          <mat-card class="box-shadow-md p-4">
+            <a href="javascript:void(0)">
+              <img [src]="'assets/images/storecats/'+slide.id+'.jpg'" alt="Product">
+            </a>
+            <mat-card-content class="pt-3">
+              <h5>  {{slide.name}} ({{slide.count}}) </h5>             
+            </mat-card-content>
+          </mat-card>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

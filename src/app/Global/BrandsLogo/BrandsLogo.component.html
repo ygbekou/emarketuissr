@@ -1,14 +1,7 @@
-<ngx-slick-carousel class="carousel" [config]="slideConfig">
+<!-- <ngx-slick-carousel class="carousel" [config]="slideConfig">
   <div ngxSlickItem *ngFor="let store of stores">
     <a [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
-      <mat-card>
-        <!--  <mat-card-header>
-           <mat-card-title>{{store.name}}</mat-card-title>  
-          <mat-card-subtitle *ngIf="store.address">
-           <font style="color: #283593;"> {{store.catName}} </font><br/>
-            {{store.address.city +', '+store.address.country.name}}
-          </mat-card-subtitle>
-        </mat-card-header> -->
+      <mat-card> 
         <mat-card-content>
           <img src="assets/images/stores/{{store.id}}/{{store.image}}">
           <div class="myOverlay">
@@ -19,4 +12,28 @@
       </mat-card>
     </a>
   </div>
-</ngx-slick-carousel>
+</ngx-slick-carousel> -->
+
+<div class="section-gap pb-0" *ngIf="stores">
+  <div class="container">
+ 
+    <div class="shop-card-gap px-4">
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
+          *ngFor="let store of stores">
+          <a [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
+          <mat-card class="box-shadow-md p-4">
+            <a href="javascript:void(0)">
+              <img src="assets/images/stores/{{store.id}}/{{store.image}}" alt="">
+            </a>
+            <mat-card-content class="pt-3">
+                <h5>{{store.catName}} </h5>
+           <p> {{store.address.city +', '+store.address.country.name}}</p>              
+            </mat-card-content>
+          </mat-card>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

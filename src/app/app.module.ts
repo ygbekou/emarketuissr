@@ -83,6 +83,7 @@ import { LangComponent } from './Layouts/lang/lang.component';
 import { AuthGuardService } from './Services/auth-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RoleGuardService } from './Services/role-guard.service';
+import { StoreCatsComponent } from './Global/StoreCats/StoreCats.component';
 const config: InputFileConfig = {
    fileAccept: '*'
 };
