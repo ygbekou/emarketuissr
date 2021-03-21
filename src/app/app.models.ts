@@ -1590,8 +1590,8 @@ export class Order {
   cancellationReason: CancellationReason;
   shipper: Shipper;
   zoneToGeoZone: ZoneToGeoZone;
-	preorderDate: Date;
-	preorderHour: number;
+  preorderDate: Date;
+  preorderHour: number;
   preorderMinute: string;
   preorderTimePeriod: TimePeriod;
   expected: Date;
@@ -1700,7 +1700,8 @@ export class ProductSearchCriteria {
     public fromWeb: number,
     public productId: number,
     public topN: number,
-    public userId: number
+    public userId: number,
+    public storeCatId: number
   ) {
 
   }
@@ -1926,4 +1927,10 @@ export class TimeZone {
   name: string;
   description: string;
   gmtOffset: number;
+}
+
+export class StoreCatVO {
+  public id: number;
+  public name: string;
+  public count: number;
 }

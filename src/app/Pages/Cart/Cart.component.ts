@@ -16,7 +16,6 @@ import { Constants } from 'src/app/app.constants';
 export class CartComponent implements OnInit, AfterViewChecked {
    error: string;
    message: string;
-
    order: Order;
    products: any;
    user: User = new User();

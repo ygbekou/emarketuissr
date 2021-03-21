@@ -11,11 +11,15 @@
    {{'COMMON.SHOW_ALL'|translate}}</a>
 </div>
 
-<embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
-</embryo-lightening-deals>
+<!-- <embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
+</embryo-lightening-deals> -->
 
-<embryo-TopProducts *ngIf="topProducts" [products]="topProducts" [currency]="appService?.currency"
-   (addToCart)="addToCart($event)"></embryo-TopProducts>
+<app-store-cats *ngIf="storeCats" [storeCats]="storeCats">
+</app-store-cats>
+
+<!-- <embryo-TopProducts *ngIf="topProducts" [products]="topProducts" [currency]="appService?.currency"
+   (addToCart)="addToCart($event)"></embryo-TopProducts> -->
+
 <div class="section-gap pt-0">
    <div class="container">
       <div fxLayoutAlign="space-between" class="w-100">

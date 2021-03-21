@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
-import { MarketingDescription, Language, ProductDescVO, ProductSearchCriteria } from 'src/app/app.models';
+import { MarketingDescription, Language, ProductDescVO, ProductSearchCriteria, StoreCatVO } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,6 +14,7 @@ export class HomeTwoComponent implements OnInit {
    topProducts: ProductDescVO[] = [];
    lighteningDealsProducts: any;
    marketings: MarketingDescription[] = [];
+   storeCats: StoreCatVO[] = [];
 
    constructor(public appService: AppService, public translate: TranslateService) { }
 
@@ -22,6 +23,13 @@ export class HomeTwoComponent implements OnInit {
       // this.getProducts();
    }
 
+   public getStoreCats(langId) {
+      this.appService.getObjects('/service/catalog/getStoreCats/' + langId + '/2')
+         .subscribe((data: StoreCatVO[]) => {
+            this.storeCats = data;
+         }, (error) => console.log(error),
+            () => console.log('Get all getStoreCats complete'));
+   }
    public lighteningDeals() {
       const parameters: string[] = [];
       this.appService.getAllByCriteria('com.softenza.emarket.model.Language',
@@ -45,6 +53,7 @@ export class HomeTwoComponent implements OnInit {
                if (language.code === lang) {
                   this.getSliders(language.id);
                   this.getProductsOnSale(language.id);
+                  this.getStoreCats(language.id)
                }
             });
 
@@ -79,9 +88,9 @@ export class HomeTwoComponent implements OnInit {
             // console.log(data);
             if (data && data.length > 0) {
                this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
-                new ProductSearchCriteria(
-                  this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0',
-                  0, 0, 0, 0))
+                  new ProductSearchCriteria(
+                     this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0',
+                     0, 0, 0, 0, 0))
                   .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);

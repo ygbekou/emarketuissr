@@ -97,6 +97,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { ReviewComponent } from './Review/Review.component';
 import { InputFileModule } from 'ngx-input-file';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
+import { StoreCatsComponent } from './StoreCats/StoreCats.component';
 
 @NgModule({
    imports: [
@@ -141,7 +142,6 @@ import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/Prod
       FormsModule,
       ReactiveFormsModule,
       SlickCarouselModule,
-      
    ],
    declarations: [
       BrandslogoComponent,
@@ -198,7 +198,8 @@ import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/Prod
       CustomerTransactionComponent,
       CustomerRewardComponent,
       StoreHeaderComponent,
-      ProductOptionPopupComponent
+      ProductOptionPopupComponent,
+      StoreCatsComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -254,7 +255,8 @@ import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/Prod
       CustomerTransactionComponent,
       CustomerRewardComponent,
       StoreHeaderComponent,
-      ProductOptionPopupComponent
+      ProductOptionPopupComponent,
+      StoreCatsComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
