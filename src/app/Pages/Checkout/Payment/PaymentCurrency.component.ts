@@ -694,8 +694,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      || (this.store && this.store.presentPreorderScreen &&  this.store.presentPreorderScreen.name === 'WHEN_CLOSED')
                      )
                   && (!this.order.preorderDate || !this.order.preorderHour || !this.order.preorderMinute);
-                     //|| !this.order.preorderTimePeriod)
-
       this.appService.navbarCartStoreAllowOrderMap[this.store.id] = disable;
 
       return disable;
