@@ -9,6 +9,8 @@
 		"NONE": "None",
 		"HOUR": "Hour",
 		"RUN":"Run",
+		"DECREMENT_INVN":"Decrement inventory",
+		"ALLOW_NEG_INVN":"Allow negative inventory",
 		"TIME_ZONE":"Time zone",
 		"START":"Start",
 		"STORE_HOURS": "Store hours",
@@ -663,7 +665,7 @@
 		"PRESENT_PREORDER_SCREEN":"Present Pre-Order Screen",
 		"CARRYOUT_DATE":"Carryout date",
 		"TIME_PERIOD": "Time Period",
-		"SCHEDULE_FOR_LATER": "Yes! I want to schedule this order for later"
+		"SCHEDULE_FOR_LATER": "I want to schedule this order for later"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

@@ -48,7 +48,7 @@
                   class="title-link">{{prd?.name}}</a> </h5>
 
             <h6 class="danger-color" *ngIf="fromPage==='sell' && prd.product.quantity<=0">
-               
+
                <font style="color: red;">
                   {{'COMMON.OUT_OF_STOCK'|translate}}: {{prd.product.quantity}}
                </font>
@@ -98,7 +98,12 @@
             </div>
 
             <div class="m-icon" *ngIf="fromPage==='buy'">
-               <embryo-AddToCardButton [product]="prd" (addToCart)="addToCartProduct($event)">
+               <ng-container *ngIf="!(prd.product.quantity>0||prd.product.allowNegInvn==1)">
+                  <button mat-fab color="secondary"><i class="material-icons"> production_quantity_limits </i></button>
+               </ng-container>
+
+               <embryo-AddToCardButton *ngIf="prd.product.quantity>0||prd.product.allowNegInvn==1" [product]="prd"
+                  (addToCart)="addToCartProduct($event)">
                </embryo-AddToCardButton>
             </div>
             <div class="m-icon" *ngIf="fromPage==='sell'">
