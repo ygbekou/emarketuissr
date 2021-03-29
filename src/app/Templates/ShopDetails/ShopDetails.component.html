@@ -65,64 +65,66 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <div>
               <a [routerLink]="['/products/dtl/'+detailData.product?.id+(detailData.product?.ptsId?'/'+detailData.product?.ptsId:'')]"
-               fragment="reviews" class="a-link-normal">
+                fragment="reviews" class="a-link-normal">
                 {{detailData.product.reviews.length}}
                 {{'COMMON.REVIEW'|translate}}{{detailData.product.reviews.length > 1 ? 's' : ''}}
               </a>
             </div>
           </div>
-          <div class="product-detail-price"> 
-               <div fxFlex>
-                  <span class="secondary-color" style="text-decoration: line-through;"
-                     *ngIf="detailData.product.productDiscountPercentage > 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+          <div class="product-detail-price">
+            <div fxFlex>
+              <span class="secondary-color" style="text-decoration: line-through;"
+                *ngIf="detailData.product.productDiscountPercentage > 0">
+                {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
                 &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}}
                 {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
-                  </span>
-                  <span class="accent-color"
-                     *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
+              </span>
+              <span class="accent-color"
+                *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
+                {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
+              </span>
+              <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
-                    &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
-                     {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} {{detailData.product.productDiscountPrice}}
-                     {{detailData.product.symbolRight}}
-                  </span> 
-               </div>  
+                &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
+                {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} {{detailData.product.productDiscountPrice}}
+                {{detailData.product.symbolRight}}
+              </span>
+            </div>
           </div>
           <ul class="no-style mb-4">
             <li>
               <span class="font-medium"> {{'COMMON.AVAILABILITY'|translate}} </span>:
               <span style="color: green;font-weight: bold;"
-                *ngIf="detailData.product.quantity > 0">{{'COMMON.IN_STOCK'|translate}}</span>
+                *ngIf="detailData.product.quantity > 0 || detailData.product.allowNegInvn==1">{{'COMMON.IN_STOCK'|translate}}</span>
               <span style="color: red;font-weight: bold;"
-                *ngIf="!(detailData.product.quantity > 0)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
+                *ngIf="!(detailData.product.quantity > 0 || detailData.product.allowNegInvn==1)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
             </li>
           </ul>
           <div class="short-des" [innerHTML]="detailData?.description | safehtml"></div>
-          
-          
+
+
           <div *ngFor="let povo of detailData?.povos; let i = index;">
             <div *ngIf="povo.optionType == 'Radio'">
-              <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></label>
+              <label style="font-weight: bold;">{{povo.name}} <span style="color:red"
+                  *ngIf="povo.required === 1">*</span></label>
               <div fxLayout="row wrap">
                 <mat-radio-group class="w-100">
                   <div *ngFor="let prdOptionValue of povo.povs" style="width: 500px; height: 50px;">
-                    <mat-radio-button class="w-100" 
-                        [value]="prdOptionValue.id" (click)="radioButtonChange($event, povo, prdOptionValue);">
-                      
-                          <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-                            {{prdOptionValue.name}}
-                          </div>
+                    <mat-radio-button class="w-100" [value]="prdOptionValue.id"
+                      (click)="radioButtonChange($event, povo, prdOptionValue);">
+
+                      <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                        {{prdOptionValue.name}}
+                      </div>
                     </mat-radio-button>
-                    <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
-                      ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}}) 
+                    <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
+                      *ngIf="prdOptionValue.price > 0">
+                      ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
                     </div>
                   </div>
                 </mat-radio-group>
@@ -134,7 +136,7 @@
                 <div fxLayout="row wrap">
                   <mat-form-field class="w-100 mb-3">
                     <mat-label> {{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-                    <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption" 
+                    <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption"
                       [(ngModel)]="prdOptionValue.value">
                   </mat-form-field>
                   <span style="width:10px;"></span>
@@ -147,7 +149,8 @@
                 <div fxLayout="row wrap">
                   <mat-form-field class="w-100 mb-3">
                     <mat-label> {{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-                    <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea" [(ngModel)]="prdOptionValue.value"></textarea>
+                    <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea"
+                      [(ngModel)]="prdOptionValue.value"></textarea>
                   </mat-form-field>
                   <span style="width:10px;"></span>
                 </div>
@@ -155,13 +158,15 @@
             </div>
 
             <div *ngIf="povo.optionType == 'Checkbox'">
-              <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span> </label>
+              <label style="font-weight: bold;">{{povo.name}} <span style="color:red"
+                  *ngIf="povo.required === 1">*</span> </label>
               <div fxLayout="row wrap">
-                <div  class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
-                  <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" 
-                  id="{{prdOptionValue.name}}" name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
-                    {{prdOptionValue.name}} 
-                    <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
+                <div class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
+                  <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" id="{{prdOptionValue.name}}"
+                    name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
+                    {{prdOptionValue.name}}
+                    <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
+                      *ngIf="prdOptionValue.price > 0">
                       ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
                     </div>
                   </mat-checkbox>
@@ -173,9 +178,10 @@
               <div *ngFor="let prdOptionValue of povo.povs">
                 <div fxLayout="row wrap">
                   <mat-form-field class="w-100 mb-3">
-                    <mat-label> {{prdOptionValue.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value"
-                      class="form-control" id="value" name="value">
+                    <mat-label> {{prdOptionValue.name}} <span style="color:red" *ngIf="povo.required === 1">*</span>
+                    </mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value" class="form-control"
+                      id="value" name="value">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
@@ -186,12 +192,12 @@
 
             <div *ngIf="povo.optionType == 'Select'">
               <div fxLayout="row wrap">
-                
+
                 <mat-form-field class="w-100 mb-3">
                   <mat-label>{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
                   <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
                     <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
-                      (click)="singleSelectionChange($event, povo, prdOptionValue)" >
+                      (click)="singleSelectionChange($event, povo, prdOptionValue)">
                       {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
                     </mat-option>
                   </mat-select>
@@ -202,7 +208,7 @@
 
           </div>
 
-          
+
           <div class="mb-4" *ngIf="fromPage==='buy'">
             <a href="javascript:void(0)" class="text-underline" (click)="addToWishlist(detailData)"> Add To Wishlist</a>
           </div>
@@ -232,32 +238,34 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" style="font-size:12px;">
         <mat-card>
-          <div   class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
+          <div class="product-detail-price col-gap" *ngIf="detailData.product.quantity > 0">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                   <div fxFlex>
-                  <span class="secondary-color" style="text-decoration: line-through;"
-                     *ngIf="detailData.product.productDiscountPercentage > 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+              <div fxFlex>
+                <span class="secondary-color" style="text-decoration: line-through;"
+                  *ngIf="detailData.product.productDiscountPercentage > 0">
+                  {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}}
+                  {{detailData.product.symbolRight}}
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
                   &nbsp;&nbsp; {{detailData.product.symbolLeft}} {{detailData.product?.percentagePrice}}
                   {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                    &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
-                  </span>
-                  <span class="accent-color"
-                     *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                     {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}} {{detailData.product.symbolRight}}
-                  </span>
-                  <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
+                  &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
+                </span>
+                <span class="accent-color"
+                  *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
+                  {{detailData.product.symbolLeft}} {{detailData.product?.totalPrice}}
+                  {{detailData.product.symbolRight}}
+                </span>
+                <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
-                    &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
+                  &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
                   {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}}
                   {{detailData.product.productDiscountPrice}}
-                     {{detailData.product.symbolRight}}
-                  </span> 
-               </div>  
+                  {{detailData.product.symbolRight}}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -293,7 +301,7 @@
           </div>
 
           <mat-error *ngIf="error" severity="error">
-              {{ error }}
+            {{ error }}
           </mat-error>
           <div class="col-gap" *ngIf="detailData.product.quantity > 0">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
@@ -304,7 +312,7 @@
             </div>
           </div>
 
-          <div  class="col-gap">
+          <div class="col-gap">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <button mat-raised-button color="secondary" class="w-100" (click)="addToWishlist(detailData)">
                 <mat-icon>favorite</mat-icon>
@@ -314,7 +322,7 @@
           </div>
 
         </mat-card>
-        
+
       </div>
     </div>
   </div>

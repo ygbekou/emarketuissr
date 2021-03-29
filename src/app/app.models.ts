@@ -1021,8 +1021,13 @@ export class ProductToStore {
   marginPerc: number;
   shippingWeight: number;
   productDiscounts: ProductDiscount[] = [];
-
+  subtract: number;
+  allowNegInvn: number;
   type = 'ProductToStore';
+  constructor() {
+    this.subtract = 1;
+    this.allowNegInvn = 1;
+  }
 }
 
 
@@ -1306,6 +1311,7 @@ export class ProductVO {
   productDiscountId: number;
   hasOption: number;
   buyPrice: number;
+  allowNegInvn: number;
   shippingWeight: number;
   selectedOptionsMap: Map<number, any> = new Map();
 }

@@ -150,6 +150,7 @@ export class ProductsListComponent implements OnInit {
             this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId)
       ).subscribe((data: ProductListVO) => {
             this.applyGridFilter(data);
+            console.log(data);
          },
             error => console.log(error),
             () => console.log('Get all getProductsOnSale complete'));

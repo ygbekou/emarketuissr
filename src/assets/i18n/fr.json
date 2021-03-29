@@ -7,6 +7,8 @@
     "OUT_OF": "sur",
     "OR": "ou",
     "START":"Début",
+    "DECREMENT_INVN":"Décrémenter l'inventaire",
+		"ALLOW_NEG_INVN":"Permettre l'inventaire négatif",
     "TIME_ZONE":"Fuseau horaire",
     "STORE_HOURS": "Heures de la boutique",
     "DELIVERY_HOURS":"Heures de livraison",
@@ -666,6 +668,7 @@
 		"PRESENT_PREORDER_SCREEN":"Présenter l'écran de précommande",
 		"CARRYOUT_DATE":"Date de réception",
     "TIME_PERIOD": "Periode de temps",
+    "SCHEDULE_FOR_LATER": "Je souhaite planifier cette commande pour plus tard"
     "SCHEDULE_FOR_LATER": "Oui! Je souhaite planifier cette commande pour plus tard",
 		"GENERATE_MESSAGE": "Générer Méssage",
 		"HI": "Salut",

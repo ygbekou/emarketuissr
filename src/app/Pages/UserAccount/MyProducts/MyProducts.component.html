@@ -228,8 +228,8 @@
                   <mat-form-field class="w-30">
                     <mat-label> {{'COMMON.SHIPPING_WEIGHT' | translate}}
                     </mat-label>
-                    <input matInput type="text" class="form-control" id="weight" [(ngModel)]="productStore.shippingWeight"
-                      name="weight" #weight="ngModel"> 
+                    <input matInput type="text" class="form-control" id="weight"
+                      [(ngModel)]="productStore.shippingWeight" name="weight" #weight="ngModel">
                   </mat-form-field>
                 </div>
               </div>
@@ -242,18 +242,36 @@
                   </mat-form-field>
                 </div>
 
+
+
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-                  <mat-form-field class="w-100">
-                    <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
-                    <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
-                      [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
-                      <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
-                        {{taxClass.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
+                  <mat-slide-toggle [(ngModel)]="productStore.subtract" name="subtract" #availableOnline="ngModel"
+                    class="my-2">
+                    {{ 'COMMON.DECREMENT_INVN' | translate }}
+                  </mat-slide-toggle>
+                </div> 
               </div>
+                     <div fxLayout="row wrap">
+
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-form-field class="w-100">
+                      <mat-label>{{'COMMON.TAX_CLASS' | translate }}</mat-label>
+                      <mat-select placeholder="{{'COMMON.TAX_CLASS' | translate }}" id="taxClass" name="taxClass"
+                        [(ngModel)]="productStore.taxClassId" #taxClass="ngModel">
+                        <mat-option *ngFor="let taxClass of appService.appInfoStorage.taxClasses" [value]="taxClass.id">
+                          {{taxClass.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                    <mat-slide-toggle [(ngModel)]="productStore.allowNegInvn" name="allowNegInvn"
+                      #availableOnline="ngModel" class="my-2">
+                      {{ 'COMMON.ALLOW_NEG_INVN' | translate }}
+                    </mat-slide-toggle>
+                  </div>
+                </div>
 
               <div fxLayout="row wrap">
                 <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
