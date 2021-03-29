@@ -16,6 +16,9 @@
 		"OPEN_TIME":"Store open time",
 		"CLOSE_TIME":"Store close time",
 		"ALL_ZONES": "All zones",
+		"MINUTES": "Minutes",
+		"HOURS": "Hours",
+		"DAYS": "Days",
 		"SHIPPER":"Shipper",
 		"PREFERRED_SHIPPER":"Preferred shipper",
 		"DELIVERY_START":"Delivery start time",
@@ -663,7 +666,12 @@
 		"PRESENT_PREORDER_SCREEN":"Present Pre-Order Screen",
 		"CARRYOUT_DATE":"Carryout date",
 		"TIME_PERIOD": "Time Period",
-		"SCHEDULE_FOR_LATER": "Yes! I want to schedule this order for later"
+		"SCHEDULE_FOR_LATER": "Yes! I want to schedule this order for later",
+		"GENERATE_MESSAGE": "Generate Message",
+		"HI": "Hi",
+		"THANK_YOU": "Thank You",
+		"BOUGHT_FOR_PICKUP": "Bought for pickup",
+		"BOUGHT_FOR_DELIVERY": "Bought for delivery"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

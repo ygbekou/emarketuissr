@@ -5,6 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeFrFR from '@angular/common/locales/fr';
+import localeFrFRExtra from '@angular/common/locales/extra/fr';
 
 import moment from 'moment-timezone';
 import { CartComponent } from '../../Cart/Cart.component';
@@ -41,7 +44,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    storeId: number;
    @Output() orderCompleteEvent = new EventEmitter<Order>();
 
-   store: Store;
+   store: Store = new Store();
    hasOrderSucceed: boolean;
    zoneToGeoZone: ZoneToGeoZone;
    storeOpen: boolean;
@@ -69,6 +72,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       private datePipe: DatePipe
    ) {
 
+      registerLocaleData(localeFrFR, localeFrFRExtra);
       this.processPaymentConfirmation();
    }
 
@@ -95,9 +99,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.store = result;
             if (this.pickUp === '1') {
                this.isStoreOpen();
-            } else {
-               this.getZoneToGeoZone();
             }
+            this.getZoneToGeoZone();
           }
         });
     }
@@ -252,6 +255,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    public isDeliveryOpen() {
 
+      console.log('Testing is good ...');
       this.nextOpenDateTime = undefined;
       this.nextCloseDateTime = undefined;
       this.deliveryOpen = false;
@@ -573,23 +577,17 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       }
    }
 
-   public setDestMessage() {
-      console.log(this.shouldNotify);
-      if (this.shouldNotify) {
-         if (this.user.shippingAddress && this.user.shippingAddress.phone) {
-            this.order.shippingCustomField = ('+' + this.user.shippingAddress.country.code) +
-               this.user.shippingAddress.phone;
-         } else {
-            this.order.shippingCustomField =
-
-               (this.user.shippingAddress && this.user.shippingAddress.country) ?
-                  ('+' + this.user.shippingAddress.country.code) : '';
-         }
-
-         this.order.customField = this.getNoteToRecipient();
+   public generateMessage() {
+      
+      if (this.user.shippingAddress && this.user.shippingAddress.phone) {
+         this.order.shippingCustomField = ('+' + this.user.shippingAddress.country.code) +
+            this.user.shippingAddress.phone;
       } else {
-         this.order.customField = '';
+         this.order.shippingCustomField = (this.user.shippingAddress && this.user.shippingAddress.country) ?
+               ('+' + this.user.shippingAddress.country.code) : '';
       }
+
+      this.order.customField = this.getNoteToRecipient();
 
    }
 
@@ -607,11 +605,11 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.translate.get(['COMMON.THANK_YOU', 'COMMON.ERROR']).subscribe((res) => {
          thank = res['COMMON.THANK_YOU'];
       });
-      this.translate.get(['MESSAGE.BOUGHT_FOR_PICKUP', 'COMMON.ERROR']).subscribe((res) => {
-         pickup = res['MESSAGE.BOUGHT_FOR_PICKUP'];
+      this.translate.get(['COMMON.BOUGHT_FOR_PICKUP', 'COMMON.ERROR']).subscribe((res) => {
+         pickup = res['COMMON.BOUGHT_FOR_PICKUP'];
       });
-      this.translate.get(['MESSAGE.BOUGHT_FOR_DELIVERY', 'COMMON.ERROR']).subscribe((res) => {
-         delivery = res['MESSAGE.BOUGHT_FOR_DELIVERY'];
+      this.translate.get(['COMMON.BOUGHT_FOR_DELIVERY', 'COMMON.ERROR']).subscribe((res) => {
+         delivery = res['COMMON.BOUGHT_FOR_DELIVERY'];
       });
 
       const buff = hi + ' '

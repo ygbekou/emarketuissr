@@ -13,7 +13,7 @@ import { AppService } from 'src/app/Services/app.service';
 })
 export class ShippingZonesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'description', 'shippingMode', 'flatRate', 'weightRate', 'weight'];
-  displayedColumns2: string[] = ['id', 'country', 'zone', 'actions'];
+  displayedColumns2: string[] = ['id', 'country', 'zone', 'deliveryTimeBegin', 'deliveryTimeEnd', 'deliveryTimeUnit', 'actions'];
   dataSource: MatTableDataSource<GeoZone>;
   zoneToGeoZoneDS: MatTableDataSource<ZoneToGeoZone>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
