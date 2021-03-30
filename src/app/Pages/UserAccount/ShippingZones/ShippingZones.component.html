@@ -392,6 +392,8 @@
               <mat-label>Zone</mat-label>
               <mat-select placeholder="Time Unit" id="zone" [compareWith]="compareZones" name="timeUnit"
                 [(ngModel)]="zoneToGeoZone.deliveryTimeUnit" #deliveryTimeUnit="ngModel">
+                <mat-option [value]="''">
+                </mat-option>
                 <mat-option [value]="'M'">
                   {{'COMMON.MINUTES'|translate}}
                 </mat-option>

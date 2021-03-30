@@ -148,6 +148,13 @@ export class ShippingZonesComponent implements OnInit {
   saveZoneToGeoZone(zoneToGeoZone: ZoneToGeoZone) {
     this.messages = '';
     this.errors = '';
+
+    if (zoneToGeoZone.deliveryTimeBegin > zoneToGeoZone.deliveryTimeEnd) {
+      this.translate.get(['MESSAGE.INVALID_DELIVERY_TIME']).subscribe(res => {
+        this.errors = res['MESSAGE.INVALID_DELIVERY_TIME'];
+      });
+      return;
+    }
     console.log(zoneToGeoZone);
     if (zoneToGeoZone.country) {
       if (!zoneToGeoZone.zone || !zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {

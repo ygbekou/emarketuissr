@@ -691,5 +691,23 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       return disable;
    }
 
+
+   generateDeliveryEstimationTimeMessage() {
+      let deliveryTimeUnitDesc = '';
+
+      this.translate.get(['COMMON.MINUTES_SHORT', 'COMMON.HOURS_SHORT', 'COMMON.DAYS_SHORT']).subscribe((res) => {
+         if (this.zoneToGeoZone.deliveryTimeUnit === 'M') {
+            deliveryTimeUnitDesc = res['COMMON.MINUTES_SHORT'];
+         } else if (this.zoneToGeoZone.deliveryTimeUnit === 'H') {
+            deliveryTimeUnitDesc = res['COMMON.HOURS_SHORT'];
+         } else if (this.zoneToGeoZone.deliveryTimeUnit === 'D') {
+            deliveryTimeUnitDesc = res['COMMON.DAYS_SHORT'];
+         }
+      });
+
+      return deliveryTimeUnitDesc;
+
+   }
+
 }
 

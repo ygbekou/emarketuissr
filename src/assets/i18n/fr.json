@@ -17,7 +17,10 @@
     "ALL_ZONES": "Toutes les zones",
 		"MINUTES": "Minutes",
 		"HOURS": "Heures",
-		"DAYS": "Jours",
+    "DAYS": "Jours",
+    "MINUTES_SHORT": "min",
+		"HOURS_SHORT": "hrs",
+		"DAYS_SHORT": "jrs",
     "SHIPPER":"Expéditeur",
     "PREFERRED_SHIPPER":"Expéditeur préféré",
     "DELIVERY_START":"Heure debut d'expédition",
@@ -668,13 +671,13 @@
 		"PRESENT_PREORDER_SCREEN":"Présenter l'écran de précommande",
 		"CARRYOUT_DATE":"Date de réception",
     "TIME_PERIOD": "Periode de temps",
-    "SCHEDULE_FOR_LATER": "Je souhaite planifier cette commande pour plus tard"
-    "SCHEDULE_FOR_LATER": "Oui! Je souhaite planifier cette commande pour plus tard",
+    "SCHEDULE_FOR_LATER": "Je souhaite planifier cette commande pour plus tard",
 		"GENERATE_MESSAGE": "Générer Méssage",
 		"HI": "Salut",
 		"THANK_YOU": "Merci",
 		"BOUGHT_FOR_PICKUP": "Acheté pour venir prendre",
-		"BOUGHT_FOR_DELIVERY": "Acheté pour livraison"
+		"BOUGHT_FOR_DELIVERY": "Acheté pour livraison",
+		"DELIVERY_FEE": "Frais de livraison "
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
@@ -754,7 +757,8 @@
     "STORE_CLOSED2": "{{store_name}} est fermée en ce moment.  Elle sera ouverte {{day}} de {{open_time}} a {{close_time}}. ",
     "NO_DELIVERY_PERIOD": "{{store_name}} ne livre pas en ce moment.  La livraison reprend demain de {{open_time}} a {{close_time}}. ",
     "NO_DELIVERY_PERIOD1": "{{store_name}} ne livre pas en ce moment.  La livraison reprend aujourd'hui de {{open_time}} a {{close_time}}. ",
-	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre pas en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. "
+	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre pas en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. ",
+		"INVALID_DELIVERY_TIME": "Le délai de livraison de d�but ne peut pas etre supérieur au délai de livraison de fin"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
