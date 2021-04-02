@@ -13,9 +13,7 @@ import { BaseComponent } from '../../baseComponent';
 export class OptionDescriptionComponent extends BaseComponent implements OnInit {
 
    messages = '';
- 
-   @Input() option: Options; 
-
+   @Input() option: Options;
    optionDescription: OptionDescription;
    selectedTab = 0;
    selectedMainTabIndex = 0;
@@ -26,9 +24,7 @@ export class OptionDescriptionComponent extends BaseComponent implements OnInit 
       }
 
 	ngOnInit() {
-
       this.refreshLangObjects();
-
    }
 
    refreshLangObjects() {

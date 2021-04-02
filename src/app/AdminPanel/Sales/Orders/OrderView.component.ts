@@ -112,7 +112,6 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
         (error) => console.log(error),
         () => console.log('Get Store complete'));
   }
-  
   public setStoreOrderDetails() {
     const parameters: string[] = [];
     parameters.push('e.tabId = |tId|' + this.storeOrder.id + '|Integer');
