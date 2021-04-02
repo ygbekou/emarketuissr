@@ -22,6 +22,12 @@
 		"OPEN_TIME":"Store open time",
 		"CLOSE_TIME":"Store close time",
 		"ALL_ZONES": "All zones",
+		"MINUTES": "Minutes",
+		"HOURS": "Hours",
+		"DAYS": "Days",
+		"MINUTES_SHORT": "min",
+		"HOURS_SHORT": "hrs",
+		"DAYS_SHORT": "days",
 		"SHIPPER":"Shipper",
 		"PREFERRED_SHIPPER":"Preferred shipper",
 		"DELIVERY_START":"Delivery start time",
@@ -669,7 +675,13 @@
 		"PRESENT_PREORDER_SCREEN":"Present Pre-Order Screen",
 		"CARRYOUT_DATE":"Carryout date",
 		"TIME_PERIOD": "Time Period",
-		"SCHEDULE_FOR_LATER": "I want to schedule this order for later"
+		"SCHEDULE_FOR_LATER": "I want to schedule this order for later",
+		"GENERATE_MESSAGE": "Generate Message",
+		"HI": "Hi",
+		"THANK_YOU": "Thank You",
+		"BOUGHT_FOR_PICKUP": "Bought for pickup",
+		"BOUGHT_FOR_DELIVERY": "Bought for delivery",
+		"DELIVERY_FEE": "Delivery Fee "
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -752,7 +764,8 @@
 		"NO_DELIVERY_PERIOD1": "{{store_name}} does not deliver at this moment. The delivery resumes today from {{open_time}} to {{close_time}}. ",
 		"NO_DELIVERY_PERIOD2": "{{store_name}} does not deliver at this moment. The delivery resumes {{day}} from {{open_time}} to {{close_time}}. ",
 		"CHOOSE_LATER_DELIVERY_DATE": "We do not deliver at this moment. Please choose the delivery date/time for later delivery",
-		"CHOOSE_LATER_PICKUP_DATE": "The store is close at this moment. Please choose the pick up date/time for later pick up"
+		"CHOOSE_LATER_PICKUP_DATE": "The store is close at this moment. Please choose the pick up date/time for later pick up",
+		"INVALID_DELIVERY_TIME": "Begin Delivery Time cannot be greater than End Delivery Time"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",
