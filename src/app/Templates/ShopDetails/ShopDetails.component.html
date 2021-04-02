@@ -273,9 +273,9 @@
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <span class="font-medium"> {{'COMMON.AVAILABILITY'|translate}} </span>:
               <span style="color: green;font-weight: bold;"
-                *ngIf="detailData.product.quantity > 0">{{'COMMON.IN_STOCK'|translate}}</span>
+                *ngIf="detailData.product.quantity > 0 || detailData.product.allowNegInvn==1">{{'COMMON.IN_STOCK'|translate}}</span>
               <span style="color: red;font-weight: bold;"
-                *ngIf="!(detailData.product.quantity > 0)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
+                *ngIf="!(detailData.product.quantity > 0 || detailData.product.allowNegInvn==1)">{{'COMMON.OUT_OF_STOCK'|translate}}</span>
             </div>
           </div>
 

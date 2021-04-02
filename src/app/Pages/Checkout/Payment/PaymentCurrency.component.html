@@ -65,22 +65,13 @@
             <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
             <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
           </mat-button-toggle-group>
-
-          <!-- <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
-            <mat-radio-button  value="0">
-              {{'COMMON.SHIP_TO_ME'|translate}}
-            </mat-radio-button>
-            <mat-radio-button  value="1">
-              {{'COMMON.I_PICKUP'|translate}}
-            </mat-radio-button> 
-          </mat-radio-group>  -->
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+            <!-- {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
               + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}} 
             {{'COMMON.DELIVERY_FEE' | translate}} * {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}} 
-              {{generateDeliveryEstimationTimeMessage()}}
+              {{generateDeliveryEstimationTimeMessage()}} -->
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
               routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>

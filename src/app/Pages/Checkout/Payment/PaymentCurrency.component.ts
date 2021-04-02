@@ -90,7 +90,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    ngAfterViewInit() {
       this.minutes = ['00', '15', '30', '45'];
    }
-
    getStore() {
     if (this.storeId > 0) {
       this.appService.getOne(this.storeId, 'Store')
@@ -105,7 +104,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
         });
     }
   }
-
    getHours() {
       this.hours = [];
       this.timePeriodMap = new Map();
@@ -115,28 +113,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.minScheduleDate = new Date(this.nextOpenDateTime);
       this.maxScheduleDate = new Date(this.nextOpenDateTime);
       this.maxScheduleDate.setDate(this.maxScheduleDate.getDate() + 7);
-
       console.log(this.maxScheduleDate);
-
       let j = 0;
       for (let i = openHour; i < closeHour; i++) {
-         // if (i > 12) {
-         //    let periodValue = this.timePeriodMap.get(Number(i - 12));
-         //    if (!periodValue) {
-         //       periodValue = [];
-         //       this.hours[j] = Number(i - 12);
-         //    }
-         //    periodValue.push(this.appService.getTimePeriod('PM'));
-         //    this.timePeriodMap.set(Number(i - 12), periodValue);
-         // } else {
-         //    let periodValue = this.timePeriodMap.get(i);
-         //    if (!periodValue) {
-         //       periodValue = [];
-         //       this.hours[j] = Number(i);
-         //    }
-         //    periodValue.push(this.appService.getTimePeriod('AM'));
-         //    this.timePeriodMap.set(i, periodValue);
-         // }
          this.hours[j] = Number(i);
          j++;
       }
