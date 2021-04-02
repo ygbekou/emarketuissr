@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User, Address, Country, Zone, CreditCard, Store, Currency, TimeZone, PresentPreorderScreen } from 'src/app/app.models';
+import { User, Address, Country, Zone, CreditCard, Store, Currency, TimeZone, PresentPreorderScreen, StoreShipper, Shipper } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,12 +18,15 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    user: User = new User();
    messages: any;
    errors: any;
+   shippers: Shipper[] = [];
    creditCardBackground = 'background-image: url(assets/images/cards/card-edit.png)';
    address: Address = new Address();
    card: CreditCard = new CreditCard();
    formData: FormData;
    picture: any[] = [];
    picture1: any[] = [];
+   picture0: any[] = [];
+   storeShippers: StoreShipper[] = [];
    addresses: Address[] = [];
    store: Store = new Store();
    currencies: Currency[] = [];
@@ -78,6 +81,87 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       });
    }
 
+   getShippers() {
+      const parameters: string[] = [];
+      parameters.push('e.status= |abc|1|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Shipper', parameters)
+         .subscribe((data: Shipper[]) => {
+            this.shippers = data;
+            this.storeShippers.forEach((ss) => {
+               const index: number = this.shippers.findIndex((tb) => tb.id === ss.shipper.id);
+               if (index !== -1) {
+                  this.shippers.splice(index, 1);
+               }
+            });
+
+         },
+            error => console.log(error),
+            () => console.log('Get all Shipper complete'));
+   }
+
+   getStoreShippers() {
+      const parameters: string[] = [];
+      parameters.push('e.store.id= |abc|' + this.store.id + '|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.StoreShipper', parameters)
+         .subscribe((data: StoreShipper[]) => {
+            this.storeShippers = data;
+            this.getShippers();
+         },
+            error => console.log(error),
+            () => console.log('Get all Shipper complete'));
+   }
+
+   public deleteStoreShipper(id: number) {
+      this.appService.delete(id, 'com.softenza.emarket.model.StoreShipper')
+         .subscribe(resp => {
+            if (resp.result === 'SUCCESS') {
+               this.getStoreShippers();
+            }
+         });
+   }
+
+   changeShipper(storeShipper: StoreShipper) {
+      storeShipper.storeStatus = (storeShipper.storeStatus == null
+         || storeShipper.storeStatus.toString() === 'false'
+         || storeShipper.storeStatus.toString() === '0') ? 0 : 1;
+      console.log(storeShipper);
+      this.appService.save(storeShipper, 'StoreShipper')
+         .subscribe(result => {
+            if (result.id > 0) {
+               // this. getStoreShippers(Number(this.appService.tokenStorage.getUserId()));
+               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+               });
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+               });
+            }
+         });
+   }
+   addShipper(shipper: Shipper) {
+      const ss: StoreShipper = new StoreShipper();
+      ss.shipper = shipper;
+      ss.store = this.store;
+      ss.storeStatus = 1;
+      ss.shipperStatus = 0;
+      ss.shipCount = 0;
+      this.appService.save(ss, 'StoreShipper')
+         .subscribe(result => {
+
+            if (result.id > 0) {
+               this.getStoreShippers();
+               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+               });
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+               });
+            }
+         });
+   }
+
    getAddresses() {
       const userId = Number(this.appService.tokenStorage.getUserId());
       if (userId > 0) {
@@ -122,8 +206,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          .subscribe((data: PresentPreorderScreen[]) => {
             this.presentPreorderScreens = data;
          },
-         error => console.log(error),
-         () => console.log('Get all PresentPreorderScreen complete'));
+            error => console.log(error),
+            () => console.log('Get all PresentPreorderScreen complete'));
    }
 
    get() {
@@ -179,6 +263,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    submitProfileInfo() {
       this.messages = '';
       this.errors = '';
+      this.user.isShipper = (this.user.isShipper == null
+         || this.user.isShipper.toString() === 'false'
+         || this.user.isShipper.toString() === '0') ? 0 : 1;
       this.user.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
       if (this.picture && this.picture.length > 0 && this.picture[0].file) {
@@ -234,6 +321,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       if (this.picture1 && this.picture1.length > 0 && this.picture1[0].file) {
          this.formData.append('file[]', this.picture1[0].file, 'picture.' + this.picture1[0].file.name);
       }
+      if (this.picture0 && this.picture0.length > 0 && this.picture0[0].file) {
+         this.formData.append('file[]', this.picture0[0].file, 'storeFrontImage.' + this.picture0[0].file.name);
+      }
       this.appService.saveWithFile(this.store, 'Store', this.formData, 'saveWithFile')
          .subscribe(data => {
             this.processResult(data, this.store, null);
@@ -255,6 +345,27 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       }
    }
 
+   changeStoreShipper(user: User) {
+      this.user.isShipper = (this.user.isShipper == null
+         || this.user.isShipper.toString() === 'false'
+         || this.user.isShipper.toString() === '0') ? 0 : 1;
+      this.appService.saveWithUrl('/service/user/user/changeShipperSettings', user)
+         .subscribe((data: any) => {
+            console.log(data);
+            if (data.result === 'SUCCESS') {
+               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.messages = res['MESSAGE.SAVE_SUCCESS'];
+               });
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'] + ' : ' + data.result;
+               });
+            }
+         },
+            error => console.log(error),
+            () => console.log('Get all changeStoreShipper complete'));
+   }
+
    getCard(cardId: number) {
       if (cardId > 0) {
          const parameters: string[] = [];
@@ -272,10 +383,12 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       console.log(storeId);
       if (storeId > 0) {
          this.picture1 = [];
+         this.picture0 = [];
          this.appService.getOneWithChildsAndFiles(storeId, 'Store')
             .subscribe(result => {
                if (result.id > 0) {
                   this.store = result;
+                  this.getStoreShippers();
                   console.log(this.store);
                   const images: any[] = [];
                   const image = {
@@ -284,6 +397,16 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                   };
                   images.push(image);
                   this.picture1 = images;
+
+
+                  const images0: any[] = [];
+                  const image0 = {
+                     link: 'assets/images/stores/' + this.store.id + '/' + this.store.storeFrontImage,
+                     preview: 'assets/images/stores/' + this.store.id + '/' + this.store.storeFrontImage
+                  };
+                  images0.push(image0);
+                  this.picture0 = images0;
+
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
                      this.errors = res['MESSAGE.READ_FAILED'];

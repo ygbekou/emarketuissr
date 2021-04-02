@@ -24,6 +24,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Addresses', url: '/account/addresses', icon: 'location_on' },
+      { name: 'Deliveries', url: '/account/deliveries', icon: 'local_shipping' },
       { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' }
     ]
   },
@@ -59,6 +60,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
+      { name: 'Livraisons', url: '/account/deliveries', icon: 'local_shipping' },
       { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' }
     ]
   },

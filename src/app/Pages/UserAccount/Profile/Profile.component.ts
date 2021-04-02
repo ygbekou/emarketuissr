@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/Services/app.service';
-import { User } from 'src/app/app.models';
+import { User, StoreShipper } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,12 +11,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class ProfileComponent implements OnInit {
   user: User = new User();
   error: string;
-  iconSize = 'lg';
+  iconSize = 'lg'; 
   iconColor = '';
   constructor(public appService: AppService, public translate: TranslateService) { }
 
   ngOnInit() {
-    this.getUser(Number(this.appService.tokenStorage.getUserId()));
+    this.getUser(Number(this.appService.tokenStorage.getUserId())); 
   }
 
   getUser(userId: number) {
@@ -32,5 +32,5 @@ export class ProfileComponent implements OnInit {
       });
 
   }
-
+ 
 }

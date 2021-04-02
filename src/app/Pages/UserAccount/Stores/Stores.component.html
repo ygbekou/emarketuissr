@@ -40,15 +40,16 @@
         <div class="tile-footer">
           <div fxLayout="row wrap" class="col-gap">
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-              <button mat-raised-button color="accent" (click)="delete(store.id)">{{'COMMON.DELETE'|translate}}</button>
+              <!-- <button mat-raised-button color="accent" (click)="delete(store.id)">{{'COMMON.DELETE'|translate}}</button>
+            -->
             </div>
             <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
               <span class="pull-right">
-                <button mat-raised-button color="primary" *ngIf="!fromAdmin"
+                <button mat-raised-button color="accent" *ngIf="!fromAdmin"
                   [routerLink]="['/account/profile/edit']"
                   [queryParams]="{type:'store', sId:store.id}">{{'COMMON.EDIT'|translate}}</button>
 
-                <button mat-raised-button color="primary" *ngIf="fromAdmin"
+                <button mat-raised-button color="accent" *ngIf="fromAdmin"
                   [routerLink]="['/admin/customers/store/'+store.id]">{{'COMMON.EDIT'|translate}}</button>
               </span>
             </div>
