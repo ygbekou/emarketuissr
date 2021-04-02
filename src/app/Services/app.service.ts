@@ -333,7 +333,8 @@ export class AppService {
                'storeName': cartItem.storeName,
                'currencyCode': cartItem.currencyCode,
                'symbolLeft': cartItem.symbolLeft,
-               'symbolRight': cartItem.symbolRight
+               'symbolRight': cartItem.symbolRight,
+               'decimalPlace': cartItem.decimalPlace
             };
          }
 
@@ -967,6 +968,7 @@ export class AppService {
          .subscribe((data: Language[]) => {
             this.appInfoStorage.languages = data;
             let lang = navigator.language;
+
             if (lang) {
                lang = lang.substring(0, 2);
             }

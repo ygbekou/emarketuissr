@@ -21,6 +21,7 @@ export class AppInfoStorage {
   public activeStatuses: any = [];
   public USER_GROUPS: any = [];
   public language: Language;
+  public displayLang: string;
   public searchCategories: CategoryDescription[] = [];
   public storeCategories: StoreCategoryDesc[] = [];
   public selectedSearchCategory: CategoryDescription;

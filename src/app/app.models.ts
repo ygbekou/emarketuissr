@@ -473,7 +473,7 @@ export class CategoryDescription {
 export class Currency {
   id: number;
   code: string;
-  decimalPlace: number;
+  decimalPlace: number = 0;
   status: number;
   symbolLeft: string;
   symbolRight: string;
@@ -631,6 +631,10 @@ export class ZoneToGeoZone {
   store: Store;
   geoZone: GeoZone;
   country: Country;
+  deliveryTimeBegin: number;
+  deliveryTimeEnd: number;
+  deliveryTimeUnit: string;
+
   errors: string[];
   type = 'ZoneToGeoZone';
 }
@@ -769,6 +773,7 @@ export class Store extends BaseModel {
     this.aprvStatus = 0;
     this.onlineStore = 1;
     this.owner = new User();
+    this.currency = new Currency();
   }
 
 }
@@ -1172,6 +1177,7 @@ export class CartItem {
   currencyCode: string;
   symbolLeft: string;
   symbolRight: string;
+  decimalPlace: number;
   productDiscountQuantity: number;
   productDiscountPrice: number;
   productDiscountPercentage: number;
@@ -1205,6 +1211,7 @@ export class CartItem {
     this.currencyCode = p.product.currencyCode;
     this.symbolLeft = p.product.symbolLeft;
     this.symbolRight = p.product.symbolRight;
+    this.decimalPlace = p.product.currencyDecimalPlace;
     this.productDiscountQuantity = p.product.productDiscountQuantity;
     this.productDiscountPrice = p.product.productDiscountPrice;
     this.productDiscountId = p.product.productDiscountId;

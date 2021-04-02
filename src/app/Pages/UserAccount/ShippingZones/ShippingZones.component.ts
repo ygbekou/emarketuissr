@@ -13,7 +13,7 @@ import { AppService } from 'src/app/Services/app.service';
 })
 export class ShippingZonesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'description', 'shippingMode', 'flatRate', 'weightRate', 'weight'];
-  displayedColumns2: string[] = ['id', 'country', 'zone', 'actions'];
+  displayedColumns2: string[] = ['id', 'country', 'zone', 'deliveryTimeBegin', 'deliveryTimeEnd', 'deliveryTimeUnit', 'actions'];
   dataSource: MatTableDataSource<GeoZone>;
   zoneToGeoZoneDS: MatTableDataSource<ZoneToGeoZone>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -148,6 +148,13 @@ export class ShippingZonesComponent implements OnInit {
   saveZoneToGeoZone(zoneToGeoZone: ZoneToGeoZone) {
     this.messages = '';
     this.errors = '';
+
+    if (zoneToGeoZone.deliveryTimeBegin > zoneToGeoZone.deliveryTimeEnd) {
+      this.translate.get(['MESSAGE.INVALID_DELIVERY_TIME']).subscribe(res => {
+        this.errors = res['MESSAGE.INVALID_DELIVERY_TIME'];
+      });
+      return;
+    }
     console.log(zoneToGeoZone);
     if (zoneToGeoZone.country) {
       if (!zoneToGeoZone.zone || !zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {

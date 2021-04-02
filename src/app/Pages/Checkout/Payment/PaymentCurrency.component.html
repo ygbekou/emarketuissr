@@ -60,16 +60,27 @@
 
     <mat-card>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-          <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33" >
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
+            <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
+            <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <!-- <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
             <mat-radio-button  value="0">
               {{'COMMON.SHIP_TO_ME'|translate}}
             </mat-radio-button>
             <mat-radio-button  value="1">
               {{'COMMON.I_PICKUP'|translate}}
             </mat-radio-button> 
-          </mat-radio-group> 
+          </mat-radio-group>  -->
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
+            {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}} 
+            {{'COMMON.DELIVERY_FEE' | translate}} * {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}} 
+              {{generateDeliveryEstimationTimeMessage()}}
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
               routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
@@ -141,51 +152,68 @@
         <a [routerLink]="['/terms-conditions']">{{'COMMON.PLACE_YOUR_ORDER_NOTICE' | translate}} </a></div>
       <h6>{{'COMMON.ORDER_SUMMARY' | translate}} </h6>
       <div fxLayout="row wrap" fxLayoutAlign="none">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
           {{'COMMON.ITEMS' | translate}} ({{appService?.navbarCartCountMap[storeId]}}):</div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} {{appService?.navbarCartPriceMap[storeId]}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}</div>
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          {{appService?.navbarCartPriceMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+        </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-          {{'COMMON.SHIPPING_AND_HANDLING' | translate}}:</div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} {{appService?.navbarCartShippingMap[storeId]}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}</div>
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+          {{'COMMON.DELIVERY_FEE' | translate}}:</div>
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+        </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
           {{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
-          {{appService?.navbarCartTotalBeforeTaxMap[storeId]}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}</div>
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          {{appService?.navbarCartTotalBeforeTaxMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+        </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
           {{'COMMON.ESTIMATED_TAX' | translate}}:</div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
-          {{appService?.navbarCartEstimatedTaxMap[storeId]}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}</div>
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          {{appService?.navbarCartEstimatedTaxMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+        </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-          {{'COMMON.TOTAL' | translate}}:</div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} {{appService?.navbarCartTotalMap[storeId]}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}</div>
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+          {{'COMMON.TOTAL' | translate}}:
+        </div>
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          {{appService?.navbarCartTotalMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+        </div>
       </div>
 
       <br />
       <div fxLayout="row wrap" fxLayoutAlign="none">
-        <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+        <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
           <h6 style="color: #ff5722">{{'COMMON.ORDER_TOTAL' | translate}}:</h6>
         </div>
-        <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-          <h6 style="color: #ff5722">{{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
-            {{appService?.navbarCartTotalMap[storeId]}} {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
+        <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+          <h6 style="color: #ff5722">
+            {{appService?.navbarCartTotalMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
+              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
           </h6>
         </div>
       </div>
@@ -195,15 +223,20 @@
     <mat-card>
       <div fxLayout="row wrap" class="w-100">
         <mat-label> {{'COMMON.NOTE_FOR_STORE' | translate}}</mat-label>
-        <textarea matInput rows="5" cols="50" class="form-control" id="comments"
-            [(ngModel)]="order.comment" name="comments" #comments="ngModel"></textarea>
+        <textarea rows="5" cols="50" id="comments" appearance="outline"
+            [(ngModel)]="order.comment" name="comments" #comments="ngModel">
+        </textarea>
       </div>
+
+      <br/>
       
-      <div fxLayout="row wrap" class="w-100">
-        <mat-slide-toggle [(ngModel)]="shouldNotify" name="notify" #notify="ngModel" (change)="setDestMessage()">
-          {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
-        </mat-slide-toggle>
-        <mat-form-field class="w-100 mb-3" *ngIf="shouldNotify">
+      <div fxLayout="row wrap" class="w-100" style="align-content: center">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="generateMessage()"
+          type="button" style="width:50%; margin:0 auto;">
+          <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.GENERATE_MESSAGE' | translate}}</span>
+        </button>
+
+        <mat-form-field class="w-100 mb-3">
             <mat-label> {{'COMMON.PHONE' | translate}}(E.x. +22890......)</mat-label>
             <input matInput type="text" class="form-control" id="phone" [(ngModel)]="order.shippingCustomField"
               name="phone" #phone="ngModel" required>
@@ -211,9 +244,9 @@
       </div>
       <div fxLayout="row wrap" class="w-100">
         <mat-label> {{'COMMON.NOTE_FOR_DEST' | translate}}</mat-label>
-        <textarea matInput rows="5" cols="50" class="form-control" id="customField" [disabled]="!shouldNotify"
-            [(ngModel)]="order.customField" name="customField"
-            #customField="ngModel"></textarea>
+        <textarea rows="5" cols="50" id="customField" appearance="outline"
+            [(ngModel)]="order.customField" name="customField" #customField="ngModel">
+        </textarea>
       </div>
     </mat-card>
   </div>

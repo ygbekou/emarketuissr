@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule,
+   MatButtonToggleModule,
 	MatCardModule,
 	MatMenuModule,
 	MatToolbarModule,
@@ -48,6 +49,7 @@ import { PaymentDeliveryStepper } from './Payment/PaymentDeliveryStepper.compone
    imports: [
       CommonModule,
       MatButtonModule,
+      MatButtonToggleModule,
       FlexLayoutModule,
       MatCardModule,
       MatMenuModule,
