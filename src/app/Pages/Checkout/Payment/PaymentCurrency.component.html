@@ -75,12 +75,14 @@
             </mat-radio-button> 
           </mat-radio-group>  -->
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}} 
-            {{'COMMON.DELIVERY_FEE' | translate}} * {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}} 
-              {{generateDeliveryEstimationTimeMessage()}}
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" 
+                *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
+              {{'COMMON.ARRIVING' | translate}}
+            </div>
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" 
+                *ngIf="deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
+              {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}} {{generateDeliveryEstimationTimeMessage()}}
+            </div>
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
               routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
@@ -141,6 +143,7 @@
       <div fxLayout="row wrap">
         <mat-error *ngIf="error">{{error}}</mat-error>
       </div>
+     
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
         type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))

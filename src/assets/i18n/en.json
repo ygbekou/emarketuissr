@@ -675,7 +675,8 @@
 		"THANK_YOU": "Thank You",
 		"BOUGHT_FOR_PICKUP": "Bought for pickup",
 		"BOUGHT_FOR_DELIVERY": "Bought for delivery",
-		"DELIVERY_FEE": "Delivery Fee "
+		"DELIVERY_FEE": "Delivery Fee ",
+		"ARRIVING": "Arriving in "
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
