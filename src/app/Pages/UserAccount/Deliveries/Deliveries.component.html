@@ -1,0 +1,62 @@
+<mat-card>
+  <h1 style="color: #283593;">{{'COMMON.MY_DELIVERIES'|translate}}</h1>
+
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <button mat-flat-button style="width: 100%;" [color]="user.isShipper===1?'accent':'warning'"
+    (click)="changeStoreShip(1);">{{'COMMON.I_DELIVER'|translate}}</button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <button mat-flat-button style="width: 100%;" [color]="user.isShipper===0?'accent':'warning'"
+    (click)="changeStoreShip(0);">{{'COMMON.I_DONT_DELIVER'|translate}}</button>
+    </div>
+  </div> 
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeShippers && storeShippers.length>0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+      *ngFor="let storeShipper of storeShippers">
+      <div class="tile tile-primary">
+        <div class="tile-heading">{{storeShipper.store.name}}
+          <span class="pull-right">
+            <mat-slide-toggle [(ngModel)]="storeShipper.shipperStatus" class="my-2" name="shipperStatus"
+              #shipperStatus="ngModel" (change)="changeStoreShipper(storeShipper)">
+              <i *ngIf="storeShipper.shipperStatus===0" class="fa fa-spinner"></i>
+              <i *ngIf="storeShipper.shipperStatus===1" class="fa fa-check"></i>
+              {{storeShipper.shipperStatus===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}
+            </mat-slide-toggle>
+            <br />
+          </span>
+        </div>
+        <div class="tile-body">
+          <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+              <img height="100%" src="assets/images/stores/{{storeShipper.store.id}}/{{storeShipper.store.image}}">
+              <br />
+              <span class="pull-left">
+                <i *ngIf="storeShipper.storeStatus===0" class="fa fa-exclamation-circle"></i>
+                <i *ngIf="storeShipper.storeStatus===1" class="fa fa-check-circle"></i>
+                {{storeShipper.storeStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+              <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{storeShipper.store.phone}}</span><br />
+              <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{storeShipper.store.email}}</span><br />
+              <span class="pull-left" *ngIf="storeShipper.store.address"><i class="fa fa-map-marker fa-sm"></i>
+                {{storeShipper.store.address.city}}, {{storeShipper.store.address.country.name}}</span>
+              <div [innerHTML]="storeShipper.store?.description"></div>
+            </div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.DELIVERIES' | translate}} :
+                {{storeShipper.shipCount}}
+              </h4>
+            </div>
+          </div>
+
+        </div>
+        <div class="tile-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

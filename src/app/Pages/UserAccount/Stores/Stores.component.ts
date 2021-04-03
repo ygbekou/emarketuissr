@@ -32,12 +32,12 @@ export class StoresComponent implements OnInit {
   }
 
   public delete(cardId: number) {
-    this.appService.delete(cardId, 'com.softenza.emarket.model.Store')
+    /* this.appService.delete(cardId, 'com.softenza.emarket.model.Store')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           this.getStores();
         }
-      });
+      }); */
   }
 
   private getStores() {

@@ -5,6 +5,7 @@ import { NgAisModule } from 'angular-instantsearch';
 import {
   MatButtonModule,
   MatBadgeModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatMenuModule,
   MatToolbarModule,
@@ -63,6 +64,7 @@ import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 import { ProductsModule } from 'src/app/AdminPanel/Products/Products.module';
 import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
+import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 
 @NgModule({
   imports: [
@@ -107,6 +109,7 @@ import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component'
     ReportsModule,
     SalesModule,
     MatPaginatorModule,
+    MatButtonToggleModule,
     ProductsModule,
     QuillModule.forRoot({
       theme: 'snow',
@@ -149,7 +152,8 @@ import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component'
     OpenOrdersComponent,
     OrderCancelComponent,
     ReportsComponent,
-    ShippingZonesComponent
+    ShippingZonesComponent,
+    DeliveriesComponent
   ],
   exports: [
     CardsComponent,

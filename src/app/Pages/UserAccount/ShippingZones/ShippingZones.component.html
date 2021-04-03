@@ -123,19 +123,6 @@
             {{ 'COMMON.ENABLE' | translate }}
           </mat-slide-toggle>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
-              id="shipper" name="shipper" [(ngModel)]="geoZone.shipper" #shipper="ngModel">
-              <mat-option *ngFor="let cat of shippers" [value]="cat">
-                {{  cat.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <div fxLayout="row wrap">
 
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <button mat-stroked-button [color]="geoZone.shippingMode==0?'accent':'secondary'"
@@ -154,6 +141,22 @@
             {{'COMMON.RATE_SHOP' | translate }}
           </button>
         </div>
+
+       <!--  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field class="w-100 mb-3">
+            <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
+            <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
+              id="shipper" name="shipper" [(ngModel)]="geoZone.shipper" #shipper="ngModel">
+              <mat-option *ngFor="let cat of shippers" [value]="cat">
+                {{  cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+      </div>
+      <div fxLayout="row wrap">
+
+        
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" *ngIf="geoZone.shippingMode==0">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.FLAT_RATE' | translate}}
@@ -189,8 +192,6 @@
           </mat-form-field>
         </div>
       </div>
-
-
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
           <h4 color="primary">{{'COMMON.DELIVERY_HOURS'|translate}}</h4>

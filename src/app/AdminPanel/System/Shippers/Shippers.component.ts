@@ -12,7 +12,8 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./Shippers.component.scss']
 })
 export class ShippersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'phone', 'status', 'sortOrder'];
+  displayedColumns: string[] = ['id', 'name', 'phone',
+   'status','deliveryCount','rating', 'sortOrder'];
   dataSource: MatTableDataSource<Shipper>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

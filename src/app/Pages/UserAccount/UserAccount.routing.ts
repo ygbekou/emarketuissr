@@ -20,6 +20,7 @@ import { RoleGuardService } from 'src/app/Services/role-guard.service';
 import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
+import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -29,6 +30,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'profile',
             component: ProfileComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'deliveries',
+            component: DeliveriesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

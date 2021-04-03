@@ -65,15 +65,6 @@
             <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
             <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
           </mat-button-toggle-group>
-
-          <!-- <mat-radio-group [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
-            <mat-radio-button  value="0">
-              {{'COMMON.SHIP_TO_ME'|translate}}
-            </mat-radio-button>
-            <mat-radio-button  value="1">
-              {{'COMMON.I_PICKUP'|translate}}
-            </mat-radio-button> 
-          </mat-radio-group>  -->
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
             <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" 
                 *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">

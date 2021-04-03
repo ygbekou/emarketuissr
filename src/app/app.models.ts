@@ -107,6 +107,7 @@ export class User extends BaseModel {
   stripeCustomerId: string;
   fileNames: string[];
   language: Language;
+  isShipper: number;
   type = 'User';
 
   // transient
@@ -472,7 +473,7 @@ export class CategoryDescription {
 export class Currency {
   id: number;
   code: string;
-  decimalPlace: number = 0;
+  decimalPlace = 0;
   status: number;
   symbolLeft: string;
   symbolRight: string;
@@ -721,6 +722,7 @@ export class Store extends BaseModel {
   address: Address;
   email: string;
   image: string;
+  storeFrontImage: string;
   phone: string;
   status: number;
   aprvStatus: number;
@@ -1931,6 +1933,7 @@ export class Shipper {
   ratingCount: number;
   rating: number;
   deliveryCount: number;
+  user: User;
   url: number;
   type = 'Shipper';
 }
@@ -1946,4 +1949,14 @@ export class StoreCatVO {
   public id: number;
   public name: string;
   public count: number;
+}
+
+export class StoreShipper {
+  public id: number;
+  public shipper: Shipper;
+  public store: Store;
+  public shipperStatus: number;
+  public storeStatus: number;
+  public shipCount: number;
+  type = 'StoreShipper';
 }

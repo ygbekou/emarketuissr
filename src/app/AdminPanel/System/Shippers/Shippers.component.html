@@ -45,8 +45,21 @@
         <!-- Image Column -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
-          <td mat-cell *matCellDef="let shipper">  
-             {{shipper.status===1?('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}}
+          <td mat-cell *matCellDef="let shipper">
+            {{shipper.status===1?('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deliveryCount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERIES' | translate}} </th>
+          <td mat-cell *matCellDef="let shipper"> {{shipper.deliveryCount}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.RATING' | translate}} </th>
+          <td mat-cell *matCellDef="let shipper">
+            {{(shipper.ratingCount>0?shipper.rating/shipper.ratingCount:0)|number:'1.0-1'}}
           </td>
         </ng-container>
 
@@ -55,6 +68,8 @@
           <td mat-cell *matCellDef="let shipper"> {{shipper.sortOrder}}
           </td>
         </ng-container>
+
+
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let shipper; columns: displayedColumns;" (click)="edit(shipper)">
@@ -83,8 +98,8 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.PHONE' | translate}}
             </mat-label>
-            <input matInput type="text" placeholder ="+22890111213" class="form-control" id="phone" [(ngModel)]="shipper.phone" name="phone"
-              #phone="ngModel" required>
+            <input matInput type="text" placeholder="+22890111213" class="form-control" id="phone"
+              [(ngModel)]="shipper.phone" name="phone" #phone="ngModel" required>
             <mat-error *ngIf="ff.submitted && description.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
@@ -133,15 +148,15 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>URL
             </mat-label>
-            <input matInput type="text" class="form-control" id="url" [(ngModel)]="shipper.url"
-              name="url" #url="ngModel">
+            <input matInput type="text" class="form-control" id="url" [(ngModel)]="shipper.url" name="url"
+              #url="ngModel">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="shipper.ratingCount > 0">
-          {{'COMMON.REVIEW'|translate}}{{shipper.ratingCount > 0 ? 's ('+shipper.rating+'/5)' : ''}}
+          {{'COMMON.REVIEW'|translate}}{{shipper.ratingCount > 0 ? 's ('+(shipper.rating/shipper.ratingCount|number:'1.0-1')+'/5)' : ''}}
         </div>
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="shipper.deliveryCount>0">
-          {{'COMMON.SHIPPED'|translate}} : {{shipper.deliveryCount}}
+         {{shipper.deliveryCount}} {{'COMMON.DELIVERIES'|translate}}  
         </div>
       </div>
 
