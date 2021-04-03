@@ -1,15 +1,17 @@
-<mat-error severity="error">{{error}}</mat-error>
+<mat-error severity="error" *ngIf="!storeHoursMessage">{{error}}</mat-error>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
 
-      <mat-card *ngIf="showPreorder()">
+      <mat-card *ngIf="(storeHoursMessage || (store && store.presentPreorderScreen && store.presentPreorderScreen.name === 'ALWAYS'))">
         <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='1' && !storeOpen">
           <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
         </div>
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
             id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
-            {{'COMMON.SCHEDULE_FOR_LATER' | translate}}
+            
+            <h6 *ngIf="pickUp==='1'">{{'COMMON.CHOOSE_PICKUP_DATE'|translate}}</h6>
+        <h6 *ngIf="pickUp==='0'">{{'COMMON.CHOOSE_DELIVERY_DATE'|translate}}</h6>
           </mat-checkbox>
         </div>
         <div fxLayout="row wrap" *ngIf="scheduleForLater">
@@ -42,18 +44,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div> 
-          <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngIf="none">
-            <mat-form-field class="w-90">
-              <mat-select placeholder="{{'COMMON.TIME_PERIOD' | translate}}" id="timePrds" 
-                 (selectionChange)="timePeriodSelectionChange($event)" name="timePrds"
-               [(ngModel)]="order.preorderTimePeriod" #timePrds="ngModel" required>
-                <mat-option *ngFor="let timePeriod of timePeriods" [value]="timePeriod">
-                  {{timePeriod.description}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>  -->
+          </div>  
         </div> 
       
     </mat-card>
@@ -127,16 +118,16 @@
       </div>
     </mat-card>
 
-    <embryo-Cart [pickUp] ="pickUp" (placeYourOrderEvent)="placeYourOrder()" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
+    <embryo-Cart  [purchasePossible]="purchasePossible"  [pickUp] ="pickUp" (placeYourOrderEvent)="placeYourOrder()" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
   </div>
   <div fxFlex.xs="0" fxFlex.sm="0" fxHide.xs="true" fxHide.sm="true" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <mat-card>
       <div fxLayout="row wrap">
-        <mat-error *ngIf="error">{{error}}</mat-error>
+        <mat-error *ngIf="error && !storeHoursMessage">{{error}}</mat-error>
       </div>
      
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
-        type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
+        type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || !purchasePossible ||
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
         || appService.navbarCartStoreAllowOrderMap[storeId]">
         <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>

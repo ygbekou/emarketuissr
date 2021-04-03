@@ -6,6 +6,8 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "CHOOSE_DELIVERY_DATE":"Quand voudriez-vous la livraison?",
+    "CHOOSE_PICKUP_DATE":"Quand allez-vous passer chercher?",
     "START":"Début",
     "I_DELIVER":"Je delivre",
 		"I_DONT_DELIVER":"Je ne delivre pas",
@@ -765,7 +767,10 @@
     "NO_DELIVERY_PERIOD": "{{store_name}} ne livre pas en ce moment.  La livraison reprend demain de {{open_time}} a {{close_time}}. ",
     "NO_DELIVERY_PERIOD1": "{{store_name}} ne livre pas en ce moment.  La livraison reprend aujourd'hui de {{open_time}} a {{close_time}}. ",
 	  "NO_DELIVERY_PERIOD2": "{{store_name}} ne livre pas en ce moment.  La livraison reprend {{day}} de {{open_time}} a {{close_time}}. ",
-		"INVALID_DELIVERY_TIME": "Le délai de livraison de d�but ne peut pas etre supérieur au délai de livraison de fin"
+		"INVALID_DELIVERY_TIME": "Le délai de livraison de d�but ne peut pas etre supérieur au délai de livraison de fin",
+ 		"CHOOSE_LATER_DELIVERY_DATE": "Nous ne livrons pas en ce moment. Choisissez la date/heure de livraison",
+		"CHOOSE_LATER_PICKUP_DATE": "La boutique est fermée en ce moment. Choisissez la date/heure a laquelle vous passez prendre"
+
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

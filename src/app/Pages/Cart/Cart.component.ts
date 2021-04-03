@@ -23,6 +23,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
    popupResponse: any;
    @Input()
    storeId: number;
+    @Input() purchasePossible : boolean;
    @Input()
    pickUp;
    @Output()
