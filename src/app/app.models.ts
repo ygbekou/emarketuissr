@@ -473,7 +473,7 @@ export class CategoryDescription {
 export class Currency {
   id: number;
   code: string;
-  decimalPlace: number = 0;
+  decimalPlace = 0;
   status: number;
   symbolLeft: string;
   symbolRight: string;

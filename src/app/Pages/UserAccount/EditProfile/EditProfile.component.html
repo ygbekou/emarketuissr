@@ -81,11 +81,11 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
-          <br />
+          <!-- <br />
           <mat-slide-toggle [(ngModel)]="user.isShipper" (change)="changeStoreShipper(user)" name="isShipper"
             #isShipper="ngModel" class="my-2">
             {{ 'COMMON.I_SHIPPER' | translate }}
-          </mat-slide-toggle>
+          </mat-slide-toggle> -->
 
         </div>
       </div>
@@ -751,12 +751,12 @@
                   {{storeShipper.shipperStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
                 <!-- <div [innerHTML]="storeShipper.shipper?.description"></div> -->
                 <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.DELIVERIES' | translate}} :
-                  {{storeShipper.shipCount}}
+                  {{storeShipper.shipper.deliveryCount}}
                 </h4>
 
                 <h6 class="text-muted text-left fw-600 mb-3">{{'COMMON.RATING' | translate}} :
                   {{storeShipper.shipper.ratingCount}}
-                  {{'COMMON.REVIEW'|translate}}{{storeShipper.shipper.ratingCount > 0 ? 's ('+storeShipper.shipper.rating+'/5)' : ''}}
+                  {{'COMMON.REVIEW'|translate}}{{storeShipper.shipper.ratingCount > 0 ? 's ('+(storeShipper.shipper.rating/storeShipper.shipper.ratingCount |number:'1.0-1')+'/5)' : ''}}
                 </h6>
 
               </div>

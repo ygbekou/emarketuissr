@@ -9,6 +9,8 @@
 		"NONE": "None",
 		"HOUR": "Hour",
 		"RUN":"Run",
+		"I_DELIVER":"I deliver",
+		"I_DONT_DELIVER":"I don't deliver",
 		"DELIVERIES": "Deliveries",
 		"MY_DELIVERIES":"My deliveries",
 		"STORE_FRONT_IMG":"Store front image",

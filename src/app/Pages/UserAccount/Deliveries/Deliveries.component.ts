@@ -38,6 +38,7 @@ export class DeliveriesComponent implements OnInit {
 
   getStoreShippers(userId: number) {
     if (userId > 0) {
+      this.storeShippers = [];
       const parameters: string[] = [];
       parameters.push('e.shipper.user.id = |userId|' + userId + '|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.StoreShipper', parameters)
@@ -49,6 +50,27 @@ export class DeliveriesComponent implements OnInit {
           () => console.log('Get all StoreShipper complete for userId=' + userId));
     }
   }
+
+  changeStoreShip(val: number) {
+    this.user.isShipper = val;
+    this.appService.saveWithUrl('/service/user/user/changeShipperSettings', this.user)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.getStoreShippers(this.user.id);
+        if (data.result === 'SUCCESS') {
+          this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+            this.messages = res['MESSAGE.SAVE_SUCCESS'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.SAVE_UNSUCCESS'] + ' : ' + data.result;
+          });
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all changeStoreShipper complete'));
+  }
+
   changeStoreShipper(storeShipper: StoreShipper) {
     storeShipper.shipperStatus = (storeShipper.shipperStatus == null
       || storeShipper.shipperStatus.toString() === 'false'

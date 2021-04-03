@@ -5,6 +5,7 @@ import { NgAisModule } from 'angular-instantsearch';
 import {
   MatButtonModule,
   MatBadgeModule,
+  MatButtonToggleModule,
   MatCardModule,
   MatMenuModule,
   MatToolbarModule,
@@ -108,6 +109,7 @@ import { DeliveriesComponent } from './Deliveries/Deliveries.component';
     ReportsModule,
     SalesModule,
     MatPaginatorModule,
+    MatButtonToggleModule,
     ProductsModule,
     QuillModule.forRoot({
       theme: 'snow',

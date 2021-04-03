@@ -1,5 +1,16 @@
 <mat-card>
-  <h1 style="color: #283593;" *ngIf="storeShippers && storeShippers.length>0">{{'COMMON.MY_DELIVERIES'|translate}}</h1>
+  <h1 style="color: #283593;">{{'COMMON.MY_DELIVERIES'|translate}}</h1>
+
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <button mat-flat-button style="width: 100%;" [color]="user.isShipper===1?'accent':'warning'"
+    (click)="changeStoreShip(1);">{{'COMMON.I_DELIVER'|translate}}</button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <button mat-flat-button style="width: 100%;" [color]="user.isShipper===0?'accent':'warning'"
+    (click)="changeStoreShip(0);">{{'COMMON.I_DONT_DELIVER'|translate}}</button>
+    </div>
+  </div> 
   <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeShippers && storeShippers.length>0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
       *ngFor="let storeShipper of storeShippers">
