@@ -5,53 +5,35 @@
                 <div class="py-5 content border-lighter">
                     <div fxLayout="row wrap" fxLayoutAlign="space-between">
                         <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45">
-                            <a [routerLink]="['/']" style="padding-right: 20px; padding-bottom: 0px; padding-left: 0px;"> 
-                                <img src="assets/images/company/logo.png" width="224" height="34"
-                                    alt=""> </a>
-                          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1"></p>
+                            <a [routerLink]="['/']"
+                                style="padding-right: 20px; padding-bottom: 0px; padding-left: 0px;">
+                                <img src="assets/images/company/logo.png" width="224" height="34" alt=""> </a>
+                            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1"></p>
                             <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
                                 <mat-icon color="accent">mail_outline</mat-icon>
                                 <span class="mx-2">{{appService.appInfoStorage.company.email}}</span>
                             </p>
-                            <p fxLayout="row" fxLayoutAlign="start center  text-left" class="mt-2"
-                                *ngFor="let loc of locations">
-                                <a mat-button (click)="location=loc" color="accent" class="w-100 text-left"
-                                    *ngIf="location.name!==loc.name" style="text-align: left;;padding: 0px;">
-                                    <mat-icon color="accent">location_on</mat-icon>
-                                    {{loc.name}}
-                                </a>
-                                <a mat-button (click)="location=loc" color="primary" class="w-100 text-left"
-                                    *ngIf="location.name===loc.name" style="text-align: left;;padding: 0px;">
-                                    <mat-icon color="accent">location_on</mat-icon>
-                                    {{loc.name}}
+                            <p fxLayout="row" fxLayoutAlign="start center  text-left" 
+                                class="mt-2" *ngFor="let loc of locations">
+                                <a mat-button color="accent" class="w-100 text-left"
+                                    style="text-align: left;padding: 0px;">
+                                    <mat-icon color="accent">call</mat-icon>
+                                    {{loc.name}} ({{location.telephone}})
                                 </a>
                             </p>
                         </div>
-                        <div fxFlex="100" fxFlex.gt-sm="15" fxFlex.sm="45" ngClass.xs="pt-5">
-                            <a mat-button color="accent" class="w-100 uppercase" style="text-align: left;padding: 0px;">
-                                <mat-icon color="accent">location_on</mat-icon>
-                                {{location.name}}
-                            </a>
-                            <div style="text-align: left; align-content: left;" [innerHTML]="location.address"></div>
-                            <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-                                <mat-icon color="accent">call</mat-icon>
-                                <span class="mx-2">{{location.telephone}}</span>
-                            </p>
-                        </div>
-
-                        <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="45" ngClass.xs="pt-5"
+                        <div fxFlex="100" fxFlex.gt-sm="18" fxFlex.sm="45" ngClass.xs="pt-5"
                             *ngFor="let item of mainMenus">
                             <a mat-button color="accent" class="w-100 text-left"
                                 style="text-align: left;text-transform: uppercase;"> {{item.name | translate}}
                             </a>
-                            <span *ngFor="let subChild of item.children">
-                                <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+                            <span *ngFor="let subChild of item.children"> 
                                     <a mat-button [routerLink]="['/'+subChild.state]"
                                         routerLinkActive="horizontal-active-link"
                                         [routerLinkActiveOptions]="{exact:true}">
                                         <span>{{subChild.name | translate}}</span>
                                     </a>
-                                </p>
+                                 
                             </span>
                         </div>
 

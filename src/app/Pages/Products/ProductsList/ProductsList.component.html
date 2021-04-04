@@ -1,6 +1,25 @@
 <app-store-header *ngIf="store.id > 0" [store]="store">
-</app-store-header> 
+</app-store-header>
 <div class="container">
+  <div fxLayout="row wrap" class="col-gap" *ngIf="stores && stores.length>1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <ngx-slick-carousel class="carousel" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let astore of stores">
+          <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id; getData()" >
+            <mat-card-content>
+              <a href="javascript:void(0)">
+              <img src="assets/images/stores/{{astore.id}}/{{astore.image}}">
+              </a>
+              <div class="myOverlay">
+                {{astore.address.city +', '+astore.address.country.name}}
+              </div>
+            </mat-card-content>
+          </mat-card> 
+        </div>
+      </ngx-slick-carousel>
+    </div>
+    <br />
+  </div>
   <div fxLayout="row wrap" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
       <div class="mat-card mb-4">
@@ -62,7 +81,7 @@
             <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
               <!-- <span *ngIf="isHomePage"> -->
               <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-               {{'COMMON.SHOW'|translate}}   {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+                {{'COMMON.SHOW'|translate}} {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
               </a>
               <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
                 <span (mouseleave)="countsMenuTrigger.closeMenu()">
@@ -121,5 +140,3 @@
 <div class="container">
   <app-Reviews *ngIf="store.id > 0" [reviewType]="'store'" [details]="store"></app-Reviews>
 </div>
-
- 
