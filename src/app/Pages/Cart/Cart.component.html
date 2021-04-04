@@ -127,7 +127,7 @@
           </div>
         </div>
         <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-            [disabled]="(appService.hasOrderSucceedMap[storeId] === true || !purchasePossible || 
+            [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
         || appService.navbarCartStoreAllowOrderMap[storeId]" (click)="placeYourOrder()" type="button"
             style="width:100%;">
