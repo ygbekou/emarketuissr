@@ -3,25 +3,26 @@
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
 
       <mat-card *ngIf="(storeHoursMessage || (store && store.presentPreorderScreen && store.presentPreorderScreen.name === 'ALWAYS'))">
-        <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='1' && !storeOpen">
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
         </div>
-        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+        <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="store && store.presentPreorderScreen.name !== 'NEVER'">
           <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
             id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
             
             <h6 *ngIf="pickUp==='1'">{{'COMMON.CHOOSE_PICKUP_DATE'|translate}}</h6>
-        <h6 *ngIf="pickUp==='0'">{{'COMMON.CHOOSE_DELIVERY_DATE'|translate}}</h6>
+            <h6 *ngIf="pickUp==='0'">{{'COMMON.CHOOSE_DELIVERY_DATE'|translate}}</h6>
           </mat-checkbox>
         </div>
         <div fxLayout="row wrap" *ngIf="scheduleForLater">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
             <mat-form-field class="w-90">
               <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate" [min]="nextOpenDateTime" [max]="maxScheduleDate"
+              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate" 
+                [min]="nextOpenDateTime" [max]="maxScheduleDate" (dateInput)="getHours($event.value)"
                 class="form-control" id="pickupDatetime" name="pickupDatetime" required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker #picker ></mat-datepicker>
             </mat-form-field>
           </div>  
         
@@ -127,7 +128,7 @@
       </div>
      
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
-        type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || !purchasePossible ||
+        type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true ||
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
         || appService.navbarCartStoreAllowOrderMap[storeId]">
         <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
