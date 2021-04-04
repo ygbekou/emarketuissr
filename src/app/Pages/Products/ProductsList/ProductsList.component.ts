@@ -25,7 +25,7 @@ export class ProductsListComponent implements OnInit {
    dataSource: MatTableDataSource<ProductDescVO>;
    public viewType = 'grid';
    public viewCol = 33.3;
-   public count = 6;
+   public count = 48;
    public searchFields: any;
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
@@ -42,7 +42,7 @@ export class ProductsListComponent implements OnInit {
    catDesc: CategoryDescription = new CategoryDescription();
    // slideConfig: any;
    height = { 'height': '70px' };
-   public counts = [2, 3, 6, 12, 24, 36];
+   public counts = [12, 24, 36, 48, 96];
    dummyCat = '';
    popupResponse: any;
 

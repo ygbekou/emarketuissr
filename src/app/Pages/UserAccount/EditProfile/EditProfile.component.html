@@ -399,7 +399,7 @@
     <div fxLayout="row wrap" class="col-gap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <div class="example-container">
-          <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_FRONT_IMG' | translate}} (1920x700)</h4>
+          <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_FRONT_IMG' | translate}}</h4>
           <input-file [(ngModel)]="picture0" name="gallery0" #gallery0="ngModel" fileLimit="1" fileAccept="image/*"
             [linkEnabled]="true">
           </input-file>
@@ -483,7 +483,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
           <br />
           <mat-form-field class="w-50 mb-3">
             <mat-label> {{'COMMON.STORE_CODE' | translate}}
