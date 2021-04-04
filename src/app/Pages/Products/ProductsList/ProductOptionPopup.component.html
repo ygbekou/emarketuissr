@@ -1,140 +1,145 @@
-<ng-container style="width: 100%">
-
-  <h2 mat-dialog-title>{{productDesc?.name}}</h2>
+<ng-container>
+  <h1 mat-dialog-title class="primary-color">{{productDesc?.name}}</h1>
   <mat-dialog-content class="mat-typography">
-    <img mat-card-image height="300"
-        [src]="'assets/images/products/'+(productDesc.product?.image?(productDesc.product.id+'/'+productDesc.product?.image):'default.png')" alt=mage>
-  
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <img mat-card-image 
+          [src]="'assets/images/products/'+(productDesc.product?.image?(productDesc.product.id+'/'+productDesc.product?.image):'default.png')"
+          alt="Image">
+      </div>
 
-  <div fxLayout="row wrap">
-    <font style="font-weight: bold; font-size: 15px;">
-      {{productDesc?.name}}
-    </font>
-  </div>
-  <br/>
-  <div *ngFor="let povo of productDesc?.povos; let i = index;">
-
-    <div *ngIf="povo.optionType == 'Radio'">
-      <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></label>
-      
-      <div fxLayout="row wrap">
-        <mat-radio-group class="w-100">
-            <div *ngFor="let prdOptionValue of povo.povs" style="width: 500px; height: 50px;">
-              <mat-radio-button class="w-100" 
-                  [value]="prdOptionValue.id" (click)="radioButtonChange($event, povo, prdOptionValue);">
-                    <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div *ngFor="let povo of productDesc?.povos; let i = index;">
+          <div *ngIf="povo.optionType == 'Radio'">
+            <label style="font-weight: bold;"> 
+              <h1 class="primary-color">{{povo.name}} {{povo.required === 1?'*':''}} </h1>
+               </label>
+            <div fxLayout="row wrap">
+              <mat-radio-group class="w-100">
+                <div *ngFor="let prdOptionValue of povo.povs" style="width: 500px; height: 50px;">
+                  <mat-radio-button class="w-100" [value]="prdOptionValue.id"
+                    (click)="radioButtonChange($event, povo, prdOptionValue);">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                       {{prdOptionValue.name}}
+
+                      <font color="red" *ngIf="prdOptionValue.price > 0"><strong>
+                          ({{prdOptionValue.pricePrefix}}
+                          {{productDesc.product.symbolLeft}}
+                          {{prdOptionValue.price}}
+                          {{productDesc.product.symbolRight}})
+
+                        </strong></font>
                     </div>
-              </mat-radio-button>
-              <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="prdOptionValue.price > 0">
-                ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}}) 
+                  </mat-radio-button>
+                </div>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div *ngIf="povo.optionType == 'Text'">
+            <div *ngFor="let prdOptionValue of povo.povs">
+              <div fxLayout="row wrap">
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label> <h1 class="primary-color">{{povo.name}} {{povo.required === 1?'*':''}} </h1> </mat-label>
+                  <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption"
+                    [(ngModel)]="prdOptionValue.value">
+                </mat-form-field>
+                <span style="width:10px;"></span>
               </div>
             </div>
-        </mat-radio-group>
-      </div>
-    </div>
+          </div>
 
-    <div *ngIf="povo.optionType == 'Text'">
-      <div *ngFor="let prdOptionValue of povo.povs">
-        <div fxLayout="row wrap">
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{povo.name}}<span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-            <input matInput type="text" class="form-control" id="model" name="prdOptionValue.textOption" 
-              [(ngModel)]="prdOptionValue.value">
-          </mat-form-field>
-          <span style="width:10px;"></span>
+          <div *ngIf="povo.optionType == 'Textarea'">
+            <div *ngFor="let prdOptionValue of povo.povs">
+              <div fxLayout="row wrap">
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label> <h1 class="primary-color">{{povo.name}} {{povo.required === 1?'*':''}} </h1> </mat-label>
+                  <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea"
+                    [(ngModel)]="prdOptionValue.value"></textarea>
+                </mat-form-field>
+                <span style="width:10px;"></span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="povo.optionType == 'Checkbox'">
+            <label style="font-weight: bold;"><h1 class="primary-color">{{povo.name}}  {{povo.required === 1?'*':''}} </h1>  </label>
+            <div fxLayout="row wrap">
+              <div class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
+                <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" id="{{prdOptionValue.name}}"
+                  name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
+                  {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}}
+                  {{prdOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="povo.optionType == 'Date'">
+            <div *ngFor="let prdOptionValue of povo.povs">
+              <div fxLayout="row wrap">
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label> {{prdOptionValue.name}} <span style="color:red" *ngIf="povo.required === 1">*</span>
+                  </mat-label>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value" class="form-control"
+                    id="value" name="value">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <span style="width:10px;"></span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="povo.optionType == 'Select'">
+            <div fxLayout="row wrap">
+              <mat-form-field class="w-100 mb-3">
+                <mat-label><h1 class="primary-color">{{povo.name}} {{povo.required === 1?'*':''}} </h1> </mat-label>
+                <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
+                  <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
+                    (click)="singleSelectionChange($event, povo, prdOptionValue)">
+                    {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span style="width:10px;"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <div *ngIf="povo.optionType == 'Textarea'">
-      <div *ngFor="let prdOptionValue of povo.povs">
-        <div fxLayout="row wrap">
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{povo.name}}<span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-            <textarea matInput rows="5" cols="25" name="prdOptionValue.textArea" [(ngModel)]="prdOptionValue.value"></textarea>
-          </mat-form-field>
-          <span style="width:10px;"></span>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="povo.optionType == 'Checkbox'">
-      <label style="font-weight: bold;">{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></label>
-      <div fxLayout="row wrap">
-        <div  class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
-          <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" 
-          id="{{prdOptionValue.name}}" name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
-            {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
-          </mat-checkbox>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="povo.optionType == 'Date'">
-      <div *ngFor="let prdOptionValue of povo.povs">
-        <div fxLayout="row wrap">
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{prdOptionValue.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="prdOptionValue.value"
-              class="form-control" id="value" name="value">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <span style="width:10px;"></span>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="povo.optionType == 'Select'">
-      <div fxLayout="row wrap">
-        
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{povo.name}} <span style="color:red" *ngIf="povo.required === 1">*</span></mat-label>
-          <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
-            <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
-              (click)="singleSelectionChange($event, povo, prdOptionValue)" >
-              {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <span style="width:10px;"></span>
-      </div>
-    </div>
-
-  </div>
-
   </mat-dialog-content>
   <mat-dialog-actions style="min-height: 80px;">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <h6 class="accent-color"
           *ngIf="productDesc.product.productDiscountPercentage === undefined || productDesc.product.productDiscountPercentage <= 0">
-          {{productDesc.product.symbolLeft}} {{productDesc.quantity * productDesc.product?.totalPrice}} {{productDesc.product.symbolRight}}
+          <strong> {{productDesc.product.symbolLeft}} {{productDesc.quantity * productDesc.product?.totalPrice}}
+            {{productDesc.product.symbolRight}}</strong>
         </h6>
       </div>
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <button mat (click)="productDesc.quantity = productDesc.quantity - 1" [disabled]="productDesc.quantity === 1"><i class="material-icons"> remove
-              </i></button>
-        <mat-form-field   class="w-15" style="width: 60px !important;">
-          <input matInput type="text" class="form-control" id="qty" [(ngModel)]="productDesc.quantity" name="qty" style="text-align: center" required>
+        <button mat (click)="productDesc.quantity = productDesc.quantity - 1" [disabled]="productDesc.quantity === 1"><i
+            class="material-icons"> remove
+          </i></button>
+        <mat-form-field class="w-15" style="width: 60px !important;">
+          <input matInput type="text" class="form-control" id="qty" [(ngModel)]="productDesc.quantity" name="qty"
+            style="text-align: center" required>
         </mat-form-field>
-       <button mat (click)="productDesc.quantity = productDesc.quantity + 1"><i class="material-icons"> add_box
-              </i></button>
+        <button mat (click)="productDesc.quantity = productDesc.quantity + 1"><i class="material-icons"> add_box
+          </i></button>
       </div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-dialog-close>{{'COMMON.CANCEL'|translate}}</button>
       </div>
-      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"  style="align-items: right">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" style="align-items: right">
         <mat-error *ngIf="error" severity="error">
-            {{ error }}
+          {{ error }}
         </mat-error>
-        <button (click)="shouldClose()" mat-raised-button color="accent" class="w-50" cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
+        <button (click)="shouldClose()" mat-raised-button color="accent" class="w-50"
+          cdkFocusInitial>{{'COMMON.ADD_TO_CART'|translate}}</button>
       </div>
     </div>
   </mat-dialog-actions>
-
-  
 </ng-container>

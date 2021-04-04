@@ -52,6 +52,7 @@ export class ClientDashboardComponent implements OnInit {
       searchCriteria.storeId = this.storeId;
       searchCriteria.miscNum1 = Number(this.appService.tokenStorage.getUserId());
       searchCriteria.langId = this.appService.appInfoStorage.language.id;
+      console.log(searchCriteria);
       this.appService.saveWithUrl('/service/catalog/getDashboard', searchCriteria)
          .subscribe((data: any[]) => {
             this.dashboard = data[0];

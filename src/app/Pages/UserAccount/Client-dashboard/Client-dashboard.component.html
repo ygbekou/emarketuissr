@@ -22,13 +22,9 @@
           </div>
           <div class="tile-body">
             <i class="fa fa-credit-card"></i>
-            <h2 class="pull-right">{{(dashboard.onlineSales?dashboard.onlineSales:0)|number:'1.0-0'}}</h2>
+            <h4 class="pull-right">{{(dashboard.onlineSales?dashboard.onlineSales:0)|number:'1.0-0'}}</h4>
           </div>
-          <div class="tile-footer">
-            <!--           <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
 
@@ -45,11 +41,7 @@
             <i class="fa fa-shopping-cart"></i>
             <h2 class="pull-right">{{(dashboard.onlineOrders?dashboard.onlineOrders:0)|number:'1.0-0'}}</h2>
           </div>
-          <div class="tile-footer">
-            <!--            <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
@@ -64,11 +56,7 @@
             <i class="fa fa-cart-plus"></i>
             <h2 class="pull-right">{{(dashboard.onlineUnits?dashboard.onlineUnits:0)|number:'1.0-0'}}</h2>
           </div>
-          <div class="tile-footer">
-            <!--             <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
 
@@ -90,11 +78,7 @@
             <i class="fa fa-credit-card"></i>
             <h2 class="pull-right">{{ (dashboard.storeSales?dashboard.storeSales:0)|number:'1.0-0'}}</h2>
           </div>
-          <div class="tile-footer">
-            <!--            <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
@@ -109,11 +93,7 @@
             <i class="fa fa-shopping-cart"></i>
             <h2 class="pull-right">{{(dashboard.storeOrders?dashboard.storeOrders:0)|number:'1.0-0'}}</h2>
           </div>
-          <div class="tile-footer">
-            <!--            <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
 
@@ -129,11 +109,7 @@
             <i class="fa fa-cart-plus"></i>
             <h2 class="pull-right">{{(dashboard.storeUnits?dashboard.storeUnits:0)|number:'1.0-0'}}</h2>
           </div>
-          <div class="tile-footer">
-            <!--             <a
-              [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
- -->
-          </div>
+          <div class="tile-footer"> </div>
         </div>
       </div>
     </div>
@@ -168,7 +144,6 @@
           <div class="buttongroup mt-3 mb-3 text-right" *ngIf="ordersVO">
             <button class="mb-2 mr-2" (click)="filterOnlineOrder('')" mat-stroked-button color="primary">
               {{'COMMON.ALL'|translate}} ({{ ordersVO.online.length}})</button>
-      
             <button *ngFor="let mapEntry of ordersVO.onlineStatus | keyvalue" class="mb-2 mr-2"
               (click)="filterOnlineOrder(mapEntry.key)" mat-stroked-button color="primary">
               {{mapEntry.key}} ({{mapEntry.value}})</button>
@@ -236,14 +211,13 @@
       </div>
     </mat-tab>
     <mat-tab label="{{'COMMON.STORE_ORDERS' | translate}}">
-            <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
         <div class="card-content">
           <div class="buttongroup mt-3 mb-3 text-right" *ngIf="ordersVO">
-             <button   class="mb-2 mr-2" 
-              (click)="filterStoreOrder('')" mat-stroked-button color="primary">
+            <button class="mb-2 mr-2" (click)="filterStoreOrder('')" mat-stroked-button color="primary">
               {{'COMMON.ALL'|translate}} ({{ ordersVO.store.length}})</button>
 
-            <button *ngFor="let mapEntry of ordersVO.storeStatus | keyvalue" class="mb-2 mr-2" 
+            <button *ngFor="let mapEntry of ordersVO.storeStatus | keyvalue" class="mb-2 mr-2"
               (click)="filterStoreOrder(mapEntry.key)" mat-stroked-button color="primary">
               {{mapEntry.key}} ({{mapEntry.value}})</button>
           </div>

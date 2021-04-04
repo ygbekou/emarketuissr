@@ -54,7 +54,7 @@ export class FooterComponent implements OnInit {
                                     if (menu.children && menu.children.length > 0) {
                                         menu.children.forEach(sub => {
 
-                                            if (++i < 4) {
+                                            if (++i < 5) {
                                                 this.mainMenus.push(sub);
                                             }
                                         })

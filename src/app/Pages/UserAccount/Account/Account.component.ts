@@ -79,7 +79,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
       { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Historique des ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
+      { name: 'Historique ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
       { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' },
       { name: 'Zones d\'expedition', url: '/account/shipping-zones', icon: 'local_shipping' },

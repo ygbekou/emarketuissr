@@ -321,6 +321,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.quantity = 0;
     this.productStore.maxQty = 0;
     this.productStore.sortOrder = 0;
+    this.productStore.availableOnline = 1;
     this.productStore.price = this.productDesc.product.price ?
       this.productDesc.product.price : 0;
     this.productStore.vipPrice = this.productDesc.product.price ?
@@ -344,6 +345,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.productStore.maxQty = 0;
     this.productStore.quantity = 0;
     this.productStore.sortOrder = 0;
+    this.productStore.availableOnline = 1;
     this.productStore.price = this.productDesc.product.price ?
       this.productDesc.product.price : 0;
     this.productStore.vipPrice = this.productDesc.product.price ?
@@ -389,6 +391,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.errors = '';
     this.productStore.product = this.productDesc.product;
     this.productStore.store = this.selectedStore;
+    this.productStore.availableOnline = 1;
     this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.productStore.status = (this.productStore.status == null
       || this.productStore.status.toString() === 'false'

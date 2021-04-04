@@ -22,7 +22,7 @@
 					<ul class="sub-menu" *ngIf="child.children && child.children.length >0" >
 						<li *ngFor="let subChild of child.children"  >
 							<a *ngIf="subChild.type == 'queryParams'" class="nav-link" (click)="redirectTo(subChild)">
-								<mat-icon>chevron_right</mat-icon>
+								<!-- <mat-icon>chevron_right</mat-icon> -->
 								{{subChild.name | translate}}
 							</a>
 							<a *ngIf="subChild.type == 'link'" class="nav-link" [routerLink]="['/'+subChild.state]">

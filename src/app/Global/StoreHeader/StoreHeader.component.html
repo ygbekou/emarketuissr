@@ -1,5 +1,4 @@
-<div class="store-header-bar"
-  [style.background-image]="backgroundImg">
+<div class="store-header-bar" [style.background-image]="backgroundImg">
   <div class="container">
     <div fxLayout="row wrap" class="col-gap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
@@ -11,8 +10,8 @@
           {{store.address?('| '+store.address.city+', '+store.address.country.name):''}}
           {{store.phone? ('| '+ ('COMMON.PHONE'|translate) +': '+ store.phone):'' }} |
           <a [routerLink]="['/products']" fragment="reviews" class="a-link-normal">
-            {{store.reviews.length}}
-            {{'COMMON.REVIEW'|translate}}{{store.reviews.length > 0 ? 's ('+store.ratingAverage+'/5)' : ''}}
+            {{store.reviews?store.reviews.length:0}}
+            {{'COMMON.REVIEW'|translate}}{{(store.reviews&&store.reviews.length > 0) ? 's ('+store.ratingAverage+'/5)' : ''}}
           </a>
         </h6>
       </div>

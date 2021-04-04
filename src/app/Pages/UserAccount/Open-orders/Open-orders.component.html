@@ -17,17 +17,17 @@
               <div class="tile-heading">
                 <div fxLayout="row wrap" class="col-gap">
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    {{'COMMON.ORDER_PLACED'|translate}} <br />
+                    {{'COMMON.ORDER_PLACED'|translate}}: <br />
                     {{order.createDate | date: 'mediumDate'}}
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    TOTAL<br />
+                    TOTAL:<br />
                     {{order.symbolLeft}}
                     {{ order.total  | number:'1.0-2'}}
                     {{order.symbolRight}}
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    {{'COMMON.SHIP_TO'|translate}}<br />
+                    {{'COMMON.SHIP_TO'|translate}}:<br />
                     {{order.cFirstName +' '+ order.cLastName}}
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
@@ -40,7 +40,22 @@
               </div>
               <div class="tile-body">
                 <div fxLayout="row wrap" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                    <div fxLayout="row wrap" class="col-gap">
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                        
+                        <h6 class="accent-color">
+                         <font color="red"> {{order.status}} </font> </h6>
+                      </div>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                        <button mat-button color="accent"
+                          [routerLink]="['/account/order-detail', 'o'+order.orderId]">{{'COMMON.ORDER_DETAIL'|translate}}</button>
+                      </div>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                        <button mat-button color="accent" *ngIf="order.isCancellable"
+                          [routerLink]="['/account/order-cancel', +order.orderId]">{{'COMMON.CANCEL_ORDER'|translate}}</button>
+                      </div>
+                    </div>
                     <div fxLayout="row wrap" class="col-gap" *ngFor="let orderProduct of order.orderProducts">
                       <div fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15"
                         style="text-align: center!important;">
@@ -56,13 +71,13 @@
                         <a class="p-link"
                           [routerLink]="['/products/dtl/'+orderProduct.product.id+ '/'+orderProduct.ptsId]">
                           {{orderProduct.name}} </a><br />
-                          <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
-                            <label>{{mapEntry.key}}: </label>
-                            <span *ngFor="let option of mapEntry.value">
-                              {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
-                            </span>
-                            <span>&nbsp;&nbsp;</span>
+                        <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
+                          <label>{{mapEntry.key}}: </label>
+                          <span *ngFor="let option of mapEntry.value">
+                            {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
                           </span>
+                          <span>&nbsp;&nbsp;</span>
+                        </span>
                         <h6 class="accent-color">
                           {{'COMMON.PRICE'|translate}}:
                           {{order.symbolLeft}}
@@ -81,19 +96,6 @@
 
                       </div>
                     </div>
-                  </div>
-
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                    
-                    <h6 style="color: #283593;">{{'COMMON.ORDER_STATUS' | translate}}:
-                    {{order.status}} </h6>
-
-                    <button mat-button color="accent"
-                      [routerLink]="['/account/order-detail', 'o'+order.orderId]">{{'COMMON.ORDER_DETAIL'|translate}}</button>
-
-                    <button mat-button color="accent" *ngIf="order.isCancellable"
-                      [routerLink]="['/account/order-cancel', +order.orderId]">{{'COMMON.CANCEL_ORDER'|translate}}</button>
-
                   </div>
                 </div>
 

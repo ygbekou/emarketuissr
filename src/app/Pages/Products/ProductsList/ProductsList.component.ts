@@ -37,9 +37,10 @@ export class ProductsListComponent implements OnInit {
    searchText = '0';
    storeId = 0;
    store = new Store();
+   stores: Store[] = [];
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
-   slideConfig: any;
+   // slideConfig: any;
    height = { 'height': '70px' };
    public counts = [2, 3, 6, 12, 24, 36];
    dummyCat = '';
@@ -53,7 +54,47 @@ export class ProductsListComponent implements OnInit {
       { code: 'priceasc', name: 'Prix ascendant' },
       { code: 'pricedesc', name: 'Prix descendant' },
       { code: 'rating', name: 'Rating' }];
-
+   slideConfig = {
+      'slidesToShow': 6,
+      'slidesToScroll': 1,
+      'arrows': true,
+      'swipeToSlide': true,
+      'infinite': true,
+      'autoplay': true,
+      'autoplaySpeed': 2000,
+      'responsive': [
+         {
+            breakpoint: 1200,
+            settings: {
+               slidesToShow: 5
+            }
+         },
+         {
+            breakpoint: 1024,
+            settings: {
+               slidesToShow: 4
+            }
+         },
+         {
+            breakpoint: 800,
+            settings: {
+               slidesToShow: 3
+            }
+         },
+         {
+            breakpoint: 600,
+            settings: {
+               slidesToShow: 2
+            }
+         },
+         {
+            breakpoint: 480,
+            settings: {
+               slidesToShow: 1
+            }
+         }
+      ]
+   };
    constructor(public appService: AppService,
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
@@ -90,9 +131,13 @@ export class ProductsListComponent implements OnInit {
 
             if (this.catId > 0 || this.marketId > 0 || this.storeCatId > 0) {
                console.log('catId=' + this.catId
-               + ', marketId=' + this.marketId
-               + ', storeCatId=' + this.storeCatId);
-               this.getData();
+                  + ', marketId=' + this.marketId
+                  + ', storeCatId=' + this.storeCatId);
+               if (this.storeCatId > 0) {
+                  this.getStoresAndData();
+               } else {
+                  this.getData();
+               }
             }
          }
 
@@ -108,7 +153,6 @@ export class ProductsListComponent implements OnInit {
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
                this.getStore();
-               this.getData();
             }
 
          });
@@ -132,16 +176,40 @@ export class ProductsListComponent implements OnInit {
    getStore() {
       // alert(this.storeId);
       if (this.storeId > 0) {
-         this.appService.saveWithUrl('/service/catalog/getStore', {'type': 'Store', 'id': this.storeId})
+         this.appService.saveWithUrl('/service/catalog/getStore', { 'type': 'Store', 'id': this.storeId })
             .subscribe(result => {
-            if (result.id > 0) {
-               this.store = result;
-               console.log(this.store);
-            }
-         });
+               if (result.id > 0) {
+                  this.store = result;
+                  console.log(this.store);
+                  this.getData();
+               }
+            });
       }
    }
 
+   public getStoresAndData() {
+      // console.log('get store called');
+      this.stores = [];
+      const parameters: string[] = [];
+      parameters.push('e.displayWeb = |abc|1|Integer');
+      parameters.push('e.status = |xyz|1|Integer');
+      parameters.push('e.aprvStatus = |klm|1|Integer');
+      parameters.push('e.storeCat.id = |klz|' + this.storeCatId + '|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters, ' order by e.sortOrder ')
+         .subscribe((data: Store[]) => {
+            this.stores = data;
+            console.log(this.stores);
+            if (this.stores) {
+               this.store = this.stores[0];
+               this.storeCatId = 0;
+               this.getData();
+            }
+         }, (error) => {
+            console.log(error);
+            console.log('Error occurred');
+         },
+            () => console.log('Get getStores complete'));
+   }
 
    // Getting all the product based on the Top Search
    getProducts() {
@@ -149,11 +217,11 @@ export class ProductsListComponent implements OnInit {
          new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId)
       ).subscribe((data: ProductListVO) => {
-            this.applyGridFilter(data);
-            console.log(data);
-         },
-            error => console.log(error),
-            () => console.log('Get all getProductsOnSale complete'));
+         this.applyGridFilter(data);
+         console.log(data);
+      },
+         error => console.log(error),
+         () => console.log('Get all getProductsOnSale complete'));
    }
 
    applyGridFilter(data) {
@@ -230,8 +298,7 @@ export class ProductsListComponent implements OnInit {
                   this.catDesc = data[0];
                   console.log(this.catDesc);
                }
-            },
-               error => console.log(error),
+            }, error => console.log(error),
                () => console.log('Get all Category Item complete'));
       }
    }
@@ -253,10 +320,10 @@ export class ProductsListComponent implements OnInit {
    public addToCart(value) {
       if (value.product.hasOption === 1) {
          this.appService.productOptionPopup(value).
-         subscribe(res => { this.popupResponse = res; },
-            err => console.log(err),
-            () => this.getCartPopupResponse(this.popupResponse, value)
-         );
+            subscribe(res => { this.popupResponse = res; },
+               err => console.log(err),
+               () => this.getCartPopupResponse(this.popupResponse, value)
+            );
       } else {
          const ci = new CartItem(value);
          this.appService.addToCart(ci);
@@ -274,10 +341,10 @@ export class ProductsListComponent implements OnInit {
    public addToWishList(value) {
       if (value.product.hasOption === 1) {
          this.appService.productOptionPopup(value).
-         subscribe(res => { this.popupResponse = res; },
-            err => console.log(err),
-            () => this.getWishPopupResponse(this.popupResponse, value)
-         );
+            subscribe(res => { this.popupResponse = res; },
+               err => console.log(err),
+               () => this.getWishPopupResponse(this.popupResponse, value)
+            );
       } else {
          const ci = new CartItem(value);
          this.appService.addToWishlist(ci);
