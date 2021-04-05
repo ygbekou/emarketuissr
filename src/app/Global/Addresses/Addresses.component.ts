@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Address } from 'src/app/app.models';
 import { AddressComponent } from '../Address/Address.component';
 import { MatExpansionPanel } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-addresses',
@@ -21,11 +21,18 @@ export class AddressesComponent implements OnInit {
   @Input() deliveryMode;
   @ViewChild('shippingAddressComponent', { static: false }) shippingAddressComponent: AddressComponent;
   @ViewChild('shippingExpansionPanelElement', { static: false }) shippingExpansionPanelElement: MatExpansionPanel;
-
+  public fromPage = '';
   step = 0;
   constructor(public appService: AppService,
     public router: Router,
+    private route: ActivatedRoute,
     public translate: TranslateService) {
+    this.route.queryParams.forEach(queryParams => {
+      if (queryParams['fromPage']) {
+        console.log('From page: ' + queryParams['fromPage']);
+        this.fromPage = queryParams['fromPage'];
+      }
+    });
   }
 
   ngOnInit() {
@@ -66,7 +73,11 @@ export class AddressesComponent implements OnInit {
     address.addressType = this.addressType;
     this.appService.saveWithUrl('/service/catalog/setShipPayAddress/', address)
       .subscribe((data) => {
-        this.router.navigate(['/checkout/payment'], { queryParams: { deliveryMode: this.deliveryMode } });
+        if (this.fromPage === 'fromStore') {
+          this.router.navigate(['/account/profile/edit'], { queryParams: { type: 'store', sId: '0' } });
+        } else {
+          this.router.navigate(['/checkout/payment'], { queryParams: { deliveryMode: this.deliveryMode } });
+        }
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));

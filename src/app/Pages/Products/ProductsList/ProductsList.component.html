@@ -1,11 +1,11 @@
-<app-store-header *ngIf="store.id > 0" [store]="store">
+<app-store-header *ngIf="store.id > 0" [store]="store" [backgroundImg] ="backgroundImg">
 </app-store-header>
 <div class="container">
   <div fxLayout="row wrap" class="col-gap" *ngIf="stores && stores.length>1">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <ngx-slick-carousel class="carousel" [config]="slideConfig">
         <div ngxSlickItem *ngFor="let astore of stores">
-          <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id; getData()">
+          <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id;setImage(); getData();">
             <mat-card-content>
               <a href="javascript:void(0)">
                 <img src="assets/images/stores/{{astore.id}}/{{astore.image}}">

@@ -51,24 +51,46 @@ export class DeliveriesComponent implements OnInit {
     }
   }
 
+  isPhoneValid(phone: string): boolean {
+    if (phone && phone.startsWith('+') && phone.length > 8) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   changeStoreShip(val: number) {
-    this.user.isShipper = val;
-    this.appService.saveWithUrl('/service/user/user/changeShipperSettings', this.user)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.getStoreShippers(this.user.id);
-        if (data.result === 'SUCCESS') {
-          this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-            this.messages = res['MESSAGE.SAVE_SUCCESS'];
+    this.errors = '';
+    console.log(this.user);
+    if (val === 1 && !this.isPhoneValid(this.user.mobilePhone)) {
+      this.translate.get(['VALIDATION.INVALID_PHONE', 'COMMON.ERROR']).subscribe(res => {
+        this.translate.get(['COMMON.PHONE_FORMAT', 'COMMON.ERROR']).subscribe(res2 => {
+          this.translate.get(['MESSAGE.SET_PHONE', 'COMMON.ERROR']).subscribe(res3 => {
+            this.errors = res['VALIDATION.INVALID_PHONE'] + ' : ' + this.user.mobilePhone +
+              '. ' + res2['COMMON.PHONE_FORMAT'] +
+              '. ' + res3['MESSAGE.SET_PHONE'];
           });
-        } else {
-          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-            this.errors = res['MESSAGE.SAVE_UNSUCCESS'] + ' : ' + data.result;
-          });
-        }
-      },
-        error => console.log(error),
-        () => console.log('Get all changeStoreShipper complete'));
+
+        });
+      });
+    } else {
+      this.user.isShipper = val;
+      this.appService.saveWithUrl('/service/user/user/changeShipperSettings', this.user)
+        .subscribe((data: any) => {
+          console.log(data);
+          this.getStoreShippers(this.user.id);
+          if (data.result === 'SUCCESS') {
+            this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+              this.messages = res['MESSAGE.SAVE_SUCCESS'];
+            });
+          } else {
+            this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+              this.errors = res['MESSAGE.SAVE_UNSUCCESS'] + ' : ' + data.result;
+            });
+          }
+        },
+          error => console.log(error),
+          () => console.log('Get all changeStoreShipper complete'));
+    }
   }
 
   changeStoreShipper(storeShipper: StoreShipper) {

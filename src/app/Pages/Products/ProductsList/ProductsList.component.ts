@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked, AfterContentChecked } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
@@ -10,6 +10,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
    selector: 'app-prod-list-all',
@@ -26,6 +27,7 @@ export class ProductsListComponent implements OnInit {
    public viewType = 'grid';
    public viewCol = 33.3;
    public count = 48;
+   public backgroundImg: any;
    public searchFields: any;
    public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
    public message: string;
@@ -98,6 +100,7 @@ export class ProductsListComponent implements OnInit {
    constructor(public appService: AppService,
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
+      private sanitizer: DomSanitizer,
       private activatedRoute: ActivatedRoute) { }
 
    ngOnInit() {
@@ -181,12 +184,27 @@ export class ProductsListComponent implements OnInit {
                if (result.id > 0) {
                   this.store = result;
                   console.log(this.store);
+                  this.setImage();
+                  this.storeId = this.store.id;
                   this.getData();
                }
             });
       }
    }
 
+   setImage() {
+      if (this.store) {
+         if (this.store.storeFrontImage) {
+            this.backgroundImg = this.sanitizer.bypassSecurityTrustStyle('url(' +
+               '/assets/images/stores/' + this.store.id + '/' + this.store.storeFrontImage + ')');
+         } else {
+            this.backgroundImg = this.sanitizer.bypassSecurityTrustStyle('url(/assets/images/page-title-bar.jpg)');
+         }
+      } else {
+         this.backgroundImg = this.sanitizer.bypassSecurityTrustStyle('url(/assets/images/page-title-bar.jpg)');
+      }
+      console.log(this.backgroundImg);
+   }
    public getStoresAndData() {
       // console.log('get store called');
       this.stores = [];
@@ -201,6 +219,8 @@ export class ProductsListComponent implements OnInit {
             console.log(this.stores);
             if (this.stores) {
                this.store = this.stores[0];
+               this.storeId = this.store.id;
+               this.setImage();
                this.storeCatId = 0;
                this.getData();
             }
@@ -213,10 +233,16 @@ export class ProductsListComponent implements OnInit {
 
    // Getting all the product based on the Top Search
    getProducts() {
-      this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
-         new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
-            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId)
-      ).subscribe((data: ProductListVO) => {
+      let crit = null;
+      if (this.searchText) {
+         crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
+            0, 0, 0, this.searchText, 1, 0, 0, 0, 0);
+      } else {
+         crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
+            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId);
+      }
+
+      this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', crit).subscribe((data: ProductListVO) => {
          this.applyGridFilter(data);
          console.log(data);
       },

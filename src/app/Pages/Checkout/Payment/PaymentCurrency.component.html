@@ -2,75 +2,78 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
 
-      <mat-card *ngIf="(storeHoursMessage || (store && store.presentPreorderScreen && store.presentPreorderScreen.name === 'ALWAYS'))">
-        <div fxLayout="row wrap" fxLayoutGap="10px grid">
-          <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
+    <mat-card
+      *ngIf="(storeHoursMessage || (store && store.presentPreorderScreen && store.presentPreorderScreen.name === 'ALWAYS'))">
+      <div fxLayout="row wrap" fxLayoutGap="10px grid">
+        <mat-error severity="warning">{{storeHoursMessage}}</mat-error>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="store && store.presentPreorderScreen.name !== 'NEVER'">
+        <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" id="scheduleForLater" name="scheduleForLater"
+          (change)="scheduleForLaterChecked($event);">
+
+          <h6 *ngIf="pickUp==='1'">{{'COMMON.CHOOSE_PICKUP_DATE'|translate}}</h6>
+          <h6 *ngIf="pickUp==='0'">{{'COMMON.CHOOSE_DELIVERY_DATE'|translate}}</h6>
+        </mat-checkbox>
+      </div>
+      <div fxLayout="row wrap" *ngIf="scheduleForLater">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-form-field class="w-90">
+            <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate" [min]="nextOpenDateTime"
+              [max]="maxScheduleDate" (dateInput)="getHours($event.value)" class="form-control" id="pickupDatetime"
+              name="pickupDatetime" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         </div>
-        <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="store && store.presentPreorderScreen.name !== 'NEVER'">
-          <mat-checkbox class="mb-2 d-block" [(ngModel)]="scheduleForLater" 
-            id="scheduleForLater" name="scheduleForLater" (change)="scheduleForLaterChecked($event);">
-            
-            <h6 *ngIf="pickUp==='1'">{{'COMMON.CHOOSE_PICKUP_DATE'|translate}}</h6>
-            <h6 *ngIf="pickUp==='0'">{{'COMMON.CHOOSE_DELIVERY_DATE'|translate}}</h6>
-          </mat-checkbox>
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-form-field class="w-90">
+            <mat-select placeholder="HH" id="hrs" name="hrs" [(ngModel)]="order.preorderHour" #hrs="ngModel"
+              (selectionChange)="hourSelectionChange($event)" required>
+              <mat-option *ngFor="let hr of hours" [value]="hr">
+                {{hr}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div fxLayout="row wrap" *ngIf="scheduleForLater">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            <mat-form-field class="w-90">
-              <mat-label> {{'COMMON.CARRYOUT_DATE' | translate}} </mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="order.preorderDate" 
-                [min]="nextOpenDateTime" [max]="maxScheduleDate" (dateInput)="getHours($event.value)"
-                class="form-control" id="pickupDatetime" name="pickupDatetime" required>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker ></mat-datepicker>
-            </mat-form-field>
-          </div>  
-        
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            <mat-form-field class="w-90">
-              <mat-select placeholder="HH" id="hrs" name="hrs" [(ngModel)]="order.preorderHour" #hrs="ngModel"
-                (selectionChange)="hourSelectionChange($event)" required>
-                <mat-option *ngFor="let hr of hours" [value]="hr">
-                  {{hr}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-            <mat-form-field class="w-90">
-              <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="order.preorderMinute" #mns="ngModel" 
-                 (selectionChange)="minuteSelectionChange($event)"required>
-                <mat-option *ngFor="let minute of minutes" [value]="minute">
-                  {{minute}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>  
-        </div> 
-      
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+          <mat-form-field class="w-90">
+            <mat-select placeholder="MM" id="mn" name="mns" [(ngModel)]="order.preorderMinute" #mns="ngModel"
+              (selectionChange)="minuteSelectionChange($event)" required>
+              <mat-option *ngFor="let minute of minutes" [value]="minute">
+                {{minute}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
     </mat-card>
 
     <mat-card>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33" >
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="pickUp" (change)="deliveryOptionChange($event);">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+          <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="pickUp"
+            (change)="deliveryOptionChange($event);">
             <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
             <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
           </mat-button-toggle-group>
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" 
-                *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+              *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
               {{'COMMON.ARRIVING' | translate}}
             </div>
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" 
-                *ngIf="deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
-              {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}} {{generateDeliveryEstimationTimeMessage()}}
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+              *ngIf="deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
+              {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}}
+              {{generateDeliveryEstimationTimeMessage()}}
             </div>
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
-              routerLinkActive="tab-active" *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}"
-              routerLinkActive="tab-active" *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}" routerLinkActive="tab-active"
+              *ngIf="user.shippingAddress && user.shippingAddress.address1 !== '' ">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}" routerLinkActive="tab-active"
+              *ngIf="!(user.shippingAddress && user.shippingAddress.address1 !== '') ">{{'COMMON.ADD' | translate}}</a>
           </div>
           <div *ngIf="user.shippingAddress && pickUp === '0'">
             {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
@@ -83,10 +86,10 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
-              routerLinkActive="tab-active" *ngIf="user.billingAddress && user.billingAddress.address1 !== undefined ">{{'COMMON.CHANGE' | translate}}</a>
-            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}"
-              routerLinkActive="tab-active" *ngIf="!(user.billingAddress && user.billingAddress.address1 !== undefined)">{{'COMMON.ADD' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}" routerLinkActive="tab-active"
+              *ngIf="user.billingAddress && user.billingAddress.address1 !== undefined ">{{'COMMON.CHANGE' | translate}}</a>
+            <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}" routerLinkActive="tab-active"
+              *ngIf="!(user.billingAddress && user.billingAddress.address1 !== undefined)">{{'COMMON.ADD' | translate}}</a>
           </div>
           <div *ngIf="user.billingAddress">
             {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
@@ -109,24 +112,25 @@
           <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
             {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
           </div>
-        <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
+          <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
             {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
           </div>
-        <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
+          <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
             {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
           </div>
         </div>
       </div>
     </mat-card>
 
-    <embryo-Cart  [purchasePossible]="purchasePossible"  [pickUp] ="pickUp" (placeYourOrderEvent)="placeYourOrder()" (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
+    <embryo-Cart [purchasePossible]="purchasePossible" [pickUp]="pickUp" (placeYourOrderEvent)="placeYourOrder()"
+      (orderCompleteEvent)="updateOrder($event)" [storeId]="storeId"></embryo-Cart>
   </div>
   <div fxFlex.xs="0" fxFlex.sm="0" fxHide.xs="true" fxHide.sm="true" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <mat-card>
       <div fxLayout="row wrap">
         <mat-error *ngIf="error && !storeHoursMessage">{{error}}</mat-error>
       </div>
-     
+
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
         type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true ||
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
@@ -205,35 +209,38 @@
       </div>
 
     </mat-card>
-
+    <br />
     <mat-card>
-      <div fxLayout="row wrap" class="w-100">
-        <mat-label> {{'COMMON.NOTE_FOR_STORE' | translate}}</mat-label>
-        <textarea rows="5" cols="50" id="comments" appearance="outline"
-            [(ngModel)]="order.comment" name="comments" #comments="ngModel">
+      <div fxLayout="row wrap" fxLayoutAlign="none">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <h6 class="primary-color">{{'COMMON.NOTE_FOR_STORE' | translate}}</h6>
+          <textarea rows="5" cols="28" id="comments" appearance="outline" [(ngModel)]="order.comment" name="comments"
+            #comments="ngModel">
         </textarea>
+        </div>
       </div>
-
-      <br/>
-      
-      <div fxLayout="row wrap" class="w-100" style="align-content: center">
-        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="generateMessage()"
-          type="button" style="width:50%; margin:0 auto;">
-          <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.GENERATE_MESSAGE' | translate}}</span>
-        </button>
-
-        <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.PHONE' | translate}}(E.x. +22890......)</mat-label>
-            <input matInput type="text" class="form-control" id="phone" [(ngModel)]="order.shippingCustomField"
-              name="phone" #phone="ngModel" required>
+      <div fxLayout="row wrap" fxLayoutAlign="none"> 
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <br/>
+          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar> 
+          <br/>
+          <h6 class="primary-color"> {{'COMMON.NOTE_FOR_DEST' | translate}}</h6>
+          <mat-form-field class="w-100 mb-3">           
+            <mat-label> {{'COMMON.PHONE' | translate}}</mat-label>
+            <input matInput type="text" placeholder="(E.x. +22890112234)"
+              class="form-control" id="phone" [(ngModel)]="order.shippingCustomField" name="phone" #phone="ngModel"
+            >
           </mat-form-field>
-      </div>
-      <div fxLayout="row wrap" class="w-100">
-        <mat-label> {{'COMMON.NOTE_FOR_DEST' | translate}}</mat-label>
-        <textarea rows="5" cols="50" id="customField" appearance="outline"
-            [(ngModel)]="order.customField" name="customField" #customField="ngModel">
+          <textarea rows="5" cols="28" id="customField" appearance="outline" [(ngModel)]="order.customField"
+            name="customField" #customField="ngModel">
         </textarea>
+
+        </div>
+
       </div>
+      <!-- <div fxLayout="row wrap" class="w-100">       
+        
+      </div> -->
     </mat-card>
   </div>
 </div>

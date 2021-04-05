@@ -28,6 +28,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    picture0: any[] = [];
    storeShippers: StoreShipper[] = [];
    addresses: Address[] = [];
+   sId = -1;
    store: Store = new Store();
    currencies: Currency[] = [];
    presentPreorderScreens: PresentPreorderScreen[] = [];
@@ -60,6 +61,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
             this.type = queryParams['type'];
             this.getAddress(queryParams['adrId']);
             this.getCard(queryParams['cId']);
+            if (queryParams['sId']) {
+               this.sId = queryParams['sId'];
+            }
             this.getStore(queryParams['sId']);
          });
       });
@@ -163,6 +167,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    }
 
    getAddresses() {
+      console.log('Get addresses called');
       const userId = Number(this.appService.tokenStorage.getUserId());
       if (userId > 0) {
          const parameters: string[] = [];
@@ -170,6 +175,13 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
             .subscribe((data: Address[]) => {
                this.addresses = data;
+               console.log(this.addresses);
+               if (this.sId !== -1) {
+                  if (!this.addresses || this.addresses.length === 0) {
+                     console.log('rerouting');
+                     this.router.navigate(['/account/addresses'], { queryParams: { fromPage: 'fromStore' } });
+                  }
+               }
             },
                error => console.log(error),
                () => console.log('Get all addresses complete for userId=' + userId));
@@ -263,9 +275,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    submitProfileInfo() {
       this.messages = '';
       this.errors = '';
-      this.user.isShipper = (this.user.isShipper == null
-         || this.user.isShipper.toString() === 'false'
-         || this.user.isShipper.toString() === '0') ? 0 : 1;
       this.user.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.formData = new FormData();
       if (this.picture && this.picture.length > 0 && this.picture[0].file) {
@@ -413,11 +422,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                   });
                }
             });
-      } else if (storeId == 0) {
-         if (!this.addresses || this.addresses.length === 0) {
-            console.log('rerouting');
-            this.router.navigate(['/account/addresses'], { queryParams: {} });
-         }
       }
    }
 
@@ -429,6 +433,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
             .subscribe(result => {
                if (result.id > 0) {
                   this.user = result;
+                  console.log(this.user);
                   this.user.confirmPassword = this.user.password;
                   const images: any[] = [];
                   this.user.fileNames.forEach(item => {

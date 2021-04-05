@@ -97,8 +97,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                   this.store = result;
                   if (this.pickUp === '1') {
                      this.isStoreOpen();
+                  } else {
+                     this.getZoneToGeoZone();
                   }
-                  this.getZoneToGeoZone();
                }
             });
       }
@@ -120,27 +121,27 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    getHours() {
       this.hours = [];
-      //const dayNumber = this.order.preorderDate.getDay();
-      //let openTime = null;
-      //let closeTime = null;
+      // const dayNumber = this.order.preorderDate.getDay();
+      // let openTime = null;
+      // let closeTime = null;
 
-      //if (this.pickUp === '0') {
+      // if (this.pickUp === '0') {
       //   openTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delStart' + dayNumber];
       //   closeTime = JSON.parse(JSON.stringify(this.zoneToGeoZone.geoZone))['delEnd' + dayNumber];
-      //} else {
+      // } else {
       //   openTime = JSON.parse(JSON.stringify(this.store))['openTime' + dayNumber];
       //   closeTime = JSON.parse(JSON.stringify(this.store))['closeTime' + dayNumber];
-      //}
+      // }
 
-      //let openHour = this.storeOpen || this.deliveryOpen ? new Date().getHours() : openTime.split(':')[0];
-      //const closeHour = closeTime.split(':')[0];
+      // let openHour = this.storeOpen || this.deliveryOpen ? new Date().getHours() : openTime.split(':')[0];
+      // const closeHour = closeTime.split(':')[0];
 
-      //if (!this.storeOpen && !this.deliveryOpen && this.minScheduleDate.getDate() === this.order.preorderDate.getDate()) {
+      // if (!this.storeOpen && !this.deliveryOpen && this.minScheduleDate.getDate() === this.order.preorderDate.getDate()) {
       //   openHour = this.nextOpenDateTime.getHours();
-      //}
+      // }
 
-      let openHour = 0;
-      let closeHour = 24;
+      const openHour = 0;
+      const closeHour = 24;
       let j = 0;
       for (let i = openHour; i < closeHour; i++) {
          this.hours[j] = Number(i);
@@ -151,7 +152,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public isStoreOpen() {
-
+      console.log('XXXXXXXXXX');
+      console.log(this.store);
+      console.log(this.store.timeZone);
       this.nextOpenDateTime = undefined;
       this.nextCloseDateTime = undefined;
       this.storeOpen = false;
@@ -185,8 +188,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (openTime != null && openTime.length >= 3 &&
          closeTime !== null && closeTime.length >= 3) {
 
-         const newDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
-         const today = this.datePipe.transform(new Date(moment(newDay, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm')), 'yyyy-MM-dd ');
+         const newDay1 = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
+         const today = this.datePipe.transform(new Date(moment(newDay1, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm')), 'yyyy-MM-dd ');
 
          openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format());
          closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format());
@@ -208,8 +211,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       console.log('nextCloseDateTime = ' + nextCloseTime);
       if (nextOpenTime != null && nextOpenTime.length >= 3 &&
          nextCloseTime !== null && nextCloseTime.length >= 3) {
-         const newDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
-         const tomorrow = new Date(moment(newDay, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         const newDay2 = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
+         const tomorrow = new Date(moment(newDay2, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
          tomorrow.setDate(tomorrow.getDate() + iterCount);
          const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
          const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format());
@@ -299,9 +302,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       let closeDateTime = null;
       if (openTime != null && openTime.length >= 3 &&
          closeTime !== null && closeTime.length >= 3) {
-         const newDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
-         const today = this.datePipe.transform(new Date(moment(newDay, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm')), 'yyyy-MM-dd ');
-         
+         const newDay1 = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
+         const today = this.datePipe.transform(new Date(moment(newDay1, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm')), 'yyyy-MM-dd ');
          openDateTime = new Date(moment.tz(today + openTime, this.store.timeZone.name).format());
          closeDateTime = new Date(moment.tz(today + closeTime, this.store.timeZone.name).format());
 
@@ -320,9 +322,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
       if (nextOpenTime != null && nextOpenTime.length >= 3 &&
          nextCloseTime !== null && nextCloseTime.length >= 3) {
-      
-         const newDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
-         const tomorrow = new Date(moment(newDay, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
+         const newDay2 = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm');
+         const tomorrow = new Date(moment(newDay2, null).tz(this.store.timeZone.name).format('YYYY-MM-DD HH:mm'));
          tomorrow.setDate(tomorrow.getDate() + iterCount);
          const tomorrowD = this.datePipe.transform(tomorrow, 'yyyy-MM-dd ');
          const nextOpenDateTime = new Date(moment.tz(tomorrowD + nextOpenTime, this.store.timeZone.name).format());

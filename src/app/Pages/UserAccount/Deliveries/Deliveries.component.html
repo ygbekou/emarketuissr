@@ -1,10 +1,10 @@
 <mat-card>
   <h1 style="color: #283593;">{{'COMMON.MY_DELIVERIES'|translate}}</h1>
-
   <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <button mat-flat-button style="width: 100%;" [color]="user.isShipper===1?'accent':'warning'"
     (click)="changeStoreShip(1);">{{'COMMON.I_DELIVER'|translate}}</button>
+    <mat-error severity="error" *ngIf="errors">{{errors}}</mat-error>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <button mat-flat-button style="width: 100%;" [color]="user.isShipper===0?'accent':'warning'"

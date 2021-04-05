@@ -16,7 +16,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    deliveryMode: string;
    panelOpenState = false;
    @Input() userId: number;
-
+   public fromPage = '';
    constructor(public appService: AppService,
       public router: Router,
       private route: ActivatedRoute,
@@ -30,6 +30,9 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
          if (+queryParams['addressType'] > 0) {
             this.addressType = +queryParams['addressType'];
             this.deliveryMode = queryParams['deliveryMode'];
+         } else if (queryParams['fromPage']) {
+            console.log('From page: ' + queryParams['fromPage']);
+            this.fromPage = queryParams['fromPage'];
          }
       });
    }
