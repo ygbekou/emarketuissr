@@ -24,7 +24,7 @@ export class ProductsToolbarComponent implements OnInit {
 
   public viewType: string = 'grid';
   public viewCol: number = 25;
-  public counts = [1, 6, 12, 18, 24, 36];
+  public counts = [12, 24, 36, 48, 96];
   public count: any;
   public sortings = [
     { code: 'nameasc', name: 'Nom ascendant' },

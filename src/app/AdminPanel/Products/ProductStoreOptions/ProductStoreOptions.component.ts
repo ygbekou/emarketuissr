@@ -37,6 +37,17 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
       // this.getProductToStoreUnselectedOptions();
    }
 
+   public reset() {
+      console.log('reset called');
+      this.currentOption = '';
+      this.messages = '';
+      this.productStoreOption = new ProductStoreOption();
+      this.optionValues = [];
+      this.productStoreOptionValues = [];
+      this.productStoreOptions = [];
+      this.optionOptions = [];
+      this.filteredOptionOptions = [];
+   }
    getProductToStoreUnselectedOptions(productToStoreId: number) {
       this.appService.getObjects('/service/catalog/producttostoreunselectedoptions/' + this.appService.appInfoStorage.language.id
          + '/' + productToStoreId)

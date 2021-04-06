@@ -61,7 +61,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   };
   public viewType = 'grid';
   public viewCol = 33.3;
-  public count = 6;
+  public count = 48;
   public searchFields: any;
   public removedSearchField: string;
   public pagination: Pagination = new Pagination(1, this.count, null, 2, 0, 0);
@@ -304,6 +304,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
   selectForSaleProduct($event) {
     this.productDesc = $event;
+    this.prdStoreOptView.reset();
     this.appService.getObject('/service/catalog/getProductToStore/' + this.selectedStore.id + '/' + this.productDesc.product.id)
       .subscribe((data: ProductToStore) => {
         if (data !== null && data.id > 0) {

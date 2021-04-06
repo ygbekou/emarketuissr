@@ -234,14 +234,16 @@ export class ProductsListComponent implements OnInit {
    // Getting all the product based on the Top Search
    getProducts() {
       let crit = null;
-      if (this.searchText) {
+      if (this.searchText && this.searchText !== '0') {
+         console.log('this.searchText is not null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             0, 0, 0, this.searchText, 1, 0, 0, 0, 0);
       } else {
+         console.log('this.searchText is null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId);
       }
-
+      console.log(crit);
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', crit).subscribe((data: ProductListVO) => {
          this.applyGridFilter(data);
          console.log(data);
