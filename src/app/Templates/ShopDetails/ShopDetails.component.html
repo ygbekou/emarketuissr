@@ -279,12 +279,12 @@
             </div>
           </div>
 
-          <div class="col-gap" *ngIf="detailData.product.quantity > 0">
+          <div class="col-gap" *ngIf="detailData.product.quantity > 0 || detailData.product.allowNegInvn==1">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-              <mat-select *ngIf="detailData.product.quantity > 0" [(value)]="qty" placeholder="1"
+              <mat-select *ngIf="detailData.product.quantity > 0 || detailData.product.allowNegInvn==1" [(value)]="qty" placeholder="1"
                 (selectionChange)="calculatePrice(detailData, $event.value)">
                 <ng-container
-                  *ngFor="let quantity of [].constructor(detailData.product.quantity>10?10:detailData.product.quantity); let i = index;">
+                  *ngFor="let quantity of [].constructor((detailData.product.quantity>10 || detailData.product.quantity<=0)?10:detailData.product.quantity); let i = index;">
                   <mat-option value="{{i + 1}}">{{i + 1}}</mat-option>
                 </ng-container>
               </mat-select>
@@ -303,7 +303,7 @@
           <mat-error *ngIf="error" severity="error">
             {{ error }}
           </mat-error>
-          <div class="col-gap" *ngIf="detailData.product.quantity > 0">
+          <div class="col-gap" *ngIf="detailData.product.quantity > 0 || detailData.product.allowNegInvn==1">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <button mat-raised-button color="accent" class="w-100" (click)="addToCart(detailData)">
                 <mat-icon>add_shopping_cart</mat-icon>
