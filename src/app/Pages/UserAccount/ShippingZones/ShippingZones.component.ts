@@ -48,6 +48,7 @@ export class ShippingZonesComponent implements OnInit {
     if ((!o1 && o2 && !(o2.id > 0)) || (!o2 && o1 && !(o1.id > 0))) {
       return true;
     }
+
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
@@ -100,8 +101,8 @@ export class ShippingZonesComponent implements OnInit {
       parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
         .subscribe((data: Zone[]) => {
-          this.zones = data;
-          this.zones.unshift(this.allZones);
+          country.zones = data;
+          country.zones.unshift(this.allZones);
         },
           error => console.log(error),
           () => console.log('Get all GeoZone complete'));
@@ -109,26 +110,27 @@ export class ShippingZonesComponent implements OnInit {
   }
 
 
-  getZoneToGeoZone() {
-    const parameters: string[] = [];
-    parameters.push('e.store.id = |abc|' + this.store.id + '|Integer');
-    parameters.push('e.geoZone.id = |geoZoneId|' + this.geoZone.id + '|Integer');
-    this.appService.getAllByCriteria('com.softenza.emarket.model.ZoneToGeoZone', parameters)
-      .subscribe((data: ZoneToGeoZone[]) => {
-        this.zones = [];
-        if (data && data.length > 0) {
-          data.forEach((a) => {
-            this.zones.push(a.zone);
-          });
-          this.zones.unshift(this.allZones);
-        }
+  getZoneToGeoZones() {
+
+    console.log('Get zoneToGeoZones for Store id: ' + this.store.id + ' and Geo Zone id '
+      + this.geoZone.id);
+
+      this.appService.saveWithUrl('/service/order/getZoneToGeoZones/', {
+         'storeId': this.store.id,
+         'geoZoneId': this.geoZone.id,
+         'lang': this.appService.appInfoStorage.language.code
+      }).subscribe((data: ZoneToGeoZone[]) => {
+        console.log("Zone to Geo Zones .... ");
+        console.log(data);
         this.zoneToGeoZoneDS = new MatTableDataSource(data);
         this.zoneToGeoZoneDS.paginator = this.paginator;
         this.zoneToGeoZoneDS.sort = this.sort;
       },
         error => console.log(error),
-        () => console.log('Get all GeoZone complete'));
-  }
+        () => console.log('ZoneToGeoZone retrieved '));
+
+   }
+
 
   addNewZoneToGeoZone() {
     this.errors = '';
@@ -149,13 +151,26 @@ export class ShippingZonesComponent implements OnInit {
     this.messages = '';
     this.errors = '';
 
-    if (zoneToGeoZone.deliveryTimeBegin > zoneToGeoZone.deliveryTimeEnd) {
-      this.translate.get(['MESSAGE.INVALID_DELIVERY_TIME']).subscribe(res => {
-        this.errors = res['MESSAGE.INVALID_DELIVERY_TIME'];
-      });
-      return;
+    if (
+      (zoneToGeoZone.deliveryTimeBegin && !zoneToGeoZone.deliveryTimeEnd)
+      || (!zoneToGeoZone.deliveryTimeBegin && zoneToGeoZone.deliveryTimeEnd)
+      || (zoneToGeoZone.deliveryTimeBegin > zoneToGeoZone.deliveryTimeEnd)
+     ) {
+        this.translate.get(['MESSAGE.INVALID_DELIVERY_TIME']).subscribe(res => {
+          this.errors = res['MESSAGE.INVALID_DELIVERY_TIME'];
+        });
+        return;
+    } else {
+      if (zoneToGeoZone.deliveryTimeBegin <= zoneToGeoZone.deliveryTimeEnd) {
+        if (!zoneToGeoZone.deliveryTimeUnit || zoneToGeoZone.deliveryTimeUnit === '0') {
+          this.translate.get(['MESSAGE.INVALID_DELIVERY_UNIT']).subscribe(res => {
+            this.errors = res['MESSAGE.INVALID_DELIVERY_UNIT'];
+          });
+          return;
+        }
+      }
     }
-    console.log(zoneToGeoZone);
+
     if (zoneToGeoZone.country) {
       if (!zoneToGeoZone.zone || !zoneToGeoZone.zone.id || !(zoneToGeoZone.zone.id > 0)) {
         zoneToGeoZone.zone = null;
@@ -302,7 +317,7 @@ export class ShippingZonesComponent implements OnInit {
     const data: ZoneToGeoZone[] = [];
     this.zoneToGeoZoneDS = new MatTableDataSource(data);
     this.zoneToGeoZoneDS.data = [];
-    this.getZoneToGeoZone();
+    this.getZoneToGeoZones();
     this.selectedTab = 1;
   }
   save() {
