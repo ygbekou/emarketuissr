@@ -582,7 +582,13 @@ export class Country {
   name: string;
   postcodeRequired: number;
   status: number;
+
+  zones: Zone[];
   type = 'Country';
+
+  constructor() {
+    this.zones = [];
+  }
 }
 
 export class Zone {
@@ -633,10 +639,15 @@ export class ZoneToGeoZone {
   country: Country;
   deliveryTimeBegin: number;
   deliveryTimeEnd: number;
-  deliveryTimeUnit: string;
+  deliveryTimeUnit = '';
 
+  
   errors: string[];
   type = 'ZoneToGeoZone';
+
+  constructor() {
+    this.country = new Country();
+  }
 }
 
 export class TaxClass {

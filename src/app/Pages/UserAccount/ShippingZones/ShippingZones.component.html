@@ -356,7 +356,7 @@
               <mat-label>Zone</mat-label>
               <mat-select placeholder="Zone" id="zone" [compareWith]="compareZones" name="zone"
                 [(ngModel)]="zoneToGeoZone.zone" #zone="ngModel">
-                <mat-option *ngFor="let zone of zones" [value]="zone">
+                <mat-option *ngFor="let zone of zoneToGeoZone.country.zones" [value]="zone">
                   {{zone?zone.name:''}}
                 </mat-option>
               </mat-select>
@@ -365,10 +365,10 @@
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeBegin">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> Zone </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERY_TIME_BEGIN' | translate}} </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Del. Time Begin</mat-label>
+              <mat-label>{{'COMMON.DELIVERY_TIME_BEGIN' | translate}}</mat-label>
               <input matInput type="text" class="form-control" id="deliveryTimeBegin"
                   [(ngModel)]="zoneToGeoZone.deliveryTimeBegin" name="deliveryTimeBegin" #deliveryTimeBegin="ngModel">
             </mat-form-field>
@@ -376,10 +376,10 @@
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeEnd">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> Zone </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERY_TIME_END' | translate}} </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Del. Time End</mat-label>
+              <mat-label>{{'COMMON.DELIVERY_TIME_END' | translate}}</mat-label>
               <input matInput type="text" class="form-control" id="deliveryTimeEnd"
                   [(ngModel)]="zoneToGeoZone.deliveryTimeEnd" name="deliveryTimeEnd" #deliveryTimeEnd="ngModel">
             </mat-form-field>
@@ -387,13 +387,13 @@
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeUnit">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> Zone </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERY_TIME_UNIT' | translate}} </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Zone</mat-label>
-              <mat-select placeholder="Time Unit" id="zone" [compareWith]="compareZones" name="timeUnit"
+              <mat-label>{{'COMMON.DELIVERY_TIME_UNIT' | translate}}</mat-label>
+              <mat-select placeholder="Time Unit" id="zone" name="timeUnit"
                 [(ngModel)]="zoneToGeoZone.deliveryTimeUnit" #deliveryTimeUnit="ngModel">
-                <mat-option [value]="''">
+                <mat-option [value]="'0'">
                 </mat-option>
                 <mat-option [value]="'M'">
                   {{'COMMON.MINUTES'|translate}}

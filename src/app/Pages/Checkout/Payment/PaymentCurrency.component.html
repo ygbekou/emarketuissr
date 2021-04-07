@@ -60,11 +60,11 @@
             <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
           </mat-button-toggle-group>
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="primary-color"
               *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
               {{'COMMON.ARRIVING' | translate}}
             </div>
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="primary-color"
               *ngIf="deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
               {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}}
               {{generateDeliveryEstimationTimeMessage()}}

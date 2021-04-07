@@ -688,7 +688,10 @@
 		"BOUGHT_FOR_PICKUP": "Bought for pickup",
 		"BOUGHT_FOR_DELIVERY": "Bought for delivery",
 		"DELIVERY_FEE": "Delivery Fee ",
-		"ARRIVING": "Arriving in "
+		"ARRIVING": "Arriving in ",
+		"DELIVERY_TIME_BEGIN": "delivery time from",
+		"DELIVERY_TIME_END": "delivery time to",
+		"DELIVERY_TIME_UNIT": "delivery time Unit"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -773,7 +776,8 @@
 		"NO_DELIVERY_PERIOD2": "{{store_name}} does not deliver at this moment. The delivery resumes {{day}} from {{open_time}} to {{close_time}}. ",
 		"CHOOSE_LATER_DELIVERY_DATE": "We do not deliver at this moment. Please choose the delivery date/time for later delivery",
 		"CHOOSE_LATER_PICKUP_DATE": "The store is close at this moment. Please choose the pick up date/time for later pick up",
-		"INVALID_DELIVERY_TIME": "Begin Delivery Time cannot be greater than End Delivery Time"
+		"INVALID_DELIVERY_TIME": "Begin Delivery Time cannot be greater than End Delivery Time",
+		"INVALID_DELIVERY_UNIT": "Select a Time Unit from the list"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",
