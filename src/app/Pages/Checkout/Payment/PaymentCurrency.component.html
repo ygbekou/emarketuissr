@@ -60,14 +60,16 @@
             <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
           </mat-button-toggle-group>
           <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="pickUp==='0'">
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="primary-color"
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="primary-color"
               *ngIf=" deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
-              {{'COMMON.ARRIVING' | translate}}
-            </div>
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="primary-color"
-              *ngIf="deliveryOpen && zoneToGeoZone && zoneToGeoZone.deliveryTimeBegin > 0">
-              {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}}
-              {{generateDeliveryEstimationTimeMessage()}}
+              <font color="green">
+                <strong>
+                  {{'COMMON.ARRIVING' | translate}}
+                  {{zoneToGeoZone.deliveryTimeBegin}} - {{zoneToGeoZone.deliveryTimeEnd}}
+                  {{generateDeliveryEstimationTimeMessage()}}
+                </strong>
+              </font>
+
             </div>
             <h6>{{'COMMON.SHIPPING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 1}" routerLinkActive="tab-active"
@@ -219,17 +221,16 @@
         </textarea>
         </div>
       </div>
-      <div fxLayout="row wrap" fxLayoutAlign="none"> 
+      <div fxLayout="row wrap" fxLayoutAlign="none">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-          <br/>
-          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar> 
-          <br/>
+          <br />
+          <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+          <br />
           <h6 class="primary-color"> {{'COMMON.NOTE_FOR_DEST' | translate}}</h6>
-          <mat-form-field class="w-100 mb-3">           
+          <mat-form-field class="w-100 mb-3">
             <mat-label> {{'COMMON.PHONE' | translate}}</mat-label>
-            <input matInput type="text" placeholder="(E.x. +22890112234)"
-              class="form-control" id="phone" [(ngModel)]="order.shippingCustomField" name="phone" #phone="ngModel"
-            >
+            <input matInput type="text" placeholder="(E.x. +22890112234)" class="form-control" id="phone"
+              [(ngModel)]="order.shippingCustomField" name="phone" #phone="ngModel">
           </mat-form-field>
           <textarea rows="5" cols="28" id="customField" appearance="outline" [(ngModel)]="order.customField"
             name="customField" #customField="ngModel">

@@ -5,14 +5,22 @@
     padding-bottom: 2.5rem;
     padding-left: 0px;
 }
+
 a:hover {
     color: #283593;
 }
-a { 
+
+a {
     color: #ff5722;
 }
+
 .mat-error {
     color: #ff5722;
     font-weight: 500;
     font-size: 1.2rem;
+}
+
+.mat-button-toggle-checked {
+    color: white;
+    background-color: #283593;
 }

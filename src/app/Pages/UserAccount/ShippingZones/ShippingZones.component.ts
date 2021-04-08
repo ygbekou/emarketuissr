@@ -180,13 +180,16 @@ export class ShippingZonesComponent implements OnInit {
       try {
         this.messages = '';
         console.log(zoneToGeoZone);
-        const index: number = this.zoneToGeoZoneDS.data.indexOf(zoneToGeoZone);
+       // const index: number = this.currentTab.tabDtls.findIndex((tbd) => tbd.id === tabDtl.id);
+
+       const index: number = this.zoneToGeoZoneDS.data.indexOf(zoneToGeoZone);
         this.appService.save(zoneToGeoZone, 'ZoneToGeoZone')
           .subscribe(result => {
             if (result.id > 0) {
               if (index !== -1) {
                 this.zoneToGeoZoneDS.data.splice(index, 1);
               }
+              console.log(result);
               this.zoneToGeoZoneDS.data.push(result);
               this.zoneToGeoZoneDS = new MatTableDataSource<ZoneToGeoZone>(this.zoneToGeoZoneDS.data);
               this.zoneToGeoZoneDS.paginator = this.paginator;
