@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'; 
 import { CartItem } from 'src/app/app.models';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
    selector: 'embryo-ProductGrid',
@@ -31,7 +32,7 @@ export class ProductGridComponent implements OnInit {
       return hit.objectID;
    }
 
-   constructor() { }
+   constructor(public appService: AppService) { }
 
    ngOnInit() {
 

@@ -24,10 +24,10 @@
 
                       <font color="red" *ngIf="prdOptionValue.price > 0"><strong>
                           ({{prdOptionValue.pricePrefix}}
-                          {{productDesc.product.symbolLeft}}
-                          {{prdOptionValue.price}}
-                          {{productDesc.product.symbolRight}})
-
+                            {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
+                              + productDesc.product.symbolRight:true:'1.' 
+                              + productDesc.product.currencyDecimalPlace + '-'  
+                              + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
                         </strong></font>
                     </div>
                   </mat-radio-button>
@@ -68,8 +68,12 @@
               <div class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
                 <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" id="{{prdOptionValue.name}}"
                   name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
+
                   {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}}
-                  {{prdOptionValue.price}})&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
+                        + productDesc.product.symbolRight:true:'1.' 
+                        + productDesc.product.currencyDecimalPlace + '-'  
+                        + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})&nbsp;&nbsp;&nbsp;&nbsp;
                 </mat-checkbox>
               </div>
             </div>
@@ -97,7 +101,10 @@
                 <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
                   <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
                     (click)="singleSelectionChange($event, povo, prdOptionValue)">
-                    {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price}})
+                    {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
+                        + productDesc.product.symbolRight:true:'1.' 
+                        + productDesc.product.currencyDecimalPlace + '-'  
+                        + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -113,8 +120,12 @@
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <h6 class="accent-color"
           *ngIf="productDesc.product.productDiscountPercentage === undefined || productDesc.product.productDiscountPercentage <= 0">
-          <strong> {{productDesc.product.symbolLeft}} {{productDesc.quantity * productDesc.product?.totalPrice}}
-            {{productDesc.product.symbolRight}}</strong>
+          <strong> 
+            {{productDesc.quantity * productDesc.product?.totalPrice | currency:productDesc.product.symbolLeft 
+                + productDesc.product.symbolRight:true:'1.' 
+                + productDesc.product.currencyDecimalPlace + '-'  
+                + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+          </strong>
         </h6>
       </div>
       <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">

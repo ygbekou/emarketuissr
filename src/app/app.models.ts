@@ -1807,6 +1807,7 @@ export class OnlineOrderVO {
   currencyCode: string;
   symbolLeft: string;
   symbolRight: string;
+  currencyDecimalPlace: number;
   createDate: Date;
   status: string;
   isCancellable: boolean;
@@ -1827,6 +1828,7 @@ export class StoreOrderVO {
   currencyCode: string;
   symbolLeft: string;
   symbolRight: string;
+  currencyDecimalPlace: number;
   createDate: Date;
   status: string;
 }

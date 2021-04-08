@@ -5,9 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
-import { registerLocaleData } from '@angular/common';
-import localeFrFR from '@angular/common/locales/fr';
-import localeFrFRExtra from '@angular/common/locales/extra/fr';
 
 import moment from 'moment-timezone';
 import { CartComponent } from '../../Cart/Cart.component';
@@ -71,7 +68,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       private datePipe: DatePipe
    ) {
 
-      registerLocaleData(localeFrFR, localeFrFRExtra);
       this.processPaymentConfirmation();
    }
 

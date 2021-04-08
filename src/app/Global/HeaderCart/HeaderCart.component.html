@@ -16,8 +16,11 @@
                         alt="cart-image"></a> </div>
                <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="px-2">
                   <h6 class="mb-0"><a href="javascript:void(0);">{{product?.name}}</a></h6>
-                  <span>{{'COMMON.QTY'|translate}}:{{product.quantity}} &nbsp;
-                     {{'COMMON.PRICE'|translate}}:{{product.symbolLeft}} {{ product.total }} {{product.symbolRight}} </span>
+                  <span>{{'COMMON.QTY'|translate}}: {{product.quantity}} &nbsp;
+                     {{'COMMON.PRICE'|translate}}: {{product.total | currency:product.symbolLeft 
+                        + product.symbolRight:true:'1.' 
+                        + product.decimalPlace + '-'  
+                        + product.decimalPlace:appService?.appInfoStorage.language.locale}} </span>
                </div>
                <div fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="35" fxFlex.lg="35" fxFlex.xl="35" class="
                cart-menu-action">
