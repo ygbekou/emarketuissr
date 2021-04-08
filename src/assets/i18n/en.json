@@ -689,9 +689,10 @@
 		"BOUGHT_FOR_DELIVERY": "Bought for delivery",
 		"DELIVERY_FEE": "Delivery Fee ",
 		"ARRIVING": "Arriving in ",
-		"DELIVERY_TIME_BEGIN": "delivery time from",
-		"DELIVERY_TIME_END": "delivery time to",
-		"DELIVERY_TIME_UNIT": "delivery time Unit"
+		"DELIVERY_TIME":"Estimated delivery",
+		"DELIVERY_TIME_BEGIN": "Begin range",
+		"DELIVERY_TIME_END": "End range",
+		"DELIVERY_TIME_UNIT": "Time Unit"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

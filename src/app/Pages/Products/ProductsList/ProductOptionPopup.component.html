@@ -5,7 +5,7 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <img mat-card-image 
           [src]="'assets/images/products/'+(productDesc.product?.image?(productDesc.product.id+'/'+productDesc.product?.image):'default.png')"
-          alt="Image">
+          alt="Image" max-height="200px!important">
       </div>
 
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
