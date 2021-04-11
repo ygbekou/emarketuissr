@@ -70,11 +70,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       private datePipe: DatePipe
    ) {
 
-      this.processPaymentConfirmation();
+
    }
 
    ngOnInit() {
 
+      this.processPaymentConfirmation();
       this.error = '';
       if (!this.order) {
          this.order = new Order();
@@ -551,6 +552,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.appService.completeOrder(+this.storeId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
+                           this.appService.storeOrderId(this.order);
                            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
                            window.location.href = url;
                            return;
