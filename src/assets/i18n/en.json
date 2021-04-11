@@ -692,7 +692,9 @@
 		"DELIVERY_TIME":"Estimated delivery",
 		"DELIVERY_TIME_BEGIN": "Begin range",
 		"DELIVERY_TIME_END": "End range",
-		"DELIVERY_TIME_UNIT": "Time Unit"
+		"DELIVERY_TIME_UNIT": "Time Unit",
+		"ACCEPT_PICKUP_CASH": "Accept Cash for Pickup",
+		"ACCEPT_DELIVERY_CASH": "Accept Cash for Delivery"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
