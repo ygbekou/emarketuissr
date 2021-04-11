@@ -90,7 +90,7 @@ export class HomeTwoComponent implements OnInit {
                this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
                   new ProductSearchCriteria(
                      this.appService.appInfoStorage.language.id, 0, data[0].marketing.id, 0, '0',
-                     0, 0, 0, 0, 0))
+                     0, 0, 0, 0, 0, 0))
                   .subscribe((data2: ProductDescVO[]) => {
                      this.topProducts = data2;
                      // console.log(this.topProducts);

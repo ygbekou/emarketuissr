@@ -237,11 +237,11 @@ export class ProductsListComponent implements OnInit {
       if (this.searchText && this.searchText !== '0') {
          console.log('this.searchText is not null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
-            0, 0, 0, this.searchText, 1, 0, 0, 0, 0);
+            0, 0, 0, this.searchText, 1, 0, 0, 0, 0, 0);
       } else {
          console.log('this.searchText is null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
-            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId);
+            this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId, 0);
       }
       console.log(crit);
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', crit).subscribe((data: ProductListVO) => {
