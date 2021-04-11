@@ -74,7 +74,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-
+      console.log('Store Id = ' + this.storeId);
       this.error = '';
       if (!this.order) {
          this.order = new Order();
@@ -732,10 +732,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public isCashAllowed(): boolean {
-      if (this.store && this.store.acceptDeliveryCash === 1 && !this.pickUp) {
+      console.log('Cash allowed  this.pickUp = ' + this.pickUp);
+      console.log(this.store);
+      if (this.store && this.store.acceptDeliveryCash === 1 && this.pickUp === '0') {
          return true;
       }
-      if (this.store && this.store.acceptPickupCash === 1 && this.pickUp) {
+      if (this.store && this.store.acceptPickupCash === 1 && this.pickUp === '1') {
          return true;
       }
       return false;
