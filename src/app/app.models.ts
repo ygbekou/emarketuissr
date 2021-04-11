@@ -777,6 +777,9 @@ export class Store extends BaseModel {
   closeTime0: string;
   presentPreorderScreen: PresentPreorderScreen;
   timeZone: TimeZone;
+  acceptPickupCash: number;
+  acceptDeliveryCash: number;
+
   type = 'Store';
 
   constructor() {

@@ -692,7 +692,9 @@
     "DELIVERY_TIME":"Délai livraison",
 		"DELIVERY_TIME_BEGIN": "Plage Début",
 		"DELIVERY_TIME_END": "Plage Fin",
-		"DELIVERY_TIME_UNIT": "Unité de temps"
+		"DELIVERY_TIME_UNIT": "Unité de temps",
+		"ACCEPT_PICKUP_CASH": "Accepter cash pour les prise en boutique",
+		"ACCEPT_DELIVERY_CASH": "Accepter cash pour les livraisons"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

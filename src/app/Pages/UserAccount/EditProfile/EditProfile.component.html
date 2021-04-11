@@ -554,6 +554,16 @@
             class="my-2">
             {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
           </mat-slide-toggle>
+          <br/>
+          <br/>
+
+          <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel" class="my-2">
+            {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
+          </mat-slide-toggle>
+          <br/>
+          <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash" #acceptDeliveryCash="ngModel" class="my-2">
+            {{ 'COMMON.ACCEPT_DELIVERY_CASH' | translate }}
+          </mat-slide-toggle>
 
         </div>
       </div>

@@ -307,6 +307,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       this.store.onlineStore = (this.store.onlineStore == null
          || this.store.onlineStore.toString() === 'false'
          || this.store.onlineStore.toString() === '0') ? 0 : 1;
+      
+      this.store.acceptDeliveryCash = (this.store.acceptDeliveryCash == null
+         || this.store.acceptDeliveryCash.toString() === 'false'
+         || this.store.acceptDeliveryCash.toString() === '0') ? 0 : 1;
+
+      this.store.acceptPickupCash = (this.store.acceptPickupCash == null
+         || this.store.acceptPickupCash.toString() === 'false'
+         || this.store.acceptPickupCash.toString() === '0') ? 0 : 1;
 
       this.store.sendSMSNewOrder = (this.store.sendSMSNewOrder == null
          || this.store.sendSMSNewOrder.toString() === 'false'
