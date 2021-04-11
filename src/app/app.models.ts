@@ -1727,7 +1727,8 @@ export class ProductSearchCriteria {
     public productId: number,
     public topN: number,
     public userId: number,
-    public storeCatId: number
+    public storeCatId: number,
+    public fromStore: number
   ) {
 
   }

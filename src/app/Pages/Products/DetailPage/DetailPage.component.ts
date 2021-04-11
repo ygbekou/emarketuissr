@@ -70,7 +70,7 @@ export class DetailPageComponent extends BaseComponent implements OnInit {
    getRelatedProducts(langId: number) {
       this.appService.saveWithUrl('/service/catalog/getRelatedProductsOnSale/',
          new ProductSearchCriteria(
-            langId, 0, 0, 0, '0', 1, this.product.product.id, this.topN, 0, 0
+            langId, 0, 0, 0, '0', 1, this.product.product.id, this.topN, 0, 0, 0
          ))
          .subscribe((data: ProductDescVO[]) => {
             this.products = data;
