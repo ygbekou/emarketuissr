@@ -70,11 +70,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       private datePipe: DatePipe
    ) {
 
-      this.processPaymentConfirmation();
+
    }
 
    ngOnInit() {
-      console.log('Store Id = ' + this.storeId);
+
+      this.processPaymentConfirmation();
       this.error = '';
       if (!this.order) {
          this.order = new Order();
@@ -91,8 +92,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.storeId > 0) {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
-               if (result.id > 0) {
-                  console.log(this.store)
+               if (result.id > 0) { 
                   this.store = result;
                   if (this.pickUp === '1') {
                      this.isStoreOpen();
@@ -551,6 +551,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.appService.completeOrder(+this.storeId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
+                           this.appService.storeOrderId(this.order);
                            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
                            window.location.href = url;
                            return;
@@ -732,8 +733,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public isCashAllowed(): boolean {
-      console.log('Cash allowed  this.pickUp = ' + this.pickUp);
-      console.log(this.store);
       if (this.store && this.store.acceptDeliveryCash === 1 && this.pickUp === '0') {
          return true;
       }
@@ -742,6 +741,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       }
       return false;
    }
+
 
 }
 
