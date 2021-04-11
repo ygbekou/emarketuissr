@@ -92,8 +92,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.storeId > 0) {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
-               if (result.id > 0) {
-                  console.log(this.store)
+               if (result.id > 0) { 
                   this.store = result;
                   if (this.pickUp === '1') {
                      this.isStoreOpen();
@@ -734,14 +733,15 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public isCashAllowed(): boolean {
-      if (this.store && this.store.acceptDeliveryCash === 1 && !this.pickUp) {
+      if (this.store && this.store.acceptDeliveryCash === 1 && this.pickUp === '0') {
          return true;
       }
-      if (this.store && this.store.acceptPickupCash === 1 && this.pickUp) {
+      if (this.store && this.store.acceptPickupCash === 1 && this.pickUp === '1') {
          return true;
       }
       return false;
    }
+
 
 }
 

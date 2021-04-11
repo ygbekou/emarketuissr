@@ -1,7 +1,7 @@
 
-import {interval as observableInterval} from 'rxjs';
+import { interval as observableInterval } from 'rxjs';
 
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Component, ElementRef, OnInit, OnDestroy, ViewEncapsulation, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
@@ -9,14 +9,14 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'embryo-TimerCountDown',
-	templateUrl: './TimerCountDown.component.html',
-	styleUrls: ['./TimerCountDown.component.scss'],
+   selector: 'embryo-TimerCountDown',
+   templateUrl: './TimerCountDown.component.html',
+   styleUrls: ['./TimerCountDown.component.scss'],
 })
 
 export class TimerCountDownComponent implements OnInit, OnDestroy {
 
-   @Input() dateTime : any;
+   @Input() dateTime: any;
 
    private future: Date;
    private futureString: string;
@@ -25,20 +25,18 @@ export class TimerCountDownComponent implements OnInit, OnDestroy {
    private subscription: Subscription;
    private message: string;
 
-   hours : any;
-   minutes : any;
-   seconds : any;
+   hours: any;
+   minutes: any;
+   seconds: any;
 
    constructor(public dialogRef: MatDialogRef<TimerCountDownComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-    translate: TranslateService) { 
-       dialogRef.disableClose = true;
-    }
+      translate: TranslateService) {
+      dialogRef.disableClose = true;
+   }
 
-   dhms(t) 
-   {
-      if(t && t > 0)
-      {
+   dhms(t) {
+      if (t && t > 0) {
          let days, hours, minutes, seconds;
          days = Math.floor(t / 86400);
          t -= days * 86400;
@@ -48,35 +46,24 @@ export class TimerCountDownComponent implements OnInit, OnDestroy {
          t -= minutes * 60;
          seconds = t % 60;
 
-         if(hours < 10)
-         {
-            this.hours = '0'+ hours;
-         }
-         else
-         {
+         if (hours < 10) {
+            this.hours = '0' + hours;
+         } else {
             this.hours = hours;
          }
-         
-         if(minutes < 10)
-         {
-            this.minutes = '0'+ minutes;
-         }
-         else
-         {
+
+         if (minutes < 10) {
+            this.minutes = '0' + minutes;
+         } else {
             this.minutes = minutes;
          }
 
-         if(seconds < 10)
-         {
-            this.seconds = '0'+ seconds;
-         }
-         else
-         {
+         if (seconds < 10) {
+            this.seconds = '0' + seconds;
+         } else {
             this.seconds = seconds;
          }
-      }
-      else
-      {
+      } else {
          this.hours = '00';
          this.minutes = '00';
          this.seconds = '00';
@@ -85,10 +72,8 @@ export class TimerCountDownComponent implements OnInit, OnDestroy {
    }
 
 
-   ngOnInit() 
-   {
-      if(this.dateTime)
-      {
+   ngOnInit() {
+      if (this.dateTime) {
          this.future = this.dateTime;
          this.$counter = observableInterval(1000).pipe(map((x) => {
             this.diff = Math.floor((this.future.getTime() - new Date().getTime()) / 1000);
@@ -99,8 +84,7 @@ export class TimerCountDownComponent implements OnInit, OnDestroy {
       }
    }
 
-   ngOnDestroy(): void 
-   {
+   ngOnDestroy(): void {
       this.subscription.unsubscribe();
    }
 }
