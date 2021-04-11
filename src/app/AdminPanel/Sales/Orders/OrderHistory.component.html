@@ -63,10 +63,10 @@
             
               <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{orderHistory.orderStatus.description}}</span><br/>
-              <mat-button-toggle-group name="fontStyle" aria-label="Font Style" 
-                    (change)="onToggleGroupChange($event)" [disabled]="orderHistory.id > 0">
-                <mat-button-toggle *ngFor="let orderStatus of filteredOrderStatuses" [disabled]="order.orderStatus.name === orderStatus.name" 
-                  [value]="orderStatus">
+              <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="order.orderStatus.id"
+                    (change)="onToggleGroupChange($event)" [disabled]="orderHistory.id > 0" >
+                <mat-button-toggle *ngFor="let orderStatus of filteredOrderStatuses" [disabled]="disableToggle(orderStatus)" 
+                [value]="orderStatus.id">
                   {{orderStatus.description}}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </mat-button-toggle>

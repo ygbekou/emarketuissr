@@ -123,8 +123,10 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
             if (result.id > 0) {
               this.order.orderStatus = this.orderHistory.orderStatus;
               this.orderHistory = new OrderHistory();
-              this.getOrderHistories();
-              this.filterOrderStatuses();
+              //this.getOrderHistories();
+              //this.filterOrderStatuses();
+              window.location.reload();
+
             }
           });
 
@@ -156,7 +158,7 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
   public filterOrderStatuses() {
     this.filteredOrderStatuses = [];
     this.orderStatuses.forEach( orderStatus => {
-      if (orderStatus.name === 'SHIPPED' || orderStatus.name === 'DELIVERED' || orderStatus.name === 'PROCESSING') {
+      if (orderStatus.name === 'PENDING' || orderStatus.name === 'SHIPPED' || orderStatus.name === 'DELIVERED' || orderStatus.name === 'PROCESSING') {
         this.filteredOrderStatuses.push(orderStatus);
       }
     });
@@ -180,8 +182,22 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
 
 
   public onToggleGroupChange(event) {
-    this.orderHistory.orderStatus = event.value;
+    this.orderHistory.orderStatus.id = event.value;
 
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
+
+  disableToggle(orderStatus: OrderStatus) {
+    return this.order.orderStatus.name === orderStatus.name
+          || (orderStatus.name === 'PENDING'
+              && (this.order.orderStatus.name === 'PROCESSING' || this.order.orderStatus.name === 'SHIPPED'
+                || this.order.orderStatus.name === 'DELIVERED'))
+          || (orderStatus.name === 'PROCESSING'
+              && (this.order.orderStatus.name === 'SHIPPED' || this.order.orderStatus.name === 'DELIVERED'))
+          || (orderStatus.name === 'SHIPPED' && this.order.orderStatus.name === 'DELIVERED');
   }
 
 }
