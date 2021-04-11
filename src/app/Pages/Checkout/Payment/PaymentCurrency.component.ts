@@ -62,6 +62,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    minScheduleDate: Date;
    maxScheduleDate: Date;
 
+   payCash = false;
+
    constructor(public appService: AppService,
       public router: Router,
       public translate: TranslateService,
@@ -90,6 +92,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
                if (result.id > 0) {
+                  console.log(this.store)
                   this.store = result;
                   if (this.pickUp === '1') {
                      this.isStoreOpen();
@@ -491,7 +494,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.expected = preorderDatetime;
 
 
-      if (!this.user.paymentMethodCode) {
+      if (!this.user.paymentMethodCode && !this.payCash) {
          this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
             this.error = res;
             this.cartComponent.error = res;
@@ -514,12 +517,19 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.order.shippingMethod = 'DELIVERY';
             this.order.shippingCode = 'DELIVERY';
          }
-         if (this.user.paymentMethodCode === 'CREDIT_CARD' && this.user.creditCard) {
+
+         if (this.payCash) {
+            this.order.paymentCode = 'CASH';
+            this.order.paymentMethod = 'CASH';
+            this.order.paymentInfo = 'CASH';
+         } else if (this.user.paymentMethodCode === 'CREDIT_CARD' && this.user.creditCard) {
             this.order.paymentInfo = this.user.creditCard.cardType +
                ' - xxx' + this.user.creditCard.last4Digits +
                ' - Exp: ' + this.user.creditCard.expMonth + '/' +
                this.user.creditCard.expYear;
          }
+
+
          this.appService.getIp()
             .subscribe((data1: any) => {
                this.order.ip = data1.ip;
@@ -719,6 +729,16 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
       return deliveryTimeUnitDesc;
 
+   }
+
+   public isCashAllowed(): boolean {
+      if (this.store && this.store.acceptDeliveryCash === 1 && !this.pickUp) {
+         return true;
+      }
+      if (this.store && this.store.acceptPickupCash === 1 && this.pickUp) {
+         return true;
+      }
+      return false;
    }
 
 }

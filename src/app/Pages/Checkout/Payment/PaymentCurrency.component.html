@@ -85,7 +85,7 @@
             {{user.shippingAddress.country.name}}<br />
           </div>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2}" routerLinkActive="tab-active"
@@ -101,7 +101,8 @@
             {{user.billingAddress.country.name}}<br>
           </div>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="36" fxFlex.xl="36">
+          <div *ngIf="!payCash">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{
                   user.paymentMethodCode==='CREDIT_CARD'?('COMMON.CREDIT_CARD' | translate):
@@ -111,8 +112,9 @@
             <a [routerLink]="['/checkout/cards']" [queryParams]="{paymentMethodCode: user.paymentMethodCode}"
               routerLinkActive="tab-active" *ngIf="!user.paymentMethodCode">{{'COMMON.ADD' | translate}}</a>
           </div>
-          <div *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
-            {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
+          <div fxLayout="row wrap" *ngIf="user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard" >
+            <img [src]="'assets/images/cards/' + user.creditCard.cardTypeIndex + '.png'"
+          [style.width.px]="50" class="d-block"> {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
           </div>
           <div *ngIf="user.paymentMethodCode === 'TMONEY' && user.tmoney">
             {{'COMMON.PHONE_NUMBER' | translate}} : {{user.tmoney.phoneNumber}}
@@ -120,7 +122,20 @@
           <div *ngIf="user.paymentMethodCode === 'FLOOZ' && user.flooz">
             {{'COMMON.PHONE_NUMBER' | translate}} : {{user.flooz.phoneNumber}}
           </div>
+          </div>
+          <br/>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid" *ngIf="isCashAllowed()">
+            <mat-slide-toggle [(ngModel)]="payCash" name="payCash" #isPayCash="ngModel" class="my-2">
+              {{ 'COMMON.PAY_CASH' | translate }}
+            </mat-slide-toggle>
+            <br/>
+          </div>
+
         </div>
+
+       
+        
+
       </div>
     </mat-card>
 

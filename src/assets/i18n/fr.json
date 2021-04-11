@@ -694,7 +694,8 @@
 		"DELIVERY_TIME_END": "Plage Fin",
 		"DELIVERY_TIME_UNIT": "Unité de temps",
 		"ACCEPT_PICKUP_CASH": "Accepter cash pour les prise en boutique",
-		"ACCEPT_DELIVERY_CASH": "Accepter cash pour les livraisons"
+		"ACCEPT_DELIVERY_CASH": "Accepter cash pour les livraisons",
+		"PAY_CASH": "Payer Cash"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
