@@ -696,7 +696,10 @@
 		"DELIVERY_TIME_UNIT": "Time Unit",
 		"ACCEPT_PICKUP_CASH": "Accept Cash for Pickup",
 		"ACCEPT_DELIVERY_CASH": "Accept Cash for Delivery",
-		"PAY_CASH": "Pay Cash"
+		"PAY_CASH": "Pay Cash",
+		"PARENT_PRODUCT": "Parent Product",
+		"PARENTS": "Parents",
+		"SELECT_ONE": "Select One"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

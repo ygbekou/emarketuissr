@@ -296,5 +296,9 @@
    <mat-tab label="{{'COMMON.OPTION' | translate}}" *ngIf="product.id > 0">
       <app-product-options [product]="product" [productId]="product.id"></app-product-options>
    </mat-tab>
+ 
+   <mat-tab label="{{'COMMON.PARENTS' | translate}}" *ngIf="product.id > 0">
+      <app-product-to-parent (productChangeEvent)="setProduct($event)" [product]="product" [productId]="product.id"></app-product-to-parent>
+   </mat-tab>
 
 </mat-tab-group>

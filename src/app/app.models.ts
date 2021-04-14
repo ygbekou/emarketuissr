@@ -272,6 +272,23 @@ export class ProductRelated {
   action = '';
 }
 
+export class ProductToParent {
+  id: number;
+  product: Product;
+  parent: Product;
+  quantity: number;
+  currentOption: any;
+
+  parentProductDescription: ProductDescription = new ProductDescription();
+  parentOptions: ProductDescription[] = [];
+  filteredParentOptions: ProductDescription[] = [];
+
+  type = 'ProductToParent';
+  action = '';
+
+
+}
+
 export class Language {
   id: number;
   name: string;
