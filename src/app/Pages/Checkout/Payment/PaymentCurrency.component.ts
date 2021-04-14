@@ -92,7 +92,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.storeId > 0) {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
-               if (result.id > 0) { 
+               if (result.id > 0) {
                   this.store = result;
                   if (this.pickUp === '1') {
                      this.isStoreOpen();
@@ -547,7 +547,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.cartComponent.error = res;
                         });
                      } else {
-                        if (this.user.paymentMethodCode !== 'TMONEY') {
+                        if (this.user.paymentMethodCode !== 'TMONEY'
+                           || this.payCash
+                           || (this.order.paymentCode && this.order.paymentCode === 'CASH')) {
                            this.appService.completeOrder(+this.storeId);
                            this.orderCompleteEvent.emit(this.order);
                         } else {
