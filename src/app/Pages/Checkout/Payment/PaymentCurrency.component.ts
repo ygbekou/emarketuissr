@@ -92,15 +92,15 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.storeId > 0) {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
-               if (result.id > 0) {
-                  this.store = result;
-                  if (this.pickUp === '1') {
-                     this.isStoreOpen();
-                  } else {
-                     this.getZoneToGeoZone();
-                  }
+            if (result.id > 0) {
+               this.store = result;
+               if (this.pickUp === '1') {
+                  this.isStoreOpen();
+               } else {
+                  this.getZoneToGeoZone();
                }
-            });
+            }
+         });
       }
    }
 
@@ -554,6 +554,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.orderCompleteEvent.emit(this.order);
                         } else {
                            this.appService.storeOrderId(this.order);
+                           this.appService.completeOrder(+this.storeId);
+                           this.orderCompleteEvent.emit(this.order);
                            const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
                            window.location.href = url;
                            return;
@@ -580,12 +582,18 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          }).subscribe((data: Order) => {
             this.order = data;
             if (data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-               this.cartComponent.error = data.errors[0];
-            } else {
-               this.appService.completeOrder(+this.storeId);
-               this.orderCompleteEvent.emit(this.order);
+               if ('ORDER_ALREADY_PROCESSED' === data.errors[0]) {
+                  this.appService.clearOrderId();
+                  return;
+               } else {
+                  this.error = data.errors[0];
+                  this.cartComponent.error = data.errors[0];
+               }
             }
+            // } else {
+            //    this.appService.completeOrder(+this.storeId);
+            //    this.orderCompleteEvent.emit(this.order);
+            // }
             this.appService.clearOrderId();
          },
             error => console.log(error),
