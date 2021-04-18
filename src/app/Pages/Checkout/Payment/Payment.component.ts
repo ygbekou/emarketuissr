@@ -41,16 +41,22 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       this.user.billingAddress = new Address();
       this.user.creditCard = new CreditCard();
       this.getUser(Number(this.appService.tokenStorage.getUserId()));
-
    }
 
    ngOnInit() {
       this.deliveryMode = <'0' | '1'> localStorage.getItem('deliveryMode');
+      if (!this.deliveryMode) {
+         this.deliveryMode = '0';
+         this.deliveryOptionChange(null);
+      }
+
       this.appService.recalculateCart(true);
+      
+      
    }
 
    ngAfterViewInit() {
-      
+
    }
 
 
@@ -59,15 +65,20 @@ export class PaymentComponent implements OnInit, AfterViewInit {
          .subscribe(result => {
             if (result.id > 0) {
                this.user = result;
+
                if (this.user.paymentMethodCode === 'CREDIT_CARD') {
                   this.appService.getObject('/service/order/customer/' + userId + '/active_card')
                      .subscribe((data: CreditCard) => {
                         this.user.creditCard = data;
+                        this.setAllStepDone();
+                        this.redirectToUserInfo();
                      },
                         error => console.log(error),
                         () => console.log('Get user active CreditCard complete for userId=' + userId));
-               } else if (this.user.paymentMethodCode === 'TMONEY') {
+               } else {
                   //this.processPaymentConfirmation();
+                  this.setAllStepDone();
+                  this.redirectToUserInfo();
                }
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -96,9 +107,39 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }
    }
 
-   setAllStepDone(deliveryInfo: any) {
-      this.allStepDone = deliveryInfo.status;
-      this.deliveryMode = deliveryInfo.deliveryMode;
+   setAllStepDone() {
+      if (this.deliveryMode === '1') {
+         this.allStepDone = this.user.shippingAddress && this.user.shippingAddress.id
+                  && this.user.billingAddress && this.user.billingAddress.id
+            && ((this.user.creditCard !== null && this.user.creditCard.id > 0)
+               || (this.user.tmoney !== null && this.user.tmoney.id > 0)
+               || (this.user.flooz !== null && this.user.flooz.id > 0));
+      } else if (this.deliveryMode === '0') {
+         this.allStepDone = this.user.billingAddress && this.user.billingAddress.id
+            && ((this.user.creditCard !== null && this.user.creditCard.stripePaymentMethodId !== null)
+               || (this.user.tmoney !== null && this.user.tmoney.id > 0)
+               || (this.user.flooz !== null && this.user.flooz.id > 0));
+      }
+      //this.deliveryMode = deliveryInfo.deliveryMode;
+   }
+
+
+   deliveryOptionChange(event) {
+      localStorage.setItem('deliveryMode', this.deliveryMode);
+   }
+
+   redirectToUserInfo() {
+      if (this.deliveryMode && !this.user.shippingAddress && !this.user.billingAddress) {
+         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 0, fromPage: 'checkout'} });
+      } else if (this.deliveryMode === '0' && !this.user.shippingAddress) {
+         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 1, fromPage: 'checkout'} });
+      } else if (this.deliveryMode && !this.user.billingAddress) {
+         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 2, fromPage: 'checkout'} });
+      } else if (this.deliveryMode && ((this.user.creditCard === null || !this.user.creditCard.stripePaymentMethodId)
+               && (this.user.tmoney === null || this.user.tmoney.id <= 0)
+               && (this.user.flooz === null || this.user.flooz.id <= 0))) {
+         this.router.navigate(['/checkout/cards'], { queryParams: {fromPage: 'checkout'} });
+      }
    }
 
 }

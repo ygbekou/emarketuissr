@@ -145,7 +145,9 @@ export class PaymentCardComponent implements OnInit, AfterViewInit {
          .subscribe(result2 => {
             console.log(result2);
             if (result2.result === 'SUCCESS') {
-               this.cardSaveEvent.emit(result2);
+               const creditCard = new CreditCard();
+               creditCard.stripePaymentMethodId = result.paymentMethod.id;
+               this.cardSaveEvent.emit(creditCard);
             } else {
                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
                   this.errors = res['MESSAGE.SAVE_UNSUCCESS'];

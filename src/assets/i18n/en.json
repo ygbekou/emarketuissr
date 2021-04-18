@@ -111,6 +111,8 @@
 		"SHIP_TO": "Ship to",
 		"ADD_ADDRESS": "Add address",
 		"SELECT_ADDRESS": "Select this address",
+		"SELECT_CREDIT_CARD": "Select this credit card",
+		"SELECT_PHONE": "Select this phone",
 		"ORDER_DETAIL": "Order details",
 		"OPEN_ORDERS": "Open orders",
 		"VIEW_OPEN_ORDERS": "View my open orders",
@@ -699,7 +701,9 @@
 		"PAY_CASH": "Pay Cash",
 		"PARENT_PRODUCT": "Parent Product",
 		"PARENTS": "Parents",
-		"SELECT_ONE": "Select One"
+		"SELECT_ONE": "Select One",
+		"ADD_ADDRESS_TO_PROCEED":"Specify your address to proceed",
+		"ADD_PAYMENT_TO_PROCEED":"Specify your payment method to proceed"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

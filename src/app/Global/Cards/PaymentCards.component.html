@@ -1,5 +1,6 @@
 <div class="table-wrapper">
-  <div><h6>{{'COMMON.CREDIT_OR_DEBIT_CARDS'|translate}}</h6></div>
+  
+  <div><h4 style="color: #283593;">{{'COMMON.CREDIT_OR_DEBIT_CARDS'|translate}}</h4></div>
   <table mat-table [dataSource]="creditCardsDataSource" matSort class="w-100">
 
     <ng-container matColumnDef="selected">
@@ -35,6 +36,11 @@
     <ng-container matColumnDef="action">
         <th class="px-3" mat-header-cell *matHeaderCellDef> Action </th>
         <td class="px-3" mat-cell *matCellDef="let creditCard; let i = index;">
+          <button mat-button color="warn" (click)="changePaymentMethod(creditCard)">
+            <mat-icon>check_circle_outline</mat-icon>
+            {{'COMMON.SELECT_CREDIT_CARD'|translate}}
+          </button>
+          
           <button color="warn" mat-icon-button (click)="delete(creditCard.stripePaymentMethodId)" 
             matTooltip="{{'COMMON.DELETE' | translate}}">
               <mat-icon class="">delete</mat-icon>

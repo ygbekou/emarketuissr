@@ -1,4 +1,11 @@
 <div class="container">
+  <div fxLayout="row wrap" *ngIf="fromPage === 'checkout'">
+    <h2 style="color: #283593;">{{'COMMON.ADD_PAYMENT_TO_PROCEED'|translate}}</h2>
+  </div>
+  <div fxLayout="row wrap" *ngIf="!(fromPage === 'checkout')">
+    <h2 style="color: #283593;">{{'COMMON.PAYMENT_METHOD'|translate}}s</h2>
+  </div>
+
   <div fxLayout="row wrap" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <app-PaymentCards [paymentType]="'CREDIT_CARD'" [userId]="userId" [deliveryMode]="deliveryMode"

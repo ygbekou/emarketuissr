@@ -72,7 +72,6 @@ export class PaymentCardsComponent implements OnInit {
   }
 
   changePaymentMethod(creditCard: CreditCard) {
-
     this.paymentMethodChange.userId = this.userId;
     this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
     this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';

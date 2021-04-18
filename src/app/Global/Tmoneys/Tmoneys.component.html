@@ -1,6 +1,6 @@
 
 <div class="table-wrapper">
-  <div><h6>{{this.paymentType}}</h6></div>
+  <div><h4 style="color: #283593;">{{this.paymentType}}</h4></div>
   <table mat-table [dataSource]="tmoneysDataSource" matSort class="w-100">
 
     <ng-container matColumnDef="selected">
@@ -27,6 +27,11 @@
     <ng-container matColumnDef="action">
         <th class="px-3" mat-header-cell *matHeaderCellDef> Action </th>
         <td class="px-3" mat-cell *matCellDef="let tmoney; let i = index;">
+          <button mat-button color="warn" (click)="changePaymentMethod(tmoney)">
+            <mat-icon>check_circle_outline</mat-icon>
+            {{'COMMON.SELECT_PHONE'|translate}}
+          </button>
+
           <button color="warn" mat-icon-button (click)="delete(tmoney.id)" 
             matTooltip="{{'COMMON.DELETE' | translate}}">
               <mat-icon class="">delete</mat-icon>

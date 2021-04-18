@@ -151,7 +151,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    }
 
    public isStoreOpen() {
-      console.log('XXXXXXXXXX');
       console.log(this.store);
       console.log(this.store.timeZone);
       this.nextOpenDateTime = undefined;
@@ -388,35 +387,37 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    getZoneToGeoZone() {
 
-      console.log('Calling Geozone for Store id: ' + this.storeId + ' and Shipping Address id ' + this.user.shippingAddress.zone.id);
+      if (this.user.shippingAddress && this.user.shippingAddress.zone) {
+         console.log('Calling Geozone for Store id: ' + this.storeId + ' and Shipping Address id ' + this.user.shippingAddress.zone.id);
 
-      this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
-         'storeId': this.storeId,
-         'zoneId': this.user.shippingAddress.zone.id,
-         'countryId': this.user.shippingAddress.country.id
-      })
-         .subscribe((data: ZoneToGeoZone) => {
-            if (data !== null && data.errors !== null && data.errors !== undefined) {
-               this.error = data.errors[0];
-            } else {
-               this.zoneToGeoZone = data;
-               this.appService.navbarCartShippingGeoZoneMap[this.storeId] = this.zoneToGeoZone;
-               console.log(this.zoneToGeoZone);
-               if (data === null) {
-                  this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
-                     { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe(res => {
-                        this.error = res;
-                     });
+         this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
+            'storeId': this.storeId,
+            'zoneId': this.user.shippingAddress.zone.id,
+            'countryId': this.user.shippingAddress.country.id
+         })
+            .subscribe((data: ZoneToGeoZone) => {
+               if (data !== null && data.errors !== null && data.errors !== undefined) {
+                  this.error = data.errors[0];
                } else {
-                  this.isDeliveryOpen();
+                  this.zoneToGeoZone = data;
+                  this.appService.navbarCartShippingGeoZoneMap[this.storeId] = this.zoneToGeoZone;
+                  console.log(this.zoneToGeoZone);
+                  if (data === null) {
+                     this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
+                        { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe(res => {
+                           this.error = res;
+                        });
+                  } else {
+                     this.isDeliveryOpen();
+                  }
                }
-            }
 
-            console.log('Calling Recalculate ...');
-            this.appService.recalculateCart(false);
-         },
-            error => console.log(error),
-            () => console.log('ZoneToGeoZone retrieved '));
+               console.log('Calling Recalculate ...');
+               this.appService.recalculateCart(false);
+            },
+               error => console.log(error),
+               () => console.log('ZoneToGeoZone retrieved '));
+         }
 
    }
 

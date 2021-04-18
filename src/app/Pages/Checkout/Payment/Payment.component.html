@@ -6,10 +6,17 @@
 </div>
   <div class="checkout-option">
     <div class="container" *ngIf="isUserLoggedIn()">
-      <app-Payment-DeliveryStepper [pickUp]="deliveryMode" (setAllStepDone)="setAllStepDone($event)" *ngIf="!allStepDone"></app-Payment-DeliveryStepper>
+      <div *ngIf="deliveryMode !== null && !allStepDone">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="deliveryMode"
+          (change)="deliveryOptionChange($event);">
+          <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
+          <mat-button-toggle value="1">{{'COMMON.I_PICKUP'|translate}}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+
       <mat-tab-group  *ngIf="allStepDone">
-        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].storeName}}"
-          *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
+        <mat-tab label="{{appService.navbarCartCurrencyMap[item.key].storeName}}" *ngFor="let item of appService.localStorageCartProductsMap | keyvalue">
           <app-Payment-Currency [user]="user" [pickUp]="deliveryMode" (orderCompleteEvent)="updateOrder($event)" [storeId]="item.key">
           </app-Payment-Currency>
         </mat-tab>

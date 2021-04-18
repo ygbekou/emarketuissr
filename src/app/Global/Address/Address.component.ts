@@ -53,7 +53,8 @@ export class AddressComponent implements OnInit {
          this.address.addressType = this.selectedAddressType;
       }
 
-      this.appService.save(this.address, 'Address')
+
+       this.appService.saveWithUrl('/service/catalog/savePaymentAddress/', this.address)
          .subscribe(result => {
             if (result.id > 0) {
                this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {

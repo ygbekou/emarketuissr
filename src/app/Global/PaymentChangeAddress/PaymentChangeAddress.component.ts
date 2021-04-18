@@ -47,7 +47,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
    }
 
    onAddressSaved($event) {
-      // this.paymentAddresses.updateTable($event);
+      this.paymentAddresses.updateTable($event);
    }
 }
 

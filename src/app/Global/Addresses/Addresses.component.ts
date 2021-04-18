@@ -54,6 +54,9 @@ export class AddressesComponent implements OnInit {
       this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
         .subscribe((data: Address[]) => {
           this.addresses = data;
+          if (this.addresses.length === 0) {
+            this.shippingExpansionPanelElement.open();
+          }
         },
           error => console.log(error),
           () => console.log('Get all addresses complete for userId=' + this.userId));
@@ -91,14 +94,20 @@ export class AddressesComponent implements OnInit {
     } else {
       this.addresses[index] = address;
     }
-    this.selectAddress(address);
   }
 
   onAddressSaved($event) {
-    this.updateTable($event);
-    if (this.shippingExpansionPanelElement) {
-      this.shippingExpansionPanelElement.close();
+    if (this.fromPage === 'fromStore') {
+      this.router.navigate(['/account/profile/edit'], { queryParams: { type: 'store', sId: '0' } });
+    } else if (this.fromPage === 'checkout') {
+      this.router.navigate(['/checkout/payment'], { queryParams: { deliveryMode: this.deliveryMode } });
+    } else {
+      this.updateTable($event);
+      if (this.shippingExpansionPanelElement) {
+        this.shippingExpansionPanelElement.close();
+      }
     }
+
   }
 
   editAddress(addressId: number) {

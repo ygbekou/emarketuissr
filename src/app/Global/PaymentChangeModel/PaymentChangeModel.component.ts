@@ -21,6 +21,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    paypalMethodStatus: number;
    deliveryMode: string;
    panelOpenState = false;
+   fromPage: string;
 
    @Input()
    userId: number;
@@ -33,6 +34,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
       this.activatedRoute.queryParams.forEach(queryParams => {
          this.paypalMethodStatus = queryParams['paymentMethodCode'] === 'PAYPAL' ? 1 : undefined;
          this.deliveryMode = queryParams['deliveryMode'];
+         this.fromPage = queryParams['fromPage'];
       });
    }
 
@@ -48,43 +50,65 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    }
 
    onCardSaved($event) {
-      // this.paymentCardsComponent.updateTable($event);
-      this.paymentCardsComponent.getCreditCards();
-      // this.router.navigate(['/checkout/payment']);
+
+      if (!(this.fromPage === 'checkout')) {
+         this.paymentCardsComponent.updateTable($event);
+         this.paymentCardsComponent.getCreditCards();
+      }
+
+      this.paymentCardsComponent.changePaymentMethod($event);
    }
 
    onCardMethodSelected($event) {
-      this.floozsComponent.getTmoneys();
-      this.tmoneysComponent.getTmoneys();
-      this.paypalMethodStatus = 0;
-      this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+
+      if (this.fromPage === 'checkout') {
+         this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else {
+         this.floozsComponent.getTmoneys();
+         this.tmoneysComponent.getTmoneys();
+         this.paypalMethodStatus = 0;
+      }
    }
 
 
    onTmoneySaved($event) {
-      this.tmoneysComponent.updateTable($event);
+
+      if (!(this.fromPage === 'checkout')) {
+         this.tmoneysComponent.updateTable($event);
+      }
+
       this.tmoneysComponent.changePaymentMethod($event);
-      // this.router.navigate(['/checkout/payment']);
    }
 
    onTmoneyMethodSelected($event) {
-      this.floozsComponent.getTmoneys();
-      this.paymentCardsComponent.getCreditCards();
-      this.paypalMethodStatus = 0;
-      this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+
+      if (this.fromPage === 'checkout') {
+         this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else {
+         this.floozsComponent.getTmoneys();
+         this.paymentCardsComponent.getCreditCards();
+         this.paypalMethodStatus = 0;
+      }
+
    }
 
    onFloozSaved($event) {
-      this.floozsComponent.updateTable($event);
-	  this.floozsComponent.changePaymentMethod($event);
-      // this.router.navigate(['/checkout/payment']);
+      if (!(this.fromPage === 'checkout')) {
+         this.floozsComponent.updateTable($event);
+      }
+
+      this.floozsComponent.changePaymentMethod($event);
    }
 
    onFloozMethodSelected($event) {
-      this.tmoneysComponent.getTmoneys();
-      this.paymentCardsComponent.getCreditCards();
-      this.paypalMethodStatus = 0;
-      this.router.navigate(['/checkout/payment']);
+
+      if (this.fromPage === 'checkout') {
+         this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else {
+         this.tmoneysComponent.getTmoneys();
+         this.paymentCardsComponent.getCreditCards();
+         this.paypalMethodStatus = 0;
+      }
    }
 
 
