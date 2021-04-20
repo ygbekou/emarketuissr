@@ -182,7 +182,11 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
 
 
   public onToggleGroupChange(event) {
-    this.orderHistory.orderStatus.id = event.value;
+    const result = this.orderStatuses.filter(el => el.id === event.value);
+
+    if (result.length > 0) {
+      this.orderHistory.orderStatus = result[0];
+    }
 
   }
 

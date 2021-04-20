@@ -111,7 +111,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       if (this.deliveryMode === '1') {
          this.allStepDone = this.user.shippingAddress && this.user.shippingAddress.id
                   && this.user.billingAddress && this.user.billingAddress.id
-            && ((this.user.creditCard !== null && this.user.creditCard.id > 0)
+            && ((this.user.creditCard !== null && this.user.creditCard.stripePaymentMethodId !== null)
                || (this.user.tmoney !== null && this.user.tmoney.id > 0)
                || (this.user.flooz !== null && this.user.flooz.id > 0));
       } else if (this.deliveryMode === '0') {

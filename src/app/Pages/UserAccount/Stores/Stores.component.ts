@@ -31,15 +31,6 @@ export class StoresComponent implements OnInit {
 
   }
 
-  public delete(cardId: number) {
-    /* this.appService.delete(cardId, 'com.softenza.emarket.model.Store')
-      .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-          this.getStores();
-        }
-      }); */
-  }
-
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
     storeSearchCriteria.status = 1;
@@ -53,16 +44,5 @@ export class StoresComponent implements OnInit {
         () => console.log('Get all Stores complete'));
   }
 
-/*   getStores() {
-    if (this.userId > 0) {
-      const parameters: string[] = [];
-      parameters.push('e.owner.id = |userId|' + this.userId + '|Integer');
-      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
-        .subscribe((data: Store[]) => {
-          this.stores = data;
-        },
-          error => console.log(error),
-          () => console.log('Get all Store complete for userId=' + this.userId));
-    }
-  } */
+
 }
