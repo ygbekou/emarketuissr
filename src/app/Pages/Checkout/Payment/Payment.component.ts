@@ -51,8 +51,6 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       }
 
       this.appService.recalculateCart(true);
-      
-      
    }
 
    ngAfterViewInit() {

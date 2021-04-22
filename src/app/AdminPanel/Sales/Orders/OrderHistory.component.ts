@@ -162,21 +162,6 @@ export class OrderHistoryComponent extends BaseComponent implements OnInit {
         this.filteredOrderStatuses.push(orderStatus);
       }
     });
-    // }
-    // if (this.order.orderStatus.name === 'SHIPPED') {
-    //   this.orderStatuses.forEach( orderStatus => {
-    //     if (orderStatus.name === 'PROCESSING' || orderStatus.name === 'DELIVERED') {
-    //       this.filteredOrderStatuses.push(orderStatus);
-    //     }
-    //   });
-    // }
-    // if (this.order.orderStatus.name === 'DELIVERED') {
-    //   this.orderStatuses.forEach( orderStatus => {
-    //     if (orderStatus.name === 'PROCESSING' || orderStatus.name === 'SHIPPED') {
-    //       this.filteredOrderStatuses.push(orderStatus);
-    //     }
-    //   });
-    // }
     return this.filteredOrderStatuses;
   }
 

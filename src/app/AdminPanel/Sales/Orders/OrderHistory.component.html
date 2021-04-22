@@ -57,14 +57,14 @@
 
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-card>
-      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate >
         <div fxLayout="row wrap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngIf="canEdit">
             
-              <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label>
+              <mat-label>{{'COMMON.ORDER_STATUS' | translate}}:</mat-label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{orderHistory.orderStatus.description}}</span><br/>
               <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="order.orderStatus.id"
-                    (change)="onToggleGroupChange($event)" [disabled]="orderHistory.id > 0" >
+                    (change)="onToggleGroupChange($event)" [disabled]="orderHistory.id > 0 || order.orderStatus.name === 'FAILED'">
                 <mat-button-toggle *ngFor="let orderStatus of filteredOrderStatuses" [disabled]="disableToggle(orderStatus)" 
                 [value]="orderStatus.id">
                   {{orderStatus.description}}
@@ -74,7 +74,7 @@
 
             
             <div fxLayout="row wrap" class="w-100">
-              <mat-slide-toggle [(ngModel)]="orderHistory.notify" name="notify" #notify="ngModel" class="my-2">
+              <mat-slide-toggle [(ngModel)]="orderHistory.notify" name="notify" #notify="ngModel" class="my-2" >
                 {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
               </mat-slide-toggle>
             </div>
@@ -88,7 +88,8 @@
             </div>
             <div  class="w-100">
               <br/>
-              <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <button mat-raised-button color="primary" fxLayout="row" 
+                fxLayoutAlign="center center" type="submit">
                 <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                 <mat-icon>save</mat-icon>
               </button>
