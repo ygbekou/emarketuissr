@@ -53,7 +53,7 @@
 
     <mat-card>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+        <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
           <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="pickUp"
             (change)="deliveryOptionChange($event);">
             <mat-button-toggle value="0">{{'COMMON.SHIP_TO_ME'|translate}}</mat-button-toggle>
@@ -85,7 +85,7 @@
             {{user.shippingAddress.country.name}}<br />
           </div>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+        <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <h6>{{'COMMON.BILLING_ADDRESS' | translate}}</h6>
             <a [routerLink]="['/checkout/addresses']" [queryParams]="{addressType: 2, fromPage: 'checkout'}" routerLinkActive="tab-active"
@@ -101,7 +101,7 @@
             {{user.billingAddress.country.name}}<br>
           </div>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="36" fxFlex.xl="36">
+        <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
           
             <div fxLayout="row wrap" fxLayoutGap="10px grid">
               <h6>{{'COMMON.PAYMENT_METHOD' | translate}}: {{ payCash?'Cash':(
@@ -113,7 +113,7 @@
                 routerLinkActive="tab-active" *ngIf="!user.paymentMethodCode">{{'COMMON.ADD' | translate}}</a>
             </div>
             <div fxLayout="row wrap" *ngIf="!payCash && user.paymentMethodCode === 'CREDIT_CARD' && user.creditCard">
-              <img [src]="'assets/images/cards/' + user.creditCard.cardTypeIndex + '.png'" [style.width.px]="50"
+              <img [src]="'assets/images/cards/' + user.creditCard.cardTypeIndex + '.png'" style="height:auto; width: 25%;"
                 class="d-block"> {{'COMMON.ENDING_IN' | translate}} {{'xxx'+user.creditCard.last4Digits}}
             </div>
             <div *ngIf="!payCash && user.paymentMethodCode === 'TMONEY' && user.tmoney">
@@ -130,10 +130,6 @@
           </div>
 
         </div>
-
-
-
-
       </div>
     </mat-card>
 

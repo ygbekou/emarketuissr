@@ -2,10 +2,10 @@
   <mat-toolbar-row class="header-v2-top">
     <div class="container">
       <div fxLayout="row wrap">
-        <div class="logo-site" fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="35" fxFlex.lg="25%" fxFlex.xl="25%">
+        <div class="logo-site" fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
           <embryo-AppLogo></embryo-AppLogo>
         </div>
-        <div fxFlex.sm="0" fxHide.xs="0" fxHide.sm="true" fxFlex.md="35" fxFlex.sm.hdie fxFlex.lg="55%"
+        <div fxFlex.sm="0" fxHide.xs="0" fxHide.sm="true" fxFlex.md="50"   fxFlex.lg="50"  fxFlex.xl="50"
           fxFlex.xl="55%" class="align-center">
 
           <form name="form" (ngSubmit)="f.form.valid && searchProducts()" #f="ngForm" validate>
@@ -39,10 +39,10 @@
           </form>
 
         </div>
-        <div fxFlex.xs="30%" fxFlex.sm="30%" fxFlex.md="5%" fxFlex.lg="5%" fxFlex.xl="5%" style="vertical-align: middle;">
+        <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" style="vertical-align: middle;">
           <app-lang></app-lang>
         </div>
-        <div fxFlex.xs="35" fxFlex.sm="35" fxFlex.md="25" fxFlex.lg="15%" fxFlex.xl="15%">
+        <div fxFlex.xs="45" fxFlex.sm="45" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
           <span fxFlex></span>
           <div class="list-flex user-tool">
             <embryo-HeaderCart [currency]="appService?.currency" [cartProducts]="appService?.localStorageCartProducts"
