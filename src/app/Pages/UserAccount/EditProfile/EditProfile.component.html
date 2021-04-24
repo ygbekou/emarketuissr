@@ -570,6 +570,25 @@
 
     </div>
 
+     <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field class="w-50 mb-3">
+            <mat-label>Longitude </mat-label>
+            <input matInput type="text"  class="form-control" id="longitude" [(ngModel)]="store.longitude"
+              name="longitude" #longitude="ngModel"> 
+          </mat-form-field> 
+      </div>
+
+       <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+          <mat-form-field class="w-50 mb-3">
+            <mat-label>Latitude </mat-label>
+            <input matInput type="text"  class="form-control" id="latitude" [(ngModel)]="store.latitude"
+              name="latitude" #latitude="ngModel"> 
+          </mat-form-field> 
+      </div>
+
+    </div>
+
     <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
         <h4 color="primary">{{'COMMON.STORE_HOURS'|translate}}</h4>

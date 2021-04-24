@@ -792,6 +792,8 @@ export class Store extends BaseModel {
   closeTime6: string;
   openTime0: string;
   closeTime0: string;
+  longitude: number;
+  latitude: number;
   presentPreorderScreen: PresentPreorderScreen;
   timeZone: TimeZone;
   acceptPickupCash: number;
