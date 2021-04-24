@@ -7,13 +7,13 @@ import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 })
 export class ProductCardComponent implements OnInit {
 
-   @Input() product : any;
+   @Input() product: any;
 
-   @Input() index   : any;
+   @Input() index: any;
 
-   @Input() currency : string;
+   @Input() currency: string;
 
-   @Input() type  : string = '';
+   @Input() type = '';
 
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
@@ -24,20 +24,20 @@ export class ProductCardComponent implements OnInit {
    ngOnInit() {
    }
 
-   public addToCartProduct(value:any) {
+   public addToCartProduct(value: any) {
       this.addToCart.emit(value);
    }
 
-   public productAddToWishlist(value:any, parentClass) {
-      if(!(document.getElementById(parentClass).classList.contains('wishlist-active'))){
-         let element = document.getElementById(parentClass).className += " wishlist-active";
+   public productAddToWishlist(value: any, parentClass) {
+      if (!(document.getElementById(parentClass).classList.contains('wishlist-active'))) {
+         const element = document.getElementById(parentClass).className += ' wishlist-active';
       }
       this.addToWishlist.emit(value);
    }
 
    public checkCartAlready(singleProduct) {
-      let products = JSON.parse(localStorage.getItem("cart_item")) || [];
-      if (!products.some((item) => item.id == singleProduct.id)) {
+      const products = JSON.parse(window.localStorage.getItem('cart_item')) || [];
+      if (!products.some((item) => item.id === singleProduct.id)) {
          return true;
       }
    }

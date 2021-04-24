@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'; 
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CartItem } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 
@@ -18,7 +18,7 @@ export class ProductGridComponent implements OnInit {
    @Input() viewCol: any;
    @Output() selectProduct: EventEmitter<any> = new EventEmitter();
    @Output() removeProduct: EventEmitter<any> = new EventEmitter();
-   @Input() gridThree: boolean = false;
+   @Input() gridThree = false;
 
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
@@ -51,7 +51,7 @@ export class ProductGridComponent implements OnInit {
    }
 
    public addToCartProduct(value: any) {
-      //const ci = new CartItem(value);
+      // const ci = new CartItem(value);
       this.addToCart.emit(value);
    }
 
@@ -61,15 +61,15 @@ export class ProductGridComponent implements OnInit {
 
    public productAddToWishlist(value: any, parentClass) {
       if (!(document.getElementById(parentClass).classList.contains('wishlist-active'))) {
-         let element = document.getElementById(parentClass).className += " wishlist-active";
+         const element = document.getElementById(parentClass).className += ' wishlist-active';
       }
-      //const ci = new CartItem(value);
+      // const ci = new CartItem(value);
       this.addToWishList.emit(value);
    }
 
    public checkCartAlready(singleProduct) {
-      let products = JSON.parse(localStorage.getItem("cart_item")) || [];
-      if (!products.some((item) => item.name == singleProduct.name)) {
+      const products = JSON.parse(window.localStorage.getItem('cart_item')) || [];
+      if (!products.some((item) => item.name === singleProduct.name)) {
          return true;
       }
    }

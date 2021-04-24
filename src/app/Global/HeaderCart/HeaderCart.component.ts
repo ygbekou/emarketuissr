@@ -14,7 +14,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
    @Input() currency: string;
 
    mobWidth: any;
-   mobScreenSize: number = 767;
+   mobScreenSize = 767;
 
    @Output() removeProductData: EventEmitter<any> = new EventEmitter();
 
@@ -26,7 +26,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
 
    ngOnInit() {
 
-      this.cartProducts = JSON.parse(localStorage.getItem('cart_item'));
+      this.cartProducts = JSON.parse(window.localStorage.getItem('cart_item'));
       if (this.cartProducts) {
          this.count = this.cartProducts.length;
          if (this.count && this.count !== 0) {
@@ -39,7 +39,7 @@ export class HeaderCartComponent implements OnInit, OnChanges {
 
 
    ngOnChanges() {
-      if (this.count && this.count != 0) {
+      if (this.count && this.count !== 0) {
          this.hiddenBadge = false;
       } else {
          this.hiddenBadge = true;

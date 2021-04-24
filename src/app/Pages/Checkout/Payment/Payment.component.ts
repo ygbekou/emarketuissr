@@ -44,7 +44,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-      this.deliveryMode = <'0' | '1'> localStorage.getItem('deliveryMode');
+      this.deliveryMode = <'0' | '1'> window.localStorage.getItem('deliveryMode');
       if (!this.deliveryMode) {
          this.deliveryMode = '0';
          this.deliveryOptionChange(null);
@@ -123,7 +123,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
 
    deliveryOptionChange(event) {
-      localStorage.setItem('deliveryMode', this.deliveryMode);
+      window.localStorage.setItem('deliveryMode', this.deliveryMode);
    }
 
    redirectToUserInfo() {

@@ -23,66 +23,66 @@ export class TokenStorage {
   constructor() { }
 
   signOut() {
-    window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
-    // window.sessionStorage.clear();
+    window.localStorage.removeItem(TokenStorage.TOKEN_KEY);
+    // window.localStorage.clear();
   }
 
   public saveAuthData(authData: AuthToken) {
 
-    window.sessionStorage.removeItem(TokenStorage.USER);
-    window.sessionStorage.setItem(TokenStorage.USER, JSON.stringify(authData));
+    window.localStorage.removeItem(TokenStorage.USER);
+    window.localStorage.setItem(TokenStorage.USER, JSON.stringify(authData));
 
-    window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
-    window.sessionStorage.setItem(TokenStorage.TOKEN_KEY, authData.token);
+    window.localStorage.removeItem(TokenStorage.TOKEN_KEY);
+    window.localStorage.setItem(TokenStorage.TOKEN_KEY, authData.token);
 
     // user data
-    window.sessionStorage.removeItem(TokenStorage.USER_GROUP_ID);
-    window.sessionStorage.setItem(TokenStorage.USER_GROUP_ID, authData.authorities[0] + '');
+    window.localStorage.removeItem(TokenStorage.USER_GROUP_ID);
+    window.localStorage.setItem(TokenStorage.USER_GROUP_ID, authData.authorities[0] + '');
 
-    window.sessionStorage.removeItem(TokenStorage.ROLE_NAME);
-    window.sessionStorage.setItem(TokenStorage.ROLE_NAME, authData.roleName);
+    window.localStorage.removeItem(TokenStorage.ROLE_NAME);
+    window.localStorage.setItem(TokenStorage.ROLE_NAME, authData.roleName);
 
-    window.sessionStorage.removeItem(TokenStorage.PICTURE);
-    window.sessionStorage.setItem(TokenStorage.PICTURE, authData.picture);
+    window.localStorage.removeItem(TokenStorage.PICTURE);
+    window.localStorage.setItem(TokenStorage.PICTURE, authData.picture);
 
-    window.sessionStorage.removeItem(TokenStorage.FIRST_NAME);
-    window.sessionStorage.setItem(TokenStorage.FIRST_NAME, authData.firstName);
+    window.localStorage.removeItem(TokenStorage.FIRST_NAME);
+    window.localStorage.setItem(TokenStorage.FIRST_NAME, authData.firstName);
 
-    window.sessionStorage.removeItem(TokenStorage.MIDDLE_NAME);
-    window.sessionStorage.setItem(TokenStorage.MIDDLE_NAME, authData.middleName);
+    window.localStorage.removeItem(TokenStorage.MIDDLE_NAME);
+    window.localStorage.setItem(TokenStorage.MIDDLE_NAME, authData.middleName);
 
-    window.sessionStorage.removeItem(TokenStorage.LAST_NAME);
-    window.sessionStorage.setItem(TokenStorage.LAST_NAME, authData.lastName);
+    window.localStorage.removeItem(TokenStorage.LAST_NAME);
+    window.localStorage.setItem(TokenStorage.LAST_NAME, authData.lastName);
 
-    window.sessionStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
-    window.sessionStorage.setItem(TokenStorage.FIRST_TIME_LOGIN, authData.firstTimeLogin);
+    window.localStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
+    window.localStorage.setItem(TokenStorage.FIRST_TIME_LOGIN, authData.firstTimeLogin);
 
-    window.sessionStorage.removeItem(TokenStorage.USER_ID);
-    window.sessionStorage.setItem(TokenStorage.USER_ID, authData.userId + '');
+    window.localStorage.removeItem(TokenStorage.USER_ID);
+    window.localStorage.setItem(TokenStorage.USER_ID, authData.userId + '');
 
-    window.sessionStorage.removeItem(TokenStorage.USER_NAME);
-    window.sessionStorage.setItem(TokenStorage.USER_NAME, authData.userName + '');
+    window.localStorage.removeItem(TokenStorage.USER_NAME);
+    window.localStorage.setItem(TokenStorage.USER_NAME, authData.userName + '');
 
-    window.sessionStorage.removeItem(TokenStorage.HOME_PAGE);
-    window.sessionStorage.setItem(TokenStorage.HOME_PAGE, authData.homePage);
+    window.localStorage.removeItem(TokenStorage.HOME_PAGE);
+    window.localStorage.setItem(TokenStorage.HOME_PAGE, authData.homePage);
   }
 
   public clearAuthData() {
-    window.sessionStorage.removeItem(TokenStorage.TOKEN_KEY);
-    window.sessionStorage.removeItem(TokenStorage.USER_GROUP_ID);
-    window.sessionStorage.removeItem(TokenStorage.ROLE_NAME);
-    window.sessionStorage.removeItem(TokenStorage.PICTURE);
-    window.sessionStorage.removeItem(TokenStorage.FIRST_NAME);
-    window.sessionStorage.removeItem(TokenStorage.MIDDLE_NAME);
-    window.sessionStorage.removeItem(TokenStorage.LAST_NAME);
-    window.sessionStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
-    window.sessionStorage.removeItem(TokenStorage.USER_ID);
-    window.sessionStorage.removeItem(TokenStorage.USER_NAME);
-    window.sessionStorage.removeItem(TokenStorage.HOME_PAGE);
+    window.localStorage.removeItem(TokenStorage.TOKEN_KEY);
+    window.localStorage.removeItem(TokenStorage.USER_GROUP_ID);
+    window.localStorage.removeItem(TokenStorage.ROLE_NAME);
+    window.localStorage.removeItem(TokenStorage.PICTURE);
+    window.localStorage.removeItem(TokenStorage.FIRST_NAME);
+    window.localStorage.removeItem(TokenStorage.MIDDLE_NAME);
+    window.localStorage.removeItem(TokenStorage.LAST_NAME);
+    window.localStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
+    window.localStorage.removeItem(TokenStorage.USER_ID);
+    window.localStorage.removeItem(TokenStorage.USER_NAME);
+    window.localStorage.removeItem(TokenStorage.HOME_PAGE);
   }
 
   public getToken(): string {
-    return window.sessionStorage.getItem(TokenStorage.TOKEN_KEY);
+    return window.localStorage.getItem(TokenStorage.TOKEN_KEY);
   }
 
   public hasToken(): boolean {
@@ -90,39 +90,39 @@ export class TokenStorage {
   }
 
   public getRole(): string {
-    return window.sessionStorage.getItem(TokenStorage.USER_GROUP_ID);
+    return window.localStorage.getItem(TokenStorage.USER_GROUP_ID);
   }
 
   public getRoleName(): string {
-    return window.sessionStorage.getItem(TokenStorage.ROLE_NAME);
+    return window.localStorage.getItem(TokenStorage.ROLE_NAME);
   }
 
   public getPicture(): string {
-    return window.sessionStorage.getItem(TokenStorage.PICTURE);
+    return window.localStorage.getItem(TokenStorage.PICTURE);
   }
 
   public getFirstName(): string {
-    return window.sessionStorage.getItem(TokenStorage.FIRST_NAME);
+    return window.localStorage.getItem(TokenStorage.FIRST_NAME);
   }
 
   public getMiddleName(): string {
-    return window.sessionStorage.getItem(TokenStorage.MIDDLE_NAME);
+    return window.localStorage.getItem(TokenStorage.MIDDLE_NAME);
   }
 
   public getLastName(): string {
-    return window.sessionStorage.getItem(TokenStorage.LAST_NAME);
+    return window.localStorage.getItem(TokenStorage.LAST_NAME);
   }
 
   public getFirstTimeLogin(): string {
-    return window.sessionStorage.getItem(TokenStorage.FIRST_TIME_LOGIN);
+    return window.localStorage.getItem(TokenStorage.FIRST_TIME_LOGIN);
   }
 
   public getMenus(): string {
-    return window.sessionStorage.getItem(TokenStorage.MENUS);
+    return window.localStorage.getItem(TokenStorage.MENUS);
   }
 
   public getNonMenuPermissions(): string {
-    return window.sessionStorage.getItem(TokenStorage.NON_MENU_RESOURCES);
+    return window.localStorage.getItem(TokenStorage.NON_MENU_RESOURCES);
   }
 
   public getName(): string {
@@ -132,18 +132,18 @@ export class TokenStorage {
   }
 
   public getUserId(): string {
-    return window.sessionStorage.getItem(TokenStorage.USER_ID);
+    return window.localStorage.getItem(TokenStorage.USER_ID);
   }
 
   public getUserName(): string {
-    return window.sessionStorage.getItem(TokenStorage.USER_NAME);
+    return window.localStorage.getItem(TokenStorage.USER_NAME);
   }
 
   public getHomePage(): string {
-    return window.sessionStorage.getItem(TokenStorage.HOME_PAGE);
+    return window.localStorage.getItem(TokenStorage.HOME_PAGE);
   }
 
   public getUser(): User {
-    return JSON.parse(window.sessionStorage.getItem(TokenStorage.USER));
+    return JSON.parse(window.localStorage.getItem(TokenStorage.USER));
   }
 }

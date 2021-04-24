@@ -99,7 +99,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 export function tokenGetter() {
-  return localStorage.getItem('access_token');
+  return window.localStorage.getItem('access_token');
 }
 
 @NgModule({

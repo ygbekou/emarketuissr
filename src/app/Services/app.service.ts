@@ -136,7 +136,7 @@ export class AppService {
       });
       if (!found) { products.push(setCartItemDefaultValue); }
 
-      localStorage.setItem('cart_item', JSON.stringify(products));
+      window.localStorage.setItem('cart_item', JSON.stringify(products));
       this.recalculateCart(true);
    }
 
@@ -256,7 +256,7 @@ export class AppService {
 
       this.toastyService.wait(toastOption);
       setTimeout(() => {
-         localStorage.setItem('cart_item', JSON.stringify(cartItems));
+         window.localStorage.setItem('cart_item', JSON.stringify(cartItems));
          this.recalculateCart(true);
       }, 500);
    }
@@ -274,15 +274,15 @@ export class AppService {
       });
       if (!found) { products.push(data); }
 
-      localStorage.setItem('cart_item', JSON.stringify(products));
+      window.localStorage.setItem('cart_item', JSON.stringify(products));
       this.recalculateCart(true);
    }
 
    public updateAllLocalCartProduct(products: any) {
 
-      localStorage.removeItem('cart_item');
+      window.localStorage.removeItem('cart_item');
 
-      localStorage.setItem('cart_item', JSON.stringify(products));
+      window.localStorage.setItem('cart_item', JSON.stringify(products));
    }
 
    public recalculateCart(needParse: boolean) {
@@ -314,8 +314,8 @@ export class AppService {
       this.navbarCartEstimatedTaxMap = {};
       this.navbarCartTotalMap = {};
 
-      //console.log('Product List ...');
-      //console.log(this.localStorageCartProducts);
+      // console.log('Product List ...');
+      // console.log(this.localStorageCartProducts);
 
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
@@ -367,7 +367,7 @@ export class AppService {
 
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
          const deliveryMode = this.navbarCartDeliveryMap[storeId] === undefined ? 
-                              localStorage.getItem('deliveryMode') : this.navbarCartDeliveryMap[storeId];
+                              window.localStorage.getItem('deliveryMode') : this.navbarCartDeliveryMap[storeId];
 
          if (deliveryMode === '0') {
             if (this.navbarCartShippingGeoZoneMap[storeId]) {
@@ -460,14 +460,14 @@ export class AppService {
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          // ReAdding the products after remove
-         localStorage.setItem('cart_item', JSON.stringify(products));
+         window.localStorage.setItem('cart_item', JSON.stringify(products));
          this.recalculateCart(true);
       }, 500);
    }
 
    public completeOrder(storeId: number) {
       console.log('Completing order ...');
-      const products: any = JSON.parse(localStorage.getItem('cart_item'));
+      const products: any = JSON.parse(window.localStorage.getItem('cart_item'));
       this.hasOrderSucceedMap[storeId] = true;
 
       const filteredProducts = products.filter(p => {
@@ -490,7 +490,7 @@ export class AppService {
        this.toastyService.wait(toastOption); */
       setTimeout(() => {
          // ReAdding the products after remove
-         localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
+         window.localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
          this.recalculateCart(true);
       }, 500);
    }
@@ -536,7 +536,7 @@ export class AppService {
          wishItems.push(data);
          this.toastyService.wait(toastOption);
          setTimeout(() => {
-            localStorage.setItem('wishlist_item', JSON.stringify(wishItems));
+            window.localStorage.setItem('wishlist_item', JSON.stringify(wishItems));
             this.calculateLocalWishlistProdCounts();
          }, 500);
       } else {
@@ -588,7 +588,7 @@ export class AppService {
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          // ReAdding the products after remove
-         localStorage.setItem('wishlist_item', JSON.stringify(products));
+         window.localStorage.setItem('wishlist_item', JSON.stringify(products));
          this.calculateLocalWishlistProdCounts();
       }, 500);
 
@@ -636,8 +636,8 @@ export class AppService {
 
       this.toastyService.wait(toastOption);
       setTimeout(() => {
-         localStorage.removeItem('wishlist_item');
-         localStorage.setItem('cart_item', JSON.stringify(cartItems));
+         window.localStorage.removeItem('wishlist_item');
+         window.localStorage.setItem('cart_item', JSON.stringify(cartItems));
          this.recalculateCart(true);
          this.calculateLocalWishlistProdCounts();
       }, 500);
@@ -713,36 +713,35 @@ export class AppService {
     * Buy Product functions
     */
    public addBuyUserDetails(formdata) {
-      localStorage.setItem('user', JSON.stringify(formdata));
+      window.localStorage.setItem('user', JSON.stringify(formdata));
+      const product = JSON.parse(window.localStorage.getItem('cart_item'));
+      window.localStorage.setItem('byProductDetails', JSON.stringify(product));
+      this.buyUserCartProducts = JSON.parse(window.localStorage.getItem('byProductDetails'));
 
-      const product = JSON.parse(localStorage.getItem('cart_item'));
-      localStorage.setItem('byProductDetails', JSON.stringify(product));
-      this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
-
-      localStorage.removeItem('cart_item');
+      window.localStorage.removeItem('cart_item');
       this.recalculateCart(true);
    }
 
    public removeBuyProducts() {
-      localStorage.removeItem('byProductDetails');
-      this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
+      window.localStorage.removeItem('byProductDetails');
+      this.buyUserCartProducts = JSON.parse(window.localStorage.getItem('byProductDetails'));
    }
 
 
    public storeOrderId(order: Order) {
 
-      localStorage.setItem('order_id', order.id + '');
+      window.localStorage.setItem('order_id', order.id + '');
    }
 
    public clearOrderId() {
 
-      localStorage.removeItem('order_id');
+      window.localStorage.removeItem('order_id');
    }
 
 
    public getStoredOrderId() {
 
-      return +localStorage.getItem('order_id');
+      return +window.localStorage.getItem('order_id');
    }
 
    /**
