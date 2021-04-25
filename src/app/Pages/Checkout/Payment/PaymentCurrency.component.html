@@ -149,7 +149,8 @@
         type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true ||
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
         || appService.navbarCartStoreAllowOrderMap[storeId] 
-        ">
+        || (!appService?.navbarCartStorePayCash[storeId] && appService?.navbarCartCurrencyMap[storeId].currencyCode !== 'XOF'
+            && (this.user.paymentMethodCode === 'TMONEY' || this.user.paymentMethodCode === 'FLOOZ'))">
         <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
       </button>
 
