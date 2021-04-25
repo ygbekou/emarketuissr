@@ -24,10 +24,10 @@
 
                       <font color="red" *ngIf="prdOptionValue.price > 0"><strong>
                           ({{prdOptionValue.pricePrefix}}
-                            {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
-                              + productDesc.product.symbolRight:true:'1.' 
-                              + productDesc.product.currencyDecimalPlace + '-'  
-                              + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
+                            {{productDesc.product.symbolLeft}} 
+                              {{prdOptionValue.price | number: '1.' + productDesc.product.currencyDecimalPlace + '-'  
+                              + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                            {{productDesc.product.symbolRight}})
                         </strong></font>
                     </div>
                   </mat-radio-button>
@@ -68,12 +68,11 @@
               <div class="w-100" *ngFor="let prdOptionValue of povo.povs; let i=index;">
                 <mat-checkbox class="mb-2 d-block" [(ngModel)]="prdOptionValue.checked" id="{{prdOptionValue.name}}"
                   name="{{prdOptionValue.name}}" (change)="checkboxChange($event, povo, prdOptionValue);">
-
                   {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}}
-                      {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
-                        + productDesc.product.symbolRight:true:'1.' 
-                        + productDesc.product.currencyDecimalPlace + '-'  
-                        + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})&nbsp;&nbsp;&nbsp;&nbsp;
+                    {{productDesc.product.symbolLeft}} 
+                      {{prdOptionValue.price | number: '1.' + productDesc.product.currencyDecimalPlace + '-'  
+                      + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{productDesc.product.symbolRight}})&nbsp;&nbsp;&nbsp;&nbsp;
                 </mat-checkbox>
               </div>
             </div>
@@ -101,10 +100,11 @@
                 <mat-select placeholder="prdOptionValue.name" id="currency" name="currency">
                   <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
                     (click)="singleSelectionChange($event, povo, prdOptionValue)">
-                    {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price | currency:productDesc.product.symbolLeft 
-                        + productDesc.product.symbolRight:true:'1.' 
-                        + productDesc.product.currencyDecimalPlace + '-'  
-                        + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
+                    {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}}
+                    {{productDesc.product.symbolLeft}} 
+                      {{prdOptionValue.price | number: '1.' + productDesc.product.currencyDecimalPlace + '-'  
+                      + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{productDesc.product.symbolRight}})
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -121,10 +121,11 @@
         <h6 class="accent-color"
           *ngIf="productDesc.product.productDiscountPercentage === undefined || productDesc.product.productDiscountPercentage <= 0">
           <strong> 
-            {{productDesc.quantity * productDesc.product?.totalPrice | currency:productDesc.product.symbolLeft 
-                + productDesc.product.symbolRight:true:'1.' 
-                + productDesc.product.currencyDecimalPlace + '-'  
-                + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+            {{productDesc.product.symbolLeft}} {{productDesc.quantity * productDesc.product?.totalPrice 
+              | number: '1.' + productDesc.product.currencyDecimalPlace + '-'  
+                      + productDesc.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+            {{productDesc.product.symbolRight}}
+
           </strong>
         </h6>
       </div>

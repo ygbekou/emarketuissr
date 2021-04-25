@@ -22,10 +22,10 @@
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                     TOTAL:<br />
-                    {{order.total | currency:order.symbolLeft 
-                            + order.symbolRight:true:'1.' 
-                            + order.currencyDecimalPlace + '-'  
-                            + order.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{order.symbolLeft}} 
+                        {{order.total | number: '1.' + order.currencyDecimalPlace + '-'  
+                        + order.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                     {{order.symbolRight}}
                   </div>
                   <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                     {{'COMMON.SHIP_TO'|translate}}:<br />
@@ -81,11 +81,10 @@
                         </span>
                         <h6 class="accent-color">
                           {{'COMMON.PRICE'|translate}}:
-
-                          {{orderProduct.total | currency:order.symbolLeft 
-                            + order.symbolRight:true:'1.' 
-                            + order.currencyDecimalPlace + '-'  
+                          {{order.symbolLeft}} 
+                            {{orderProduct.total | number: '1.' + order.currencyDecimalPlace + '-'  
                             + order.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                          {{order.symbolRight}}
                             | {{'COMMON.QTY'|translate}}: {{orderProduct.quantity}}</h6>
                         <font style="font-style: italic;">
                           {{'COMMON.SOLD_BY'|translate}}
@@ -137,10 +136,10 @@
                   {{prd?.name}} </a><br />
                 <h6 class="accent-color">
                   {{'COMMON.PRICE'|translate}}:
-                  {{prd.product?.price | currency:prd.product?.symbolLeft 
-                            + prd.product?.symbolRight:true:'1.' 
-                            + prd.product?.currencyDecimalPlace + '-'  
-                            + prd.product?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{prd.product?.symbolLeft}} 
+                    {{prd.product?.price | number: '1.' + prd.product?.currencyDecimalPlace + '-'  
+                    + prd.product?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{prd.product?.symbolRight}}
                 </h6> 
                 <font style="font-style: italic;">
                   {{'COMMON.SOLD_BY'|translate}}

@@ -788,7 +788,8 @@
 		"INVALID_DELIVERY_TIME": "Le délai de livraison de début ne peut pas etre supérieur au délai de livraison de fin",
  		"CHOOSE_LATER_DELIVERY_DATE": "Nous ne livrons pas en ce moment. Choisissez la date/heure de livraison",
 		"CHOOSE_LATER_PICKUP_DATE": "La boutique est fermée en ce moment. Choisissez la date/heure a laquelle vous passez prendre",
-		"INVALID_DELIVERY_UNIT": "Sélectionnez une unité de temps dans la liste"
+		"INVALID_DELIVERY_UNIT": "Sélectionnez une unité de temps dans la liste",
+		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

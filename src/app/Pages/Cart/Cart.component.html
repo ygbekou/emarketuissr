@@ -52,10 +52,10 @@
             <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
               <div class="cart-item-price">
                 <h4>
-                  {{calculateProductSinglePrice(product, product?.quantity) | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-                    + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-                    + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+                  {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+                    {{calculateProductSinglePrice(product, product?.quantity) | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
                     + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
                 </h4>
               </div>
             </div>
@@ -77,50 +77,50 @@
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">{{'COMMON.ITEMS' | translate}}
             ({{appService?.navbarCartCountMap[storeId]}}):</div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-            {{appService?.navbarCartPriceMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+              {{appService?.navbarCartPriceMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
           </div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
             {{'COMMON.DELIVERY_FEE' | translate}}:</div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-            {{appService?.navbarCartShippingMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+              {{appService?.navbarCartShippingMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
           </div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
             {{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-            {{appService?.navbarCartTotalBeforeTaxMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+              {{appService?.navbarCartTotalBeforeTaxMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
           </div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
             {{'COMMON.ESTIMATED_TAX' | translate}}:</div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-            {{appService?.navbarCartEstimatedTaxMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+              {{appService?.navbarCartEstimatedTaxMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
           </div>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
             {{'COMMON.TOTAL' | translate}}:</div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-            {{appService?.navbarCartTotalMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-              + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-              + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+              {{appService?.navbarCartTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
               + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
           </div>
         </div>
 
@@ -131,17 +131,20 @@
           </div>
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
             <h6 style="color: #ff5722">
-              {{appService?.navbarCartTotalMap[storeId] | currency:appService?.navbarCartCurrencyMap[storeId].symbolLeft 
-                + appService?.navbarCartCurrencyMap[storeId].symbolRight:true:'1.' 
-                + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}} 
+                {{appService?.navbarCartTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
                 + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
             </h6>
           </div>
         </div>
-        <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" [disabled]="(appService.hasOrderSucceedMap[storeId] === true || 
-        (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
-        || appService.navbarCartStoreAllowOrderMap[storeId]" (click)="placeYourOrder()" type="button"
-            style="width:100%;">
+        <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" 
+          [disabled]="(appService.hasOrderSucceedMap[storeId] === true 
+          || (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
+          || appService.navbarCartStoreAllowOrderMap[storeId]
+          || (!appService?.navbarCartStorePayCash[storeId] && appService?.navbarCartCurrencyMap[storeId].currencyCode !== 'XOF'
+              && (this.user.paymentMethodCode === 'TMONEY' || this.user.paymentMethodCode === 'FLOOZ'))" 
+            (click)="placeYourOrder()" type="button" style="width:100%;">
             <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.PLACE_YOUR_ORDER' | translate}}</span>
           </button></div>
         <div fxLayout="row wrap">

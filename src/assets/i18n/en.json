@@ -789,7 +789,8 @@
 		"CHOOSE_LATER_DELIVERY_DATE": "We do not deliver at this moment. Please choose the delivery date/time for later delivery",
 		"CHOOSE_LATER_PICKUP_DATE": "The store is close at this moment. Please choose the pick up date/time for later pick up",
 		"INVALID_DELIVERY_TIME": "Begin Delivery Time cannot be greater than End Delivery Time",
-		"INVALID_DELIVERY_UNIT": "Select a Time Unit from the list"
+		"INVALID_DELIVERY_UNIT": "Select a Time Unit from the list",
+		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

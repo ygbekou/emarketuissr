@@ -57,6 +57,7 @@ export class AppService {
    navbarCartShippingGeoZoneMap = {};
    navbarCartDeliveryMap = {};
    navbarCartStoreAllowOrderMap = {};
+   navbarCartStorePayCash = {};
 
    navbarCartTotalBeforeTax = 0;
    navbarCartTotalBeforeTaxMap = {};

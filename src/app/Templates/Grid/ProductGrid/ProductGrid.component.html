@@ -76,33 +76,34 @@
                <div fxFlex fxLayoutAlign="space-between">
                   <h6 class="secondary-color" style="text-decoration: line-through;"
                      *ngIf="prd.product.productDiscountPercentage > 0">
-                     {{prd.product?.price | currency:prd.product.symbolLeft 
-                        + prd.product.symbolRight:true:'1.' 
-                        + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}} 
+                        {{prd.product?.productDiscountPercentage | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
-
+                     {{prd.product.symbolRight}}
                   </h6>
                   <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage > 0">
-                     {{prd.product?.percentagePrice | currency:prd.product.symbolLeft 
-                        + prd.product.symbolRight:true:'1.' 
-                        + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}} 
+                        {{prd.product?.percentagePrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                     {{prd.product.symbolRight}}
                   </h6>
                   <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage > 0">
                      {{prd.product.productDiscountPercentage}} % OFF
                   </h6>
                   <h6 class="accent-color"
                      *ngIf="prd.product.productDiscountPercentage === undefined || prd.product.productDiscountPercentage <= 0">
-                     {{prd.product?.price | currency:prd.product.symbolLeft 
-                        + prd.product.symbolRight:true:'1.' 
-                        + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}} 
+                        {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                     {{prd.product.symbolRight}}
 
                   </h6>
                   <h6 class="accent-color" *ngIf="prd.product.productDiscountQuantity > 0 
                   && prd.product.productDiscountPrice > 0">
                      {{'COMMON.BUY'|translate}} {{prd.product.productDiscountQuantity}}
-                     {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}} {{prd.product.productDiscountPrice}}
+                     {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}} 
+                        {{prd.product?.productDiscountPrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                        + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
                   </h6>
                </div>

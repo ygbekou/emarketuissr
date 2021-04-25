@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 
 import moment from 'moment-timezone';
 import { CartComponent } from '../../Cart/Cart.component';
+import { userInfo } from 'os';
 
 @Component({
    selector: 'app-Payment-Currency',
@@ -28,6 +29,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    error: string;
    message: string;
    storeHoursMessage: string;
+   paymentMethodError: string;
    notify = false;
    order: Order = new Order();
    shouldNotify: false;
@@ -87,6 +89,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    ngAfterViewInit() {
       this.minutes = ['00', '15', '30', '45'];
+
+
    }
    getStore() {
       if (this.storeId > 0) {
@@ -99,7 +103,25 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                } else {
                   this.getZoneToGeoZone();
                }
+
+               this.validatePaymentMethodAndCurrency();
             }
+         });
+      }
+   }
+
+   validatePaymentMethodAndCurrency() {
+      this.appService.navbarCartStorePayCash[this.store.id] = this.payCash;
+      this.paymentMethodError = '';
+      if (!this.payCash && this.store.currency.code !== 'XOF'
+         && (this.user.paymentMethodCode === 'TMONEY' || this.user.paymentMethodCode === 'FLOOZ')
+         ) {
+            this.translate.get('MESSAGE.INVALID_PAYMENT_METHOD',
+         {
+            payment_method: this.user.paymentMethodCode,
+            currency_code: this.store.currency.title
+         }).subscribe((res) => {
+            this.paymentMethodError = res;
          });
       }
    }

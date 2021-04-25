@@ -75,35 +75,36 @@
             <div fxFlex>
               <span class="secondary-color" style="text-decoration: line-through;"
                 *ngIf="detailData.product.productDiscountPercentage > 0">
-                {{detailData.product?.totalPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolLeft}} 
+                  {{detailData.product?.totalPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                  + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolRight}}
               </span>
               <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
                 &nbsp;&nbsp; 
-                {{detailData.product?.percentagePrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolLeft}} 
+                  {{detailData.product?.percentagePrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                  + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolRight}}
               </span>
               <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
                 &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
               </span>
               <span class="accent-color"
                 *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                {{detailData.product?.totalPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolLeft}} 
+                  {{detailData.product?.totalPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                  + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolRight}}
               </span>
               <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
                 &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
-                {{'COMMON.FOR'|translate}} {{detailData.product?.productDiscountPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{'COMMON.FOR'|translate}} {{detailData.product.symbolLeft}} 
+                  {{detailData.product?.productDiscountPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                  + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                {{detailData.product.symbolRight}}
+
               </span>
             </div>
           </div>
@@ -135,10 +136,10 @@
                     </mat-radio-button>
                     <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
                       *ngIf="prdOptionValue.price > 0">
-                      ({{prdOptionValue.pricePrefix}} {{prdOptionValue.price | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
+                      ({{prdOptionValue.pricePrefix}} {{detailData.product.symbolLeft}} 
+                        {{prdOptionValue.price | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                      {{detailData.product.symbolRight}})
                     </div>
                   </div>
                 </mat-radio-group>
@@ -182,10 +183,10 @@
                     <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
                       *ngIf="prdOptionValue.price > 0">
                       ({{prdOptionValue.pricePrefix}} 
-                      {{prdOptionValue.price | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
+                      {{detailData.product.symbolLeft}} 
+                        {{prdOptionValue.price | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                      {{detailData.product.symbolRight}})
                     </div>
                   </mat-checkbox>
                 </div>
@@ -217,10 +218,10 @@
                     <mat-option *ngFor="let prdOptionValue of povo.povs" [value]="prdOptionValue"
                       (click)="singleSelectionChange($event, povo, prdOptionValue)">
                       {{prdOptionValue.name}} ({{prdOptionValue.pricePrefix}}
-                      {{prdOptionValue.price | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}})
+                      {{detailData.product.symbolLeft}} 
+                        {{prdOptionValue.price | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                      {{detailData.product.symbolRight}})
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -265,35 +266,35 @@
               <div fxFlex>
                 <span class="secondary-color" style="text-decoration: line-through;"
                   *ngIf="detailData.product.productDiscountPercentage > 0">
-                  {{detailData.product?.totalPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolLeft}} 
+                    {{detailData.product?.totalPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                    + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolRight}}
                 </span>
                 <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
-                  &nbsp;&nbsp; {{detailData.product?.percentagePrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  &nbsp;&nbsp; {{detailData.product.symbolLeft}} 
+                    {{detailData.product?.percentagePrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                    + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolRight}}
                 </span>
                 <span class="accent-color" *ngIf="detailData.product.productDiscountPercentage > 0">
                   &nbsp; &nbsp; {{detailData.product.productDiscountPercentage}} % OFF
                 </span>
                 <span class="accent-color"
                   *ngIf="detailData.product.productDiscountPercentage === undefined || detailData.product.productDiscountPercentage <= 0">
-                  {{detailData.product?.totalPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolLeft}} 
+                    {{detailData.product?.totalPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                    + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolRight}}
                 </span>
                 <span class="accent-color" *ngIf="detailData.product.productDiscountQuantity > 0 
                   && detailData.product.productDiscountPrice > 0">
                   &nbsp;&nbsp; {{'COMMON.BUY'|translate}} {{detailData.product.productDiscountQuantity}}
                   {{'COMMON.FOR'|translate}} 
-                  {{detailData.product?.productDiscountPrice | currency:detailData.product.symbolLeft 
-                        + detailData.product.symbolRight:true:'1.' 
-                        + detailData.product.currencyDecimalPlace + '-'  
-                        + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolLeft}} 
+                    {{detailData.product?.productDiscountPrice | number: '1.' + detailData.product.currencyDecimalPlace + '-'  
+                    + detailData.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{detailData.product.symbolRight}}
                 </span>
               </div>
             </div>
