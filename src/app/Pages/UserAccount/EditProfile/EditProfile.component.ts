@@ -331,6 +331,15 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       this.store.sendSMSShipper = (this.store.sendSMSShipper == null
          || this.store.sendSMSShipper.toString() === 'false'
          || this.store.sendSMSShipper.toString() === '0') ? 0 : 1;
+
+      this.store.autoUpload = (this.store.autoUpload == null
+         || this.store.autoUpload.toString() === 'false'
+         || this.store.autoUpload.toString() === '0') ? 0 : 1;
+
+       this.store.allowReopen = (this.store.allowReopen == null
+         || this.store.allowReopen.toString() === 'false'
+         || this.store.allowReopen.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);

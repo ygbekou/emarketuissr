@@ -564,6 +564,14 @@
           <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash" #acceptDeliveryCash="ngModel" class="my-2">
             {{ 'COMMON.ACCEPT_DELIVERY_CASH' | translate }}
           </mat-slide-toggle>
+          <br/>
+          <mat-slide-toggle [(ngModel)]="store.allowReopen" name="allowReopen" #allowReopen="ngModel" class="my-2">
+            {{ 'COMMON.ALLOW_TAB_REOPEN' | translate }}
+          </mat-slide-toggle>
+          <br/>
+          <mat-slide-toggle [(ngModel)]="store.autoUpload" name="autoUpload" #autoUpload="ngModel" class="my-2">
+            {{ 'COMMON.AUTO_UPLOAD_OFFLINE' | translate }}
+          </mat-slide-toggle>
 
         </div>
       </div>
@@ -571,7 +579,7 @@
     </div>
 
      <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
           <mat-form-field class="w-50 mb-3">
             <mat-label>Longitude </mat-label>
             <input matInput type="text"  class="form-control" id="longitude" [(ngModel)]="store.longitude"
@@ -579,11 +587,19 @@
           </mat-form-field> 
       </div>
 
-       <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+       <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
           <mat-form-field class="w-50 mb-3">
             <mat-label>Latitude </mat-label>
             <input matInput type="text"  class="form-control" id="latitude" [(ngModel)]="store.latitude"
               name="latitude" #latitude="ngModel"> 
+          </mat-form-field> 
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+          <mat-form-field class="w-50 mb-3">
+            <mat-label>{{'COMMON.AUTO_LOCK_AFTER_X_PRT'|translate}} </mat-label>
+            <input matInput type="text"  class="form-control" id="lockAfterXPrint" [(ngModel)]="store.lockAfterXPrint"
+              name="lockAfterXPrint" #lockAfterXPrint="ngModel"> 
           </mat-form-field> 
       </div>
 
