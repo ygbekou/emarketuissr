@@ -52,6 +52,7 @@ export class CTAGroupComponent implements OnInit {
    getSliders(langId: number) {
       const parameters: string[] = [];
       parameters.push('e.language.id = |langCode|' + langId + '|Integer');
+      parameters.push('e.marketing.status = |stta|1|Integer');
       parameters.push('e.marketing.section = |sInS|2|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters,
          ' order by e.marketing.sortOrder ')

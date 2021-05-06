@@ -798,7 +798,9 @@ export class Store extends BaseModel {
   timeZone: TimeZone;
   acceptPickupCash: number;
   acceptDeliveryCash: number;
-
+  allowReopen: number;
+  lockAfterXPrint: number;
+  autoUpload: number;
   type = 'Store';
 
   constructor() {
