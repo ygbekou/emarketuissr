@@ -47,6 +47,10 @@ import { ReturnHistoryComponent } from './Returns/ReturnHistory.component';
 import { AdminReviewsComponent } from './Reviews/AdminReviews.component';
 import { ReviewsTableComponent } from './Reviews/ReviewsTable.component';
 import { OrderOptionComponent } from './Orders/OrderOption.component';
+import { SalesSummariesComponent } from './Summaries/SalesSummaries.component';
+import { PayoutsComponent } from './Payouts/Payouts.component';
+import { PayoutComponent } from './Payouts/Payout.component';
+import { SalesSummariesIncludeComponent } from './Summaries/SalesSummariesInclude.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,11 @@ import { OrderOptionComponent } from './Orders/OrderOption.component';
     ReturnComponent,
     ReturnHistoryComponent,
     AdminReviewsComponent,
-    ReviewsTableComponent
+    ReviewsTableComponent,
+    SalesSummariesComponent,
+    SalesSummariesIncludeComponent,
+    PayoutsComponent,
+    PayoutComponent
   ],
   imports: [
     CommonModule,
@@ -122,6 +130,6 @@ import { OrderOptionComponent } from './Orders/OrderOption.component';
     })
 
   ],
-	exports: [OrdersComponent, OrderViewComponent]
+	exports: [OrdersComponent, OrderViewComponent, SalesSummariesComponent, SalesSummariesIncludeComponent, PayoutComponent, PayoutsComponent]
 })
 export class SalesModule { }

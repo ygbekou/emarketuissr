@@ -1033,6 +1033,11 @@ export class AppService {
          }, error => console.log(error),
             () => console.log('Get TimePeriod complete'));
 
+      this.getAllByCriteria('Currency', parameters, ' order by e.title ')
+         .subscribe((data: any[]) => {
+            this.appInfoStorage.currencies = data;
+         }, error => console.log(error),
+            () => console.log('Get Currency complete'));
 
       this.getCachedReferences('taxclass')
          .subscribe((data: GenericVO[]) => {

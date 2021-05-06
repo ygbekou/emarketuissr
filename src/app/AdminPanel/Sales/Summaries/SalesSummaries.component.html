@@ -1,0 +1,203 @@
+<a mat-button [routerLink]="['/admin/sales/summaries']">{{'COMMON.SALES_SUMMARIES' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)">
+      <mat-tab label="{{'COMMON.SALES_SUMMARIES' | translate}}">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="salesSummariesDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="storeName">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.storeName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="monthyear">
+              <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.MONTH'|translate}}/{{'COMMON.YEAR'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right"> {{salesSummary.month}}/{{salesSummary.year}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="paymentMethod">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PAYMENT_METHOD'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.paymentMethod}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="taxFees">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TAX_FEES'|translate}} </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="shippingCost">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.DELIVERY_FEE'|translate}} </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="processingFees">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PROCESSING_FEES'|translate}} </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalPaid">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_PAID'|translate}} </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalDue">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right">
+                {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+             + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let salesSummary" class="text-right"> {{salesSummary.status}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="dateAdded">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.createDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+           
+            <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
+            <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;">
+            </tr>
+          </table>
+          <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </mat-tab>
+    
+      <mat-tab label="{{'COMMON.PAYMENTS' | translate}}">
+
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+    <mat-card>
+      <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+        <div fxLayout="row wrap">
+          <div class="text-center">
+            <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+          </div>
+          <div class="text-center" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.ID' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.id"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
+              <mat-option *ngFor="let store of stores" [value]="store.id">
+                {{store.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.YEAR' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.year"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.MONTH' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.month"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.status" name="status">
+              <mat-option [value]="0">
+                {{'COMMON.ACTIVE'|translate}}
+              </mat-option>
+              <mat-option [value]="1">
+                {{'COMMON.INACTIF'|translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+              [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+              [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <div class="text-center">
+            <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

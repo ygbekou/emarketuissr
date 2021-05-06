@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language, CategoryDescription, Menu, Company, Country, Zone, StoreCategoryDesc, TimePeriod } from './app.models';
+import { Language, CategoryDescription, Menu, Company, Country, Zone, StoreCategoryDesc, TimePeriod, Currency } from './app.models';
 import { TranslateService } from '@ngx-translate/core';
 
 
@@ -19,6 +19,7 @@ export class AppInfoStorage {
   public returnReasons: any = [];
   public returnActions: any = [];
   public activeStatuses: any = [];
+  public currencies: Currency[] = [];
   public USER_GROUPS: any = [];
   public language: Language;
   public displayLang: string;

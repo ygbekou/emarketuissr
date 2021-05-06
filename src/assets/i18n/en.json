@@ -703,7 +703,20 @@
 		"PARENTS": "Parents",
 		"SELECT_ONE": "Select One",
 		"ADD_ADDRESS_TO_PROCEED":"Specify your address to proceed",
-		"ADD_PAYMENT_TO_PROCEED":"Specify your payment method to proceed"
+		"ADD_PAYMENT_TO_PROCEED":"Specify your payment method to proceed",
+		"TOTAL_DUE": "Total Due",
+		"TOTAL_PAID": "Total Paid",
+		"SALES_SUMMARIES": "Sales Summaries",
+		"PAYMENTS": "Payments",
+		"PAYOUTS": "Payout",
+		"PROOF_PAYOUT_ID": "Proof Payout Id",
+		"PAYOUT_DATE": "Payout Date",
+		"PROCESSING_FEES": "Processing Fees",
+		"TAX_FEES": "Tax Fees",
+		"SELECT_TRANSACTION": "Select transactions",
+		"COMPLETE_PAYOUT": "Complete payout",
+		"TOTAL_DUE_SELECTED": "Total Due Selected",
+		"REVERSE": "Reverse"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

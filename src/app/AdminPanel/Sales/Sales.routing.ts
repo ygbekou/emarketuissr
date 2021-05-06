@@ -7,6 +7,8 @@ import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
 import { AdminReviewsComponent } from './Reviews/AdminReviews.component';
 import { ReviewComponent } from 'src/app/Global/Review/Review.component';
+import { SalesSummariesComponent } from './Summaries/SalesSummaries.component';
+import { PayoutsComponent } from './Payouts/Payouts.component';
 
 export const SalesRoutes: Routes = [
    {
@@ -64,7 +66,23 @@ export const SalesRoutes: Routes = [
             data: {
                expectedRole: ['Administrator']
             }
-         }
+         },
+         {
+            path: 'summaries',
+            component: SalesSummariesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'payouts',
+            component: PayoutsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
       ]
    }
 ];

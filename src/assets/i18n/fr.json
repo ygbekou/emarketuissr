@@ -703,7 +703,20 @@
 		"PARENTS": "Parents",
 		"SELECT_ONE": "Choisir Un",
 		"ADD_ADDRESS_TO_PROCEED":"Indiquez votre adresse pour continuer",
-		"ADD_PAYMENT_TO_PROCEED":"Indiquez votre méthode de payement pour continuer"
+		"ADD_PAYMENT_TO_PROCEED":"Indiquez votre méthode de payement pour continuer",
+		"TOTAL_DUE": "Total Due",
+		"TOTAL_PAID": "Total Payé",
+		"SALES_SUMMARIES": "Sommaires des ventes",
+		"PAYMENTS": "Payements",
+		"PAYOUTS": "Remboursements",
+		"PROOF_PAYOUT_ID": "Proof Payout Id",
+		"PAYOUT_DATE": "Date de remboursement",
+		"PROCESSING_FEES": "Frais de traitement",
+		"TAX_FEES": "Frais fiscaux",
+		"SELECT_TRANSACTION": "Selectionner les transactions",
+		"COMPLETE_PAYOUT": "Completer le remboursement",
+		"TOTAL_DUE_SELECTED": "Total Due Sélectionné",
+		"REVERSE": "Retourner"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

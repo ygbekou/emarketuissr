@@ -1,0 +1,118 @@
+
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="salesSummariesDatasource" matSort class="w-100">
+        <ng-container matColumnDef="select" *ngIf="action === 'add'">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? calculateTotalDue(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="monthyear">
+          <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.MONTH'|translate}}/{{'COMMON.YEAR'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right"> {{salesSummary.month}}/{{salesSummary.year}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paymentMethod">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PAYMENT_METHOD'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.paymentMethod}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taxFees">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TAX_FEES'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="shippingCost">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.DELIVERY_FEE'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="processingFees">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PROCESSING_FEES'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPaid">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_PAID'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalDue">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let salesSummary" class="text-right"> {{salesSummary.status}} </td>
+        </ng-container> -->
+        
+        <ng-container matColumnDef="dateAdded">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.createDate | date: 'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
+        <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;">
+        </tr>
+      </table>
+      <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="text-right">
+      <h6 style="color: #ff5722">{{'COMMON.TOTAL_DUE_SELECTED'|translate}}</h6>
+    </div>
+    <div fxFlex.xs="10" fxFlex.sm="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="text-right">
+    </div>
+    <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="text-left">
+      <h6 style="color: #ff5722">
+        {{selectedCurrency?.symbolLeft}} {{totalDue | number: '1.' + selectedCurrency?.decimalPlace + '-'  
+          + selectedCurrency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{selectedCurrency?.symbolRight}}
+      </h6>
+    </div>
+    <div fxFlex.xs="10" fxFlex.sm="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="text-right">
+    </div>
+  </div>
+</div>

@@ -1996,3 +1996,79 @@ export class StoreShipper {
   public shipCount: number;
   type = 'StoreShipper';
 }
+
+export class SalesSummary {
+	public id: number;
+	public store: Store;
+	public currency: Currency;
+  public year: number;
+  public month: number;
+  public paymentMethod: string;
+  public total: number;
+  public shippingCost: number;
+  public taxFees: number;
+  public processingFees: number;
+  public totalDue: number;
+  public totalPaid: number;
+  public status: number;
+
+  type = 'SalesSummary';
+}
+
+
+export class SalesSummarySearchCriteria {
+  id: number;
+  year: number;
+	month: number;
+	currencyId: number;
+	currencyCode: string;
+	storeId: number;
+	storeName: string;
+	status: number;
+  paymentMethods: string[];
+  userId: number;
+  beginDate: Date;
+  endDate: Date;
+}
+
+
+export class Payout {
+	public id: number;
+	public store: Store;
+	public currency: Currency;
+  public year: number;
+  public total: number;
+  public image: string;
+  public proofPayoutId: string;
+  public comment: string;
+  public payoutDate: Date;
+  public status: number;
+  public modBy: number;
+
+  public salesSummaryIds: number[];
+  public salesSummarys: SalesSummary[];
+  public salesSummaryVOs: [];
+
+  type = 'Payout';
+
+  constructor() {
+    this.store = new Store();
+    this.currency = new Currency();
+  }
+}
+
+
+export class PayoutSearchCriteria {
+  id: number;
+  year: number;
+	currencyId: number;
+	currencyCode: string;
+	storeId: number;
+	storeName: string;
+	status: number;
+  proofPayoutId: string[];
+  userId: number;
+  payoutDate: Date;
+  beginDate: Date;
+  endDate: Date;
+}
