@@ -719,7 +719,13 @@
 		"SELECT_TRANSACTION": "Select transactions",
 		"COMPLETE_PAYOUT": "Complete payout",
 		"TOTAL_DUE_SELECTED": "Total Due Selected",
-		"REVERSE": "Reverse"
+		"REVERSE": "Reverse",
+		"PAID": "Paid",
+		"PARTIALLY_PAID": "Partially Paid",
+		"UNPAID": "Unpaid",
+		"REVERSE_PAYOUT_ID": "Reverse Payout Id",
+    	"REVERSED": "Reversed",
+    	"REVERSAL": "Reversal"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

@@ -21,7 +21,7 @@ export interface SearchResponse {
   styleUrls: ['./Payouts.component.scss']
 })
 export class PayoutsComponent extends BaseComponent implements OnInit {
-  payoutColumns: string[] = ['payoutDate', 'storeName', 'currency', 'year', 'total', 'proofPayoutId', 'dateAdded'];
+  payoutColumns: string[] = ['payoutDate', 'storeName', 'year', 'total', 'proofPayoutId', 'dateAdded', 'id', 'reversePayoutId'];
   payoutDatasource: MatTableDataSource<Payout>;
   @ViewChild('MatPaginatorPayout', { static: true }) payoutPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) payoutSort: MatSort;

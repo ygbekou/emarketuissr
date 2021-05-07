@@ -712,14 +712,20 @@
 		"SALES_SUMMARIES": "Sommaires des ventes",
 		"PAYMENTS": "Payements",
 		"PAYOUTS": "Remboursements",
-		"PROOF_PAYOUT_ID": "Proof Payout Id",
+		"PROOF_PAYOUT_ID": "Preuve d'itentité",
 		"PAYOUT_DATE": "Date de remboursement",
 		"PROCESSING_FEES": "Frais de traitement",
 		"TAX_FEES": "Frais fiscaux",
-		"SELECT_TRANSACTION": "Selectionner les transactions",
+		"SELECT_TRANSACTION": "Sélectionner les transactions",
 		"COMPLETE_PAYOUT": "Completer le remboursement",
 		"TOTAL_DUE_SELECTED": "Total Due Sélectionné",
-		"REVERSE": "Retourner"
+		"REVERSE": "Retourner",
+		"PAID": "Payé",
+		"PARTIALLY_PAID": "Partielement Payé",
+		"UNPAID": "Non payé",
+    "REVERSE_PAYOUT_ID": "Payment retourné",
+    "REVERSED": "Reversé",
+    "REVERSAL": "Renversement"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

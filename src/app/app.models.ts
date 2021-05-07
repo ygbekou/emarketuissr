@@ -2013,6 +2013,7 @@ export class SalesSummary {
   public totalDue: number;
   public totalPaid: number;
   public status: number;
+  public payoutId: number;
 
   type = 'SalesSummary';
 }
@@ -2046,6 +2047,7 @@ export class Payout {
   public payoutDate: Date;
   public status: number;
   public modBy: number;
+  public reversePayoutId: number;
 
   public salesSummaryIds: number[];
   public salesSummarys: SalesSummary[];

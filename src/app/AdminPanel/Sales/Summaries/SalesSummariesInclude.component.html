@@ -1,6 +1,7 @@
 
 <div fxLayout="row wrap">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" 
+    *ngIf="salesSummariesDatasource?.data && salesSummariesDatasource.data?.length > 0">
     <div class="table-wrapper">
       <table mat-table [dataSource]="salesSummariesDatasource" matSort class="w-100">
         <ng-container matColumnDef="select" *ngIf="action === 'add'">
@@ -99,7 +100,7 @@
   </div>
 </div>
 
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf="selectedCurrency">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="text-right">
       <h6 style="color: #ff5722">{{'COMMON.TOTAL_DUE_SELECTED'|translate}}</h6>

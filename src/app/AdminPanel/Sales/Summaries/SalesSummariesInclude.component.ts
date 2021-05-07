@@ -133,10 +133,13 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   }
 
 
-  setDataSource(data, action) {
+  setDataSource(data, action, total) {
     this.action = action;
     if (this.action === 'edit') {
       this.salesSummariesColumns.splice(0, 1);
+    }
+    if (total) {
+      this.totalDue = total;
     }
     this.salesSummariesDatasource = new MatTableDataSource(data);
     this.salesSummariesDatasource.paginator = this.salesSummariesPaginator;
