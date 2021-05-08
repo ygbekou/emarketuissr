@@ -45,7 +45,7 @@ const MENUITEMS = [
       { state: 'returns', name: 'Returns', type: 'link' },
       { state: 'reviews', name: 'Reviews', type: 'link' },
       { state: 'summaries', name: 'Sales Summaries', type: 'link' },
-      { state: 'payouts', name: 'Payouts', type: 'link' }
+      { state: 'payouts/0', name: 'Payouts', type: 'link' }
     ]
   },
   {
@@ -122,7 +122,7 @@ const MENUITEMS_FR = [
       { state: 'returns', name: 'Retours', type: 'link' },
       { state: 'reviews', name: 'Reviews', type: 'link' },
       { state: 'summaries', name: 'Sommaire des ventes', type: 'link' },
-      { state: 'payouts', name: 'Remboursement', type: 'link' }
+      { state: 'payouts', name: 'Payements', type: 'link' }
     ]
   },
   {

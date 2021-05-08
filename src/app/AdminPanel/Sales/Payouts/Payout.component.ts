@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Payout, Store, SalesSummarySearchCriteria } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Payout, Store, SalesSummarySearchCriteria, PayoutVO } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
@@ -24,6 +24,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   stores: Store[] = [];
   formData: FormData;
   picture: any[] = [];
+  @Output() payoutSaveEvent = new EventEmitter<any>();
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -48,6 +49,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   }
 
   getPayout(payoutId: number) {
+    this.messages = '';
     if (payoutId > 0) {
       this.appService.getOneWithChildsAndFiles(payoutId, 'Payout')
         .subscribe(result => {
@@ -93,6 +95,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
       .subscribe((data: Payout) => {
         this.processResult(data, this.payout, null);
         this.payout = data;
+        this.payoutSaveEvent.emit(new PayoutVO(this.payout));
       },
         error => console.log(error),
         () => console.log('Get all getProductsForCategoryForSale complete'));
@@ -102,6 +105,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
     this.payout.reversePayoutId = this.payout.id;
     this.payout.id = undefined;
     this.payout.total = -this.payout.total;
+    this.payout.salesSummarys = [];
     this.save();
   }
 
@@ -123,6 +127,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
       searchCriteria.storeId = this.payout.store.id;
       searchCriteria.currencyId = this.payout.store.currency.id;
       searchCriteria.year = this.payout.year;
+      searchCriteria.totalDueGreaterThan = 0;
 
       this.salesSummariesIncludeComponent.searchCriteria = searchCriteria;
       this.salesSummariesIncludeComponent.selectedCurrency = this.payout.currency;

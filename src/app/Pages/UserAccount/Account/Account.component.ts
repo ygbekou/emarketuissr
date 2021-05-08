@@ -43,6 +43,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
+      { name: 'Sales summary', url: '/account/sales-summaries', icon: 'dashboard' },
       { name: 'Sales history', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
       { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },

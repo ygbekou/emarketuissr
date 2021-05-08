@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { OrderStatus, StoreSearchCriteria, Store, Payout, PayoutSearchCriteria } from 'src/app/app.models';
+import { OrderStatus, StoreSearchCriteria, Store, Payout, PayoutSearchCriteria, PayoutVO } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { FormControl } from '@angular/forms';
 import { PayoutComponent } from './Payout.component';
+import { ActivatedRoute } from '@angular/router';
 
 export interface SearchResponse {
   document: string;
@@ -21,8 +22,8 @@ export interface SearchResponse {
   styleUrls: ['./Payouts.component.scss']
 })
 export class PayoutsComponent extends BaseComponent implements OnInit {
-  payoutColumns: string[] = ['payoutDate', 'storeName', 'year', 'total', 'proofPayoutId', 'dateAdded', 'id', 'reversePayoutId'];
-  payoutDatasource: MatTableDataSource<Payout>;
+  payoutColumns: string[] = ['id', 'payoutDate', 'storeName', 'year', 'total', 'proofPayoutId', 'dateAdded', 'reversePayoutId'];
+  payoutDatasource: MatTableDataSource<PayoutVO>;
   @ViewChild('MatPaginatorPayout', { static: true }) payoutPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) payoutSort: MatSort;
 
@@ -43,18 +44,34 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   selected = new FormControl(0);
 
   constructor(public appService: AppService,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    private activatedRoute: ActivatedRoute) {
     super(translate);
   }
 
   ngOnInit() {
-    this.clear();
-    this.getStores();
-    this.search();
+    this.activatedRoute.params.subscribe(params => {
+      if (params.id === undefined || +params.id === 0) {
+        setTimeout(() => {
+          this.selected.setValue(0);
+          this.searchCriteria.storeId = 0;
+          this.clear();
+          this.getStores();
+          this.search();
+        }, 500);
+      } else {
+        setTimeout(() => {
+          this.changeOrderType(params.id);
+        }, 500);
+      }
+    });
+
   }
+
 
   private clear() {
     this.searchCriteria.userId = this.userId;
+    this.searchCriteria = new PayoutSearchCriteria();
   }
 
   changeOrderType(payoutId: number) {
@@ -74,8 +91,6 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   }
 
   search() {
-    //this.setToggleValues();
-    console.log(this.searchCriteria);
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
@@ -104,6 +119,15 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   setToggleValues() {
     this.searchCriteria.status = (this.searchCriteria.status === null || this.searchCriteria.status === undefined
       || this.searchCriteria.status.toString() === 'false' || this.searchCriteria.status.toString() === '0') ? 0 : 1;
+  }
+
+  updateDataTable(payoutVo: PayoutVO) {
+    this.payoutDatasource.data.unshift(payoutVo);
+    this.payoutDatasource = new MatTableDataSource(this.payoutDatasource.data);
+    this.payoutDatasource.paginator = this.payoutPaginator;
+    this.payoutDatasource.sort = this.payoutSort;
+
+    this.payoutComponent.getPayout(payoutVo.id);
   }
 
 }

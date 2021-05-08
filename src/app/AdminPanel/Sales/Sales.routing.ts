@@ -76,7 +76,7 @@ export const SalesRoutes: Routes = [
             }
          },
          {
-            path: 'payouts',
+            path: 'payouts/:id',
             component: PayoutsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {

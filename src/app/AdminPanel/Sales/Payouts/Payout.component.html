@@ -1,28 +1,21 @@
 
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap">
-    <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit" 
-        [disabled]="!f.form.valid">
-          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-          <mat-icon>save</mat-icon>
-      </button>
-    </div>
-    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3"></div>
-    <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3"></div>
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
       <button mat-raised-button style="color:#ff0000" fxLayout="row" fxLayoutAlign="center center" (click)="reverse()" 
         [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
           <span class="mx-1 uppercase">{{'COMMON.REVERSE' | translate}}</span>
           <mat-icon>undo</mat-icon>
       </button>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
       <div class="text-center mt-2" *ngIf="messages">
         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
       </div>
     </div>
   </div>
-  <mat-horizontal-stepper [linear]="false" #stepper *ngIf="!payout.id">
+  <mat-horizontal-stepper [linear]="true" #stepper *ngIf="!payout.id">
     <mat-step>
       <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
       <div fxLayout="row wrap">
@@ -71,7 +64,7 @@
         </div>
       </div>
     </mat-step>
-    <mat-step>
+    <mat-step [completed]="payout.total > 0">
       <ng-template matStepLabel>{{'COMMON.SELECT_TRANSACTION'|translate}}</ng-template>
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
@@ -83,7 +76,7 @@
               <mat-icon>keyboard_backspace</mat-icon>
           </button>
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;"
-          (click)="stepper.selectedIndex = 2;">
+          (click)="stepper.selectedIndex = 2;" [disabled]="payout.total === 0">
               <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
@@ -141,6 +134,11 @@
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
           (click)="stepper.selectedIndex = 1;">
               <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;" type="submit" 
+            [disabled]="!f.form.valid">
+              <span class="mx-1 uppercase">{{'COMMON.PAY' | translate}}</span>
+              <mat-icon>save</mat-icon>
           </button>
         </div>
       </div>

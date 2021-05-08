@@ -21,6 +21,7 @@ import { OrderCancelComponent } from './OrderCancel/OrderCancel.component';
 import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
+import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -118,6 +119,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sales-orders',
             component: SalesOrdersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'sales-summaries',
+            component: SellerSalesSummariesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

@@ -2030,6 +2030,7 @@ export class SalesSummarySearchCriteria {
 	status: number;
   paymentMethods: string[];
   userId: number;
+  totalDueGreaterThan: number;
   beginDate: Date;
   endDate: Date;
 }
@@ -2048,6 +2049,7 @@ export class Payout {
   public status: number;
   public modBy: number;
   public reversePayoutId: number;
+  public createDate: Date;
 
   public salesSummaryIds: number[];
   public salesSummarys: SalesSummary[];
@@ -2061,6 +2063,46 @@ export class Payout {
   }
 }
 
+
+export class PayoutVO {
+  id: number;
+	storeId: number;
+	storeName: string;
+	total: number;
+	year: number;
+	image: string;
+	proofPayoutId: string;
+	comment: string;
+	currencyCode: string;
+	currencyId: number;
+	currencySymbolLeft: string;
+	currencySymbolRight: string;
+	currencyDecimalPlace: number;
+	payoutDate: Date;
+	createDate: Date;
+	status: number;
+  reversePayoutId: number;
+
+  constructor(payout: Payout) {
+    this.id = payout.id;
+	  this.storeId = payout.store.id;
+	  this.storeName = payout.store.name;
+	  this.total = payout.total;
+    this.year = payout.year;
+    this.image = payout.image;
+    this.proofPayoutId = payout.proofPayoutId;
+    this.comment = payout.comment;
+    this.currencyCode = payout.currency.code;
+    this.currencyId = payout.currency.id;
+    this.currencySymbolLeft = payout.currency.symbolLeft;
+    this.currencySymbolRight = payout.currency.symbolRight;
+    this.currencyDecimalPlace = payout.currency.decimalPlace;
+    this.payoutDate = payout.payoutDate;
+    this.createDate = payout.createDate;
+    this.status = payout.status;
+    this.reversePayoutId = payout.reversePayoutId;
+  }
+}
 
 export class PayoutSearchCriteria {
   id: number;

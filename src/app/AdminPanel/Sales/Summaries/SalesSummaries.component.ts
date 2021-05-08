@@ -37,6 +37,8 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   stores: Store[] = [];
   colors = ['primary', 'secondary'];
 
+  allStore = new Store();
+
   constructor(public appService: AppService,
     public translate: TranslateService) {
     super(translate);
@@ -45,11 +47,18 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.clear();
     this.getStores();
+  }
+
+
+  ngAfterViewInit() {
+    this.searchCriteria.status = 0;
+    this.searchCriteria.storeId = 0;
     this.search();
   }
 
   private clear() {
     this.searchCriteria.userId = this.userId;
+    this.searchCriteria = new SalesSummarySearchCriteria();
   }
 
   changeOrderType(event) {
@@ -58,8 +67,8 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   }
 
   private getStores() {
-    this.searchCriteria.status = 1;
-    this.searchCriteria.userId = this.userId;
+    this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = this.userId;
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
@@ -69,7 +78,6 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   }
 
   search() {
-    console.log(this.searchCriteria);
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
