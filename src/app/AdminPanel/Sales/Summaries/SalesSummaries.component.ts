@@ -57,7 +57,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   }
 
   private clear() {
-    this.searchCriteria.userId = this.userId;
+    this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.searchCriteria = new SalesSummarySearchCriteria();
   }
 
@@ -68,7 +68,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
 
   private getStores() {
     this.storeSearchCriteria.status = 1;
-    this.storeSearchCriteria.userId = this.userId;
+    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
@@ -82,6 +82,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
+       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.appService.saveWithUrl('/service/order/salesSummaries', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.salesSummariesDatasource = new MatTableDataSource(data);

@@ -4,11 +4,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 @Component({
-  selector: 'app-sellersales-summaries',
-  templateUrl: './SellerSalesSummaries.component.html',
-  styleUrls: ['./SellerSalesSummaries.component.scss']
+  selector: 'app-seller-payouts',
+  templateUrl: './SellerPayouts.component.html',
+  styleUrls: ['./SellerPayouts.component.scss']
 })
-export class SellerSalesSummariesComponent extends BaseComponent implements OnInit {
+export class SellerPayoutsComponent extends BaseComponent implements OnInit {
 
   constructor(public appService: AppService,
     public translate: TranslateService) {

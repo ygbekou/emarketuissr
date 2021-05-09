@@ -108,7 +108,7 @@
            
             <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
             <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;"
-               [routerLink]="'/admin/sales/payouts/'+salesSummary.payoutId">
+               [routerLink]="[(userId === 0 ? '/account/payouts/' : '/admin/sales/payouts/') +salesSummary.payoutId]">
             </tr>
           </table>
           <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { Payout, Store, SalesSummarySearchCriteria, PayoutVO } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
@@ -26,6 +26,9 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   picture: any[] = [];
   @Output() payoutSaveEvent = new EventEmitter<any>();
 
+  @Input() isAdminPage = true;
+  @Input() canAcknowledge = false;
+
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
@@ -46,6 +49,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
 
   clear() {
     this.payout = new Payout();
+    this.payout.status = 1;
   }
 
   getPayout(payoutId: number) {
@@ -76,13 +80,12 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
         });
     } else {
       this.payout = new Payout();
+      this.payout.status = 1;
     }
   }
 
   save() {
     this.messages = '';
-    this.setToggleValues();
-    console.log(this.payout);
     this.payout.currency = this.payout.store.currency;
 
     this.payout.modBy = +this.appService.tokenStorage.getUserId();
@@ -105,6 +108,13 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
     this.payout.reversePayoutId = this.payout.id;
     this.payout.id = undefined;
     this.payout.total = -this.payout.total;
+    this.payout.salesSummarys = [];
+    this.save();
+  }
+
+  acknowledge() {
+    this.payout.status = 2;
+    alert(this.payout.status)
     this.payout.salesSummarys = [];
     this.save();
   }
@@ -137,7 +147,6 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   }
 
   updateTotalDue(payout: Payout) {
-    console.log(this.payout);
       this.payout.total = payout.total;
       this.payout.salesSummaryIds = payout.salesSummaryIds;
    }

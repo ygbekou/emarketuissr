@@ -1,12 +1,25 @@
 
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3"></div>
-    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;" type="submit" 
+            [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+          </button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="isAdminPage">
       <button mat-raised-button style="color:#ff0000" fxLayout="row" fxLayoutAlign="center center" (click)="reverse()" 
         [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
           <span class="mx-1 uppercase">{{'COMMON.REVERSE' | translate}}</span>
           <mat-icon>undo</mat-icon>
+      </button>
+    </div> 
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="canAcknowledge">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="acknowledge()" 
+        [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
+          <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
+          <mat-icon>done_all</mat-icon>
       </button>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
@@ -19,7 +32,7 @@
     <mat-step>
       <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
       <div fxLayout="row wrap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
             <mat-select [(ngModel)]="payout.store" name="store" #store="ngModel" [compareWith]="compareObjects" required>
@@ -33,12 +46,12 @@
           </mat-form-field>
         </div>
 
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label> {{'COMMON.CURRENCY' | translate}}</mat-label><br/>
           {{payout.store.currency?.title}}
         </div>
 
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.YEAR' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="year" [(ngModel)]="payout.year" name="year" #year="ngModel" required>
@@ -117,7 +130,7 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
 
-            <textarea matInput rows="5" cols="50" class="form-control" id="comment"
+            <textarea matInput rows="10" cols="50" class="form-control" id="comment"
                   [(ngModel)]="payout.comment" name="comment"
                   #comment="ngModel"></textarea>
           </mat-form-field>
@@ -138,15 +151,12 @@
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;" type="submit" 
             [disabled]="!f.form.valid">
               <span class="mx-1 uppercase">{{'COMMON.PAY' | translate}}</span>
-              <mat-icon>save</mat-icon>
+              <mat-icon>payment</mat-icon>
           </button>
         </div>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-
-
-
 
 
     <div fxLayout="row wrap" *ngIf="payout.id > 0">
@@ -156,17 +166,21 @@
         <h4 style="color:red; text-align: center; display:flex; justify-content:center;" *ngIf="payout.total < 0 && payout.reversePayoutId">{{'COMMON.REVERSAL' | translate}}</h4>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
             <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <mat-label> {{payout.store.name}}</mat-label>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {{payout.store.currency?.title}}
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label> {{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label> {{payout.year}}</mat-label>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <span *ngIf="payout.status === 1" style="color:blue"><h5>{{'COMMON.SUBMITTED' | translate}}</h5></span>
+          <span *ngIf="payout.status === 2" style="color:green"><h6>{{'COMMON.ACKNOWLEDGED' | translate}}</h6></span>
         </div>
       </div>
 
@@ -184,7 +198,7 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}</mat-label><br />
             <input matInput [matDatepicker]="datePayoutPicker" class="form-control" id="datePayout"
-                [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" required>
+                [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" [disabled]="!isAdminPage" required>
             <mat-datepicker-toggle matSuffix [for]="datePayoutPicker"></mat-datepicker-toggle>
             <mat-datepicker #datePayoutPicker></mat-datepicker>
           </mat-form-field>
@@ -193,7 +207,7 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="proofPayoutId" [(ngModel)]="payout.proofPayoutId" 
-              name="proofPayoutId" #proofPayoutId="ngModel" required>
+              name="proofPayoutId" #proofPayoutId="ngModel" [disabled]="!isAdminPage" required>
           </mat-form-field>
         </div>
       </div>
@@ -203,9 +217,8 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
 
-            <textarea matInput rows="5" cols="50" class="form-control" id="comment"
-                  [(ngModel)]="payout.comment" name="comment"
-                  #comment="ngModel"></textarea>
+            <textarea matInput rows="10" cols="50" class="form-control" id="comment"
+                  [(ngModel)]="payout.comment" name="comment" #comment="ngModel" [disabled]="!isAdminPage"></textarea>
           </mat-form-field>
         </div>
         <div fxLayout="row wrap">

@@ -22,6 +22,7 @@ import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
+import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -127,6 +128,22 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sales-summaries',
             component: SellerSalesSummariesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'payouts/:id',
+            component: SellerPayoutsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'allpayouts',
+            component: SellerPayoutsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

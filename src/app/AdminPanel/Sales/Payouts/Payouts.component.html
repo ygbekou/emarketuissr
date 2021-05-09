@@ -21,7 +21,7 @@
                 autocomplete="off">
             </mat-form-field>
           </div>
-          <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+          <div fxFlex="100" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
             <a (click)="action = 'add'; messages = ''; changeOrderType(null)" mat-icon-button color="primary"
               matTooltip="{{'COMMON.ADD' | translate}}">
               <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
@@ -88,7 +88,7 @@
           </table>
           <p *ngIf="payoutDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
         </div>
-        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSize]="10" #MatPaginatorPayout [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
       </mat-tab>
 
 

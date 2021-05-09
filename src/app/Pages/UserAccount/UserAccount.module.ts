@@ -67,6 +67,7 @@ import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component'
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
 import { SalesSummariesComponent } from 'src/app/AdminPanel/Sales/Summaries/SalesSummaries.component';
+import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
 
 @NgModule({
   imports: [
@@ -150,6 +151,7 @@ import { SalesSummariesComponent } from 'src/app/AdminPanel/Sales/Summaries/Sale
     SalesDashboardComponent,
     SalesOrdersComponent,
     SellerSalesSummariesComponent,
+    SellerPayoutsComponent,
     OrderDetailComponent,
     ClientDashboardComponent,
     OpenOrdersComponent,

@@ -32,8 +32,9 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   messages = '';
   button = 'filter';
 
-  @Input()
-  userId: number;
+  @Input() userId: number;
+  @Input() isAdminPage = true;
+  @Input() canAcknowledge = false;
 
   searchCriteria: PayoutSearchCriteria = new PayoutSearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
@@ -70,17 +71,19 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
 
 
   private clear() {
-    this.searchCriteria.userId = this.userId;
+    this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.searchCriteria = new PayoutSearchCriteria();
   }
 
   changeOrderType(payoutId: number) {
+    this.payoutComponent.isAdminPage = this.isAdminPage;
+    this.payoutComponent.canAcknowledge = this.canAcknowledge;
     this.payoutComponent.getPayout(payoutId);
     this.selected.setValue(1);
   }
 
   private getStores() {
-    this.searchCriteria.userId = this.userId;
+    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
@@ -95,6 +98,7 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
+      this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.appService.saveWithUrl('/service/order/payouts', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.payoutDatasource = new MatTableDataSource(data);

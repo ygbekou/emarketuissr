@@ -726,7 +726,9 @@
 		"UNPAID": "Non payé",
     "REVERSE_PAYOUT_ID": "Payment retourné",
     "REVERSED": "Reversé",
-    "REVERSAL": "Renversement"
+    "REVERSAL": "Renversement",
+    "ACKNOWLEDGE": "Accuser réception",
+    "ACKNOWLEDGED": "Reconnue"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

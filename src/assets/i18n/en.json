@@ -726,7 +726,9 @@
 		"UNPAID": "Unpaid",
 		"REVERSE_PAYOUT_ID": "Reverse Payout Id",
     	"REVERSED": "Reversed",
-    	"REVERSAL": "Reversal"
+		"REVERSAL": "Reversal",
+		"ACKNOWLEDGE": "Acknowledge",
+		"ACKNOWLEDGED": "Acknowledged"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
