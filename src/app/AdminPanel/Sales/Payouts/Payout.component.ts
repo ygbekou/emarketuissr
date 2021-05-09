@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from 'src/app/app.constants';
 import { SalesSummariesIncludeComponent } from '../Summaries/SalesSummariesInclude.component';
 import { MatStepper } from '@angular/material';
+import { Location } from "@angular/common";
 
 
 @Component({
@@ -26,17 +27,19 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   picture: any[] = [];
   @Output() payoutSaveEvent = new EventEmitter<any>();
 
-  @Input() isAdminPage = true;
+  @Input() isAdminPage = false;
   @Input() canAcknowledge = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
       super(translate);
     }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
+
       if (params.id === undefined || params.id === 0) {
         this.clear();
       } else {
@@ -45,6 +48,12 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
         this.getPayout(params.id);
       }
     });
+
+    this.activatedRoute.data.subscribe(value => {
+      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
+        && (this.location.path().startsWith('/admin/sales/payouts'));
+    });
+
   }
 
   clear() {
@@ -104,9 +113,27 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
         () => console.log('Get all getProductsForCategoryForSale complete'));
   }
 
+  saveSimple() {
+    this.messages = '';
+    this.payout.currency = this.payout.store.currency;
+    try {
+
+      this.appService.save(this.payout, 'Payout')
+        .subscribe(data => {
+          this.processResult(data, this.payout, null);
+          this.payout = data;
+          this.payoutSaveEvent.emit(new PayoutVO(this.payout));
+        });
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   reverse() {
     this.payout.reversePayoutId = this.payout.id;
     this.payout.id = undefined;
+    this.payout.status = 3;
     this.payout.total = -this.payout.total;
     this.payout.salesSummarys = [];
     this.save();
@@ -114,15 +141,10 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
 
   acknowledge() {
     this.payout.status = 2;
-    alert(this.payout.status)
     this.payout.salesSummarys = [];
-    this.save();
+    this.saveSimple();
   }
 
-  setToggleValues() {
-    this.payout.status = (this.payout.status === null || this.payout.status === undefined
-      || this.payout.status.toString() === 'false' || this.payout.status.toString() === '0') ? 0 : 1;
-  }
 
   isEmpty(value: string): boolean {
     const val = value !== null && value !== undefined ? value.trim() : '';

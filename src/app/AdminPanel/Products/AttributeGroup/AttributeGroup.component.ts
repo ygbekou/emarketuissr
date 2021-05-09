@@ -90,8 +90,6 @@ export class AttributeGroupComponent extends BaseComponent implements OnInit {
       const ag = {...this.attributeGroup};
       this.cleanAttributeGroupDescriptions(ag);
 
-      console.info(ag);
-
       this.appService.save(ag, 'AttributeGroup')
         .subscribe(result => {
           if (result.id > 0) {

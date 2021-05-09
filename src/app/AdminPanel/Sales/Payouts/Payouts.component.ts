@@ -9,6 +9,7 @@ import { BaseComponent } from '../../baseComponent';
 import { FormControl } from '@angular/forms';
 import { PayoutComponent } from './Payout.component';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from "@angular/common";
 
 export interface SearchResponse {
   document: string;
@@ -22,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./Payouts.component.scss']
 })
 export class PayoutsComponent extends BaseComponent implements OnInit {
-  payoutColumns: string[] = ['id', 'payoutDate', 'storeName', 'year', 'total', 'proofPayoutId', 'dateAdded', 'reversePayoutId'];
+  payoutColumns: string[] = ['id', 'payoutDate', 'storeName', 'year', 'total', 'proofPayoutId', 'dateAdded', 'reversePayoutId', 'status'];
   payoutDatasource: MatTableDataSource<PayoutVO>;
   @ViewChild('MatPaginatorPayout', { static: true }) payoutPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) payoutSort: MatSort;
@@ -46,7 +47,8 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
 
   constructor(public appService: AppService,
     public translate: TranslateService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
     super(translate);
   }
 
@@ -61,12 +63,18 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
           this.search();
         }, 500);
       } else {
+        this.clear();
+        this.getStores();
         setTimeout(() => {
-          this.changeOrderType(params.id);
+          this.selectPayout(params.id);
         }, 500);
       }
     });
 
+    this.activatedRoute.data.subscribe(value => {
+      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
+        && (this.location.path().startsWith('/admin/sales/payouts'));
+    });
   }
 
 
@@ -75,8 +83,8 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
     this.searchCriteria = new PayoutSearchCriteria();
   }
 
-  changeOrderType(payoutId: number) {
-    this.payoutComponent.isAdminPage = this.isAdminPage;
+  selectPayout(payoutId: number) {
+    //this.payoutComponent.isAdminPage = this.isAdminPage;
     this.payoutComponent.canAcknowledge = this.canAcknowledge;
     this.payoutComponent.getPayout(payoutId);
     this.selected.setValue(1);

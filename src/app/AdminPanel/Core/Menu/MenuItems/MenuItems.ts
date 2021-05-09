@@ -122,7 +122,7 @@ const MENUITEMS_FR = [
       { state: 'returns', name: 'Retours', type: 'link' },
       { state: 'reviews', name: 'Reviews', type: 'link' },
       { state: 'summaries', name: 'Sommaire des ventes', type: 'link' },
-      { state: 'payouts', name: 'Payements', type: 'link' }
+      { state: 'payouts/0', name: 'Payements', type: 'link' }
     ]
   },
   {
