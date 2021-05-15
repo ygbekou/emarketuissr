@@ -801,6 +801,8 @@ export class Store extends BaseModel {
   allowReopen: number;
   lockAfterXPrint: number;
   autoUpload: number;
+  processingFeesPercentage: number;
+  
   type = 'Store';
 
   constructor() {
@@ -2016,6 +2018,10 @@ export class SalesSummary {
   public payoutId: number;
 
   type = 'SalesSummary';
+
+  constructor() {
+    this.store = new Store();
+  }
 }
 
 

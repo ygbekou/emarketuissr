@@ -51,6 +51,7 @@ import { SalesSummariesComponent } from './Summaries/SalesSummaries.component';
 import { PayoutsComponent } from './Payouts/Payouts.component';
 import { PayoutComponent } from './Payouts/Payout.component';
 import { SalesSummariesIncludeComponent } from './Summaries/SalesSummariesInclude.component';
+import { SalesSummaryComponent } from './Summaries/SalesSummary.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { SalesSummariesIncludeComponent } from './Summaries/SalesSummariesInclud
     ReviewsTableComponent,
     SalesSummariesComponent,
     SalesSummariesIncludeComponent,
+    SalesSummaryComponent,
     PayoutsComponent,
     PayoutComponent
   ],
@@ -130,6 +132,7 @@ import { SalesSummariesIncludeComponent } from './Summaries/SalesSummariesInclud
     })
 
   ],
-	exports: [OrdersComponent, OrderViewComponent, SalesSummariesComponent, SalesSummariesIncludeComponent, PayoutComponent, PayoutsComponent]
+  exports: [OrdersComponent, OrderViewComponent, SalesSummariesComponent, SalesSummariesIncludeComponent, SalesSummaryComponent,
+     PayoutComponent, PayoutsComponent]
 })
 export class SalesModule { }
