@@ -19,6 +19,7 @@ export class ReportsComponent implements OnInit {
   fromAdmin = false;
   beginDate: Date;
   endDate: Date;
+  running = false;
   subRpt = 1;
   @Input()
   userId;
@@ -31,6 +32,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.showParams = false;
+    this.running = false;
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
     } else {
@@ -81,14 +83,21 @@ export class ReportsComponent implements OnInit {
     const parm3 = new Parameter('pQtyMax', qtyMax + '');
     rep.parameters = [];
     rep.parameters.push(parm1, parm2, parm3);
-
+    this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);
+        this.running = false;
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
       },
-        error => console.log(error),
-        () => console.log('runInvnReport complete '));
+        error => {
+          console.log(error);
+          this.running = false;
+        },
+        () => {
+          console.log('runInvnReport complete ');
+          this.running = false;
+        });
 
   }
   openInNewTab(url) {
@@ -97,7 +106,7 @@ export class ReportsComponent implements OnInit {
   }
 
   runRpt() {
-
+    this.running = true;
     const rep = new RunReportVO();
     if (this.subRpt === 6) {
       rep.reportName = 'receipts';
@@ -120,10 +129,17 @@ export class ReportsComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.showParams = false;
+        this.running = false;
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
       },
-        error => console.log(error),
-        () => console.log('runInvnReport complete '));
+        error => {
+          console.log(error);
+          this.running = false;
+        },
+        () => {
+          console.log('runInvnReport complete ');
+          this.running = false;
+        });
   }
 
 }
