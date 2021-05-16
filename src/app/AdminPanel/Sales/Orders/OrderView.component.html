@@ -227,7 +227,7 @@
               [style.width.px]="40">
           </div>
           <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90">
-            <span>{{orderProduct.name}}</span><br/>
+            <span>{{orderProduct.name}}</span><br />
             <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
               <label>{{mapEntry.key}}: </label>
               <span *ngFor="let option of mapEntry.value">
@@ -377,6 +377,20 @@
     {{storeOrder.comments}}
   </div>
 </div>
+
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap"
+  *ngIf="orderType==='s' && store.allowExRcpt===1 && canEdit">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+    <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+    </div>
+    <mat-slide-toggle (change)="updateStoreOrder()" [(ngModel)]="storeOrder.exRcpt" name="exRcpt" #exRcpt="ngModel"
+      class="my-2">
+      {{ 'COMMON.EXCLUDE_FROM_RCPT' | translate }}
+    </mat-slide-toggle>
+  </div>
+</div>
+
 <div class="table-wrapper" *ngIf="orderType==='s'">
   <table mat-table [dataSource]="storeDS" matSort class="w-100">
     <!-- Product Column -->

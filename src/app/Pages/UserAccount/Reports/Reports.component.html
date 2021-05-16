@@ -61,6 +61,16 @@
           </p>
         </span>
 
+          <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(6)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.RECEIPTS'|translate}}</span>
+            </a>
+          </p>
+        </span>
+
         <mat-form-field class="w-100" *ngIf="showParams">
           <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
           <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"

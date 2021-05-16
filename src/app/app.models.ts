@@ -801,6 +801,7 @@ export class Store extends BaseModel {
   allowReopen: number;
   lockAfterXPrint: number;
   autoUpload: number;
+  allowExRcpt: number;
   type = 'Store';
 
   constructor() {
@@ -1884,6 +1885,7 @@ export class TabHdr {
   public modDate: Date;
   public comments: string;
   public clientId: number;
+  public exRcpt: number;
   public tabDtls: TabDtl[] = [];
   public type = 'TabHdr';
 }

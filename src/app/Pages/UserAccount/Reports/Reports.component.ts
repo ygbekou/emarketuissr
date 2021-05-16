@@ -64,7 +64,7 @@ export class ReportsComponent implements OnInit {
 
   runInvnReport(type: number) {
     this.showParams = false;
-    if (type === 3 || type === 4 || type === 5) {
+    if (type === 3 || type === 4 || type === 5 || type === 6) {
       this.showParams = true;
       this.subRpt = type;
       return;
@@ -99,7 +99,12 @@ export class ReportsComponent implements OnInit {
   runRpt() {
 
     const rep = new RunReportVO();
-    rep.reportName = 'sales';
+    if (this.subRpt === 6) {
+      rep.reportName = 'receipts';
+    } else {
+      rep.reportName = 'sales';
+    }
+
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
     const parm3 = new Parameter('dateDebut',

@@ -69,6 +69,10 @@
           {{ 'COMMON.DISPLAY_MB' | translate }}
         </mat-slide-toggle>
 
+        <mat-slide-toggle [(ngModel)]="store.allowExRcpt" name="allowExRcpt" #allowExRcpt="ngModel" class="my-2">
+          {{ 'COMMON.ALLOW_EX_RCPT' | translate }}
+        </mat-slide-toggle>
+
         <mat-form-field class="w-100 mb-3">
           <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
           <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"

@@ -95,6 +95,11 @@ export class StoreComponent extends BaseComponent implements OnInit {
       || this.store.displayMb.toString() === 'false'
       || this.store.displayMb.toString() === '0') ? 0 : 1;
 
+    this.store.allowExRcpt = (this.store.allowExRcpt == null
+      || this.store.allowExRcpt.toString() === 'false'
+      || this.store.allowExRcpt.toString() === '0') ? 0 : 1;
+
+
     this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.formData = new FormData();
     this.formData = new FormData();
