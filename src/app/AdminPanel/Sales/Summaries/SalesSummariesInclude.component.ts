@@ -16,7 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./SalesSummaries.component.scss']
 })
 export class SalesSummariesIncludeComponent extends BaseComponent implements OnInit {
-  salesSummariesColumns: string[] = ['select', 'monthyear', 'paymentMethod', 'total', 'taxFees', 'shippingCost', 'processingFees', 'totalPaid', 'totalDue'];
+  salesSummariesColumns: string[] = ['select', 'monthyear', 'paymentMethod', 'total', 'processingFees', 'totalPaid', 'totalDue', 'status'];
   salesSummariesDatasource: MatTableDataSource<SalesSummary>;
   @ViewChild('MatPaginatorSalesSummaries', { static: true }) salesSummariesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) salesSummariesSort: MatSort;
@@ -40,8 +40,10 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   selectedCurrency: Currency;
   totalDue = 0;
   @Output() totalDueCompleteEvent = new EventEmitter<Payout>();
+  @Output() selectSalesSummaryEvent = new EventEmitter<any>();
 
   selectedSalesSummaryIds: number[] = [];
+  @Input()
   action = 'add';
 
   constructor(public appService: AppService,
@@ -135,7 +137,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
 
   setDataSource(data, action, total) {
     this.action = action;
-    if (this.action === 'edit') {
+    if (this.action !== 'add' && this.salesSummariesColumns[0] === 'select') {
       this.salesSummariesColumns.splice(0, 1);
     }
     if (total) {
@@ -146,4 +148,9 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
     this.salesSummariesDatasource.sort = this.salesSummariesSort;
   }
 
+
+  selectSalesSummary(ss: any) {
+    console.log(ss)
+    this.selectSalesSummaryEvent.emit(ss);
+  }
 }

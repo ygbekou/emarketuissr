@@ -503,7 +503,7 @@
 		"SUBJECTIVE": "Subjective",
 		"SUBMIT": "Submit",
 		"SUB_TOTAL": "Sub-total",
-		"SHIPPING_RATE": "Shipping rate",
+		"SHIPPING_RATE": "Shipping cost",
 		"SUCCESS": "Success",
 		"SUMMARY": "Summary",
 		"SUSCRIBE": "Suscribe",
@@ -724,13 +724,20 @@
 		"TOTAL_DUE_SELECTED": "Total Due Selected",
 		"REVERSE": "Reverse",
 		"PAID": "Paid",
+		"PAYMENT_SUBMITTED": "Pay. Submitted",
+		"PAYMENT_ACKNOWLEDGED": "Pay. Acknowledged",
 		"PARTIALLY_PAID": "Partially Paid",
 		"UNPAID": "Unpaid",
 		"REVERSE_PAYOUT_ID": "Reverse Payout Id",
     	"REVERSED": "Reversed",
 		"REVERSAL": "Reversal",
 		"ACKNOWLEDGE": "Acknowledge",
-		"ACKNOWLEDGED": "Acknowledged"
+		"ACKNOWLEDGED": "Acknowledged",
+		"VIEW_DETAILS": "View Details",
+		"PAYMENT_DETAILS": "Payment Details",
+		"SALES_SUMMARY_DETAILS": "Sales Summary Details",
+		"PROCESSING_FEES_PERCENTAGE": "Processing Fees Percentage"
+
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

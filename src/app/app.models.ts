@@ -802,8 +802,8 @@ export class Store extends BaseModel {
   lockAfterXPrint: number;
   autoUpload: number;
   allowExRcpt: number;
+  processingFeesPercentage: number;
   type = 'Store';
-
   constructor() {
     super();
     this.aprvStatus = 0;

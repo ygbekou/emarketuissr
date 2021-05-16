@@ -38,22 +38,6 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="taxFees">
-          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.TAX_FEES'|translate}} </th>
-          <td mat-cell *matCellDef="let salesSummary" class="text-left">
-            {{salesSummary.currencySymbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="shippingCost">
-          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.DELIVERY_FEE'|translate}} </th>
-          <td mat-cell *matCellDef="let salesSummary" class="text-left">
-            {{salesSummary.currencySymbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="processingFees">
           <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.PROCESSING_FEES'|translate}} </th>
           <td mat-cell *matCellDef="let salesSummary" class="text-left">
@@ -72,21 +56,29 @@
 
         <ng-container matColumnDef="totalDue">
           <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
-          <td mat-cell *matCellDef="let salesSummary" class="text-right">
+          <td mat-cell *matCellDef="let salesSummary">
             {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
           + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="dateAdded">
-          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
           </th>
-          <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.createDate | date: 'dd/MM/yyyy'}} </td>
+          <td mat-cell *matCellDef="let salesSummary" class="text-left"> 
+            <span style="color: #0000FF" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 2"> {{'COMMON.PAYMENT_SUBMITTED'|translate}} </span>
+            <span style="color: #008000" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 3"> {{'COMMON.PAYMENT_ACKNOWLEDGED'|translate}} </span>
+            <span style="color: #FF0000" *ngIf="salesSummary.totalPaid === 0"> {{'COMMON.UNPAID'|translate}} </span>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
-        <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;">
-        </tr>
+        <ng-container *ngIf="action === 'fromSalesSummaryDetails'">
+          <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;" (click)="selectSalesSummary(salesSummary)"></tr>
+        </ng-container>
+        <ng-container *ngIf="action !== 'fromSalesSummaryDetails'">
+          <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;"></tr>
+        </ng-container>
       </table>
       <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
     </div>

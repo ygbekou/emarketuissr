@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { OrderStatus, StoreSearchCriteria, Store, SalesSummary, SalesSummarySearchCriteria } from 'src/app/app.models';
+import { OrderStatus, StoreSearchCriteria, Store, SalesSummary, SalesSummarySearchCriteria, Payout } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
+import { SalesSummaryComponent } from './SalesSummary.component';
+import { FormControl } from '@angular/forms';
 
 export interface SearchResponse {
   document: string;
@@ -19,11 +21,12 @@ export interface SearchResponse {
   styleUrls: ['./SalesSummaries.component.scss']
 })
 export class SalesSummariesComponent extends BaseComponent implements OnInit {
-  salesSummariesColumns: string[] = ['storeName', 'monthyear', 'paymentMethod', 'total', 'taxFees', 'shippingCost', 'processingFees', 'totalPaid', 'totalDue', 'status'];
+  salesSummariesColumns: string[] = ['storeName', 'monthyear', 'paymentMethod', 'total', 'processingFees', 'totalDue', 'status', 'actions'];
   salesSummariesDatasource: MatTableDataSource<SalesSummary>;
   @ViewChild('MatPaginatorSalesSummaries', { static: true }) salesSummariesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) salesSummariesSort: MatSort;
 
+  @ViewChild(SalesSummaryComponent, { static: false }) salesSummaryComponent: SalesSummaryComponent;
   expandedElement: SearchResponse | null;
   messages = '';
   button = 'filter';
@@ -38,6 +41,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   colors = ['primary', 'secondary'];
 
   allStore = new Store();
+  selected = new FormControl(0);
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -62,8 +66,6 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   }
 
   changeOrderType(event) {
-    this.search();
-
   }
 
   private getStores() {
@@ -101,6 +103,27 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
       this.salesSummariesDatasource.paginator.firstPage();
     }
 
+  }
+
+
+  acknowledgeSalesSummary(ssId: number) {
+    this.messages = '';
+    const ss = new SalesSummary();
+    ss.id = ssId;
+    this.appService.saveWithUrl('/service/order/acknowledgeSalesSummary/', ss)
+      .subscribe((data: Payout) => {
+        this.processResult(data, ss, null);
+        this.search();
+      },
+        error => console.log(error),
+        () => console.log('Aknowledgement complete'));
+  }
+
+
+  getSalesSummaryDetails(salesSummaryId: number, payoutId: number) {
+    this.salesSummaryComponent.getSalesSummary(salesSummaryId);
+    this.salesSummaryComponent.getPayout(payoutId);
+    this.selected.setValue(1);
   }
 
 }
