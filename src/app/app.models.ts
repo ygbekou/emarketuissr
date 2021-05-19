@@ -2021,9 +2021,11 @@ export class SalesSummary {
   public acknowledgeDate: Date;
 
   type = 'SalesSummary';
+
+  constructor() {
     this.acknowledger = new User();
   }
-
+}
 
 export class SalesSummarySearchCriteria {
   id: number;
