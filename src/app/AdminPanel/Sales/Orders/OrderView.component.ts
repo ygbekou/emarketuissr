@@ -47,6 +47,7 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.messages = '';
     this.activatedRoute.params.subscribe(params => {
       console.log(params);
       const paramId: string = params.id;
@@ -179,4 +180,24 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
     return val.length === 0;
   }
 
+  updateStoreOrder() {
+    this.messages = '';
+    this.storeOrder.exRcpt = (this.storeOrder.exRcpt == null
+      || this.storeOrder.exRcpt.toString() === 'false'
+      || this.storeOrder.exRcpt.toString() === '0') ? 0 : 1;
+    this.appService.save(this.storeOrder, 'TabHdr')
+      .subscribe(result => {
+        if (result.id > 0) {
+          this.storeOrder = result;
+          this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+            this.messages = res['MESSAGE.SAVE_SUCCESS'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+            this.messages = res['MESSAGE.SAVE_UNSUCCESS'];
+          });
+        }
+      });
+
+  }
 }

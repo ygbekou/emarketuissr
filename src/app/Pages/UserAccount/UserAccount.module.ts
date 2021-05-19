@@ -114,6 +114,7 @@ import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component'
     MatPaginatorModule,
     MatButtonToggleModule,
     ProductsModule,
+    SalesModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {

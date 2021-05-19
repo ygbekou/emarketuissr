@@ -801,10 +801,9 @@ export class Store extends BaseModel {
   allowReopen: number;
   lockAfterXPrint: number;
   autoUpload: number;
+  allowExRcpt: number;
   processingFeesPercentage: number;
-
   type = 'Store';
-
   constructor() {
     super();
     this.aprvStatus = 0;
@@ -1886,6 +1885,7 @@ export class TabHdr {
   public modDate: Date;
   public comments: string;
   public clientId: number;
+  public exRcpt: number;
   public tabDtls: TabDtl[] = [];
   public type = 'TabHdr';
 }
@@ -2021,12 +2021,8 @@ export class SalesSummary {
   public acknowledgeDate: Date;
 
   type = 'SalesSummary';
-
-  constructor() {
-    this.store = new Store();
     this.acknowledger = new User();
   }
-}
 
 
 export class SalesSummarySearchCriteria {
