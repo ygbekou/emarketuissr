@@ -37,7 +37,7 @@
                 <ng-container matColumnDef="monthyear">
                   <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.MONTH'|translate}}/{{'COMMON.YEAR'|translate}}
                   </th>
-                  <td mat-cell *matCellDef="let salesSummary" class="text-right"> {{salesSummary.month}}/{{salesSummary.year}} </td>
+                  <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.month}}/{{salesSummary.year}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="paymentMethod">
@@ -86,10 +86,11 @@
                   <td mat-cell *matCellDef="let salesSummary"> 
                     <a  mat-icon-button (click)="getSalesSummaryDetails(salesSummary.id, salesSummary.payoutId)"
                       color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
-                      <mat-icon>details</mat-icon>
+                      <mat-icon>info</mat-icon>
                     </a>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a  mat-icon-button (click)="acknowledgeSalesSummary(salesSummary.id)" *ngIf="salesSummary.status === 2"
+                    <a  mat-icon-button (click)="acknowledgeSalesSummary(salesSummary.id)" 
+                      *ngIf="salesSummary.status === 2 && !isAdminPage"
                       color="primary" matTooltip="{{'COMMON.ACKNOWLEDGE' | translate}}">
                       <mat-icon>done_all</mat-icon>
                     </a>
@@ -120,15 +121,6 @@
                       <mat-icon>filter_alt</mat-icon>
                     </button>
                   </div>
-                  <div class="text-center" *ngIf="messages">
-                    <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-                  </div>
-
-                  <mat-form-field class="w-100">
-                    <mat-label> ID</mat-label>
-                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.id"
-                      name="model" #model="ngModel">
-                  </mat-form-field>
 
                   <mat-form-field class="w-100" appearance="fill">
                     <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
@@ -183,7 +175,7 @@
                   <mat-form-field class="w-100">
                     <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
                     <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
-                      [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel">
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
                     <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #endDatePicker></mat-datepicker>
                   </mat-form-field>

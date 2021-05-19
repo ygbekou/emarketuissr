@@ -63,8 +63,12 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
     this.payout.status = 1;
   }
 
-  getPayout(payoutId: number) {
-    this.messages = '';
+  getPayout(payoutId: number, clearMessages = true) {
+
+    if (clearMessages) {
+      this.messages = '';
+    }
+
     if (payoutId > 0) {
       this.appService.getOneWithChildsAndFiles(payoutId, 'Payout')
         .subscribe(result => {
@@ -99,7 +103,11 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
     this.messages = '';
     this.payout.currency = this.payout.store.currency;
 
-    this.payout.modBy = +this.appService.tokenStorage.getUserId();
+    this.payout.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    if (!this.payout.id) {
+      this.payout.payer.id = +this.appService.tokenStorage.getUserId();
+    }
     this.formData = new FormData();
     if (this.picture && this.picture.length > 0 && this.picture[0].file) {
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);

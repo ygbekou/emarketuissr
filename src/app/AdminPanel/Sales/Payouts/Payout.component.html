@@ -213,13 +213,25 @@
       </div>
 
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+          <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+        </div>
 
-            <textarea matInput rows="10" cols="50" class="form-control" id="comment"
-                  [(ngModel)]="payout.comment" name="comment" #comment="ngModel" [disabled]="!isAdminPage"></textarea>
-          </mat-form-field>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+          <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{payout.payerFullName }}
+        </div>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
+          
+            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+            <textarea matInput rows="8" cols="50" class="form-control" id="comment" maxlength="255"
+                  onkeypress="if (this.value.length >= 255) { return false; }"
+                  [(ngModel)]="payout.comment" name="comment" #comment="ngModel" *ngIf="isAdminPage"></textarea>
+          
         </div>
         <div fxLayout="row wrap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">

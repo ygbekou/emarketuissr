@@ -2,7 +2,8 @@
 <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
   <div fxLayout="row wrap">
   
-    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="salesSummary.status === 2">
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" 
+         *ngIf="salesSummary.status === 2 && !isAdminPage">
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="acknowledgeSalesSummary()" 
         [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
           <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
@@ -27,22 +28,22 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label style="color: #FF0000"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label style="color: #FF0000"> 
-            {{payout.currency?.symbolLeft}} {{salesSummary.total | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+            {{salesSummary.currency?.symbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
           </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <mat-label> {{'COMMON.PROCESSING_FEES' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label> 
-          {{payout.currency?.symbolLeft}} {{salesSummary.processingFees | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
         </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label style="color: #008000"> {{'COMMON.TOTAL_PAID' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label style="color: #008000"> 
-            {{payout.currency?.symbolLeft}} {{salesSummary.totalPaid | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+            {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
           </mat-label>
       </div>
     </div>
@@ -70,22 +71,38 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <mat-label> {{'COMMON.SHIPPING_RATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label>
-          {{payout.currency?.symbolLeft}} {{salesSummary.shippingCost | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
         </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <mat-label> {{'COMMON.TAX_FEES' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label> 
-          {{payout.currency?.symbolLeft}} {{salesSummary.taxFees | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
         </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <mat-label> {{'COMMON.TOTAL_DUE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label>
-          {{payout.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
+        </mat-label>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.ACKNOWLEDGE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>
+          {{salesSummary.acknowledgeDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+        </mat-label>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.ACKNOWLEDGER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>
+          {{salesSummary.acknowledgerFullName }}
         </mat-label>
       </div>
     </div>
@@ -121,19 +138,33 @@
     </div>
 
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-
-          <textarea matInput rows="10" cols="50" class="form-control" id="comment"
-                [(ngModel)]="payout.comment" name="comment" #comment="ngModel" [disabled]="!isAdminPage"></textarea>
-        </mat-form-field>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>
+          {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+        </mat-label>
       </div>
-      <div fxLayout="row wrap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-          <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*" [linkEnabled]="true">
-          </input-file>
-        </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label>
+          {{payout.payerFullName }}
+        </mat-label>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
+        <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+        <mat-card>
+          <div [innerHTML]="payout.comment"></div>
+        </mat-card>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label>
+        <a href="assets/images/payouts/{{payout.id}}/{{payout.image}}" download>
+          <img src="assets/images/payouts/{{payout.id}}/{{payout.image}}" style="height: 100px; width: 200px;" alt="{{'COMMON.PAYMENT_RECEIPT' | translate}}">
+        </a>
       </div>
     </div>
 

@@ -46,6 +46,29 @@ export class BaseComponent {
     }
   }
 
+  protected processResultWith(result, entityObject, pictureUrl) {
+    if (result.errors === null || result.errors.length === 0) {
+      this.hasError = false;
+      entityObject = result;
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+          this.messages = res['MESSAGE.SAVE_SUCCESS'];
+      });
+
+      if (entityObject.user && entityObject.user.birthDate != null) {
+          entityObject.user.birthDate = new Date(entityObject.user.birthDate);
+      }
+      if (pictureUrl) {
+          pictureUrl = '';
+      }
+    } else {
+      this.hasError = true;
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR']).subscribe(res => {
+          this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
+          ?  res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
+      });
+    }
+  }
+
   removeItem(listItems: any[], id: number) {
     const index = listItems.findIndex(x => x.id === id);
     listItems.splice(index, 1);
@@ -109,4 +132,20 @@ export class BaseComponent {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
+
+  updateDatasourceData(dataSource, paginator, sort, obj) {
+
+    const index = dataSource.data.findIndex(x => x.id === obj.id);
+
+    if (index === -1) {
+      dataSource.data.unshift(obj);
+    } else {
+      dataSource.data[index] = obj;
+    }
+
+    dataSource.data = dataSource.data.slice();
+    dataSource = new MatTableDataSource(dataSource.data);
+    dataSource.paginator = paginator;
+    dataSource.sort = sort;
+  }
 }

@@ -53,12 +53,12 @@
             <ng-container matColumnDef="year">
               <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.YEAR'|translate}}
               </th>
-              <td mat-cell *matCellDef="let payout" class="text-right"> {{payout.year}} </td>
+              <td mat-cell *matCellDef="let payout"> {{payout.year}} </td>
             </ng-container>
 
             <ng-container matColumnDef="total">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
-              <td mat-cell *matCellDef="let payout" class="text-right">
+              <td mat-cell *matCellDef="let payout">
                 {{payout.currencySymbolLeft}} {{payout.total | number: '1.' + payout.currencyDecimalPlace + '-'  
              + payout.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currencySymbolRight}}
               </td>

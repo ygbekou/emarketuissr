@@ -802,7 +802,7 @@ export class Store extends BaseModel {
   lockAfterXPrint: number;
   autoUpload: number;
   processingFeesPercentage: number;
-  
+
   type = 'Store';
 
   constructor() {
@@ -2016,11 +2016,15 @@ export class SalesSummary {
   public totalPaid: number;
   public status: number;
   public payoutId: number;
+  public acknowledger: User;
+  public acknowledgerFullName: string;
+  public acknowledgeDate: Date;
 
   type = 'SalesSummary';
 
   constructor() {
     this.store = new Store();
+    this.acknowledger = new User();
   }
 }
 
@@ -2053,19 +2057,22 @@ export class Payout {
   public comment: string;
   public payoutDate: Date;
   public status: number;
-  public modBy: number;
+  public modifiedBy: number;
   public reversePayoutId: number;
+  public payer: User;
   public createDate: Date;
 
   public salesSummaryIds: number[];
   public salesSummarys: SalesSummary[];
   public salesSummaryVOs: [];
+  public payerFullName: string;
 
   type = 'Payout';
 
   constructor() {
     this.store = new Store();
     this.currency = new Currency();
+    this.payer = new User();
   }
 }
 

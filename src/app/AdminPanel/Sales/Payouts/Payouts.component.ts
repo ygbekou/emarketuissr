@@ -134,12 +134,8 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   }
 
   updateDataTable(payoutVo: PayoutVO) {
-    this.payoutDatasource.data.unshift(payoutVo);
-    this.payoutDatasource = new MatTableDataSource(this.payoutDatasource.data);
-    this.payoutDatasource.paginator = this.payoutPaginator;
-    this.payoutDatasource.sort = this.payoutSort;
-
-    this.payoutComponent.getPayout(payoutVo.id);
+    this.updateDatasourceData(this.payoutDatasource, this.payoutPaginator, this.payoutSort, payoutVo);
+    this.payoutComponent.getPayout(payoutVo.id, false);
   }
 
 }

@@ -53,7 +53,7 @@ export class SalesSummaryComponent  extends BaseComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(value => {
       this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
-        && (this.location.path().startsWith('/admin/sales/payouts'));
+        && (this.location.path().startsWith('/admin/'));
     });
 
   }

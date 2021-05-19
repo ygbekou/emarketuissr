@@ -8,6 +8,8 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { SalesSummaryComponent } from './SalesSummary.component';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from "@angular/common";
 
 export interface SearchResponse {
   document: string;
@@ -33,6 +35,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
 
   @Input()
   userId: number;
+  @Input() isAdminPage = false;
 
   searchCriteria: SalesSummarySearchCriteria = new SalesSummarySearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
@@ -44,19 +47,30 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   selected = new FormControl(0);
 
   constructor(public appService: AppService,
-    public translate: TranslateService) {
+    public translate: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
     super(translate);
   }
 
   ngOnInit() {
     this.clear();
     this.getStores();
+
+
+    this.activatedRoute.data.subscribe(value => {
+      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
+        && (this.location.path().startsWith('/admin/'));
+    });
   }
 
 
   ngAfterViewInit() {
-    this.searchCriteria.status = 0;
     this.searchCriteria.storeId = 0;
+    this.searchCriteria.endDate = new Date();
+    const beginDate = new Date();
+    beginDate.setFullYear(this.searchCriteria.endDate.getFullYear() - 1);
+    this.searchCriteria.beginDate = beginDate;
     this.search();
   }
 
@@ -110,6 +124,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
     this.messages = '';
     const ss = new SalesSummary();
     ss.id = ssId;
+    ss.acknowledger.id = +this.appService.tokenStorage.getUserId();
     this.appService.saveWithUrl('/service/order/acknowledgeSalesSummary/', ss)
       .subscribe((data: Payout) => {
         this.processResult(data, ss, null);
