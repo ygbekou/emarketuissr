@@ -2024,6 +2024,8 @@ export class SalesSummary {
 
   constructor() {
     this.acknowledger = new User();
+    this.store = new Store();
+    this.currency = new Currency();
   }
 }
 
