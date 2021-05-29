@@ -125,6 +125,7 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
   }
 
   storeSelected(event) {
+    this.searchCriteria.inventoryLevel = null;
     this.searchCriteria.storeId = this.selectedStore.id;
     this.search();
     this.storeIngredientComponent.store = event.value;

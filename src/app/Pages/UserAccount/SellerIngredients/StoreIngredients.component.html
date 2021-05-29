@@ -20,7 +20,7 @@
       <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
 
         <div fxLayout="row wrap">
-          <div fxFlex="90" fxFlex.gt-sm="90" class="p-3">
+          <div fxFlex="50" fxFlex.gt-sm="50" class="p-3">
             <mat-form-field appearance="outline" class="w-100">
               <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
                 autocomplete="off">
@@ -31,6 +31,12 @@
               matTooltip="{{'COMMON.ADD' | translate}}">
               <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
             </a>
+          </div>
+          <div fxFlex="40" fxFlex.gt-sm="40" class="p-3" *ngIf="userId !== 0">
+            <button mat-raised-button color="primary" fxLayout="row" (click)="searchCriteria.inventoryLevel = 'Low'; 
+              messages = ''; search();" matTooltip="{{'COMMON.INGREDIENT_WITH_LOW_INVENTORY' | translate}}">
+                <span class="mx-1 uppercase">{{'COMMON.LOW_INVENTORY' | translate}}</span>
+            </button>
           </div>
         </div>
         <div class="text-center mt-2" *ngIf="messages">

@@ -753,7 +753,9 @@
 		"INGREDIENTS": "Ingrédients",
 		"INVENTORY": "Inventaire",
 		"ADD_QUANTITY": "Ajouter Quantité",
-		"QUANTITY_PER_UNIT": "Quantité Unitaire"
+		"QUANTITY_PER_UNIT": "Quantité Unitaire",
+		"LOW_INVENTORY": "Faible Niveau",
+		"INGREDIENT_WITH_LOW_INVENTORY": "Ingrédients avec de faibles stocks"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",

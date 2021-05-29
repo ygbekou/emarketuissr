@@ -2197,6 +2197,7 @@ export class IngredientSearchCriteria {
   userId: number;
   ingredientName: string;
   status: number;
+  inventoryLevel: string;
 }
 
 export class StoreIngredientInventory {
