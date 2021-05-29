@@ -395,11 +395,11 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                }
          }
       } else {
-         this.purchasePossible = false;
-         this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
+         this.purchasePossible = true;
+         /* this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
             { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe((res) => {
                this.error = res;
-            });
+            }); */
       }
 
       this.disableForStoreClose();
