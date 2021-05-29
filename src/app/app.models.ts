@@ -2203,6 +2203,7 @@ export class StoreIngredientInventory {
   id: number;
   storeIngredient: StoreIngredient;
   quantity: number;
+  description: string;
   createDate: Date;
   modBy: number;
   addByLastName: string;

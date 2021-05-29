@@ -20,6 +20,7 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
 
    @Input() productToStore: ProductToStore;
    @Input() productToStoreId: number;
+   @Input() storeId: number;
 
    messages: string;
    currentOption: string;
@@ -52,6 +53,7 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    getProductStoreUnassignedIngredients() {
       this.searchCriteria.productStoreId = this.productToStoreId;
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
+      this.searchCriteria.storeId = this.storeId;
 
       this.appService.saveWithUrl('/service/catalog/getProductStoreUnassignedIngredients',
          this.searchCriteria).subscribe((data: any[]) => {
@@ -59,14 +61,15 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
          this.filteredIngredientOptions = data;
       },
         error => console.log(error),
-        () => console.log('Get ingredients complete'));
+        () => console.log('Get product store unassigned ingredients complete'));
 
    }
 
-   getProductToStoreSelectedIngredients(productStoreId: number) {
+   getProductStoreSelectedIngredients() {
+      alert('Here  ')
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
-      this.searchCriteria.productStoreId = productStoreId;
+      this.searchCriteria.productStoreId = this.productToStoreId;
 
       this.appService.saveWithUrl('/service/catalog/getProductStoreIngredients', this.searchCriteria)
         .subscribe((data: any[]) => {
@@ -96,7 +99,8 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    resetDatasource(prdStoreIngredients: ProductStoreIngredient[]) {
-      this.reinitializeDatasource(prdStoreIngredients);
+      //this.reinitializeDatasource(prdStoreIngredients);
+      this.getProductStoreSelectedIngredients();
       this.getProductStoreUnassignedIngredients();
    }
 
@@ -107,7 +111,7 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    saveProductStoreIngredient(productStoreIngredient: ProductStoreIngredient) {
-      productStoreIngredient.productStoreId = this.productToStore.id;
+      productStoreIngredient.productStoreId = this.productToStoreId;
 
       this.appService.saveWithUrl('/service/crud/ProductStoreIngredient/save/', productStoreIngredient)
          .subscribe((data: ProductStoreOption) => {

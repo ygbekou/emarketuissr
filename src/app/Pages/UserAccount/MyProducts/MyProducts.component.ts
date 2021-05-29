@@ -322,6 +322,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
         this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
         this.productDiscountDatasource.paginator = this.productDiscountPaginator;
         this.productDiscountDatasource.sort = this.productDiscountSort;
+        this.prdStoreIngredientsView.productToStoreId = this.productStore.id;
+        this.prdStoreIngredientsView.storeId = this.productStore.store.id;
         this.prdStoreIngredientsView.resetDatasource(this.productStore.productStoreIngredients);
       },
         error => console.log(error),

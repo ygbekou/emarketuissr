@@ -84,8 +84,14 @@
                 [(ngModel)]="storeIngredientInventory.quantity" #inventoryQuantity="ngModel" required>
           </mat-form-field>
           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-form-field>
+            <mat-label> {{'COMMON.DESCRIPTION' | translate}}</mat-label>
+            <textarea matInput rows="2" cols="50" class="form-control" id="description"
+               [(ngModel)]="storeIngredientInventory.description" name="description"
+               #description="ngModel"></textarea>
+         </mat-form-field>
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit" 
-            [disabled]="!f.form.valid">
+            [disabled]="!f2.form.valid">
               <span class="mx-1 uppercase">{{'COMMON.ADD_QUANTITY' | translate}}</span>
               <mat-icon>save</mat-icon>
           </button>
@@ -100,9 +106,15 @@
         <table mat-table [dataSource]="inventoryDatasource" matSort class="w-100">
 
           <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.QUANTITY' | translate}}
+            <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.QUANTITY' | translate}}
             </th>
             <td mat-cell *matCellDef="let inventory"> {{inventory.quantity}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.DESCRIPTION' | translate}}
+            </th>
+            <td mat-cell *matCellDef="let inventory"> {{inventory.description}}</td>
           </ng-container>
 
           <ng-container matColumnDef="createdBy">
@@ -112,7 +124,7 @@
           </ng-container>
 
           <ng-container matColumnDef="createdDate">
-            <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}
+            <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.CREATE_DATE' | translate}}
             </th>
             <td mat-cell *matCellDef="let inventory"> {{inventory.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
           </ng-container>

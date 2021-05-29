@@ -15,7 +15,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 })
 export class StoreIngredientComponent  extends BaseComponent implements OnInit, AfterViewInit {
 
-  inventoryColumns: string[] = ['quantity', 'createdBy', 'createdDate'];
+  inventoryColumns: string[] = ['quantity', 'description', 'createdBy', 'createdDate'];
   inventoryDatasource: MatTableDataSource<StoreIngredient>;
   @ViewChild(MatPaginator, { static: true }) inventoryPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) inventorySort: MatSort;
