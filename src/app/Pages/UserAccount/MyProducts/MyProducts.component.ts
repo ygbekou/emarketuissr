@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CategoryDescription, ProductDescription, Product, Store, Pagination,
   ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO,
-  ProductDescVO, SearchCriteria, StoreSearchCriteria, RunReportVO, Parameter
+  ProductDescVO, SearchCriteria, StoreSearchCriteria, RunReportVO, Parameter, ProductStoreIngredient
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ProductStoreOptionsComponent } from 'src/app/AdminPanel/Products/ProductStoreOptions/ProductStoreOptions.component';
 import { Constants } from 'src/app/app.constants';
+import { ProductStoreIngredientsComponent } from 'src/app/AdminPanel/Products/ProductStoreIngredients/ProductStoreIngredients.component';
 
 @Component({
   selector: 'app-my-products',
@@ -32,6 +33,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
 
   @ViewChild(ProductStoreOptionsComponent, { static: false }) prdStoreOptView: ProductStoreOptionsComponent;
+  @ViewChild(ProductStoreIngredientsComponent, { static: false }) prdStoreIngredientsView: ProductStoreIngredientsComponent;
 
   categories: CategoryDescription[][] = [];
   categoryId = 0;
@@ -315,10 +317,12 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
           this.productStore = new ProductToStore();
           this.productStore.availableOnline = this.selectedStore.onlineStore;
           this.productStore.productDiscounts.push(new ProductDiscount());
+          this.productStore.productStoreIngredients.push(new ProductStoreIngredient());
         }
         this.productDiscountDatasource = new MatTableDataSource(this.productStore.productDiscounts);
         this.productDiscountDatasource.paginator = this.productDiscountPaginator;
         this.productDiscountDatasource.sort = this.productDiscountSort;
+        this.prdStoreIngredientsView.resetDatasource(this.productStore.productStoreIngredients);
       },
         error => console.log(error),
         () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));

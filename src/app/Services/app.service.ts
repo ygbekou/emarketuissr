@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -151,6 +151,14 @@ export class AppService {
       console.log(copy);
       return copy;
    }
+
+   public cloneIngredient(i: Ingredient): Ingredient {
+      let copy: Ingredient = new Ingredient();
+      copy = { ...i };
+      copy.ingredientDescriptions = [];
+      return copy;
+   }
+
    public reviewPopup(singleProductDetails, reviews) {
       let review: MatDialogRef<ReviewPopupComponent>;
       const dialogConfig = new MatDialogConfig();

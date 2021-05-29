@@ -15,6 +15,8 @@ import { OptionsComponent } from './Options/Options.component';
 import { OptionComponent } from './Option/Option.component';
 import { AuthGuardService } from 'src/app/Services/auth-guard.service';
 import { RoleGuardService } from 'src/app/Services/role-guard.service';
+import { IngredientsComponent } from './Ingredients/Ingredients.component';
+import { IngredientComponent } from './Ingredient/Ingredient.component';
 
 export const ProductsRoutes: Routes = [
    {
@@ -148,6 +150,22 @@ export const ProductsRoutes: Routes = [
          {
             path: 'option/:id',
             component: OptionComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'ingredients',
+            component: IngredientsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'ingredients/:id',
+            component: IngredientComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']

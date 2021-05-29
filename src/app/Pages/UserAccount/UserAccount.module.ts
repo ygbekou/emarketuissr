@@ -32,7 +32,8 @@ import {
   MatTreeModule,
   MatSlideToggleModule,
   MatStepperModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -66,13 +67,15 @@ import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
-import { SalesSummariesComponent } from 'src/app/AdminPanel/Sales/Summaries/SalesSummaries.component';
 import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
+import { StoreIngredientComponent } from './SellerIngredients/StoreIngredient.component';
+import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(UserAccountRoutes),
+    MatAutocompleteModule,
     MatBadgeModule,
     MatButtonModule,
     FlexLayoutModule,
@@ -159,7 +162,9 @@ import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component'
     OrderCancelComponent,
     ReportsComponent,
     ShippingZonesComponent,
-    DeliveriesComponent
+    DeliveriesComponent,
+    StoreIngredientComponent,
+    StoreIngredientsComponent
   ],
   exports: [
     CardsComponent,

@@ -43,6 +43,14 @@
           <td mat-cell *matCellDef="let salesSummary" class="text-left">
             {{salesSummary.currencySymbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
           + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+          </td> 
+        </ng-container>
+
+        <ng-container matColumnDef="totalDue">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
+          <td mat-cell *matCellDef="let salesSummary">
+            {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
+          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
           </td>
         </ng-container>
 
@@ -54,20 +62,12 @@
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="totalDue">
-          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
-          <td mat-cell *matCellDef="let salesSummary">
-            {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-          + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
-          </td>
-        </ng-container>
-
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
           </th>
           <td mat-cell *matCellDef="let salesSummary" class="text-left"> 
-            <span style="color: #0000FF" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 2"> {{'COMMON.PAYMENT_SUBMITTED'|translate}} </span>
-            <span style="color: #008000" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 3"> {{'COMMON.PAYMENT_ACKNOWLEDGED'|translate}} </span>
+            <span style="color: #0000FF" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 2"> {{'COMMON.PAY_SUBMITTED'|translate}} </span>
+            <span style="color: #008000" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 3"> {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
             <span style="color: #FF0000" *ngIf="salesSummary.totalPaid === 0"> {{'COMMON.UNPAID'|translate}} </span>
           </td>
         </ng-container>

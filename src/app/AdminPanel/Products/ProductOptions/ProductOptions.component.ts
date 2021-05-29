@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Form, NgForm } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, OptionDescription, ProductOption, Options, ProductOptionValue, OptionValueDescription, OptionValue } from 'src/app/app.models';
+import { Product, OptionDescription, ProductOption, ProductOptionValue, OptionValueDescription } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { Observable } from 'rxjs';

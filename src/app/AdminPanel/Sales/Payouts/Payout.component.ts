@@ -51,11 +51,8 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
 
     this.activatedRoute.data.subscribe(value => {
       this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
-        && (this.location.path().startsWith('/admin/sales/payouts'));
-
-       
+        && (this.location.path().startsWith('/admin/'));
     });
-
   }
 
   clear() {
@@ -165,6 +162,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
   searchSalesSummaries() {
 
     if (this.salesSummariesIncludeComponent) {
+      this.payout.total = 0;
       const searchCriteria = new SalesSummarySearchCriteria();
       searchCriteria.storeId = this.payout.store.id;
       searchCriteria.currencyId = this.payout.store.currency.id;

@@ -1,0 +1,62 @@
+<a mat-button [routerLink]="['/admin/ingredients']">{{'COMMON.INGREDIENT' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/ingredients']">
+  <h5>{{'COMMON.INGREDIENT' | translate}}</h5>
+</a>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
+    <a [routerLink]="['/admin/ingredients', 0]" mat-icon-button color="primary"
+      matTooltip="{{'COMMON.ADD' | translate}}">
+      <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+    </a>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+<div class="table-wrapper">
+  <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let ingredientDesc"> {{ingredientDesc.id}} </td>
+    </ng-container>
+
+    <!-- Image Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let ingredientDesc"><img [src]="'assets/images/ingredients/'+ingredientDesc.ingredient.id+'/'+ingredientDesc.ingredient.image"
+          [style.width.px]="50" class="d-block"></td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ingredient Name </th>
+      <td mat-cell *matCellDef="let ingredientDesc"> {{ingredientDesc.name}} </td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+      <td mat-cell *matCellDef="let ingredientDesc">
+        {{ingredientDesc.ingredient.status === 1 ? ('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}} 
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let ingredientDesc; columns: displayedColumns;"
+    [routerLink]="['/admin/ingredients', ingredientDesc.ingredient.id]">
+    </tr>
+  </table>
+  <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+</div>
+<mat-paginator [pageSize]="10"  [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

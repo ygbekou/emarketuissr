@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./SalesSummaries.component.scss']
 })
 export class SalesSummariesComponent extends BaseComponent implements OnInit {
-  salesSummariesColumns: string[] = ['storeName', 'monthyear', 'paymentMethod', 'total', 'processingFees', 'totalDue', 'status', 'actions'];
+  salesSummariesColumns: string[] = ['storeName', 'monthyear', 'total', 'processingFees', 'totalDue', 'totalPaid', 'status', 'actions'];
   salesSummariesDatasource: MatTableDataSource<SalesSummary>;
   @ViewChild('MatPaginatorSalesSummaries', { static: true }) salesSummariesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) salesSummariesSort: MatSort;
@@ -71,6 +71,12 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
     const beginDate = new Date();
     beginDate.setFullYear(this.searchCriteria.endDate.getFullYear() - 1);
     this.searchCriteria.beginDate = beginDate;
+
+    if (this.isAdminPage) {
+      this.searchCriteria.status = 1;
+    }
+   
+
     this.search();
   }
 

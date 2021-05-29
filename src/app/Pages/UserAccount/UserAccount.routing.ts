@@ -23,6 +23,7 @@ import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component'
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
 import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
+import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -192,6 +193,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'shipping-zones',
             component: ShippingZonesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'store-ingredients',
+            component: StoreIngredientsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

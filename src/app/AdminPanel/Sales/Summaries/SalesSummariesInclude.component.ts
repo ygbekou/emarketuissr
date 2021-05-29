@@ -16,7 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./SalesSummaries.component.scss']
 })
 export class SalesSummariesIncludeComponent extends BaseComponent implements OnInit {
-  salesSummariesColumns: string[] = ['select', 'monthyear', 'paymentMethod', 'total', 'processingFees', 'totalPaid', 'totalDue', 'status'];
+  salesSummariesColumns: string[] = ['select', 'monthyear', 'paymentMethod', 'total', 'processingFees', 'totalDue', 'totalPaid', 'status'];
   salesSummariesDatasource: MatTableDataSource<SalesSummary>;
   @ViewChild('MatPaginatorSalesSummaries', { static: true }) salesSummariesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) salesSummariesSort: MatSort;
@@ -67,6 +67,8 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
 
   search() {
     console.log(this.searchCriteria);
+    this.totalDue = 0;
+    this.selection.clear();
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {

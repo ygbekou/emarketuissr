@@ -1,0 +1,69 @@
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+<div fxLayout="row wrap" *ngIf="productToStore !== undefined && productToStore.id > 0">
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div class="table-wrapper">
+         <table mat-table [dataSource]="productStoreIngredientsDatasource" matSort class="w-100">
+            <ng-container matColumnDef="ingredientName">
+               <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.INGREDIENT' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient">
+                  <mat-form-field appearance="outline" class="w-100">
+                  <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
+                     matInput [matAutocomplete]="auto" [(ngModel)]="productStoreIngredient.ingredientName" required
+                     (ngModelChange)="filterOptions(productStoreIngredient.ingredientName)">
+                  <mat-autocomplete id="option1" #auto="matAutocomplete">
+                     <mat-option *ngFor="let option of filteredIngredientOptions "
+                        (onSelectionChange)="productStoreIngredient.ingredient.id = option.ingredient.id" [value]="option.name">
+                        {{option.name}}
+                     </mat-option>
+                  </mat-autocomplete>
+               </mat-form-field>
+               </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantityPerUnit">
+               <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.QUANTITY_PER_UNIT' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient">
+                  <mat-form-field>
+                  <input matInput type="text" class="form-control" [(ngModel)]="productStoreIngredient.quantityPerUnit"
+                     name="quantityPerUnit" #quantityPerUnit="ngModel" pattern="^[2-9]+$">
+                  </mat-form-field>
+               </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+               <th mat-header-cell *matHeaderCellDef> Actions
+                  <a (click)="addNew()" mat-icon-button color="primary"
+                  matTooltip="{{'COMMON.ADD' | translate}}">
+                  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+                  </a>
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient; let i = index;">
+                  <button mat-icon-button color="primary" (click)="saveProductStoreIngredient(productStoreIngredient)"
+                     matTooltip="{{'COMMON.SAVE' | translate}}" class="save">
+                     <mat-icon>save</mat-icon>
+                  </button>
+                  &nbsp;&nbsp;
+                  <button mat-icon-button color="warn" (click)="deleteProductStoreIngredient(productStoreIngredient, i)"
+                     matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+                     <mat-icon>delete</mat-icon>
+                  </button>
+               </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="productStoreIngredientsColumns"></tr>
+            <tr mat-row *matRowDef="let productStoreIngredient; columns: productStoreIngredientsColumns;"></tr>
+         </table>
+         <p *ngIf="productStoreIngredientsDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+            {{'MESSAGE.NO_DATA' | translate}}
+         </p>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+   </div>
+</div>

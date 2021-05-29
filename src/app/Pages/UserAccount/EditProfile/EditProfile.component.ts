@@ -6,6 +6,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Location } from "@angular/common";
 
 @Component({
    selector: 'app-edit-profile',
@@ -41,13 +42,15 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    cardForm: FormGroup;
 
    emailPattern: any = /\S+@\S+\.\S+/;
+   isAdminPage = false;
 
    constructor(private route: ActivatedRoute,
       public appService: AppService,
       public router: Router,
       public translate: TranslateService,
       private sanitizer: DomSanitizer,
-      private formGroup: FormBuilder) {
+      private formGroup: FormBuilder,
+      private location: Location) {
       super(translate);
       this.route.params.subscribe(() => {
          if (this.appService.appInfoStorage.language.code === 'fr') {
@@ -82,6 +85,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          name: ['', [Validators.required]],
          month: ['', [Validators.required]],
          year: ['', [Validators.required]]
+      });
+
+      this.route.data.subscribe(value => {
+         this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
+            && (this.location.path().startsWith('/admin/'));
       });
    }
 

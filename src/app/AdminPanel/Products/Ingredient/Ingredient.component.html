@@ -1,0 +1,61 @@
+<a mat-button [routerLink]="['/admin/ingredients']">{{'COMMON.INGREDIENT' | translate}}s
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="gray">
+  <h5>{{'COMMON.INGREDIENT' | translate}}</h5>
+</a>
+
+<a (click)="clear()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+</a>
+
+<mat-tab-group (selectedTabChange)="clearMessages($event)">
+   <mat-tab label="{{'COMMON.GENERAL' | translate}}">
+      <app-ingredient-description [ingredient]="ingredient"></app-ingredient-description>
+   </mat-tab>
+
+   <mat-tab label="{{'COMMON.DATA' | translate}}" *ngIf="ingredient.id > 0">
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <div class="text-center mt-2">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                     <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                     <mat-icon>save</mat-icon>
+                  </button> </div>
+               <div class="text-center mt-2" *ngIf="messages">
+                  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+               </div>
+            </div>
+
+         </div>
+
+         
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-form-field class="w-100">
+                  <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
+                  <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId"
+                     name="manufacturerId" [(ngModel)]="ingredient.manufacturerId" #manufacturerId="ngModel">
+                     <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers"
+                        [value]="manufacturer.id">
+                        {{manufacturer.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+               <mat-slide-toggle [(ngModel)]="ingredient.status" name="status" #status="ngModel" class="my-2">
+                  {{ 'COMMON.STATUS' | translate }}
+               </mat-slide-toggle>
+            </div>
+
+         </div>
+      </form>
+   </mat-tab>
+
+</mat-tab-group>

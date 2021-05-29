@@ -40,6 +40,7 @@ import { EditProductComponent } from './EditProduct/EditProduct.component';
 import { ProductComponent } from './Product/Product.component';
 import { GlobalModule } from '../../Global/Global.module';
 import { ProductsComponent } from './Products/Products.component';
+import { IngredientsComponent } from './Ingredients/Ingredients.component';
 import { ProductsRoutes } from './Products.routing';
 import { CategoryComponent } from './Category/Category.component';
 import { CategoriesComponent } from './Categories/Categories.component';
@@ -68,6 +69,9 @@ import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { ProductToProductComponent } from './ProductLink/ProductToProduct.component';
 import { ProductToParentComponent } from './ProductLink/ProductToParent.component';
 import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStoreOptions.component';
+import { IngredientComponent } from './Ingredient/Ingredient.component';
+import { IngredientDescriptionComponent } from './IngredientDescription/IngredientDescription.component';
+import { ProductStoreIngredientsComponent } from './ProductStoreIngredients/ProductStoreIngredients.component';
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
@@ -75,8 +79,8 @@ import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStore
     MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
     AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
     OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent, ProductToParentComponent, 
-    OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,  ProductStoreOptionsComponent, 
-    MarketingProductComponent],
+    OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,  ProductStoreOptionsComponent, IngredientsComponent,
+    IngredientComponent, IngredientDescriptionComponent, MarketingProductComponent, ProductStoreIngredientsComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -141,7 +145,7 @@ import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStore
 
   ],
    exports: [
-     ProductStoreOptionsComponent
+     ProductStoreOptionsComponent, ProductStoreIngredientsComponent
    ]
 })
 export class ProductsModule { }

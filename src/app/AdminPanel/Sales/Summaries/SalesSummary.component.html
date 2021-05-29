@@ -26,6 +26,20 @@
         <span *ngIf="salesSummary.status === 3" style="color:#008000"><h6>{{'COMMON.PAYMENT_ACKNOWLEDGED' | translate}}</h6></span>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-label> {{salesSummary.store.name}}</mat-label>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{salesSummary.store.currency?.title}}
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <mat-label> {{'COMMON.MONTH' | translate}}/{{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label> {{salesSummary.month}}/{{salesSummary.year}}</mat-label>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label style="color: #FF0000"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label style="color: #FF0000"> 
             {{salesSummary.currency?.symbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
@@ -40,6 +54,13 @@
         </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+          <mat-label style="color: #008000"> {{'COMMON.TOTAL_DUE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-label style="color: #008000"> 
+            {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
+          </mat-label>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label style="color: #008000"> {{'COMMON.TOTAL_PAID' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label style="color: #008000"> 
             {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
@@ -47,27 +68,15 @@
           </mat-label>
       </div>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label> {{salesSummary.store.name}}</mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{salesSummary.store.currency?.title}}
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.MONTH' | translate}}/{{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label> {{salesSummary.month}}/{{salesSummary.year}}</mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label> {{'COMMON.PAYMENT_METHOD' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label> {{salesSummary.paymentMethod}}</mat-label>
-      </div>
-    </div>
 
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <mat-label style="color: #FF0000"> {{'COMMON.TOTAL_REMAINING' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label style="color: #FF0000"> 
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalRemaining | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
+        </mat-label>
+      </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <mat-label> {{'COMMON.SHIPPING_RATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label>
@@ -83,11 +92,8 @@
         </mat-label>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.TOTAL_DUE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
-          {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-        </mat-label>
+          <mat-label> {{'COMMON.PAYMENT_METHOD' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-label> {{salesSummary.paymentMethod}}</mat-label>
       </div>
     </div>
 
@@ -113,11 +119,11 @@
   <div fxLayout="row wrap" *ngIf="payout.id > 0">
     <h4 style="color:blue">{{'COMMON.PAYMENT_DETAILS' | translate}}</h4>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+      <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
         <span *ngIf="payout.status === 1" style="color:blue"><h5>{{'COMMON.SUBMITTED' | translate}}</h5></span>
         <span *ngIf="payout.status === 2" style="color:green"><h6>{{'COMMON.PARTIALLY_ACKNOWLEDGED' | translate}}</h6></span>
         <span *ngIf="payout.status === 3" style="color:green"><h6>{{'COMMON.ACKNOWLEDGED' | translate}}</h6></span>
-      </div>
+      </div> -->
     
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -161,7 +167,7 @@
         </mat-card>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label>
+        <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label><br/>
         <a href="assets/images/payouts/{{payout.id}}/{{payout.image}}" download>
           <img src="assets/images/payouts/{{payout.id}}/{{payout.image}}" style="height: 100px; width: 200px;" alt="{{'COMMON.PAYMENT_RECEIPT' | translate}}">
         </a>

@@ -803,7 +803,10 @@ export class Store extends BaseModel {
   autoUpload: number;
   allowExRcpt: number;
   processingFeesPercentage: number;
+  cashProFeePercent: number;
+
   type = 'Store';
+
   constructor() {
     super();
     this.aprvStatus = 0;
@@ -1059,6 +1062,7 @@ export class ProductToStore {
   marginPerc: number;
   shippingWeight: number;
   productDiscounts: ProductDiscount[] = [];
+  productStoreIngredients: ProductStoreIngredient[] = [];
   subtract: number;
   allowNegInvn: number;
   type = 'ProductToStore';
@@ -2014,11 +2018,13 @@ export class SalesSummary {
   public processingFees: number;
   public totalDue: number;
   public totalPaid: number;
+  public totalRemaining: number;
   public status: number;
   public payoutId: number;
   public acknowledger: User;
   public acknowledgerFullName: string;
   public acknowledgeDate: Date;
+  public modifiedBy: number;
 
   type = 'SalesSummary';
 
@@ -2130,4 +2136,96 @@ export class PayoutSearchCriteria {
   payoutDate: Date;
   beginDate: Date;
   endDate: Date;
+}
+
+
+export class Ingredient extends BaseModel {
+  id: number;
+  image: string;
+  manufacturerId: number;
+  status: number;
+  modifiedBy: number;
+  fileNames: string[];
+  ingredientDescriptions: IngredientDescription[] = [];
+  name: string;
+
+  type = 'Ingredient';
+  action: string;
+}
+
+export class IngredientDescription {
+  id: number;
+  ingredient: Ingredient;
+  language: Language;
+  name: string;
+  description: string;
+  shortDescription: string;
+  mediumDescription: string;
+
+  type = 'IngredientDescription';
+}
+
+export class StoreIngredient {
+  id: number;
+  store: Store;
+  ingredient: Ingredient;
+  minimumQty: number;
+	maximumQty: number;
+  price: number;
+  quantity: number;
+  status = 1;
+  modifiedBy: number;
+
+  storeName: string;
+  ingredientName: string;
+
+  type = 'StoreIngredient';
+
+  public constructor() {
+    this.store = new Store();
+    this.ingredient = new Ingredient();
+  }
+
+}
+
+export class IngredientSearchCriteria {
+  id: number;
+  ingredientId: number;
+  storeId: number;
+  productStoreId: number;
+	languageId: number;
+  userId: number;
+  ingredientName: string;
+  status: number;
+}
+
+export class StoreIngredientInventory {
+  id: number;
+  storeIngredient: StoreIngredient;
+  quantity: number;
+  createDate: Date;
+  modBy: number;
+  addByLastName: string;
+  addByFirstName: string;
+
+  type = 'StoreIngredientInventory';
+
+  public constructor() {
+    this.storeIngredient = new StoreIngredient();
+  }
+
+}
+
+export class ProductStoreIngredient {
+  id: number;
+  productStoreId: number;
+  ingredient: Ingredient;
+  quantityPerUnit: number;
+  ingredientName: string;
+
+  type = 'ProductStoreIngredient';
+
+  constructor() {
+    this.ingredient = new Ingredient();
+  }
 }

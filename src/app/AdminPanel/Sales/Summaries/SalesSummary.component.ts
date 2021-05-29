@@ -117,6 +117,9 @@ export class SalesSummaryComponent  extends BaseComponent implements OnInit {
 
   acknowledgeSalesSummary() {
     this.messages = '';
+    this.salesSummary.acknowledger.id = +this.appService.tokenStorage.getUserId();
+    this.salesSummary.modifiedBy = +this.appService.tokenStorage.getUserId();
+
     this.appService.saveWithUrl('/service/order/acknowledgeSalesSummary/', this.salesSummary)
       .subscribe((data: Payout) => {
         this.processResult(data, this.salesSummary, null);

@@ -100,7 +100,7 @@
       <ng-template matStepLabel>{{'COMMON.COMPLETE_PAYOUT'|translate}}</ng-template>
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}</mat-label>
+          <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
           <br/>
           <h6 style="color: #ff5722">
             {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
@@ -166,27 +166,27 @@
         <h4 style="color:red; text-align: center; display:flex; justify-content:center;" *ngIf="payout.total < 0 && payout.reversePayoutId">{{'COMMON.REVERSAL' | translate}}</h4>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
             <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <mat-label> {{payout.store.name}}</mat-label>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {{payout.store.currency?.title}}
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-label> {{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <mat-label> {{payout.year}}</mat-label>
         </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <span *ngIf="payout.status === 1" style="color:blue"><h5>{{'COMMON.SUBMITTED' | translate}}</h5></span>
           <span *ngIf="payout.status === 2" style="color:green"><h6>{{'COMMON.ACKNOWLEDGED' | translate}}</h6></span>
-        </div>
+        </div> -->
       </div>
 
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}</mat-label>
+          <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
           <br/>
           <h6 style="color: #ff5722">
             {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
