@@ -11,16 +11,20 @@
                </th>
                <td mat-cell *matCellDef="let productStoreIngredient">
                   <mat-form-field appearance="outline" class="w-100">
-                  <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
-                     matInput [matAutocomplete]="auto" [(ngModel)]="productStoreIngredient.ingredientName" required
-                     (ngModelChange)="filterOptions(productStoreIngredient.ingredientName)">
-                  <mat-autocomplete id="option1" #auto="matAutocomplete">
-                     <mat-option *ngFor="let option of filteredIngredientOptions "
-                        (onSelectionChange)="productStoreIngredient.ingredient.id = option.ingredient.id" [value]="option.name">
-                        {{option.name}}
-                     </mat-option>
-                  </mat-autocomplete>
-               </mat-form-field>
+                     <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
+                        matInput [matAutocomplete]="auto" [(ngModel)]="productStoreIngredient.ingredientName" required
+                        (ngModelChange)="productStoreIngredient.isTouched = true; filterOptions(productStoreIngredient.ingredientName)">
+                     <mat-autocomplete id="option1" #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredIngredientOptions "
+                           (onSelectionChange)="productStoreIngredient.isTouched = true; 
+                           productStoreIngredient.ingredient.id = option.ingredient.id" [value]="option.name">
+                           {{option.name}}
+                        </mat-option>
+                     </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-error *ngIf="productStoreIngredient.isTouched && !validateSelectedIngredient(productStoreIngredient)" severity="error">
+                     {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+                  </mat-error>
                </td>
             </ng-container>
 

@@ -67,6 +67,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
   }
 
   clear() {
+    this.messages = '';
     this.storeIngredient = new StoreIngredient();
     this.currentOption = '';
   }
@@ -79,7 +80,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
         .subscribe(result => {
           if (result.id > 0) {
             this.storeIngredient = result;
-            this.currentOption = storeIngredient.ingredient.name;
+            this.storeIngredient.ingredientName = storeIngredient.ingredient.name;
           } else {
             this.storeIngredient = new StoreIngredient();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -140,6 +141,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
     if (!this.storeIngredient.store.id ) {
       this.storeIngredient.store.id = this.store.id;
     }
+    this.currentOption = this.storeIngredient.ingredientName;
 
     this.setToggleValues();
 
@@ -147,13 +149,29 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
       .subscribe((data: StoreIngredient) => {
         this.processResult(data, this.storeIngredient, null);
         this.storeIngredient = data;
-        console.log(this.storeIngredient)
         this.storeIngredient.storeName = this.store.name;
         this.storeIngredient.ingredientName = this.currentOption;
         this.storeIngredientSaveEvent.emit(this.storeIngredient);
       },
         error => console.log(error),
         () => console.log('Save StoreIngredient complete'));
+  }
+
+  validateSelectedIngredient() {
+    if (!this.storeIngredient.ingredient || !this.storeIngredient.ingredient.id) {
+      return false;
+    }
+
+    if (typeof(this.storeIngredient.ingredientName) === 'string') {
+      const index = this.ingredientOptions.findIndex(x => x.name === this.storeIngredient.ingredientName);
+      if (index === -1) {
+        return false;
+      } else {
+        this.storeIngredient.ingredient = this.ingredientOptions[index].ingredient;
+      }
+    }
+
+    return true;
   }
 
   addQuantity() {

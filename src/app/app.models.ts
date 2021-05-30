@@ -2143,7 +2143,7 @@ export class Ingredient extends BaseModel {
   id: number;
   image: string;
   manufacturerId: number;
-  status: number;
+  status = 1;
   modifiedBy: number;
   fileNames: string[];
   ingredientDescriptions: IngredientDescription[] = [];
@@ -2224,6 +2224,7 @@ export class ProductStoreIngredient {
   ingredient: Ingredient;
   quantityPerUnit: number;
   ingredientName: string;
+  isTouched: false;
 
   type = 'ProductStoreIngredient';
 

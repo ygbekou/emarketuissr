@@ -70,7 +70,6 @@ import { ProductToProductComponent } from './ProductLink/ProductToProduct.compon
 import { ProductToParentComponent } from './ProductLink/ProductToParent.component';
 import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStoreOptions.component';
 import { IngredientComponent } from './Ingredient/Ingredient.component';
-import { IngredientDescriptionComponent } from './IngredientDescription/IngredientDescription.component';
 import { ProductStoreIngredientsComponent } from './ProductStoreIngredients/ProductStoreIngredients.component';
 
 @NgModule({
@@ -80,7 +79,7 @@ import { ProductStoreIngredientsComponent } from './ProductStoreIngredients/Prod
     AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
     OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent, ProductToParentComponent, 
     OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,  ProductStoreOptionsComponent, IngredientsComponent,
-    IngredientComponent, IngredientDescriptionComponent, MarketingProductComponent, ProductStoreIngredientsComponent],
+    IngredientComponent, MarketingProductComponent, ProductStoreIngredientsComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

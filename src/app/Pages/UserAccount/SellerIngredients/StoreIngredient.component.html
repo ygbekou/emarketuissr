@@ -1,7 +1,7 @@
 
-<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+<form name="form" (ngSubmit)="f.form.valid && validateSelectedIngredient() && save()" #f="ngForm" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3" >
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1" >
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" >
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;" type="submit" 
           [disabled]="!f.form.valid">
@@ -13,7 +13,7 @@
         <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
       </div>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div class="text-center mt-2" *ngIf="messages">
         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
       </div>
@@ -22,24 +22,28 @@
 
   <div fxLayout="row wrap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-label> {{'COMMON.QUANTITY' | translate}}:</mat-label><br/>
         <mat-label> {{storeIngredient.quantity}}</mat-label>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.INGREDIENT' | translate}}:</mat-label>
           <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
-              matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required (ngModelChange)="filterOptions(currentOption)">
+              matInput [matAutocomplete]="auto" [(ngModel)]="storeIngredient.ingredientName" #ingredientName="ngModel"
+              required (ngModelChange)="filterOptions(storeIngredient.ingredientName)">
           <mat-autocomplete id="option1" #auto="matAutocomplete">
-              <mat-option *ngFor="let option of filteredIngredientOptions " 
+              <mat-option *ngFor="let option of filteredIngredientOptions "
                 (onSelectionChange)="setSelectedIngredient(option)" [value]="option.name">
                 {{option.name}} 
               </mat-option>
           </mat-autocomplete>
         </mat-form-field> 
+        <mat-error *ngIf="f.submitted && !validateSelectedIngredient()" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="price" [(ngModel)]="storeIngredient.price"
@@ -49,21 +53,21 @@
       
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.MINIMUM_QUANTITY' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="minimumQuantity" [(ngModel)]="storeIngredient.minimumQty"
               name="minimumQuantity" #minimumQuantity="ngModel">
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.MAXIMUM_QUANTITY' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="maximumQuantity" [(ngModel)]="storeIngredient.maximumQty"
               name="maximumQuantity" #maximumQuantity="ngModel">
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-slide-toggle [(ngModel)]="storeIngredient.status" name="status" #status="ngModel" class="my-2">
           {{ 'COMMON.ENABLE' | translate }}
         </mat-slide-toggle>

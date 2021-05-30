@@ -110,7 +110,7 @@ const MENUITEMS_FR = [
       { state: 'marketings', name: 'Marketing', type: 'link' },
       { state: 'attributes', name: 'Attributs', type: 'link' },
       { state: 'options', name: 'Options', type: 'link' },
-      { state: 'ingredients', name: 'Ingrédients', type: 'link' },
+      { state: 'ingredients', name: 'Ingredients', type: 'link' },
       { state: 'information', name: 'Information', type: 'link' }
     ]
   },

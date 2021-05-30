@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
+import { IngredientComponent } from '../Ingredient/Ingredient.component';
 
 @Component({
   selector: 'app-ingredients',
@@ -13,7 +14,10 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Ingredients.component.scss']
 })
 export class IngredientsComponent extends BaseComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'image', 'name', 'status'];
+
+  @ViewChild(IngredientComponent, { static: false }) ingredientView: IngredientComponent;
+
+  displayedColumns: string[] = ['name', 'status', 'actions'];
   dataSource: MatTableDataSource<IngredientDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -42,7 +46,7 @@ export class IngredientsComponent extends BaseComponent implements OnInit {
 
   public remove(ingredientDesc: IngredientDescription) {
     this.messages = '';
-    this.appService.delete(ingredientDesc.id, 'com.softenza.emarket.model.IngredientDescription')
+    this.appService.delete(ingredientDesc.ingredient.id, 'Ingredient')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           const index: number = this.dataSource.data.indexOf(ingredientDesc);
@@ -71,4 +75,19 @@ export class IngredientsComponent extends BaseComponent implements OnInit {
     }
   }
 
+
+  onIngredientSave($event) {
+    const ingredient = $event;
+
+    ingredient.ingredientDescriptions.forEach(element => {
+        if (element.language.id === this.appService.appInfoStorage.language.id) {
+          ingredient.ingredientDescriptions[0].ingredient = ingredient;
+          if (!this.dataSource.data) {
+            this.dataSource.data = [];
+          }
+          this.dataSource.data.push(ingredient.ingredientDescriptions[0]);
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+        }
+    });
+  }
 }

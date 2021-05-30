@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Ingredient, IngredientDescription } from 'src/app/app.models';
+import { Ingredient, IngredientDescription, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
-import { IngredientDescriptionComponent } from '../IngredientDescription/IngredientDescription.component';
 
 @Component({
   selector: 'app-ingredient',
@@ -15,8 +14,9 @@ import { IngredientDescriptionComponent } from '../IngredientDescription/Ingredi
 export class IngredientComponent extends BaseComponent implements OnInit {
 
   messages = '';
-  @ViewChild(IngredientDescriptionComponent, { static: false}) ingredientDescriptionView: IngredientDescriptionComponent;
   ingredient: Ingredient;
+  
+  @Output() ingredientSaveEvent = new EventEmitter<Ingredient>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,10 +38,6 @@ export class IngredientComponent extends BaseComponent implements OnInit {
   }
 
   clearMessages($event) {
-    console.log('Tab changed');
-    if (this.ingredientDescriptionView) {
-      this.ingredientDescriptionView.messages = '';
-    }
     this.messages = '';
   }
 
@@ -60,14 +56,13 @@ export class IngredientComponent extends BaseComponent implements OnInit {
     for (const lang of this.appService.appInfoStorage.languages) {
       const pd = new IngredientDescription();
       pd.language = lang;
+      pd.name = '';
       this.ingredient.ingredientDescriptions.push(pd);
-    }
-    if (this.ingredientDescriptionView) {
-      this.ingredientDescriptionView.setIngredient(this.ingredient);
     }
   }
 
   getIngredientDescriptions(ingredientId: number) {
+    this.messages = '';
     const parameters: string[] = [];
     if (ingredientId != null) {
       parameters.push('e.ingredient.id = |ingredientId|' + ingredientId + '|Integer');
@@ -77,11 +72,7 @@ export class IngredientComponent extends BaseComponent implements OnInit {
 
         if (data !== null && data.length > 0) {
           this.ingredient = data[0].ingredient;
-          console.log('In product');
-          console.log(this.ingredient);
           this.ingredient.ingredientDescriptions = data;
-          this.ingredientDescriptionView.ingredient = this.ingredient;
-          this.ingredientDescriptionView.refreshLangObjects();
 
         }
       },
@@ -95,22 +86,33 @@ export class IngredientComponent extends BaseComponent implements OnInit {
       || this.ingredient.status.toString() === '0') ? 0 : 1;
   }
 
+  cleanIngredientDescriptions(ingredient: Ingredient) {
+    ingredient.ingredientDescriptions.forEach(element => {
+       element.ingredient = undefined;
+       const language = element.language;
+       element.language = new Language();
+       element.language.id = language.id;    });
+  }
+
   save() {
     this.messages = '';
     try {
-      this.setIngredientToggles();
-      const ingr = { ...this.ingredient };
-      ingr.ingredientDescriptions = [];
-      this.appService.save(ingr, 'Ingredient')
+      const ingred = {...this.ingredient};
+      this.cleanIngredientDescriptions(ingred);
+
+      this.appService.save(ingred, 'Ingredient')
         .subscribe(result => {
           if (result.id > 0) {
             this.ingredient.id = result.id;
             this.processResult(result, this.ingredient, null);
-            this.ingredientDescriptionView.setIngredient(this.ingredient);
+            this.ingredientSaveEvent.emit(this.ingredient);
           }
         });
+
     } catch (e) {
       console.log(e);
     }
   }
+
+
 }

@@ -66,7 +66,6 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    getProductStoreSelectedIngredients() {
-      alert('Here  ')
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
       this.searchCriteria.productStoreId = this.productToStoreId;
@@ -74,11 +73,35 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
       this.appService.saveWithUrl('/service/catalog/getProductStoreIngredients', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.reinitializeDatasource(data);
+          this.productStoreIngredients = Array.from({...data});
         },
           error => console.log(error),
           () => console.log('Get product store ingredients complete'));
    }
 
+
+   validateSelectedIngredient(productStoreIngredient: ProductStoreIngredient) {
+
+      if (typeof(productStoreIngredient.ingredientName) === 'string' && this.ingredientOptions) {
+         let index = this.ingredientOptions.findIndex(x => x.name === productStoreIngredient.ingredientName);
+         if (index === -1) {
+            index = this.productStoreIngredients.findIndex(x => x.id === productStoreIngredient.id);
+            if (index === -1) {
+               return false;
+            } else {
+               return true;
+            }
+         } else {
+            productStoreIngredient.ingredient = this.ingredientOptions[index].ingredient;
+         }
+      }
+
+      if (!productStoreIngredient.ingredient || !productStoreIngredient.ingredient.id) {
+         return false;
+      }
+
+      return true;
+   }
 
    filterOptions(val) {
       if (val) {
@@ -111,6 +134,10 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    saveProductStoreIngredient(productStoreIngredient: ProductStoreIngredient) {
+
+      if (!this.validateSelectedIngredient(productStoreIngredient)) {
+         return;
+      }
       productStoreIngredient.productStoreId = this.productToStoreId;
 
       this.appService.saveWithUrl('/service/crud/ProductStoreIngredient/save/', productStoreIngredient)

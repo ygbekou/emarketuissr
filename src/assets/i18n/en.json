@@ -871,7 +871,8 @@
 		"BEGIN_G_END": "Begin date must be less than the end date",
 		"DUPLICATE_PRIORITY": "Priorities must be different for active discounts",
 		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters",
-		"OPTION_IS_REQUIRED": "The option {{option_description}} is required"
+		"OPTION_IS_REQUIRED": "The option {{option_description}} is required",
+		"PLEASE_SELECT_FROM_DROPDOWN": "Field is required - Please select from the list"
 	},
 	"DATE": {
 		"1": "Jan",

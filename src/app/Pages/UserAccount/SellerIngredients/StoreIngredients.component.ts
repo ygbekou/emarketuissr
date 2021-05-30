@@ -23,10 +23,15 @@ export interface SearchResponse {
   styleUrls: ['./StoreIngredients.component.scss']
 })
 export class StoreIngredientsComponent extends BaseComponent implements OnInit {
-  storeIngredientsColumns: string[] = ['storeName', 'ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status', 'actions'];
+  storeIngredientsColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status', 'actions'];
   storeIngredientsDatasource: MatTableDataSource<StoreIngredient>;
   @ViewChild('MatPaginatorStoreIngredients', { static: true }) storeIngredientsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeIngredientsSort: MatSort;
+
+  lowInventoryColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status'];
+  lowInventoryDatasource: MatTableDataSource<StoreIngredient>;
+  @ViewChild('MatPaginatorLowInventory', { static: true }) lowInventoryPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) lowInventorySort: MatSort;
 
   @ViewChild(StoreIngredientComponent, { static: false }) storeIngredientComponent: StoreIngredientComponent;
   messages = '';
@@ -110,10 +115,32 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
     }
   }
 
+  searchLowInventory() {
+    this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
+
+    this.appService.saveWithUrl('/service/catalog/getStoreIngredients', this.searchCriteria)
+      .subscribe((data: any[]) => {
+      this.lowInventoryDatasource = new MatTableDataSource(data);
+      this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
+      this.lowInventoryDatasource.sort = this.lowInventorySort;
+    },
+      error => console.log(error),
+    () => console.log('Get low inventories complete'));
+  }
+
   public applyFilter(filterValue: string) {
     this.storeIngredientsDatasource.filter = filterValue.trim().toLowerCase();
     if (this.storeIngredientsDatasource.paginator) {
       this.storeIngredientsDatasource.paginator.firstPage();
+    }
+
+  }
+
+  public applyLowInventoryFilter(filterValue: string) {
+    this.lowInventoryDatasource.filter = filterValue.trim().toLowerCase();
+    if (this.lowInventoryDatasource.paginator) {
+      this.lowInventoryDatasource.paginator.firstPage();
     }
 
   }
@@ -125,12 +152,22 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
   }
 
   storeSelected(event) {
-    this.searchCriteria.inventoryLevel = null;
-    this.searchCriteria.storeId = this.selectedStore.id;
-    this.search();
-    this.storeIngredientComponent.store = event.value;
-    this.storeIngredientComponent.clear();
-    this.storeIngredientComponent.getStoreUnassignedIngredients();
+
+    setTimeout(() => {
+        this.searchCriteria.inventoryLevel = null;
+        this.searchCriteria.storeId = this.selectedStore.id;
+        this.search();
+
+        this.lowInventoryDatasource = new MatTableDataSource([]);
+        this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
+        this.lowInventoryDatasource.sort = this.lowInventorySort;
+
+        if (this.storeIngredientComponent) {
+          this.storeIngredientComponent.store = event.value;
+          this.storeIngredientComponent.clear();
+          this.storeIngredientComponent.getStoreUnassignedIngredients();
+        }
+      }, 500);
   }
 
   updateDataTable(storeIngredient: StoreIngredient) {
