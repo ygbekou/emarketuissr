@@ -872,7 +872,7 @@
     "EMAIL_INVALID": "Cet E-mail est invalide",
     "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères",
     "OPTION_IS_REQUIRED": "The option {{option_description}} is required",
-		"PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez s�lectionner dans la liste"
+		"PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste"
   },
   "DATE": {
     "1": "Jan",
