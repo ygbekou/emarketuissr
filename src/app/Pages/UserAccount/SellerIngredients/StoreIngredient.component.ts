@@ -158,9 +158,6 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
   }
 
   validateSelectedIngredient() {
-    if (!this.storeIngredient.ingredient || !this.storeIngredient.ingredient.id) {
-      return false;
-    }
 
     if (typeof(this.storeIngredient.ingredientName) === 'string') {
       const index = this.ingredientOptions.findIndex(x => x.name === this.storeIngredient.ingredientName);
@@ -169,6 +166,10 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
       } else {
         this.storeIngredient.ingredient = this.ingredientOptions[index].ingredient;
       }
+    }
+
+    if (!this.storeIngredient.ingredient || !this.storeIngredient.ingredient.id) {
+      return false;
     }
 
     return true;

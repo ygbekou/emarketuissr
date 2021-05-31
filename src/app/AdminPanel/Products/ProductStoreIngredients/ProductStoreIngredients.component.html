@@ -9,11 +9,12 @@
                <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.INGREDIENT' | translate}}
                </th>
-               <td mat-cell *matCellDef="let productStoreIngredient">
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
                   <mat-form-field appearance="outline" class="w-100">
                      <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
                         matInput [matAutocomplete]="auto" [(ngModel)]="productStoreIngredient.ingredientName" required
-                        (ngModelChange)="productStoreIngredient.isTouched = true; filterOptions(productStoreIngredient.ingredientName)">
+                        (ngModelChange)="productStoreIngredient.isTouched = true; 
+                        filterOptions(productStoreIngredient.ingredientName)">
                      <mat-autocomplete id="option1" #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredIngredientOptions "
                            (onSelectionChange)="productStoreIngredient.isTouched = true; 
@@ -32,10 +33,10 @@
                <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.QUANTITY_PER_UNIT' | translate}}
                </th>
-               <td mat-cell *matCellDef="let productStoreIngredient">
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
                   <mat-form-field>
                   <input matInput type="text" class="form-control" [(ngModel)]="productStoreIngredient.quantityPerUnit"
-                     name="quantityPerUnit" #quantityPerUnit="ngModel" pattern="^[2-9]+$">
+                     name="quantityPerUnit" #quantityPerUnit="ngModel" pattern="^[0-9]+$" required>
                   </mat-form-field>
                </td>
             </ng-container>

@@ -66,6 +66,7 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    getProductStoreSelectedIngredients() {
+      this.messages = '';
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
       this.searchCriteria.productStoreId = this.productToStoreId;
