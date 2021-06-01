@@ -96,17 +96,17 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       if (this.storeId > 0) {
          this.appService.getOne(this.storeId, 'Store')
             .subscribe(result => {
-            if (result.id > 0) {
-               this.store = result;
-               if (this.pickUp === '1') {
-                  this.isStoreOpen();
-               } else {
-                  this.getZoneToGeoZone();
-               }
+               if (result.id > 0) {
+                  this.store = result;
+                  if (this.pickUp === '1') {
+                     this.isStoreOpen();
+                  } else {
+                     this.getZoneToGeoZone();
+                  }
 
-               this.validatePaymentMethodAndCurrency();
-            }
-         });
+                  this.validatePaymentMethodAndCurrency();
+               }
+            });
       }
    }
 
@@ -115,14 +115,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.paymentMethodError = '';
       if (!this.payCash && this.store.currency.code !== 'XOF'
          && (this.user.paymentMethodCode === 'TMONEY' || this.user.paymentMethodCode === 'FLOOZ')
-         ) {
-            this.translate.get('MESSAGE.INVALID_PAYMENT_METHOD',
-         {
-            payment_method: this.user.paymentMethodCode,
-            currency_code: this.store.currency.title
-         }).subscribe((res) => {
-            this.paymentMethodError = res;
-         });
+      ) {
+         this.translate.get('MESSAGE.INVALID_PAYMENT_METHOD',
+            {
+               payment_method: this.user.paymentMethodCode,
+               currency_code: this.store.currency.title
+            }).subscribe((res) => {
+               this.paymentMethodError = res;
+            });
       }
    }
 
@@ -395,7 +395,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                }
          }
       } else {
+         console.log('purchase possible');
          this.purchasePossible = true;
+         this.deliveryOpen = true;
          /* this.translate.get('MESSAGE.STORE_DOESNOT_SHIP_TO_ADDRESS',
             { store_name: this.appService.navbarCartCurrencyMap[this.storeId].storeName }).subscribe((res) => {
                this.error = res;
@@ -439,7 +441,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             },
                error => console.log(error),
                () => console.log('ZoneToGeoZone retrieved '));
-         }
+      }
 
    }
 
@@ -743,7 +745,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       const disable = ((!this.storeOpen && this.pickUp === '1') || (!this.deliveryOpen && this.pickUp === '0'))
          && (!this.order.preorderDate || !this.order.preorderHour || !this.order.preorderMinute);
       this.appService.navbarCartStoreAllowOrderMap[this.store.id] = disable;
-
+      console.log('disable = ' + disable);
       return disable;
    }
 
