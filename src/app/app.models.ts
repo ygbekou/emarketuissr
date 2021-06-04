@@ -1066,6 +1066,11 @@ export class ProductToStore {
   subtract: number;
   allowNegInvn: number;
   type = 'ProductToStore';
+
+  productName: string;
+  storeName: string;
+  image: string;
+
   constructor() {
     this.subtract = 1;
     this.allowNegInvn = 1;
@@ -2230,5 +2235,82 @@ export class ProductStoreIngredient {
 
   constructor() {
     this.ingredient = new Ingredient();
+  }
+}
+
+
+export class ProductMenu extends BaseModel {
+  id: number;
+  image: string;
+  status = 1;
+  modifiedBy: number;
+  menuDescriptions: MenuDescription[] = [];
+  name: string;
+
+  type = 'Menu';
+  action: string;
+}
+
+export class MenuDescription {
+  id: number;
+  menu: ProductMenu;
+  language: Language;
+  name: string;
+  description: string;
+  shortDescription: string;
+  mediumDescription: string;
+
+  type = 'MenuDescription';
+}
+
+export class StoreMenu {
+  id: number;
+  store: Store;
+  menu: ProductMenu;
+  status = 1;
+  modifiedBy: number;
+
+  storeName: string;
+  menuName: string;
+
+  type = 'StoreMenu';
+
+  public constructor() {
+    this.store = new Store();
+    this.menu = new ProductMenu();
+  }
+
+}
+
+
+export class MenuSearchCriteria {
+  id: number;
+  menuId: number;
+  storeId: number;
+  productStoreId: number;
+  storeMenuId: number;
+	languageId: number;
+  userId: number;
+  menuName: string;
+  status: number;
+}
+
+export class ProductStoreMenu {
+  id: number;
+  productStoreId: number;
+  storeMenuId: number;
+  productId: number;
+  storeId: number;
+  menu: ProductMenu;
+  product: Product;
+  menuName: string;
+  productName: string;
+  image: string;
+  isTouched: false;
+
+  type = 'ProductStoreMenu';
+
+  constructor() {
+    this.menu = new ProductMenu();
   }
 }

@@ -461,6 +461,7 @@
     "SELECT_PRODUCT": "Sélectionner un produit",
     "SELECT_OPTION": "Sélectionner une option",
     "SELECT_STORE": "Selectionner une boutique",
+    "AVAILABLE_PRODUCTS": "Produits Disponible",
     "SELECTED_PRODUCTS": "Produits Sélectionnés",
     "SELECTED_USER": "Utilisateur sélectioné",
     "SELLER_SPACE": "Mes ventes",
@@ -755,10 +756,12 @@
 		"ADD_QUANTITY": "Ajouter Quantité",
 		"QUANTITY_PER_UNIT": "Quantité Unitaire",
 		"LOW_INVENTORY": "Faible Niveau",
-		"INGREDIENT_WITH_LOW_INVENTORY": "Ingrédients avec de faibles stocks"
+		"INGREDIENT_WITH_LOW_INVENTORY": "Ingrédients avec de faibles stocks",
+		"MENU": "Menu",
+		"MENUS": "Menus"
   },
   "MESSAGE": {
-    "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à notre blogs",
+    "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
     "CHOOSE_MAIL_PASSWD": "Entrez votre e-mail et choisissez un mot de passe",
     "DELETE_CONFIRM": "Etes-vous sur de vouloir continuer?",
     "DELETE_SUCCESS": "La suppression a réussi",

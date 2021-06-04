@@ -71,15 +71,18 @@ import { ProductToParentComponent } from './ProductLink/ProductToParent.componen
 import { ProductStoreOptionsComponent } from './ProductStoreOptions/ProductStoreOptions.component';
 import { IngredientComponent } from './Ingredient/Ingredient.component';
 import { ProductStoreIngredientsComponent } from './ProductStoreIngredients/ProductStoreIngredients.component';
+import { MenuComponent } from './Menu/Menu.component';
+import { MenusComponent } from './Menus/Menus.component';
+
 
 @NgModule({
   declarations: [ProductsComponent, EditProductComponent, ProductComponent, ProductDescriptionComponent,
     ProductLinkComponent, CategoryComponent, CategoriesComponent, InformationComponent, InformationsComponent,
     MarketingComponent, MarketingsComponent, ProductImagesComponent, AttributeGroupComponent, AttributeGroupDescriptionComponent,
     AttributeComponent, AttributeDescriptionComponent, AttributeGroupsComponent, AttributesComponent, ProductAttributesComponent,
-    OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent, ProductToParentComponent, 
+    OptionsComponent, OptionComponent, OptionDescriptionComponent, ProductToProductComponent, ProductToParentComponent,
     OptionValuesComponent, OptionValueComponent, ProductOptionsComponent,  ProductStoreOptionsComponent, IngredientsComponent,
-    IngredientComponent, MarketingProductComponent, ProductStoreIngredientsComponent],
+    IngredientComponent, MarketingProductComponent, ProductStoreIngredientsComponent, MenuComponent, MenusComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

@@ -70,6 +70,8 @@ import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSumm
 import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
 import { StoreIngredientComponent } from './SellerIngredients/StoreIngredient.component';
 import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
+import { StoreMenuComponent } from './SellerMenus/StoreMenu.component';
+import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
 
 @NgModule({
   imports: [
@@ -164,7 +166,9 @@ import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.
     ShippingZonesComponent,
     DeliveriesComponent,
     StoreIngredientComponent,
-    StoreIngredientsComponent
+    StoreIngredientsComponent,
+    StoreMenuComponent,
+    StoreMenusComponent
   ],
   exports: [
     CardsComponent,
