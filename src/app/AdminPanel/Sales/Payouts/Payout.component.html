@@ -93,7 +93,6 @@
               <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
-        
       </div>
     </mat-step>
     <mat-step>
@@ -102,9 +101,10 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
           <br/>
+          
           <h6 style="color: #ff5722">
-            {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
-              + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+            {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
+              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.store.currency?.symbolRight}}
           </h6>
         </div>
 
@@ -189,8 +189,8 @@
           <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
           <br/>
           <h6 style="color: #ff5722">
-            {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
-              + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
+            {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
+              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.store.currency?.symbolRight}}
           </h6>
         </div>
 

@@ -518,6 +518,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       const preorderDatetime = new Date(storeTimeZoneMoment);
       this.order.expected = preorderDatetime;
 
+      const orderPreorderDate = this.order.preorderDate;
+      const orderPreorderHour = this.order.preorderHour;
+      const orderPreorderMinute = this.order.preorderMinute;
 
       if (!this.user.paymentMethodCode && !this.payCash) {
          this.translate.get('VALIDATION.SELECT_PAYMENT_METHOD').subscribe(res => {
@@ -570,6 +573,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                         this.translate.get('MESSAGE.' + data.errors[0]).subscribe(res => {
                            this.error = res;
                            this.cartComponent.error = res;
+                           this.order.preorderDate = orderPreorderDate;
+                           this.order.preorderHour = orderPreorderHour;
+                           this.order.preorderMinute = orderPreorderMinute;
                         });
                      } else {
                         if (this.user.paymentMethodCode !== 'TMONEY'

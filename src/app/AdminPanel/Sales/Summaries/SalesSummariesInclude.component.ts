@@ -24,8 +24,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   messages = '';
   button = 'filter';
 
-  @Input()
-  userId: number;
+  @Input() userId: number;
 
   searchCriteria: SalesSummarySearchCriteria = new SalesSummarySearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
@@ -43,8 +42,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   @Output() selectSalesSummaryEvent = new EventEmitter<any>();
 
   selectedSalesSummaryIds: number[] = [];
-  @Input()
-  action = 'add';
+  @Input() action = 'add';
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -66,7 +64,6 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   }
 
   search() {
-    console.log(this.searchCriteria);
     this.totalDue = 0;
     this.selection.clear();
     if (this.button.endsWith('clear')) {

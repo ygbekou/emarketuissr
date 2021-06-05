@@ -12,7 +12,7 @@
       <mat-tab label="{{'COMMON.SALES_SUMMARIES' | translate}}">
 
         <div fxLayout="row wrap">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div fxFlex="100" fxFlex.gt-sm="100">
             <mat-form-field appearance="outline" class="w-100">
               <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
                 autocomplete="off">
@@ -64,7 +64,7 @@
 
                 <ng-container matColumnDef="totalDue">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
-                  <td mat-cell *matCellDef="let salesSummary" class="text-left">
+                  <td mat-cell *matCellDef="let salesSummary" class="text-left" [ngStyle]="{'color': salesSummary.totalDue < 0 ? '#ff5722' : '#000000'}" >
                     {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
                 + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
                   </td>
@@ -82,8 +82,8 @@
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
                   </th>
                   <td mat-cell *matCellDef="let salesSummary" class="text-left"> 
-                    <span style="color: #0000FF" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 2"> {{'COMMON.PAY_SUBMITTED'|translate}} </span>
-                    <span style="color: #008000" *ngIf="salesSummary.totalDue === 0 && salesSummary.status === 3"> {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
+                    <span style="color: #0000FF" *ngIf="salesSummary.status === 2"> {{'COMMON.PAY_SUBMITTED'|translate}} </span>
+                    <span style="color: #008000" *ngIf="salesSummary.status === 3"> {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
                     <span style="color: #FF0000" *ngIf="salesSummary.totalPaid === 0"> {{'COMMON.UNPAID'|translate}} </span>
                     <!-- <span style="color: #0000FF" *ngIf="salesSummary.totalDue > 0 && salesSummary.totalPaid > 0"> {{'COMMON.PARTIALLY_PAID'|translate}} </span> -->
                   </td>
