@@ -27,6 +27,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'shopping_basket',
     children: [
+      { state: 'menus', name: 'Menus', type: 'link' },
       { state: 'categories', name: 'Categories', type: 'link' },
       { state: 'products', name: 'Products', type: 'link' },
       { state: 'marketings', name: 'Marketing', type: 'link' },
@@ -105,6 +106,7 @@ const MENUITEMS_FR = [
     type: 'sub',
     icon: 'shopping_basket',
     children: [
+      { state: 'menus', name: 'Menus', type: 'link' },
       { state: 'categories', name: 'Categories', type: 'link' },
       { state: 'products', name: 'Produits', type: 'link' },
       { state: 'marketings', name: 'Marketing', type: 'link' },

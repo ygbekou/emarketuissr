@@ -461,6 +461,7 @@
 		"SELECT_PRODUCT": "Select a product",
 		"SELECT_OPTION": "Select an option",
 		"SELECT_STORE": "Select a store",
+		"AVAILABLE_PRODUCTS": "Available Products",
 		"SELECTED_PRODUCTS": "Selected Products",
 		"SELECTED_USER": "Selected User",
 		"SELL_PRODUCT": "Sell",
@@ -754,7 +755,9 @@
 		"ADD_QUANTITY": "Add Quantity",
 		"QUANTITY_PER_UNIT": "Quantity Per Unit",
 		"LOW_INVENTORY": "Low Inventory",
-		"INGREDIENT_WITH_LOW_INVENTORY": "Ingredients with low inventories"
+		"INGREDIENT_WITH_LOW_INVENTORY": "Ingredients with low inventories",
+		"MENU": "Menu",
+		"MENUS": "Menus"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
