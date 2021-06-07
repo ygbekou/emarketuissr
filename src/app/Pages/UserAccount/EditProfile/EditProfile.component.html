@@ -520,7 +520,7 @@
           </mat-form-field>
           <address class="mb-4" *ngIf="store.address">
             {{store.address.address1}} {{store.address.address2}}<br>
-            {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
+            {{store.address.city}}, {{store.address.zone?.name}} {{store.address.postCode}}<br>
             {{store.address.country.name}}
           </address>
 
@@ -554,21 +554,23 @@
             class="my-2">
             {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
           </mat-slide-toggle>
-          <br/>
-          <br/>
+          <br />
+          <br />
 
-          <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel" class="my-2">
+          <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel"
+            class="my-2">
             {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
           </mat-slide-toggle>
-          <br/>
-          <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash" #acceptDeliveryCash="ngModel" class="my-2">
+          <br />
+          <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash"
+            #acceptDeliveryCash="ngModel" class="my-2">
             {{ 'COMMON.ACCEPT_DELIVERY_CASH' | translate }}
           </mat-slide-toggle>
-          <br/>
+          <br />
           <mat-slide-toggle [(ngModel)]="store.allowReopen" name="allowReopen" #allowReopen="ngModel" class="my-2">
             {{ 'COMMON.ALLOW_TAB_REOPEN' | translate }}
           </mat-slide-toggle>
-          <br/>
+          <br />
           <mat-slide-toggle [(ngModel)]="store.autoUpload" name="autoUpload" #autoUpload="ngModel" class="my-2">
             {{ 'COMMON.AUTO_UPLOAD_OFFLINE' | translate }}
           </mat-slide-toggle>
@@ -577,48 +579,60 @@
       </div>
 
     </div>
-
-     <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-          <mat-form-field class="w-50 mb-3">
-            <mat-label>Longitude </mat-label>
-            <input matInput type="text"  class="form-control" id="longitude" [(ngModel)]="store.longitude"
-              name="longitude" #longitude="ngModel"> 
-          </mat-form-field> 
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>Longitude </mat-label>
+          <input matInput type="text" class="form-control" id="longitude" [(ngModel)]="store.longitude" name="longitude"
+            #longitude="ngModel">
+        </mat-form-field>
       </div>
 
-       <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-          <mat-form-field class="w-50 mb-3">
-            <mat-label>Latitude </mat-label>
-            <input matInput type="text"  class="form-control" id="latitude" [(ngModel)]="store.latitude"
-              name="latitude" #latitude="ngModel"> 
-          </mat-form-field> 
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>Latitude </mat-label>
+          <input matInput type="text" class="form-control" id="latitude" [(ngModel)]="store.latitude" name="latitude"
+            #latitude="ngModel">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>{{'COMMON.AUTO_LOCK_AFTER_X_PRT'|translate}} </mat-label>
+          <input matInput type="text" class="form-control" id="lockAfterXPrint" [(ngModel)]="store.lockAfterXPrint"
+            name="lockAfterXPrint" #lockAfterXPrint="ngModel">
+        </mat-form-field>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-          <mat-form-field class="w-50 mb-3">
-            <mat-label>{{'COMMON.AUTO_LOCK_AFTER_X_PRT'|translate}} </mat-label>
-            <input matInput type="text"  class="form-control" id="lockAfterXPrint" [(ngModel)]="store.lockAfterXPrint"
-              name="lockAfterXPrint" #lockAfterXPrint="ngModel"> 
-          </mat-form-field> 
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
+          <mat-label>{{'COMMON.MAXIMUM_DELIVERY_DISTANCE'|translate}} (km) </mat-label>
+          <input matInput type="text" class="form-control" id="maxDistance" [(ngModel)]="store.maxDistance"
+            name="maxDistance" #maxDistance="ngModel">
+        </mat-form-field>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-        <mat-form-field class="w-50 mb-3">
+    </div>
+    <div fxLayout="row wrap">
+
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
           <mat-label>{{'COMMON.PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
-          <input matInput type="text"  class="form-control" id="processingFeesPercentage" [(ngModel)]="store.processingFeesPercentage"
-            name="processingFeesPercentage" #processingFeesPercentage="ngModel" min="0" max="100" [disabled]="!isAdminPage" required> 
-        </mat-form-field> 
+          <input matInput type="text" class="form-control" id="processingFeesPercentage"
+            [(ngModel)]="store.processingFeesPercentage" name="processingFeesPercentage"
+            #processingFeesPercentage="ngModel" min="0" max="100" [disabled]="!isAdminPage" required>
+        </mat-form-field>
         <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
         </mat-error>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-sm="25" class="p-3">
-        <mat-form-field class="w-50 mb-3">
+      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field class="w-100 mb-3">
           <mat-label>{{'COMMON.CASH_PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
-          <input matInput type="text"  class="form-control" id="cashProFeePercent" [(ngModel)]="store.cashProFeePercent"
-            name="cashProFeePercent" #cashProFeePercent="ngModel" min="0" max="100" [disabled]="!isAdminPage" required> 
+          <input matInput type="text" class="form-control" id="cashProFeePercent" [(ngModel)]="store.cashProFeePercent"
+            name="cashProFeePercent" #cashProFeePercent="ngModel" min="0" max="100" [disabled]="!isAdminPage" required>
         </mat-form-field>
         <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
           {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -802,9 +816,11 @@
           <div class="tile-body">
             <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                <img height="100%" *ngIf="storeShipper.shipper.user"
+                <img height="100%" *ngIf="storeShipper.shipper.user && storeShipper.shipper.user.image"
                   src="assets/images/users/{{storeShipper.shipper.user.id}}/{{storeShipper.shipper.user.image}}">
-                <br />
+
+                <img height="100%" *ngIf="!(storeShipper.shipper.user && storeShipper.shipper.user.image)"
+                  src="assets/images/users/user_blue.jpg">
               </div>
               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
                 <span class="pull-left"><i class="fa fa-phone fa-sm"></i>

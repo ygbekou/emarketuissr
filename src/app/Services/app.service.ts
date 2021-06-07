@@ -1140,6 +1140,7 @@ export class AppService {
       if (country) {
          const parameters: string[] = [];
          parameters.push('e.country.id = |countryId|' + country.id + '|Integer');
+         parameters.push('e.status = |xyz|1|Integer');
          this.getAllByCriteria('com.softenza.emarket.model.Zone', parameters)
             .subscribe((data: Zone[]) => {
                this.appInfoStorage.setZones(data);

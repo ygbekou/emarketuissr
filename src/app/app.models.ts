@@ -658,7 +658,7 @@ export class ZoneToGeoZone {
   deliveryTimeEnd: number;
   deliveryTimeUnit = '';
 
-  
+
   errors: string[];
   type = 'ZoneToGeoZone';
 
@@ -804,9 +804,9 @@ export class Store extends BaseModel {
   allowExRcpt: number;
   processingFeesPercentage: number;
   cashProFeePercent: number;
+  maxDistance: number;
 
   type = 'Store';
-
   constructor() {
     super();
     this.aprvStatus = 0;
@@ -849,6 +849,8 @@ export class Address {
   zone: Zone;
   phone: string;
   status = 0;
+  public longitude: number;
+  public latitude: number;
   type = 'Address';
 
   constructor() {
@@ -1459,7 +1461,6 @@ export class CompanyLocation {
   type = 'Location';
 }
 
-
 export class OrderHistory {
   id: number;
   comment: string;
@@ -2011,9 +2012,9 @@ export class StoreShipper {
 }
 
 export class SalesSummary {
-	public id: number;
-	public store: Store;
-	public currency: Currency;
+  public id: number;
+  public store: Store;
+  public currency: Currency;
   public year: number;
   public month: number;
   public paymentMethod: string;
@@ -2043,12 +2044,12 @@ export class SalesSummary {
 export class SalesSummarySearchCriteria {
   id: number;
   year: number;
-	month: number;
-	currencyId: number;
-	currencyCode: string;
-	storeId: number;
-	storeName: string;
-	status: number;
+  month: number;
+  currencyId: number;
+  currencyCode: string;
+  storeId: number;
+  storeName: string;
+  status: number;
   paymentMethods: string[];
   userId: number;
   totalDueGreaterThan: number;
@@ -2058,9 +2059,9 @@ export class SalesSummarySearchCriteria {
 
 
 export class Payout {
-	public id: number;
-	public store: Store;
-	public currency: Currency;
+  public id: number;
+  public store: Store;
+  public currency: Currency;
   public year: number;
   public total: number;
   public image: string;
@@ -2090,28 +2091,28 @@ export class Payout {
 
 export class PayoutVO {
   id: number;
-	storeId: number;
-	storeName: string;
-	total: number;
-	year: number;
-	image: string;
-	proofPayoutId: string;
-	comment: string;
-	currencyCode: string;
-	currencyId: number;
-	currencySymbolLeft: string;
-	currencySymbolRight: string;
-	currencyDecimalPlace: number;
-	payoutDate: Date;
-	createDate: Date;
-	status: number;
+  storeId: number;
+  storeName: string;
+  total: number;
+  year: number;
+  image: string;
+  proofPayoutId: string;
+  comment: string;
+  currencyCode: string;
+  currencyId: number;
+  currencySymbolLeft: string;
+  currencySymbolRight: string;
+  currencyDecimalPlace: number;
+  payoutDate: Date;
+  createDate: Date;
+  status: number;
   reversePayoutId: number;
 
   constructor(payout: Payout) {
     this.id = payout.id;
-	  this.storeId = payout.store.id;
-	  this.storeName = payout.store.name;
-	  this.total = payout.total;
+    this.storeId = payout.store.id;
+    this.storeName = payout.store.name;
+    this.total = payout.total;
     this.year = payout.year;
     this.image = payout.image;
     this.proofPayoutId = payout.proofPayoutId;
@@ -2131,11 +2132,11 @@ export class PayoutVO {
 export class PayoutSearchCriteria {
   id: number;
   year: number;
-	currencyId: number;
-	currencyCode: string;
-	storeId: number;
-	storeName: string;
-	status: number;
+  currencyId: number;
+  currencyCode: string;
+  storeId: number;
+  storeName: string;
+  status: number;
   proofPayoutId: string[];
   userId: number;
   payoutDate: Date;
@@ -2175,7 +2176,7 @@ export class StoreIngredient {
   store: Store;
   ingredient: Ingredient;
   minimumQty: number;
-	maximumQty: number;
+  maximumQty: number;
   price: number;
   quantity: number;
   status = 1;
@@ -2198,7 +2199,7 @@ export class IngredientSearchCriteria {
   ingredientId: number;
   storeId: number;
   productStoreId: number;
-	languageId: number;
+  languageId: number;
   userId: number;
   ingredientName: string;
   status: number;
@@ -2289,7 +2290,7 @@ export class MenuSearchCriteria {
   storeId: number;
   productStoreId: number;
   storeMenuId: number;
-	languageId: number;
+  languageId: number;
   userId: number;
   menuName: string;
   status: number;
