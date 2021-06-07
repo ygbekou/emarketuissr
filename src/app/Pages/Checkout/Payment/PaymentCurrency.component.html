@@ -1,7 +1,9 @@
 <mat-error severity="error" *ngIf="!storeHoursMessage">{{error}}</mat-error>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-
+    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+      <mat-error severity="error">{{error}}</mat-error>
+    </div>
     <mat-card
       *ngIf="(storeHoursMessage || (store && store.presentPreorderScreen && store.presentPreorderScreen.name === 'ALWAYS'))">
       <div fxLayout="row wrap" fxLayoutGap="10px grid">
@@ -141,10 +143,6 @@
   </div>
   <div fxFlex.xs="0" fxFlex.sm="0" fxHide.xs="true" fxHide.sm="true" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
     <mat-card>
-      <div fxLayout="row wrap">
-        <mat-error *ngIf="error && !storeHoursMessage">{{error}}</mat-error>
-      </div>
-
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="placeYourOrder()"
         type="button" style="width:100%;" [disabled]="(appService.hasOrderSucceedMap[storeId] === true ||
         (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))

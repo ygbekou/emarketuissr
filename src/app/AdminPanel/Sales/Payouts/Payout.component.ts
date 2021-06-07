@@ -170,7 +170,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
       searchCriteria.totalDueGreaterThan = 0;
 
       this.salesSummariesIncludeComponent.searchCriteria = searchCriteria;
-      this.salesSummariesIncludeComponent.selectedCurrency = this.payout.currency;
+      this.salesSummariesIncludeComponent.selectedCurrency = this.payout.store.currency;
       this.salesSummariesIncludeComponent.search();
       this.stepper.selectedIndex = 1;
     }
