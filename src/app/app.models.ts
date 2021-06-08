@@ -805,7 +805,7 @@ export class Store extends BaseModel {
   processingFeesPercentage: number;
   cashProFeePercent: number;
   maxDistance: number;
-
+  useMenu: number;
   type = 'Store';
   constructor() {
     super();

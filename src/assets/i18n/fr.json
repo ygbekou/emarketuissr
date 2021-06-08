@@ -6,6 +6,7 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "DISPLAY_MENU_INSTEAD":"Afficher le menu au lieu de catégorie",
     "MAXIMUM_DELIVERY_DISTANCE":"Distance maximum de livraison",
     "RECEIPTS":"Recus de vente",
     "EXCLUDE_FROM_RCPT":"Exclure des recus",

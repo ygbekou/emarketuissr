@@ -11,17 +11,11 @@
 <fieldset>
   <legend><h5 style="color:#00008b">{{'COMMON.LIST' | translate}}</h5></legend>
   <div fxLayout="row wrap">
-    <div fxFlex="100" fxFlex.gt-sm="90" class="p-1">
+    <div fxFlex="100" fxFlex.gt-sm="100" class="p-1">
       <mat-form-field appearance="outline" class="w-100">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
           autocomplete="off">
       </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-sm="10" class="p-1">
-      <a [routerLink]="['/admin/ingredients', 0]" mat-icon-button color="primary"
-        matTooltip="{{'COMMON.ADD' | translate}}">
-        <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-      </a>
     </div>
   </div>
   <div class="text-center mt-2" *ngIf="messages">

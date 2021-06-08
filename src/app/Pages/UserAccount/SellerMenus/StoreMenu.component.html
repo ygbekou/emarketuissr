@@ -1,18 +1,5 @@
-
 <form name="form" (ngSubmit)="f.form.valid && validateSelectedMenu() && save()" #f="ngForm" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1" >
-      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" >
-        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;" type="submit" 
-          [disabled]="!f.form.valid">
-            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-            <mat-icon>save</mat-icon>
-        </button>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
-      </div>
-    </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div class="text-center mt-2" *ngIf="messages">
         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
@@ -21,134 +8,146 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.MENU' | translate}}:</mat-label>
-          <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
-              matInput [matAutocomplete]="auto" [(ngModel)]="storeMenu.menuName" #menuName="ngModel"
-              required (ngModelChange)="filterOptions(storeMenu.menuName)">
-          <mat-autocomplete id="option1" #auto="matAutocomplete">
-              <mat-option *ngFor="let option of filteredMenuOptions "
-                (onSelectionChange)="setSelectedMenu(option)" [value]="option.name">
-                {{option.name}} 
-              </mat-option>
-          </mat-autocomplete>
-        </mat-form-field> 
-        <mat-error *ngIf="f.submitted && !validateSelectedMenu()" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
-        </mat-error>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
-          {{ 'COMMON.ENABLE' | translate }}
-        </mat-slide-toggle>
-      </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label> {{'COMMON.MENU' | translate}}:</mat-label>
+        <input type="text" placeholder="{{'COMMON.SELECT'|translate}}"   name="menuName" matInput
+          [matAutocomplete]="auto" [(ngModel)]="storeMenu.menuName" #menuName="ngModel" required
+          (ngModelChange)="filterOptions(storeMenu.menuName)">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredMenuOptions " (onSelectionChange)="setSelectedMenu(option)"
+            [value]="option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-error *ngIf="f.submitted && !validateSelectedMenu()" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+      </mat-error>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
+        {{ 'COMMON.ENABLE' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+        type="submit" [disabled]="!f.form.valid">
+        <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+        <mat-icon>save</mat-icon>
+      </button>
     </div>
   </div>
 </form>
 
-  <div fxLayout="row wrap" [hidden]="!storeMenu?.id">
-    <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-      <legend><h5 style="color:#00008b">{{'COMMON.AVAILABLE_PRODUCTS' | translate}}</h5></legend>
+<div fxLayout="row wrap" [hidden]="!storeMenu?.id">
+  <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+    <legend>
+      <h5 style="color:#00008b">{{'COMMON.AVAILABLE_PRODUCTS' | translate}}</h5>
+    </legend>
 
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="100">
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput (keyup)="applyAvailableProductFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
-              autocomplete="off">
-          </mat-form-field>
-        </div>
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput (keyup)="applyAvailableProductFilter($event.target.value)"
+            placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+        </mat-form-field>
       </div>
-
-      <div class="table-wrapper">
-        <table mat-table [dataSource]="aProductDatasource" matSort class="w-100">
-
-          <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
-            </th>
-            <td mat-cell *matCellDef="let productStore"> {{productStore.productName}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
-            <td mat-cell *matCellDef="let productStore">
-              <img [src]="'assets/images/products/'+(productStore?.image?(productStore.product.id+'/'+productStore?.image):'default.png')"
-                [style.width.px]="50" class="d-block">
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
-            <td mat-cell *matCellDef="let productStore"> 
-              <a mat-icon-button (click)="saveProductStoreMenu(productStore)"
-                color="secondary" matTooltip="{{'COMMON.ADD' | translate}}">
-                <mat-icon style="color: #006400">check</mat-icon>
-              </a>
-              &nbsp;&nbsp;
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="aProductColumns"></tr>
-          <tr mat-row *matRowDef="let productStore; columns: aProductColumns;"></tr>
-        </table>
-        <p *ngIf="!aProductDatasource?.data || aProductDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
-      </div>
-      <mat-paginator #aProductPaginator [length]="10" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     </div>
-  
 
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="aProductDatasource" matSort class="w-100">
 
-   <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
- 
-    <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-      <legend><h5 style="color:#00008b">{{'COMMON.SELECTED_PRODUCTS' | translate}}</h5></legend>
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let productStore"> {{productStore.productName}}</td>
+        </ng-container>
 
-      <div fxLayout="row wrap">
-        <div fxFlex="100" fxFlex.gt-sm="100">
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput (keyup)="applySelectedProductFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
-              autocomplete="off">
-          </mat-form-field>
-        </div>
-      </div>
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
+          <td mat-cell *matCellDef="let productStore">
+            <img
+              [src]="'assets/images/products/'+(productStore?.image?(productStore.product.id+'/'+productStore?.image):'default.png')"
+              [style.width.px]="50" class="d-block">
+          </td>
+        </ng-container>
 
-      <div class="table-wrapper">
-        <table mat-table [dataSource]="sProductDatasource" matSort class="w-100">
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
+          <td mat-cell *matCellDef="let productStore">
+            <a mat-icon-button (click)="saveProductStoreMenu(productStore)" color="secondary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon style="color: #006400">check</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
-            </th>
-            <td mat-cell *matCellDef="let productStoreMenu"> {{productStoreMenu.productName}}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
-            <td mat-cell *matCellDef="let productStoreMenu">
-              <img [src]="'assets/images/products/'+(productStoreMenu?.image?(productStoreMenu.product.id+'/'+productStoreMenu?.image):'default.png')"
-                [style.width.px]="50" class="d-block">
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
-            <td mat-cell *matCellDef="let productStoreMenu"> 
-              <a mat-icon-button (click)="deleteProductStoreMenu(productStoreMenu)" 
-                color="secondary" matTooltip="{{'COMMON.REMOVE' | translate}}">
-                <mat-icon style="color: #FF0000">remove</mat-icon>
-              </a>
-              &nbsp;&nbsp;
-            </td>
-          </ng-container>   
-        
-          <tr mat-header-row *matHeaderRowDef="sProductColumns"></tr>
-          <tr mat-row *matRowDef="let productStoreMenu; columns: sProductColumns;"></tr>
-        </table>
-        <p *ngIf="!sProductDatasource?.data || sProductDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
-      </div>
-      <mat-paginator #sProductPaginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        <tr mat-header-row *matHeaderRowDef="aProductColumns"></tr>
+        <tr mat-row *matRowDef="let productStore; columns: aProductColumns;"></tr>
+      </table>
+      <p *ngIf="!aProductDatasource?.data || aProductDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+        {{'MESSAGE.NO_DATA' | translate}}</p>
     </div>
+    <mat-paginator #aProductPaginator [length]="10" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+      showFirstLastButtons></mat-paginator>
   </div>
 
 
 
+  <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
+
+  <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+    <legend>
+      <h5 style="color:#00008b">{{'COMMON.SELECTED_PRODUCTS' | translate}}</h5>
+    </legend>
+
+    <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput (keyup)="applySelectedProductFilter($event.target.value)"
+            placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="sProductDatasource" matSort class="w-100">
+
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let productStoreMenu"> {{productStoreMenu.productName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
+          <td mat-cell *matCellDef="let productStoreMenu">
+            <img
+              [src]="'assets/images/products/'+(productStoreMenu?.image?(productStoreMenu.product.id+'/'+productStoreMenu?.image):'default.png')"
+              [style.width.px]="50" class="d-block">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
+          <td mat-cell *matCellDef="let productStoreMenu">
+            <a mat-icon-button (click)="deleteProductStoreMenu(productStoreMenu)" color="secondary"
+              matTooltip="{{'COMMON.REMOVE' | translate}}">
+              <mat-icon style="color: #FF0000">remove</mat-icon>
+            </a>
+            &nbsp;&nbsp;
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="sProductColumns"></tr>
+        <tr mat-row *matRowDef="let productStoreMenu; columns: sProductColumns;"></tr>
+      </table>
+      <p *ngIf="!sProductDatasource?.data || sProductDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+        {{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator #sProductPaginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

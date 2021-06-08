@@ -6,6 +6,7 @@
 		"SHOP": "Shop",
 		"PER_PAGE":"Per page",
 		"OUT_OF": "out of",
+		"DISPLAY_MENU_INSTEAD":"Display menu instead of category",
 		"MAXIMUM_DELIVERY_DISTANCE":"Maximum delivery distance",
 		"EXCLUDE_FROM_RCPT":"Exclude from receipt",
 		"ALLOW_EX_RCPT":"Authorize receipt selection",

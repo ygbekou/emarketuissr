@@ -106,6 +106,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
             this.menu.id = result.id;
             this.processResult(result, this.menu, null);
             this.menuSaveEvent.emit(this.menu);
+            this.clear();
           }
         });
 
