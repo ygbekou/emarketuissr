@@ -86,6 +86,12 @@
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
 
+        <mat-form-field  *ngIf="showParams && allowExRcpt && subRpt === 6">
+          <mat-label> {{'COMMON.PERCENT_OF_RECEIPT'|translate}}</mat-label><br />
+           <input matInput type="text" placeholder="100" class="form-control" id="percentPrint1"
+            [(ngModel)]="percentPrint" name="percentPrint1" #percentPrint1="ngModel">
+       </mat-form-field>
+
         <div class="text-center" *ngIf="showParams && !running">
           <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row" [disabled]="!beginDate && endDate"
             fxLayoutAlign="center center" type="submit">

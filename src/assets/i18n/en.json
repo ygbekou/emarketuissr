@@ -6,6 +6,7 @@
 		"SHOP": "Shop",
 		"PER_PAGE":"Per page",
 		"OUT_OF": "out of",
+		"PERCENT_OF_RECEIPT":"Percentage of receipts to print",
 		"DISPLAY_MENU_INSTEAD":"Display menu instead of category",
 		"MAXIMUM_DELIVERY_DISTANCE":"Maximum delivery distance",
 		"EXCLUDE_FROM_RCPT":"Exclude from receipt",

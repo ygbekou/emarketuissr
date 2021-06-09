@@ -19,7 +19,9 @@ export class ReportsComponent implements OnInit {
   fromAdmin = false;
   beginDate: Date;
   endDate: Date;
+  percentPrint = 100;
   running = false;
+  allowExRcpt = false;
   subRpt = 1;
   @Input()
   userId;
@@ -59,6 +61,14 @@ export class ReportsComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        console.log(this.stores);
+        if (this.stores) {
+          this.stores.forEach((st) => {
+            if (st.allowExRcpt === 1) {
+              this.allowExRcpt = true;
+            }
+          });
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
@@ -102,7 +112,9 @@ export class ReportsComponent implements OnInit {
   }
   openInNewTab(url) {
     const win = window.open(url, '_blank');
-    win.focus();
+    if (win) {
+      win.focus();
+    }
   }
 
   runRpt() {
@@ -121,8 +133,9 @@ export class ReportsComponent implements OnInit {
     const parm4 = new Parameter('dateFin',
       this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
     const parm5 = new Parameter('subRptId', '' + this.subRpt);
+    const parm6 = new Parameter('percentPrint', '' + this.percentPrint);
     rep.parameters = [];
-    rep.parameters.push(parm1, parm2, parm3, parm4, parm5);
+    rep.parameters.push(parm1, parm2, parm3, parm4, parm5, parm6);
     console.log(rep);
 
     this.appService.saveWithUrl('/service/report/run/', rep)
