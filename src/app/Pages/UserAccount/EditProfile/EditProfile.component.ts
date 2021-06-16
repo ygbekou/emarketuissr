@@ -348,6 +348,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.useMenu.toString() === 'false'
          || this.store.useMenu.toString() === '0') ? 0 : 1;
 
+            this.store.allowPickup = (this.store.allowPickup == null
+         || this.store.allowPickup.toString() === 'false'
+         || this.store.allowPickup.toString() === '0') ? 0 : 1;
+
        this.store.allowReopen = (this.store.allowReopen == null
          || this.store.allowReopen.toString() === 'false'
          || this.store.allowReopen.toString() === '0') ? 0 : 1;

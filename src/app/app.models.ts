@@ -642,6 +642,8 @@ export class GeoZone {
   delEnd6: string;
   delStart0: string;
   delEnd0: string;
+  kmRate: number;
+  shippingWeightKm: number;
   constructor() {
     this.status = 1;
   }
@@ -806,6 +808,7 @@ export class Store extends BaseModel {
   cashProFeePercent: number;
   maxDistance: number;
   useMenu: number;
+  allowPickup: number;
   type = 'Store';
   constructor() {
     super();

@@ -129,20 +129,20 @@
             (click)="geoZone.shippingMode=0">
             <mat-icon *ngIf="geoZone.shippingMode==0">check</mat-icon>
             {{'COMMON.FLAT_RATE' | translate }}
-          </button> 
+          </button>
           <button mat-stroked-button [color]="geoZone.shippingMode==1?'accent':'secondary'"
             (click)="geoZone.shippingMode=1">
             <mat-icon *ngIf="geoZone.shippingMode==1">check</mat-icon>
             {{'COMMON.PER_WEIGHT' | translate }}
-          </button> 
+          </button>
           <button mat-stroked-button [color]="geoZone.shippingMode==2?'accent':'secondary'"
             (click)="geoZone.shippingMode=2">
             <mat-icon *ngIf="geoZone.shippingMode==2">check</mat-icon>
-            {{'COMMON.RATE_SHOP' | translate }}
+            {{'COMMON.PER_KM' | translate }}
           </button>
         </div>
 
-       <!--  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+        <!--  <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
           <mat-form-field class="w-100 mb-3">
             <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
@@ -156,7 +156,7 @@
       </div>
       <div fxLayout="row wrap">
 
-        
+
         <div fxFlex="100" fxFlex.gt-sm="50" class="p-3" *ngIf="geoZone.shippingMode==0">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.FLAT_RATE' | translate}}
@@ -191,6 +191,31 @@
             </mat-error>
           </mat-form-field>
         </div>
+
+
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.RATE_PER_KM' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="kmRate" [(ngModel)]="geoZone.kmRate"
+              name="kmRate" #kmRate="ngModel" required>
+            <mat-error *ngIf="ff.submitted && kmRate.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.SHIPPING_WEIGHT_KM' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="shippingWeightKm" [(ngModel)]="geoZone.shippingWeightKm"
+              name="shippingWeightKm" #shippingWeightKm="ngModel" required>
+            <mat-error *ngIf="ff.submitted && shippingWeightKm.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
@@ -200,7 +225,7 @@
       </div>
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
+          <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -214,8 +239,8 @@
               [(ngModel)]="geoZone.delEnd1" name="delEnd1" #delEnd1="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -229,8 +254,8 @@
               [(ngModel)]="geoZone.delEnd2" name="delEnd2" #delEnd2="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -244,8 +269,8 @@
               [(ngModel)]="geoZone.delEnd3" name="delEnd3" #delEnd3="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -259,8 +284,8 @@
               [(ngModel)]="geoZone.delEnd4" name="delEnd4" #delEnd4="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -274,8 +299,8 @@
               [(ngModel)]="geoZone.delEnd5" name="delEnd5" #delEnd5="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -289,8 +314,8 @@
               [(ngModel)]="geoZone.delEnd6" name="delEnd6" #delEnd6="ngModel">
           </mat-form-field>
         </div>
-           <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-           <h6 color="primary">{{'WEEKDAY.0'|translate}}</h6>
+        <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+          <h6 color="primary">{{'WEEKDAY.0'|translate}}</h6>
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.START' | translate}}
             </mat-label>
@@ -333,7 +358,8 @@
 
         <!-- Image Column -->
         <ng-container matColumnDef="country">
-          <th style="width: 30% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.COUNTRY' | translate}} </th>
+          <th style="width: 30% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{'COMMON.COUNTRY' | translate}} </th>
           <td style="width: 30% !important;" mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
@@ -351,7 +377,7 @@
         <!-- Image Column -->
         <ng-container matColumnDef="zone">
           <th style="width: 30% !important;" mat-header-cell *matHeaderCellDef mat-sort-header> Zone </th>
-          <td style="width: 30% !important;" mat-cell *matCellDef="let zoneToGeoZone"> 
+          <td style="width: 30% !important;" mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>Zone</mat-label>
               <mat-select placeholder="Zone" id="zone" [compareWith]="compareZones" name="zone"
@@ -365,34 +391,35 @@
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeBegin">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERY_TIME' | translate}} </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.DELIVERY_TIME' | translate}}
+          </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.DELIVERY_TIME_BEGIN' | translate}}</mat-label>
               <input matInput type="text" class="form-control" id="deliveryTimeBegin"
-                  [(ngModel)]="zoneToGeoZone.deliveryTimeBegin" name="deliveryTimeBegin" #deliveryTimeBegin="ngModel">
+                [(ngModel)]="zoneToGeoZone.deliveryTimeBegin" name="deliveryTimeBegin" #deliveryTimeBegin="ngModel">
             </mat-form-field>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeEnd">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header>   </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.DELIVERY_TIME_END' | translate}}</mat-label>
               <input matInput type="text" class="form-control" id="deliveryTimeEnd"
-                  [(ngModel)]="zoneToGeoZone.deliveryTimeEnd" name="deliveryTimeEnd" #deliveryTimeEnd="ngModel">
+                [(ngModel)]="zoneToGeoZone.deliveryTimeEnd" name="deliveryTimeEnd" #deliveryTimeEnd="ngModel">
             </mat-form-field>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="deliveryTimeUnit">
-          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header>  </th>
+          <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> </th>
           <td mat-cell *matCellDef="let zoneToGeoZone">
             <mat-form-field appearance="outline" class="w-100">
               <mat-label>{{'COMMON.DELIVERY_TIME_UNIT' | translate}}</mat-label>
-              <mat-select placeholder="Time Unit" id="zone" name="timeUnit"
-                [(ngModel)]="zoneToGeoZone.deliveryTimeUnit" #deliveryTimeUnit="ngModel">
+              <mat-select placeholder="Time Unit" id="zone" name="timeUnit" [(ngModel)]="zoneToGeoZone.deliveryTimeUnit"
+                #deliveryTimeUnit="ngModel">
                 <mat-option [value]="'0'">
                 </mat-option>
                 <mat-option [value]="'M'">

@@ -574,11 +574,14 @@
           <mat-slide-toggle [(ngModel)]="store.autoUpload" name="autoUpload" #autoUpload="ngModel" class="my-2">
             {{ 'COMMON.AUTO_UPLOAD_OFFLINE' | translate }}
           </mat-slide-toggle>
-            <br />
+          <br />
           <mat-slide-toggle [(ngModel)]="store.useMenu" name="useMenu" #useMenu="ngModel" class="my-2">
             {{ 'COMMON.DISPLAY_MENU_INSTEAD' | translate }}
           </mat-slide-toggle>
-
+          <br />
+          <mat-slide-toggle [(ngModel)]="store.allowPickup" name="allowPickup" #allowPickup="ngModel" class="my-2">
+            {{ 'COMMON.ALLOW_PICKUP' | translate }}
+          </mat-slide-toggle>
         </div>
       </div>
 
