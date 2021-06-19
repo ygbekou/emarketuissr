@@ -13,7 +13,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
   templateUrl: './StoreMenu.component.html',
   styleUrls: ['./StoreMenus.component.scss']
 })
-export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterViewInit {
+export class StoreMenuComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   aProductColumns: string[] = ['image', 'productName', 'actions'];
   aProductDatasource: MatTableDataSource<ProductToStore>;
@@ -47,8 +47,8 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute,
     private location: Location) {
-      super(translate);
-    }
+    super(translate);
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -103,12 +103,15 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
 
   getStoreMenu(storeMenu: StoreMenu) {
     this.messages = '';
+    console.log(storeMenu);
     if (storeMenu && storeMenu.id > 0) {
       // this.getStoreIngredientInventory(storeMenu.id);
       this.appService.getOneWithChildsAndFiles(storeMenu.id, 'StoreMenu')
         .subscribe(result => {
           if (result.id > 0) {
             this.storeMenu = result;
+            console.log('got menu');
+            console.log(this.storeMenu);
             this.storeMenu.menuName = storeMenu.menu.name;
             this.getStoreMenuUnassignedProducts();
             this.getStoreMenuProducts();
@@ -134,7 +137,7 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
         this.menuDescriptions = data;
 
         this.menuOptions = data;
-          this.filteredMenuOptions = data;
+        this.filteredMenuOptions = data;
       },
         error => console.log(error),
         () => console.log('Get menus complete'));
@@ -143,39 +146,39 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
 
   getStoreMenuProducts() {
 
-      this.appService.saveWithUrl('/service/catalog/getProductStoreMenus',
+    this.appService.saveWithUrl('/service/catalog/getProductStoreMenus',
       {
         storeId: this.storeMenu.store.id,
         storeMenuId: this.storeMenu.id,
         languageId: this.appService.appInfoStorage.language.id
       })
-        .subscribe((data: any[]) => {
-          this.sProductDatasource = new MatTableDataSource(data);
-          this.sProductDatasource.paginator = this.sProductPaginator;
-          this.sProductDatasource.sort = this.sProductSort;
-        },
-          error => console.log(error),
-          () => console.log('Get store menu products complete'));
+      .subscribe((data: any[]) => {
+        this.sProductDatasource = new MatTableDataSource(data);
+        this.sProductDatasource.paginator = this.sProductPaginator;
+        this.sProductDatasource.sort = this.sProductSort;
+      },
+        error => console.log(error),
+        () => console.log('Get store menu products complete'));
 
   }
 
 
 
   filterOptions(val) {
-      if (val) {
-         const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
-         this.filteredMenuOptions = this.menuOptions
-          .filter(menuDesc => menuDesc.name.toLowerCase().startsWith(filterValue));
-      } else {
-         this.filteredMenuOptions = this.menuOptions;
-      }
-   }
+    if (val) {
+      const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
+      this.filteredMenuOptions = this.menuOptions
+        .filter(menuDesc => menuDesc.name.toLowerCase().startsWith(filterValue));
+    } else {
+      this.filteredMenuOptions = this.menuOptions;
+    }
+  }
 
-   save() {
+  save() {
     this.messages = '';
     this.storeMenu.modifiedBy = +this.appService.tokenStorage.getUserId();
 
-    if (!this.storeMenu.store.id ) {
+    if (!this.storeMenu.store.id) {
       this.storeMenu.store.id = this.store.id;
     }
     this.currentOption = this.storeMenu.menuName;
@@ -196,9 +199,14 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
 
   validateSelectedMenu() {
 
-    if (typeof(this.storeMenu.menuName) === 'string') {
+    console.log(this.storeMenu);
+    if (typeof (this.storeMenu.menuName) === 'string') {
       const index = this.menuOptions.findIndex(x => x.name === this.storeMenu.menuName);
       if (index === -1) {
+        console.log('1');
+        if (this.storeMenu.id && this.storeMenu.id > 0) {
+          return true;
+        }
         return false;
       } else {
         this.storeMenu.menu = this.menuOptions[index].menu;
@@ -206,24 +214,26 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
     }
 
     if (!this.storeMenu.menu || !this.storeMenu.menu.id) {
+      console.log('2');
       return false;
     }
-
+    console.log('3');
     return true;
   }
 
   setToggleValues() {
     this.storeMenu.status = (this.storeMenu.status == null
-          || this.storeMenu.status.toString() === 'false'
-          || this.storeMenu.status.toString() === '0') ? 0 : 1;
+      || this.storeMenu.status.toString() === 'false'
+      || this.storeMenu.status.toString() === '0') ? 0 : 1;
   }
 
   setSelectedMenu(menuDesc: MenuDescription) {
     console.log(menuDesc);
-     this.storeMenu.menu = menuDesc.menu;
+    this.storeMenu.menu = menuDesc.menu;
   }
 
-  isEmpty(value: string): boolean {'';
+  isEmpty(value: string): boolean {
+    '';
     const val = value !== null && value !== undefined ? value.trim() : '';
 
     return val.length === 0;
@@ -231,54 +241,58 @@ export class StoreMenuComponent  extends BaseComponent implements OnInit, AfterV
 
 
   saveProductStoreMenu(productStore: ProductToStore) {
-      const productStoreMenu = new ProductStoreMenu();
-      const oldProductName = productStore.productName;
-      const oldProductImage = productStore.image;
-      productStoreMenu.productStoreId = productStore.id;
-      productStoreMenu.storeMenuId = this.storeMenu.id;
-      productStoreMenu.menu = this.storeMenu.menu;
-      productStoreMenu.productId = productStore.product.id;
-      productStoreMenu.storeId = productStore.store.id;
+    const productStoreMenu = new ProductStoreMenu();
+    const oldProductName = productStore.productName;
+    const oldProductImage = productStore.image;
+    productStoreMenu.productStoreId = productStore.id;
+    productStoreMenu.storeMenuId = this.storeMenu.id;
+    productStoreMenu.menu = this.storeMenu.menu;
+    productStoreMenu.productId = productStore.product.id;
+    productStoreMenu.storeId = productStore.store.id;
 
-      this.appService.saveWithUrl('/service/crud/ProductStoreMenu/save/', productStoreMenu)
-         .subscribe((data: ProductStoreMenu) => {
-            this.processResult(data, productStoreMenu, null);
-            productStoreMenu.id = data.id;
-            productStoreMenu.productName = oldProductName;
-            productStoreMenu.image = oldProductImage;
-            productStoreMenu.product = new Product();
-            productStoreMenu.product.id = productStoreMenu.productId;
-            this.updateDatasourceData(this.sProductDatasource, this.sProductPaginator, this.sProductSort, productStoreMenu);
-            this.processDataSourceDeleteResult({result: 'SUCCESS'}, this.messages, productStore, this.aProductDatasource);
-            this.aProductDatasource.data = Array.from(this.aProductDatasource.data);
-         },
-            error => console.log(error),
-            () => console.log('Save selected product store menu complete'));
+    this.appService.saveWithUrl('/service/crud/ProductStoreMenu/save/', productStoreMenu)
+      .subscribe((data: ProductStoreMenu) => {
+        this.processResult(data, productStoreMenu, null);
+        productStoreMenu.id = data.id;
+        productStoreMenu.productName = oldProductName;
+        productStoreMenu.image = oldProductImage;
+        productStoreMenu.product = new Product();
+        productStoreMenu.product.id = productStoreMenu.productId;
+        this.updateDatasourceData(this.sProductDatasource, this.sProductPaginator, this.sProductSort, productStoreMenu);
+        this.processDataSourceDeleteResult({ result: 'SUCCESS' }, this.messages, productStore, this.aProductDatasource);
+        this.aProductDatasource.data = Array.from(this.aProductDatasource.data);
+      },
+        error => console.log(error),
+        () => console.log('Save selected product store menu complete'));
 
-   }
+  }
 
-   public deleteProductStoreMenu(productStoreMenu: ProductStoreMenu, index: number) {
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
 
-      this.messages = '';
+  public deleteProductStoreMenu(productStoreMenu: ProductStoreMenu, index: number) {
 
-      const productStore = new ProductToStore();
-      productStore.id = productStoreMenu.productStoreId;
-      productStore.productName = productStoreMenu.productName;
-      productStore.product = new Product();
-      productStore.product.id = productStoreMenu.product.id;
-      productStore.image = productStoreMenu.image;
-      productStore.store = new Store();
-      productStore.store.id = productStoreMenu.storeId;
+    this.messages = '';
 
-      this.appService.delete(productStoreMenu.id, 'ProductStoreMenu')
-         .subscribe(data => {
+    const productStore = new ProductToStore();
+    productStore.id = productStoreMenu.productStoreId;
+    productStore.productName = productStoreMenu.productName;
+    productStore.product = new Product();
+    productStore.product.id = productStoreMenu.product.id;
+    productStore.image = productStoreMenu.image;
+    productStore.store = new Store();
+    productStore.store.id = productStoreMenu.storeId;
 
-            this.updateDatasourceData(this.aProductDatasource, this.aProductPaginator, this.aProductSort, productStore);
-            this.processDataSourceDeleteResult(data, this.messages, productStoreMenu, this.sProductDatasource);
-            this.sProductDatasource.data = Array.from(this.sProductDatasource.data);
+    this.appService.delete(productStoreMenu.id, 'ProductStoreMenu')
+      .subscribe(data => {
 
-         });
-   }
+        this.updateDatasourceData(this.aProductDatasource, this.aProductPaginator, this.aProductSort, productStore);
+        this.processDataSourceDeleteResult(data, this.messages, productStoreMenu, this.sProductDatasource);
+        this.sProductDatasource.data = Array.from(this.sProductDatasource.data);
+
+      });
+  }
 
   public applyAvailableProductFilter(filterValue: string) {
     this.aProductDatasource.filter = filterValue.trim().toLowerCase();

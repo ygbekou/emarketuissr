@@ -12,7 +12,7 @@
           <address class="mb-4">
             <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
             {{addr.address1}} {{addr.address2}}<br>
-            {{addr.city}}, {{addr.zone.name}} {{addr.postCode}}<br>
+            {{addr.city}}, {{addr.zone?.name}} {{addr.postCode}}<br>
             {{addr.country.name}}
           </address>
           <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px" *ngIf="addressType>0">

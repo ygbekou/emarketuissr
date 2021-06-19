@@ -642,6 +642,8 @@ export class GeoZone {
   delEnd6: string;
   delStart0: string;
   delEnd0: string;
+  kmRate: number;
+  shippingWeightKm: number;
   constructor() {
     this.status = 1;
   }
@@ -804,9 +806,10 @@ export class Store extends BaseModel {
   allowExRcpt: number;
   processingFeesPercentage: number;
   cashProFeePercent: number;
-
+  maxDistance: number;
+  useMenu: number;
+  allowPickup: number;
   type = 'Store';
-
   constructor() {
     super();
     this.aprvStatus = 0;
@@ -849,6 +852,8 @@ export class Address {
   zone: Zone;
   phone: string;
   status = 0;
+  public longitude: number;
+  public latitude: number;
   type = 'Address';
 
   constructor() {
@@ -1458,7 +1463,6 @@ export class CompanyLocation {
   telephone: string;
   type = 'Location';
 }
-
 
 export class OrderHistory {
   id: number;
