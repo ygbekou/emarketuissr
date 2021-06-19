@@ -72,6 +72,9 @@ import { StoreIngredientComponent } from './SellerIngredients/StoreIngredient.co
 import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
 import { StoreMenuComponent } from './SellerMenus/StoreMenu.component';
 import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
+import { PurchaseOrderComponent } from './SellerPurchaseOrders/PurchaseOrder.component';
+import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.component';
+import { PurchaseOrderDetailsComponent } from './SellerPurchaseOrders/PurchaseOrderDetails.component';
 
 @NgModule({
   imports: [
@@ -168,7 +171,10 @@ import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
     StoreIngredientComponent,
     StoreIngredientsComponent,
     StoreMenuComponent,
-    StoreMenusComponent
+    StoreMenusComponent,
+    PurchaseOrderComponent,
+    PurchaseOrdersComponent,
+    PurchaseOrderDetailsComponent
   ],
   exports: [
     CardsComponent,

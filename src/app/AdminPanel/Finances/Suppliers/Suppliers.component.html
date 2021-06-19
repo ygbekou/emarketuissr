@@ -1,0 +1,87 @@
+<a mat-button [routerLink]="['/admin/finances/suppliers']">{{'COMMON.SUPPLIERS' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+
+
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+
+    <mat-tab-group class="table-tab-list" color="accent" [selectedIndex]="selected.value"
+               (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="{{'COMMON.SUPPLIERS' | translate}}">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="90" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
+            <a (click)="action = 'add'; messages = ''; selectSupplier(null)" mat-icon-button color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+            </a>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="supplierDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> ID
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.NAME' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="contact">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.CONTACT' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.contact}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.PHONE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.phone}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.EMAIL' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.ADDRESS' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let supplier"> {{supplier.address}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="supplierColumns"></tr>
+            <tr mat-row *matRowDef="let supplier; columns: supplierColumns;" (click)="selectSupplier(supplier.id)">
+            </tr>
+          </table>
+          <p *ngIf="supplierDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSize]="10" #MatPaginatorSupplier [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </mat-tab>
+
+
+      <mat-tab label="{{'COMMON.ADD' | translate}} / {{'COMMON.EDIT' | translate}}">
+        <app-supplier (saveEvent)="updateDataTable($event)"></app-supplier>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

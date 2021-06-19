@@ -61,6 +61,16 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin/finances',
+    name: 'Finances',
+    type: 'sub',
+    icon: 'account_balance',
+    children: [
+      { state: 'transactionTypes', name: 'Transaction Types', type: 'link' },
+      { state: 'suppliers', name: 'Suppliers', type: 'link' }
+    ]
+  },
+  {
     state: 'admin/system',
     name: 'System',
     type: 'sub',
@@ -137,6 +147,16 @@ const MENUITEMS_FR = [
     children: [
       { state: 'users', name: 'Utilisateurs', type: 'link' },
       { state: 'stores/list', name: 'Boutiques', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/finances',
+    name: 'Finances',
+    type: 'sub',
+    icon: 'account_balance',
+    children: [
+      { state: 'transactionTypes', name: 'Types de Transaction', type: 'link' },
+      { state: 'suppliers', name: 'Fournisseurs', type: 'link' }
     ]
   },
   {

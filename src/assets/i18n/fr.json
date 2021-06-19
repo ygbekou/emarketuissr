@@ -758,7 +758,16 @@
 		"LOW_INVENTORY": "Faible Niveau",
 		"INGREDIENT_WITH_LOW_INVENTORY": "Ingrédients avec de faibles stocks",
 		"MENU": "Menu",
-		"MENUS": "Menus"
+		"MENUS": "Menus",
+		"SUPPLIER": "Fournisseur",
+		"SUPPLIERS": "Fournisseurs",
+    "SELECT_PURCHASER": "Choisir acheteur",
+    "SELECT_SUPPLIER": "Choisir fournisseur",
+		"PURCHASE_DATE": "Date de commande",
+		"PURCHASE_ORDERS": "Commandes",
+		"TAXES": "Impots",
+		"IMAGE": "Image",
+		"PURCHASER": "Acheteur"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

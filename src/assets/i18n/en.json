@@ -757,7 +757,16 @@
 		"LOW_INVENTORY": "Low Inventory",
 		"INGREDIENT_WITH_LOW_INVENTORY": "Ingredients with low inventories",
 		"MENU": "Menu",
-		"MENUS": "Menus"
+		"MENUS": "Menus",
+		"SUPPLIER": "Supplier",
+		"SUPPLIERS": "Suppliers",
+		"SELECT_PURCHASER": "Select purchaser",
+    	"SELECT_SUPPLIER": "Select supplier",
+		"PURCHASE_DATE": "Purchase date",
+		"PURCHASE_ORDERS": "Purchase Orders",
+		"TAXES": "Taxes",
+		"IMAGE": "Image",
+		"PURCHASER": "Purchaser"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

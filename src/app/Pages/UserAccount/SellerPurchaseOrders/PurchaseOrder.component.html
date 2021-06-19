@@ -1,0 +1,146 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div fxLayout="row wrap" *ngIf="store?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+          type="submit" [disabled]="!f.form.valid">
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_PURCHASER' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="poHdr.purchaser" appearance="outline" name="purchaser" [compareWith]="compareObjects"
+            #purchaser="ngModel">
+            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
+              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && purchaser.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_SUPPLIER' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="poHdr.supplier" appearance="outline" name="store" [compareWith]="compareObjects"
+            #supplier="ngModel">
+            <mat-option *ngFor="let supplier of suppliers" [value]="supplier">
+              {{supplier.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && supplier.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}}</mat-label>
+          <input matInput [matDatepicker]="picker" class="form-control" id="poDate" [(ngModel)]="poHdr.poDate"
+            name="poDate" #poDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SUB_TOTAL' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="poHdr.subTotal" name="subTotal"
+            #subTotal="ngModel" required>
+          <mat-error *ngIf="f.submitted && subTotal.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.TAXES' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="taxes" [(ngModel)]="poHdr.taxes" name="taxes"
+            #taxes="ngModel">
+          <mat-error *ngIf="f.submitted && taxes.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.REBATE' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="discount" [(ngModel)]="poHdr.discount" name="discount"
+            #discount="ngModel">
+          <mat-error *ngIf="f.submitted && discount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.AMOUNT' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="poHdr.amount" name="amount"
+            #amount="ngModel">
+          <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="poHdr.description"
+            name="description" #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          [linkEnabled]="true">
+        </input-file>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-slide-toggle [(ngModel)]="poHdr.status" name="status" #status="ngModel" class="my-2">
+          {{ 'COMMON.ENABLE' | translate }}
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<div *ngIf="poHdr.id > 0">
+  <mat-tab-group (selectedTabChange)="changeTab($event)">
+    <mat-tab label="{{'COMMON.PRODUCT' | translate}}s">
+      <app-purchase-order-details #ProductsComponent></app-purchase-order-details>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
+    <app-purchase-order-details #IngredientsComponent></app-purchase-order-details>
+  </mat-tab>
+</mat-tab-group>

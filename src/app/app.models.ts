@@ -658,7 +658,7 @@ export class ZoneToGeoZone {
   deliveryTimeEnd: number;
   deliveryTimeUnit = '';
 
-  
+
   errors: string[];
   type = 'ZoneToGeoZone';
 
@@ -2011,9 +2011,9 @@ export class StoreShipper {
 }
 
 export class SalesSummary {
-	public id: number;
-	public store: Store;
-	public currency: Currency;
+  public id: number;
+  public store: Store;
+  public currency: Currency;
   public year: number;
   public month: number;
   public paymentMethod: string;
@@ -2043,12 +2043,12 @@ export class SalesSummary {
 export class SalesSummarySearchCriteria {
   id: number;
   year: number;
-	month: number;
-	currencyId: number;
-	currencyCode: string;
-	storeId: number;
-	storeName: string;
-	status: number;
+  month: number;
+  currencyId: number;
+  currencyCode: string;
+  storeId: number;
+  storeName: string;
+  status: number;
   paymentMethods: string[];
   userId: number;
   totalDueGreaterThan: number;
@@ -2058,9 +2058,9 @@ export class SalesSummarySearchCriteria {
 
 
 export class Payout {
-	public id: number;
-	public store: Store;
-	public currency: Currency;
+  public id: number;
+  public store: Store;
+  public currency: Currency;
   public year: number;
   public total: number;
   public image: string;
@@ -2090,28 +2090,28 @@ export class Payout {
 
 export class PayoutVO {
   id: number;
-	storeId: number;
-	storeName: string;
-	total: number;
-	year: number;
-	image: string;
-	proofPayoutId: string;
-	comment: string;
-	currencyCode: string;
-	currencyId: number;
-	currencySymbolLeft: string;
-	currencySymbolRight: string;
-	currencyDecimalPlace: number;
-	payoutDate: Date;
-	createDate: Date;
-	status: number;
+  storeId: number;
+  storeName: string;
+  total: number;
+  year: number;
+  image: string;
+  proofPayoutId: string;
+  comment: string;
+  currencyCode: string;
+  currencyId: number;
+  currencySymbolLeft: string;
+  currencySymbolRight: string;
+  currencyDecimalPlace: number;
+  payoutDate: Date;
+  createDate: Date;
+  status: number;
   reversePayoutId: number;
 
   constructor(payout: Payout) {
     this.id = payout.id;
-	  this.storeId = payout.store.id;
-	  this.storeName = payout.store.name;
-	  this.total = payout.total;
+    this.storeId = payout.store.id;
+    this.storeName = payout.store.name;
+    this.total = payout.total;
     this.year = payout.year;
     this.image = payout.image;
     this.proofPayoutId = payout.proofPayoutId;
@@ -2131,11 +2131,11 @@ export class PayoutVO {
 export class PayoutSearchCriteria {
   id: number;
   year: number;
-	currencyId: number;
-	currencyCode: string;
-	storeId: number;
-	storeName: string;
-	status: number;
+  currencyId: number;
+  currencyCode: string;
+  storeId: number;
+  storeName: string;
+  status: number;
   proofPayoutId: string[];
   userId: number;
   payoutDate: Date;
@@ -2175,7 +2175,7 @@ export class StoreIngredient {
   store: Store;
   ingredient: Ingredient;
   minimumQty: number;
-	maximumQty: number;
+  maximumQty: number;
   price: number;
   quantity: number;
   status = 1;
@@ -2198,7 +2198,7 @@ export class IngredientSearchCriteria {
   ingredientId: number;
   storeId: number;
   productStoreId: number;
-	languageId: number;
+  languageId: number;
   userId: number;
   ingredientName: string;
   status: number;
@@ -2289,7 +2289,7 @@ export class MenuSearchCriteria {
   storeId: number;
   productStoreId: number;
   storeMenuId: number;
-	languageId: number;
+  languageId: number;
   userId: number;
   menuName: string;
   status: number;
@@ -2313,4 +2313,113 @@ export class ProductStoreMenu {
   constructor() {
     this.menu = new ProductMenu();
   }
+}
+
+export class Supplier {
+  id: number;
+  name: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  status: number;
+
+  modifiedBy: number;
+
+  type = 'Supplier';
+}
+
+export class TransactionType {
+  id: number;
+  status: number;
+  transactionTypeDescriptions: TransactionTypeDescription[] = [];
+  name: string;
+
+  type = 'TransactionType';
+}
+
+export class TransactionTypeDescription {
+  id: number;
+  language: Language;
+  transactionType: TransactionType;
+  name: string;
+
+  type = 'TransactionTypeDescription';
+}
+
+export class PoHdr {
+  id: number;
+  store: Store;
+  purchaser: User;
+  supplier: Supplier;
+  poDate: Date;
+  subTotal: number;
+  taxes: number;
+  discount: number;
+  amount: number;
+  image: string;
+  description: string;
+  status: number;
+
+  storeName: string;
+  modifiedBy: number;
+
+  type = 'PoHdr';
+
+  constructor() {
+    this.purchaser = new User();
+    this.store = new Store();
+  }
+}
+
+export class PoDtl {
+  id: number;
+  poHdr: PoHdr;
+  product: Product;
+  ingredient: Ingredient;
+  unitAmount: number;
+  quantity: number;
+  totalAmount: number;
+  status: number;
+
+  productName: string;
+  ingredientName: string;
+  isTouched = false;
+  modifiedBy: number;
+
+  type = 'PoDtl';
+
+  constructor() {
+    this.poHdr = new PoHdr();
+    this.product = new Product();
+    this.ingredient = new Ingredient();
+  }
+}
+
+export class POSearchCriteria {
+
+  id: number;
+  storeId: number;
+  storeName: string;
+  purchaserId: number;
+  purchaserName: string;
+  supplierId: number;
+  supplierName: string;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  userId: number;
+  minAmount: number;
+  maxAmount: number;
+}
+
+export class StoreEmployee {
+  public id: number;
+  public store: Store;
+  public employee: User;
+  public status: number;
+  public role: number;
+  public beginDate: Date;
+  public endDate: Date;
+  public type = 'StoreEmployee';
 }

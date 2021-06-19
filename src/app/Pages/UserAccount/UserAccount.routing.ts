@@ -25,6 +25,7 @@ import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSumm
 import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
 import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
 import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
+import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -210,6 +211,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'store-menus',
             component: StoreMenusComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'purchase-orders',
+            component: PurchaseOrdersComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
