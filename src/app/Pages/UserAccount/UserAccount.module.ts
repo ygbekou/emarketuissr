@@ -75,6 +75,8 @@ import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
 import { PurchaseOrderComponent } from './SellerPurchaseOrders/PurchaseOrder.component';
 import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.component';
 import { PurchaseOrderDetailsComponent } from './SellerPurchaseOrders/PurchaseOrderDetails.component';
+import { TransactionComponent } from './SellerTransactions/Transaction.component';
+import { TransactionsComponent } from './SellerTransactions/Transactions.component';
 
 @NgModule({
   imports: [
@@ -174,7 +176,9 @@ import { PurchaseOrderDetailsComponent } from './SellerPurchaseOrders/PurchaseOr
     StoreMenusComponent,
     PurchaseOrderComponent,
     PurchaseOrdersComponent,
-    PurchaseOrderDetailsComponent
+    PurchaseOrderDetailsComponent,
+    TransactionComponent,
+    TransactionsComponent
   ],
   exports: [
     CardsComponent,

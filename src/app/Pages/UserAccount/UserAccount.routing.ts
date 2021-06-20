@@ -26,6 +26,7 @@ import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component'
 import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
 import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
 import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.component';
+import { TransactionsComponent } from './SellerTransactions/Transactions.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -219,6 +220,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'purchase-orders',
             component: PurchaseOrdersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'transactions',
+            component: TransactionsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

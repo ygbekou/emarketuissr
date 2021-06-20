@@ -160,7 +160,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
           }
         });
     } else {
-      this.setDatasource([]);
+      this.clear([]);
     }
   }
 

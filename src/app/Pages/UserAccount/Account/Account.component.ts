@@ -48,6 +48,7 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
       { name: 'Product ingredients', url: '/account/store-ingredients', icon: 'fastfood' },
       { name: 'Restaurant menu', url: '/account/store-menus', icon: 'restaurant_menu' },
+      { name: 'Transactions', url: '/account/transactions', icon: 'transaction' },
       { name: 'Purchase Orders', url: '/account/purchase-orders', icon: 'restaurant_menu' },
       { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
       { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
@@ -89,6 +90,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Ingredients des produits', url: '/account/store-ingredients', icon: 'fastfood' },
       { name: 'Menu restaurant', url: '/account/store-menus', icon: 'restaurant_menu' },
       { name: 'Commandes', url: '/account/purchase-orders', icon: 'restaurant_menu' },
+      { name: 'Transactions', url: '/account/transactions', icon: 'transaction' },
       { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' },
       { name: 'Zones d\'expedition', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'Etats', url: '/account/reports', icon: 'segment' }

@@ -1077,6 +1077,11 @@ export class AppService {
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
 
+      this.getAllByCriteria('TransactionTypeDescription', parameters, ' ')
+         .subscribe((data: any[]) => {
+            this.appInfoStorage.transactionTypes = data;
+         }, error => console.log(error),
+            () => console.log('Get transaction types complete'));
    }
 
    public getStoreCategories() {

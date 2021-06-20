@@ -1,0 +1,113 @@
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    
+ 
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font></mat-label>
+      <mat-select [(ngModel)]="selectedStore" appearance="outline" name="store"
+        (selectionChange)="storeSelected($event)">
+        <mat-option *ngFor="let store of stores" [value]="store">
+          {{store.name}} 
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+   
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
+      [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="{{'COMMON.PURCHASE_ORDERS' | translate}}">
+
+        <div fxLayout="row wrap">
+          <div fxFlex="50" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex="10" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
+            <a (click)="action = 'add'; messages = ''; getTransaction(null)" mat-icon-button color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+            </a>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="transactionsDatasource" matSort class="w-100">
+<!-- 
+                <ng-container matColumnDef="storeName">
+                  <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.STORE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let storeIngredient"> {{storeIngredient.storeName}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="transactionType">
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.TRANSACTION_TYPE' | translate}}</th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.transactionType.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="paidBy">
+                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.PAYER' | translate}}</th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.paidByName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="receiver">
+                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.RECEIVER' | translate}}</th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.receiverName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="transactionDate">
+                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.TRANSACTION_DATE' | translate}}</th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.transactionDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="salaryDate">
+                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.SALARY_DATE' | translate}}</th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.salaryDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.TOTAL' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let transaction"> {{transaction.amount}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef width="14%" mat-sort-header> Actions</th>
+                  <td mat-cell *matCellDef="let transaction"> 
+                    <a  mat-icon-button (click)="getTransaction(transaction)"
+                      color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
+                      <mat-icon>info</mat-icon>
+                    </a>
+                    &nbsp;&nbsp;
+                  </td>
+                </ng-container>
+
+              
+                <tr mat-header-row *matHeaderRowDef="transactionsColumns"></tr>
+                <tr mat-row *matRowDef="let transaction; columns: transactionsColumns;"></tr>
+              </table>
+              <p *ngIf="transactionsDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+            </div>
+            <mat-paginator #MatPaginatorTransactions [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+          
+        </div>
+     
+      </mat-tab>
+
+      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+        <app-transaction (translationSaveEvent)="updateDataTable($event)"></app-transaction>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+  
+</div>

@@ -774,7 +774,13 @@
 		"PURCHASE_ORDERS": "Commandes",
 		"TAXES": "Impots",
 		"IMAGE": "Image",
-		"PURCHASER": "Acheteur"
+		"PURCHASER": "Acheteur",
+		"TRANSACTION_TYPE": "Transaction Type",
+		"RECEIVER": "Destinataire",
+		"TRANSACTION_DATE": "Date de transaction",
+		"SALARY_DATE": "Date de salaire",
+		"SELECT_PAYER": "Choisir payeur",
+		"SELECT_RECEIVER": "Choisir récepteur"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

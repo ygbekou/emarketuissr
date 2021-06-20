@@ -773,7 +773,13 @@
 		"PURCHASE_ORDERS": "Purchase Orders",
 		"TAXES": "Taxes",
 		"IMAGE": "Image",
-		"PURCHASER": "Purchaser"
+		"PURCHASER": "Purchaser",
+		"TRANSACTION_TYPE": "Transaction Type",
+		"RECEIVER": "Receiver",
+		"TRANSACTION_DATE": "Transaction Date",
+		"SALARY_DATE": "Salary Date",
+		"SELECT_PAYER": "Select payer",
+		"SELECT_RECEIVER": "Select receiver"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
