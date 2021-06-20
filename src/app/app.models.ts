@@ -2458,6 +2458,8 @@ export class Transaction {
 export class TransactionSearchCriteria {
 
   id: number;
+  transactionId: number;
+  transactionTypeId: number;
   storeId: number;
   storeName: string;
   receiverId: number;

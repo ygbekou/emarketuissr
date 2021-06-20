@@ -15,7 +15,7 @@
    
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
-    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
+    <mat-tab-group class="table-tab-list" color="accent"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
       <mat-tab label="{{'COMMON.PURCHASE_ORDERS' | translate}}">
 
@@ -38,6 +38,7 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
             <div class="table-wrapper">
               <table mat-table [dataSource]="purchaseOrdersDatasource" matSort class="w-100">
 <!-- 
@@ -111,6 +112,98 @@
           
         </div>
      
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-card>
+              <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+                <div fxLayout="row wrap">
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                      <mat-icon>filter_alt</mat-icon>
+                    </button>
+                  </div>
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.SELECT_PURCHASER' | translate}} 
+                    </mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.purchaserId" appearance="fill" name="purchaser">
+                      <mat-option [value]="">
+                        
+                      </mat-option>
+                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
+                        {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.SELECT_SUPPLIER' | translate}}
+                    </mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.supplierId" appearance="fill" name="supplier">
+                      <mat-option [value]="">
+                        
+                      </mat-option>
+                      <mat-option *ngFor="let supplier of suppliers" [value]="supplier.id">
+                        {{supplier.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="fill">
+                    <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.status" name="status">
+                      <mat-option [value]="1">
+                          {{'COMMON.ACTIVE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="0">
+                        {{'COMMON.INACTIVE'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #beginDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.MIN_AMOUNT' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.minAmount"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.MAX_AMOUNT' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.maxAmount"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-card>
+          </div>
+        </div>
+
       </mat-tab>
 
       <mat-tab label="{{'COMMON.DETAILS' | translate}}">

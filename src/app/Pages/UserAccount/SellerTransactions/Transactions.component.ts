@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { StoreSearchCriteria, Store, Transaction, TransactionSearchCriteria } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, Transaction, TransactionSearchCriteria, StoreEmployee } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -45,6 +45,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   allStore = new Store();
   selected = new FormControl(0);
   selectedStore: Store;
+  storeEmployees: StoreEmployee[] = [];
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -92,6 +93,21 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
         () => console.log('Get all Stores complete'));
   }
 
+  public getMyStoreEmployees() {
+    if (this.searchCriteria.storeId) {
+      const parameters: string[] = [];
+      parameters.push('e.store.id = |sId|' + this.searchCriteria.storeId + '|Integer');
+      parameters.push('e.store.status = |storeStatus|1|Integer');
+      parameters.push('e.status = |employeeStatus|1|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
+        .subscribe((data: StoreEmployee[]) => {
+          this.storeEmployees = data;
+        },
+          (error) => console.log(error),
+          () => console.log('Get all StoreEmployees complete'));
+    }
+  }
+
   search() {
     if (this.button.endsWith('clear')) {
       this.clear();
@@ -106,7 +122,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
           this.transactionsDatasource.sort = this.transactionsSort;
         },
           error => console.log(error),
-          () => console.log('Get store menus complete'));
+          () => console.log('Get transactions complete'));
 
     }
   }
@@ -130,6 +146,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
         this.searchCriteria.storeId = this.selectedStore.id;
         this.search();
         this.selected.setValue(0);
+        this.getMyStoreEmployees();
 
         if (this.transactionComponent) {
           this.transactionComponent.store = event.value;

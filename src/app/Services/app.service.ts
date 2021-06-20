@@ -970,7 +970,7 @@ export class AppService {
    }
 
    public getCacheData() {
-      const parameters: string[] = [];
+      let parameters: string[] = [];
 
       this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
          .subscribe((data: Language[]) => {
@@ -1025,6 +1025,14 @@ export class AppService {
                   error => console.log(error),
                   () => console.log('Get Company complete'));
 
+            parameters.push('e.language.id = |langCode|' + this.appInfoStorage.language.id + '|Integer');
+            this.getAllByCriteria('TransactionTypeDescription', parameters, ' ')
+               .subscribe((data: any[]) => {
+                  this.appInfoStorage.transactionTypes = data;
+               }, error => console.log(error),
+                  () => console.log('Get transaction types complete'));
+            parameters = [];
+
          }, error => console.log(error),
             () => console.log('Get Languages complete'));
 
@@ -1076,12 +1084,6 @@ export class AppService {
             this.appInfoStorage.manufacturers = data;
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
-
-      this.getAllByCriteria('TransactionTypeDescription', parameters, ' ')
-         .subscribe((data: any[]) => {
-            this.appInfoStorage.transactionTypes = data;
-         }, error => console.log(error),
-            () => console.log('Get transaction types complete'));
    }
 
    public getStoreCategories() {

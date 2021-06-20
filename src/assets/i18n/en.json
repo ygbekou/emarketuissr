@@ -620,6 +620,8 @@
 		"FILTER": "Filter",
 		"MIN_TOTAL": "Min Total",
 		"MAX_TOTAL": "Max Total",
+		"MIN_AMOUNT": "Min Amount",
+		"MAX_AMOUNT": "Max Amount",
 		"ORDERS": "Orders",
 		"OVERRIDE": "Override",
 		"NOTIFY_CUSTOMER": "Notify Customer",

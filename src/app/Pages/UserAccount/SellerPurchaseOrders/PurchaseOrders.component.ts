@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { StoreSearchCriteria, Store, PoHdr, POSearchCriteria } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, PoHdr, POSearchCriteria, StoreEmployee, Supplier } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -45,6 +45,8 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
   allStore = new Store();
   selected = new FormControl(0);
   selectedStore: Store;
+  storeEmployees: StoreEmployee[] = [];
+  suppliers: Supplier[] = [];
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -71,14 +73,12 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
       this.searchCriteria.status = 1;
     }
     this.search();
+    this.getSuppliers();
   }
 
   private clear() {
     this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.searchCriteria = new POSearchCriteria();
-  }
-
-  changeOrderType(event) {
   }
 
   private getStores() {
@@ -90,6 +90,34 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
+  }
+
+  public getMyStoreEmployees() {
+    if (this.searchCriteria.storeId) {
+      const parameters: string[] = [];
+      parameters.push('e.store.id = |sId|' + this.searchCriteria.storeId + '|Integer');
+      parameters.push('e.store.status = |storeStatus|1|Integer');
+      parameters.push('e.status = |employeeStatus|1|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
+        .subscribe((data: StoreEmployee[]) => {
+          this.storeEmployees = data;
+        },
+          (error) => console.log(error),
+          () => console.log('Get all StoreEmployees complete'));
+    }
+  }
+
+  public getSuppliers() {
+    const parameters: string[] = [];
+    //parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
+    parameters.push('e.status = |supplierStatus|1|Integer');
+    this.appService.getAllByCriteria('Supplier', parameters, ' ')
+      .subscribe((data: Supplier[]) => {
+        this.suppliers = data;
+        console.log(this.suppliers);
+      },
+        (error) => console.log(error),
+        () => console.log('Get all Suppliers complete'));
   }
 
   search() {
@@ -106,7 +134,7 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
           this.purchaseOrdersDatasource.sort = this.purchaseOrdersSort;
         },
           error => console.log(error),
-          () => console.log('Get store menus complete'));
+          () => console.log('Get purchase orders complete'));
 
     }
   }
@@ -130,6 +158,7 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
         this.searchCriteria.storeId = this.selectedStore.id;
         this.search();
         this.selected.setValue(0);
+        this.getMyStoreEmployees();
 
         if (this.purchaseOrderComponent) {
           this.purchaseOrderComponent.store = event.value;

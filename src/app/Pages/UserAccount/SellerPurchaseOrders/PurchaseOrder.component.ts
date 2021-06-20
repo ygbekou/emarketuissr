@@ -90,35 +90,37 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
   setDatasource(data) {
-     setTimeout(() => {
-        const prdPoDtls = data.filter(poDtl => poDtl.product && poDtl.product.id > 0);
-        if (this.productsComponent) {
-          this.productsComponent.setDatasource(prdPoDtls);
-          this.productsComponent.getStoreProducts(this.store.id);
-          this.productsComponent.poHdr = this.poHdr;
-        }
+    setTimeout(() => {
+      const prdPoDtls = data.filter(poDtl => poDtl.product && poDtl.product.id > 0);
+      if (this.productsComponent) {
+        this.productsComponent.setDatasource(prdPoDtls);
+        this.productsComponent.getStoreProducts(this.store.id);
+        this.productsComponent.poHdr = this.poHdr;
+      }
 
-        const igdPoDtls = data.filter(poDtl => poDtl.ingredient && poDtl.ingredient.id > 0);
-        if (this.ingredientsComponent) {
-          this.ingredientsComponent.setDatasource(igdPoDtls);
-          this.ingredientsComponent.getStoreIngredients(this.store.id);
-          this.ingredientsComponent.poHdr = this.poHdr;
-        }
-      }, 500);
+      const igdPoDtls = data.filter(poDtl => poDtl.ingredient && poDtl.ingredient.id > 0);
+      if (this.ingredientsComponent) {
+        this.ingredientsComponent.setDatasource(igdPoDtls);
+        this.ingredientsComponent.getStoreIngredients(this.store.id);
+        this.ingredientsComponent.poHdr = this.poHdr;
+      }
+    }, 500);
   }
 
   public getMyStoreEmployees() {
-    const parameters: string[] = [];
-    parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
-    parameters.push('e.store.status = |storeStatus|1|Integer');
-    parameters.push('e.status = |employeeStatus|1|Integer');
-    this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
-      .subscribe((data: StoreEmployee[]) => {
-        this.storeEmployees = data;
-        console.log(this.storeEmployees);
-      },
-        (error) => console.log(error),
-        () => console.log('Get all StoreEmployees complete'));
+    if (this.store.id) {
+      const parameters: string[] = [];
+      parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
+      parameters.push('e.store.status = |storeStatus|1|Integer');
+      parameters.push('e.status = |employeeStatus|1|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
+        .subscribe((data: StoreEmployee[]) => {
+          this.storeEmployees = data;
+          console.log(this.storeEmployees);
+        },
+          (error) => console.log(error),
+          () => console.log('Get all StoreEmployees complete'));
+    }
   }
 
   public getSuppliers() {
@@ -146,8 +148,8 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
 
             const images: any[] = [];
             const image = {
-                link: 'assets/images/pohdrs/' + this.poHdr.id + '/' + this.poHdr.image,
-                preview: 'assets/images/pohdrs/' + this.poHdr.id + '/' + this.poHdr.image
+              link: 'assets/images/pohdrs/' + this.poHdr.id + '/' + this.poHdr.image,
+              preview: 'assets/images/pohdrs/' + this.poHdr.id + '/' + this.poHdr.image
             };
             images.push(image);
             this.picture = images;
@@ -180,14 +182,15 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
 
-  getStoreProducts() {    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
+  getStoreProducts() {
+    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
       + this.appService.appInfoStorage.language.id + '/' + this.store.id)
-      .subscribe((data: ProductDescription[]) => {
-        this.filteredProductOptions = data;
-        this.productOptions = data;
-      },
-        error => console.log(error),
-        () => console.log('Get all store product complete'));
+    .subscribe((data: ProductDescription[]) => {
+      this.filteredProductOptions = data;
+      this.productOptions = data;
+    },
+      error => console.log(error),
+      () => console.log('Get all store product complete'));
   }
 
 

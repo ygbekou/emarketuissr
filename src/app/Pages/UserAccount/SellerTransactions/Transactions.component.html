@@ -15,6 +15,7 @@
    
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
+    
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
       <mat-tab label="{{'COMMON.PURCHASE_ORDERS' | translate}}">
@@ -38,6 +39,7 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
             <div class="table-wrapper">
               <table mat-table [dataSource]="transactionsDatasource" matSort class="w-100">
 <!-- 
@@ -97,7 +99,103 @@
               <p *ngIf="transactionsDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
             <mat-paginator #MatPaginatorTransactions [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-          
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-card>
+              <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+                <div fxLayout="row wrap">
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                      <mat-icon>filter_alt</mat-icon>
+                    </button>
+                  </div>
+
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label> {{'COMMON.TRANSACTION_TYPE' | translate}} </mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.transactionTypeId" appearance="outline" name="transactionType">
+                      <mat-option *ngFor="let transactionTypeDesc of appService.appInfoStorage.transactionTypes"
+                          [value]="transactionTypeDesc.transactionType.id">
+                        {{transactionTypeDesc.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.SELECT_RECEIVER' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.receiverId" appearance="fill" name="receiver">
+                      <mat-option [value]="">
+                        
+                      </mat-option>
+                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
+                        {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.SELECT_PAYER' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.paidById" appearance="fill" name="paidBy">
+                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
+                        {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="fill">
+                    <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.status" name="status">
+                      <mat-option [value]="1">
+                          {{'COMMON.ACTIVE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="0">
+                        {{'COMMON.INACTIVE'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #beginDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.MIN_AMOUNT' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.minAmount"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.MAX_AMOUNT' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.maxAmount"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-card>
+          </div>
         </div>
      
       </mat-tab>

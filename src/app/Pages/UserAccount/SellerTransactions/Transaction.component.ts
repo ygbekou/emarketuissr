@@ -78,17 +78,18 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
   }
 
   public getMyStoreEmployees() {
-    const parameters: string[] = [];
-    parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
-    parameters.push('e.store.status = |storeStatus|1|Integer');
-    parameters.push('e.status = |employeeStatus|1|Integer');
-    this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
-      .subscribe((data: StoreEmployee[]) => {
-        this.storeEmployees = data;
-        console.log(this.storeEmployees);
-      },
-        (error) => console.log(error),
-        () => console.log('Get all StoreEmployees complete'));
+    if (this.store.id) {
+      const parameters: string[] = [];
+      parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
+      parameters.push('e.store.status = |storeStatus|1|Integer');
+      parameters.push('e.status = |employeeStatus|1|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
+        .subscribe((data: StoreEmployee[]) => {
+          this.storeEmployees = data;
+        },
+          (error) => console.log(error),
+          () => console.log('Get all StoreEmployees complete'));
+    }
   }
 
   getTransaction(transaction: Transaction) {
@@ -101,8 +102,8 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
             const images: any[] = [];
             const image = {
-                link: 'assets/images/transactions/' + this.transaction.id + '/' + this.transaction.image,
-                preview: 'assets/images/transactions/' + this.transaction.id + '/' + this.transaction.image
+              link: 'assets/images/transactions/' + this.transaction.id + '/' + this.transaction.image,
+              preview: 'assets/images/transactions/' + this.transaction.id + '/' + this.transaction.image
             };
             images.push(image);
             this.picture = images;
@@ -121,14 +122,15 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
   }
 
 
-  getStoreProducts() {    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
+  getStoreProducts() {
+    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
       + this.appService.appInfoStorage.language.id + '/' + this.store.id)
-      .subscribe((data: ProductDescription[]) => {
-        this.filteredProductOptions = data;
-        this.productOptions = data;
-      },
-        error => console.log(error),
-        () => console.log('Get all store product complete'));
+    .subscribe((data: ProductDescription[]) => {
+      this.filteredProductOptions = data;
+      this.productOptions = data;
+    },
+      error => console.log(error),
+      () => console.log('Get all store product complete'));
   }
 
 
