@@ -1,0 +1,115 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div fxLayout="row wrap" *ngIf="store?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+          type="submit" [disabled]="!f.form.valid">
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_PAYER' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="transaction.paidBy" appearance="outline" name="paidBy" [compareWith]="compareObjects"
+            #paidBy="ngModel">
+            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
+              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && paidBy.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.TRANSACTION_TYPE' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="transaction.transactionType" appearance="outline" name="transactionType" [compareWith]="compareObjects"
+            #transactionType="ngModel">
+            <mat-option *ngFor="let transactionTypeDesc of appService.appInfoStorage.transactionTypes" [value]="transactionTypeDesc.transactionType">
+              {{transactionTypeDesc.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && transactionType.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.TRANSACTION_DATE' | translate}}</mat-label>
+          <input matInput [matDatepicker]="picker" class="form-control" id="transactionDate" [(ngModel)]="transaction.transactionDate"
+            name="transactionDate" #transactionDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_RECEIVER' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="transaction.receiver" appearance="outline" name="receiver" [compareWith]="compareObjects"
+            #receiver="ngModel">
+            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
+              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && receiver.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.TOTAL' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="transaction.amount" name="amount"
+            #amount="ngModel" required>
+          <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="transaction.description"
+            name="description" #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          [linkEnabled]="true">
+        </input-file>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-slide-toggle [(ngModel)]="transaction.status" name="status" #status="ngModel" class="my-2">
+          {{ 'COMMON.ENABLE' | translate }}
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+  </div>
+</form>

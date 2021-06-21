@@ -620,8 +620,10 @@
     "LINK_PRODUCTS": "Produits Liés",
     "LINK_CATEGORIES": "Categories Liées",
     "FILTER": "Filtrer",
-    "MIN_TOTAL": "Min Total",
-    "MAX_TOTAL": "Max Total",
+    "MIN_TOTAL": "Total minimal",
+    "MAX_TOTAL": "Total maximal",
+    "MIN_AMOUNT": "Montant minimal",
+    "MAX_AMOUNT": "Montant maximal",
     "ORDERS": "Achats",
     "OVERRIDE": "Remplacer",
     "NOTIFY_CUSTOMER": "Notifier le client",
@@ -774,7 +776,13 @@
 		"PURCHASE_ORDERS": "Commandes",
 		"TAXES": "Impots",
 		"IMAGE": "Image",
-		"PURCHASER": "Acheteur"
+		"PURCHASER": "Acheteur",
+		"TRANSACTION_TYPE": "Transaction Type",
+		"RECEIVER": "Destinataire",
+		"TRANSACTION_DATE": "Date de transaction",
+		"SALARY_DATE": "Date de salaire",
+		"SELECT_PAYER": "Choisir payeur",
+		"SELECT_RECEIVER": "Choisir récepteur"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

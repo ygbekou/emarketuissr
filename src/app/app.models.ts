@@ -2427,3 +2427,49 @@ export class StoreEmployee {
   public endDate: Date;
   public type = 'StoreEmployee';
 }
+
+export class Transaction {
+  id: number;
+  transactionType: TransactionType;
+  store: Store;
+  paidBy: User;
+  receiver: User;
+  transactionDate: Date;
+  salaryDate: Date;
+  amount: number;
+  image: string;
+  description: string;
+  status: number;
+
+  storeName: string;
+  modifiedBy: number;
+  receiverName: string;
+  paidByName: string;
+
+  type = 'Transaction';
+
+  constructor() {
+    this.paidBy = new User();
+    this.receiver = new User();
+    this.store = new Store();
+  }
+}
+
+export class TransactionSearchCriteria {
+
+  id: number;
+  transactionId: number;
+  transactionTypeId: number;
+  storeId: number;
+  storeName: string;
+  receiverId: number;
+  receiverName: string;
+  paidById: number;
+  paidByName: string;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  userId: number;
+  minAmount: number;
+  maxAmount: number;
+}

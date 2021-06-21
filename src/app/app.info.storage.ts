@@ -30,6 +30,7 @@ export class AppInfoStorage {
   public footerMenus: Menu[] = [];
   public manufacturers: any = [];
   public attributeGroups: any = [];
+  public transactionTypes: any = [];
   public optionTypes: any = ['Select', 'Radio', 'Checkbox', 'Text', 'Textarea', 'Date', 'Time', 'Date & Time'];
   public optionPrefixes: any = ['+', '-'];
 

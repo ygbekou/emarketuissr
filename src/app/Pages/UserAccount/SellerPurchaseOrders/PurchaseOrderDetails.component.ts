@@ -126,14 +126,13 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
       poDtl.product = null;
     }
 
-    this.appService.save(poDtl, 'PoDtl')
+    this.appService.saveWithUrl('/service/finance/savePoDtl/', poDtl)
       .subscribe((data: PoDtl) => {
         this.processResult(data, poDtl, null);
         poDtl = data;
-        poDtl.isTouched = false;
       },
         error => console.log(error),
-        () => console.log('Save poDtl complete'));
+        () => console.log('Get all PoDtl complete'));
   }
 
   removePoDtl(poDtl: PoDtl, index: number) {
