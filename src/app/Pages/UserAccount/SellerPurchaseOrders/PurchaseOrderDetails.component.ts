@@ -13,9 +13,10 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
   templateUrl: './PurchaseOrderDetails.component.html',
   styleUrls: ['./PurchaseOrders.component.scss']
 })
+
 export class PurchaseOrderDetailsComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  poDtlColumns: string[] = ['image', 'productName', 'quantity', 'unitPrice', 'totalAmount', 'actions'];
+  poDtlColumns: string[] = ['id', 'image', 'productName', 'quantity', 'unitPrice', 'totalAmount', 'actions'];
   poDtlDatasource: MatTableDataSource<PoDtl>;
   @ViewChild('poDtlPaginator', { static: true }) poDtlPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) poDtlSort: MatSort;
@@ -27,8 +28,10 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
   ingredientOptions: IngredientDescription[];
   filteredIngredientOptions: IngredientDescription[];
 
-  poHdr: PoHdr;
+  poHdr: PoHdr = new PoHdr();
   poDtls: PoDtl[] = [];
+
+  saving = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -115,7 +118,8 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
     this.poDtlDatasource.sort = this.poDtlSort;
   }
 
-  savePoDtl(poDtl: PoDtl) {
+  savePoDtl(poDtl: PoDtl, index: number) {
+    this.saving = true;
     this.messages = '';
     poDtl.modifiedBy = +this.appService.tokenStorage.getUserId();
     poDtl.poHdr = this.poHdr;
@@ -128,8 +132,13 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
 
     this.appService.saveWithUrl('/service/finance/savePoDtl/', poDtl)
       .subscribe((data: PoDtl) => {
+        console.log(data);
         this.processResult(data, poDtl, null);
         poDtl = data;
+        poDtl.isTouched = false;
+        this.poDtlDatasource.data[index] = data;
+        this.setDatasource(this.poDtlDatasource.data);
+        this.saving = false;
       },
         error => console.log(error),
         () => console.log('Get all PoDtl complete'));
@@ -151,7 +160,6 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
           this.poDtlDatasource.data = Array.from(this.poDtlDatasource.data);
           this.setDatasource(this.poDtlDatasource.data);
       });
-   
   }
 
   validateSelectedProduct(poDtl: PoDtl) {

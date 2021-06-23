@@ -24,10 +24,10 @@ export interface SearchResponse {
 })
 export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
 
-  purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'subTotal', 'taxes', 'discount', 'amount', 'actions'];
+  purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
   purchaseOrdersDatasource: MatTableDataSource<PoHdr>;
-  @ViewChild('MatPaginatorPurchaseOrders', { static: true }) purchaseOrdersPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) purchaseOrdersSort: MatSort;
+  @ViewChild('MatPaginatorPurchaseOrders', { static: false }) purchaseOrdersPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) purchaseOrdersSort: MatSort;
 
 
   @ViewChild(PurchaseOrderComponent, { static: false }) purchaseOrderComponent: PurchaseOrderComponent;

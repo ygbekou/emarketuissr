@@ -99,9 +99,10 @@ export class TransactionTypeComponent extends BaseComponent implements OnInit {
       this.appService.save(thisTransactionType, 'TransactionType')
         .subscribe(result => {
           if (result.id > 0) {
-            this.transactionType.id = result.id;
             this.processResult(result, this.transactionType, null);
+            this.transactionType = {...result};
             this.saveEvent.emit(this.transactionType);
+            console.log(this.transactionType)
           }
         });
 

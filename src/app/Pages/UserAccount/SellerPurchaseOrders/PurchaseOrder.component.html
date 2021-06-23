@@ -1,15 +1,27 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner> 
+  </div>
+</div>
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          type="submit" [disabled]="!f.form.valid">
+          type="submit" [disabled]="!f.form.valid || poHdr.status === 2">
           <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
           <mat-icon>save</mat-icon>
         </button>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
         <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="secondary" (click)="submit()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
+          [disabled]="!poHdr.id || poHdr.status !== 1" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
+          <mat-icon>submit</mat-icon>
+        </button>
       </div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
@@ -53,9 +65,9 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}}</mat-label>
+          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}} <font color="red">*</font> </mat-label>
           <input matInput [matDatepicker]="picker" class="form-control" id="poDate" [(ngModel)]="poHdr.poDate"
-            name="poDate" #poDate="ngModel">
+            name="poDate" #poDate="ngModel" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -126,9 +138,19 @@
         </input-file>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-slide-toggle [(ngModel)]="poHdr.status" name="status" #status="ngModel" class="my-2">
-          {{ 'COMMON.ENABLE' | translate }}
-        </mat-slide-toggle>
+        <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="poHdr.status">
+          <mat-button-toggle [value]="0">
+            {{'COMMON.INACTIVE' | translate}}
+          </mat-button-toggle>
+          <mat-button-toggle [value]="1">
+            {{'COMMON.ACTIVE' | translate}}
+          </mat-button-toggle>
+          <mat-button-toggle [value]="2" [disabled]="true">
+            {{'COMMON.SUBMITTED' | translate}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
       </div>
     </div>
 

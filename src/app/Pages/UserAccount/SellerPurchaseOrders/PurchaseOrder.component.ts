@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, ProductStoreMenu, ProductToStore, PoDtl, PoHdr, ProductDescription, StoreEmployee, User, Supplier } from 'src/app/app.models';
+import { Store, ProductStoreMenu, PoDtl, PoHdr, ProductDescription, StoreEmployee, User, Supplier } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -46,7 +46,8 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   @Input() store = new Store();
   @Output() poHdrSaveEvent = new EventEmitter<any>();
 
-  selection;
+  saving = false;
+  justSubmitted = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -93,18 +94,18 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
     setTimeout(() => {
       const prdPoDtls = data.filter(poDtl => poDtl.product && poDtl.product.id > 0);
       if (this.productsComponent) {
+        this.productsComponent.poHdr = this.poHdr;
         this.productsComponent.setDatasource(prdPoDtls);
         this.productsComponent.getStoreProducts(this.store.id);
-        this.productsComponent.poHdr = this.poHdr;
       }
 
       const igdPoDtls = data.filter(poDtl => poDtl.ingredient && poDtl.ingredient.id > 0);
       if (this.ingredientsComponent) {
+        this.ingredientsComponent.poHdr = this.poHdr;
         this.ingredientsComponent.setDatasource(igdPoDtls);
         this.ingredientsComponent.getStoreIngredients(this.store.id);
-        this.ingredientsComponent.poHdr = this.poHdr;
       }
-    }, 500);
+    }, 1000);
   }
 
   public getMyStoreEmployees() {
@@ -205,6 +206,11 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
   save() {
+    if (this.justSubmitted) {
+      this.justSubmitted = false;
+      return;
+    }
+    this.saving = true;
     this.messages = '';
     this.poHdr.modifiedBy = +this.appService.tokenStorage.getUserId();
 
@@ -213,10 +219,9 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
     }
     this.setToggleValues();
 
-    let nbFiles = 0;
-    for (const img of this.picture) {
-      nbFiles++;
-      this.formData.append('file[]', img.file, 'picture.jpg');
+    this.formData = new FormData();
+    if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+      this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
     }
 
     this.appService.saveWithFile(this.poHdr, 'PoHdr', this.formData, 'saveWithFile')
@@ -225,9 +230,31 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         this.poHdr = data;
         this.poHdr.storeName = this.store.name;
         this.poHdrSaveEvent.emit(this.poHdr);
+        if (!this.poDtlDatasource || !this.poDtlDatasource.data) {
+          this.setDatasource([]);
+        }
+        this.saving = false;
       },
         error => console.log(error),
-        () => console.log('Save StoreMenu complete'));
+        () => console.log('Save PoHdr complete'));
+  }
+
+  submit() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.poHdr.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/submitPoHdr/', this.poHdr)
+      .subscribe((data: PoHdr) => {
+        console.log(data);
+        this.processResult(data, this.poHdr, null);
+        this.poHdr = data;
+        this.getPoDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Submit PoHrd complete'));
   }
 
   setToggleValues() {
@@ -236,19 +263,11 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
       || this.poHdr.status.toString() === '0') ? 0 : 1;
   }
 
-  isEmpty(value: string): boolean {
-    '';
-    const val = value !== null && value !== undefined ? value.trim() : '';
-
-    return val.length === 0;
-  }
-
   changeTab($event) {
-    console.log('Tab changed');
     if ($event.index === 0) {
-      this.ingredientsComponent.poDtlColumns[1] = 'productName';
+      this.ingredientsComponent.poDtlColumns[2] = 'productName';
     } else if ($event.index === 1) {
-      this.ingredientsComponent.poDtlColumns[1] = 'ingredientName';
+      this.ingredientsComponent.poDtlColumns[2] = 'ingredientName';
     }
   }
 

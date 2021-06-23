@@ -2363,7 +2363,7 @@ export class PoHdr {
   amount: number;
   image: string;
   description: string;
-  status: number;
+  status = 1;
 
   storeName: string;
   modifiedBy: number;
