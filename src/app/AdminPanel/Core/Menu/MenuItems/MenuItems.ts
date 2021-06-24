@@ -67,7 +67,8 @@ const MENUITEMS = [
     icon: 'account_balance',
     children: [
       { state: 'transactionTypes', name: 'Transaction Types', type: 'link' },
-      { state: 'suppliers', name: 'Suppliers', type: 'link' }
+      { state: 'suppliers', name: 'Suppliers', type: 'link' },
+      { state: 'bills', name: 'Billing', type: 'link' }
     ]
   },
   {
@@ -156,7 +157,8 @@ const MENUITEMS_FR = [
     icon: 'account_balance',
     children: [
       { state: 'transactionTypes', name: 'Types de Transaction', type: 'link' },
-      { state: 'suppliers', name: 'Fournisseurs', type: 'link' }
+      { state: 'suppliers', name: 'Fournisseurs', type: 'link' },
+      { state: 'bills', name: 'Facturation', type: 'link' }
     ]
   },
   {

@@ -77,7 +77,7 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
 
     this.appService.saveWithUrl('/service/catalog/getStoreIngredients', {
       languageId: +this.appService.appInfoStorage.language.id,
-      userId: storeId
+      storeId: storeId
     })
       .subscribe((data: any[]) => {
         console.log('les ingredients');

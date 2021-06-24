@@ -32,24 +32,30 @@ import {
   MatNativeDateModule,
   MatStepperModule,
   MatChipsModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from '../../Global/Global.module';
-import { UserAccountModule } from 'src/app/Pages/UserAccount/UserAccount.module';
 import { TransactionTypeComponent } from './TransactionType/TransactionType.component';
 import { TransactionTypesComponent } from './TransactionTypes/TransactionTypes.component';
 import { FinancesRoutes } from './Finances.routing';
 import { SupplierComponent } from './Suppliers/Supplier.component';
 import { SuppliersComponent } from './Suppliers/Suppliers.component';
+import { BillComponent } from './Billings/Bill.component';
+import { BillDetailsComponent } from './Billings/BillDetails.component';
+import { BillsComponent } from './Billings/Bills.component';
 
 @NgModule({
   declarations: [
     TransactionTypeComponent,
     TransactionTypesComponent,
     SupplierComponent,
-    SuppliersComponent
+    SuppliersComponent,
+    BillComponent,
+    BillDetailsComponent,
+    BillsComponent
   ],
   imports: [
     CommonModule,
@@ -64,6 +70,7 @@ import { SuppliersComponent } from './Suppliers/Suppliers.component';
     MatOptionModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatRadioModule,
     MatDividerModule,
@@ -74,7 +81,6 @@ import { SuppliersComponent } from './Suppliers/Suppliers.component';
     MatSortModule,
     MatGridListModule,
     GlobalModule,
-    UserAccountModule,
     FormsModule,
     MatTabsModule,
     ReactiveFormsModule,
@@ -113,6 +119,10 @@ import { SuppliersComponent } from './Suppliers/Suppliers.component';
       }
     })
 
+  ],
+
+  exports: [
+    BillsComponent
   ]
 })
 export class FinancesModule { }

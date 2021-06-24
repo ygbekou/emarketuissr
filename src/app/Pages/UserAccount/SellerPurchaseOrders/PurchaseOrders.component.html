@@ -113,7 +113,7 @@
 
               
                 <tr mat-header-row *matHeaderRowDef="purchaseOrdersColumns"></tr>
-                <tr mat-row *matRowDef="let storeMenu; columns: purchaseOrdersColumns;"></tr>
+                <tr mat-row *matRowDef="let poHdr; columns: purchaseOrdersColumns;"></tr>
               </table>
               <p *ngIf="purchaseOrdersDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
@@ -168,6 +168,9 @@
                       </mat-option>
                       <mat-option [value]="0">
                         {{'COMMON.INACTIVE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.SUBMITTED'|translate}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>

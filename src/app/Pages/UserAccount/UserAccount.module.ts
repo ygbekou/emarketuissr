@@ -77,6 +77,8 @@ import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.c
 import { PurchaseOrderDetailsComponent } from './SellerPurchaseOrders/PurchaseOrderDetails.component';
 import { TransactionComponent } from './SellerTransactions/Transaction.component';
 import { TransactionsComponent } from './SellerTransactions/Transactions.component';
+import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
+import { FinancesModule } from 'src/app/AdminPanel/Finances/Finances.module';
 
 @NgModule({
   imports: [
@@ -124,7 +126,7 @@ import { TransactionsComponent } from './SellerTransactions/Transactions.compone
     MatPaginatorModule,
     MatButtonToggleModule,
     ProductsModule,
-    SalesModule,
+    FinancesModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
@@ -178,7 +180,8 @@ import { TransactionsComponent } from './SellerTransactions/Transactions.compone
     PurchaseOrdersComponent,
     PurchaseOrderDetailsComponent,
     TransactionComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    SellerBillsComponent
   ],
   exports: [
     CardsComponent,

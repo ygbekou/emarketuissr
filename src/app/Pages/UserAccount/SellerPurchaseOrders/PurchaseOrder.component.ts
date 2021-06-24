@@ -16,10 +16,10 @@ import { PurchaseOrderDetailsComponent } from './PurchaseOrderDetails.component'
 })
 export class PurchaseOrderComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  poDtlColumns: string[] = ['image', 'productName', 'quantity', 'unitPrice', 'totalAmount', 'actions'];
-  poDtlDatasource: MatTableDataSource<PoDtl>;
-  @ViewChild('poDtlPaginator', { static: true }) poDtlPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) poDtlSort: MatSort;
+  // poDtlColumns: string[] = ['image', 'productName', 'quantity', 'unitPrice', 'totalAmount', 'actions'];
+  // poDtlDatasource: MatTableDataSource<PoDtl>;
+  // @ViewChild('poDtlPaginator', { static: true }) poDtlPaginator: MatPaginator;
+  // @ViewChild(MatSort, { static: true }) poDtlSort: MatSort;
 
   @ViewChild('ProductsComponent', { static: false }) productsComponent: PurchaseOrderDetailsComponent;
   @ViewChild('IngredientsComponent', { static: false }) ingredientsComponent: PurchaseOrderDetailsComponent;
@@ -27,11 +27,11 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   messages = '';
   poHdr: PoHdr = new PoHdr();
 
-  currentOption: string;
-  productOptions: ProductDescription[];
-  filteredProductOptions: ProductDescription[];
+  // currentOption: string;
+  // productOptions: ProductDescription[];
+  // filteredProductOptions: ProductDescription[];
 
-  storeProductMenu: ProductStoreMenu = new ProductStoreMenu();
+  // storeProductMenu: ProductStoreMenu = new ProductStoreMenu();
   storeEmployees: StoreEmployee[] = [];
   suppliers: Supplier[] = [];
   poDtls: PoDtl[] = [];
@@ -84,7 +84,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
 
   clear(data) {
     this.messages = '';
-    this.currentOption = '';
+    //this.currentOption = '';
     this.poHdr = new PoHdr();
     this.setDatasource([]);
     this.picture = [];
@@ -183,27 +183,27 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
 
-  getStoreProducts() {
-    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
-      + this.appService.appInfoStorage.language.id + '/' + this.store.id)
-    .subscribe((data: ProductDescription[]) => {
-      this.filteredProductOptions = data;
-      this.productOptions = data;
-    },
-      error => console.log(error),
-      () => console.log('Get all store product complete'));
-  }
+  // getStoreProducts() {
+  //   this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
+  //     + this.appService.appInfoStorage.language.id + '/' + this.store.id)
+  //   .subscribe((data: ProductDescription[]) => {
+  //     this.filteredProductOptions = data;
+  //     this.productOptions = data;
+  //   },
+  //     error => console.log(error),
+  //     () => console.log('Get all store product complete'));
+  // }
 
 
-  filterOptions(val) {
-    if (val) {
-      const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
-      this.filteredProductOptions = this.productOptions
-        .filter(productDesc => productDesc.name.toLowerCase().startsWith(filterValue));
-    } else {
-      this.filteredProductOptions = this.productOptions;
-    }
-  }
+  // filterOptions(val) {
+  //   if (val) {
+  //     const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
+  //     this.filteredProductOptions = this.productOptions
+  //       .filter(productDesc => productDesc.name.toLowerCase().startsWith(filterValue));
+  //   } else {
+  //     this.filteredProductOptions = this.productOptions;
+  //   }
+  // }
 
   save() {
     if (this.justSubmitted) {
@@ -230,9 +230,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         this.poHdr = data;
         this.poHdr.storeName = this.store.name;
         this.poHdrSaveEvent.emit(this.poHdr);
-        if (!this.poDtlDatasource || !this.poDtlDatasource.data) {
-          this.setDatasource([]);
-        }
+        this.getPoDtls();
         this.saving = false;
       },
         error => console.log(error),
@@ -265,7 +263,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
 
   changeTab($event) {
     if ($event.index === 0) {
-      this.ingredientsComponent.poDtlColumns[2] = 'productName';
+      this.productsComponent.poDtlColumns[2] = 'productName';
     } else if ($event.index === 1) {
       this.ingredientsComponent.poDtlColumns[2] = 'ingredientName';
     }
