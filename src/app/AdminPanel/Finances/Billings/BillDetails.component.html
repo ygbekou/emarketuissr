@@ -1,0 +1,109 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner> 
+  </div>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+    <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+    </div>
+  </div>
+</div>
+
+<table mat-table [dataSource]="billDtlDatasource" matSort class="w-100">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell width="5%" *matHeaderCellDef mat-sort-header> ID </th>
+    <td mat-cell *matCellDef="let billDtl"> {{billDtl.id}} </td>
+  </ng-container>
+
+  <!-- Image Column -->
+  <ng-container matColumnDef="image">
+    <th mat-header-cell width="5%" *matHeaderCellDef mat-sort-header> {{'COMMON.IMAGE' | translate}} </th>
+    <td mat-cell *matCellDef="let billDtl">
+      <img
+        [src]="'assets/images/products/'+(billDtl.product?.image?(billDtl.product.id+'/'+billDtl.product?.image):'default.png')"
+        [style.width.px]="25" class="d-block">
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="productName">
+    <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header> {{'COMMON.PRODUCT' | translate}}</th>
+    <td mat-cell *matCellDef="let billDtl" class="p-1">
+      <mat-form-field appearance="outline" class="w-100">
+        <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
+          [matAutocomplete]="auto" [(ngModel)]="billDtl.productName" required
+          (ngModelChange)="billDtl.isTouched = true; filterOptions(billDtl.productName)">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredProductOptions " (onSelectionChange)="billDtl.isTouched = true; 
+                  billDtl.product.id = option.product.id" [value]="option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-error *ngIf="billDtl.isTouched && !validateSelectedProduct(billDtl)" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+      </mat-error>
+    </td>
+  </ng-container>
+
+
+  <!-- Quantity Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
+    <td mat-cell *matCellDef="let billDtl">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <input type="text" aria-label="Number" name="quantity" matInput [(ngModel)]="billDtl.quantity" required
+          (ngModelChange)="billDtl.isTouched = true; calculateTotalAmount(billDtl);">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- Unit Price Column -->
+  <ng-container matColumnDef="unitPrice">
+    <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
+    <td mat-cell *matCellDef="let billDtl">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <input type="text" aria-label="Number" name="unitPrice" matInput [(ngModel)]="billDtl.unitAmount" required
+          (ngModelChange)="billDtl.isTouched = true; calculateTotalAmount(billDtl);">
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!-- Total Amount Column -->
+  <ng-container matColumnDef="totalAmount">
+    <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.TOTAL'|translate}} </th>
+    <td mat-cell *matCellDef="let billDtl"> {{billDtl.totalAmount}}
+    </td>
+  </ng-container>
+
+  <!--   Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cellwidth="20%" *matHeaderCellDef> Actions
+      <a (click)="addBillDtl()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}"  
+        [disabled]="bill.status === 0 || bill.status === 2">
+        <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+      </a>
+    </th>
+    <td mat-cell *matCellDef="let billDtl; let i = index">
+      <button mat-icon-button color="primary" (click)="saveBillDtl(billDtl, i)" matTooltip="{{'COMMON.SAVE' | translate}}"
+        [disabled]="!billDtl.isTouched || bill.status === 0 || bill.status === 2" class="remove">
+        <mat-icon>save</mat-icon>
+      </button>
+      &nbsp;&nbsp;
+      <button mat-icon-button color="warn" (click)="removeBillDtl(billDtl)" matTooltip="{{'COMMON.DELETE' | translate}}"
+        [disabled]="bill.status === 0 || bill.status === 2" class="remove">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="billDtlColumns"></tr>
+  <tr mat-row *matRowDef="let billDtl; columns: billDtlColumns;">
+  </tr>
+
+</table>
+<p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

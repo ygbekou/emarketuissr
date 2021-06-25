@@ -46,7 +46,7 @@ export class TransactionTypesComponent extends BaseComponent implements OnInit {
 
   public remove(ttDesc: TransactionTypeDescription) {
     this.messages = '';
-    this.appService.delete(ttDesc.transactionType.id, 'Menu')
+    this.appService.delete(ttDesc.transactionType.id, 'TransactionType')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
           const index: number = this.dataSource.data.indexOf(ttDesc);
@@ -85,8 +85,9 @@ export class TransactionTypesComponent extends BaseComponent implements OnInit {
           if (!this.dataSource.data) {
             this.dataSource.data = [];
           }
-          this.dataSource.data.push(transType.transactionTypeDescriptions[0]);
-          this.dataSource = new MatTableDataSource(this.dataSource.data);
+          // this.dataSource.data.push(transType.transactionTypeDescriptions[0]);
+          // this.dataSource = new MatTableDataSource(this.dataSource.data);
+          this.updateDatasourceData(this.dataSource, this.paginator, this.sort, transType.transactionTypeDescriptions[0]);
         }
     });
   }

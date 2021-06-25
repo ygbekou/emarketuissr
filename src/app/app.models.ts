@@ -2363,7 +2363,7 @@ export class PoHdr {
   amount: number;
   image: string;
   description: string;
-  status: number;
+  status = 1;
 
   storeName: string;
   modifiedBy: number;
@@ -2466,6 +2466,65 @@ export class TransactionSearchCriteria {
   receiverName: string;
   paidById: number;
   paidByName: string;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  userId: number;
+  minAmount: number;
+  maxAmount: number;
+}
+
+
+export class Bill {
+  id: number;
+  store: Store;
+  billDate: Date;
+  subTotal: number;
+  taxes: number;
+  discount: number;
+  amount: number;
+  image: string;
+  description: string;
+  status = 1;
+
+  storeName: string;
+  modifiedBy: number;
+
+  type = 'Bill';
+
+  constructor() {
+    this.store = new Store();
+  }
+}
+
+export class BillDtl {
+  id: number;
+  bill: Bill;
+  product: Product;
+  unitAmount: number;
+  quantity: number;
+  totalAmount: number;
+  status: number;
+
+  productName: string;
+  ingredientName: string;
+  isTouched = false;
+  modifiedBy: number;
+
+  type = 'BillDtl';
+
+  constructor() {
+    this.bill = new Bill();
+    this.product = new Product();
+  }
+}
+
+export class BillSearchCriteria {
+
+  id: number;
+  billId: number;
+  storeId: number;
+  storeName: string;
   status: number;
   beginDate: Date;
   endDate: Date;

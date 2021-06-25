@@ -90,6 +90,15 @@
                   <td mat-cell *matCellDef="let poHdr"> {{poHdr.amount}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>S</th>
+                  <td mat-cell *matCellDef="let poHdr"> 
+                    <span *ngIf="poHdr.status === 0" style="color: #FF0000">I</span>
+                    <span *ngIf="poHdr.status === 1" style="color: #0000FF">A</span>
+                    <span *ngIf="poHdr.status === 2" style="color: #00FF41">S</span>
+                  </td>
+                </ng-container>
+
 
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
@@ -104,11 +113,11 @@
 
               
                 <tr mat-header-row *matHeaderRowDef="purchaseOrdersColumns"></tr>
-                <tr mat-row *matRowDef="let storeMenu; columns: purchaseOrdersColumns;"></tr>
+                <tr mat-row *matRowDef="let poHdr; columns: purchaseOrdersColumns;"></tr>
               </table>
               <p *ngIf="purchaseOrdersDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
-            <mat-paginator #MatPaginatorStoreIngredients [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+            <mat-paginator #MatPaginatorPurchaseOrders [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
           
         </div>
      
@@ -159,6 +168,9 @@
                       </mat-option>
                       <mat-option [value]="0">
                         {{'COMMON.INACTIVE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.SUBMITTED'|translate}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>

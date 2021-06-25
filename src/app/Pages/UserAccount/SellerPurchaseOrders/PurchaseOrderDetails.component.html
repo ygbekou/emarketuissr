@@ -1,3 +1,16 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner> 
+  </div>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+    <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+    </div>
+  </div>
+</div>
+
 <table mat-table [dataSource]="poDtlDatasource" matSort class="w-100">
 
   <!-- ID Column -->
@@ -8,7 +21,7 @@
 
   <!-- Image Column -->
   <ng-container matColumnDef="image">
-    <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.IMAGE' | translate}} </th>
+    <th mat-header-cell width="5%" *matHeaderCellDef mat-sort-header> {{'COMMON.IMAGE' | translate}} </th>
     <td mat-cell *matCellDef="let poDtl">
       <img
         [src]="'assets/images/products/'+(poDtl.product?.image?(poDtl.product.id+'/'+poDtl.product?.image):'default.png')"
@@ -61,7 +74,7 @@
   <ng-container matColumnDef="quantity">
     <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
     <td mat-cell *matCellDef="let poDtl">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" style="width: 100%">
         <input type="text" aria-label="Number" name="quantity" matInput [(ngModel)]="poDtl.quantity" required
           (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);">
       </mat-form-field>
@@ -72,7 +85,7 @@
   <ng-container matColumnDef="unitPrice">
     <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
     <td mat-cell *matCellDef="let poDtl">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" style="width: 100%">
         <input type="text" aria-label="Number" name="unitPrice" matInput [(ngModel)]="poDtl.unitAmount" required
           (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);">
       </mat-form-field>
@@ -89,18 +102,19 @@
   <!--   Column -->
   <ng-container matColumnDef="actions">
     <th mat-header-cellwidth="20%" *matHeaderCellDef> Actions
-      <a (click)="addPoDtl()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+      <a (click)="addPoDtl()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}"  
+        [disabled]="poHdr.status === 0 || poHdr.status === 2">
         <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
       </a>
     </th>
-    <td mat-cell *matCellDef="let poDtl">
-      <button mat-icon-button color="primary" (click)="savePoDtl(poDtl)" matTooltip="{{'COMMON.SAVE' | translate}}"
-        [disabled]="!poDtl.isTouched || poDtl.id > 0" class="remove">
+    <td mat-cell *matCellDef="let poDtl; let i = index">
+      <button mat-icon-button color="primary" (click)="savePoDtl(poDtl, i)" matTooltip="{{'COMMON.SAVE' | translate}}"
+        [disabled]="!poDtl.isTouched || poHdr.status === 0 || poHdr.status === 2" class="remove">
         <mat-icon>save</mat-icon>
       </button>
       &nbsp;&nbsp;
       <button mat-icon-button color="warn" (click)="removePoDtl(poDtl)" matTooltip="{{'COMMON.DELETE' | translate}}"
-        [disabled]="poDtl.id > 0" class="remove">
+        [disabled]="poHdr.status === 0 || poHdr.status === 2" class="remove">
         <mat-icon>delete</mat-icon>
       </button>
     </td>

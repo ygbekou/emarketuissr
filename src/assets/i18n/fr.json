@@ -782,7 +782,10 @@
 		"TRANSACTION_DATE": "Date de transaction",
 		"SALARY_DATE": "Date de salaire",
 		"SELECT_PAYER": "Choisir payeur",
-		"SELECT_RECEIVER": "Choisir récepteur"
+		"SELECT_RECEIVER": "Choisir récepteur",
+		"TRANSACTIONS": "Transactions",
+		"BILLS": "Factures",
+		"BILL_DATE": "Date de facture"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

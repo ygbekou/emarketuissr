@@ -8,7 +8,7 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          type="submit" [disabled]="!f.form.valid || poHdr.status === 2">
+          type="submit" [disabled]="!f.form.valid || bill.status === 2">
           <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
           <mat-icon>save</mat-icon>
         </button>
@@ -18,7 +18,7 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="secondary" (click)="submit()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
-          [disabled]="!poHdr.id || poHdr.status !== 1" class="remove">
+          [disabled]="!bill.id || bill.status !== 1" class="remove">
           <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
           <mat-icon>submit</mat-icon>
         </button>
@@ -33,7 +33,7 @@
 
   <div fxLayout="row wrap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.SELECT_PURCHASER' | translate}} <font color="red">*</font>
           </mat-label>
@@ -62,12 +62,12 @@
         <mat-error *ngIf="f.submitted && supplier.invalid" severity="error">
           {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
         </mat-error>
-      </div>
+      </div> -->
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}} <font color="red">*</font> </mat-label>
-          <input matInput [matDatepicker]="picker" class="form-control" id="poDate" [(ngModel)]="poHdr.poDate"
-            name="poDate" #poDate="ngModel" required>
+          <mat-label> {{'COMMON.BILL_DATE' | translate}} <font color="red">*</font> </mat-label>
+          <input matInput [matDatepicker]="picker" class="form-control" id="billDate" [(ngModel)]="bill.billDate"
+            name="billDate" #billDate="ngModel" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -79,7 +79,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.SUB_TOTAL' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="poHdr.subTotal" name="subTotal"
+          <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="bill.subTotal" name="subTotal"
             #subTotal="ngModel" required>
           <mat-error *ngIf="f.submitted && subTotal.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -91,7 +91,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.TAXES' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="taxes" [(ngModel)]="poHdr.taxes" name="taxes"
+          <input matInput type="text" class="form-control" id="taxes" [(ngModel)]="bill.taxes" name="taxes"
             #taxes="ngModel">
           <mat-error *ngIf="f.submitted && taxes.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -103,7 +103,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.REBATE' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="discount" [(ngModel)]="poHdr.discount" name="discount"
+          <input matInput type="text" class="form-control" id="discount" [(ngModel)]="bill.discount" name="discount"
             #discount="ngModel">
           <mat-error *ngIf="f.submitted && discount.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -115,7 +115,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.AMOUNT' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="poHdr.amount" name="amount"
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="bill.amount" name="amount"
             #amount="ngModel">
           <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -128,7 +128,7 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="poHdr.description"
+          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="bill.description"
             name="description" #description="ngModel"></textarea>
         </mat-form-field>
       </div>
@@ -139,7 +139,7 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
-        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="poHdr.status">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="bill.status">
           <mat-button-toggle [value]="0">
             {{'COMMON.INACTIVE' | translate}}
           </mat-button-toggle>
@@ -157,12 +157,9 @@
   </div>
 </form>
 
-<div *ngIf="poHdr.id > 0">
+<div *ngIf="bill.id > 0">
   <mat-tab-group (selectedTabChange)="changeTab($event)">
     <mat-tab label="{{'COMMON.PRODUCT' | translate}}s">
-      <app-purchase-order-details #ProductsComponent></app-purchase-order-details>
-  </mat-tab>
-  <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
-    <app-purchase-order-details #IngredientsComponent></app-purchase-order-details>
+      <app-bill-details #ProductsComponent></app-bill-details>
   </mat-tab>
 </mat-tab-group>

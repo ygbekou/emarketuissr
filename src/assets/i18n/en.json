@@ -781,7 +781,10 @@
 		"TRANSACTION_DATE": "Transaction Date",
 		"SALARY_DATE": "Salary Date",
 		"SELECT_PAYER": "Select payer",
-		"SELECT_RECEIVER": "Select receiver"
+		"SELECT_RECEIVER": "Select receiver",
+		"TRANSACTIONS": "Transactions",
+		"BILLS": "Bills",
+		"BILL_DATE": "Bill Date"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { StoreSearchCriteria, Store, PoHdr, POSearchCriteria, StoreEmployee, Supplier } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, StoreEmployee, Supplier, Bill, BillSearchCriteria } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +9,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
-import { PurchaseOrderComponent } from './PurchaseOrder.component';
+import { BillComponent } from './Bill.component';
 
 export interface SearchResponse {
   document: string;
@@ -18,26 +18,26 @@ export interface SearchResponse {
 
 
 @Component({
-  selector: 'app-purchase-orders',
-  templateUrl: './PurchaseOrders.component.html',
-  styleUrls: ['./PurchaseOrders.component.scss']
+  selector: 'app-bills',
+  templateUrl: './Bills.component.html',
+  styleUrls: ['./Bills.component.scss']
 })
-export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
+export class BillsComponent extends BaseComponent implements OnInit {
 
-  purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
-  purchaseOrdersDatasource: MatTableDataSource<PoHdr>;
-  @ViewChild('MatPaginatorPurchaseOrders', { static: false }) purchaseOrdersPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) purchaseOrdersSort: MatSort;
+  billsColumns: string[] = ['billDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
+  billsDatasource: MatTableDataSource<Bill>;
+  @ViewChild('MatPaginatorBills', { static: false }) billsPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) billsSort: MatSort;
 
 
-  @ViewChild(PurchaseOrderComponent, { static: false }) purchaseOrderComponent: PurchaseOrderComponent;
+  @ViewChild(BillComponent, { static: false }) billComponent: BillComponent;
   messages = '';
   button = 'filter';
 
   @Input() userId: number;
   @Input() isAdminPage = false;
 
-  searchCriteria: POSearchCriteria = new POSearchCriteria();
+  searchCriteria: BillSearchCriteria = new BillSearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
   stores: Store[] = [];
   colors = ['primary', 'secondary'];
@@ -73,12 +73,11 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
       this.searchCriteria.status = 1;
     }
     this.search();
-    this.getSuppliers();
   }
 
   private clear() {
     this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
-    this.searchCriteria = new POSearchCriteria();
+    this.searchCriteria = new BillSearchCriteria();
   }
 
   private getStores() {
@@ -107,19 +106,6 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
     }
   }
 
-  public getSuppliers() {
-    const parameters: string[] = [];
-    //parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
-    parameters.push('e.status = |supplierStatus|1|Integer');
-    this.appService.getAllByCriteria('Supplier', parameters, ' ')
-      .subscribe((data: Supplier[]) => {
-        this.suppliers = data;
-        console.log(this.suppliers);
-      },
-        (error) => console.log(error),
-        () => console.log('Get all Suppliers complete'));
-  }
-
   search() {
     if (this.button.endsWith('clear')) {
       this.clear();
@@ -127,51 +113,50 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
 
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
 
-      this.appService.saveWithUrl('/service/finance/getPurchaseOrders', this.searchCriteria)
+      this.appService.saveWithUrl('/service/finance/getBills', this.searchCriteria)
         .subscribe((data: any[]) => {
-          this.purchaseOrdersDatasource = new MatTableDataSource(data);
-          this.purchaseOrdersDatasource.paginator = this.purchaseOrdersPaginator;
-          this.purchaseOrdersDatasource.sort = this.purchaseOrdersSort;
+          this.billsDatasource = new MatTableDataSource(data);
+          this.billsDatasource.paginator = this.billsPaginator;
+          this.billsDatasource.sort = this.billsSort;
         },
           error => console.log(error),
-          () => console.log('Get purchase orders complete'));
+          () => console.log('Get bills complete'));
 
     }
   }
 
   public applyFilter(filterValue: string) {
-    this.purchaseOrdersDatasource.filter = filterValue.trim().toLowerCase();
-    if (this.purchaseOrdersDatasource.paginator) {
-      this.purchaseOrdersDatasource.paginator.firstPage();
+    this.billsDatasource.filter = filterValue.trim().toLowerCase();
+    if (this.billsDatasource.paginator) {
+      this.billsDatasource.paginator.firstPage();
     }
 
   }
 
-  getPurchaseOrderDetails(poHdr: any) {
+  getBillDetails(bill: any) {
     this.selected.setValue(1);
-    this.purchaseOrderComponent.getPoHdr(poHdr);
+    this.billComponent.getBill(bill);
   }
 
   storeSelected(event) {
 
     setTimeout(() => {
-        this.searchCriteria.storeId = this.selectedStore.id;
-        this.search();
-        this.selected.setValue(0);
-        this.getMyStoreEmployees();
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
+      this.selected.setValue(0);
+      this.getMyStoreEmployees();
 
-        if (this.purchaseOrderComponent) {
-          this.purchaseOrderComponent.store = event.value;
-          this.purchaseOrderComponent.getMyStoreEmployees();
-          this.purchaseOrderComponent.getSuppliers();
-          //this.purchaseOrderComponent.getStoreProducts();
-          this.purchaseOrderComponent.clear([]);
-        }
-      }, 500);
+      if (this.billComponent) {
+        this.billComponent.store = event.value;
+        this.billComponent.getMyStoreEmployees();
+        this.billComponent.getSuppliers();
+        this.billComponent.clear([]);
+      }
+    }, 500);
   }
 
-  updateDataTable(poHdr: PoHdr) {
-    this.updateDatasourceData(this.purchaseOrdersDatasource, this.purchaseOrdersPaginator, this.purchaseOrdersSort, poHdr);
+  updateDataTable(bill: Bill) {
+    this.updateDatasourceData(this.billsDatasource, this.billsPaginator, this.billsSort, bill);
     this.selected.setValue(0);
   }
 }

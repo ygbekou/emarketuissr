@@ -15,11 +15,10 @@
    
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
-    
-    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
+    <mat-tab-group class="table-tab-list" color="accent"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-      <mat-tab label="{{'COMMON.TRANSACTIONS' | translate}}">
- 
+      <mat-tab label="{{'COMMON.BILLS' | translate}}">
+
         <div fxLayout="row wrap">
           <div fxFlex="50" fxFlex.gt-sm="50" class="p-3">
             <mat-form-field appearance="outline" class="w-100">
@@ -28,7 +27,7 @@
             </mat-form-field>
           </div>
           <div fxFlex="10" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
-            <a (click)="action = 'add'; messages = ''; getTransaction(null)" mat-icon-button color="primary"
+            <a (click)="action = 'add'; messages = ''; getBillDetails(null)" mat-icon-button color="primary"
               matTooltip="{{'COMMON.ADD' | translate}}">
               <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
             </a>
@@ -39,52 +38,54 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
             <div class="table-wrapper">
-              <table mat-table [dataSource]="transactionsDatasource" matSort class="w-100">
-<!-- 
-                <ng-container matColumnDef="storeName">
-                  <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.STORE' | translate}}
+              <table mat-table [dataSource]="billsDatasource" matSort class="w-100">
+
+                <ng-container matColumnDef="billDate">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.BILL_DATE' | translate}}
                   </th>
-                  <td mat-cell *matCellDef="let storeIngredient"> {{storeIngredient.storeName}} </td>
-                </ng-container> -->
-
-                <ng-container matColumnDef="transactionType">
-                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.TRANSACTION_TYPE' | translate}}</th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.transactionType.name}} </td>
+                  <td mat-cell *matCellDef="let bill"> {{bill.billDate | date:'mediumDate' : '' : translate.currentLang}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="paidBy">
-                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.PAYER' | translate}}</th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.paidByName}} </td>
+                <ng-container matColumnDef="subTotal">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SUB_TOTAL' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let bill"> {{bill.subTotal}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="receiver">
-                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.RECEIVER' | translate}}</th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.receiverName}} </td>
+                <ng-container matColumnDef="taxes">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TAXES' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let bill"> {{bill.taxes}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="transactionDate">
-                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.TRANSACTION_DATE' | translate}}</th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.transactionDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="salaryDate">
-                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.SALARY_DATE' | translate}}</th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.salaryDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
+                <ng-container matColumnDef="discount">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.REBATE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let bill"> {{bill.discount}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef width="12%" mat-sort-header> {{'COMMON.TOTAL' | translate}}
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.AMOUNT' | translate}}
                   </th>
-                  <td mat-cell *matCellDef="let transaction"> {{transaction.amount}} </td>
+                  <td mat-cell *matCellDef="let bill"> {{bill.amount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>S</th>
+                  <td mat-cell *matCellDef="let bill"> 
+                    <span *ngIf="bill.status === 0" style="color: #FF0000">I</span>
+                    <span *ngIf="bill.status === 1" style="color: #0000FF">A</span>
+                    <span *ngIf="bill.status === 2" style="color: #00FF41">S</span>
+                  </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef width="14%" mat-sort-header> Actions</th>
-                  <td mat-cell *matCellDef="let transaction"> 
-                    <a  mat-icon-button (click)="getTransaction(transaction)"
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
+                  <td mat-cell *matCellDef="let bill"> 
+                    <a  mat-icon-button (click)="getBillDetails(bill)"
                       color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
                       <mat-icon>info</mat-icon>
                     </a>
@@ -93,15 +94,16 @@
                 </ng-container>
 
               
-                <tr mat-header-row *matHeaderRowDef="transactionsColumns"></tr>
-                <tr mat-row *matRowDef="let transaction; columns: transactionsColumns;"></tr>
+                <tr mat-header-row *matHeaderRowDef="billsColumns"></tr>
+                <tr mat-row *matRowDef="let bill; columns: billsColumns;"></tr>
               </table>
-              <p *ngIf="transactionsDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+              <p *ngIf="billsDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
-            <mat-paginator #MatPaginatorTransactions [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-          </div>
-
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-paginator #MatPaginatorBills [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+          
+        </div>
+     
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
             <mat-card>
               <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 
@@ -114,37 +116,6 @@
                     </button>
                   </div>
 
-                  <mat-form-field appearance="fill" class="w-100">
-                    <mat-label> {{'COMMON.TRANSACTION_TYPE' | translate}} </mat-label>
-                    <mat-select [(ngModel)]="searchCriteria.transactionTypeId" appearance="outline" name="transactionType">
-                      <mat-option *ngFor="let transactionTypeDesc of appService.appInfoStorage.transactionTypes"
-                          [value]="transactionTypeDesc.transactionType.id">
-                        {{transactionTypeDesc.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label> {{'COMMON.SELECT_RECEIVER' | translate}}</mat-label>
-                    <mat-select [(ngModel)]="searchCriteria.receiverId" appearance="fill" name="receiver">
-                      <mat-option [value]="">
-                        
-                      </mat-option>
-                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
-                        {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                  <mat-form-field appearance="outline" class="w-100">
-                    <mat-label> {{'COMMON.SELECT_PAYER' | translate}}</mat-label>
-                    <mat-select [(ngModel)]="searchCriteria.paidById" appearance="fill" name="paidBy">
-                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
-                        {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
                   <mat-form-field class="w-100" appearance="fill">
                     <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
                     <mat-select [(ngModel)]="searchCriteria.status" name="status">
@@ -154,7 +125,11 @@
                       <mat-option [value]="0">
                         {{'COMMON.INACTIVE'|translate}}
                       </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.SUBMITTED'|translate}}
+                      </mat-option>
                     </mat-select>
+
                   </mat-form-field>
 
                   <mat-form-field class="w-100">
@@ -197,11 +172,11 @@
             </mat-card>
           </div>
         </div>
-     
+
       </mat-tab>
 
       <mat-tab label="{{'COMMON.DETAILS' | translate}}">
-        <app-transaction (translationSaveEvent)="updateDataTable($event)"></app-transaction>
+        <app-bill (billSaveEvent)="updateDataTable($event)"></app-bill>
       </mat-tab>
     </mat-tab-group>
   </div>
