@@ -809,6 +809,7 @@ export class Store extends BaseModel {
   maxDistance: number;
   useMenu: number;
   allowPickup: number;
+  flashPromo: string;
   type = 'Store';
   constructor() {
     super();

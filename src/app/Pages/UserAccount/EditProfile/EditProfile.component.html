@@ -388,388 +388,490 @@
 
 <mat-card *ngIf="type == 'store'">
   <form name="form" (ngSubmit)="f4.form.valid && submitStoreInfo()" #f4="ngForm" validate>
+
     <div fxLayout="row wrap" class="col-gap">
-
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-
         <h2 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE' | translate}}</h2>
       </div>
     </div>
+    <mat-tab-group class="table-tab-list" color="accent">
+      <mat-tab  label="{{'COMMON.STORE_INFO' | translate}}">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <div class="example-container">
+              <mat-form-field class="w-100 mb-3">
+                <mat-label>{{'COMMON.STORE_CATEGORY' | translate}}</mat-label>
+                <mat-select placeholder="{{'COMMON.STORE_CATEGORY' | translate}}" [compareWith]="compareObjects"
+                  id="storeCat" name="storecat" [(ngModel)]="store.storeCat" #storecat="ngModel" required>
+                  <mat-option *ngFor="let cat of appService.appInfoStorage.storeCategories" [value]="cat.storeCat">
+                    {{  cat.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-    <div fxLayout="row wrap" class="col-gap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="example-container">
-          <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_FRONT_IMG' | translate}}</h4>
-          <input-file [(ngModel)]="picture0" name="gallery0" #gallery0="ngModel" fileLimit="1" fileAccept="image/*"
-            [linkEnabled]="true">
-          </input-file>
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.STORE_CATEGORY' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.STORE_CATEGORY' | translate}}" [compareWith]="compareObjects"
-              id="storeCat" name="storecat" [(ngModel)]="store.storeCat" #storecat="ngModel" required>
-              <mat-option *ngFor="let cat of appService.appInfoStorage.storeCategories" [value]="cat.storeCat">
-                {{  cat.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+              <mat-form-field class="w-100 mb-3">
+                <mat-label> {{'COMMON.NAME' | translate}}
+                </mat-label>
+                <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
+                  #name="ngModel" required>
+                <mat-error *ngIf="f4.submitted && name.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
 
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.NAME' | translate}}
+              <mat-form-field class="w-100 mb-3">
+                <mat-label> {{'COMMON.EMAIL' | translate}}
+                </mat-label>
+                <input matInput type="text" class="form-control" id="email" [(ngModel)]="store.email" name="email"
+                  #email="ngModel" autocomplete="off" required email>
+                <mat-error *ngIf="f4.submitted && email.invalid && email.errors.required" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
+                <mat-error *ngIf="f4.submitted && email.invalid && email.errors.email" severity="error">
+                  {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100 mb-3">
+                <mat-label> {{'COMMON.PHONE' | translate}}
+                  {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
+                </mat-label>
+                <input matInput type="text" class="form-control" id="phone" [(ngModel)]="store.phone" name="phone"
+                  #phone="ngModel" required phone>
+                <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100 mb-3">
+
+                <mat-label> {{'COMMON.CELL_PHONE' | translate}}
+                  {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
+                </mat-label>
+
+                <input matInput type="text" class="form-control" id="cellPhone" [(ngModel)]="store.cellPhone"
+                  name="cellPhone" #cellPhone="ngModel" required phone>
+                <mat-error *ngIf="f4.submitted && cellPhone.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100 mb-3">
+                <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+                <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
+                  name="currency" [(ngModel)]="store.currency" #currency="ngModel" required>
+                  <mat-option *ngFor="let cat of currencies" [value]="cat">
+                    {{cat.code +' - '+ cat.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <div class="example-container">
+              <mat-form-field class="w-100 mb-3">
+                <mat-label>{{'COMMON.ADDRESS' | translate}}</mat-label>
+                <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" [compareWith]="compareObjects" id="address"
+                  name="address" [(ngModel)]="store.address" #address="ngModel" required>
+                  <mat-option *ngFor="let cat of addresses" [value]="cat">
+                    {{cat.city +', '+ cat.country.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <address class="mb-4" *ngIf="store.address">
+                {{store.address.address1}} {{store.address.address2}}<br>
+                {{store.address.city}}, {{store.address.zone?.name}} {{store.address.postCode}}<br>
+                {{store.address.country.name}}
+              </address>
+              <br />
+              <mat-form-field class="w-100 mb-3">
+                <mat-label>{{'COMMON.TIME_ZONE' | translate}}</mat-label>
+                <mat-select placeholder="{{'COMMON.TIME_ZONE' | translate}}" [compareWith]="compareObjects"
+                  id="timeZone" name="timeZone" [(ngModel)]="store.timeZone" #timeZone="ngModel" required>
+                  <mat-option *ngFor="let tz of timeZones" [value]="tz">
+                    {{  tz.description}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="w-100 mb-3">
+                <mat-label>{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}</mat-label>
+                <mat-select placeholder="{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}"
+                  [compareWith]="compareObjects" id="presentPreorderScreen" name="presentPreorderScreen"
+                  [(ngModel)]="store.presentPreorderScreen" #presentPreorderScreen="ngModel" required>
+                  <mat-option *ngFor="let presentPreorderScreen of presentPreorderScreens"
+                    [value]="presentPreorderScreen">
+                    {{presentPreorderScreen.description}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br />
+              <mat-form-field class="w-50 mb-3">
+                <mat-label> {{'COMMON.STORE_CODE' | translate}}
+                </mat-label>
+                <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+                  name="code" #code="ngModel" required>
+                <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+                  {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+              <button mat-fab color="warn" (click)="generateStoreCode()">
+                <mat-icon>cached</mat-icon>
+              </button>
+              <br/>
+              
+              <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
+                {{ 'COMMON.ENABLE' | translate }}
+              </mat-slide-toggle>
+              <div class="divider"></div>
+              <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
+                {{ 'COMMON.ONLINE_STORE' | translate }}
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-label>{{'COMMON.DESCRIPTION' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
-              #name="ngModel" required>
-            <mat-error *ngIf="f4.submitted && name.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
+            <quill-editor id="description" name="description" [(ngModel)]="store.description" #description="ngModel">
+            </quill-editor>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.MEDIA' | translate}}">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <div class="example-container">
+              <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_FRONT_IMG' | translate}}</h4>
+              <input-file [(ngModel)]="picture0" name="gallery0" #gallery0="ngModel" fileLimit="1" fileAccept="image/*"
+                [linkEnabled]="true">
+              </input-file>
+            </div>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <div class="example-container">
+              <h4 class="text-muted text-left fw-600 mb-3">Logo</h4>
+              <input-file [(ngModel)]="picture1" name="gallery1" #gallery1="ngModel" fileLimit="1" fileAccept="image/*"
+                [linkEnabled]="true">
+              </input-file>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.HOURS' | translate}}">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
+            <h4 color="primary">{{'COMMON.STORE_HOURS'|translate}}</h4>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart1"
+                [(ngModel)]="store.openTime1" name="delStart1" #delStart1="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd1"
+                [(ngModel)]="store.closeTime1" name="delEnd1" #delEnd1="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart2"
+                [(ngModel)]="store.openTime2" name="delStart2" #delStart2="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd2"
+                [(ngModel)]="store.closeTime2" name="delEnd2" #delEnd2="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart3"
+                [(ngModel)]="store.openTime3" name="delStart3" #delStart3="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd3"
+                [(ngModel)]="store.closeTime3" name="delEnd3" #delEnd3="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart4"
+                [(ngModel)]="store.openTime4" name="delStart4" #delStart4="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd4"
+                [(ngModel)]="store.closeTime4" name="delEnd4" #delEnd4="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart5"
+                [(ngModel)]="store.openTime5" name="delStart5" #delStart5="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd5"
+                [(ngModel)]="store.closeTime5" name="delEnd5" #delEnd5="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart6"
+                [(ngModel)]="store.openTime6" name="delStart6" #delStart6="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd6"
+                [(ngModel)]="store.closeTime6" name="delEnd6" #delEnd6="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
+            <h6 color="primary">{{'WEEKDAY.0'|translate}}</h6>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.START' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="00:00" class="form-control" id="delStart0"
+                [(ngModel)]="store.openTime0" name="delStart0" #delStart0="ngModel">
+            </mat-form-field>
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.END_S' | translate}}
+              </mat-label>
+              <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd0"
+                [(ngModel)]="store.closeTime0" name="delEnd0" #delEnd0="ngModel">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.SHIPPER' | translate}}s">
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+           <!--  <h2 class="text-muted text-left fw-600 mb-3">{{'COMMON.SHIPPER' | translate}}s</h2> -->
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
+              <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
+                id="shipper">
+                <mat-option *ngFor="let cat of shippers" [value]="cat" (click)="addShipper(cat)">
+                  {{  cat.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeShippers && storeShippers.length>0">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+            *ngFor="let storeShipper of storeShippers">
+            <div class="tile tile-primary">
+              <div class="tile-heading">{{storeShipper.shipper.name}}
+                <span class="pull-right">
+                  <mat-slide-toggle [(ngModel)]="storeShipper.storeStatus" class="my-2" name="storeStatus"
+                    #storeStatus="ngModel" (change)="changeShipper(storeShipper)">
+                    <i *ngIf="storeShipper.storeStatus===0" class="fa fa-spinner"></i>
+                    <i *ngIf="storeShipper.storeStatus===1" class="fa fa-check"></i>
+                    {{storeShipper.storeStatus===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}
+                  </mat-slide-toggle>
+                  <br />
+                </span>
+              </div>
+              <div class="tile-body">
+                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                    <img height="100%" *ngIf="storeShipper.shipper.user && storeShipper.shipper.user.image"
+                      src="assets/images/users/{{storeShipper.shipper.user.id}}/{{storeShipper.shipper.user.image}}">
 
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.EMAIL' | translate}}
-            </mat-label>
-            <input matInput type="text" class="form-control" id="email" [(ngModel)]="store.email" name="email"
-              #email="ngModel" autocomplete="off" required email>
-            <mat-error *ngIf="f4.submitted && email.invalid && email.errors.required" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
-            <mat-error *ngIf="f4.submitted && email.invalid && email.errors.email" severity="error">
-              {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
-          </mat-form-field>
+                    <img height="100%" *ngIf="!(storeShipper.shipper.user && storeShipper.shipper.user.image)"
+                      src="assets/images/users/user_blue.jpg">
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                    <span class="pull-left"><i class="fa fa-phone fa-sm"></i>
+                      {{storeShipper.shipper.user?storeShipper.shipper.user.mobilePhone:storeShipper.shipper.phone}}</span><br />
+                    <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{storeShipper.shipper.email}}</span>
+                    <br />
+                    <span class="pull-left">
+                      <i *ngIf="storeShipper.shipperStatus===0" class="fa fa-exclamation-circle"></i>
+                      <i *ngIf="storeShipper.shipperStatus===1" class="fa fa-check-circle"></i>
+                      {{storeShipper.shipperStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
+                    <!-- <div [innerHTML]="storeShipper.shipper?.description"></div> -->
+                    <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.DELIVERIES' | translate}} :
+                      {{storeShipper.shipper.deliveryCount}}
+                    </h4>
 
-          <mat-form-field class="w-100 mb-3">
-            <mat-label> {{'COMMON.PHONE' | translate}}
-              {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
-            </mat-label>
-            <input matInput type="text" class="form-control" id="phone" [(ngModel)]="store.phone" name="phone"
-              #phone="ngModel" required phone>
+                    <h6 class="text-muted text-left fw-600 mb-3">{{'COMMON.RATING' | translate}} :
+                      {{storeShipper.shipper.ratingCount}}
+                      {{'COMMON.REVIEW'|translate}}{{storeShipper.shipper.ratingCount > 0 ? 's ('+(storeShipper.shipper.rating/storeShipper.shipper.ratingCount |number:'1.0-1')+'/5)' : ''}}
+                    </h6>
+
+                  </div>
+                </div>
+              </div>
+              <div class="tile-footer">
+                <div fxLayout="row wrap" class="col-gap" *ngIf="storeShipper.shipCount==0">
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                    <!--  -->
+                  </div>
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                    <button mat-raised-button color="accent"
+                      (click)="deleteStoreShipper(storeShipper.id)">{{'COMMON.DELETE'|translate}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Configuration">
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>Longitude </mat-label>
+              <input matInput type="text" class="form-control" id="longitude" [(ngModel)]="store.longitude"
+                name="longitude" #longitude="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>Latitude </mat-label>
+              <input matInput type="text" class="form-control" id="latitude" [(ngModel)]="store.latitude"
+                name="latitude" #latitude="ngModel">
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.AUTO_LOCK_AFTER_X_PRT'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="lockAfterXPrint" [(ngModel)]="store.lockAfterXPrint"
+                name="lockAfterXPrint" #lockAfterXPrint="ngModel">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.MAXIMUM_DELIVERY_DISTANCE'|translate}} (km) </mat-label>
+              <input matInput type="text" class="form-control" id="maxDistance" [(ngModel)]="store.maxDistance"
+                name="maxDistance" #maxDistance="ngModel">
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="processingFeesPercentage"
+                [(ngModel)]="store.processingFeesPercentage" name="processingFeesPercentage"
+                #processingFeesPercentage="ngModel" min="0" max="100" [disabled]="!isAdminPage" required>
+            </mat-form-field>
             <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-100 mb-3">
-
-            <mat-label> {{'COMMON.CELL_PHONE' | translate}}
-              {{(store.address && store.address.country)? '(+'+store.address.country.code +')':''}}
-            </mat-label>
-
-            <input matInput type="text" class="form-control" id="cellPhone" [(ngModel)]="store.cellPhone"
-              name="cellPhone" #cellPhone="ngModel" required phone>
-            <mat-error *ngIf="f4.submitted && cellPhone.invalid" severity="error">
-              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
-              name="currency" [(ngModel)]="store.currency" #currency="ngModel" required>
-              <mat-option *ngFor="let cat of currencies" [value]="cat">
-                {{cat.code +' - '+ cat.title}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.ENABLE' | translate }}
-          </mat-slide-toggle>
-          <div class="divider"></div>
-          <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
-            {{ 'COMMON.ONLINE_STORE' | translate }}
-          </mat-slide-toggle>
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.PRESENT_PREORDER_SCREEN' | translate}}" [compareWith]="compareObjects"
-              id="presentPreorderScreen" name="presentPreorderScreen" [(ngModel)]="store.presentPreorderScreen"
-              #presentPreorderScreen="ngModel" required>
-              <mat-option *ngFor="let presentPreorderScreen of presentPreorderScreens" [value]="presentPreorderScreen">
-                {{presentPreorderScreen.description}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br />
-          <mat-form-field class="w-50 mb-3">
-            <mat-label> {{'COMMON.STORE_CODE' | translate}}
-            </mat-label>
-            <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
-              name="code" #code="ngModel" required>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.CASH_PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="cashProFeePercent"
+                [(ngModel)]="store.cashProFeePercent" name="cashProFeePercent" #cashProFeePercent="ngModel" min="0"
+                max="100" [disabled]="!isAdminPage" required>
+            </mat-form-field>
             <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
-          </mat-form-field>
-
-          <button mat-fab color="warn" (click)="generateStoreCode()">
-            <mat-icon>cached</mat-icon>
-          </button>
-
+          </div>
         </div>
-      </div>
 
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="example-container">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
 
-          <h4 class="text-muted text-left fw-600 mb-3">Logo</h4>
-          <input-file [(ngModel)]="picture1" name="gallery1" #gallery1="ngModel" fileLimit="1" fileAccept="image/*"
-            [linkEnabled]="true">
-          </input-file>
+             <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.FLASH_PROMO'|translate}}  </mat-label>
+              <input matInput type="text" class="form-control" id="flashPromo" [(ngModel)]="store.flashPromo"
+                name="flashPromo" #flashPromo="ngModel">
+            </mat-form-field>
 
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.ADDRESS' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" [compareWith]="compareObjects" id="address"
-              name="address" [(ngModel)]="store.address" #address="ngModel" required>
-              <mat-option *ngFor="let cat of addresses" [value]="cat">
-                {{cat.city +', '+ cat.country.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <address class="mb-4" *ngIf="store.address">
-            {{store.address.address1}} {{store.address.address2}}<br>
-            {{store.address.city}}, {{store.address.zone?.name}} {{store.address.postCode}}<br>
-            {{store.address.country.name}}
-          </address>
+            <mat-slide-toggle [(ngModel)]="store.sendSMSNewOrder" name="sendSMSNewOrder" #sendSMSNewOrder="ngModel"
+              class="my-2">
+              {{ 'COMMON.SEND_SMS_NEW_ORDER' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.sendSMSOrderCancel" name="sendSMSNewOrder"
+              #sendSMSOrderCancel="ngModel" class="my-2">
+              {{ 'COMMON.SEND_SMS_ORDER_CANCEL' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.sendSMSLowInventory" name="sendSMSLowInventory"
+              #sendSMSLowInventory="ngModel" class="my-2">
+              {{ 'COMMON.SEND_SMS_LOW_INVN' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.sendSMSShipper" name="sendSMSShipper" #sendSMSShipper="ngModel"
+              class="my-2">
+              {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
+            </mat-slide-toggle>
+            <br />
+          </div>
 
-          <br />
-          <mat-form-field class="w-100 mb-3">
-            <mat-label>{{'COMMON.TIME_ZONE' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.TIME_ZONE' | translate}}" [compareWith]="compareObjects" id="timeZone"
-              name="timeZone" [(ngModel)]="store.timeZone" #timeZone="ngModel" required>
-              <mat-option *ngFor="let tz of timeZones" [value]="tz">
-                {{  tz.description}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.sendSMSNewOrder" name="sendSMSNewOrder" #sendSMSNewOrder="ngModel"
-            class="my-2">
-            {{ 'COMMON.SEND_SMS_NEW_ORDER' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.sendSMSOrderCancel" name="sendSMSNewOrder" #sendSMSOrderCancel="ngModel"
-            class="my-2">
-            {{ 'COMMON.SEND_SMS_ORDER_CANCEL' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.sendSMSLowInventory" name="sendSMSLowInventory"
-            #sendSMSLowInventory="ngModel" class="my-2">
-            {{ 'COMMON.SEND_SMS_LOW_INVN' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.sendSMSShipper" name="sendSMSShipper" #sendSMSShipper="ngModel"
-            class="my-2">
-            {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <br />
-
-          <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel"
-            class="my-2">
-            {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash"
-            #acceptDeliveryCash="ngModel" class="my-2">
-            {{ 'COMMON.ACCEPT_DELIVERY_CASH' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.allowReopen" name="allowReopen" #allowReopen="ngModel" class="my-2">
-            {{ 'COMMON.ALLOW_TAB_REOPEN' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.autoUpload" name="autoUpload" #autoUpload="ngModel" class="my-2">
-            {{ 'COMMON.AUTO_UPLOAD_OFFLINE' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.useMenu" name="useMenu" #useMenu="ngModel" class="my-2">
-            {{ 'COMMON.DISPLAY_MENU_INSTEAD' | translate }}
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle [(ngModel)]="store.allowPickup" name="allowPickup" #allowPickup="ngModel" class="my-2">
-            {{ 'COMMON.ALLOW_PICKUP' | translate }}
-          </mat-slide-toggle>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel"
+              class="my-2">
+              {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.acceptDeliveryCash" name="acceptDeliveryCash"
+              #acceptDeliveryCash="ngModel" class="my-2">
+              {{ 'COMMON.ACCEPT_DELIVERY_CASH' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.allowReopen" name="allowReopen" #allowReopen="ngModel" class="my-2">
+              {{ 'COMMON.ALLOW_TAB_REOPEN' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.autoUpload" name="autoUpload" #autoUpload="ngModel" class="my-2">
+              {{ 'COMMON.AUTO_UPLOAD_OFFLINE' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.useMenu" name="useMenu" #useMenu="ngModel" class="my-2">
+              {{ 'COMMON.DISPLAY_MENU_INSTEAD' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.allowPickup" name="allowPickup" #allowPickup="ngModel" class="my-2">
+              {{ 'COMMON.ALLOW_PICKUP' | translate }}
+            </mat-slide-toggle>
+          </div>
         </div>
-      </div>
 
-    </div>
-    <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>Longitude </mat-label>
-          <input matInput type="text" class="form-control" id="longitude" [(ngModel)]="store.longitude" name="longitude"
-            #longitude="ngModel">
-        </mat-form-field>
-      </div>
-
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>Latitude </mat-label>
-          <input matInput type="text" class="form-control" id="latitude" [(ngModel)]="store.latitude" name="latitude"
-            #latitude="ngModel">
-        </mat-form-field>
-      </div>
-    </div>
-    <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.AUTO_LOCK_AFTER_X_PRT'|translate}} </mat-label>
-          <input matInput type="text" class="form-control" id="lockAfterXPrint" [(ngModel)]="store.lockAfterXPrint"
-            name="lockAfterXPrint" #lockAfterXPrint="ngModel">
-        </mat-form-field>
-      </div>
-
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.MAXIMUM_DELIVERY_DISTANCE'|translate}} (km) </mat-label>
-          <input matInput type="text" class="form-control" id="maxDistance" [(ngModel)]="store.maxDistance"
-            name="maxDistance" #maxDistance="ngModel">
-        </mat-form-field>
-      </div>
-
-    </div>
-    <div fxLayout="row wrap">
-
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
-          <input matInput type="text" class="form-control" id="processingFeesPercentage"
-            [(ngModel)]="store.processingFeesPercentage" name="processingFeesPercentage"
-            #processingFeesPercentage="ngModel" min="0" max="100" [disabled]="!isAdminPage" required>
-        </mat-form-field>
-        <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-          {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-        </mat-error>
-      </div>
-
-      <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.CASH_PROCESSING_FEES_PERCENTAGE'|translate}} </mat-label>
-          <input matInput type="text" class="form-control" id="cashProFeePercent" [(ngModel)]="store.cashProFeePercent"
-            name="cashProFeePercent" #cashProFeePercent="ngModel" min="0" max="100" [disabled]="!isAdminPage" required>
-        </mat-form-field>
-        <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-          {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-        </mat-error>
-      </div>
-
-    </div>
-
-    <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="33" class="p-3">
-        <h4 color="primary">{{'COMMON.STORE_HOURS'|translate}}</h4>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      </div>
-    </div>
-    <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.1'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart1"
-            [(ngModel)]="store.openTime1" name="delStart1" #delStart1="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd1"
-            [(ngModel)]="store.closeTime1" name="delEnd1" #delEnd1="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.2'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart2"
-            [(ngModel)]="store.openTime2" name="delStart2" #delStart2="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd2"
-            [(ngModel)]="store.closeTime2" name="delEnd2" #delEnd2="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.3'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart3"
-            [(ngModel)]="store.openTime3" name="delStart3" #delStart3="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd3"
-            [(ngModel)]="store.closeTime3" name="delEnd3" #delEnd3="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.4'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart4"
-            [(ngModel)]="store.openTime4" name="delStart4" #delStart4="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd4"
-            [(ngModel)]="store.closeTime4" name="delEnd4" #delEnd4="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.5'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart5"
-            [(ngModel)]="store.openTime5" name="delStart5" #delStart5="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd5"
-            [(ngModel)]="store.closeTime5" name="delEnd5" #delEnd5="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.6'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart6"
-            [(ngModel)]="store.openTime6" name="delStart6" #delStart6="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd6"
-            [(ngModel)]="store.closeTime6" name="delEnd6" #delEnd6="ngModel">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-sm="14" class="p-3">
-        <h6 color="primary">{{'WEEKDAY.0'|translate}}</h6>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.START' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="00:00" class="form-control" id="delStart0"
-            [(ngModel)]="store.openTime0" name="delStart0" #delStart0="ngModel">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.END_S' | translate}}
-          </mat-label>
-          <input matInput type="text" placeholder="23:59" class="form-control" id="delEnd0"
-            [(ngModel)]="store.closeTime0" name="delEnd0" #delEnd0="ngModel">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-        <mat-label>{{'COMMON.DESCRIPTION' | translate}}
-        </mat-label>
-        <quill-editor id="description" name="description" [(ngModel)]="store.description" #description="ngModel">
-        </quill-editor>
-      </div>
-    </div>
+      </mat-tab>
+    </mat-tab-group>
     <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
         <div class="text-left mt-2" fxFlex.gt-sm="25">
@@ -785,83 +887,6 @@
         </div>
         <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
           <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
-        </div>
-      </div>
-    </div>
-
-
-    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-        <h2 class="text-muted text-left fw-600 mb-3">{{'COMMON.SHIPPER' | translate}}s</h2>
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
-          <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
-            id="shipper">
-            <mat-option *ngFor="let cat of shippers" [value]="cat" (click)="addShipper(cat)">
-              {{  cat.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeShippers && storeShippers.length>0">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-        *ngFor="let storeShipper of storeShippers">
-        <div class="tile tile-primary">
-          <div class="tile-heading">{{storeShipper.shipper.name}}
-            <span class="pull-right">
-              <mat-slide-toggle [(ngModel)]="storeShipper.storeStatus" class="my-2" name="storeStatus"
-                #storeStatus="ngModel" (change)="changeShipper(storeShipper)">
-                <i *ngIf="storeShipper.storeStatus===0" class="fa fa-spinner"></i>
-                <i *ngIf="storeShipper.storeStatus===1" class="fa fa-check"></i>
-                {{storeShipper.storeStatus===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}
-              </mat-slide-toggle>
-              <br />
-            </span>
-          </div>
-          <div class="tile-body">
-            <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                <img height="100%" *ngIf="storeShipper.shipper.user && storeShipper.shipper.user.image"
-                  src="assets/images/users/{{storeShipper.shipper.user.id}}/{{storeShipper.shipper.user.image}}">
-
-                <img height="100%" *ngIf="!(storeShipper.shipper.user && storeShipper.shipper.user.image)"
-                  src="assets/images/users/user_blue.jpg">
-              </div>
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-                <span class="pull-left"><i class="fa fa-phone fa-sm"></i>
-                  {{storeShipper.shipper.user?storeShipper.shipper.user.mobilePhone:storeShipper.shipper.phone}}</span><br />
-                <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{storeShipper.shipper.email}}</span>
-                <br />
-                <span class="pull-left">
-                  <i *ngIf="storeShipper.shipperStatus===0" class="fa fa-exclamation-circle"></i>
-                  <i *ngIf="storeShipper.shipperStatus===1" class="fa fa-check-circle"></i>
-                  {{storeShipper.shipperStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
-                <!-- <div [innerHTML]="storeShipper.shipper?.description"></div> -->
-                <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.DELIVERIES' | translate}} :
-                  {{storeShipper.shipper.deliveryCount}}
-                </h4>
-
-                <h6 class="text-muted text-left fw-600 mb-3">{{'COMMON.RATING' | translate}} :
-                  {{storeShipper.shipper.ratingCount}}
-                  {{'COMMON.REVIEW'|translate}}{{storeShipper.shipper.ratingCount > 0 ? 's ('+(storeShipper.shipper.rating/storeShipper.shipper.ratingCount |number:'1.0-1')+'/5)' : ''}}
-                </h6>
-
-              </div>
-            </div>
-          </div>
-          <div class="tile-footer">
-            <div fxLayout="row wrap" class="col-gap" *ngIf="storeShipper.shipCount==0">
-              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                <!--  -->
-              </div>
-              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                <button mat-raised-button color="accent"
-                  (click)="deleteStoreShipper(storeShipper.id)">{{'COMMON.DELETE'|translate}}</button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
