@@ -6,6 +6,8 @@ import { TransactionTypeComponent } from './TransactionType/TransactionType.comp
 import { SuppliersComponent } from './Suppliers/Suppliers.component';
 import { SupplierComponent } from './Suppliers/Supplier.component';
 import { BillsComponent } from './Billings/Bills.component';
+import { ServicesComponent } from './Services/Services.component';
+import { ServiceComponent } from './Service/Service.component';
 
 export const FinancesRoutes: Routes = [
    {
@@ -51,6 +53,22 @@ export const FinancesRoutes: Routes = [
          {
             path: 'bills',
             component: BillsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'services',
+            component: ServicesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'service/:id',
+            component: ServiceComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']

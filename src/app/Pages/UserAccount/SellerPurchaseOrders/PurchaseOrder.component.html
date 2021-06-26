@@ -65,7 +65,7 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-form-field class="w-100">
-          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}} <font color="red">*</font> </mat-label>
+          <mat-label> {{'COMMON.PURCHASE_DATE' | translate}} </mat-label>
           <input matInput [matDatepicker]="picker" class="form-control" id="poDate" [(ngModel)]="poHdr.poDate"
             name="poDate" #poDate="ngModel" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -140,10 +140,10 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="poHdr.status">
-          <mat-button-toggle [value]="0">
+          <mat-button-toggle [value]="0" [disabled]="poHdr.status === 2">
             {{'COMMON.INACTIVE' | translate}}
           </mat-button-toggle>
-          <mat-button-toggle [value]="1">
+          <mat-button-toggle [value]="1"  [disabled]="poHdr.status === 2">
             {{'COMMON.ACTIVE' | translate}}
           </mat-button-toggle>
           <mat-button-toggle [value]="2" [disabled]="true">
@@ -161,8 +161,9 @@
   <mat-tab-group (selectedTabChange)="changeTab($event)">
     <mat-tab label="{{'COMMON.PRODUCT' | translate}}s">
       <app-purchase-order-details #ProductsComponent></app-purchase-order-details>
-  </mat-tab>
-  <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
-    <app-purchase-order-details #IngredientsComponent></app-purchase-order-details>
-  </mat-tab>
+    </mat-tab>
+    <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
+      <app-purchase-order-details #IngredientsComponent></app-purchase-order-details>
+    </mat-tab>
 </mat-tab-group>
+</div>

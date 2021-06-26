@@ -2501,13 +2501,14 @@ export class BillDtl {
   id: number;
   bill: Bill;
   product: Product;
+  service: Service;
   unitAmount: number;
   quantity: number;
   totalAmount: number;
   status: number;
 
   productName: string;
-  ingredientName: string;
+  serviceName: string;
   isTouched = false;
   modifiedBy: number;
 
@@ -2516,6 +2517,7 @@ export class BillDtl {
   constructor() {
     this.bill = new Bill();
     this.product = new Product();
+    this.service = new Service();
   }
 }
 
@@ -2531,4 +2533,23 @@ export class BillSearchCriteria {
   userId: number;
   minAmount: number;
   maxAmount: number;
+}
+
+
+export class Service {
+  id: number;
+  status: number;
+  serviceDescriptions: ServiceDescription[] = [];
+  name: string;
+
+  type = 'Service';
+}
+
+export class ServiceDescription {
+  id: number;
+  language: Language;
+  service: Service;
+  name: string;
+
+  type = 'ServiceDescription';
 }

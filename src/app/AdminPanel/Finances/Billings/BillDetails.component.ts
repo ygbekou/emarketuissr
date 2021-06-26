@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ProductDescription, Bill, BillDtl } from 'src/app/app.models';
+import { ProductDescription, Bill, BillDtl, Service, ServiceDescription } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -25,10 +25,13 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
   currentOption: string;
   productOptions: ProductDescription[];
   filteredProductOptions: ProductDescription[];
+  serviceOptions: ServiceDescription[];
+  filteredServiceOptions: ServiceDescription[];
 
   bill: Bill = new Bill();
   billDtls: BillDtl[] = [];
   saving = false;
+  services: Service[] = [];
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -69,6 +72,20 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
         () => console.log('Get all store product complete'));
   }
 
+  public getServices() {
+
+    const parameters: string[] = [];
+    parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
+    this.appService.getAllByCriteria('ServiceDescription', parameters)
+      .subscribe((data: ServiceDescription[]) => {
+        this.filteredServiceOptions = data;
+        this.serviceOptions = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all ServiceDescription complete'));
+
+
+  }
 
   filterOptions(val) {
     if (val) {
@@ -80,6 +97,15 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
     }
   }
 
+  filterServiceOptions(val) {
+    if (val) {
+      const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
+      this.filteredServiceOptions = this.serviceOptions
+        .filter(ingredienttDesc => ingredienttDesc.name.toLowerCase().startsWith(filterValue));
+    } else {
+      this.filteredServiceOptions = this.serviceOptions;
+    }
+  }
 
   addBillDtl() {
     this.messages = '';
@@ -94,6 +120,13 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
     this.messages = '';
     billDtl.modifiedBy = +this.appService.tokenStorage.getUserId();
     billDtl.bill = this.bill;
+
+    if (billDtl.product.id > 0) {
+      billDtl.service = null;
+    } else if (billDtl.service.id > 0) {
+      billDtl.product = null;
+    }
+
 
     this.appService.saveWithUrl('/service/finance/saveBillDtl/', billDtl)
       .subscribe((data: BillDtl) => {
@@ -145,6 +178,29 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
 
     if (!billDtl.product || !billDtl.product.id) {
       return false;
+    }
+
+    return true;
+  }
+
+  validateSelectedService(billDtl: BillDtl) {
+
+    if (typeof(billDtl.serviceName) === 'string' && this.serviceOptions) {
+        let index = this.serviceOptions.findIndex(x => x.name === billDtl.serviceName);
+        if (index === -1) {
+          index = this.billDtls.findIndex(x => x.id === billDtl.id);
+          if (index === -1) {
+              return false;
+          } else {
+              return true;
+          }
+        } else {
+          billDtl.service = this.serviceOptions[index].service;
+        }
+    }
+
+    if (!billDtl.service || !billDtl.service.id) {
+        return false;
     }
 
     return true;

@@ -46,6 +46,8 @@ import { SuppliersComponent } from './Suppliers/Suppliers.component';
 import { BillComponent } from './Billings/Bill.component';
 import { BillDetailsComponent } from './Billings/BillDetails.component';
 import { BillsComponent } from './Billings/Bills.component';
+import { ServiceComponent } from './Service/Service.component';
+import { ServicesComponent } from './Services/Services.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { BillsComponent } from './Billings/Bills.component';
     SuppliersComponent,
     BillComponent,
     BillDetailsComponent,
-    BillsComponent
+    BillsComponent,
+    ServiceComponent,
+    ServicesComponent
   ],
   imports: [
     CommonModule,

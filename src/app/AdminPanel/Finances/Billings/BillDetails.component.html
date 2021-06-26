@@ -50,6 +50,27 @@
   </ng-container>
 
 
+  <ng-container matColumnDef="serviceName">
+    <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header> {{'COMMON.SERVICE' | translate}}</th>
+    <td mat-cell *matCellDef="let billDtl" class="p-1">
+      <mat-form-field appearance="outline" class="w-100">
+        <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
+          [matAutocomplete]="auto" [(ngModel)]="billDtl.serviceName" required
+          (ngModelChange)="billDtl.isTouched = true; filterServiceOptions(billDtl.serviceName)">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredServiceOptions " (onSelectionChange)="billDtl.isTouched = true; 
+                  billDtl.service.id = option.service.id" [value]="option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>  
+      </mat-form-field>
+      <mat-error *ngIf="billDtl.isTouched && !validateSelectedService(billDtl)" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+      </mat-error>
+    </td>
+  </ng-container>
+
+
   <!-- Quantity Column -->
   <ng-container matColumnDef="quantity">
     <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>

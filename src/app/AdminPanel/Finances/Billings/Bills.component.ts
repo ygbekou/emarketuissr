@@ -149,7 +149,6 @@ export class BillsComponent extends BaseComponent implements OnInit {
       if (this.billComponent) {
         this.billComponent.store = event.value;
         this.billComponent.getMyStoreEmployees();
-        this.billComponent.getSuppliers();
         this.billComponent.clear([]);
       }
     }, 500);

@@ -16,11 +16,11 @@ import { BillDetailsComponent } from './BillDetails.component';
 export class BillComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   @ViewChild('ProductsComponent', { static: false }) productsComponent: BillDetailsComponent;
+  @ViewChild('ServicesComponent', { static: false }) servicesComponent: BillDetailsComponent;
 
   messages = '';
   bill: Bill = new Bill();
   storeEmployees: StoreEmployee[] = [];
-  suppliers: Supplier[] = [];
   billDtls: BillDtl[] = [];
 
   selectedPurchaser: User;
@@ -82,6 +82,14 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
         this.productsComponent.setDatasource(prdBillDtls);
         this.productsComponent.getStoreProducts(this.store.id);
       }
+
+      const serBillDtls = data.filter(billDtl => billDtl.service && billDtl.service.id > 0);
+      if (this.servicesComponent) {
+        this.servicesComponent.bill = this.bill;
+        this.servicesComponent.setDatasource(serBillDtls);
+        this.servicesComponent.getServices();
+      }
+
     }, 1000);
   }
 
@@ -100,20 +108,6 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
           () => console.log('Get all StoreEmployees complete'));
     }
   }
-
-  public getSuppliers() {
-    const parameters: string[] = [];
-    //parameters.push('e.store.id = |sId|' + this.store.id + '|Integer');
-    parameters.push('e.status = |supplierStatus|1|Integer');
-    this.appService.getAllByCriteria('Supplier', parameters, ' ')
-      .subscribe((data: Supplier[]) => {
-        this.suppliers = data;
-        console.log(this.suppliers);
-      },
-        (error) => console.log(error),
-        () => console.log('Get all Suppliers complete'));
-  }
-
 
   getBill(bill: Bill) {
     this.messages = '';
@@ -211,6 +205,8 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
   changeTab($event) {
     if ($event.index === 0) {
       this.productsComponent.billDtlColumns[2] = 'productName';
+    } else if ($event.index === 1) {
+      this.servicesComponent.billDtlColumns[2] = 'serviceName';
     }
   }
 

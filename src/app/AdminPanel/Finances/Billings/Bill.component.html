@@ -33,36 +33,6 @@
 
   <div fxLayout="row wrap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.SELECT_PURCHASER' | translate}} <font color="red">*</font>
-          </mat-label>
-          <mat-select [(ngModel)]="poHdr.purchaser" appearance="outline" name="purchaser" [compareWith]="compareObjects"
-            #purchaser="ngModel">
-            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
-              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-error *ngIf="f.submitted && purchaser.invalid" severity="error">
-          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
-        </mat-error>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.SELECT_SUPPLIER' | translate}} <font color="red">*</font>
-          </mat-label>
-          <mat-select [(ngModel)]="poHdr.supplier" appearance="outline" name="store" [compareWith]="compareObjects"
-            #supplier="ngModel">
-            <mat-option *ngFor="let supplier of suppliers" [value]="supplier">
-              {{supplier.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-error *ngIf="f.submitted && supplier.invalid" severity="error">
-          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
-        </mat-error>
-      </div> -->
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.BILL_DATE' | translate}} <font color="red">*</font> </mat-label>
@@ -140,10 +110,10 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
         <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="bill.status">
-          <mat-button-toggle [value]="0">
+          <mat-button-toggle [value]="0" [disabled]="bill.status === 2">
             {{'COMMON.INACTIVE' | translate}}
           </mat-button-toggle>
-          <mat-button-toggle [value]="1">
+          <mat-button-toggle [value]="1" [disabled]="bill.status === 2">
             {{'COMMON.ACTIVE' | translate}}
           </mat-button-toggle>
           <mat-button-toggle [value]="2" [disabled]="true">
@@ -161,5 +131,9 @@
   <mat-tab-group (selectedTabChange)="changeTab($event)">
     <mat-tab label="{{'COMMON.PRODUCT' | translate}}s">
       <app-bill-details #ProductsComponent></app-bill-details>
-  </mat-tab>
-</mat-tab-group>
+    </mat-tab>
+    <mat-tab label="{{'COMMON.SERVICE' | translate}}s">
+      <app-bill-details #ServicesComponent></app-bill-details>
+    </mat-tab>
+  </mat-tab-group>
+</div>

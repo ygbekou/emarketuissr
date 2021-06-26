@@ -80,8 +80,6 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
       storeId: storeId
     })
       .subscribe((data: any[]) => {
-        console.log('les ingredients');
-        console.log(data);
         this.filteredIngredientOptions = data;
         this.ingredientOptions = data;
       },

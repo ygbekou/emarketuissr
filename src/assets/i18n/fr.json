@@ -785,7 +785,8 @@
 		"SELECT_RECEIVER": "Choisir récepteur",
 		"TRANSACTIONS": "Transactions",
 		"BILLS": "Factures",
-		"BILL_DATE": "Date de facture"
+    "BILL_DATE": "Date de facture",
+    "SERVICE": "Service"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

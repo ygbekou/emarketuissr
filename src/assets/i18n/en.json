@@ -784,7 +784,8 @@
 		"SELECT_RECEIVER": "Select receiver",
 		"TRANSACTIONS": "Transactions",
 		"BILLS": "Bills",
-		"BILL_DATE": "Bill Date"
+		"BILL_DATE": "Bill Date",
+		"SERVICE": "Service"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
