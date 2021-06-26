@@ -7,6 +7,8 @@
 		"PER_PAGE":"Per page",
 		"OUT_OF": "out of",
 		"PER_KM":"Per km",
+		"STORE_INFO":"Store info",
+		"FLASH_PROMO":"Quick promo message",
 		"ALLOW_PICKUP": "Allow pickup",
 		 "RATE_PER_KM":"Cost per km",
     	"SHIPPING_WEIGHT_KM":"Shipping weight",

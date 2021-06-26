@@ -65,7 +65,6 @@ export class StoreMenusComponent extends BaseComponent implements OnInit {
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
-
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
     }

@@ -7,6 +7,8 @@
     "OUT_OF": "sur",
     "OR": "ou",
     "PER_KM":"Par km",
+    "FLASH_PROMO":"Message promo",
+    "STORE_INFO":"Info boutique",
     "ALLOW_PICKUP": "Autoriser le pickup",
     "RATE_PER_KM":"Prix par km",
     "SHIPPING_WEIGHT_KM":"Poids d'expédition",
