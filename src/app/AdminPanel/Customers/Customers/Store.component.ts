@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store, Currency } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { ActivatedRoute } from '@angular/router';
+import { StoreServicesComponent } from '../../Finances/StoreServices/StoreServices.component';
 
 @Component({
   selector: 'app-store',
   templateUrl: './Store.component.html'
 })
 export class StoreComponent extends BaseComponent implements OnInit {
+
+  @ViewChild(StoreServicesComponent, { static: false }) storeServiceComponent: StoreServicesComponent;
+
   messages = '';
   errors = '';
   formData: FormData;
   picture: any[] = [];
   currencies: Currency[] = [];
   store: Store;
+
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute) {
@@ -54,6 +59,7 @@ export class StoreComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           if (result.id > 0) {
             this.store = result;
+            this.storeServiceComponent.setStore(this.store);
             this.store.fileNames.forEach(item => {
               if (item === this.store.image) {
                 this.picture.push(
@@ -131,4 +137,6 @@ export class StoreComponent extends BaseComponent implements OnInit {
         () => console.log('Get all CategoryDescription complete'));
   }
 
+  changeTab($event) {
+  }
 }

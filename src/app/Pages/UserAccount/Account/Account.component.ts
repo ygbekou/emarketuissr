@@ -43,7 +43,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Sales summary', url: '/account/sales-summaries', icon: 'dashboard' },
+      { name: 'Payments', url: '/account/sales-summaries', icon: 'dashboard' },
       { name: 'Sales history', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
       { name: 'Product ingredients', url: '/account/store-ingredients', icon: 'fastfood' },
@@ -85,7 +85,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
       { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Sommaire des ventes', url: '/account/sales-summaries', icon: 'dashboard' },
+      { name: 'Payements', url: '/account/sales-summaries', icon: 'dashboard' },
       { name: 'Historique ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
       { name: 'Ingredients des produits', url: '/account/store-ingredients', icon: 'fastfood' },

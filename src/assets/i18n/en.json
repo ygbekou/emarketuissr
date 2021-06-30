@@ -787,7 +787,13 @@
 		"TRANSACTIONS": "Transactions",
 		"BILLS": "Bills",
 		"BILL_DATE": "Bill Date",
-		"SERVICE": "Service"
+		"SERVICE": "Service",
+		"BILL_RECUR": "Bill Recurrence",
+		"RENEWAL_RECUR": "Renewal Recurrence",
+		"MONTHLY": "Monthly",
+		"QUATERLY": "Quaterly",
+		"BIANNUAL": "Biannual",
+		"YEARLY": "Yearly"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

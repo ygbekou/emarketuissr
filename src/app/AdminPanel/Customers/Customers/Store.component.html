@@ -4,148 +4,152 @@
 <a mat-button color="gray">
   <h5>{{'COMMON.STORE' | translate}}</h5>
 </a>
-<form name="form" (ngSubmit)="f4.form.valid && submitStoreInfo()" #f4="ngForm" validate>
-  <div fxLayout="row wrap" class="col-gap">
+<mat-tab-group (selectedTabChange)="changeTab($event)">
+  <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+    <form name="form" (ngSubmit)="f4.form.valid && submitStoreInfo()" #f4="ngForm" validate>
+      <div fxLayout="row wrap" class="col-gap">
 
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <div class="example-container">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div class="example-container">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.NAME' | translate}}
+              </mat-label>
+              <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
+                #name="ngModel" required>
+              <mat-error *ngIf="f4.submitted && name.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
 
-        <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE' | translate}}</h4>
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.EMAIL' | translate}}
+              </mat-label>
+              <input matInput type="text" class="form-control" id="email" [(ngModel)]="store.email" name="email"
+                #email="ngModel" autocomplete="off" required email>
+              <mat-error *ngIf="f4.submitted && email.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
+              <mat-error *ngIf="f4.submitted && email.invalid" severity="error">
+                {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
+            </mat-form-field>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.NAME' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
-            #name="ngModel" required>
-          <mat-error *ngIf="f4.submitted && name.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.PHONE' | translate}}
+              </mat-label>
+              <input matInput type="text" class="form-control" id="phone" [(ngModel)]="store.phone" name="phone"
+                #phone="ngModel">
+              <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.EMAIL' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="email" [(ngModel)]="store.email" name="email"
-            #email="ngModel" autocomplete="off" required email>
-          <mat-error *ngIf="f4.submitted && email.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }} </mat-error>
-          <mat-error *ngIf="f4.submitted && email.invalid" severity="error">
-            {{ 'VALIDATION.EMAIL_INVALID' | translate }} </mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-100 mb-3">
+              <mat-label> {{'COMMON.SORT_ORDER' | translate}}
+              </mat-label>
+              <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="store.sortOrder"
+                name="sortOrder" #sortOrder="ngModel">
+              <mat-error *ngIf="f4.submitted && sortOrder.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.PHONE' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="phone" [(ngModel)]="store.phone" name="phone"
-            #phone="ngModel">
-          <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
+            <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
+              {{ 'COMMON.ENABLE' | translate }}
+            </mat-slide-toggle>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label> {{'COMMON.SORT_ORDER' | translate}}
-          </mat-label>
-          <input matInput type="text" class="form-control" id="sortOrder" [(ngModel)]="store.sortOrder" name="sortOrder"
-            #sortOrder="ngModel">
-          <mat-error *ngIf="f4.submitted && sortOrder.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-        </mat-form-field>
+            <mat-slide-toggle [(ngModel)]="store.aprvStatus" name="aprvStatus" #aprvStatus="ngModel" class="my-2">
+              {{ 'COMMON.APPROVE' | translate }}
+            </mat-slide-toggle>
 
-        <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
-          {{ 'COMMON.ENABLE' | translate }}
-        </mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="store.displayWeb" name="displayWeb" #displayWeb="ngModel" class="my-2">
+              {{ 'COMMON.DISPLAY_WEB' | translate }}
+            </mat-slide-toggle>
 
-        <mat-slide-toggle [(ngModel)]="store.aprvStatus" name="aprvStatus" #aprvStatus="ngModel" class="my-2">
-          {{ 'COMMON.APPROVE' | translate }}
-        </mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="store.displayMb" name="displayMb" #displayMb="ngModel" class="my-2">
+              {{ 'COMMON.DISPLAY_MB' | translate }}
+            </mat-slide-toggle>
 
-        <mat-slide-toggle [(ngModel)]="store.displayWeb" name="displayWeb" #displayWeb="ngModel" class="my-2">
-          {{ 'COMMON.DISPLAY_WEB' | translate }}
-        </mat-slide-toggle>
+            <mat-slide-toggle [(ngModel)]="store.allowExRcpt" name="allowExRcpt" #allowExRcpt="ngModel" class="my-2">
+              {{ 'COMMON.ALLOW_EX_RCPT' | translate }}
+            </mat-slide-toggle>
 
-        <mat-slide-toggle [(ngModel)]="store.displayMb" name="displayMb" #displayMb="ngModel" class="my-2">
-          {{ 'COMMON.DISPLAY_MB' | translate }}
-        </mat-slide-toggle>
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+              <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
+                name="currency" [(ngModel)]="store.currency" #currency="ngModel">
+                <mat-option *ngFor="let cur of currencies" [value]="cur">
+                  {{cur.code +' - '+ cur.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-        <mat-slide-toggle [(ngModel)]="store.allowExRcpt" name="allowExRcpt" #allowExRcpt="ngModel" class="my-2">
-          {{ 'COMMON.ALLOW_EX_RCPT' | translate }}
-        </mat-slide-toggle>
+          </div>
+        </div>
 
-        <mat-form-field class="w-100 mb-3">
-          <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
-          <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
-            name="currency" [(ngModel)]="store.currency" #currency="ngModel">
-            <mat-option *ngFor="let cur of currencies" [value]="cur">
-              {{cur.code +' - '+ cur.title}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div class="example-container">
+            <strong>
+              <mat-label> {{'COMMON.OWNER_NAME' | translate}}:</mat-label>
+              {{store.owner.firstName}} {{store.owner.middleName}} {{store.owner.lastName}}
+            </strong>
+            <br />
+            {{'COMMON.STORE_ADDRESS' | translate}}:
+            <address class="mb-4" *ngIf="store.address">
+              {{store.address.address1}} {{store.address.address2}}<br>
+              {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
+              {{store.address.country.name}}
+            </address>
+
+            <h4 class="text-muted text-left fw-600 mb-3"></h4>
+            <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+              [linkEnabled]="true">
+            </input-file>
+
+            <mat-form-field class="w-50 mb-3">
+              <mat-label> {{'COMMON.STORE_CODE' | translate}}
+              </mat-label>
+              <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
+                name="code" #code="ngModel">
+
+              <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+
+            </mat-form-field>
+            <button mat-fab color="warn" (click)="generateStoreCode()">
+              <mat-icon>cached</mat-icon>
+            </button>
+
+          </div>
+        </div>
 
       </div>
-    </div>
 
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-      <div class="example-container">
-        <strong>
-          <mat-label> {{'COMMON.OWNER_NAME' | translate}}:</mat-label>
-          {{store.owner.firstName}} {{store.owner.middleName}} {{store.owner.lastName}}
-        </strong>
-        <br />
-        {{'COMMON.STORE_ADDRESS' | translate}}:
-        <address class="mb-4" *ngIf="store.address">
-          {{store.address.address1}} {{store.address.address2}}<br>
-          {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
-          {{store.address.country.name}}
-        </address>
-
-        <h4 class="text-muted text-left fw-600 mb-3"></h4>
-        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
-          [linkEnabled]="true">
-        </input-file>
-
-        <mat-form-field class="w-50 mb-3">
-          <mat-label> {{'COMMON.STORE_CODE' | translate}}
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <mat-label>{{'COMMON.DESCRIPTION' | translate}}
           </mat-label>
-          <input matInput type="text" disabled="true" class="form-control" id="code" [(ngModel)]="store.code"
-            name="code" #code="ngModel">
-            
-          <mat-error *ngIf="f4.submitted && phone.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
-
-        </mat-form-field>
-        <button mat-fab color="warn" (click)="generateStoreCode()">
-          <mat-icon>cached</mat-icon>
-        </button>
-        
+          <quill-editor id="description" name="description" [(ngModel)]="store.description" #description="ngModel">
+          </quill-editor>
+        </div>
       </div>
-    </div>
-
-  </div>
-
-  <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-      <mat-label>{{'COMMON.DESCRIPTION' | translate}}
-      </mat-label>
-      <quill-editor id="description" name="description" [(ngModel)]="store.description" #description="ngModel">
-      </quill-editor>
-    </div>
-  </div>
-  <div fxLayout="row wrap">
-    <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-      <div class="text-left mt-2" fxFlex.gt-sm="25">
-        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-          <mat-icon>save</mat-icon>
-        </button> </div>
-      <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-        <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+              <mat-icon>save</mat-icon>
+            </button> </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
       </div>
-      <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
-        <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
-      </div>
-    </div>
-  </div>
-</form>
+    </form>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.SERVICE' | translate}}s">
+    <app-store-services #ServicesComponent></app-store-services>
+  </mat-tab>
+</mat-tab-group>

@@ -43,6 +43,7 @@ import { UserComponent } from './Customers/User.component';
 import { UserAccountModule } from 'src/app/Pages/UserAccount/UserAccount.module';
 import { StoresComponent } from './Customers/Stores.component';
 import { StoreComponent } from './Customers/Store.component';
+import { FinancesModule } from '../Finances/Finances.module';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { StoreComponent } from './Customers/Store.component';
     MatStepperModule,
     MatChipsModule,
     MatBadgeModule,
+    FinancesModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {

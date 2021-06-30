@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User, Address, Country, Zone, CreditCard, Store, Currency, TimeZone, PresentPreorderScreen, StoreShipper, Shipper } from 'src/app/app.models';
@@ -7,6 +7,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from "@angular/common";
+import { StoreServicesComponent } from 'src/app/AdminPanel/Finances/StoreServices/StoreServices.component';
 
 @Component({
    selector: 'app-edit-profile',
@@ -14,6 +15,9 @@ import { Location } from "@angular/common";
    styleUrls: ['./EditProfile.component.scss']
 })
 export class EditProfileComponent extends BaseComponent implements OnInit {
+
+   @ViewChild(StoreServicesComponent, { static: false }) storeServicesComponent: StoreServicesComponent;
+
    countries: Country[] = [];
    zones: Zone[] = [];
    user: User = new User();
@@ -43,6 +47,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
    emailPattern: any = /\S+@\S+\.\S+/;
    isAdminPage = false;
+   displaySaveButton = true;
 
    constructor(private route: ActivatedRoute,
       public appService: AppService,
@@ -348,11 +353,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.useMenu.toString() === 'false'
          || this.store.useMenu.toString() === '0') ? 0 : 1;
 
-            this.store.allowPickup = (this.store.allowPickup == null
+      this.store.allowPickup = (this.store.allowPickup == null
          || this.store.allowPickup.toString() === 'false'
          || this.store.allowPickup.toString() === '0') ? 0 : 1;
 
-       this.store.allowReopen = (this.store.allowReopen == null
+      this.store.allowReopen = (this.store.allowReopen == null
          || this.store.allowReopen.toString() === 'false'
          || this.store.allowReopen.toString() === '0') ? 0 : 1;
 
@@ -557,4 +562,16 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       return '';
    }
 
+   storeTabChanged($event) {
+      this.displaySaveButton = $event.index !== 5;
+      if ($event.index === 5) {
+         setTimeout(() => {
+            if (this.storeServicesComponent) {
+               this.storeServicesComponent.selectedStore.id = this.store.id;
+               this.storeServicesComponent.searchCriteria.storeId = this.store.id;
+               this.storeServicesComponent.search();
+            }
+         }, 500);
+      }
+   }
 }

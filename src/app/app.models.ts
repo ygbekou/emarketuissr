@@ -2554,3 +2554,45 @@ export class ServiceDescription {
 
   type = 'ServiceDescription';
 }
+
+export class StoreService {
+  id: number;
+  store: Store;
+  service: Service;
+  startDate: Date;
+  endDate: Date;
+  subTotal: number;
+  taxes: number;
+  discount: number;
+  amount: number;
+  description: string;
+  image: string;
+  status = 1;
+  billRecur: number;
+  renewalRecur: number;
+
+  storeName: string;
+  modifiedBy: number;
+
+  type = 'StoreService';
+
+  constructor() {
+    this.store = new Store();
+    this.service = new Service();
+  }
+}
+
+
+export class ServiceSearchCriteria {
+
+  id: number;
+  serviceId: number;
+  storeId: number;
+  storeName: string;
+  status: number;
+  beginStartDate: Date;
+  endStartDate: Date;
+  userId: number;
+  minAmount: number;
+  maxAmount: number;
+}

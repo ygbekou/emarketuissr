@@ -1,0 +1,204 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner> 
+  </div>
+</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div fxLayout="row wrap" *ngIf="store?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1" *ngIf="this.isAdminPage">
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+          type="submit" [disabled]="!f.form.valid || storeService.status === 2">
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
+      </div>
+      <!-- <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="secondary" (click)="submit()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
+          [disabled]="!storeService.id || storeService.status !== 1" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
+          <mat-icon>submit</mat-icon>
+        </button>
+      </div> -->
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SERVICE' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="storeService.service" appearance="outline" name="service" [compareWith]="compareObjects"
+            #service="ngModel">
+            <mat-option *ngFor="let serviceDesc of appService.appInfoStorage.services" [value]="serviceDesc.service">
+              {{serviceDesc.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && service.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.START_DATE' | translate}} <font color="red">*</font> </mat-label>
+          <input matInput [matDatepicker]="startDatePicker" class="form-control" id="startDate" [(ngModel)]="storeService.startDate"
+            name="startDate" #startDate="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.END_DATE' | translate}} <font color="red">*</font> </mat-label>
+          <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate" [(ngModel)]="storeService.endDate"
+            name="endDate" #endDate="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SUB_TOTAL' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="storeService.subTotal" name="subTotal"
+            #subTotal="ngModel" required>
+          <mat-error *ngIf="f.submitted && subTotal.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.TAXES' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="taxes" [(ngModel)]="storeService.taxes" name="taxes"
+            #taxes="ngModel">
+          <mat-error *ngIf="f.submitted && taxes.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.REBATE' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="discount" [(ngModel)]="storeService.discount" name="discount"
+            #discount="ngModel">
+          <mat-error *ngIf="f.submitted && discount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.AMOUNT' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="storeService.amount" name="amount"
+            #amount="ngModel">
+          <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="storeService.description"
+            name="description" #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          [linkEnabled]="true">
+        </input-file>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="storeService.status">
+          <mat-button-toggle [value]="0" [disabled]="storeService.status === 2">
+            {{'COMMON.INACTIVE' | translate}}
+          </mat-button-toggle>
+          <mat-button-toggle [value]="1" [disabled]="storeService.status === 2">
+            {{'COMMON.ACTIVE' | translate}}
+          </mat-button-toggle>
+          <mat-button-toggle [value]="2" [disabled]="true">
+            {{'COMMON.SUBMITTED' | translate}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.BILL_RECUR' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="storeService.billRecur" appearance="outline" name="billRecur" #billRecur="ngModel">
+            <mat-option [value]="1">
+              {{'COMMON.MONTHLY' | translate}}
+            </mat-option>
+            <mat-option [value]="2">
+              {{'COMMON.QUATERLY' | translate}}
+            </mat-option>
+            <mat-option [value]="3">
+              {{'COMMON.BIANNUAL' | translate}}
+            </mat-option>
+            <mat-option [value]="4">
+              {{'COMMON.YEARLY' | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && billRecur.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.RENEWAL_RECUR' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [(ngModel)]="storeService.renewalRecur" appearance="outline" name="renewalRecur" #renewalRecur="ngModel">
+            <mat-option [value]="1">
+              {{'COMMON.MONTHLY' | translate}}
+            </mat-option>
+            <mat-option [value]="2">
+              {{'COMMON.QUATERLY' | translate}}
+            </mat-option>
+            <mat-option [value]="3">
+              {{'COMMON.BIANNUAL' | translate}}
+            </mat-option>
+            <mat-option [value]="4">
+              {{'COMMON.YEARLY' | translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="f.submitted && renewalRecur.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error>
+      </div>
+    </div>
+
+  </div>
+</form>

@@ -1031,6 +1031,13 @@ export class AppService {
                   this.appInfoStorage.transactionTypes = data;
                }, error => console.log(error),
                   () => console.log('Get transaction types complete'));
+
+            this.getAllByCriteria('ServiceDescription', parameters, ' ')
+               .subscribe((data: any[]) => {
+                  this.appInfoStorage.services = data;
+               }, error => console.log(error),
+                  () => console.log('Get services complete'));
+
             parameters = [];
 
          }, error => console.log(error),
