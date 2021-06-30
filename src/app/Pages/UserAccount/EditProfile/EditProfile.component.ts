@@ -482,8 +482,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    }
 
    storeTabChanged($event) {
-      this.displaySaveButton = $event.index !== 5;
-      if ($event.index === 5) {
+      this.displaySaveButton = $event.index !== 4;
+      if ($event.index === 4) {
          setTimeout(() => {
             if (this.storeServicesComponent) {
                this.storeServicesComponent.selectedStore.id = this.store.id;
