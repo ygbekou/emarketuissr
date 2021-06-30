@@ -893,6 +893,7 @@
     "MESSAGE_REQUIRED": "Message requis",
     "EMAIL_REQUIRED": "E-mail requis",
     "NAME_REQUIRED": "Le nom est requis",
+    "START_FIELD_REQUIRED": "Les champs marqués d'une étoile (*) sont requis",
     "INVALID_PHONE":"Numero de telephone invalide",
     "EMAIL_USED": "Cet E-mail est déjàutilisé",
     "PASSWORD_REQUIRED": "Mot de passe requis",

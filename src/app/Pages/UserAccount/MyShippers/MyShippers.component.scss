@@ -1,0 +1,115 @@
+.divider{
+    width:100px;
+    height:auto;
+    display:inline-block;
+}
+.mat-row:nth-child(even) {
+    background-color: white;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #e1eaf7;
+}
+
+.mat-row:hover {
+    background-color: #0066c0;
+    cursor: pointer;
+}
+
+.tile-primary {
+    background-color: #1b80c2;
+}
+
+.tile {
+    margin-bottom: 15px;
+    border-radius: 3px;
+    color: #FFFFFF;
+    transition: all 1s;
+}
+
+.tile-heading {
+    padding: 5px 8px;
+    // text-transform: uppercase;
+    color: #FFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tile-heading a:hover {
+    color: #ff5722;
+}
+
+.tile-heading a {
+    color: #0066c0;
+}
+
+.tile-body {
+    padding: 15px;
+    color: #0066c0;
+    line-height: 48px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    background-color: #f5f2f2;
+}
+
+.tile-footer {
+    padding: 5px 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tile .tile-body i {
+    // font-size: 50px;
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.tile .tile-body a:hover {
+    color: #ff5722;
+}
+
+.tile .tile-body a {
+    color: #0066c0;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.tile:hover .tile-body i {
+    // color: #FFFFFF;
+    opacity: 1;
+}
+
+h1,h2,h3,h4,h5,
+h6,.h1,.h2,.h3,
+.h4,.h5,.h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+input:focus {
+    outline: none !important;
+    border-color: #1b80c2;
+    box-shadow: 0 0 10px #1b80c2;
+}
+
+textarea:focus {
+    outline: none !important;
+    border-color: #1b80c2;
+    box-shadow: 0 0 10px #1b80c2;
+}
+
+textarea {
+    outline: none !important;
+    border-color: #719ECE;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.col-gap>div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}

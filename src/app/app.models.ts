@@ -234,6 +234,10 @@ export class ProductDiscount {
   // Transient variable
   disablePrice: boolean;
   disablePercentage: boolean;
+  constructor() {
+    this.dateStart = new Date();
+    this.status = 1;
+  }
 }
 
 

@@ -64,6 +64,9 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
@@ -88,6 +91,10 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores && this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.storeSelected(this.selectedStore);
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
@@ -143,17 +150,17 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   storeSelected(event) {
 
     setTimeout(() => {
-        this.searchCriteria.storeId = this.selectedStore.id;
-        this.search();
-        this.selected.setValue(0);
-        this.getMyStoreEmployees();
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
+      this.selected.setValue(0);
+      this.getMyStoreEmployees();
 
-        if (this.transactionComponent) {
-          this.transactionComponent.store = event.value;
-          this.transactionComponent.getMyStoreEmployees();
-          this.transactionComponent.clear([]);
-        }
-      }, 500);
+      if (this.transactionComponent) {
+        this.transactionComponent.store = event.value;
+        this.transactionComponent.getMyStoreEmployees();
+        this.transactionComponent.clear([]);
+      }
+    }, 500);
   }
 
   updateDataTable(transaction: Transaction) {

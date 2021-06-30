@@ -673,85 +673,8 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="{{'COMMON.SHIPPER' | translate}}s">
-        <div fxLayout="row wrap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-           <!--  <h2 class="text-muted text-left fw-600 mb-3">{{'COMMON.SHIPPER' | translate}}s</h2> -->
-            <mat-form-field class="w-100 mb-3">
-              <mat-label>{{'COMMON.PREFERRED_SHIPPER' | translate}}</mat-label>
-              <mat-select placeholder="{{'COMMON.PREFERRED_SHIPPER' | translate}}" [compareWith]="compareObjects"
-                id="shipper">
-                <mat-option *ngFor="let cat of shippers" [value]="cat" (click)="addShipper(cat)">
-                  {{  cat.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeShippers && storeShippers.length>0">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-            *ngFor="let storeShipper of storeShippers">
-            <div class="tile tile-primary">
-              <div class="tile-heading">{{storeShipper.shipper.name}}
-                <span class="pull-right">
-                  <mat-slide-toggle [(ngModel)]="storeShipper.storeStatus" class="my-2" name="storeStatus"
-                    #storeStatus="ngModel" (change)="changeShipper(storeShipper)">
-                    <i *ngIf="storeShipper.storeStatus===0" class="fa fa-spinner"></i>
-                    <i *ngIf="storeShipper.storeStatus===1" class="fa fa-check"></i>
-                    {{storeShipper.storeStatus===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}
-                  </mat-slide-toggle>
-                  <br />
-                </span>
-              </div>
-              <div class="tile-body">
-                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                    <img height="100%" *ngIf="storeShipper.shipper.user && storeShipper.shipper.user.image"
-                      src="assets/images/users/{{storeShipper.shipper.user.id}}/{{storeShipper.shipper.user.image}}">
 
-                    <img height="100%" *ngIf="!(storeShipper.shipper.user && storeShipper.shipper.user.image)"
-                      src="assets/images/users/user_blue.jpg">
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-                    <span class="pull-left"><i class="fa fa-phone fa-sm"></i>
-                      {{storeShipper.shipper.user?storeShipper.shipper.user.mobilePhone:storeShipper.shipper.phone}}</span><br />
-                    <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{storeShipper.shipper.email}}</span>
-                    <br />
-                    <span class="pull-left">
-                      <i *ngIf="storeShipper.shipperStatus===0" class="fa fa-exclamation-circle"></i>
-                      <i *ngIf="storeShipper.shipperStatus===1" class="fa fa-check-circle"></i>
-                      {{storeShipper.shipperStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
-                    <!-- <div [innerHTML]="storeShipper.shipper?.description"></div> -->
-                    <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.DELIVERIES' | translate}} :
-                      {{storeShipper.shipper.deliveryCount}}
-                    </h4>
-
-                    <h6 class="text-muted text-left fw-600 mb-3">{{'COMMON.RATING' | translate}} :
-                      {{storeShipper.shipper.ratingCount}}
-                      {{'COMMON.REVIEW'|translate}}{{storeShipper.shipper.ratingCount > 0 ? 's ('+(storeShipper.shipper.rating/storeShipper.shipper.ratingCount |number:'1.0-1')+'/5)' : ''}}
-                    </h6>
-
-                  </div>
-                </div>
-              </div>
-              <div class="tile-footer">
-                <div fxLayout="row wrap" class="col-gap" *ngIf="storeShipper.shipCount==0">
-                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <!--  -->
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <button mat-raised-button color="accent"
-                      (click)="deleteStoreShipper(storeShipper.id)">{{'COMMON.DELETE'|translate}}</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </mat-tab>
       <mat-tab label="Configuration">
-
         <div fxLayout="row wrap">
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
             <mat-form-field class="w-100 mb-3">

@@ -28,6 +28,7 @@ import { StoreMenusComponent } from './SellerMenus/StoreMenus.component';
 import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.component';
 import { TransactionsComponent } from './SellerTransactions/Transactions.component';
 import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
+import { MyShippersComponent } from './MyShippers/MyShippers.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -187,7 +188,7 @@ export const UserAccountRoutes: Routes = [
             }
          },
          {
-            path: 'reports',
+            path: 'reports/:rptType',
             component: ReportsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
@@ -237,6 +238,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'seller-bills',
             component: SellerBillsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'my-shippers',
+            component: MyShippersComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

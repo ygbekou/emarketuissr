@@ -64,7 +64,10 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
         && (this.location.path().startsWith('/admin/'));
     });
   }
-
+  
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
@@ -87,6 +90,10 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores && this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.storeSelected(this.selectedStore);
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));

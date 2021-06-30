@@ -1,25 +1,21 @@
 <div fxLayout="row wrap">
 
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-    
- 
     <mat-form-field appearance="outline" class="w-100">
       <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font></mat-label>
-      <mat-select [(ngModel)]="selectedStore" appearance="outline" name="store"
+      <mat-select  [compareWith]="compareObjects" [(ngModel)]="selectedStore" appearance="outline" name="store"
         (selectionChange)="storeSelected($event)">
         <mat-option *ngFor="let store of stores" [value]="store">
           {{store.name}} 
         </mat-option>
       </mat-select>
-    </mat-form-field>
-   
+    </mat-form-field>   
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
     
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
-      <mat-tab label="{{'COMMON.TRANSACTIONS' | translate}}">
- 
+      <mat-tab label="{{'COMMON.TRANSACTIONS' | translate}}"> 
         <div fxLayout="row wrap">
           <div fxFlex="50" fxFlex.gt-sm="50" class="p-3">
             <mat-form-field appearance="outline" class="w-100">
@@ -42,13 +38,6 @@
            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
             <div class="table-wrapper">
               <table mat-table [dataSource]="transactionsDatasource" matSort class="w-100">
-<!-- 
-                <ng-container matColumnDef="storeName">
-                  <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.STORE' | translate}}
-                  </th>
-                  <td mat-cell *matCellDef="let storeIngredient"> {{storeIngredient.storeName}} </td>
-                </ng-container> -->
-
                 <ng-container matColumnDef="transactionType">
                   <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.TRANSACTION_TYPE' | translate}}</th>
                   <td mat-cell *matCellDef="let transaction"> {{transaction.transactionType.name}} </td>
