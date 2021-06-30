@@ -79,6 +79,7 @@ import { TransactionComponent } from './SellerTransactions/Transaction.component
 import { TransactionsComponent } from './SellerTransactions/Transactions.component';
 import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
 import { FinancesModule } from 'src/app/AdminPanel/Finances/Finances.module';
+import { MyShippersComponent } from './MyShippers/MyShippers.component';
 
 @NgModule({
   imports: [
@@ -181,7 +182,8 @@ import { FinancesModule } from 'src/app/AdminPanel/Finances/Finances.module';
     PurchaseOrderDetailsComponent,
     TransactionComponent,
     TransactionsComponent,
-    SellerBillsComponent
+    SellerBillsComponent,
+    MyShippersComponent
   ],
   exports: [
     CardsComponent,

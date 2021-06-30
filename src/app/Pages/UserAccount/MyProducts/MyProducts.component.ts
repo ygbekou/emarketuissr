@@ -77,8 +77,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   public reportRun = false;
   public disablePrice: boolean;
   public disablePercentage: boolean;
-
-
   constructor(public appService: AppService,
     public translate: TranslateService,
     public mediaObserver: MediaObserver) {
@@ -121,27 +119,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.stepper.selectedIndex = 1;
     this.getProducts(store);
   }
-  /* 
-    getStores() {
-      const userId = Number(this.appService.tokenStorage.getUserId());
-      if (userId > 0) {
-        const parameters: string[] = [];
-        parameters.push('e.owner.id = |userId|' + userId + '|Integer');
-        parameters.push('e.status = |xyz|1|Integer');
-        parameters.push('e.aprvStatus = |klm|1|Integer');
-        this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
-          .subscribe((data: Store[]) => {
-            this.stores = data;
-            if (this.stores.length > 0) {
-              this.selectedStore = this.stores[0];
-              this.getProducts(this.stores[0]);
-            }
-          },
-            error => console.log(error),
-            () => console.log('Get all Store complete for userId=' + userId));
-      }
-    } */
-
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
     storeSearchCriteria.status = 1;
@@ -405,6 +382,15 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   validateProductDiscount(productDiscount: ProductDiscount) {
+    if (this.isBlank(productDiscount.priority) ||
+      this.isBlank(productDiscount.dateStart) ||
+      this.isBlank(productDiscount.dateEnd)) {
+      this.translate.get(['VALIDATION.START_FIELD_REQUIRED', 'COMMON.ERROR']).subscribe(res => {
+        this.errors = res['VALIDATION.START_FIELD_REQUIRED'];
+      });
+      return false;
+    }
+
     if (this.isBlank(productDiscount.price) && this.isBlank(productDiscount.percentage)) {
       this.translate.get(['VALIDATION.PRICE_OR_PERCENT', 'COMMON.ERROR']).subscribe(res => {
         this.errors = res['VALIDATION.PRICE_OR_PERCENT'];
@@ -442,7 +428,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   setToggleValues(productDiscount: ProductDiscount) {
-    productDiscount.status = (productDiscount.status === null
+    productDiscount.status = (!productDiscount.status
+      || productDiscount.status === null
       || productDiscount.status.toString() === 'false'
       || productDiscount.status.toString() === '0') ? 0 : 1;
   }
@@ -488,11 +475,11 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
-       /*  if (type === 1) { // all inventory
-          this.allInvnReport = Constants.webServer + '/assets/reports/' + data[0];
-        } else {
-          this.lowInvnReport = Constants.webServer + '/assets/reports/' + data[0];
-        } */
+        /*  if (type === 1) { // all inventory
+           this.allInvnReport = Constants.webServer + '/assets/reports/' + data[0];
+         } else {
+           this.lowInvnReport = Constants.webServer + '/assets/reports/' + data[0];
+         } */
       },
         error => console.log(error),
         () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));

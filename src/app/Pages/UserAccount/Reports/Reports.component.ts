@@ -4,6 +4,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-reports',
@@ -25,11 +26,21 @@ export class ReportsComponent implements OnInit {
   subRpt = 1;
   @Input()
   userId;
-
+  rptType = 0;
   constructor(public appService: AppService,
     private datePipe: DatePipe,
+    private route: ActivatedRoute,
     public translate: TranslateService) {
-
+    this.route.params.subscribe((params) => {
+      console.log(params);
+      this.rptType = params.rptType;
+      console.log('Report type = ' + this.rptType);
+      /* this.route.queryParams.forEach(queryParams => {
+        console.log(queryParams);
+        this.rptType = queryParams['rptType'];
+        console.log('Report type = ' + this.rptType);
+      }); */
+    });
   }
 
   ngOnInit() {
@@ -41,7 +52,6 @@ export class ReportsComponent implements OnInit {
       this.fromAdmin = true;
     }
     this.getStores();
-
   }
 
   public delete(cardId: number) {

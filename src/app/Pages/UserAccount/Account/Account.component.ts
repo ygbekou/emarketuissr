@@ -24,49 +24,74 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Addresses', url: '/account/addresses', icon: 'location_on' },
-      { name: 'Deliveries', url: '/account/deliveries', icon: 'local_shipping' },
       { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' }
     ]
   },
   {
-    name: 'Buying',
+    name: 'Orders',
     url: '/account/buying',
     icon: '',
     children: [
-      { name: 'Open orders', url: '/account/open-orders', icon: 'shopping_cart' },
-      { name: 'Purchase dashboard', url: '/account/client-dashboard', icon: 'dashboard' }
-    ]
+      { name: 'Orders dashboard', url: '/account/client-dashboard', icon: 'dashboard' },
+      { name: 'Orders details', url: '/account/open-orders', icon: 'shopping_cart' },
+     ]
   }, {
-    name: 'Selling',
+    name: 'Sales',
     url: '/account/selling',
     icon: 'account_circle',
     children: [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Sales summary', url: '/account/sales-summaries', icon: 'dashboard' },
-      { name: 'Sales history', url: '/account/sales-orders', icon: 'shopping_cart' },
-      { name: 'Sell an item', url: '/account/sell-item', icon: 'store' },
-      { name: 'Product ingredients', url: '/account/store-ingredients', icon: 'fastfood' },
-      { name: 'Restaurant menu', url: '/account/store-menus', icon: 'restaurant_menu' },
-      { name: 'Transactions', url: '/account/transactions', icon: 'credit_card' },
-      { name: 'Purchase Orders', url: '/account/purchase-orders', icon: 'shopping_basket' },
-      { name: 'Billings', url: '/account/seller-bills', icon: 'laptop' },
-      { name: 'My store items', url: '/account/my-items', icon: 'toggle_on' },
-      { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
-      { name: 'Reports', url: '/account/reports', icon: 'segment' }
+      { name: 'Sales summary', url: '/account/sales-summaries', icon: 'summarize' },
+      { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },
     ]
-  },
+  }, {
+    name: 'Products',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Sell a product', url: '/account/sell-item', icon: 'sell' },
+      { name: 'My store products', url: '/account/my-items', icon: 'qr_code_2' },
+      { name: 'Composite products', url: '/account/store-ingredients', icon: 'category' },
+      { name: 'Menu (Restaurant)', url: '/account/store-menus', icon: 'restaurant_menu' },
+     ]
+  }, {
+    name: 'Accounting',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Expenses', url: '/account/transactions', icon: 'receipt_long' },
+      { name: 'Purchase Orders', url: '/account/purchase-orders', icon: 'shopping_basket' },
+      { name: 'Bills', url: '/account/seller-bills', icon: 'receipt' }
+    ]
+  }, {
+    name: 'Shipping',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
+      { name: 'My shippers', url: '/account/shipping-zones', icon: 'directions_run' },
+      { name: 'My deliveries', url: '/account/deliveries', icon: 'local_shipping' },
+    ]
+  }, {
+    name: 'Reports',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Inventory Reports', url: '/account/reports/1', icon: 'inventory' },
+      { name: 'Sales Reports', url: '/account/reports/2', icon: 'point_of_sale' },
+    ]
+  }
 ];
 
 const TREE_DATA_FR: MenuNode[] = [
-  {
+    {
     name: 'Compte',
     url: '/account/profile',
     icon: '',
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
-      { name: 'Livraisons', url: '/account/deliveries', icon: 'local_shipping' },
       { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' }
     ]
   },
@@ -75,9 +100,9 @@ const TREE_DATA_FR: MenuNode[] = [
     url: '/account/buying',
     icon: '',
     children: [
-      { name: 'Achats en cours', url: '/account/open-orders', icon: 'shopping_cart' },
-      { name: 'Tableau de bord', url: '/account/client-dashboard', icon: 'dashboard' }
-    ]
+      { name: 'Tableau de bord', url: '/account/client-dashboard', icon: 'dashboard' },
+      { name: 'Détails Achats', url: '/account/open-orders', icon: 'shopping_cart' },
+     ]
   }, {
     name: 'Ventes',
     url: '/account/selling',
@@ -85,19 +110,47 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Boutiques', url: '/account/stores', icon: 'store' },
       { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
-      { name: 'Sommaire des ventes', url: '/account/sales-summaries', icon: 'dashboard' },
-      { name: 'Historique ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
-      { name: 'Vendre un produit', url: '/account/sell-item', icon: 'store' },
-      { name: 'Ingredients des produits', url: '/account/store-ingredients', icon: 'fastfood' },
-      { name: 'Menu restaurant', url: '/account/store-menus', icon: 'restaurant_menu' },
-      { name: 'Transactions', url: '/account/transactions', icon: 'credit_card' },
-      { name: 'Commandes', url: '/account/purchase-orders', icon: 'shopping_basket' },
-      { name: 'Facturations', url: '/account/seller-bills', icon: 'laptop' },
-      { name: 'Produits en vente', url: '/account/my-items', icon: 'toggle_on' },
-      { name: 'Zones d\'expedition', url: '/account/shipping-zones', icon: 'local_shipping' },
-      { name: 'Etats', url: '/account/reports', icon: 'segment' }
+      { name: 'Détails ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
+      { name: 'Payements', url: '/account/sales-summaries', icon: 'summarize' },
     ]
-  },
+  }, {
+    name: 'Produits',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Vendre un produit', url: '/account/sell-item', icon: 'sell' },
+      { name: 'Produits en vente', url: '/account/my-items', icon: 'qr_code_2' },
+      { name: 'Produits Composites', url: '/account/store-ingredients', icon: 'category' },
+      { name: 'Menu (Restaurant)', url: '/account/store-menus', icon: 'restaurant_menu' },
+     ]
+  }, {
+    name: 'Comptabilité',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      // { name: 'Tableau de bord', url: '/account/accounting', icon: 'receipt_long' },
+      { name: 'Dépenses', url: '/account/transactions', icon: 'receipt_long' },
+      { name: 'Commandes', url: '/account/purchase-orders', icon: 'shopping_basket' },
+      { name: 'Factures', url: '/account/seller-bills', icon: 'receipt' }
+    ]
+  }, {
+    name: 'Expédition',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Zones d\'expédition', url: '/account/shipping-zones', icon: 'local_shipping' },
+      { name: 'Mes livreurs', url: '/account/my-shippers', icon: 'directions_run' },
+      { name: 'Mes livraisons', url: '/account/deliveries', icon: 'local_shipping' },
+    ]
+  }, {
+    name: 'Etats',
+    url: '/account/selling',
+    icon: 'account_circle',
+    children: [
+      { name: 'Etats d\'inventaire', url: '/account/reports/1', icon: 'inventory' },
+      { name: 'Etats de ventes', url: '/account/reports/2', icon: 'point_of_sale' },
+    ]
+  }
 ];
 
 /** Flat node with expandable and level information */

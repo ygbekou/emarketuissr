@@ -66,6 +66,9 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
@@ -90,6 +93,10 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores && this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.storeSelected(this.selectedStore);
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
@@ -100,8 +107,8 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
-       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
-       this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
+      this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
+      this.searchCriteria.languageId = +this.appService.appInfoStorage.language.id;
 
       this.appService.saveWithUrl('/service/catalog/getStoreIngredients', this.searchCriteria)
         .subscribe((data: any[]) => {
@@ -121,12 +128,12 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
 
     this.appService.saveWithUrl('/service/catalog/getStoreIngredients', this.searchCriteria)
       .subscribe((data: any[]) => {
-      this.lowInventoryDatasource = new MatTableDataSource(data);
-      this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
-      this.lowInventoryDatasource.sort = this.lowInventorySort;
-    },
-      error => console.log(error),
-    () => console.log('Get low inventories complete'));
+        this.lowInventoryDatasource = new MatTableDataSource(data);
+        this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
+        this.lowInventoryDatasource.sort = this.lowInventorySort;
+      },
+        error => console.log(error),
+        () => console.log('Get low inventories complete'));
   }
 
   public applyFilter(filterValue: string) {
@@ -154,20 +161,20 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
   storeSelected(event) {
 
     setTimeout(() => {
-        this.searchCriteria.inventoryLevel = null;
-        this.searchCriteria.storeId = this.selectedStore.id;
-        this.search();
+      this.searchCriteria.inventoryLevel = null;
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
 
-        this.lowInventoryDatasource = new MatTableDataSource([]);
-        this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
-        this.lowInventoryDatasource.sort = this.lowInventorySort;
+      this.lowInventoryDatasource = new MatTableDataSource([]);
+      this.lowInventoryDatasource.paginator = this.lowInventoryPaginator;
+      this.lowInventoryDatasource.sort = this.lowInventorySort;
 
-        if (this.storeIngredientComponent) {
-          this.storeIngredientComponent.store = event.value;
-          this.storeIngredientComponent.clear();
-          this.storeIngredientComponent.getStoreUnassignedIngredients();
-        }
-      }, 500);
+      if (this.storeIngredientComponent) {
+        this.storeIngredientComponent.store = event.value;
+        this.storeIngredientComponent.clear();
+        this.storeIngredientComponent.getStoreUnassignedIngredients();
+      }
+    }, 500);
   }
 
   updateDataTable(storeIngredient: StoreIngredient) {

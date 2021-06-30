@@ -5,7 +5,7 @@
  
     <mat-form-field appearance="outline" class="w-100">
       <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font></mat-label>
-      <mat-select [(ngModel)]="selectedStore" appearance="outline" name="store"
+      <mat-select  [compareWith]="compareObjects"  [(ngModel)]="selectedStore" appearance="outline" name="store"
         (selectionChange)="storeSelected($event)">
         <mat-option *ngFor="let store of stores" [value]="store">
           {{store.name}} 
