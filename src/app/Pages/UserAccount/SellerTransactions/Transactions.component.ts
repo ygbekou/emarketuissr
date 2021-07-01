@@ -165,6 +165,6 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
 
   updateDataTable(transaction: Transaction) {
     this.updateDatasourceData(this.transactionsDatasource, this.transactionsPaginator, this.transactionsSort, transaction);
-    this.selected.setValue(0);
+    //this.selected.setValue(0);
   }
 }

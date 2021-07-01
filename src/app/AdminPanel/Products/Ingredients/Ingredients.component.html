@@ -5,7 +5,7 @@
   <h5>{{'COMMON.INGREDIENT' | translate}}</h5>
 </a>
 
-<app-ingredient (ingredientSaveEvent)="onIngredientSave($event)"></app-ingredient>
+<app-ingredient (saveEvent)="onSave($event)"></app-ingredient>
 
 
 <fieldset>
@@ -17,12 +17,12 @@
           autocomplete="off">
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-sm="10" class="p-1">
+    <!-- <div fxFlex="100" fxFlex.gt-sm="10" class="p-1">
       <a [routerLink]="['/admin/ingredients', 0]" mat-icon-button color="primary"
         matTooltip="{{'COMMON.ADD' | translate}}">
         <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
       </a>
-    </div>
+    </div> -->
   </div>
   <div class="text-center mt-2" *ngIf="messages">
     <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
@@ -33,7 +33,7 @@
 
       <!-- Title Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ingredient Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
         <td mat-cell *matCellDef="let ingredientDesc"> {{ingredientDesc.name}} </td>
       </ng-container>
 
@@ -41,14 +41,14 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
         <td mat-cell *matCellDef="let ingredientDesc">
-          {{ingredientDesc.ingredient.status === 1 ? ('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}} 
+          {{ingredientDesc?.ingredient?.status === 1 ? ('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}} 
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let ingredientDesc">
-        <button mat-icon-button color="primary" (click)="ingredientView.getIngredientDescriptions(ingredientDesc.ingredient.id)" 
+        <button mat-icon-button color="primary" (click)="ingredientView.getDescriptions(ingredientDesc.ingredient.id)" 
          matTooltip="{{'COMMON.EDIT' | translate}}"
           class="remove">
           <mat-icon>edit</mat-icon>

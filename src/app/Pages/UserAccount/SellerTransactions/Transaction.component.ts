@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { Store, ProductStoreMenu, ProductDescription, StoreEmployee, User, Transaction } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
@@ -152,11 +152,10 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
       this.transaction.store.id = this.store.id;
     }
     this.setToggleValues();
-
-    let nbFiles = 0;
     for (const img of this.picture) {
-      nbFiles++;
-      this.formData.append('file[]', img.file, 'picture.jpg');
+      if (img && img.file) {
+        this.formData.append('file[]', img.file, 'picture.jpg');
+      }
     }
 
     this.appService.saveWithFile(this.transaction, 'Transaction', this.formData, 'saveWithFile')
