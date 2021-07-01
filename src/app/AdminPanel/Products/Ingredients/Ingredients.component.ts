@@ -27,14 +27,14 @@ export class IngredientsComponent extends BaseComponent implements OnInit {
       super(translate);
     }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getAll();
   }
 
   getAll() {
     const parameters: string[] = [];
     parameters.push('e.language.code = |langCode|' + this.appService.appInfoStorage.language.code + '|String');
-    this.appService.getAllByCriteria('com.softenza.emarket.model.IngredientDescription', parameters)
+    this.appService.getAllByCriteria('IngredientDescription', parameters)
       .subscribe((data: IngredientDescription[]) => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
@@ -44,12 +44,12 @@ export class IngredientsComponent extends BaseComponent implements OnInit {
         () => console.log('Get all IngredientDescription complete'));
   }
 
-  public remove(ingredientDesc: IngredientDescription) {
+  public remove(iDesc: IngredientDescription) {
     this.messages = '';
-    this.appService.delete(ingredientDesc.ingredient.id, 'Ingredient')
+    this.appService.delete(iDesc.ingredient.id, 'Ingredient')
       .subscribe(resp => {
         if (resp.result === 'SUCCESS') {
-          const index: number = this.dataSource.data.indexOf(ingredientDesc);
+          const index: number = this.dataSource.data.indexOf(iDesc);
           if (index !== -1) {
             this.dataSource.data.splice(index, 1);
             this.dataSource = new MatTableDataSource<IngredientDescription>(this.dataSource.data);
@@ -76,17 +76,16 @@ export class IngredientsComponent extends BaseComponent implements OnInit {
   }
 
 
-  onIngredientSave($event) {
-    const ingredient = $event;
+  onSave($event) {
+    const ing = $event;
 
-    ingredient.ingredientDescriptions.forEach(element => {
+    ing.ingredientDescriptions.forEach(element => {
         if (element.language.id === this.appService.appInfoStorage.language.id) {
-          ingredient.ingredientDescriptions[0].ingredient = ingredient;
+          ing.ingredientDescriptions[0].ingredient = ing;
           if (!this.dataSource.data) {
             this.dataSource.data = [];
           }
-          this.dataSource.data.push(ingredient.ingredientDescriptions[0]);
-          this.dataSource = new MatTableDataSource(this.dataSource.data);
+          this.updateDatasourceData(this.dataSource, this.paginator, this.sort, ing.ingredientDescriptions[0]);
         }
     });
   }

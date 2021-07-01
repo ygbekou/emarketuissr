@@ -210,4 +210,23 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
     }
   }
 
+  calculateAmount () {
+    if (this.bill.subTotal) {
+      this.bill.amount = Number(this.bill.subTotal);
+    }
+
+    if (this.bill.taxes) {
+      if (!this.bill.amount) {
+        this.bill.amount = 0;
+      }
+      this.bill.amount += Number(this.bill.taxes);
+    }
+    if (this.bill.discount) {
+      if (!this.bill.amount) {
+        this.bill.amount = 0;
+      }
+      this.bill.amount -= Number(this.bill.discount);
+    }
+  }
+
 }

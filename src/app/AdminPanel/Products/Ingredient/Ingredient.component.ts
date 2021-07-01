@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Ingredient, IngredientDescription, Language } from 'src/app/app.models';
+import { Language, Ingredient, IngredientDescription } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../baseComponent';
@@ -15,8 +15,8 @@ export class IngredientComponent extends BaseComponent implements OnInit {
 
   messages = '';
   ingredient: Ingredient;
-  
-  @Output() ingredientSaveEvent = new EventEmitter<Ingredient>();
+
+  @Output() saveEvent = new EventEmitter<Ingredient>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,7 +31,7 @@ export class IngredientComponent extends BaseComponent implements OnInit {
         this.clear();
       } else {
         this.clear();
-        this.getIngredientDescriptions(params.id);
+        this.getDescriptions(params.id);
       }
     });
 
@@ -39,11 +39,6 @@ export class IngredientComponent extends BaseComponent implements OnInit {
 
   clearMessages($event) {
     this.messages = '';
-  }
-
-  setImage($event) {
-    console.log('Setting image' + $event);
-    this.ingredient.image = $event;
   }
 
   setIngredient($event) {
@@ -54,20 +49,20 @@ export class IngredientComponent extends BaseComponent implements OnInit {
     this.ingredient = new Ingredient();
     this.ingredient.ingredientDescriptions = [];
     for (const lang of this.appService.appInfoStorage.languages) {
-      const pd = new IngredientDescription();
-      pd.language = lang;
-      pd.name = '';
-      this.ingredient.ingredientDescriptions.push(pd);
+      const ttd = new IngredientDescription();
+      ttd.language = lang;
+      ttd.name = '';
+      this.ingredient.ingredientDescriptions.push(ttd);
     }
   }
 
-  getIngredientDescriptions(ingredientId: number) {
+  getDescriptions(ingredientId: number) {
     this.messages = '';
     const parameters: string[] = [];
     if (ingredientId != null) {
       parameters.push('e.ingredient.id = |ingredientId|' + ingredientId + '|Integer');
     }
-    this.appService.getAllByCriteria('com.softenza.emarket.model.IngredientDescription', parameters)
+    this.appService.getAllByCriteria('IngredientDescription', parameters)
       .subscribe((data: IngredientDescription[]) => {
 
         if (data !== null && data.length > 0) {
@@ -80,13 +75,13 @@ export class IngredientComponent extends BaseComponent implements OnInit {
         () => console.log('Get all Ingredient Description complete'));
   }
 
-  setIngredientToggles() {
+  setToggles() {
     this.ingredient.status = (this.ingredient.status == null
       || this.ingredient.status.toString() === 'false'
       || this.ingredient.status.toString() === '0') ? 0 : 1;
   }
 
-  cleanIngredientDescriptions(ingredient: Ingredient) {
+  cleanDescriptions(ingredient: Ingredient) {
     ingredient.ingredientDescriptions.forEach(element => {
        element.ingredient = undefined;
        const language = element.language;
@@ -97,15 +92,17 @@ export class IngredientComponent extends BaseComponent implements OnInit {
   save() {
     this.messages = '';
     try {
-      const ingred = {...this.ingredient};
-      this.cleanIngredientDescriptions(ingred);
+      this.setToggles();
+      const thisIngredient = {...this.ingredient};
+      this.cleanDescriptions(thisIngredient);
 
-      this.appService.save(ingred, 'Ingredient')
+      this.appService.save(thisIngredient, 'Ingredient')
         .subscribe(result => {
           if (result.id > 0) {
-            this.ingredient.id = result.id;
             this.processResult(result, this.ingredient, null);
-            this.ingredientSaveEvent.emit(this.ingredient);
+            this.ingredient = {...result};
+            this.saveEvent.emit(this.ingredient);
+            console.log(this.ingredient)
           }
         });
 

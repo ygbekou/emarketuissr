@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, ProductStoreMenu, PoDtl, PoHdr, ProductDescription, StoreEmployee, User, Supplier } from 'src/app/app.models';
+import { Store, PoDtl, PoHdr, StoreEmployee, User, Supplier } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { PurchaseOrderDetailsComponent } from './PurchaseOrderDetails.component';
@@ -234,6 +233,26 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
       this.productsComponent.poDtlColumns[2] = 'productName';
     } else if ($event.index === 1) {
       this.ingredientsComponent.poDtlColumns[2] = 'ingredientName';
+    }
+  }
+
+
+  calculateAmount () {
+    if (this.poHdr.subTotal) {
+      this.poHdr.amount = Number(this.poHdr.subTotal);
+    }
+
+    if (this.poHdr.taxes) {
+      if (!this.poHdr.amount) {
+        this.poHdr.amount = 0;
+      }
+      this.poHdr.amount += Number(this.poHdr.taxes);
+    }
+    if (this.poHdr.discount) {
+      if (!this.poHdr.amount) {
+        this.poHdr.amount = 0;
+      }
+      this.poHdr.amount -= Number(this.poHdr.discount);
     }
   }
 

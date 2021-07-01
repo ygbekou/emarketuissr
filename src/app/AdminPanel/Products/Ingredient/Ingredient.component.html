@@ -32,21 +32,20 @@
 
    <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+         <mat-slide-toggle [(ngModel)]="ingredient.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.STATUS' | translate }}
+         </mat-slide-toggle>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
          <mat-form-field class="w-100">
             <mat-label>{{'COMMON.MANUFACTURER' | translate }}</mat-label>
             <mat-select placeholder="{{'COMMON.MANUFACTURER' | translate }}" id="manufacturerId"
                name="manufacturerId" [(ngModel)]="ingredient.manufacturerId" #manufacturerId="ngModel">
-               <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers"
-                  [value]="manufacturer.id">
+               <mat-option *ngFor="let manufacturer of appService.appInfoStorage.manufacturers" [value]="manufacturer.id">
                   {{manufacturer.name}}
                </mat-option>
             </mat-select>
          </mat-form-field>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
-         <mat-slide-toggle [(ngModel)]="ingredient.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.STATUS' | translate }}
-         </mat-slide-toggle>
       </div>
    </div>
 </form>
