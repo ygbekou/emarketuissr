@@ -103,6 +103,7 @@ export class IngredientComponent extends BaseComponent implements OnInit {
             this.ingredient = {...result};
             this.saveEvent.emit(this.ingredient);
             console.log(this.ingredient)
+            this.clear();
           }
         });
 

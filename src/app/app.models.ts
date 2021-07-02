@@ -2457,6 +2457,8 @@ export class Transaction {
     this.paidBy = new User();
     this.receiver = new User();
     this.store = new Store();
+    this.status = 1;
+    this.transactionDate = new Date();
   }
 }
 
