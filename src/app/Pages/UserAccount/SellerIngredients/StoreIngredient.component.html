@@ -81,19 +81,23 @@
   <form name="form" (ngSubmit)="f2.form.valid && addQuantity()" #f2="ngForm" validate>
     <div fxLayout="row wrap" *ngIf="storeIngredient?.id > 0">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-        <div fxLayout="row nowrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
           <mat-form-field class="w-20">
             <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
             <input matInput type="text" style="border: 1px;" class="form-control" id="inventoryQuantity" name="inventoryQuantity"
                 [(ngModel)]="storeIngredientInventory.quantity" #inventoryQuantity="ngModel" required>
           </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           <mat-form-field>
             <mat-label> {{'COMMON.DESCRIPTION' | translate}}</mat-label>
-            <textarea matInput rows="2" cols="50" class="form-control" id="description"
+            <textarea matInput rows="2" cols="100" class="form-control" id="description"
                [(ngModel)]="storeIngredientInventory.description" name="description"
                #description="ngModel"></textarea>
-         </mat-form-field>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit" 
             [disabled]="!f2.form.valid">
               <span class="mx-1 uppercase">{{'COMMON.ADD_QUANTITY' | translate}}</span>

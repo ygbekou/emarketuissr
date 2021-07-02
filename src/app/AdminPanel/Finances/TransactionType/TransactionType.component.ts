@@ -39,6 +39,7 @@ export class TransactionTypeComponent extends BaseComponent implements OnInit {
 
   clearMessages($event) {
     this.messages = '';
+    this.transactionType = new TransactionType();
   }
 
   setIngredient($event) {
@@ -102,7 +103,7 @@ export class TransactionTypeComponent extends BaseComponent implements OnInit {
             this.processResult(result, this.transactionType, null);
             this.transactionType = {...result};
             this.saveEvent.emit(this.transactionType);
-            console.log(this.transactionType)
+            this.clear();
           }
         });
 

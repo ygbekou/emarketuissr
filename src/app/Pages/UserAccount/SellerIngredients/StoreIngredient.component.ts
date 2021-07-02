@@ -192,6 +192,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
         this.storeIngredientInventory.addByLastName = this.appService.tokenStorage.getUser().lastName;
         this.updateDatasourceData(this.inventoryDatasource, this.inventoryPaginator, this.inventorySort, this.storeIngredientInventory);
         this.storeIngredientInventory = new StoreIngredientInventory();
+        this.storeIngredientSaveEvent.emit(this.storeIngredient);
       },
         error => console.log(error),
         () => console.log('Save StoreIngredientInventory complete'));

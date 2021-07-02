@@ -137,6 +137,12 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
         this.poDtlDatasource.data[index] = data;
         this.setDatasource(this.poDtlDatasource.data);
         this.saving = false;
+        
+        if (poDtl.product.id > 0) {
+          this.filteredProductOptions = this.productOptions;
+        } else if (poDtl.ingredient.id > 0) {
+          this.filteredIngredientOptions = this.ingredientOptions;
+        }
       },
         error => console.log(error),
         () => console.log('Get all PoDtl complete'));

@@ -2331,7 +2331,7 @@ export class Supplier {
   phone: string;
   email: string;
   address: string;
-  status: number;
+  status = 1;
 
   modifiedBy: number;
 
@@ -2340,7 +2340,7 @@ export class Supplier {
 
 export class TransactionType {
   id: number;
-  status: number;
+  status = 1;
   transactionTypeDescriptions: TransactionTypeDescription[] = [];
   name: string;
 

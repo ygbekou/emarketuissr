@@ -148,6 +148,8 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
             // Removing the just saved option from dropdown
             const index = this.ingredientOptions.findIndex(x => x.ingredient.id === productStoreIngredient.ingredient.id);
             this.ingredientOptions.splice(index, 1);
+            this.filteredIngredientOptions = this.ingredientOptions;
+            productStoreIngredient.isTouched = false;
             // this.currentOption = '';
          },
             error => console.log(error),
