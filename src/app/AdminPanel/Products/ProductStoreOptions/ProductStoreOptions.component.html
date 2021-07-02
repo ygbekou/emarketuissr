@@ -1,5 +1,19 @@
-<div fxLayout="row">
-   <div fxFlex="20">
+<div fxLayout="row wrap">
+   <div fxFlex="30">
+      <mat-form-field appearance="outline" class="w-100">
+         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
+            matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required
+            (ngModelChange)="filterOptions(currentOption)">
+         <mat-autocomplete id="option1" #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionOptions "
+               (onSelectionChange)="saveProductStoreOption(option)" [value]="option.name">
+               {{option.name}}
+            </mat-option>
+         </mat-autocomplete>
+      </mat-form-field>
+   </div>
+   <div fxFlex="5"></div>
+   <div fxFlex="30">
       <div *ngFor="let productStoreOption of productStoreOptions; let i = index;" class="step-section">
          <div [ngStyle]="getStyle(productStoreOption)" fxLayout="row">
             <div fxFlex="30">
@@ -16,42 +30,30 @@
             </div>
          </div>
       </div>
-      <mat-form-field appearance="outline" class="w-100">
-         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
-            matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required
-            (ngModelChange)="filterOptions(currentOption)">
-         <mat-autocomplete id="option1" #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptionOptions "
-               (onSelectionChange)="saveProductStoreOption(option)" [value]="option.name">
-               {{option.name}}
-            </mat-option>
-         </mat-autocomplete>
-      </mat-form-field>
    </div>
-
    <div fxFlex="5"></div>
-
-   <div fxFlex="75">
+   <div fxFlex="30">
+      <div class="text-center mt-2">
+         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit"
+            *ngIf="productStoreOption.id > 0" [disabled]="!poForm.dirty">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+         </button>
+      </div>
+      <div class="text-center mt-2" *ngIf="messages">
+         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+      {{productStoreOption.optionName}}
+      <mat-slide-toggle [(ngModel)]="productStoreOption.required" name="required" #required="ngModel"
+         *ngIf="productStoreOption.id > 0" class="my-2">
+         {{ 'COMMON.REQUIRED' | translate }}
+      </mat-slide-toggle>
+   </div>
+</div>
+<div fxLayout="row wrap">
+   <div fxFlex="100">
       <form name="poForm" (ngSubmit)="poForm.form.valid && saveProductStoreOption2()" #poForm="ngForm" validate>
-         <div fxLayout="row">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-               <div class="text-center mt-2">
-                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit"
-                     *ngIf="productStoreOption.id > 0" [disabled]="!poForm.dirty">
-                     <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-                     <mat-icon>save</mat-icon>
-                  </button> </div>
-               <div class="text-center mt-2" *ngIf="messages">
-                  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-               </div>
-            </div>
-            {{productStoreOption.optionName}}
-            <mat-slide-toggle [(ngModel)]="productStoreOption.required" name="required" #required="ngModel"
-               *ngIf="productStoreOption.id > 0" class="my-2">
-               {{ 'COMMON.REQUIRED' | translate }}
-            </mat-slide-toggle>
-         </div>
-         <div fxLayout="row">
+           <div fxLayout="row">
             <div fxFlex="50" *ngIf="isTextOption()">
                <mat-form-field class="w-100">
                   <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
@@ -59,7 +61,6 @@
                      name="value" #value="ngModel">
                </mat-form-field>
             </div>
-
             <div fxFlex="50" *ngIf="isTextAreaOption()">
                <mat-form-field class="w-100">
                   <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
@@ -68,7 +69,6 @@
                </textarea>
                </mat-form-field>
             </div>
-
             <div fxFlex="50" *ngIf="isDateOption()">
                <mat-form-field class="w-100">
                   <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
@@ -78,16 +78,13 @@
                   <mat-datepicker #picker></mat-datepicker>
                </mat-form-field>
             </div>
-
             <div fxFlex="50" *ngIf="isDateTimeOption()">
                <mat-form-field class="w-100">
                   <mat-label> {{'COMMON.VALUE' | translate}}</mat-label>
                   <input matInput type="datetime-local" class="form-control" id="value" [(ngModel)]="dateTimeLocal"
                      name="value" #value="ngModel">
-
                </mat-form-field>
             </div>
-
             <div fxFlex="50" *ngIf="isTimeOption()">
                <mat-form-field class="w-100">
                   <mat-label> {{'COMMON.HOUR' | translate}}</mat-label>
@@ -253,5 +250,4 @@
       </div>
 
    </div>
-
 </div>
