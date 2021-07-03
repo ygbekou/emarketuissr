@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ProductToStore, ProductStoreOption, IngredientDescription, ProductStoreIngredient, IngredientSearchCriteria } from 'src/app/app.models';
+import {
+   ProductToStore, ProductStoreOption, IngredientDescription, ProductStoreIngredient,
+   IngredientSearchCriteria, OptionValueDescription, ProductStoreOptionValue
+} from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
@@ -13,7 +16,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 export class ProductStoreIngredientsComponent extends BaseComponent implements OnInit {
 
-   productStoreIngredientsColumns: string[] = ['ingredientName', 'quantityPerUnit', 'actions'];
+   productStoreIngredientsColumns: string[] = ['optionName', 'optionValueName', 'ingredientName', 'quantityPerUnit', 'actions'];
    productStoreIngredientsDatasource: MatTableDataSource<ProductStoreIngredient>;
    @ViewChild('MatPaginatorProductStoreIngredients', { static: true }) productStoreIngredientsPaginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) productStoreIngredientsSort: MatSort;
@@ -31,6 +34,9 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    productStoreIngredient: ProductStoreIngredient;
 
    searchCriteria: IngredientSearchCriteria = new IngredientSearchCriteria();
+
+   productStoreOptions: ProductStoreOption[];
+   productStoreOptionValues: ProductStoreOptionValue[];
 
    constructor(public appService: AppService,
       public translate: TranslateService) {
@@ -50,6 +56,21 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
       this.filteredIngredientOptions = [];
    }
 
+   getProductStoreAssignedIngredients() {
+      this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
+      this.searchCriteria.storeId = this.storeId;
+
+      this.appService.saveWithUrl('/service/catalog/getStoreAssignedIngredients',
+         this.searchCriteria).subscribe((data: any[]) => {
+            this.ingredientOptions = data;
+            this.filteredIngredientOptions = data;
+         },
+            error => console.log(error),
+            () => console.log('Get product store assigned ingredients complete'));
+
+   }
+
+
    getProductStoreUnassignedIngredients() {
       this.searchCriteria.productStoreId = this.productToStoreId;
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
@@ -57,11 +78,11 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
 
       this.appService.saveWithUrl('/service/catalog/getProductStoreUnassignedIngredients',
          this.searchCriteria).subscribe((data: any[]) => {
-         this.ingredientOptions = data;
-         this.filteredIngredientOptions = data;
-      },
-        error => console.log(error),
-        () => console.log('Get product store unassigned ingredients complete'));
+            this.ingredientOptions = data;
+            this.filteredIngredientOptions = data;
+         },
+            error => console.log(error),
+            () => console.log('Get product store unassigned ingredients complete'));
 
    }
 
@@ -72,18 +93,18 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
       this.searchCriteria.productStoreId = this.productToStoreId;
 
       this.appService.saveWithUrl('/service/catalog/getProductStoreIngredients', this.searchCriteria)
-        .subscribe((data: any[]) => {
-          this.reinitializeDatasource(data);
-          this.productStoreIngredients = Array.from({...data});
-        },
-          error => console.log(error),
-          () => console.log('Get product store ingredients complete'));
+         .subscribe((data: any[]) => {
+            this.reinitializeDatasource(data);
+            this.productStoreIngredients = Array.from({ ...data });
+         },
+            error => console.log(error),
+            () => console.log('Get product store ingredients complete'));
    }
 
 
    validateSelectedIngredient(productStoreIngredient: ProductStoreIngredient) {
 
-      if (typeof(productStoreIngredient.ingredientName) === 'string' && this.ingredientOptions) {
+      if (typeof (productStoreIngredient.ingredientName) === 'string' && this.ingredientOptions) {
          let index = this.ingredientOptions.findIndex(x => x.name === productStoreIngredient.ingredientName);
          if (index === -1) {
             index = this.productStoreIngredients.findIndex(x => x.id === productStoreIngredient.id);
@@ -123,9 +144,8 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
    }
 
    resetDatasource(prdStoreIngredients: ProductStoreIngredient[]) {
-      //this.reinitializeDatasource(prdStoreIngredients);
       this.getProductStoreSelectedIngredients();
-      this.getProductStoreUnassignedIngredients();
+      this.getProductStoreAssignedIngredients();
    }
 
    reinitializeDatasource(prdStoreIngredients: ProductStoreIngredient[]) {
@@ -139,6 +159,10 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
       if (!this.validateSelectedIngredient(productStoreIngredient)) {
          return;
       }
+
+      if (productStoreIngredient.productStoreOptionValue && !productStoreIngredient.productStoreOptionValue.id) {
+         productStoreIngredient.productStoreOptionValue = undefined;
+      }
       productStoreIngredient.productStoreId = this.productToStoreId;
 
       this.appService.saveWithUrl('/service/crud/ProductStoreIngredient/save/', productStoreIngredient)
@@ -146,9 +170,9 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
             this.processResult(data, this.productStoreIngredient, null);
             productStoreIngredient.id = data.id;
             // Removing the just saved option from dropdown
-            const index = this.ingredientOptions.findIndex(x => x.ingredient.id === productStoreIngredient.ingredient.id);
-            this.ingredientOptions.splice(index, 1);
-            this.filteredIngredientOptions = this.ingredientOptions;
+            // const index = this.ingredientOptions.findIndex(x => x.ingredient.id === productStoreIngredient.ingredient.id);
+            // this.ingredientOptions.splice(index, 1);
+            // this.filteredIngredientOptions = this.ingredientOptions;
             productStoreIngredient.isTouched = false;
             // this.currentOption = '';
          },
@@ -190,6 +214,36 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
                }
             });
       }
+   }
+
+
+   getProductToStoreSelectedOptions(productToStoreId: number) {
+      this.appService.getObjects('/service/catalog/producttostoreselectedoptions/'
+         + productToStoreId + '/' + this.appService.appInfoStorage.language.id)
+         .subscribe((data: ProductStoreOption[]) => {
+            this.productStoreOptions = data;
+         },
+            error => console.log(error),
+            () => console.log('Get productToStore selected OptionDescription complete'));
+   }
+
+
+   getProductStoreOptionValues(productStoreId: number, productStoreOptionId: number) {
+      this.appService.getObjects('/service/catalog/productstoreoptionValues/' + productStoreId + '/0/'
+       + this.appService.appInfoStorage.language.id)
+         .subscribe((data: ProductStoreOptionValue[]) => {
+            this.productStoreOptionValues = data;
+         },
+            error => console.log(error),
+            () => console.log('Get productStoreoption values complete'));
+   }
+
+
+
+   optionSelected(event) {
+      setTimeout(() => {
+         this.getProductStoreOptionValues(this.productToStoreId, null);
+      }, 500);
    }
 
 }

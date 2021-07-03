@@ -5,6 +5,41 @@
    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div class="table-wrapper">
          <table mat-table [dataSource]="productStoreIngredientsDatasource" matSort class="w-100">
+            
+             <ng-container matColumnDef="optionName">
+               <th mat-header-cell width="20%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.OPTION' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
+                  <mat-form-field class="w-100 mb-3">
+                     <mat-select placeholder="{{'COMMON.OPTION' | translate}}" id="opt" name="opt" #opt="ngModel"
+                     (selectionChange)="optionSelected($event)" [(ngModel)]="productStoreIngredient.productStoreOptionId">
+                        <mat-option *ngFor="let productStoreOption of productStoreOptions" [value]="productStoreOption.id">
+                           {{productStoreOption.optionName}}
+                        </mat-option>
+                     </mat-select>
+                  </mat-form-field>
+               </td>
+             </ng-container>
+            
+             <ng-container matColumnDef="optionValueName">
+               <th mat-header-cell width="20%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.OPTION_VALUE' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
+                  <mat-form-field class="w-100 mb-3">
+                     <mat-select placeholder="{{'COMMON.OPTION_VALUE' | translate}}" [compareWith]="compareObjects" id="optVal" 
+                     name="optVal" [(ngModel)]="productStoreIngredient.productStoreOptionValue" #optVal="ngModel">
+                        <ng-container *ngFor="let psov of productStoreOptionValues">
+                           <mat-option *ngIf = "psov.productStoreOption.id === productStoreIngredient.productStoreOptionId" [value]="psov">
+                              {{psov.optionValueName}} 
+                           </mat-option>
+                        </ng-container>
+                     </mat-select>
+                  </mat-form-field>
+               </td>
+             </ng-container>
+
             <ng-container matColumnDef="ingredientName">
                <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.INGREDIENT' | translate}}

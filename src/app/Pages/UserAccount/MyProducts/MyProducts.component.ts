@@ -452,6 +452,9 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   changeTab($event) {
     console.log('Tab changed');
     this.messages = '';
+
+    this.prdStoreIngredientsView.getProductToStoreSelectedOptions(this.productStore.id);
+    this.prdStoreIngredientsView.getProductStoreOptionValues(this.productStore.id, null);
   }
 
   runReport(type: number) {

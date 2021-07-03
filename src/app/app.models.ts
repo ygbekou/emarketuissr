@@ -1186,6 +1186,7 @@ export class ProductStoreOptionValue {
   weightPrefix: string;
   quantity: number;
   subtract: number;
+  optionValueName: string;
 
   type = 'ProductStoreOptionValue';
 
@@ -2235,6 +2236,8 @@ export class StoreIngredientInventory {
 export class ProductStoreIngredient {
   id: number;
   productStoreId: number;
+  productStoreOptionId: number;
+  productStoreOptionValue: ProductStoreOptionValue;
   ingredient: Ingredient;
   quantityPerUnit: number;
   ingredientName: string;
@@ -2244,6 +2247,7 @@ export class ProductStoreIngredient {
 
   constructor() {
     this.ingredient = new Ingredient();
+    this.productStoreOptionValue = new ProductStoreOptionValue();
   }
 }
 
