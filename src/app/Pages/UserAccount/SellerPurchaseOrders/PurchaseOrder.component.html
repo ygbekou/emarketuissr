@@ -8,7 +8,7 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          type="submit" [disabled]="!f.form.valid || poHdr.status === 5">
+          type="submit" [disabled]="!f.form.valid || poHdr.status >= 5">
           <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
           <mat-icon>save</mat-icon>
         </button>
