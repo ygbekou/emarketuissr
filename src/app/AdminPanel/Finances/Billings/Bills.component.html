@@ -214,6 +214,10 @@
         <app-user-bill [store]="selectedStore"></app-user-bill>
       </mat-tab>
 
+      <mat-tab label="{{'COMMON.PAYMENTS' | translate}}" *ngIf="isAdminPage">
+        <app-bill-payment></app-bill-payment>
+      </mat-tab>
+
     </mat-tab-group>
   </div>
 

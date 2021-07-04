@@ -51,6 +51,7 @@ import { ServicesComponent } from './Services/Services.component';
 import { StoreServiceComponent } from './StoreServices/StoreService.component';
 import { StoreServicesComponent } from './StoreServices/StoreServices.component';
 import { UserBillComponent } from './Billings/UserBill.component';
+import { BillPaymentComponent } from './Billings/BillPayment.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { UserBillComponent } from './Billings/UserBill.component';
     SuppliersComponent,
     BillComponent,
     BillDetailsComponent,
+    BillPaymentComponent,
     BillsComponent,
     UserBillComponent,
     ServiceComponent,

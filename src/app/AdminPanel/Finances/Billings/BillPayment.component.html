@@ -1,0 +1,102 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div fxLayout="row wrap" *ngIf="bill?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+          type="submit" [disabled]="!f.form.valid || bill.status >1">
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+      <mat-form-field class="w-100">
+        <mat-label> {{'COMMON.PAYMENT_DATE' | translate}} </mat-label>
+        <input matInput [matDatepicker]="picker" class="form-control" id="paymentDate" [(ngModel)]="billPayment.paymentDate"
+          name="paymentDate" #paymentDate="ngModel" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <mat-label> {{'COMMON.DUE_DATE' | translate}} </mat-label>
+        {{bill?.dueDate}}
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <h4 style="color:green">
+        {{'COMMON.DUE_AMOUNT' | translate}}
+        <br /> {{bill.store.currency.symbolLeft}}
+        {{bill.amount| number:'1.0-2'}}
+        {{bill.store.currency.symbolRight}}
+      </h4>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label> {{'COMMON.AMOUNT' | translate}}
+        </mat-label>
+        <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="billPayment.amount" name="amount"
+          #amount="ngModel" required>
+        <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="billPayment.description"
+            name="description" #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
+        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          [linkEnabled]="false">
+        </input-file>
+      </div>
+    </div>
+  </div>
+</form>
+
+<table mat-table [dataSource]="billPayDatasource" matSort class="w-100">
+
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell width="5%" *matHeaderCellDef mat-sort-header> ID </th>
+    <td mat-cell *matCellDef="let billPayment"> {{billPayment.id}} </td>
+  </ng-container>
+
+  <!-- Total Amount Column -->
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header> {{'COMMON.AMOUNT'|translate}} </th>
+    <td mat-cell *matCellDef="let billPayment"> {{billPayment.amount}}
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="billPayColumns"></tr> 
+  <tr mat-row *matRowDef="let billPayment; columns: billPayColumns;" (click)="getBillPayment(billPayment)"></tr>
+</table>
+<p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

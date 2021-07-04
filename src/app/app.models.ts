@@ -2607,3 +2607,23 @@ export class ServiceSearchCriteria {
   minAmount: number;
   maxAmount: number;
 }
+
+
+export class BillPayment {
+  id: number;
+  bill: Bill;
+  paymentDate: Date;
+  amount: number;
+  description: string;
+  image: string;
+  status: number;
+
+  isTouched = false;
+  modifiedBy: number;
+
+  type = 'BillPayment';
+
+  constructor() {
+    this.bill = new Bill();
+  }
+}
