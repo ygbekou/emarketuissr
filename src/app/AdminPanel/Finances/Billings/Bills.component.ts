@@ -60,17 +60,17 @@ export class BillsComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.clear();
     this.getStores();
-    this.activatedRoute.data.subscribe(value => {
+ /*    this.activatedRoute.data.subscribe(value => {
       this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
         && (this.location.path().startsWith('/admin/'));
-    });
+    }); */
   }
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
-    if (this.isAdminPage) {
+  /*   if (this.isAdminPage) {
       this.searchCriteria.status = 1;
-    }
+    } */
     this.search();
   }
 
@@ -113,9 +113,8 @@ export class BillsComponent extends BaseComponent implements OnInit {
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
-
-      this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
-
+      this.searchCriteria.userId =  this.userId;
+      console.log('User Id = '+ this.userId);
       this.appService.saveWithUrl('/service/finance/getBills', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.billsDatasource = new MatTableDataSource(data);
@@ -169,6 +168,6 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   updateDataTable(bill: Bill) {
     this.updateDatasourceData(this.billsDatasource, this.billsPaginator, this.billsSort, bill);
-    this.selected.setValue(0);
+    // this.selected.setValue(0);
   }
 }

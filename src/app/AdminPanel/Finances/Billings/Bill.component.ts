@@ -80,14 +80,14 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
       if (this.productsComponent) {
         this.productsComponent.bill = this.bill;
         this.productsComponent.setDatasource(prdBillDtls);
-        this.productsComponent.getStoreProducts(this.store.id);
+        // this.productsComponent.getStoreProducts(this.store.id);
       }
 
       const serBillDtls = data.filter(billDtl => billDtl.service && billDtl.service.id > 0);
       if (this.servicesComponent) {
         this.servicesComponent.bill = this.bill;
         this.servicesComponent.setDatasource(serBillDtls);
-        this.servicesComponent.getServices();
+        // this.servicesComponent.getServices();
       }
 
     }, 1000);
@@ -139,7 +139,6 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
   }
 
   getBillDtls() {
-
     this.appService.saveWithUrl('/service/finance/getBillDetails',
       {
         billId: this.bill.id,
@@ -178,6 +177,14 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
         this.bill = data;
         this.bill.storeName = this.store.name;
         this.billSaveEvent.emit(this.bill);
+        setTimeout(() => {
+          if (this.productsComponent) {
+            this.productsComponent.bill = this.bill;
+          }
+          if (this.servicesComponent) {
+            this.servicesComponent.bill = this.bill;
+          }
+        }, 1000);
         this.saving = false;
       },
         error => console.log(error),
