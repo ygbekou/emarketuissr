@@ -16,7 +16,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 export class ProductStoreIngredientsComponent extends BaseComponent implements OnInit {
 
-   productStoreIngredientsColumns: string[] = ['optionName', 'optionValueName', 'ingredientName', 'quantityPerUnit', 'actions'];
+   productStoreIngredientsColumns: string[] = ['ingredientName', 'optionName', 'optionValueName', 'quantityPerUnit', 'actions'];
    productStoreIngredientsDatasource: MatTableDataSource<ProductStoreIngredient>;
    @ViewChild('MatPaginatorProductStoreIngredients', { static: true }) productStoreIngredientsPaginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) productStoreIngredientsSort: MatSort;
@@ -119,6 +119,10 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
       }
 
       if (!productStoreIngredient.ingredient || !productStoreIngredient.ingredient.id) {
+         return false;
+      }
+
+      if (!(productStoreIngredient.quantityPerUnit > 0)) {
          return false;
       }
 
@@ -230,7 +234,7 @@ export class ProductStoreIngredientsComponent extends BaseComponent implements O
 
    getProductStoreOptionValues(productStoreId: number, productStoreOptionId: number) {
       this.appService.getObjects('/service/catalog/productstoreoptionValues/' + productStoreId + '/0/'
-       + this.appService.appInfoStorage.language.id)
+         + this.appService.appInfoStorage.language.id)
          .subscribe((data: ProductStoreOptionValue[]) => {
             this.productStoreOptionValues = data;
          },

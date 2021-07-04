@@ -1,89 +1,97 @@
-<div class="text-center mt-2" *ngIf="messages">
-  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+<div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+   <mat-icon>done</mat-icon> {{messages}}
+</div>
+<div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+   <mat-icon>close</mat-icon> {{messages}}
 </div>
 <div fxLayout="row wrap" *ngIf="productToStore !== undefined && productToStore.id > 0">
    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div class="table-wrapper">
          <table mat-table [dataSource]="productStoreIngredientsDatasource" matSort class="w-100">
-            
-             <ng-container matColumnDef="optionName">
-               <th mat-header-cell width="20%" *matHeaderCellDef mat-sort-header>
-                  {{'COMMON.OPTION' | translate}}
-               </th>
-               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
-                  <mat-form-field class="w-100 mb-3">
-                     <mat-select placeholder="{{'COMMON.OPTION' | translate}}" id="opt" name="opt" #opt="ngModel"
-                     (selectionChange)="optionSelected($event)" [(ngModel)]="productStoreIngredient.productStoreOptionId">
-                        <mat-option *ngFor="let productStoreOption of productStoreOptions" [value]="productStoreOption.id">
-                           {{productStoreOption.optionName}}
-                        </mat-option>
-                     </mat-select>
-                  </mat-form-field>
-               </td>
-             </ng-container>
-            
-             <ng-container matColumnDef="optionValueName">
-               <th mat-header-cell width="20%" *matHeaderCellDef mat-sort-header>
-                  {{'COMMON.OPTION_VALUE' | translate}}
-               </th>
-               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
-                  <mat-form-field class="w-100 mb-3">
-                     <mat-select placeholder="{{'COMMON.OPTION_VALUE' | translate}}" [compareWith]="compareObjects" id="optVal" 
-                     name="optVal" [(ngModel)]="productStoreIngredient.productStoreOptionValue" #optVal="ngModel">
-                        <ng-container *ngFor="let psov of productStoreOptionValues">
-                           <mat-option *ngIf = "psov.productStoreOption.id === productStoreIngredient.productStoreOptionId" [value]="psov">
-                              {{psov.optionValueName}} 
-                           </mat-option>
-                        </ng-container>
-                     </mat-select>
-                  </mat-form-field>
-               </td>
-             </ng-container>
-
-            <ng-container matColumnDef="ingredientName">
-               <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
+ <ng-container matColumnDef="ingredientName">
+               <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.INGREDIENT' | translate}}
                </th>
                <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
                   <mat-form-field appearance="outline" class="w-100">
-                     <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
-                        matInput [matAutocomplete]="auto" [(ngModel)]="productStoreIngredient.ingredientName" required
-                        (ngModelChange)="productStoreIngredient.isTouched = true; 
+                     <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number"
+                        name="currentOption" matInput [matAutocomplete]="auto"
+                        [(ngModel)]="productStoreIngredient.ingredientName" required (ngModelChange)="productStoreIngredient.isTouched = true; 
                         filterOptions(productStoreIngredient.ingredientName)">
                      <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-                        <mat-autocomplete id="option1" #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredIngredientOptions "
-                           (onSelectionChange)="productStoreIngredient.isTouched = true; 
+                     <mat-autocomplete id="option1" #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredIngredientOptions " (onSelectionChange)="productStoreIngredient.isTouched = true; 
                            productStoreIngredient.ingredient.id = option.ingredient.id" [value]="option.name">
                            {{option.name}}
                         </mat-option>
                      </mat-autocomplete>
                   </mat-form-field>
-               <!--    <mat-error *ngIf="productStoreIngredient.isTouched && !validateSelectedIngredient(productStoreIngredient)" severity="error">
+                  <!--    <mat-error *ngIf="productStoreIngredient.isTouched && !validateSelectedIngredient(productStoreIngredient)" severity="error">
                      {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
                   </mat-error> -->
                </td>
             </ng-container>
 
             <ng-container matColumnDef="quantityPerUnit">
-               <th mat-header-cell width="40%" *matHeaderCellDef mat-sort-header>
+               <th mat-header-cell width="20%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.QUANTITY_PER_UNIT' | translate}}
                </th>
                <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
                   <mat-form-field>
-                  <input matInput type="text" class="form-control" [(ngModel)]="productStoreIngredient.quantityPerUnit"
-                     name="quantityPerUnit" #quantityPerUnit="ngModel" pattern="^[0-9]+$" required>
+                     <input matInput type="text" class="form-control"
+                        [(ngModel)]="productStoreIngredient.quantityPerUnit" name="quantityPerUnit"
+                        #quantityPerUnit="ngModel" pattern="^[0-9]+$" required>
                   </mat-form-field>
                </td>
             </ng-container>
 
+            <ng-container matColumnDef="optionName">
+               <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.OPTION' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
+                  <mat-form-field class="w-100 mb-3">
+                     <mat-select placeholder="{{'COMMON.OPTION' | translate}}" id="opt" name="opt" #opt="ngModel"
+                        (selectionChange)="optionSelected($event)"
+                        [(ngModel)]="productStoreIngredient.productStoreOptionId">
+                        <mat-option *ngFor="let productStoreOption of productStoreOptions"
+                           [value]="productStoreOption.id">
+                           {{productStoreOption.optionName}}
+                        </mat-option>
+                     </mat-select>
+                  </mat-form-field>
+               </td>
+            </ng-container>
+
+            <ng-container matColumnDef="optionValueName">
+               <th mat-header-cell width="10%" *matHeaderCellDef mat-sort-header>
+                  {{'COMMON.OPTION_VALUE' | translate}}
+               </th>
+               <td mat-cell *matCellDef="let productStoreIngredient" class="p-1">
+                  <mat-form-field class="w-100 mb-3">
+                     <mat-select placeholder="{{'COMMON.OPTION_VALUE' | translate}}" [compareWith]="compareObjects"
+                        id="optVal" name="optVal" [(ngModel)]="productStoreIngredient.productStoreOptionValue"
+                        #optVal="ngModel">
+                        <ng-container *ngFor="let psov of productStoreOptionValues">
+                           <mat-option
+                              *ngIf="psov.productStoreOption.id === productStoreIngredient.productStoreOptionId"
+                              [value]="psov">
+                              {{psov.optionValueName}}
+                           </mat-option>
+                        </ng-container>
+                     </mat-select>
+                  </mat-form-field>
+               </td>
+            </ng-container>          
+
+            
+
             <!-- Actions Column -->
             <ng-container matColumnDef="actions">
                <th mat-header-cell *matHeaderCellDef> Actions
-                  <a (click)="addNew()" mat-icon-button color="primary"
-                  matTooltip="{{'COMMON.ADD' | translate}}">
-                  <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-                  </a>
+                  <button (click)="addNew()" mat-fab color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
+                     <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+                  </button>
                </th>
                <td mat-cell *matCellDef="let productStoreIngredient; let i = index;">
                   <button mat-icon-button color="primary" (click)="saveProductStoreIngredient(productStoreIngredient)"
