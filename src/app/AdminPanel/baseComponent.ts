@@ -8,19 +8,17 @@ import { MatTableDataSource } from '@angular/material';
 export class BaseComponent {
 
   public messages: string;
+  public errors: string;
   public messageColor: string;
   public hasError: boolean;
   public lang: any;
   dataSource: any;
   paginator: any;
   sort: any;
-
-
   constructor
     (
       protected translate: TranslateService
     ) {
-
   }
 
   protected processResult(result, entityObject, pictureUrl) {
@@ -93,8 +91,6 @@ export class BaseComponent {
 
 
   protected processDataSourceDeleteResult(resp, messages, object, dataSource) {
-
-
     if (resp.result === 'SUCCESS') {
       const index: number = dataSource.data.indexOf(object);
       if (index !== -1) {

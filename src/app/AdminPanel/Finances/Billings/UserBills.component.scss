@@ -1,0 +1,124 @@
+.mat-row:nth-child(even) {
+    background-color: white;
+}
+
+.mat-row:nth-child(odd) {
+    background-color: #e1eaf7;
+}
+
+.mat-row:hover {
+    background-color: #ff5722;
+    cursor: pointer;
+}
+.tile-primary {
+    background-color: #e1eaf7;
+}
+
+.tile {
+    margin-bottom: 15px;
+    border-radius: 3px;
+    // color: #FFFFFF;
+    transition: all 1s;
+}
+
+.tile-heading {
+    padding: 5px 8px;
+    // text-transform: uppercase;
+    color: #283593;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    
+}
+
+.tile-body {
+    padding: 15px;
+    // color: #FFFFFF;
+    line-height: 48px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tile-footer {
+    padding: 5px 8px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tile .tile-body i {
+    font-size: 50px;
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.tile:hover .tile-body i {
+    // color: #FFFFFF;
+    opacity: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+input:focus { 
+    outline: none !important;
+    border-color: #1b80c2;
+    //box-shadow: 0 0 10px #1b80c2;
+}
+textarea:focus { 
+    outline: none !important;
+    border-color: #1b80c2;
+    //box-shadow: 0 0 10px #1b80c2;
+}
+textarea{ 
+    outline: none !important;
+    border-color: #719ECE;
+    //box-shadow: 0 0 10px #719ECE;
+}
+
+.mat-cell {
+  padding: 8px 8px 8px 0;
+}
+ 
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.overlay{
+  height:100vh;
+  width:100%;
+  background-color:rgba(0, 0, 0, 0.286);
+  z-index:    10;
+  top:        0; 
+  left:       0; 
+  position:   fixed;
+}
+
+.mat-form-field-infix {
+  width: 80px !important;
+}  

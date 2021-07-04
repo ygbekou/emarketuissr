@@ -11,7 +11,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 @Component({
   selector: 'app-purchase-order-details',
   templateUrl: './PurchaseOrderDetails.component.html',
-  styleUrls: ['./PurchaseOrders.component.scss']
+  // styleUrls: ['./PurchaseOrders.component.scss']
 })
 
 export class PurchaseOrderDetailsComponent extends BaseComponent implements OnInit, AfterViewInit {

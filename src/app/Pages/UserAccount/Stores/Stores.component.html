@@ -1,7 +1,7 @@
 <mat-card>
   <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
     <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
-      [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
+      [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngFor="let store of stores">

@@ -3,7 +3,7 @@
       <div fxLayout="row" fxLayoutAlign="space-between center">
          <div class="dash-title">
             <h1 class="pull-left" style="color: #283593;">{{'COMMON.SALES_SUMMARY' | translate}}</h1>
-            <mat-form-field class="w-100 mb-3">
+            <mat-form-field class="w-100 mb-3" *ngIf="stores && stores.length>0">
                <mat-label>{{'COMMON.STORE' | translate}}</mat-label>
                <mat-select placeholder="{{'COMMON.STORE' | translate}}" [compareWith]="compareObjects" id="store"
                   name="store">
@@ -15,6 +15,12 @@
                   </mat-option>
                </mat-select>
             </mat-form-field>
+
+            <button *ngIf="!stores || stores.length===0" mat-raised-button color="accent"
+               [routerLink]="['/account/profile/edit']"
+               [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
+
          </div>
          <div>
             <button mat-icon-button (click)="getDashboard()">
@@ -27,16 +33,36 @@
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-           <button mat-flat-button color="primary" *ngIf="tag==='day'"> <h2>{{'COMMON.TODAY'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='week'"> <h2>{{'COMMON.THIS_WEEK'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='month'"> <h2>{{'COMMON.THIS_MONTH'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='year'"> <h2>{{'COMMON.THIS_YEAR'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='1month'"> <h2>{{'COMMON.LAST_1MONTH'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='3months'"> <h2>{{'COMMON.LAST_3MONTH'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='6months'"> <h2>{{'COMMON.LAST_6MONTH'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='1year'"> <h2>{{'COMMON.LAST_1YEAR'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='5years'"> <h2>{{'COMMON.LAST_5YEAR'|translate}}</h2></button>
-           <button mat-flat-button color="primary" *ngIf="tag==='century'"> <h2>{{'COMMON.ALL'|translate}}</h2></button>
+            <button mat-flat-button color="primary" *ngIf="tag==='day'">
+               <h2>{{'COMMON.TODAY'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='week'">
+               <h2>{{'COMMON.THIS_WEEK'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='month'">
+               <h2>{{'COMMON.THIS_MONTH'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='year'">
+               <h2>{{'COMMON.THIS_YEAR'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='1month'">
+               <h2>{{'COMMON.LAST_1MONTH'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='3months'">
+               <h2>{{'COMMON.LAST_3MONTH'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='6months'">
+               <h2>{{'COMMON.LAST_6MONTH'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='1year'">
+               <h2>{{'COMMON.LAST_1YEAR'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='5years'">
+               <h2>{{'COMMON.LAST_5YEAR'|translate}}</h2>
+            </button>
+            <button mat-flat-button color="primary" *ngIf="tag==='century'">
+               <h2>{{'COMMON.ALL'|translate}}</h2>
+            </button>
          </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">

@@ -24,7 +24,8 @@ export interface SearchResponse {
 })
 export class TransactionsComponent extends BaseComponent implements OnInit {
 
-  transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
+  // transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
+  transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'amount', 'actions'];
   transactionsDatasource: MatTableDataSource<Transaction>;
   @ViewChild('MatPaginatorTransactions', { static: true }) transactionsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) transactionsSort: MatSort;
@@ -70,7 +71,6 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
-
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
     }
@@ -119,9 +119,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
-
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
-
       this.appService.saveWithUrl('/service/finance/getTransactions', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.transactionsDatasource = new MatTableDataSource(data);
@@ -130,7 +128,6 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
         },
           error => console.log(error),
           () => console.log('Get transactions complete'));
-
     }
   }
 
@@ -156,7 +153,12 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
       this.getMyStoreEmployees();
 
       if (this.transactionComponent) {
-        this.transactionComponent.store = event.value;
+        if (event && !event.value) {
+          this.transactionComponent.store = event;
+        } else {
+          this.transactionComponent.store = event.value;
+        }
+        console.log(event);
         this.transactionComponent.getMyStoreEmployees();
         this.transactionComponent.clear([]);
       }

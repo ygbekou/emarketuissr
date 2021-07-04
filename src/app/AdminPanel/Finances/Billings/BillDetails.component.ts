@@ -11,7 +11,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 @Component({
   selector: 'app-bill-details',
   templateUrl: './BillDetails.component.html',
-  styleUrls: ['./Bills.component.scss']
+  // styleUrls: ['./Bills.component.scss']
 })
 
 export class BillDetailsComponent extends BaseComponent implements OnInit, AfterViewInit {

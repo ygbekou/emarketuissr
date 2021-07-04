@@ -1,6 +1,6 @@
 <div class="overlay" *ngIf="saving">
   <div class="center">
-    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner> 
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
   </div>
 </div>
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
@@ -8,25 +8,39 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          type="submit" [disabled]="!f.form.valid || poHdr.status === 2">
+          type="submit" [disabled]="!f.form.valid || poHdr.status === 5">
           <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
           <mat-icon>save</mat-icon>
         </button>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <!-- <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4> -->
       </div>
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-        <button mat-raised-button color="secondary" (click)="submit()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
-          [disabled]="!poHdr.id || poHdr.status !== 1" class="remove">
-          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
-          <mat-icon>submit</mat-icon>
+        <button mat-raised-button color="accent" (click)="submit()"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="poHdr.id && poHdr.status<5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.COMPLETE' | translate}}</span>
+          <mat-icon>done_all</mat-icon>
         </button>
       </div>
+
+       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="warn" (click)="cancel()"
+          matTooltip="{{'COMMON.CANCEL' | translate}}" *ngIf="poHdr.id && poHdr.status<5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
-      <div class="text-center mt-2" *ngIf="messages">
-        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
       </div>
     </div>
   </div>
@@ -40,7 +54,7 @@
           <mat-select [(ngModel)]="poHdr.purchaser" appearance="outline" name="purchaser" [compareWith]="compareObjects"
             #purchaser="ngModel">
             <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
-              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+              {{storeEmployee.employee.firstName}} {{storeEmployee.employee.lastName}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -115,7 +129,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <mat-label> {{'COMMON.AMOUNT' | translate}}
           </mat-label>
-          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="poHdr.amount" name="amount" 
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="poHdr.amount" name="amount"
             [disabled]="true" #amount="ngModel" required>
           <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -133,23 +147,23 @@
         </mat-form-field>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
           [linkEnabled]="true">
         </input-file>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-        <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br/>
-        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="poHdr.status">
-          <mat-button-toggle [value]="0" [disabled]="poHdr.status === 2">
-            {{'COMMON.INACTIVE' | translate}}
-          </mat-button-toggle>
-          <mat-button-toggle [value]="1"  [disabled]="poHdr.status === 2">
-            {{'COMMON.ACTIVE' | translate}}
-          </mat-button-toggle>
-          <mat-button-toggle [value]="2" [disabled]="true">
-            {{'COMMON.SUBMITTED' | translate}}
-          </mat-button-toggle>
-        </mat-button-toggle-group>
+        <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br />
+
+        <h4  *ngIf="poHdr.status === 0"  style="color:#283593;">
+          {{'COMMON.DRAFT' | translate}}
+        </h4>
+        <h4 *ngIf="poHdr.status === 5" style="color:green">
+          {{'COMMON.COMPLETED' | translate}}
+        </h4>
+        <h4  *ngIf="poHdr.status === 9"  style="color:#FF0000;">
+          {{'COMMON.CANCELLED' | translate}}
+        </h4>
 
       </div>
     </div>
@@ -165,5 +179,5 @@
     <mat-tab label="{{'COMMON.INGREDIENTS' | translate}}">
       <app-purchase-order-details #IngredientsComponent></app-purchase-order-details>
     </mat-tab>
-</mat-tab-group>
+  </mat-tab-group>
 </div>

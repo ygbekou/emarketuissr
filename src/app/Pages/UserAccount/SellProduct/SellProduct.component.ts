@@ -123,6 +123,10 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores.length > 0) {
+          this.selectedStore = this.stores[0];
+          this.stepper.selectedIndex = 1;
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));

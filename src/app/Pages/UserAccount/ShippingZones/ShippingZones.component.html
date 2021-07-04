@@ -5,7 +5,7 @@
   <h5>{{store.name}}</h5>
 </a>
 
-<mat-form-field class="w-100 mb-3">
+<mat-form-field class="w-100 mb-3" *ngIf="stores && stores.length>0">
   <mat-label>{{'COMMON.STORE' | translate}}</mat-label>
   <mat-select placeholder="{{'COMMON.STORE' | translate}}" [compareWith]="compareObjects" id="store1" name="store1"
     [(ngModel)]="store" #store1="ngModel" (selectionChange)="geoZone=null;getAll();" required>
@@ -14,6 +14,9 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+<button *ngIf="!stores || stores.length===0" mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
 <mat-tab-group [(selectedIndex)]="selectedTab" *ngIf="store">
   <mat-tab label="{{'COMMON.LIST' | translate}}">
     <div fxLayout="row wrap">
@@ -197,8 +200,8 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.RATE_PER_KM' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="kmRate" [(ngModel)]="geoZone.kmRate"
-              name="kmRate" #kmRate="ngModel" required>
+            <input matInput type="text" class="form-control" id="kmRate" [(ngModel)]="geoZone.kmRate" name="kmRate"
+              #kmRate="ngModel" required>
             <mat-error *ngIf="ff.submitted && kmRate.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>
@@ -208,8 +211,8 @@
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.SHIPPING_WEIGHT_KM' | translate}}
             </mat-label>
-            <input matInput type="text" class="form-control" id="shippingWeightKm" [(ngModel)]="geoZone.shippingWeightKm"
-              name="shippingWeightKm" #shippingWeightKm="ngModel" required>
+            <input matInput type="text" class="form-control" id="shippingWeightKm"
+              [(ngModel)]="geoZone.shippingWeightKm" name="shippingWeightKm" #shippingWeightKm="ngModel" required>
             <mat-error *ngIf="ff.submitted && shippingWeightKm.invalid" severity="error">
               {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
             </mat-error>

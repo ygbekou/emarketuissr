@@ -5,9 +5,12 @@
 </div>
 <div fxLayout="row wrap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
-    <div class="text-center mt-2" *ngIf="messages">
-      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-    </div>
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
+      </div>
   </div>
 </div>
 
@@ -103,19 +106,19 @@
   <!--   Column -->
   <ng-container matColumnDef="actions">
     <th mat-header-cellwidth="20%" *matHeaderCellDef> Actions
-      <a (click)="addBillDtl()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}"  
-        [disabled]="bill.status === 0 || bill.status === 2">
-        <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-      </a>
+      <button (click)="addBillDtl()" mat-fab color="primary" matTooltip="{{'COMMON.ADD' | translate}}"  
+        [disabled]="bill.status >1">
+        <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
+    </button>
     </th>
     <td mat-cell *matCellDef="let billDtl; let i = index">
       <button mat-icon-button color="primary" (click)="saveBillDtl(billDtl, i)" matTooltip="{{'COMMON.SAVE' | translate}}"
-        [disabled]="!billDtl.isTouched || bill.status === 0 || bill.status === 2" class="remove">
+        [disabled]="!billDtl.isTouched || bill.status >1" class="remove">
         <mat-icon>save</mat-icon>
       </button>
       &nbsp;&nbsp;
       <button mat-icon-button color="warn" (click)="removeBillDtl(billDtl)" matTooltip="{{'COMMON.DELETE' | translate}}"
-        [disabled]="bill.status === 0 || bill.status === 2" class="remove">
+        [disabled]="bill.status >1" class="remove">
         <mat-icon>delete</mat-icon>
       </button>
     </td>

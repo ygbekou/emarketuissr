@@ -173,8 +173,10 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
 
 
   save() {
+    console.log('Save called');
     if (this.justSubmitted) {
       this.justSubmitted = false;
+      console.log('Just submitted');
       return;
     }
     this.saving = true;
@@ -191,6 +193,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
     }
 
+    console.log(this.poHdr);
     this.appService.saveWithFile(this.poHdr, 'PoHdr', this.formData, 'saveWithFile')
       .subscribe((data: PoHdr) => {
         this.processResult(data, this.poHdr, null);
@@ -222,6 +225,24 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         () => console.log('Submit PoHrd complete'));
   }
 
+  cancel() {
+    this.poHdr.status = 9;
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.poHdr.modifiedBy = +this.appService.tokenStorage.getUserId();
+        this.appService.save(this.poHdr, 'PoHdr')
+      .subscribe((data: PoHdr) => {
+        this.processResult(data, this.poHdr, null);
+        this.poHdr = data;
+        this.poHdr.storeName = this.store.name;
+        this.poHdrSaveEvent.emit(this.poHdr);
+        this.getPoDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Save PoHdr complete'));
+  }
   setToggleValues() {
     this.poHdr.status = (this.poHdr.status == null
       || this.poHdr.status.toString() === 'false'
@@ -237,7 +258,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
 
-  calculateAmount () {
+  calculateAmount() {
     if (this.poHdr.subTotal) {
       this.poHdr.amount = Number(this.poHdr.subTotal);
     }

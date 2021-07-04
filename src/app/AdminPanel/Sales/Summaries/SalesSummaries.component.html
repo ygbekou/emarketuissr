@@ -1,7 +1,8 @@
 <a mat-button [routerLink]="['/admin/sales/summaries']">{{'COMMON.SALES_SUMMARIES' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-
+<button *ngIf="!stores || stores.length===0" mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
 
 <div fxLayout="row wrap">
 
@@ -35,13 +36,15 @@
                 </ng-container>
 
                 <ng-container matColumnDef="monthyear">
-                  <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.MONTH'|translate}}/{{'COMMON.YEAR'|translate}}
+                  <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header>
+                    {{'COMMON.MONTH'|translate}}/{{'COMMON.YEAR'|translate}}
                   </th>
                   <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.month}}/{{salesSummary.year}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="paymentMethod">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PAYMENT_METHOD'|translate}}
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.PAYMENT_METHOD'|translate}}
                   </th>
                   <td mat-cell *matCellDef="let salesSummary"> {{salesSummary.paymentMethod}} </td>
                 </ng-container>
@@ -50,74 +53,87 @@
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
                   <td mat-cell *matCellDef="let salesSummary" class="text-left">
                     {{salesSummary.currencySymbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{salesSummary.currencySymbolRight}}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="processingFees">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PROCESSING_FEES'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.PROCESSING_FEES'|translate}} </th>
                   <td mat-cell *matCellDef="let salesSummary" class="text-left">
                     {{salesSummary.currencySymbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{salesSummary.currencySymbolRight}}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="totalDue">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}} </th>
-                  <td mat-cell *matCellDef="let salesSummary" class="text-left" [ngStyle]="{'color': salesSummary.totalDue < 0 ? '#ff5722' : '#000000'}" >
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let salesSummary" class="text-left"
+                    [ngStyle]="{'color': salesSummary.totalDue < 0 ? '#ff5722' : '#000000'}">
                     {{salesSummary.currencySymbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{salesSummary.currencySymbolRight}}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="totalPaid">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_PAID'|translate}} </th>
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_PAID'|translate}}
+                  </th>
                   <td mat-cell *matCellDef="let salesSummary" class="text-left">
                     {{salesSummary.currencySymbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currencyDecimalPlace + '-'  
-                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currencySymbolRight}}
+                + salesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{salesSummary.currencySymbolRight}}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
                   </th>
-                  <td mat-cell *matCellDef="let salesSummary" class="text-left"> 
-                    <span style="color: #0000FF" *ngIf="salesSummary.status === 2"> {{'COMMON.PAY_SUBMITTED'|translate}} </span>
-                    <span style="color: #008000" *ngIf="salesSummary.status === 3"> {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
-                    <span style="color: #FF0000" *ngIf="salesSummary.totalPaid === 0"> {{'COMMON.UNPAID'|translate}} </span>
+                  <td mat-cell *matCellDef="let salesSummary" class="text-left">
+                    <span style="color: #0000FF" *ngIf="salesSummary.status === 2"> {{'COMMON.PAY_SUBMITTED'|translate}}
+                    </span>
+                    <span style="color: #008000" *ngIf="salesSummary.status === 3">
+                      {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
+                    <span style="color: #FF0000" *ngIf="salesSummary.totalPaid === 0"> {{'COMMON.UNPAID'|translate}}
+                    </span>
                     <!-- <span style="color: #0000FF" *ngIf="salesSummary.totalDue > 0 && salesSummary.totalPaid > 0"> {{'COMMON.PARTIALLY_PAID'|translate}} </span> -->
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
-                  <td mat-cell *matCellDef="let salesSummary"> 
-                    <a  mat-icon-button (click)="getSalesSummaryDetails(salesSummary.id, salesSummary.payoutId)"
+                  <td mat-cell *matCellDef="let salesSummary">
+                    <a mat-icon-button (click)="getSalesSummaryDetails(salesSummary.id, salesSummary.payoutId)"
                       color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
                       <mat-icon>info</mat-icon>
                     </a>
                     &nbsp;&nbsp;
-                    <button mat-raised-button (click)="acknowledgeSalesSummary(salesSummary.id)" color="accent" fxLayout="row"
-                      fxLayoutAlign="center center" *ngIf="salesSummary.status === 2 && !isAdminPage"
+                    <button mat-raised-button (click)="acknowledgeSalesSummary(salesSummary.id)" color="accent"
+                      fxLayout="row" fxLayoutAlign="center center" *ngIf="salesSummary.status === 2 && !isAdminPage"
                       matTooltip="{{'COMMON.ACKNOWLEDGE' | translate}}">
                       <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE_SHORT' | translate}}</span>
                       <mat-icon>done_all</mat-icon>
                     </button>
-                    
+
                   </td>
                 </ng-container>
 
-              
+
                 <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
                 <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;"></tr>
               </table>
-              <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+              <p *ngIf="salesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+                {{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
-            <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator>
           </div>
-     
-     
-     
+
+
+
 
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
             <mat-card>
@@ -136,7 +152,7 @@
                     <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
                     <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
                       <mat-option [value]="0">
-                          {{'COMMON.ALL_STORES'|translate}}
+                        {{'COMMON.ALL_STORES'|translate}}
                       </mat-option>
                       <mat-option *ngFor="let store of stores" [value]="store.id">
                         {{store.name}}
@@ -160,7 +176,7 @@
                     <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
                     <mat-select [(ngModel)]="searchCriteria.status" name="status">
                       <mat-option [value]="-1">
-                          {{'COMMON.ALL_STATUS'|translate}}
+                        {{'COMMON.ALL_STATUS'|translate}}
                       </mat-option>
                       <mat-option [value]="1">
                         {{'COMMON.UNPAID'|translate}}
@@ -203,7 +219,7 @@
           </div>
         </div>
 
-     
+
       </mat-tab>
 
       <mat-tab label="{{'COMMON.DETAILS' | translate}}">
@@ -213,5 +229,5 @@
   </div>
 
 
-  
+
 </div>

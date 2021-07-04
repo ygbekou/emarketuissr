@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, ProductStoreMenu, ProductDescription, StoreEmployee, User, Transaction } from 'src/app/app.models';
+import { Store, ProductStoreMenu, ProductDescription, StoreEmployee, User, Transaction, TransactionType } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +14,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 export class TransactionComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   messages = '';
+  errors = '';
   transaction: Transaction = new Transaction();
 
   currentOption: string;
@@ -68,6 +69,7 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   clear(data) {
     this.messages = '';
+    this.errors = '';
     this.currentOption = '';
     this.transaction = new Transaction();
     this.setDatasource([]);
@@ -125,12 +127,12 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
   getStoreProducts() {
     this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
       + this.appService.appInfoStorage.language.id + '/' + this.store.id)
-    .subscribe((data: ProductDescription[]) => {
-      this.filteredProductOptions = data;
-      this.productOptions = data;
-    },
-      error => console.log(error),
-      () => console.log('Get all store product complete'));
+      .subscribe((data: ProductDescription[]) => {
+        this.filteredProductOptions = data;
+        this.productOptions = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all store product complete'));
   }
 
 
@@ -146,8 +148,8 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   save() {
     this.messages = '';
+    this.errors = '';
     this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
-
     if (!this.transaction.store.id) {
       this.transaction.store.id = this.store.id;
     }
@@ -157,18 +159,30 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
         this.formData.append('file[]', img.file, 'picture.jpg');
       }
     }
-
     this.appService.saveWithFile(this.transaction, 'Transaction', this.formData, 'saveWithFile')
       .subscribe((data: Transaction) => {
         this.processResult(data, this.transaction, null);
         this.transaction = data;
         this.transaction.storeName = this.store.name;
+        this.transaction.transactionType.name = this.getTranName(this.transaction.transactionType);
         this.transactionSaveEvent.emit(this.transaction);
+        this.currentOption = '';
+        this.transaction = new Transaction();
+        this.setDatasource([]);
+        this.picture = [];
       },
         error => console.log(error),
         () => console.log('Save Transaction complete'));
   }
 
+  getTranName(tType: TransactionType): string {
+    for (const t of this.appService.appInfoStorage.transactionTypes) {
+      if (t.transactionType.id === tType.id) {
+        return t.name;
+      }
+    }
+    return null;
+  }
   setToggleValues() {
     this.transaction.status = (this.transaction.status == null
       || this.transaction.status.toString() === 'false'

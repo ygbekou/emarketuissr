@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BillComponent } from './Bill.component';
+import { UserBillComponent } from './UserBill.component';
 
 export interface SearchResponse {
   document: string;
@@ -24,13 +25,14 @@ export interface SearchResponse {
 })
 export class BillsComponent extends BaseComponent implements OnInit {
 
-  billsColumns: string[] = ['billDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
+  billsColumns: string[] = ['reference', 'billDate', 'description', 'amount', 'dueDate', 'status'];
   billsDatasource: MatTableDataSource<Bill>;
   @ViewChild('MatPaginatorBills', { static: false }) billsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) billsSort: MatSort;
 
 
   @ViewChild(BillComponent, { static: false }) billComponent: BillComponent;
+  @ViewChild(UserBillComponent, { static: false }) userBillComponent: UserBillComponent;
   messages = '';
   button = 'filter';
 
@@ -58,17 +60,14 @@ export class BillsComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.clear();
     this.getStores();
-
     this.activatedRoute.data.subscribe(value => {
       this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
         && (this.location.path().startsWith('/admin/'));
     });
   }
 
-
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
-
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
     }
@@ -82,10 +81,14 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   private getStores() {
     this.storeSearchCriteria.status = 1;
-    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.storeSearchCriteria.userId = this.userId;
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores && this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.storeSelected(this.selectedStore);
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
@@ -135,7 +138,12 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   getBillDetails(bill: any) {
     this.selected.setValue(1);
-    this.billComponent.getBill(bill);
+    if (this.userId) {
+      this.userBillComponent.getBill(bill);
+    } else {
+      this.billComponent.getBill(bill);
+    }
+
   }
 
   storeSelected(event) {
@@ -147,7 +155,12 @@ export class BillsComponent extends BaseComponent implements OnInit {
       this.getMyStoreEmployees();
 
       if (this.billComponent) {
-        this.billComponent.store = event.value;
+        if (event && event.value) {
+          this.billComponent.store = event.value;
+        } else {
+          this.billComponent.store = event;
+        }
+
         this.billComponent.getMyStoreEmployees();
         this.billComponent.clear([]);
       }

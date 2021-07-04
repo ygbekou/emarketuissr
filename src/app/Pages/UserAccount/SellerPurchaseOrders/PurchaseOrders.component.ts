@@ -23,8 +23,8 @@ export interface SearchResponse {
   styleUrls: ['./PurchaseOrders.component.scss']
 })
 export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
-
-  purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
+  // purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'subTotal', 'taxes', 'discount', 'amount', 'status', 'actions'];
+  purchaseOrdersColumns: string[] = ['purchaser', 'supplier', 'poDate', 'amount', 'status', 'actions'];
   purchaseOrdersDatasource: MatTableDataSource<PoHdr>;
   @ViewChild('MatPaginatorPurchaseOrders', { static: false }) purchaseOrdersPaginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) purchaseOrdersSort: MatSort;
@@ -64,7 +64,7 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
         && (this.location.path().startsWith('/admin/'));
     });
   }
-  
+
   compareObjects(o1: any, o2: any): boolean {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
@@ -162,19 +162,23 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
   storeSelected(event) {
 
     setTimeout(() => {
-        this.searchCriteria.storeId = this.selectedStore.id;
-        this.search();
-        this.selected.setValue(0);
-        this.getMyStoreEmployees();
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
+      this.selected.setValue(0);
+      this.getMyStoreEmployees();
 
-        if (this.purchaseOrderComponent) {
+      if (this.purchaseOrderComponent) {
+        if (event && event.value) {
           this.purchaseOrderComponent.store = event.value;
-          this.purchaseOrderComponent.getMyStoreEmployees();
-          this.purchaseOrderComponent.getSuppliers();
-          //this.purchaseOrderComponent.getStoreProducts();
-          this.purchaseOrderComponent.clear([]);
+        } else {
+          this.purchaseOrderComponent.store = event;
         }
-      }, 500);
+        this.purchaseOrderComponent.getMyStoreEmployees();
+        this.purchaseOrderComponent.getSuppliers();
+        //this.purchaseOrderComponent.getStoreProducts();
+        this.purchaseOrderComponent.clear([]);
+      }
+    }, 500);
   }
 
   updateDataTable(poHdr: PoHdr) {

@@ -189,7 +189,6 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
     this.saving = true;
     this.messages = '';
     this.bill.modifiedBy = +this.appService.tokenStorage.getUserId();
-
     this.appService.saveWithUrl('/service/finance/submitBill/', this.bill)
       .subscribe((data: Bill) => {
         console.log(data);
@@ -202,6 +201,23 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
         () => console.log('Submit Bill complete'));
   }
 
+  cancel() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.bill.status = 9;
+    this.bill.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.appService.save(this.bill, 'Bill')
+      .subscribe((data: Bill) => {
+        this.processResult(data, this.bill, null);
+        this.bill = data;
+        this.bill.storeName = this.store.name;
+        this.billSaveEvent.emit(this.bill);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Save PoHdr complete'));
+  }
   changeTab($event) {
     if ($event.index === 0) {
       this.productsComponent.billDtlColumns[2] = 'productName';
@@ -210,7 +226,7 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
     }
   }
 
-  calculateAmount () {
+  calculateAmount() {
     if (this.bill.subTotal) {
       this.bill.amount = Number(this.bill.subTotal);
     }

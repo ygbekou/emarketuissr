@@ -1,6 +1,13 @@
-<a mat-button [routerLink]="['/admin/sales/orders']">{{'COMMON.ORDERS' | translate}}
+<a mat-button [routerLink]="['/admin/sales/orders']">{{'COMMON.SALE' | translate}}s
   <mat-icon>navigate_next</mat-icon>
 </a>
+<button *ngIf="!stores || stores.length===0" mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
+<div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+  <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
+    [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
+</div>
 <div fxLayout="row wrap">
   <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
     <mat-form-field appearance="outline" class="w-100">
@@ -12,12 +19,8 @@
 <div class="text-center mt-2" *ngIf="messages">
   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
 </div>
-
-
 <div fxLayout="row wrap">
-
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)">
       <mat-tab label="{{'COMMON.ONLINE_ORDERS' | translate}}">
         <div class="table-wrapper">
@@ -88,7 +91,8 @@
           </table>
           <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
         </div>
-        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
       </mat-tab>
       <mat-tab label="{{'COMMON.STORE_ORDERS' | translate}}">
         <div class="table-wrapper">
@@ -104,8 +108,8 @@
               </th>
               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">{{element.storeName}}</td>
             </ng-container>
- 
-          
+
+
             <ng-container matColumnDef="cashier">
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.CASHIER'|translate}}
               </th>
@@ -114,11 +118,11 @@
               </td>
             </ng-container>
 
-             <ng-container matColumnDef="status">
+            <ng-container matColumnDef="status">
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.ORDER_STATUS'|translate}}
               </th>
               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                {{element.status}} 
+                {{element.status}}
               </td>
             </ng-container>
 
@@ -130,7 +134,7 @@
                 {{element.total| number:'1.0-2'}}
                 {{element.symbolRight}} </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="rebate">
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.REBATE'|translate}}
               </th>
@@ -140,7 +144,7 @@
                 {{element.symbolRight}}
               </td>
             </ng-container>
-            
+
             <ng-container matColumnDef="qty">
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.QTY'|translate}}
               </th>
@@ -159,7 +163,8 @@
           </table>
           <p *ngIf="storeDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
         </div>
-        <mat-paginator [pageSize]="10" #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSize]="10" #MatPaginatorS [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
       </mat-tab>
     </mat-tab-group>
   </div>

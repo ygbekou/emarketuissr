@@ -24,6 +24,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   @ViewChild('MatPaginatorS', { static: true }) storePG: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeST: MatSort;
   messages = '';
+  fromAdmin = false;
   button = 'filter';
   @Input() userId: number;
   searchCriteria: OrderSearchCriteria;
@@ -38,6 +39,9 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!(this.userId === undefined)) {
+      this.fromAdmin = true;
+    }
     this.clear();
     this.getStores();
     this.search();

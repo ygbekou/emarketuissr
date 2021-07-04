@@ -2372,7 +2372,7 @@ export class PoHdr {
   amount: number;
   image: string;
   description: string;
-  status = 1;
+  status = 0;
 
   storeName: string;
   modifiedBy: number;
@@ -2382,6 +2382,7 @@ export class PoHdr {
   constructor() {
     this.purchaser = new User();
     this.store = new Store();
+    this.poDate = new Date();
   }
 }
 
@@ -2410,7 +2411,6 @@ export class PoDtl {
 }
 
 export class POSearchCriteria {
-
   id: number;
   storeId: number;
   storeName: string;
@@ -2458,10 +2458,10 @@ export class Transaction {
   type = 'Transaction';
 
   constructor() {
-    this.paidBy = new User();
-    this.receiver = new User();
+    // this.paidBy = new User();
+    // this.receiver = new User();
     this.store = new Store();
-    this.status = 1;
+    this.status = 0;
     this.transactionDate = new Date();
   }
 }
@@ -2490,21 +2490,22 @@ export class Bill {
   id: number;
   store: Store;
   billDate: Date;
+  dueDate: Date;
+  paidDate: Date;
   subTotal: number;
+  reference: string;
   taxes: number;
   discount: number;
   amount: number;
   image: string;
   description: string;
-  status = 1;
-
+  status = 0;
   storeName: string;
   modifiedBy: number;
-
   type = 'Bill';
-
   constructor() {
     this.store = new Store();
+    this.billDate = new Date();
   }
 }
 
