@@ -39,7 +39,8 @@
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
           [matAutocomplete]="auto" [(ngModel)]="billDtl.productName" required
           (ngModelChange)="billDtl.isTouched = true; filterOptions(billDtl.productName)">
-        <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredProductOptions " (onSelectionChange)="billDtl.isTouched = true; 
                   billDtl.product.id = option.product.id" [value]="option.name">
             {{option.name}}
@@ -60,7 +61,8 @@
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
           [matAutocomplete]="auto" [(ngModel)]="billDtl.serviceName" required
           (ngModelChange)="billDtl.isTouched = true; filterServiceOptions(billDtl.serviceName)">
-        <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredServiceOptions " (onSelectionChange)="billDtl.isTouched = true; 
                   billDtl.service.id = option.service.id" [value]="option.name">
             {{option.name}}

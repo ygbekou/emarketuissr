@@ -1,8 +1,11 @@
 <form name="form" (ngSubmit)="f.form.valid && validateSelectedMenu() && save()" #f="ngForm" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
-      <div class="text-center mt-2" *ngIf="messages">
-        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+     <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
       </div>
     </div>
   </div>
@@ -14,7 +17,8 @@
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}"   name="menuName" matInput
           [matAutocomplete]="auto" [(ngModel)]="storeMenu.menuName" #menuName="ngModel" required
           (ngModelChange)="filterOptions(storeMenu.menuName)">
-        <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredMenuOptions " (onSelectionChange)="setSelectedMenu(option)"
             [value]="option.name">
             {{option.name}}
@@ -40,12 +44,11 @@
   </div>
 </form>
 
-<div fxLayout="row wrap" [hidden]="!storeMenu?.id">
+<div fxLayout="row wrap" *ngIf="storeMenu && storeMenu.id>0">
   <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
     <legend>
       <h5 style="color:#00008b">{{'COMMON.AVAILABLE_PRODUCTS' | translate}}</h5>
     </legend>
-
     <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="100">
         <mat-form-field appearance="outline" class="w-100">

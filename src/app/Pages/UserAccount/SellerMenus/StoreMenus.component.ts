@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./StoreMenus.component.scss']
 })
 export class StoreMenusComponent extends BaseComponent implements OnInit {
-  storeMenusColumns: string[] = ['menuName', 'status', 'actions'];
+  storeMenusColumns: string[] = ['menuName', 'status'];
   storeMenusDatasource: MatTableDataSource<StoreMenu>;
   @ViewChild('MatPaginatorStoreMenus', { static: true }) storeMenusPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeMenusSort: MatSort;
@@ -133,19 +133,23 @@ export class StoreMenusComponent extends BaseComponent implements OnInit {
   storeSelected(event) {
 
     setTimeout(() => {
-        this.searchCriteria.storeId = this.selectedStore.id;
-        this.search();
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
 
-        if (this.storeMenuComponent) {
+      if (this.storeMenuComponent) {
+        if (event && event.value) {
           this.storeMenuComponent.store = event.value;
-          this.storeMenuComponent.clear();
-          this.storeMenuComponent.getStoreUnassignedMenus();
+        } else {
+          this.storeMenuComponent.store = event;
         }
-      }, 500);
+        this.storeMenuComponent.clear();
+        this.storeMenuComponent.getStoreUnassignedMenus();
+      }
+    }, 500);
   }
 
   updateDataTable(storeMenu: StoreMenu) {
     this.updateDatasourceData(this.storeMenusDatasource, this.storeMenusPaginator, this.storeMenusSort, storeMenu);
-    this.selected.setValue(0);
+    // this.selected.setValue(0);
   }
 }

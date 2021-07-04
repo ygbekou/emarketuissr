@@ -4,6 +4,7 @@
          <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
             matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required
             (ngModelChange)="filterOptions(currentOption)">
+            <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
          <mat-autocomplete id="option1" #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredOptionOptions "
                (onSelectionChange)="saveProductStoreOption(option)" [value]="option.name">

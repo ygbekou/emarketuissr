@@ -29,10 +29,10 @@
             </mat-form-field>
           </div>
           <div fxFlex="10" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
-            <a (click)="action = 'add'; messages = ''; getStoreMenuDetails(null)" mat-icon-button color="primary"
+            <button (click)="action = 'add'; messages = ''; getStoreMenuDetails(null)" mat-fab color="primary"
               matTooltip="{{'COMMON.ADD' | translate}}">
-              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-            </a>
+              <mat-icon  class="mat-icon-xlg">add_circle</mat-icon>
+            </button>
           </div>
         </div>
         <div class="text-center mt-2" *ngIf="messages">
@@ -62,7 +62,7 @@
                   {{storeMenu.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>
               </ng-container>
 
-              <ng-container matColumnDef="actions">
+     <!--          <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
                 <td mat-cell *matCellDef="let storeMenu">
                   <a mat-icon-button (click)="getStoreMenuDetails(storeMenu)" color="secondary"
@@ -71,11 +71,12 @@
                   </a>
                   &nbsp;&nbsp;
                 </td>
-              </ng-container>
+              </ng-container> -->
 
 
               <tr mat-header-row *matHeaderRowDef="storeMenusColumns"></tr>
-              <tr mat-row *matRowDef="let storeMenu; columns: storeMenusColumns;"></tr>
+              <tr mat-row *matRowDef="let storeMenu; columns: storeMenusColumns;"
+               (click)="getStoreMenuDetails(storeMenu)" ></tr>
             </table>
             <p *ngIf="storeMenusDatasource?.data.length === 0" class="py-5 mb-0 text-center">
               {{'MESSAGE.NO_DATA' | translate}}</p>

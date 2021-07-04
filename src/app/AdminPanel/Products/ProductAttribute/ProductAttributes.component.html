@@ -21,7 +21,8 @@
                   <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
                      [(ngModel)]="productAttribute.attributeName" required
                      (ngModelChange)="filteredAttributeOptions = filterAttributes(currentOption)">
-                  <mat-autocomplete id="attribute" #auto="matAutocomplete" >
+                  <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                     <mat-autocomplete id="attribute" #auto="matAutocomplete" >
                      <mat-option *ngFor="let option of filteredAttributeOptions" 
                         (onSelectionChange)="productAttribute.attribute = option.attribute; 
                         productAttribute.language = option.language" 

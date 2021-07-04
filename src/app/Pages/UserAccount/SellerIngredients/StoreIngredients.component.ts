@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./StoreIngredients.component.scss']
 })
 export class StoreIngredientsComponent extends BaseComponent implements OnInit {
-  storeIngredientsColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status', 'actions'];
+  storeIngredientsColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status'];
   storeIngredientsDatasource: MatTableDataSource<StoreIngredient>;
   @ViewChild('MatPaginatorStoreIngredients', { static: true }) storeIngredientsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeIngredientsSort: MatSort;
@@ -170,7 +170,12 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
       this.lowInventoryDatasource.sort = this.lowInventorySort;
 
       if (this.storeIngredientComponent) {
-        this.storeIngredientComponent.store = event.value;
+        if (event && event.value) {
+          this.storeIngredientComponent.store = event.value;
+        } else {
+          this.storeIngredientComponent.store = event;
+        }
+
         this.storeIngredientComponent.clear();
         this.storeIngredientComponent.getStoreUnassignedIngredients();
       }
@@ -179,6 +184,6 @@ export class StoreIngredientsComponent extends BaseComponent implements OnInit {
 
   updateDataTable(storeIngredient: StoreIngredient) {
     this.updateDatasourceData(this.storeIngredientsDatasource, this.storeIngredientsPaginator, this.storeIngredientsSort, storeIngredient);
-    this.selected.setValue(0);
+    // this.selected.setValue(0);
   }
 }

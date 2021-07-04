@@ -26,7 +26,8 @@
           <input type="text" placeholder="" aria-label="Number" name="parentProductOption" matInput
             [(ngModel)]="productToParent.parentProductDescription.name" [matAutocomplete]="auto"
             (ngModelChange)="filterParentOptions(productToParent)">
-          <mat-autocomplete id="parent" #auto="matAutocomplete" [(ngModel)]="productToParent.parentProductDescription"
+          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+            <mat-autocomplete id="parent" #auto="matAutocomplete" [(ngModel)]="productToParent.parentProductDescription"
             name="parent">
             <mat-option *ngFor="let option of productToParent.filteredParentOptions"
               (onSelectionChange)="parentProductSelected(productToParent, option)" [value]="option.name">

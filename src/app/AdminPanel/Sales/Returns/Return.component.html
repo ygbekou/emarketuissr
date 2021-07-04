@@ -127,7 +127,8 @@
                     <input type="text" placeholder="Pick one" aria-label="Number" name="currentOption" matInput [matAutocomplete]="auto"
                      [(ngModel)]="returnProduct.productName" required
                      (ngModelChange)="filterProducts(returnProduct.productName)">
-                    <mat-autocomplete id="product" #auto="matAutocomplete" >
+                    <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                     <mat-autocomplete id="product" #auto="matAutocomplete" >
                      <mat-option *ngFor="let option of filteredOrderProducts" 
                         (onSelectionChange)="setSelectedValue(returnProduct, option)" 
                         [value]="option.name">

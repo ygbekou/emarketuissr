@@ -41,8 +41,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   @Input() store = new Store();
   @Output() storeMenuSaveEvent = new EventEmitter<any>();
 
-  selection;
-
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute,
@@ -52,12 +50,14 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
+      console.log(params);
       if (params.id === undefined || params.id === 0) {
         this.clear();
       } else {
         this.storeMenu.id = params.id;
         this.clear();
         this.getStoreMenu(params.id);
+        console.log(this.storeMenu);
       }
     });
 
@@ -81,6 +81,8 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     this.messages = '';
     this.storeMenu = new StoreMenu();
     this.currentOption = '';
+    console.log(this.storeMenu);
+    console.log(this.storeMenu.id > 0);
   }
 
   getStoreMenuUnassignedProducts() {
@@ -134,8 +136,10 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
 
     this.appService.saveWithUrl('/service/catalog/getStoreUnassignedMenus', this.searchCriteria)
       .subscribe((data: any[]) => {
+        if (data) {
+          data.push(this.storeMenu);
+        }
         this.menuDescriptions = data;
-
         this.menuOptions = data;
         this.filteredMenuOptions = data;
       },
@@ -145,7 +149,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   }
 
   getStoreMenuProducts() {
-
     this.appService.saveWithUrl('/service/catalog/getProductStoreMenus',
       {
         storeId: this.storeMenu.store.id,
@@ -161,8 +164,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         () => console.log('Get store menu products complete'));
 
   }
-
-
 
   filterOptions(val) {
     if (val) {
@@ -192,6 +193,8 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         this.storeMenu.storeName = this.store.name;
         this.storeMenu.menuName = this.currentOption;
         this.storeMenuSaveEvent.emit(this.storeMenu);
+        this.getStoreMenu(this.storeMenu);
+        this.getStoreUnassignedMenus();
       },
         error => console.log(error),
         () => console.log('Save StoreMenu complete'));

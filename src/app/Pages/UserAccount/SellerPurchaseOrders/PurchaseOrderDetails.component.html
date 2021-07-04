@@ -39,7 +39,8 @@
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
           [matAutocomplete]="auto" [(ngModel)]="poDtl.productName" required
           (ngModelChange)="poDtl.isTouched = true; filterOptions(poDtl.productName)">
-        <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredProductOptions " (onSelectionChange)="poDtl.isTouched = true; 
                   poDtl.product.id = option.product.id" [value]="option.name">
             {{option.name}}
@@ -59,7 +60,8 @@
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption" matInput
           [matAutocomplete]="auto" [(ngModel)]="poDtl.ingredientName" required
           (ngModelChange)="poDtl.isTouched = true; filterIngredientOptions(poDtl.productName)">
-        <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredIngredientOptions " (onSelectionChange)="poDtl.isTouched = true; 
                   poDtl.ingredient.id = option.ingredient.id" [value]="option.ingredient.name">
             {{option.ingredient.name}}
