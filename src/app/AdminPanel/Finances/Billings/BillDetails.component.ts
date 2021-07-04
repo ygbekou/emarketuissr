@@ -42,6 +42,8 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
 
   ngOnInit() {
     this.clear([]);
+    this.getStoreProducts(17);
+    this.getServices();
   }
 
   ngAfterViewInit() {
@@ -83,8 +85,6 @@ export class BillDetailsComponent extends BaseComponent implements OnInit, After
       },
         error => console.log(error),
         () => console.log('Get all ServiceDescription complete'));
-
-
   }
 
   filterOptions(val) {
