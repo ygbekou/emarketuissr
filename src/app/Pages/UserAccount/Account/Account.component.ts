@@ -134,7 +134,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Factures', url: '/account/seller-bills', icon: 'receipt' }
     ]
   }, {
-    name: 'Expédition',
+    name: 'Livraisons',
     url: '/account/selling',
     icon: 'account_circle',
     children: [
