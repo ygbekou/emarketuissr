@@ -82,7 +82,7 @@
                 </ng-container>
 
 
-                <ng-container matColumnDef="actions">
+               <!--  <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef width="14%" mat-sort-header> Actions</th>
                   <td mat-cell *matCellDef="let transaction">
                     <a mat-icon-button (click)="getTransaction(transaction)" color="secondary"
@@ -91,7 +91,7 @@
                     </a>
                     &nbsp;&nbsp;
                   </td>
-                </ng-container>
+                </ng-container> -->
                 <tr mat-header-row *matHeaderRowDef="transactionsColumns"></tr>
                 <tr mat-row *matRowDef="let transaction; columns: transactionsColumns;"
                 (click)="getTransaction(transaction)"
