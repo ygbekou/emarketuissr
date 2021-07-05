@@ -124,14 +124,12 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
     this.messages = '';
     this.payout.currency = this.payout.store.currency;
     try {
-
       this.appService.save(this.payout, 'Payout')
         .subscribe(data => {
           this.processResult(data, this.payout, null);
           this.payout = data;
           this.payoutSaveEvent.emit(new PayoutVO(this.payout));
         });
-
     } catch (e) {
       console.log(e);
     }
@@ -155,12 +153,10 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
 
   isEmpty(value: string): boolean {
     const val = value !== null && value !== undefined ? value.trim() : '';
-
     return val.length === 0;
   }
 
   searchSalesSummaries() {
-
     if (this.salesSummariesIncludeComponent) {
       this.payout.total = 0;
       const searchCriteria = new SalesSummarySearchCriteria();
@@ -168,7 +164,7 @@ export class PayoutComponent  extends BaseComponent implements OnInit {
       searchCriteria.currencyId = this.payout.store.currency.id;
       searchCriteria.year = this.payout.year;
       searchCriteria.totalDueGreaterThan = 0;
-
+      searchCriteria.status = 1;
       this.salesSummariesIncludeComponent.searchCriteria = searchCriteria;
       this.salesSummariesIncludeComponent.selectedCurrency = this.payout.store.currency;
       this.salesSummariesIncludeComponent.search();

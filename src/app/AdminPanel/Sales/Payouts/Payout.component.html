@@ -1,30 +1,32 @@
-
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap">
     <div fxFlex.xs="100" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3" *ngIf="isAdminPage">
-      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;" type="submit" 
-        [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
-          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-          <mat-icon>save</mat-icon>
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+        type="submit" [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
+        <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+        <mat-icon>save</mat-icon>
       </button>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="isAdminPage">
-      <button mat-raised-button style="color:#ff0000" fxLayout="row" fxLayoutAlign="center center" (click)="reverse()" 
+      <button mat-raised-button style="color:#ff0000" fxLayout="row" fxLayoutAlign="center center" (click)="reverse()"
         [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
-          <span class="mx-1 uppercase">{{'COMMON.REVERSE' | translate}}</span>
-          <mat-icon>undo</mat-icon>
+        <span class="mx-1 uppercase">{{'COMMON.REVERSE' | translate}}</span>
+        <mat-icon>undo</mat-icon>
       </button>
-    </div> 
+    </div>
     <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="canAcknowledge">
-      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="acknowledge()" 
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="acknowledge()"
         [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
-          <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
-          <mat-icon>done_all</mat-icon>
+        <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
+        <mat-icon>done_all</mat-icon>
       </button>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div class="text-center mt-2" *ngIf="messages">
-        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
       </div>
     </div>
   </div>
@@ -35,7 +37,8 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
-            <mat-select [(ngModel)]="payout.store" name="store" #store="ngModel" [compareWith]="compareObjects" required>
+            <mat-select [(ngModel)]="payout.store" name="store" #store="ngModel" [compareWith]="compareObjects"
+              required>
               <mat-option *ngFor="let store of stores" [value]="store">
                 {{store.name}}
               </mat-option>
@@ -47,14 +50,15 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label> {{'COMMON.CURRENCY' | translate}}</mat-label><br/>
+          <mat-label> {{'COMMON.CURRENCY' | translate}}</mat-label><br />
           {{payout.store.currency?.title}}
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.YEAR' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="year" [(ngModel)]="payout.year" name="year" #year="ngModel" required>
+            <input matInput type="text" class="form-control" id="year" [(ngModel)]="payout.year" name="year"
+              #year="ngModel" required>
           </mat-form-field>
           <mat-error *ngIf="f.submitted && year.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
@@ -62,8 +66,9 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
-          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="searchSalesSummaries()">
-              <mat-icon>search</mat-icon>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+            (click)="searchSalesSummaries()">
+            <mat-icon>search</mat-icon>
           </button>
         </div>
 
@@ -71,13 +76,13 @@
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;"
-          (click)="stepper.selectedIndex = 1;">
-              <mat-icon>arrow_forward</mat-icon>
+            (click)="stepper.selectedIndex = 1;">
+            <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </div>
     </mat-step>
-    <mat-step [completed]="payout.total > 0">
+    <mat-step [completed]="payout.total !== 0">
       <ng-template matStepLabel>{{'COMMON.SELECT_TRANSACTION'|translate}}</ng-template>
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
@@ -85,12 +90,12 @@
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          (click)="stepper.selectedIndex = 0;">
-              <mat-icon>keyboard_backspace</mat-icon>
+            (click)="stepper.selectedIndex = 0;">
+            <mat-icon>keyboard_backspace</mat-icon>
           </button>
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;"
-          (click)="stepper.selectedIndex = 2;" [disabled]="payout.total === 0">
-              <mat-icon>arrow_forward</mat-icon>
+            (click)="stepper.selectedIndex = 2;" [disabled]="payout.total === 0">
+            <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </div>
@@ -100,11 +105,12 @@
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
-          <br/>
-          
+          <br />
+
           <h6 style="color: #ff5722">
             {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
-              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.store.currency?.symbolRight}}
+              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{payout.store.currency?.symbolRight}}
           </h6>
         </div>
 
@@ -112,7 +118,7 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}</mat-label><br />
             <input matInput [matDatepicker]="datePayoutPicker" class="form-control" id="datePayout"
-                [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" required>
+              [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" required>
             <mat-datepicker-toggle matSuffix [for]="datePayoutPicker"></mat-datepicker-toggle>
             <mat-datepicker #datePayoutPicker></mat-datepicker>
           </mat-form-field>
@@ -120,7 +126,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="proofPayoutId" [(ngModel)]="payout.proofPayoutId" 
+            <input matInput type="text" class="form-control" id="proofPayoutId" [(ngModel)]="payout.proofPayoutId"
               name="proofPayoutId" #proofPayoutId="ngModel" required>
           </mat-form-field>
         </div>
@@ -130,14 +136,14 @@
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
 
-            <textarea matInput rows="10" cols="50" class="form-control" id="comment"
-                  [(ngModel)]="payout.comment" name="comment"
-                  #comment="ngModel"></textarea>
+            <textarea matInput rows="10" cols="50" class="form-control" id="comment" [(ngModel)]="payout.comment"
+              name="comment" #comment="ngModel"></textarea>
           </mat-form-field>
         </div>
         <div fxLayout="row wrap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-            <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*" [linkEnabled]="true">
+            <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+              [linkEnabled]="true">
             </input-file>
           </div>
         </div>
@@ -145,106 +151,95 @@
       <div fxLayout="row wrap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
-          (click)="stepper.selectedIndex = 1;">
-              <mat-icon>keyboard_backspace</mat-icon>
+            (click)="stepper.selectedIndex = 1;">
+            <mat-icon>keyboard_backspace</mat-icon>
           </button>
-          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;" type="submit" 
-            [disabled]="!f.form.valid">
-              <span class="mx-1 uppercase">{{'COMMON.PAY' | translate}}</span>
-              <mat-icon>payment</mat-icon>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: right;"
+            type="submit" [disabled]="!f.form.valid">
+            <span class="mx-1 uppercase">{{'COMMON.PAY' | translate}}</span>
+            <mat-icon>payment</mat-icon>
           </button>
         </div>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
-
-
-    <div fxLayout="row wrap" *ngIf="payout.id > 0">
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <h4 style="color:red; text-align: center; display:flex; justify-content:center;" *ngIf="payout.total > 0 && payout.reversePayoutId">{{'COMMON.REVERSED' | translate}}</h4>
-        <h4 style="color:red; text-align: center; display:flex; justify-content:center;" *ngIf="payout.total < 0 && payout.reversePayoutId">{{'COMMON.REVERSAL' | translate}}</h4>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-            <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <mat-label> {{payout.store.name}}</mat-label>
-        </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {{payout.store.currency?.title}}
-        </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label> {{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label> {{payout.year}}</mat-label>
-        </div>
-        <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <span *ngIf="payout.status === 1" style="color:blue"><h5>{{'COMMON.SUBMITTED' | translate}}</h5></span>
-          <span *ngIf="payout.status === 2" style="color:green"><h6>{{'COMMON.ACKNOWLEDGED' | translate}}</h6></span>
-        </div> -->
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
-          <br/>
-          <h6 style="color: #ff5722">
-            {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
-              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.store.currency?.symbolRight}}
-          </h6>
-        </div>
-
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}</mat-label><br />
-            <input matInput [matDatepicker]="datePayoutPicker" class="form-control" id="datePayout"
-                [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" [disabled]="!isAdminPage" required>
-            <mat-datepicker-toggle matSuffix [for]="datePayoutPicker"></mat-datepicker-toggle>
-            <mat-datepicker #datePayoutPicker></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}</mat-label>
-            <input matInput type="text" class="form-control" id="proofPayoutId" [(ngModel)]="payout.proofPayoutId" 
-              name="proofPayoutId" #proofPayoutId="ngModel" [disabled]="!isAdminPage" required>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
-        </div>
-
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-          <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          {{payout.payerFullName }}
-        </div>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-          
-            <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-            <textarea matInput rows="8" cols="50" class="form-control" id="comment" maxlength="255"
-                  onkeypress="if (this.value.length >= 255) { return false; }"
-                  [(ngModel)]="payout.comment" name="comment" #comment="ngModel" *ngIf="isAdminPage"></textarea>
-          
-        </div>
-        <div fxLayout="row wrap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-            <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*" [linkEnabled]="true">
-            </input-file>
-          </div>
-        </div>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3" *ngIf="!payout.reversePayoutId">
-          <h6 style="color:blue">{{'COMMON.SALES_SUMMARIES' | translate}}</h6>
-          <app-sales-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-sales-summaries-include>
-      </div>
-    
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <h4 style="color:red; text-align: center; display:flex; justify-content:center;"
+        *ngIf="payout.total > 0 && payout.reversePayoutId">{{'COMMON.REVERSED' | translate}}</h4>
+      <h4 style="color:red; text-align: center; display:flex; justify-content:center;"
+        *ngIf="payout.total < 0 && payout.reversePayoutId">{{'COMMON.REVERSAL' | translate}}</h4>
     </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label> {{payout.store.name}}</mat-label>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{payout.store.currency?.title}}
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label> {{payout.year}}</mat-label>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
+        <br />
+        <h6 style="color: #ff5722">
+          {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
+              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{payout.store.currency?.symbolRight}}
+        </h6>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="datePayoutPicker" class="form-control" id="datePayout"
+            [(ngModel)]="payout.payoutDate" name="datePayout" #datePayout="ngModel" [disabled]="!isAdminPage" required>
+          <mat-datepicker-toggle matSuffix [for]="datePayoutPicker"></mat-datepicker-toggle>
+          <mat-datepicker #datePayoutPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}</mat-label>
+          <input matInput type="text" class="form-control" id="proofPayoutId" [(ngModel)]="payout.proofPayoutId"
+            name="proofPayoutId" #proofPayoutId="ngModel" [disabled]="!isAdminPage" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {{payout.payerFullName }}
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
+        <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+        <textarea matInput rows="8" cols="50" class="form-control" id="comment" maxlength="255"
+          onkeypress="if (this.value.length >= 255) { return false; }" [(ngModel)]="payout.comment" name="comment"
+          #comment="ngModel" *ngIf="isAdminPage"></textarea>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
+          <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+            [linkEnabled]="true">
+          </input-file>
+        </div>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
+      *ngIf="!payout.reversePayoutId">
+      <h6 style="color:blue">{{'COMMON.SALES_SUMMARIES' | translate}}</h6>
+      <app-sales-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-sales-summaries-include>
+    </div>
+  </div>
 </form>
