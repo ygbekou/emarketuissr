@@ -2,39 +2,39 @@
 
    <div fxLayout="row wrap">
       <div fxFlex="100" fxFlex.gt-sm="10" class="p-3">
-         <button mat-icon-button color="primary" (click)="clear()" type="button"
-            matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
-            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+         <button mat-fab color="primary" (click)="clear()" matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
+            <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
          </button>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-         <div class="text-center mt-2">
-         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-            <mat-icon>save</mat-icon>
-         </button> </div>
-         <div class="text-center mt-2" *ngIf="messages">
-         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90" class="p-3">
+         <div class="text-left mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+            <mat-icon>done</mat-icon> {{messages}}
+         </div>
+         <div class="text-left mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+            <mat-icon>close</mat-icon> {{messages}}
          </div>
       </div>
    </div>
-   
+
    <div fxLayout="row">
       <div fxFlex="25" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
-         <mat-form-field appearance="outline" class="w-100" >
+         <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
-            <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="transactionType.transactionTypeDescriptions[i].name" 
-               name="name{{i}}" required>
+            <input matInput type="text" class="form-control" id="name{{i}}"
+               [(ngModel)]="transactionType.transactionTypeDescriptions[i].name" name="name{{i}}" required>
          </mat-form-field>
          <div fxFlex="5"></div>
       </div>
-   </div>
-
-   <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="25" class="p-1">
          <mat-slide-toggle [(ngModel)]="transactionType.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.STATUS' | translate }}
          </mat-slide-toggle>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+         </button>
       </div>
    </div>
 </form>

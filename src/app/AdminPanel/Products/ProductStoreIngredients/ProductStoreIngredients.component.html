@@ -8,7 +8,7 @@
    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div class="table-wrapper">
          <table mat-table [dataSource]="productStoreIngredientsDatasource" matSort class="w-100">
- <ng-container matColumnDef="ingredientName">
+            <ng-container matColumnDef="ingredientName">
                <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header>
                   {{'COMMON.INGREDIENT' | translate}}
                </th>
@@ -82,15 +82,15 @@
                      </mat-select>
                   </mat-form-field>
                </td>
-            </ng-container>          
+            </ng-container>
 
-            
+
 
             <!-- Actions Column -->
             <ng-container matColumnDef="actions">
                <th mat-header-cell *matHeaderCellDef> Actions
                   <button (click)="addNew()" mat-fab color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
-                     <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+                     <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
                   </button>
                </th>
                <td mat-cell *matCellDef="let productStoreIngredient; let i = index;">
