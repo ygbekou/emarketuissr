@@ -23,13 +23,6 @@
           <mat-icon>done_all</mat-icon>
         </button>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <button mat-raised-button color="primary" (click)="cancel()" matTooltip="{{'COMMON.PAY' | translate}}"
-          *ngIf="bill.id && bill.status < 2" class="remove">
-          <span class="mx-1 uppercase">{{'COMMON.PAY' | translate}}</span>
-          <mat-icon>payment</mat-icon>
-        </button>
-      </div>
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="warn" (click)="cancel()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
           *ngIf="bill.id && bill.status<2" class="remove">
@@ -50,7 +43,7 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
       <mat-form-field class="w-100">
         <mat-label> {{'COMMON.BILL_DATE' | translate}} </mat-label>
         <input matInput [matDatepicker]="picker" class="form-control" id="billDate" [(ngModel)]="bill.billDate"
@@ -59,7 +52,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
       <mat-form-field class="w-100">
         <mat-label> {{'COMMON.DUE_DATE' | translate}} </mat-label>
         <input matInput [matDatepicker]="picker2" class="form-control" id="dueDate" [(ngModel)]="bill.dueDate"
@@ -68,7 +61,7 @@
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label> {{'COMMON.REFERENCE' | translate}}
         </mat-label>
@@ -79,11 +72,29 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
       <h4 style="color:green">
         {{'COMMON.TOTAL_AMOUNT' | translate}}
         <br /> {{store.currency.symbolLeft}}
         {{bill.amount| number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </h4>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <h4 style="color:green">
+        {{'COMMON.TOTAL_PAID' | translate}}
+        <br /> {{store.currency.symbolLeft}}
+        {{bill.amountPaid| number:'1.0-2'}}
+        {{store.currency.symbolRight}}
+      </h4>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <h4 style="color:green">
+        {{'COMMON.TOTAL_DUE' | translate}}
+        <br /> {{store.currency.symbolLeft}}
+        {{bill.amountDue| number:'1.0-2'}}
         {{store.currency.symbolRight}}
       </h4>
     </div>
@@ -130,7 +141,7 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-          <textarea matInput rows="10" cols="50" class="form-control" id="description" [(ngModel)]="bill.description"
+          <textarea matInput rows="5" cols="50" class="form-control" id="description" [(ngModel)]="bill.description"
             name="description" #description="ngModel"></textarea>
         </mat-form-field>
       </div>
@@ -147,9 +158,6 @@
         </h4>
         <h4 *ngIf="bill.status === 1" style="color:red">
           {{'COMMON.UNPAID' | translate}}
-        </h4>
-        <h4 *ngIf="bill.status === 2" style="color:#232F3E;">
-          {{'COMMON.PARTIALLY_PAID' | translate}}
         </h4>
         <h4 *ngIf="bill.status === 5" style="color:green">
           {{'COMMON.PAID' | translate}}

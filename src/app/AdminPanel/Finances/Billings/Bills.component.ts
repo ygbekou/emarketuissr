@@ -11,6 +11,7 @@ import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BillComponent } from './Bill.component';
 import { UserBillComponent } from './UserBill.component';
+import { BillPaymentComponent } from './BillPayment.component';
 
 export interface SearchResponse {
   document: string;
@@ -33,6 +34,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(BillComponent, { static: false }) billComponent: BillComponent;
   @ViewChild(UserBillComponent, { static: false }) userBillComponent: UserBillComponent;
+  @ViewChild(BillPaymentComponent, { static: false }) billPaymentComponent: BillPaymentComponent;
   messages = '';
   button = 'filter';
 
@@ -141,6 +143,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
       this.userBillComponent.getBill(bill);
     } else {
       this.billComponent.getBill(bill);
+      this.billPaymentComponent.newBillSelected(bill);
     }
 
   }

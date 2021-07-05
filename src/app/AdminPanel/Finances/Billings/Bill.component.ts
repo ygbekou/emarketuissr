@@ -166,6 +166,11 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
       this.bill.store.id = this.store.id;
     }
 
+    if (this.bill.status <= 1) {
+      this.bill.amountDue = this.bill.amount;
+      this.bill.amountPaid = 0;
+    }
+
     this.formData = new FormData();
     if (this.picture && this.picture.length > 0 && this.picture[0].file) {
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
@@ -192,6 +197,7 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
   }
 
   submit() {
+    console.log('I am heeree ...')
     this.justSubmitted = true;
     this.saving = true;
     this.messages = '';

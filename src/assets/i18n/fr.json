@@ -806,7 +806,9 @@
 		"QUATERLY": "Trimestrielle",
 		"BIANNUAL": "Semestriel",
     "YEARLY": "Annuelle",
-		"PAY_BILL": "Pay Facture"
+		"PAY_BILL": "Pay Facture",
+		"PAYMENT_DATE": "Date de payement",
+		"PAYMENT_STATUS": "Etat du payement"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

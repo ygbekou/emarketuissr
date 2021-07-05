@@ -2497,6 +2497,8 @@ export class Bill {
   taxes: number;
   discount: number;
   amount: number;
+  amountDue: number;
+  amountPaid: number;
   image: string;
   description: string;
   status = 0;
@@ -2613,8 +2615,8 @@ export class BillPayment {
   id: number;
   bill: Bill;
   paymentDate: Date;
+  dueDate: Date;
   amount: number;
-  description: string;
   image: string;
   status: number;
 

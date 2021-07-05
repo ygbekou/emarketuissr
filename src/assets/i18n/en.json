@@ -804,7 +804,9 @@
 		"MONTHLY": "Monthly",
 		"QUATERLY": "Quaterly",
 		"BIANNUAL": "Biannual",
-		"YEARLY": "Yearly"
+		"YEARLY": "Yearly",
+		"PAYMENT_DATE": "Payment date",
+		"PAYMENT_STATUS": "Payment Status"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
