@@ -102,6 +102,7 @@ export class ServiceComponent extends BaseComponent implements OnInit {
             this.processResult(result, this.service, null);
             this.service = {...result};
             this.saveEvent.emit(this.service);
+            this.clear();
             console.log(this.service)
           }
         });

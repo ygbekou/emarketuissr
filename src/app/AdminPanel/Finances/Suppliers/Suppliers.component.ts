@@ -88,7 +88,7 @@ export class SuppliersComponent extends BaseComponent implements OnInit {
   }
 
   selectSupplier(supplierId: number) {
-    //this.payoutComponent.isAdminPage = this.isAdminPage;
+    // this.payoutComponent.isAdminPage = this.isAdminPage;
     this.supplierComponent.getSupplier(supplierId);
     this.selected.setValue(1);
   }
@@ -100,7 +100,7 @@ export class SuppliersComponent extends BaseComponent implements OnInit {
 
   updateDataTable(supplier: Supplier) {
     this.updateDatasourceData(this.supplierDatasource, this.supplierPaginator, this.supplierSort, supplier);
-    this.supplierComponent.getSupplier(supplier.id);
+    // this.supplierComponent.getSupplier(supplier.id);
   }
 
 }

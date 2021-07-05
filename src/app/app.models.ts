@@ -2336,9 +2336,7 @@ export class Supplier {
   email: string;
   address: string;
   status = 1;
-
   modifiedBy: number;
-
   type = 'Supplier';
 }
 
@@ -2555,7 +2553,9 @@ export class Service {
   status: number;
   serviceDescriptions: ServiceDescription[] = [];
   name: string;
-
+  constructor() {
+    this.status = 1;
+  }
   type = 'Service';
 }
 

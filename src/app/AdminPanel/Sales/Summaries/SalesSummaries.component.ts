@@ -23,7 +23,9 @@ export interface SearchResponse {
   styleUrls: ['./SalesSummaries.component.scss']
 })
 export class SalesSummariesComponent extends BaseComponent implements OnInit {
-  salesSummariesColumns: string[] = ['storeName', 'monthyear', 'total', 'processingFees', 'totalDue', 'totalPaid', 'status', 'actions'];
+  salesSummariesColumns: string[] = ['storeName', 'monthyear',
+    'paymentMethod', 'total', 'processingFees', 'totalDue',
+    'totalPaid', 'status', 'actions'];
   salesSummariesDatasource: MatTableDataSource<SalesSummary>;
   @ViewChild('MatPaginatorSalesSummaries', { static: true }) salesSummariesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) salesSummariesSort: MatSort;
@@ -56,14 +58,8 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.clear();
     this.getStores();
-
-
-    this.activatedRoute.data.subscribe(value => {
-      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
-        && (this.location.path().startsWith('/admin/'));
-    });
+    this.isAdminPage = !this.userId
   }
-
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
@@ -71,17 +67,14 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
     const beginDate = new Date();
     beginDate.setFullYear(this.searchCriteria.endDate.getFullYear() - 1);
     this.searchCriteria.beginDate = beginDate;
-
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
     }
-   
-
     this.search();
   }
 
   private clear() {
-    this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    // this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.searchCriteria = new SalesSummarySearchCriteria();
   }
 
@@ -90,7 +83,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
 
   private getStores() {
     this.storeSearchCriteria.status = 1;
-    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.storeSearchCriteria.userId = this.userId;
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
@@ -104,7 +97,7 @@ export class SalesSummariesComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
-       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
+      this.searchCriteria.userId = this.userId;
       this.appService.saveWithUrl('/service/order/salesSummaries', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.salesSummariesDatasource = new MatTableDataSource(data);

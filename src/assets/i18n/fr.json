@@ -6,6 +6,8 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "FEES":"Frais",
+    "TOTAL_ARTICLE": "Total articles",
     "PAID_DATE":"Date payement",
     "DUE_DATE":"Date échéance",
     "REFERENCE":"Référence",

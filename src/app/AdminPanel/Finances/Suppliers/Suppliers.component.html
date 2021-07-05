@@ -1,16 +1,12 @@
 <a mat-button [routerLink]="['/admin/finances/suppliers']">{{'COMMON.SUPPLIERS' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-
 <div class="text-center mt-2" *ngIf="messages">
   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
 </div>
 
-
 <div fxLayout="row wrap">
-
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-
+ <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-tab-group class="table-tab-list" color="accent" [selectedIndex]="selected.value"
                (selectedIndexChange)="selected.setValue($event)">
       <mat-tab label="{{'COMMON.SUPPLIERS' | translate}}">
@@ -22,16 +18,14 @@
             </mat-form-field>
           </div>
           <div fxFlex="100" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
-            <a (click)="action = 'add'; messages = ''; selectSupplier(null)" mat-icon-button color="primary"
+            <button (click)="action = 'add'; messages = ''; selectSupplier(null)" mat-fab color="primary"
               matTooltip="{{'COMMON.ADD' | translate}}">
-              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-            </a>
+              <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+            </button>
           </div>
         </div>
-
         <div class="table-wrapper">
           <table mat-table [dataSource]="supplierDatasource" matSort class="w-100">
-
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> ID
               </th>
@@ -77,8 +71,6 @@
         </div>
         <mat-paginator [pageSize]="10" #MatPaginatorSupplier [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
       </mat-tab>
-
-
       <mat-tab label="{{'COMMON.ADD' | translate}} / {{'COMMON.EDIT' | translate}}">
         <app-supplier (saveEvent)="updateDataTable($event)"></app-supplier>
       </mat-tab>

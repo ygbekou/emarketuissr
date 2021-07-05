@@ -506,7 +506,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
       this.order.total = this.appService.navbarCartTotalMap[this.storeId];
       this.order.shippingCost = this.appService.navbarCartShippingMap[this.storeId];
-      this.order.taxFees = this.appService.navbarCartShippingMap[this.storeId];
+      // this.order.taxFees = this.appService.navbarCartShippingMap[this.storeId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();

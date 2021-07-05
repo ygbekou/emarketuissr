@@ -1,13 +1,12 @@
-
 <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
   <div fxLayout="row wrap">
-  
-    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" 
-         *ngIf="salesSummary.status === 2 && !isAdminPage">
-      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="acknowledgeSalesSummary()" 
-        [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
-          <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
-          <mat-icon>done_all</mat-icon>
+
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3"
+      *ngIf="salesSummary.status === 2 && !isAdminPage">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+        (click)="acknowledgeSalesSummary()" [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
+        <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
+        <mat-icon>done_all</mat-icon>
       </button>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
@@ -18,167 +17,202 @@
   </div>
 
   <div fxLayout="row wrap">
-    <h4 style="color:blue">{{'COMMON.SALES_SUMMARY_DETAILS' | translate}}</h4>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <span *ngIf="salesSummary.status === 1" style="color:#FF0000"><h5>{{'COMMON.UNPAID' | translate}}</h5></span>
-        <span *ngIf="salesSummary.status === 2" style="color:#0000FF"><h5>{{'COMMON.PAYMENT_SUBMITTED' | translate}}</h5></span>
-        <span *ngIf="salesSummary.status === 3" style="color:#008000"><h6>{{'COMMON.PAYMENT_ACKNOWLEDGED' | translate}}</h6></span>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label> {{salesSummary.store.name}}</mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{salesSummary.store.currency?.title}}
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.MONTH' | translate}}/{{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label> {{salesSummary.month}}/{{salesSummary.year}}</mat-label>
-      </div>
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label style="color: #FF0000"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label style="color: #FF0000"> 
-            {{salesSummary.currency?.symbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-          </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.PROCESSING_FEES' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label> 
-          {{salesSummary.currency?.symbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-        </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label style="color: #008000"> {{'COMMON.TOTAL_DUE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label style="color: #008000"> 
-            {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-          </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label style="color: #008000"> {{'COMMON.TOTAL_PAID' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label style="color: #008000"> 
-            {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-          </mat-label>
-      </div>
-    </div>
-
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label style="color: #FF0000"> {{'COMMON.TOTAL_REMAINING' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label style="color: #FF0000"> 
-          {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalRemaining | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-        </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.SHIPPING_RATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
-          {{salesSummary.currency?.symbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-        </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <mat-label> {{'COMMON.TAX_FEES' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label> 
-          {{salesSummary.currency?.symbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
-            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{salesSummary.currency?.symbolRight}}
-        </mat-label>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-          <mat-label> {{'COMMON.PAYMENT_METHOD' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-label> {{salesSummary.paymentMethod}}</mat-label>
-      </div>
-    </div>
-
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.ACKNOWLEDGE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
-          {{salesSummary.acknowledgeDate | date: 'dd/MM/yyyy hh:mm:ss'}}
-        </mat-label>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.ACKNOWLEDGER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="47" fxFlex.lg="47" fxFlex.xl="47">
+      <div class="tile tile-primary">
+        <div class="tile-heading">
+          <span class="pull-left" *ngIf="salesSummary.status === 1" style="color:yellow">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.UNPAID' | translate}}
+            </h5>
+          </span>
+          <span class="pull-left" *ngIf="salesSummary.status === 2" style="color:#00FF00">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.PAYMENT_SUBMITTED' | translate}}
+            </h5>
+          </span>
+          <span class="pull-left" *ngIf="salesSummary.status === 3" style="color:#00FF00">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.PAYMENT_ACKNOWLEDGED' | translate}}
+            </h5>
+          </span>
+        </div>
+        <div class="tile-body">
+          <span class="pull-left">
+            <mat-icon>money</mat-icon>
+          </span>
+          {{'COMMON.CURRENCY' | translate}}: {{salesSummary.store.currency?.title}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>schedule</mat-icon>
+          </span>
+          {{'COMMON.MONTH' | translate}}/{{'COMMON.YEAR' | translate}}: {{salesSummary.month}}/{{salesSummary.year}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>payment</mat-icon>
+          </span>
+          {{'COMMON.PAYMENT_METHOD' | translate}}: {{salesSummary.paymentMethod}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>person</mat-icon>
+          </span>
+          {{'COMMON.ACKNOWLEDGER' | translate}}:
           {{salesSummary.acknowledgerFullName }}
-        </mat-label>
+          <br />
+          <span class="pull-left">
+            <mat-icon>schedule</mat-icon>
+          </span>
+          {{'COMMON.ACKNOWLEDGE_DATE' | translate}}: {{salesSummary.acknowledgeDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+        </div>
+        <div class="tile-footer">
+          <h5> <span class="pull-left">
+              <mat-icon>store</mat-icon>
+            </span>
+
+            {{'COMMON.STORE' | translate}}:
+            {{salesSummary.store.name}}</h5>
+        </div>
       </div>
     </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="6" fxFlex.lg="6" fxFlex.xl="6">
+    </div>
 
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="47" fxFlex.lg="47" fxFlex.xl="47">
+      <div class="tile tile-primary">
+        <div class="tile-heading">
+          <span class="pull-left" [style.color]="salesSummary.totalRemaining!==0.0?'yellow':'#00ff00'">
+            <h5>
+              <span class="pull-left">
+                <mat-icon>credit_score</mat-icon>
+              </span>
+              {{'COMMON.TOTAL_PAID' | translate}}:
+              {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalPaid | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{salesSummary.currency?.symbolRight}}
+              <span class="pull-left">
+                <mat-icon>payment</mat-icon>
+              </span>
+              {{'COMMON.TOTAL_REMAINING' | translate}}:
+              {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalRemaining | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{salesSummary.currency?.symbolRight}}
+            </h5>
+          </span>
+        </div>
+        <div class="tile-body">
+          <span class="pull-left">
+            <mat-icon>shopping_cart</mat-icon>
+          </span>
+          {{'COMMON.TOTAL_ARTICLE' | translate}}:
+          {{salesSummary.currency?.symbolLeft}}
+          {{(salesSummary.total - salesSummary.shippingCost- salesSummary.taxFees) | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{salesSummary.currency?.symbolRight}}
+          <br />
+
+          <span class="pull-left">
+            <mat-icon>payments</mat-icon>
+          </span>
+          {{'COMMON.TAX_FEES' | translate}}:
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.taxFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{salesSummary.currency?.symbolRight}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>local_shipping</mat-icon>
+          </span>
+          {{'COMMON.SHIPPING_RATE' | translate}}:
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.shippingCost | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{salesSummary.currency?.symbolRight}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>account_balance_wallet</mat-icon>
+          </span>
+          {{'COMMON.TOTAL' | translate}}:
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.total | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{salesSummary.currency?.symbolRight}}
+
+          <br />
+          <span class="pull-left">
+            <mat-icon>money</mat-icon>
+          </span>
+          {{'COMMON.PROCESSING_FEES' | translate}}:
+          {{salesSummary.currency?.symbolLeft}} {{salesSummary.processingFees | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{salesSummary.currency?.symbolRight}}
+
+        </div>
+        <div class="tile-footer">
+          <h5> <span class="pull-left">
+              <mat-icon>account_balance_wallet</mat-icon>
+            </span>
+            {{'COMMON.TOTAL_DUE' | translate}}:
+            {{salesSummary.currency?.symbolLeft}} {{salesSummary.totalDue | number: '1.' + salesSummary.currency?.decimalPlace + '-'  
+            + salesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{salesSummary.currency?.symbolRight}}
+          </h5>
+        </div>
+      </div>
+    </div>
   </div>
-
-
   <div fxLayout="row wrap" *ngIf="payout.id > 0">
-    <h4 style="color:blue">{{'COMMON.PAYMENT_DETAILS' | translate}}</h4>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-        <span *ngIf="payout.status === 1" style="color:blue"><h5>{{'COMMON.SUBMITTED' | translate}}</h5></span>
-        <span *ngIf="payout.status === 2" style="color:green"><h6>{{'COMMON.PARTIALLY_ACKNOWLEDGED' | translate}}</h6></span>
-        <span *ngIf="payout.status === 3" style="color:green"><h6>{{'COMMON.ACKNOWLEDGED' | translate}}</h6></span>
-      </div> -->
-    
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label style="color: #ff5722">
-          {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
-            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currency?.symbolRight}}
-        </mat-label>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{payout.payoutDate | date: 'dd/MM/yyyy'}}
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{payout.proofPayoutId}}
-      </div>
+      <h4 style="color:blue">{{'COMMON.PAYMENT_DETAILS' | translate}}</h4>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{payout.proofPayoutId}}
+      <br />
+      <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label style="color: #ff5722">
+        {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
+            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+        {{payout.currency?.symbolRight}}
+      </mat-label>
+      <br />
+      <mat-label> {{'COMMON.COMMENTS' | translate}}:</mat-label>
+      <div [innerHTML]="payout.comment"></div>
     </div>
 
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{payout.payoutDate | date: 'dd/MM/yyyy'}}
+      <br />
+      <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label>
+        {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+      </mat-label>
+      <br />
+      <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label>
+        {{payout.payerFullName }}
+      </mat-label>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="!payout.image">
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="payout.image">
+      <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label>
+      <br />
+      <a href="assets/images/payouts/{{payout.id}}/{{payout.image}}" download>
+        <img src="assets/images/payouts/{{payout.id}}/{{payout.image}}" style="height: 100px; width: 200px;"
+          alt="{{'COMMON.PAYMENT_RECEIPT' | translate}}">
+      </a>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
-          {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
-        </mat-label>
-      </div>
-
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
-        <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-label>
-          {{payout.payerFullName }}
-        </mat-label>
-      </div>
+      <h4 style="color:blue">{{'COMMON.SALES_SUMMARIES' | translate}}</h4>
     </div>
-
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="66" fxFlex.lg="66" fxFlex.xl="66" class="p-3">
-        <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
-        <mat-card>
-          <div [innerHTML]="payout.comment"></div>
-        </mat-card>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="payout.image">
-        <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label><br/>
-        <a href="assets/images/payouts/{{payout.id}}/{{payout.image}}" download>
-          <img src="assets/images/payouts/{{payout.id}}/{{payout.image}}" style="height: 100px; width: 200px;" alt="{{'COMMON.PAYMENT_RECEIPT' | translate}}">
-        </a>
-      </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
+      *ngIf="!payout.reversePayoutId">
+      <app-sales-summaries-include [action]="'fromSalesSummaryDetails'"
+        (selectSalesSummaryEvent)="getSalesSummary($event.id); getPayout(payout.id);"></app-sales-summaries-include>
     </div>
-
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3" *ngIf="!payout.reversePayoutId">
-        <h6 style="color:blue">{{'COMMON.SALES_SUMMARIES' | translate}}</h6>
-        <app-sales-summaries-include [action]="'fromSalesSummaryDetails'" 
-          (selectSalesSummaryEvent)="getSalesSummary($event.id); getPayout(payout.id);"></app-sales-summaries-include>
-    </div>
-  
   </div>
 </form>

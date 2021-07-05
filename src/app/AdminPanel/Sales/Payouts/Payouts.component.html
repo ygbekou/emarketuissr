@@ -1,16 +1,11 @@
-<a mat-button [routerLink]="['/admin/sales/payouts']">{{'COMMON.PAYOUTS' | translate}}
+<a mat-button [routerLink]="['/admin/sales/payouts/0']">{{'COMMON.PAYOUTS' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-
 <div class="text-center mt-2" *ngIf="messages">
   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
 </div>
-
-
 <div fxLayout="row wrap">
-
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-
     <mat-tab-group class="table-tab-list" color="accent" [selectedIndex]="selected.value"
                (selectedIndexChange)="selected.setValue($event)">
       <mat-tab label="{{'COMMON.PAYOUTS' | translate}}">
@@ -22,34 +17,29 @@
             </mat-form-field>
           </div>
           <div fxFlex="100" fxFlex.gt-sm="10" class="p-3" *ngIf="userId !== 0">
-            <a (click)="action = 'add'; messages = ''; selectPayout(null)" mat-icon-button color="primary"
+            <button (click)="action = 'add'; messages = ''; selectPayout(null)" mat-fab color="primary"
               matTooltip="{{'COMMON.ADD' | translate}}">
-              <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
-            </a>
+              <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+            </button>
           </div>
         </div>
-
         <div class="table-wrapper">
           <table mat-table [dataSource]="payoutDatasource" matSort class="w-100">
-
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> ID
               </th>
               <td mat-cell *matCellDef="let payout"> {{payout.id}} </td>
             </ng-container>
-
             <ng-container matColumnDef="payoutDate">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PAYOUT_DATE' | translate}}
               </th>
               <td mat-cell *matCellDef="let payout"> {{payout.payoutDate | date: 'MM/dd/yyyy'}} </td>
             </ng-container>
-
             <ng-container matColumnDef="storeName">
               <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
               </th>
               <td mat-cell *matCellDef="let payout"> {{payout.storeName}} </td>
             </ng-container>
-
             <ng-container matColumnDef="year">
               <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header> {{'COMMON.YEAR'|translate}}
               </th>
@@ -63,7 +53,6 @@
              + payout.currencyDecimalPlace:appService?.appInfoStorage.language.locale}} {{payout.currencySymbolRight}}
               </td>
             </ng-container>
-
             <ng-container matColumnDef="proofPayoutId">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.PROOF_PAYOUT_ID'|translate}}
               </th>
@@ -85,10 +74,10 @@
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
               </th>
-              <td mat-cell *matCellDef="let salesSummary" class="text-left"> 
-                <span style="color: #0000FF" *ngIf="!salesSummary.reversePayoutId && salesSummary.status === 1"> {{'COMMON.SUBMITTED'|translate}} </span>
-                <span style="color: #008000" *ngIf="!salesSummary.reversePayoutId && salesSummary.status === 2"> {{'COMMON.ACKNOWLEDGED'|translate}} </span>
-                <span style="color: #FF0000" *ngIf="salesSummary.reversePayoutId"> {{'COMMON.REVERSED'|translate}} </span>
+              <td mat-cell *matCellDef="let payout" class="text-left"> 
+                <span style="color: green" *ngIf="!payout.reversePayoutId && payout.status === 1"> {{'COMMON.PAID'|translate}} </span><!-- 
+                <span style="color: #008000" *ngIf="!payout.reversePayoutId && payout.status === 2"> {{'COMMON.ACKNOWLEDGED'|translate}} </span> -->
+                <span style="color: #FF0000" *ngIf="payout.reversePayoutId"> {{'COMMON.REVERSED'|translate}} </span>
               </td>
             </ng-container>
 

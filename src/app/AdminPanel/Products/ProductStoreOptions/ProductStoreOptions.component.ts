@@ -132,9 +132,20 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
             () => console.log('updateOptionField complete'));
    }
 
+   requiredChanged() {
+      this.productStoreOption.required = (this.productStoreOption.required == null
+         || this.productStoreOption.required.toString() === 'false'
+         || this.productStoreOption.required.toString() === '0') ? 0 : 1;
+
+      this.appService.saveWithUrl('/service/crud/ProductStoreOption/save/', this.productStoreOption)
+         .subscribe((data: ProductStoreOption) => {
+            this.processResult(data, this.productStoreOption, null);
+         },
+            error => console.log(error),
+            () => console.log('Save selected product store option complete'));
+   }
 
    saveProductStoreOption2() {
-
       this.productStoreOption.required = (this.productStoreOption.required == null
          || this.productStoreOption.required.toString() === 'false'
          || this.productStoreOption.required.toString() === '0') ? 0 : 1;
