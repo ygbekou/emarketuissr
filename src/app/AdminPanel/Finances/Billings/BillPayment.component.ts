@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { Bill, BillPayment } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
@@ -16,7 +16,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 export class BillPaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  billPayColumns: string[] = ['id', 'dueDate', 'paymentDate', 'amount'];
+  billPayColumns: string[] = ['id', 'dueDate', 'paymentDate', 'amount', 'status'];
   billPayDatasource: MatTableDataSource<BillPayment>;
   @ViewChild('billPayPaginator', { static: true }) billPayPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) billPaySort: MatSort;
@@ -30,6 +30,11 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
   billPayments: BillPayment[] = [];
   saving = false;
   justSubmitted = false;
+
+  isFromAdmin = true;
+  hasError = false;
+
+  @Output() billPaymentSaveEvent = new EventEmitter<any>();
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -84,8 +89,13 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
       this.billPayment.bill.id = this.bill.id;
     }
 
-    if (this.billPayment.paymentDate) {
-      this.billPayment.status = 5;
+    if (this.bill.amountDue < this.billPayment.amount) {
+      this.translate.get(['COMMON.INVALID_PAYMENT_AMOUNT']).subscribe(res => {
+        this.messages = res['COMMON.INVALID_PAYMENT_AMOUNT'];
+      });
+      this.hasError = true;
+      this.saving = false;
+      return;
     }
 
     this.formData = new FormData();
@@ -102,6 +112,59 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
       },
         error => console.log(error),
         () => console.log('Save Bill Payment complete'));
+  }
+
+
+  submitBillPayment() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.bill.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    if (this.bill.amountDue < this.billPayment.amount) {
+      this.translate.get(['COMMON.INVALID_PAYMENT_AMOUNT']).subscribe(res => {
+        this.messages = res['COMMON.INVALID_PAYMENT_AMOUNT'];
+      });
+      this.saving = false;
+      this.hasError = true;
+      return;
+    }
+
+    this.formData = new FormData();
+    if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+      this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+    }
+
+    this.appService.saveWithFileUsingUrl('/service/finance/submitBillPayment/', this.billPayment, this.formData)
+      .subscribe((data: BillPayment) => {
+        this.processResult(data, this.billPayment, null);
+        this.billPayment = data;
+        this.saving = false;
+        this.updateDataTable(this.billPayment);
+        this.getBill();
+      },
+        error => console.log(error),
+        () => console.log('Submit Bill Payment complete'));
+  }
+
+   getBill() {
+    this.messages = '';
+    if (this.bill && this.bill.id > 0) {
+      this.appService.getOneWithChildsAndFiles(this.bill.id, 'Bill')
+        .subscribe(result => {
+          if (result.id > 0) {
+            this.bill = result;
+            this.billPaymentSaveEvent.emit(this.bill);
+          } else {
+            this.bill = new Bill();
+            this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
+              this.messages = res['MESSAGE.READ_FAILED'];
+            });
+          }
+        });
+    } else {
+      this.clear([]);
+    }
   }
 
 

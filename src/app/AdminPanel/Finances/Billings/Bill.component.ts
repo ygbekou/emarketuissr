@@ -197,7 +197,6 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
   }
 
   submit() {
-    console.log('I am heeree ...')
     this.justSubmitted = true;
     this.saving = true;
     this.messages = '';

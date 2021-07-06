@@ -808,7 +808,8 @@
 		"BIANNUAL": "Biannual",
 		"YEARLY": "Yearly",
 		"PAYMENT_DATE": "Payment date",
-		"PAYMENT_STATUS": "Payment Status"
+		"PAYMENT_STATUS": "Payment Status",
+		"INVALID_PAYMENT_AMOUNT": "Payment amount cannot be greater than amount due."
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

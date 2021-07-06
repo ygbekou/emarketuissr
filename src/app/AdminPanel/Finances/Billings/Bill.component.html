@@ -159,6 +159,9 @@
         <h4 *ngIf="bill.status === 1" style="color:red">
           {{'COMMON.UNPAID' | translate}}
         </h4>
+        <h4 *ngIf="bill.status === 2" style="color:red">
+          {{'COMMON.PARTIALLY_PAID' | translate}}
+        </h4>
         <h4 *ngIf="bill.status === 5" style="color:green">
           {{'COMMON.PAID' | translate}}
         </h4>
