@@ -795,7 +795,7 @@
 
       </mat-tab>
 
-      <mat-tab label="{{'COMMON.SERVICES' | translate}}">
+      <mat-tab label="{{'COMMON.SERVICES' | translate}}" *ngIf="1>2">
         <app-store-services [selectedStore]="store"></app-store-services>
       </mat-tab>
     </mat-tab-group>
