@@ -2495,6 +2495,8 @@ export class Bill {
   taxes: number;
   discount: number;
   amount: number;
+  amountDue: number;
+  amountPaid: number;
   image: string;
   description: string;
   status = 0;
@@ -2606,4 +2608,24 @@ export class ServiceSearchCriteria {
   userId: number;
   minAmount: number;
   maxAmount: number;
+}
+
+
+export class BillPayment {
+  id: number;
+  bill: Bill;
+  paymentDate: Date;
+  dueDate: Date;
+  amount: number;
+  image: string;
+  status: number;
+
+  isTouched = false;
+  modifiedBy: number;
+
+  type = 'BillPayment';
+
+  constructor() {
+    this.bill = new Bill();
+  }
 }

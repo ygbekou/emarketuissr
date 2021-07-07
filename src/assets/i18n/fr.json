@@ -807,7 +807,11 @@
 		"MONTHLY": "Mensuelle",
 		"QUATERLY": "Trimestrielle",
 		"BIANNUAL": "Semestriel",
-		"YEARLY": "Annuelle"
+    "YEARLY": "Annuelle",
+		"PAY_BILL": "Pay Facture",
+		"PAYMENT_DATE": "Date de payement",
+    "PAYMENT_STATUS": "Etat du payement",
+    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas être supérieur au montant dû."
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez dÃ©jÃ  souscrit Ã  nortre blogs",

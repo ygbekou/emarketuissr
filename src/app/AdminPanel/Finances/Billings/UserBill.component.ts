@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreEmployee, User, Supplier, BillDtl, Bill } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Store, User, BillDtl, Bill } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BillDetailsComponent } from './BillDetails.component';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { BillPaymentComponent } from './BillPayment.component';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class UserBillComponent extends BaseComponent implements OnInit {
 
   @ViewChild('ProductsComponent', { static: false }) productsComponent: BillDetailsComponent;
   @ViewChild('ServicesComponent', { static: false }) servicesComponent: BillDetailsComponent;
+  @ViewChild(BillPaymentComponent, { static: false }) billPaymentComponent: BillPaymentComponent;
 
   billDtlColumns: string[] = ['id', 'image', 'productName', 'quantity', 'unitPrice', 'totalAmount'];
   billDtlDatasource: MatTableDataSource<BillDtl>;
@@ -64,6 +66,12 @@ export class UserBillComponent extends BaseComponent implements OnInit {
     }, 1000);
   }
 
+  newBillSelected(bill: Bill) {
+    this.getBill(bill);
+    this.billPaymentComponent.bill = bill;
+    this.billPaymentComponent.isFromAdmin = false;
+    this.billPaymentComponent.getBillPayments();
+  }
 
   getBill(bill: Bill) {
     this.messages = '';

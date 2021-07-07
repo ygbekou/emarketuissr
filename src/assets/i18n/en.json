@@ -434,7 +434,7 @@
 		"OUR_TEAM": "Our Team",
 		"PARENT": "Parent",
 		"PASSWORD": "Password",
-		"PAY": "Payer",
+		"PAY": "Pay",
 		"PAYMENT_ADDRESS": "Payment address",
 		"PERCENTAGE": "Percentage",
 		"PERIOD": "Periode",
@@ -806,7 +806,10 @@
 		"MONTHLY": "Monthly",
 		"QUATERLY": "Quaterly",
 		"BIANNUAL": "Biannual",
-		"YEARLY": "Yearly"
+		"YEARLY": "Yearly",
+		"PAYMENT_DATE": "Payment date",
+		"PAYMENT_STATUS": "Payment Status",
+		"INVALID_PAYMENT_AMOUNT": "Payment amount cannot be greater than amount due."
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

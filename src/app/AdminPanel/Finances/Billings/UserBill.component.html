@@ -83,6 +83,13 @@
     </div>
   </div>
 </div>
+
+<br/>
+<div style="text-align:center; display:block">
+  <h5 style="color:#1b80c2">
+    {{'COMMON.SERVICES' | translate}}/{{'COMMON.PRODUCT' | translate}}s
+  </h5>
+</div>
 <table mat-table [dataSource]="billDtlDatasource" matSort class="w-100">
 
   <!-- ID Column -->
@@ -102,7 +109,7 @@
   </ng-container>
 
   <ng-container matColumnDef="productName">
-    <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header> {{'COMMON.PRODUCT' | translate}}</th>
+    <th mat-header-cell width="30%" *matHeaderCellDef mat-sort-header> {{'COMMON.SERVICE' | translate}}/{{'COMMON.PRODUCT' | translate}}</th>
     <td mat-cell *matCellDef="let billDtl" class="p-1">
       {{billDtl.productName?billDtl.productName:billDtl.serviceName}}
     </td>
@@ -140,3 +147,15 @@
 </table>
 <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+
+
+<!--   This section is for Bill Payments-->
+<br/>
+<br/>
+<div style="text-align:center; display:block">
+  <h5 style="color:#1b80c2">
+    {{'COMMON.PAYMENTS' | translate}}
+  </h5>
+</div>
+<app-bill-payment></app-bill-payment>

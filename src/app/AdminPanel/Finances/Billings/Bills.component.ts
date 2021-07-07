@@ -11,6 +11,7 @@ import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BillComponent } from './Bill.component';
 import { UserBillComponent } from './UserBill.component';
+import { BillPaymentComponent } from './BillPayment.component';
 
 export interface SearchResponse {
   document: string;
@@ -25,7 +26,7 @@ export interface SearchResponse {
 })
 export class BillsComponent extends BaseComponent implements OnInit {
 
-  billsColumns: string[] = ['reference', 'billDate', 'description', 'amount', 'dueDate', 'status'];
+  billsColumns: string[] = ['reference', 'billDate', 'description', 'amount', 'amountDue', 'dueDate', 'status'];
   billsDatasource: MatTableDataSource<Bill>;
   @ViewChild('MatPaginatorBills', { static: false }) billsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) billsSort: MatSort;
@@ -33,6 +34,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(BillComponent, { static: false }) billComponent: BillComponent;
   @ViewChild(UserBillComponent, { static: false }) userBillComponent: UserBillComponent;
+  @ViewChild(BillPaymentComponent, { static: false }) billPaymentComponent: BillPaymentComponent;
   messages = '';
   button = 'filter';
 
@@ -138,9 +140,10 @@ export class BillsComponent extends BaseComponent implements OnInit {
   getBillDetails(bill: any) {
     this.selected.setValue(1);
     if (this.userId) {
-      this.userBillComponent.getBill(bill);
+      this.userBillComponent.newBillSelected(bill);
     } else {
       this.billComponent.getBill(bill);
+      this.billPaymentComponent.newBillSelected(bill);
     }
 
   }
@@ -168,6 +171,12 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   updateDataTable(bill: Bill) {
     this.updateDatasourceData(this.billsDatasource, this.billsPaginator, this.billsSort, bill);
+    this.billPaymentComponent.newBillSelected(bill);
     // this.selected.setValue(0);
+  }
+
+  updateDataTableFromPayment(bill: Bill) {
+    this.updateDatasourceData(this.billsDatasource, this.billsPaginator, this.billsSort, bill);
+    this.billComponent.getBill(bill);
   }
 }
