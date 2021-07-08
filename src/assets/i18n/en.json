@@ -5,6 +5,8 @@
 		"HOME THREE": "Home Three",
 		"SHOP": "Shop",
 		"FEES":"Fees",
+		"PAYMENT_DATE_REQ":"Payment date required",
+		"PAYMENT_DATE_NOTREQ":"Remove the payment date or submit the payment",
 		"TOTAL_ARTICLE": "Articles total",
 		"DUE_DATE":"Due date",
 		"PAID_DATE":"Paid date",

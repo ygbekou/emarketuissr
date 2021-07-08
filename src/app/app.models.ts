@@ -2506,8 +2506,24 @@ export class Bill {
   constructor() {
     this.store = new Store();
     this.billDate = new Date();
+    const d = new Date();
+    this.reference = ('SOFT') + this.dateAsYYYYMMDDHHNN(d);
+  }
+  dateAsYYYYMMDDHHNN(date): string {
+    return date.getFullYear()
+      + '' + this.leftpad(date.getMonth() + 1, 2)
+      + '' + this.leftpad(date.getDate(), 2)
+      + '' + this.leftpad(date.getHours(), 2)
+      + '' + this.leftpad(date.getMinutes(), 2);
+  }
+
+  leftpad(val, resultLength = 2, leftpadChar = '0'): string {
+    return (String(leftpadChar).repeat(resultLength)
+      + String(val)).slice(String(val).length);
   }
 }
+
+
 
 export class BillDtl {
   id: number;
@@ -2627,5 +2643,6 @@ export class BillPayment {
 
   constructor() {
     this.bill = new Bill();
+    this.status = 1;
   }
 }

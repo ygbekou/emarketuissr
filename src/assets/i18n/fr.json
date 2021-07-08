@@ -7,6 +7,8 @@
     "OUT_OF": "sur",
     "OR": "ou",
     "FEES":"Frais",
+    "PAYMENT_DATE_REQ":"Date payement requise",
+    "PAYMENT_DATE_NOTREQ":"Enlevez la date de payement ou soumettez le payement",
     "TOTAL_ARTICLE": "Total articles",
     "PAID_DATE":"Date payement",
     "DUE_DATE":"Date échéance",
