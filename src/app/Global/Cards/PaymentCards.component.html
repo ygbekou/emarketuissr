@@ -1,56 +1,49 @@
 <div class="table-wrapper">
-  
-  <div><h4 style="color: #283593;">{{'COMMON.CREDIT_OR_DEBIT_CARDS'|translate}}</h4></div>
-  <table mat-table [dataSource]="creditCardsDataSource" matSort class="w-100">
 
-    <ng-container matColumnDef="selected">
-      <th mat-header-cell *matHeaderCellDef> {{'COMMON.SELECTED'|translate}} </th>
-      <td mat-cell *matCellDef="let creditCard">
-        <mat-radio-group [(ngModel)]="creditCard.status">
-          <mat-radio-button [value]="1"  (click)="changePaymentMethod(creditCard)"></mat-radio-button>
-        </mat-radio-group>        
-      </td>
-    </ng-container>
+  <div>
+    <h4 style="color: #283593;">{{'COMMON.CREDIT_OR_DEBIT_CARDS'|translate}}</h4>
+  </div>
 
-    <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>{{'COMMON.TYPE'|translate}}</th>
-      <td mat-cell *matCellDef="let creditCard"><img [src]="'assets/images/cards/' + creditCard.cardTypeIndex + '.png'"
-          [style.width.px]="50" class="d-block"></td>
-    </ng-container>
-
-    <ng-container matColumnDef="cardNumber">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.CARD_NUMBER'|translate}} </th>
-      <td mat-cell *matCellDef="let creditCard"> XXXX XXXX XXXX {{creditCard.last4Digits}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'COMMON.NAME_ON_CARD'|translate}} </th>
-      <td mat-cell *matCellDef="let creditCard"> {{creditCard.name}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="expire">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expire </th>
-      <td mat-cell *matCellDef="let creditCard"> {{creditCard.expMonth}}/{{creditCard.expYear}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-        <th class="px-3" mat-header-cell *matHeaderCellDef> Action </th>
-        <td class="px-3" mat-cell *matCellDef="let creditCard; let i = index;">
-          <button mat-button color="warn" (click)="changePaymentMethod(creditCard)">
-            <mat-icon>check_circle_outline</mat-icon>
-            {{'COMMON.SELECT_CREDIT_CARD'|translate}}
-          </button>
-          
-          <button color="warn" mat-icon-button (click)="delete(creditCard.stripePaymentMethodId)" 
-            matTooltip="{{'COMMON.DELETE' | translate}}">
-              <mat-icon class="">delete</mat-icon>
-          </button>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns">{{'COMMON.CREDIT_OR_DEBIT_CARDS'|translate}}</tr>
-    <tr mat-row *matRowDef="let creditCard; columns: displayedColumns;">
-      My tabss
-    </tr>
-  </table>
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+      *ngFor="let creditCard of creditCards">
+      <div class="tile tile-primary">
+        <div class="tile-heading">
+          <span class="pull-left">
+            <mat-icon>credit_card</mat-icon>
+          </span>
+          {{creditCard.name}}
+        </div>
+        <div class="tile-body">
+          <div fxLayout="row wrap">
+            <div style="text-align: center;" fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+              <img [src]="'assets/images/cards/' + creditCard.cardTypeIndex + '.png'" [style.width.px]="50"
+                class="d-block">
+            </div>
+            <div style="text-align: left;" fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+              XXXX XXXX XXXX <strong> {{creditCard.last4Digits}}</strong>
+              <br />
+              Expire: <strong> {{creditCard.expMonth}}/{{creditCard.expYear}}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="tile-footer">
+          <div fxLayout="row wrap">
+            <div style="text-align: center;" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <button mat-mini-fab color="warn" (click)="delete(creditCard.stripePaymentMethodId)"
+                matTooltip="{{'COMMON.REMOVE' | translate}}">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+            <div style="text-align: center;" fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <button mat-mini-fab style="background-color:green;" (click)="changePaymentMethod(creditCard)"
+                matTooltip="{{'COMMON.SELECT_CREDIT_CARD' | translate}}">
+                <mat-icon>check_circle_outline</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

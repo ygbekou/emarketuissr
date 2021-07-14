@@ -1,43 +1,84 @@
-<mat-card>
-  <div>
-    <div fxLayout="row wrap" *ngIf="fromPage === 'checkout'">
-      <h2 style="color: #283593;">{{'COMMON.ADD_ADDRESS_TO_PROCEED'|translate}}</h2>
-    </div>
-    <div fxLayout="row wrap" *ngIf="!(fromPage === 'checkout')">
-      <h2 style="color: #283593;">{{'COMMON.ADDRESS'|translate}}s</h2>
-    </div>
-    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of addresses">
-        <div class="pt-3">
-          <address class="mb-4">
-            <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
-            {{addr.address1}} {{addr.address2}}<br>
-            {{addr.city}}, {{addr.zone?.name}} {{addr.postCode}}<br>
-            {{addr.country.name}}
-          </address>
-          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px" *ngIf="addressType>0">
-            <button mat-button color="warn" (click)="selectAddress(addr)">
-              <mat-icon>check_circle_outline</mat-icon>
-              {{'COMMON.SELECT_ADDRESS'|translate}}
-            </button>
-          </div>
-          <br />
-          <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
-            <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id)"
-              matTooltip="{{'COMMON.EDIT' | translate}}">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-raised-button color="accent" (click)="removeAddress(addr.id)"
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="fromPage === 'checkout'">
+  <h2 style="color: #283593;">{{'COMMON.ADD_ADDRESS_TO_PROCEED'|translate}}</h2>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="!(fromPage === 'checkout')">
+  <h2 style="color: #283593;">{{'COMMON.ADDRESS'|translate}}s</h2>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of addresses">
+
+    <div class="tile tile-primary">
+      <div class="tile-heading">
+        <span class="pull-left">
+          <mat-icon>place</mat-icon>
+        </span>
+        {{addr.name?addr.name:addr.address1}}
+      </div>
+      <div class="tile-body">
+        <address class="mb-4">
+          <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
+          {{addr.address1}} {{addr.address2}}<br>
+          {{addr.city}}, {{addr.zone?.name}} {{addr.postCode}}<br>
+          {{addr.country.name}}
+        </address>
+
+      </div>
+      <div class="tile-footer">
+        <div fxLayout="row wrap">
+          <div style="text-align: center;" fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <button mat-mini-fab color="warn" (click)="removeAddress(addr.id)"
               matTooltip="{{'COMMON.REMOVE' | translate}}">
               <mat-icon>remove</mat-icon>
             </button>
           </div>
+          <div style="text-align: center;" fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <button mat-mini-fab style="background-color:green;" *ngIf="fromPage==='checkout'"
+              (click)="selectAddress(addr)" matTooltip="{{'COMMON.SELECT_ADDRESS' | translate}}">
+              <mat-icon>check_circle_outline</mat-icon>
+            </button>
+          </div>
+          <div style="text-align: center;" fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <button mat-mini-fab color="primary" (click)="panelOpenState = true; editAddress(addr.id)"
+              matTooltip="{{'COMMON.EDIT' | translate}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-  <br />
-  <div>
+
+  <!--   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let addr of addresses">
+    <div class="pt-3">
+      <address class="mb-4">
+        <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
+        {{addr.address1}} {{addr.address2}}<br>
+        {{addr.city}}, {{addr.zone?.name}} {{addr.postCode}}<br>
+        {{addr.country.name}}
+      </address>
+      <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px" *ngIf="addressType>0">
+        <button mat-button color="warn" (click)="selectAddress(addr)">
+          <mat-icon>check_circle_outline</mat-icon>
+          {{'COMMON.SELECT_ADDRESS'|translate}}
+        </button>
+      </div>
+      <br />
+      <div fxLayout="row wrap" xLayout.xs="column" fxLayoutGap="20px">
+        <button mat-raised-button color="primary" (click)="panelOpenState = true; editAddress(addr.id)"
+          matTooltip="{{'COMMON.EDIT' | translate}}">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-raised-button color="accent" (click)="removeAddress(addr.id)"
+          matTooltip="{{'COMMON.REMOVE' | translate}}">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div> -->
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-accordion>
       <mat-expansion-panel #shippingExpansionPanelElement (opened)="panelOpenState = true"
         (closed)="panelOpenState = false">
@@ -53,4 +94,4 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-</mat-card>
+</div>

@@ -98,7 +98,7 @@ import { ReviewComponent } from './Review/Review.component';
 import { InputFileModule } from 'ngx-input-file';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { StoreCatsComponent } from './StoreCats/StoreCats.component';
-
+import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
 @NgModule({
    imports: [
       CommonModule,
@@ -134,6 +134,7 @@ import { StoreCatsComponent } from './StoreCats/StoreCats.component';
       TranslateModule,
       PipesModule,
       InputFileModule,
+      MatGoogleMapsAutocompleteModule,
       MatPaginatorModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyC9PnuRk42kbCPMOvsfHpn40r5SoyN38zI',
@@ -273,4 +274,4 @@ import { StoreCatsComponent } from './StoreCats/StoreCats.component';
 })
 export class GlobalModule {
 
- }
+}
