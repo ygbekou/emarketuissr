@@ -28,7 +28,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    order: Order;
    orderTotal: number;
    allStepDone: boolean;
-   deliveryMode: '0'|'1';
+   deliveryMode: '0' | '1';
 
    constructor(public appService: AppService,
       public router: Router,
@@ -44,12 +44,12 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    }
 
    ngOnInit() {
-      this.deliveryMode = <'0' | '1'> window.localStorage.getItem('deliveryMode');
+      this.deliveryMode = <'0' | '1'>window.localStorage.getItem('deliveryMode');
       if (!this.deliveryMode) {
          this.deliveryMode = '0';
          this.deliveryOptionChange(null);
       }
-
+      console.log('Payment init called');
       this.appService.recalculateCart(true);
    }
 
@@ -74,7 +74,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
                         error => console.log(error),
                         () => console.log('Get user active CreditCard complete for userId=' + userId));
                } else {
-                  //this.processPaymentConfirmation();
+                  // this.processPaymentConfirmation();
                   this.setAllStepDone();
                   this.redirectToUserInfo();
                }
@@ -98,7 +98,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
       console.log(this.appService.localStorageCartProducts);
       if (this.appService.localStorageCartProducts
          && this.appService.localStorageCartProducts.length > 1) {
-            console.log('more products?');
+         console.log('more products?');
          this.translate.get('MESSAGE.PARTIAL_ORDER_SUCCESS', { storeName: order.storeName }).subscribe(res => {
             this.message = res;
          });
@@ -108,7 +108,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
    setAllStepDone() {
       if (this.deliveryMode === '1') {
          this.allStepDone = this.user.shippingAddress && this.user.shippingAddress.id
-                  && this.user.billingAddress && this.user.billingAddress.id
+            && this.user.billingAddress && this.user.billingAddress.id
             && ((this.user.creditCard !== null && this.user.creditCard.stripePaymentMethodId !== null)
                || (this.user.tmoney !== null && this.user.tmoney.id > 0)
                || (this.user.flooz !== null && this.user.flooz.id > 0));
@@ -118,7 +118,7 @@ export class PaymentComponent implements OnInit, AfterViewInit {
                || (this.user.tmoney !== null && this.user.tmoney.id > 0)
                || (this.user.flooz !== null && this.user.flooz.id > 0));
       }
-      //this.deliveryMode = deliveryInfo.deliveryMode;
+      // this.deliveryMode = deliveryInfo.deliveryMode;
    }
 
 
@@ -128,15 +128,15 @@ export class PaymentComponent implements OnInit, AfterViewInit {
 
    redirectToUserInfo() {
       if (this.deliveryMode && !this.user.shippingAddress && !this.user.billingAddress) {
-         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 0, fromPage: 'checkout'} });
+         this.router.navigate(['/checkout/addresses'], { queryParams: { addressType: 0, fromPage: 'checkout' } });
       } else if (this.deliveryMode === '0' && !this.user.shippingAddress) {
-         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 1, fromPage: 'checkout'} });
+         this.router.navigate(['/checkout/addresses'], { queryParams: { addressType: 1, fromPage: 'checkout' } });
       } else if (this.deliveryMode && !this.user.billingAddress) {
-         this.router.navigate(['/checkout/addresses'], { queryParams: {addressType: 2, fromPage: 'checkout'} });
+         this.router.navigate(['/checkout/addresses'], { queryParams: { addressType: 2, fromPage: 'checkout' } });
       } else if (this.deliveryMode && ((this.user.creditCard === null || !this.user.creditCard.stripePaymentMethodId)
-               && (this.user.tmoney === null || this.user.tmoney.id <= 0)
-               && (this.user.flooz === null || this.user.flooz.id <= 0))) {
-         this.router.navigate(['/checkout/cards'], { queryParams: {fromPage: 'checkout'} });
+         && (this.user.tmoney === null || this.user.tmoney.id <= 0)
+         && (this.user.flooz === null || this.user.flooz.id <= 0))) {
+         this.router.navigate(['/checkout/cards'], { queryParams: { fromPage: 'checkout' } });
       }
    }
 

@@ -39,7 +39,7 @@ export class AppService {
 
    shipping = 12.95;
    tax = 27.95;
-
+   distance = 0.0;
    products: AngularFireObject<any>;
 
    localStorageCartProducts: any;
@@ -138,6 +138,7 @@ export class AppService {
       if (!found) { products.push(setCartItemDefaultValue); }
 
       window.localStorage.setItem('cart_item', JSON.stringify(products));
+      console.log('Called from setCartItemDefaultValue');
       this.recalculateCart(true);
    }
 
@@ -266,6 +267,7 @@ export class AppService {
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          window.localStorage.setItem('cart_item', JSON.stringify(cartItems));
+         console.log('Called from setCartItemDefaultValue');
          this.recalculateCart(true);
       }, 500);
    }
@@ -281,18 +283,123 @@ export class AppService {
             return true;
          }
       });
-      if (!found) { products.push(data); }
-
+      if (!found) {
+         products.push(data);
+      }
       window.localStorage.setItem('cart_item', JSON.stringify(products));
       this.recalculateCart(true);
    }
 
    public updateAllLocalCartProduct(products: any) {
-
       window.localStorage.removeItem('cart_item');
-
       window.localStorage.setItem('cart_item', JSON.stringify(products));
    }
+
+   /*       public recalculateCart(needParse: boolean, pickUp: boolean) {
+         console.log('Recalculating  cart --start');
+         if (needParse) {
+            this.localStorageCartProducts = null;
+            this.localStorageCartProducts = JSON.parse(localStorage.getItem('cart_item')) || [];
+   
+            this.localStorageCartProductsMap = {};
+            this.localStorageCartProducts.forEach((cartItem) => {
+               if (!this.localStorageCartProductsMap[cartItem.storeId]) {
+                  this.localStorageCartProductsMap[cartItem.storeId] = new Array();
+               }
+               this.localStorageCartProductsMap[cartItem.storeId].push(cartItem);
+            });
+   
+         }
+         this.navbarCartPrice = 0;
+         // this.navbarCartShipping = 0;
+         this.navbarCartTotalBeforeTax = 0;
+         this.navbarCartEstimatedTax = 0;
+         this.navbarCartTotal = 0;
+         this.navbarCartCount = 0;
+   
+         this.navbarCartCountMap = {};
+         this.navbarCartPriceMap = {};
+         this.navbarCartShippingMap = {};
+         this.navbarCartShippingWeightMap = {};
+         this.navbarCartTotalBeforeTaxMap = {};
+         this.navbarCartEstimatedTaxMap = {};
+         this.navbarCartTotalMap = {};
+   
+         this.localStorageCartProducts.forEach((cartItem) => {
+            this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
+            if (!this.navbarCartPriceMap[cartItem.storeId]) {
+               this.navbarCartCountMap[cartItem.storeId] = 0;
+               this.navbarCartPriceMap[cartItem.storeId] = 0;
+               this.navbarCartShippingMap[cartItem.storeId] = 0;
+               this.navbarCartShippingWeightMap[cartItem.storeId] = 0;
+               this.navbarCartTotalBeforeTaxMap[cartItem.storeId] = 0;
+               this.navbarCartEstimatedTaxMap[cartItem.storeId] = 0;
+               this.navbarCartTotalMap[cartItem.storeId] = 0;
+               this.hasOrderSucceedMap[cartItem.storeId] = false;
+   
+               this.navbarCartCurrencyMap[cartItem.storeId] = {
+                  currencyCode: cartItem.currencyCode,
+                  symbolLeft: cartItem.symbolLeft,
+                  symbolRight: cartItem.symbolRight,
+                  storeName: cartItem.storeName,
+               };
+            }
+   
+            this.navbarCartCountMap[cartItem.storeId] += cartItem.quantity;
+            this.navbarCartCount += cartItem.quantity;
+            this.navbarCartPriceMap[cartItem.storeId] += this.calculateCartItemTotal(cartItem);
+   
+            // this.navbarCartShipping += 0;
+            // this.navbarCartShippingMap[cartItem.storeId] += 0;
+            this.navbarCartShippingWeightMap[cartItem.storeId] +=
+               (cartItem.shippingWeight ? cartItem.shippingWeight : 0)
+               * Number(cartItem.quantity);
+   
+            if (cartItem.taxRules) {
+               cartItem.tax = 0;
+               cartItem.taxRules.forEach(
+                  (taxRule) => {
+                     cartItem.tax += taxRule.taxRate.rate * cartItem.quantity;
+                  },
+               );
+            }
+   
+            cartItem.tax = this.roundingValue(cartItem.tax);
+            cartItem.total = this.roundingValue(this.calculateCartItemTotal(cartItem) + cartItem.tax);
+            this.navbarCartEstimatedTax += cartItem.tax;
+            this.navbarCartEstimatedTaxMap[cartItem.storeId] += cartItem.tax;
+            this.navbarCartPriceMap[cartItem.storeId] = this.roundingValue(this.navbarCartPriceMap[cartItem.storeId]);
+   
+         });
+   
+         for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
+            if (!pickUp) {
+               if (this.navbarCartShippingGeoZoneMap[storeId]) {
+                  if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
+                     this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.flatRate;
+                  } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 1) {
+                     this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
+                        Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+                  } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 2 && this.distance > 0) {
+                     this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.kmRate *
+                        this.distance *
+                        Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeightKm));
+                  } else {
+                     this.navbarCartShippingMap[storeId] = 0;
+                  }
+               } else {
+                  this.navbarCartShippingMap[storeId] = 0;
+               }
+            } else {
+               this.navbarCartShippingMap[storeId] = 0;
+            }
+            this.navbarCartTotalBeforeTaxMap[storeId] = this.roundingValue(this.navbarCartPriceMap[storeId]
+               + this.navbarCartShippingMap[storeId]);
+            this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
+               + this.navbarCartEstimatedTaxMap[storeId]);
+         }
+         console.log('Recalculating  cart --end');
+      } */
 
    public recalculateCart(needParse: boolean) {
 
@@ -354,7 +461,7 @@ export class AppService {
 
          // this.navbarCartShipping += 0;
          this.navbarCartShippingWeightMap[cartItem.storeId] += (cartItem.shippingWeight ? cartItem.shippingWeight : 0)
-                                    * Number(cartItem.quantity);
+            * Number(cartItem.quantity);
 
          if (cartItem.taxRules) {
             cartItem.tax = 0;
@@ -375,27 +482,42 @@ export class AppService {
       });
 
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
-         const deliveryMode = this.navbarCartDeliveryMap[storeId] === undefined ? 
-                              window.localStorage.getItem('deliveryMode') : this.navbarCartDeliveryMap[storeId];
-
-         if (deliveryMode === '0') {
+         const pickUp = window.localStorage.getItem('deliveryMode')
+            && window.localStorage.getItem('deliveryMode') === '1' ? true : false;
+         console.log('pickUp = ' + pickUp);
+         console.log('Shipping mode = ' + this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode);
+         if (!pickUp) {
             if (this.navbarCartShippingGeoZoneMap[storeId]) {
                if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
                   this.navbarCartShippingMap[storeId] = this.navbarCartShippingGeoZoneMap[storeId].geoZone.flatRate;
+                  console.log('Calc based on flat rate: ' + this.navbarCartShippingMap[storeId]);
                } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 1) {
                   this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.weightRate *
-                        Math.ceil(Number(storeOrderShippingWeight) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+                     Math.ceil(Number((storeOrderShippingWeight && storeOrderShippingWeight > 0)
+                        ? storeOrderShippingWeight : 0.1) / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeight));
+                  console.log('Calc based on weight: ' + this.navbarCartShippingMap[storeId]);
+               } else if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 2 && this.distance > 0) {
+                  this.navbarCartShippingMap[storeId] = this.roundingValue(this.navbarCartShippingGeoZoneMap[storeId].geoZone.kmRate *
+                     this.distance *
+                     Math.ceil(Number((storeOrderShippingWeight && storeOrderShippingWeight > 0) ? storeOrderShippingWeight : 0.1)
+                        / this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingWeightKm));
+                  console.log('Calc based on distance: ' + this.navbarCartShippingMap[storeId]);
+               } else {
+                  this.navbarCartShippingMap[storeId] = 0;
+                  console.log('Calc based zero 1: ' + this.navbarCartShippingMap[storeId]);
                }
             } else {
                this.navbarCartShippingMap[storeId] = 0;
+               console.log('Calc based zero 2: ' + this.navbarCartShippingMap[storeId]);
             }
          } else {
             this.navbarCartShippingMap[storeId] = 0;
+            console.log('Calc based zero 3: ' + this.navbarCartShippingMap[storeId]);
          }
          this.navbarCartTotalBeforeTaxMap[storeId] = this.roundingValue(this.navbarCartPriceMap[storeId]
-                              + this.navbarCartShippingMap[storeId]);
+            + this.navbarCartShippingMap[storeId]);
          this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
-                              + this.navbarCartEstimatedTaxMap[storeId]);
+            + this.navbarCartEstimatedTaxMap[storeId]);
       }
    }
 
@@ -414,12 +536,12 @@ export class AppService {
       return this.roundingValue(totalPrice);
    }
 
-   calculateOptionTotal (optionMaps) {
+   calculateOptionTotal(optionMaps) {
       let totalOptionPrice = 0;
       optionMaps.forEach(optionValueDescs => {
          optionValueDescs.forEach(optionDesc => {
             if ((optionDesc.value !== undefined || optionDesc.checked !== undefined)
-               && optionDesc.price !== undefined && optionDesc.price > 0 ) {
+               && optionDesc.price !== undefined && optionDesc.price > 0) {
                if (optionDesc.pricePrefix === '+') {
                   totalOptionPrice += optionDesc.price;
                } else if (optionDesc.pricePrefix === '-') {
@@ -469,6 +591,7 @@ export class AppService {
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          // ReAdding the products after remove
+         console.log('Called from removeLocalCartProduct');
          window.localStorage.setItem('cart_item', JSON.stringify(products));
          this.recalculateCart(true);
       }, 500);
@@ -484,21 +607,9 @@ export class AppService {
       });
 
       delete this.localStorageCartProductsMap[storeId];
-
-      /*  const title = 'Updating Cart';
-       const msg = '';
-
-       const toastOption: ToastOptions = {
-          title: title,
-          msg: msg,
-          showClose: true,
-          timeout: 1000,
-          theme: 'material'
-       };
-
-       this.toastyService.wait(toastOption); */
       setTimeout(() => {
          // ReAdding the products after remove
+         console.log('Called from completeOrder');
          window.localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
          this.recalculateCart(true);
       }, 500);
@@ -726,8 +837,8 @@ export class AppService {
       const product = JSON.parse(window.localStorage.getItem('cart_item'));
       window.localStorage.setItem('byProductDetails', JSON.stringify(product));
       this.buyUserCartProducts = JSON.parse(window.localStorage.getItem('byProductDetails'));
-
       window.localStorage.removeItem('cart_item');
+      console.log('Called from addBuyUserDetails');
       this.recalculateCart(true);
    }
 
@@ -743,13 +854,11 @@ export class AppService {
    }
 
    public clearOrderId() {
-
       window.localStorage.removeItem('order_id');
    }
 
 
    public getStoredOrderId() {
-
       return +window.localStorage.getItem('order_id');
    }
 
@@ -1027,14 +1136,14 @@ export class AppService {
 
             parameters.push('e.language.id = |langCode|' + this.appInfoStorage.language.id + '|Integer');
             this.getAllByCriteria('TransactionTypeDescription', parameters, ' ')
-               .subscribe((data: any[]) => {
-                  this.appInfoStorage.transactionTypes = data;
+               .subscribe((data2: any[]) => {
+                  this.appInfoStorage.transactionTypes = data2;
                }, error => console.log(error),
                   () => console.log('Get transaction types complete'));
 
             this.getAllByCriteria('ServiceDescription', parameters, ' ')
-               .subscribe((data: any[]) => {
-                  this.appInfoStorage.services = data;
+               .subscribe((data1: any[]) => {
+                  this.appInfoStorage.services = data1;
                }, error => console.log(error),
                   () => console.log('Get services complete'));
 

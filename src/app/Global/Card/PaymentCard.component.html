@@ -12,12 +12,12 @@
             <div class="sr-input sr-card-element" id="card-element"></div>
           </div>
           <div class="sr-field-error" id="card-errors" role="alert"></div>
-          <br/>
+          <br />
           <button id="submit" mat-raised-button color="primary">
-           <div class="spinner hidden" id="spinner"></div>  
+            <div class="spinner hidden" id="spinner"></div>
             <span id="button-text">{{'COMMON.SAVE'|translate}}</span>
             <!-- <mat-icon>save</mat-icon> -->
-            <span id="order-amount"></span>            
+            <span id="order-amount"></span>
           </button>
         </form>
         <!-- <div class="sr-result hidden">
@@ -28,5 +28,11 @@
             </div> -->
       </div>
     </div>
+  </div>
+</div>
+
+<div fxLayout="row wrap" *ngIf="errors">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+  <mat-error severity="error">{{errors}}</mat-error>
   </div>
 </div>

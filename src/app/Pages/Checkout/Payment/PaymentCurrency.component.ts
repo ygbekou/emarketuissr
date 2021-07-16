@@ -410,10 +410,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
 
    getZoneToGeoZone() {
-
       if (this.user.shippingAddress && this.user.shippingAddress.zone) {
          console.log('Calling Geozone for Store id: ' + this.storeId + ' and Shipping Address id ' + this.user.shippingAddress.zone.id);
-
          this.appService.saveWithUrl('/service/order/getZoneToGeoZone/', {
             'storeId': this.storeId,
             'zoneId': this.user.shippingAddress.zone.id,
@@ -435,9 +433,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      this.isDeliveryOpen();
                   }
                }
-
                console.log('Calling Recalculate ...');
-               this.appService.recalculateCart(false);
+               // this.appService.recalculateCart(false);
+               this.calculateShippingCost();
             },
                error => console.log(error),
                () => console.log('ZoneToGeoZone retrieved '));
@@ -492,15 +490,12 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       return total;
    }
 
-
    isUserLoggedIn() {
       return this.appService.tokenStorage.getUserId() !== null;
    }
 
-
    placeYourOrder() {
       const orderId = this.order === null ? this.order.id : null;
-
       // this.order = new Order();
       this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
@@ -545,7 +540,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             this.order.shippingMethod = 'DELIVERY';
             this.order.shippingCode = 'DELIVERY';
          }
-
          if (this.payCash) {
             this.order.paymentCode = 'CASH';
             this.order.paymentMethod = 'CASH';
@@ -556,12 +550,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                ' - Exp: ' + this.user.creditCard.expMonth + '/' +
                this.user.creditCard.expYear;
          }
-
-
          this.appService.getIp()
             .subscribe((data1: any) => {
                this.order.ip = data1.ip;
-
                this.appService.timerCountDownPopup(Constants.ORDER_WAIT_TIME);
                console.log('before call');
                this.appService.saveWithUrl('/service/order/proceedCheckout/', this.order)
@@ -621,10 +612,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                   this.cartComponent.error = data.errors[0];
                }
             }
-            // } else {
-            //    this.appService.completeOrder(+this.storeId);
-            //    this.orderCompleteEvent.emit(this.order);
-            // }
             this.appService.clearOrderId();
          },
             error => console.log(error),
@@ -651,19 +638,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.order.shippingCustomField = (this.user.shippingAddress && this.user.shippingAddress.country) ?
             ('+' + this.user.shippingAddress.country.code) : '';
       }
-
       this.order.customField = this.getNoteToRecipient();
-
    }
 
-
    public getNoteToRecipient(): string {
-
       let hi = '';
       let thank = '';
       let pickup = '';
       let delivery = '';
-
       this.translate.get(['COMMON.HI', 'COMMON.ERROR']).subscribe((res) => {
          hi = res['COMMON.HI'];
       });
@@ -676,7 +658,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       this.translate.get(['COMMON.BOUGHT_FOR_DELIVERY', 'COMMON.ERROR']).subscribe((res) => {
          delivery = res['COMMON.BOUGHT_FOR_DELIVERY'];
       });
-
       const buff = hi + ' '
          + (this.user.shippingAddress ? this.user.shippingAddress.firstName : '') + '. '
          + (this.pickUp ? pickup : delivery) + ' ';
@@ -709,8 +690,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          }
       }
       this.getDates();
-
-      this.appService.recalculateCart(false);
+      this.calculateShippingCost();
+      // this.appService.recalculateCart(false);
    }
 
    scheduleForLaterChecked(event) {
@@ -755,10 +736,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       return disable;
    }
 
-
    generateDeliveryEstimationTimeMessage() {
       let deliveryTimeUnitDesc = '';
-
       this.translate.get(['COMMON.MINUTES_SHORT', 'COMMON.HOURS_SHORT', 'COMMON.DAYS_SHORT']).subscribe((res) => {
          if (this.zoneToGeoZone.deliveryTimeUnit === 'M') {
             deliveryTimeUnitDesc = res['COMMON.MINUTES_SHORT'];
@@ -768,9 +747,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
             deliveryTimeUnitDesc = res['COMMON.DAYS_SHORT'];
          }
       });
-
       return deliveryTimeUnitDesc;
-
    }
 
    public isCashAllowed(): boolean {
@@ -783,6 +760,56 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       return false;
    }
 
+   public calculateShippingCost() {
+      console.log('Calculating shipping cost');
+      this.appService.distance = 0.0;
+      console.log(this.store);
+      console.log(this.user.shippingAddress);
+      console.log('shippingMode = ' + this.appService.navbarCartShippingGeoZoneMap[this.storeId].geoZone.shippingMode);
+      if (this.appService.navbarCartShippingGeoZoneMap[this.storeId].geoZone.shippingMode === 2
+         && (!this.user.shippingAddress ||
+            !this.user.shippingAddress.latitude
+            || !this.user.shippingAddress.longitude)) {
+         this.translate.get('MESSAGE.UPDATE_ADDRESS_POSITION').subscribe((res) => {
+            this.error = res;
+            // this.maxDistExceeded = res;
+         });
+      } else {
+
+         if (this.store.latitude && this.store.longitude
+            && this.user.shippingAddress &&
+            this.user.shippingAddress.latitude
+            && this.user.shippingAddress.longitude) {
+            const distance = Math.ceil(google.maps.geometry.spherical.computeDistanceBetween(
+               new google.maps.LatLng(this.user.shippingAddress.latitude,
+                  this.user.shippingAddress.longitude),
+               new google.maps.LatLng(this.store.latitude, this.store.longitude)) / 1000.0);
+            console.log('Distance = ' + distance);
+            console.log('this.store.maxDistance = ' + this.store.maxDistance);
+            if (this.store.maxDistance
+               && distance > this.store.maxDistance) {
+               this.appService.distance = distance;
+               this.purchasePossible = false;
+               this.translate.get('MESSAGE.MAX_DELIVERY_DIST_EXCEEDED',
+                  {
+                     store_name: this.store.name,
+                     max_distance: this.store.maxDistance,
+                  }).subscribe((res) => {
+                     this.error = res;
+                     // this.maxDistExceeded = res;
+                  });
+            } else {
+               console.log('Recalculate based on distance');
+               this.purchasePossible = true;
+               this.appService.distance = distance;
+               this.appService.recalculateCart(false);
+            }
+         } else {
+            this.purchasePossible = true;
+            this.appService.recalculateCart(false);
+         }
+      }
+   }
 
 }
 

@@ -148,6 +148,7 @@ export class AddressComponent implements OnInit {
 
    public async save() {
       console.log('Save called : ' + this.gpsClicked);
+       this.hasError = false;
       if (!this.gpsClicked) {
          this.messages = '';
          this.hasError = false;
@@ -155,6 +156,7 @@ export class AddressComponent implements OnInit {
             || !this.address.lastName
             || !this.address.city
             || !this.address.address1) {
+            this.hasError = true;
             this.translate.get(['MESSAGE.FILL_ALL_REQUIRED_FIELD', 'COMMON.SUCCESS']).subscribe((res) => {
                this.messages = res['MESSAGE.FILL_ALL_REQUIRED_FIELD'];
             });
