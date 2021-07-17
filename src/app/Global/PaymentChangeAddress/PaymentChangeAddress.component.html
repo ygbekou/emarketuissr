@@ -1,7 +1,11 @@
-<div class="container">
+<div class="container" *ngIf="fromPage==='checkout'">
   <div fxLayout="row wrap" class="col-gap">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <app-addresses [userId]="userId" [addressType]="addressType" [deliveryMode]="deliveryMode"></app-addresses>
     </div>
   </div>
 </div>
+
+<mat-card *ngIf="!(fromPage==='checkout')">
+  <app-addresses [userId]="userId" [addressType]="addressType" [deliveryMode]="deliveryMode"></app-addresses>
+</mat-card>

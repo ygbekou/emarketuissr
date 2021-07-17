@@ -838,7 +838,7 @@ export class Customer {
   id: number;
 }
 
-export class Address {
+/* export class Address {
   id: number;
   address1: string;
   address2: string;
@@ -865,8 +865,42 @@ export class Address {
     this.country = new Country();
     this.zone = new Zone();
   }
-}
+} */
 
+export class Address {
+  public id: number;
+  public address1: string;
+  public address2: string;
+  public city: string;
+  public company: string;
+  public user: User;
+  public country: Country;
+  public customer: Customer;
+  public firstName: string;
+  public lastName: string;
+  public postCode: string;
+  public middleName: string;
+  public addressType: number;
+  public billTo: number;
+  public shipTo: number;
+  public zone: Zone;
+  public status = 0;
+  public phone: string;
+  public email: string;
+  public longitude: number;
+  public latitude: number;
+  public name: string;
+  public gPlaceId: string;
+  public countryCode: string;
+  public type = 'Address';
+  constructor() {
+    this.status = 0;
+    this.billTo = 0;
+    this.shipTo = 0;
+    this.country = new Country();
+    this.zone = new Zone();
+  }
+}
 export class CreditCard {
   id: number;
   name: string;
@@ -2506,8 +2540,24 @@ export class Bill {
   constructor() {
     this.store = new Store();
     this.billDate = new Date();
+    const d = new Date();
+    this.reference = ('SOFT') + this.dateAsYYYYMMDDHHNN(d);
+  }
+  dateAsYYYYMMDDHHNN(date): string {
+    return date.getFullYear()
+      + '' + this.leftpad(date.getMonth() + 1, 2)
+      + '' + this.leftpad(date.getDate(), 2)
+      + '' + this.leftpad(date.getHours(), 2)
+      + '' + this.leftpad(date.getMinutes(), 2);
+  }
+
+  leftpad(val, resultLength = 2, leftpadChar = '0'): string {
+    return (String(leftpadChar).repeat(resultLength)
+      + String(val)).slice(String(val).length);
   }
 }
+
+
 
 export class BillDtl {
   id: number;
@@ -2627,5 +2677,6 @@ export class BillPayment {
 
   constructor() {
     this.bill = new Bill();
+    this.status = 1;
   }
 }

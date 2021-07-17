@@ -106,10 +106,15 @@ export class PaymentCardComponent implements OnInit, AfterViewInit {
    * Collect card details and pay for the order
    */
    saveCard(stripe, card, clientSecret) {
+      this.errors = '';
       stripe
          .createPaymentMethod('card', card)
          .then(result => {
             if (result.error) {
+               this.translate.get(['MESSAGE.INVALID_CARD', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.INVALID_CARD'];
+               });
+               console.log('Error: ' + result.error);
                // showError(result.error.message);
             } else {
                this.saveCustomer(result);

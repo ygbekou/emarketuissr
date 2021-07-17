@@ -15,8 +15,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
           <div fxLayout="row wrap" fxLayoutAlign="left left" class="cart-product-info">
             <div fxFlex.xs="100" fxFlex.sm="35" fxFlex.md="35" fxFlex.lg="35" fxFlex.xl="35">
-              <h5>{{product?.name}}</h5>
-               
+              <h5>{{product?.name}}</h5>               
                 <div *ngFor="let mapEntry of product.selectedOptionMap | keyvalue; let i = index;">
                   <p class="mb-0" >
                     <strong>{{mapEntry.key}}: </strong>
@@ -24,11 +23,6 @@
                     {{optionValue.name}}{{optionValue.value}}&nbsp;
                   </span>
                   </p>
-                  <!-- <label style="font-weight: bold;">{{mapEntry.key}}: </label>
-                  <span *ngFor="let optionValue of mapEntry.value">
-                    {{optionValue.name}}{{optionValue.value}}&nbsp;
-                  </span>
-                  <span>&nbsp;&nbsp;</span> -->
                 </div> 
               <p class="mb-0" style="font-style: italic;">{{'COMMON.SOLD_BY'|translate}} <a [routerLink]="['/products']"
                   [queryParams]="{storeId:product.storeId}" routerLinkActive="tab-active"> {{product.storeName}}</a></p>
@@ -36,7 +30,7 @@
             <div fxFlex.xs="100" fxFlex.sm="35" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <div style="display:block !important;">
                 <button mat color="accent" style="height: 30px !important;"
-                  (click)="product.quantity = product.quantity - 1; updateCartProducts();"
+                  (click)="changed=true; product.quantity = product.quantity - 1; updateCartProducts();"
                   [disabled]="product.quantity === 1"><i class="material-icons"> remove
                   </i></button>
                 <mat-form-field class="w-15" style="width: 60px !important;">
@@ -44,7 +38,7 @@
                     style="text-align: center" required>
                 </mat-form-field>
                 <button mat color="primary" style="height: 30px !important;"
-                  (click)="product.quantity = product.quantity + 1; updateCartProducts();"><i class="material-icons">
+                  (click)="changed=true; product.quantity = product.quantity + 1; updateCartProducts();"><i class="material-icons">
                     add_box
                   </i></button>
               </div>

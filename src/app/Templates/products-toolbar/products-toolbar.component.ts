@@ -51,10 +51,6 @@ export class ProductsToolbarComponent implements OnInit {
     }
   }
 
-  ngOnChanges() {
-    // console.log(' show toggle - ' ,this.showSidenavToggle)
-  }
-
   public changeCount(count) {
     this.count = count;
     this.onChangeCount.emit(count);

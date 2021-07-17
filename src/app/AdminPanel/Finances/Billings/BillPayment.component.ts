@@ -98,6 +98,15 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
       return;
     }
 
+    if (this.billPayment.paymentDate) {
+      this.translate.get(['COMMON.PAYMENT_DATE_NOTREQ']).subscribe(res => {
+        this.messages = res['COMMON.PAYMENT_DATE_NOTREQ'];
+      });
+      this.saving = false;
+      this.hasError = true;
+      return;
+    }
+
     this.formData = new FormData();
     if (this.picture && this.picture.length > 0 && this.picture[0].file) {
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
@@ -109,6 +118,7 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
         this.billPayment = data;
         this.updateDataTable(this.billPayment);
         this.saving = false;
+        this.addPayment();
       },
         error => console.log(error),
         () => console.log('Save Bill Payment complete'));
@@ -130,6 +140,15 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
       return;
     }
 
+    if (!this.billPayment.paymentDate) {
+      this.translate.get(['COMMON.PAYMENT_DATE_REQ']).subscribe(res => {
+        this.messages = res['COMMON.PAYMENT_DATE_REQ'];
+      });
+      this.saving = false;
+      this.hasError = true;
+      return;
+    }
+
     this.formData = new FormData();
     if (this.picture && this.picture.length > 0 && this.picture[0].file) {
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
@@ -142,12 +161,13 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
         this.saving = false;
         this.updateDataTable(this.billPayment);
         this.getBill();
+        this.addPayment();
       },
         error => console.log(error),
         () => console.log('Submit Bill Payment complete'));
   }
 
-   getBill() {
+  getBill() {
     this.messages = '';
     if (this.bill && this.bill.id > 0) {
       this.appService.getOneWithChildsAndFiles(this.bill.id, 'Bill')

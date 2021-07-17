@@ -42,7 +42,6 @@ import { UserAccountRoutes } from './UserAccount.routing';
 import { AccountComponent } from './Account/Account.component';
 import { ProfileComponent } from './Profile/Profile.component';
 import { EditProfileComponent } from './EditProfile/EditProfile.component';
-import { CardsComponent } from './Cards/Cards.component';
 import { StoresComponent } from './Stores/Stores.component';
 import { OrderHistoryComponent } from './OrderHistory/OrderHistory.component';
 import { GridProductComponent } from './GridProduct/GridProduct.component';
@@ -53,7 +52,6 @@ import { SellProductComponent } from './SellProduct/SellProduct.component';
 import { TemplatesModule } from 'src/app/Templates/Templates.module';
 import { MyProductsComponent } from './MyProducts/MyProducts.component';
 import { GlobalModule } from 'src/app/Global/Global.module';
-import { AddressesComponent } from './Addresses/Addresses.component';
 import { SalesDashboardComponent } from './Sales-dashboard/Sales-dashboard.component';
 import { ReportsModule } from 'src/app/AdminPanel/Reports/Reports.module';
 import { SalesOrdersComponent } from './Sales-orders/Sales-orders.component';
@@ -156,12 +154,10 @@ import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-
     AccountComponent,
     ProfileComponent,
     EditProfileComponent,
-    CardsComponent,
     StoresComponent,
     OrderHistoryComponent,
     GridProductComponent,
     SellProductComponent,
-    AddressesComponent,
     MyProductsComponent,
     SalesDashboardComponent,
     SalesFinanceDashboardComponent,
@@ -188,7 +184,6 @@ import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-
     MyShippersComponent
   ],
   exports: [
-    CardsComponent,
     StoresComponent,
     EditProfileComponent
   ]

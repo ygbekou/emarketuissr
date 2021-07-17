@@ -22,7 +22,12 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
       private route: ActivatedRoute,
       public translate: TranslateService
    ) {
-
+      this.route.queryParams.forEach(queryParams => {
+         if (queryParams['fromPage']) {
+            console.log('From page: ' + queryParams['fromPage']);
+            this.fromPage = queryParams['fromPage'];
+         }
+      });
    }
 
    ngOnInit() {
@@ -34,6 +39,7 @@ export class PaymentChangeAddressComponent implements OnInit, AfterViewInit {
             console.log('From page: ' + queryParams['fromPage']);
             this.fromPage = queryParams['fromPage'];
          }
+         console.log('fromPage= ' + this.fromPage);
       });
    }
 
