@@ -5,11 +5,11 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatPaginator, MatSort } from '@angular/material';
 
 @Component({
-  selector: 'app-sales-dashboard',
-  templateUrl: './Sales-dashboard.component.html',
-  styleUrls: ['./Sales-dashboard.component.scss']
+  selector: 'app-sales-finance-dashboard',
+  templateUrl: './Sales-finance-dashboard.component.html',
+  styleUrls: ['./Sales-finance-dashboard.component.scss']
 })
-export class SalesDashboardComponent extends BaseComponent implements OnInit {
+export class SalesFinanceDashboardComponent extends BaseComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

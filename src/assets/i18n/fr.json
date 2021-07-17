@@ -811,7 +811,10 @@
 		"PAY_BILL": "Pay Facture",
 		"PAYMENT_DATE": "Date de payement",
     "PAYMENT_STATUS": "Etat du payement",
-    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas être supérieur au montant dû."
+    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas être supérieur au montant dû.",
+		"AMOUNT_TO_RECEIVE": "Montant a recevoir",
+		"NET_INCOME": "Revenue Net",
+		"FINANCE_SUMMARY": "Sommaire des Finances"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez dÃ©jÃ  souscrit Ã  nortre blogs",

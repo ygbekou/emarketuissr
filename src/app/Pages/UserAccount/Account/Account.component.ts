@@ -60,6 +60,7 @@ const TREE_DATA_EN: MenuNode[] = [
     url: '/account/selling',
     icon: 'account_circle',
     children: [
+      { name: 'Dashboard', url: '/account/sales-finance-dashboard', icon: 'dashboard' },
       { name: 'Expenses', url: '/account/transactions', icon: 'receipt_long' },
       { name: 'Purchase Orders', url: '/account/purchase-orders', icon: 'shopping_basket' },
       { name: 'Bills', url: '/account/seller-bills', icon: 'receipt' }
@@ -128,7 +129,7 @@ const TREE_DATA_FR: MenuNode[] = [
     url: '/account/selling',
     icon: 'account_circle',
     children: [
-      // { name: 'Tableau de bord', url: '/account/accounting', icon: 'receipt_long' },
+      { name: 'Dashboard', url: '/account/sales-finance-dashboard', icon: 'dashboard' },
       { name: 'Dépenses', url: '/account/transactions', icon: 'receipt_long' },
       { name: 'Commandes', url: '/account/purchase-orders', icon: 'shopping_basket' },
       { name: 'Factures', url: '/account/seller-bills', icon: 'receipt' }

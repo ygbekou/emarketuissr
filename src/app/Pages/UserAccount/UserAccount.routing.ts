@@ -29,6 +29,7 @@ import { PurchaseOrdersComponent } from './SellerPurchaseOrders/PurchaseOrders.c
 import { TransactionsComponent } from './SellerTransactions/Transactions.component';
 import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
 import { MyShippersComponent } from './MyShippers/MyShippers.component';
+import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -118,6 +119,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sales-dashboard',
             component: SalesDashboardComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'sales-finance-dashboard',
+            component: SalesFinanceDashboardComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
