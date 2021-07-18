@@ -1215,6 +1215,7 @@ export class ProductStoreOptionValue {
   points: number;
   pointsPrefix: string;
   price: number;
+  vipPrice: number;
   pricePrefix: string;
   weight: number;
   weightPrefix: string;
