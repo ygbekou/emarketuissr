@@ -2481,7 +2481,7 @@ export class Transaction {
   amount: number;
   image: string;
   description: string;
-  status: number;
+  status:  number;
 
   storeName: string;
   modifiedBy: number;
@@ -2491,10 +2491,8 @@ export class Transaction {
   type = 'Transaction';
 
   constructor() {
-    // this.paidBy = new User();
-    // this.receiver = new User();
     this.store = new Store();
-    this.status = 0;
+    this.status = 1;
     this.transactionDate = new Date();
   }
 }
