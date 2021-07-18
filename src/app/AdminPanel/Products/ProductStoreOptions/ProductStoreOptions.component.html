@@ -140,7 +140,7 @@
                </div>
                <div fxFlex="3" class="text-center"></div>
                <div fxFlex="10" class="text-center">
-                  <h6>{{'COMMON.PRICE' | translate}}</h6>
+                  <h6>{{'COMMON.PRICE' | translate}} / {{'COMMON.VIP_PRICE' | translate}}</h6>
                </div>
                <div fxFlex="3" class="text-center"></div>
                <div fxFlex="10" class="text-center">
@@ -198,8 +198,14 @@
                         </mat-form-field>
 
                         <mat-form-field class="w-100">
-                           <input matInput type="text" class="form-control" id="price"
+                              <mat-label>{{'COMMON.PRICE'|translate}}</mat-label>
+                              <input matInput type="text" class="form-control" id="price"
                               [(ngModel)]="productStoreOptionValue.price" name="price" #price="ngModel">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                              <mat-label>{{'COMMON.VIP_PRICE'|translate}}</mat-label>
+                              <input matInput type="text" class="form-control" id="vipPrice"
+                              [(ngModel)]="productStoreOptionValue.vipPrice" name="vipPrice" #vipPrice="ngModel">
                         </mat-form-field>
                      </div>
                      <div fxFlex="3" class="text-center"></div>
