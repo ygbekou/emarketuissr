@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { OnlineOrderVO, OrdersVO, StoreOrderVO, OrderSearchCriteria, StoreSearchCriteria, Store } from 'src/app/app.models';
+import { OrdersVO, OrderSearchCriteria, StoreSearchCriteria, Store } from 'src/app/app.models';
 @Component({
    selector: 'app-finances',
    templateUrl: './Finances.component.html',
@@ -10,7 +9,6 @@ import { OnlineOrderVO, OrdersVO, StoreOrderVO, OrderSearchCriteria, StoreSearch
 })
 
 export class FinancesComponent implements OnInit {
-
    chartData: any;
    dashboard: any;
    @Input() storeId: any;
@@ -26,9 +24,7 @@ export class FinancesComponent implements OnInit {
    stores: Store[] = [];
    colors = ['secondary', 'primary', 'secondary', 'secondary', 'secondary',
       'secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
-
    colors2 = ['tertiary', 'accent', 'tertiary', 'tertiary', 'tertiary', 'tertiary'];
-
    constructor(private appService: AppService,
       private translate: TranslateService) {
       this.store0.id = 0;

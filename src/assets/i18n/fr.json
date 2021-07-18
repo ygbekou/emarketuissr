@@ -7,6 +7,7 @@
     "OUT_OF": "sur",
     "OR": "ou",
     "FEES":"Frais",
+    "EXPENSE":"Dépense",
     "INVALID_CARD":"Carte de crédit/débit invalide",
     "ZONE_STATE": "Zone/Etat",
      "NAME_ADDRESS":"Nommer cette adresse. Ex. Maison.",
@@ -820,9 +821,11 @@
     "PAYMENT_STATUS": "Etat du payement",
     "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas �tre sup�rieur au montant d�.",
 		"AMOUNT_TO_RECEIVE": "Montant a recevoir",
-		"NET_INCOME": "Revenue Net",
-    "FINANCE_SUMMARY": "Sommaire des Finances",
-		"SALES": "Ventes",
+		"NET_INCOME": "Revenu net",
+    "FINANCE_SUMMARY": "Sommaire Comptable",
+    "SALES": "Ventes",
+    "PAID_BILLS":"Factures payées",
+    "UNPAID_BILLS":"Factures impayées",
 		"SPENDINGS": "Dépenses"
   },
   "MESSAGE": {
