@@ -11,14 +11,6 @@ import { OnlineOrderVO, OrdersVO, StoreOrderVO, OrderSearchCriteria, StoreSearch
 
 export class FinancesComponent implements OnInit {
 
-   onlineDS: MatTableDataSource<OnlineOrderVO>;
-   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
-   @ViewChild(MatSort, { static: true }) onlineST: MatSort;
-
-   storeDS: MatTableDataSource<StoreOrderVO>;
-   @ViewChild('MatPaginatorS', { static: true }) storePG: MatPaginator;
-   @ViewChild(MatSort, { static: true }) storeST: MatSort;
-
    chartData: any;
    dashboard: any;
    @Input() storeId: any;
@@ -36,9 +28,6 @@ export class FinancesComponent implements OnInit {
       'secondary', 'secondary', 'secondary', 'secondary', 'secondary'];
 
    colors2 = ['tertiary', 'accent', 'tertiary', 'tertiary', 'tertiary', 'tertiary'];
-
-   onlineOrdersColumns: string[] = ['orderId', 'createDate', 'status', 'storeName', 'city', 'country', 'total'];
-   storeOrdersColumns: string[] = ['orderId', 'date', 'status', 'store', 'type', 'price', 'rebate', 'total'];
 
    constructor(private appService: AppService,
       private translate: TranslateService) {
@@ -107,7 +96,13 @@ export class FinancesComponent implements OnInit {
             this.dashboard = data[0];
             // this.chartDataChange(this.tag, this.index);
             this.chartData = this.dashboard.dataSet[0];
-            console.log(this.dashboard);
+            this.translate.get(['COMMON.SALES', 'COMMON.SPENDINGS']).subscribe(res => {
+               this.chartData.data[0].label = res['COMMON.SALES'];
+               this.chartData.data[1].label = res['COMMON.SPENDINGS'];
+            });
+
+            console.log(this.chartData);
+
          },
             error => console.log(error),
             () => console.log('Get all getFinanceDynDashboard complete'));
@@ -189,22 +184,6 @@ export class FinancesComponent implements OnInit {
                this.tagValue = '0';
             }
          }
-      }
-   }
-
-
-   filterOnlineOrder(status) {
-      this.onlineDS.filter = status.trim().toLowerCase();
-      if (this.onlineDS.paginator) {
-         this.onlineDS.paginator.firstPage();
-      }
-   }
-
-   filterStoreOrder(status) {
-      console.log(status);
-      this.storeDS.filter = status.trim().toLowerCase();
-      if (this.storeDS.paginator) {
-         this.storeDS.paginator.firstPage();
       }
    }
 }

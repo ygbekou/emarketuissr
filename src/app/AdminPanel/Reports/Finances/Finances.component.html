@@ -23,7 +23,7 @@
 
          </div>
          <div>
-            <button mat-icon-button (click)="getDashboard()">
+            <button mat-icon-button (click)="getFinanceDynDashboard()">
                <mat-icon>sync</mat-icon>
             </button>
             <button mat-icon-button [matMenuTriggerFor]="options">
@@ -105,15 +105,14 @@
 
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
             <div class="tile tile-primary">
-               <div class="tile-heading">{{'COMMON.TRANSACTION'|translate}}s <span class="pull-right">
-                     <i *ngIf="dashboard.onlineOrders>dashboard.storeOrders" class="fa fa-caret-up"></i>
-                     <i *ngIf="dashboard.onlineOrders<=dashboard.storeOrders" class="fa fa-caret-down"></i>
-                     {{((dashboard.onlineOrders+dashboard.storeOrders) > 0 ?
-                     (100*dashboard.onlineOrders/(dashboard.onlineOrders+dashboard.storeOrders)):0)|number:'1.0-0'}}%</span>
+               <div class="tile-heading">{{'COMMON.EXPENSE'|translate}}s <span class="pull-right">
+                     <!-- <i *ngIf="dashboard.onlineOrders > dashboard.storeOrders" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.onlineOrders <= dashboard.storeOrders" class="fa fa-caret-down"></i> -->
+                     {{(dashboard.spendingTotal > 0 ? (100 * dashboard.expenseTotal / dashboard.spendingTotal) : 0)|number:'1.0-0'}}%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-shopping-cart"></i>
-                  <h2 class="pull-right">{{(dashboard.expenseTotal?dashboard.expenseTotal:0)|number:'1.0-0'}}</h2>
+                  <h2 class="pull-right">{{(dashboard.expenseTotal ? dashboard.expenseTotal:0)|number:'1.0-0'}}</h2>
                </div>
                <div class="tile-footer">
                   <a
@@ -127,8 +126,7 @@
                <div class="tile-heading">{{'COMMON.PURCHASE_ORDERS'|translate}} <span class="pull-right">
                      <i *ngIf="dashboard.purchaseTotal < dashboard.storeOrders" class="fa fa-caret-up"></i>
                      <i *ngIf="dashboard.onlineOrders >= dashboard.storeOrders" class="fa fa-caret-down"></i>
-                     {{((dashboard.purchaseTotal + dashboard.storeOrders) > 0 ?
-                     (100*dashboard.storeOrders/(dashboard.onlineOrders+dashboard.storeOrders)):0)|number:'1.0-0'}}%</span>
+                     {{(dashboard.spendingTotal > 0 ? (100 * dashboard.purchaseTotal / dashboard.spendingTotal) : 0)|number:'1.0-0'}}%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-shopping-cart"></i>
@@ -148,8 +146,7 @@
                <div class="tile-heading">{{'COMMON.BILLS'|translate}} <span class="pull-right">
                      <i *ngIf="dashboard.onlineCustomers > dashboard.storeCustomers" class="fa fa-caret-up"></i>
                      <i *ngIf="dashboard.onlineCustomers <= dashboard.storeCustomers" class="fa fa-caret-down"></i>
-                     {{((dashboard.onlineCustomers+dashboard.storeCustomers) > 0 ?
-                     (100*dashboard.onlineCustomers/(dashboard.onlineCustomers+dashboard.storeCustomers)):0)|number:'1.0-0'}}%</span>
+                     {{(dashboard.spendingTotal > 0 ? (100 * dashboard.paidBillTotal / dashboard.spendingTotal) : 0)|number:'1.0-0'}}%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-users"></i>
@@ -164,10 +161,9 @@
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
             <div class="tile tile-primary">
                <div class="tile-heading">{{'COMMON.NET_INCOME'|translate}} <span class="pull-right">
-                     <i *ngIf="dashboard.onlineUnits<dashboard.storeUnits" class="fa fa-caret-up"></i>
-                     <i *ngIf="dashboard.onlineUnits>=dashboard.storeUnits" class="fa fa-caret-down"></i>
-                     {{((dashboard.onlineUnits+dashboard.storeUnits) > 0 ?
-                     (100*dashboard.storeUnits/(dashboard.onlineUnits+dashboard.storeUnits)):0)|number:'1.0-0'}}%</span>
+                     <i *ngIf="dashboard.incomeTotal < 0" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.incomeTotal >= 0" class="fa fa-caret-down"></i>
+                     100%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-cart-plus"></i>
@@ -175,17 +171,16 @@
                </div>
                <div class="tile-footer">
                   <a
-                     [routerLink]="userId?'/account/sales-orders':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
+                     [routerLink]="userId?'/account/sales-summaries':'/admin/sales/orders'">{{'COMMON.VIEW_MORE'|translate}}...</a>
                </div>
             </div>
          </div>
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
             <div class="tile tile-primary">
                <div class="tile-heading">{{'COMMON.TOTAL_DUE'|translate}} <span class="pull-right">
-                     <i *ngIf="dashboard.onlineCustomers<dashboard.storeCustomers" class="fa fa-caret-up"></i>
-                     <i *ngIf="dashboard.onlineCustomers>=dashboard.storeCustomers" class="fa fa-caret-down"></i>
-                     {{((dashboard.onlineCustomers+dashboard.storeCustomers) > 0 ?
-                     (100*dashboard.storeCustomers/(dashboard.onlineCustomers+dashboard.storeCustomers)):0)|number:'1.0-0'}}%</span>
+                     <i *ngIf="dashboard.amountDueTotal < 0" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.amountDueTotal >= 0" class="fa fa-caret-down"></i>
+                     100%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-users"></i>
@@ -201,10 +196,9 @@
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
             <div class="tile tile-primary">
                <div class="tile-heading">{{'COMMON.AMOUNT_TO_RECEIVE'|translate}} <span class="pull-right">
-                     <i *ngIf="dashboard.onlineUnits>dashboard.storeUnits" class="fa fa-caret-up"></i>
-                     <i *ngIf="dashboard.onlineUnits<=dashboard.storeUnits" class="fa fa-caret-down"></i>
-                     {{((dashboard.onlineUnits+dashboard.storeUnits) > 0 ?
-                     (100*dashboard.onlineUnits/(dashboard.onlineUnits+dashboard.storeUnits)):0)|number:'1.0-0'}}%</span>
+                     <i *ngIf="dashboard.balanceTotal > 0" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.balanceTotal <= 0" class="fa fa-caret-down"></i>
+                     100%</span>
                </div>
                <div class="tile-body">
                   <i class="fa fa-cart-plus"></i>
