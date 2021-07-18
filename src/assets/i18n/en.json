@@ -816,7 +816,12 @@
 		"YEARLY": "Yearly",
 		"PAYMENT_DATE": "Payment date",
 		"PAYMENT_STATUS": "Payment Status",
-		"INVALID_PAYMENT_AMOUNT": "Payment amount cannot be greater than amount due."
+		"INVALID_PAYMENT_AMOUNT": "Payment amount cannot be greater than amount due.",
+		"AMOUNT_TO_RECEIVE": "Amount To Receive",
+		"NET_INCOME": "Net Income",
+		"FINANCE_SUMMARY": "Finance Summary",
+		"SALES": "Sales",
+		"SPENDINGS": "Spendings"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

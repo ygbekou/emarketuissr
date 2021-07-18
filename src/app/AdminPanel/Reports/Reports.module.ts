@@ -19,9 +19,10 @@ import {
 } from '@angular/material';
 import { WidgetModule } from '../Widget/Widget.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FinancesComponent } from './Finances/Finances.component';
 
 @NgModule({
-	declarations: [ReportsComponent],
+	declarations: [ReportsComponent, FinancesComponent],
 	imports: [
 		CommonModule,
 		RouterModule.forChild(ReportsRoutes),
@@ -40,6 +41,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 		MatPaginatorModule,
 		FlexLayoutModule
 	],
-	exports: [ReportsComponent]
+	exports: [ReportsComponent, FinancesComponent]
 })
 export class ReportsModule { }
