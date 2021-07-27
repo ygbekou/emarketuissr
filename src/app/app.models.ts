@@ -814,6 +814,9 @@ export class Store extends BaseModel {
   useMenu: number;
   allowPickup: number;
   flashPromo: string;
+  dayStartTime: string;
+  waitressPrint: number;
+  waitressClose: number;
   type = 'Store';
   constructor() {
     super();

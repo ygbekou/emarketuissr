@@ -520,9 +520,23 @@
               {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
             </mat-slide-toggle>
             <br />
+            <mat-slide-toggle [(ngModel)]="store.waitressPrint" name="waitressPrint" #waitressPrint="ngModel" class="my-2">
+              {{ 'COMMON.WAITRESS_CAN_PRINT' | translate }}
+            </mat-slide-toggle>
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.waitressClose" name="waitressClose" #waitressClose="ngModel" class="my-2">
+              {{ 'COMMON.WAITRESS_CAN_CLOSE' | translate }}
+            </mat-slide-toggle>
           </div>
 
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            
+              <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.DAY_START_TIME'|translate}}  </mat-label>
+              <input matInput type="text" class="form-control" id="dayStartTime" [(ngModel)]="store.dayStartTime"
+                name="dayStartTime" #dayStartTime="ngModel">
+            </mat-form-field>
+            
             <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel"
               class="my-2">
               {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
@@ -548,6 +562,7 @@
             <mat-slide-toggle [(ngModel)]="store.allowPickup" name="allowPickup" #allowPickup="ngModel" class="my-2">
               {{ 'COMMON.ALLOW_PICKUP' | translate }}
             </mat-slide-toggle>
+            
           </div>
         </div>
 

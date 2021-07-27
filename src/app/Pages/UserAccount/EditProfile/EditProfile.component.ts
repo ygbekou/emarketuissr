@@ -277,6 +277,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.allowPickup.toString() === 'false'
          || this.store.allowPickup.toString() === '0') ? 0 : 1;
 
+      this.store.waitressClose = (this.store.waitressClose == null
+         || this.store.waitressClose.toString() === 'false'
+         || this.store.waitressClose.toString() === '0') ? 0 : 1;
+
+      this.store.waitressPrint = (this.store.waitressPrint == null
+         || this.store.waitressPrint.toString() === 'false'
+         || this.store.waitressPrint.toString() === '0') ? 0 : 1;
+
       this.store.allowReopen = (this.store.allowReopen == null
          || this.store.allowReopen.toString() === 'false'
          || this.store.allowReopen.toString() === '0') ? 0 : 1;
