@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, ProductStoreMenu, ProductDescription, StoreEmployee, User, Transaction, TransactionType } from 'src/app/app.models';
+import { Store, StoreEmployee, User, Transaction } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+
 
 @Component({
   selector: 'app-transaction',
@@ -14,16 +15,9 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 export class TransactionComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   messages = '';
-  errors = '';
   transaction: Transaction = new Transaction();
 
-  currentOption: string;
-  productOptions: ProductDescription[];
-  filteredProductOptions: ProductDescription[];
-
-  storeProductMenu: ProductStoreMenu = new ProductStoreMenu();
   storeEmployees: StoreEmployee[] = [];
-
   selectedPurchaser: User;
 
   formData = new FormData();
@@ -33,6 +27,9 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
   @Input() canAcknowledge = false;
   @Input() store = new Store();
   @Output() transactionSaveEvent = new EventEmitter<any>();
+
+  saving = false;
+  justSubmitted = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -69,8 +66,7 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   clear(data) {
     this.messages = '';
-    this.errors = '';
-    this.currentOption = '';
+    //this.currentOption = '';
     this.transaction = new Transaction();
     this.setDatasource([]);
     this.picture = [];
@@ -88,11 +84,13 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
       this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
         .subscribe((data: StoreEmployee[]) => {
           this.storeEmployees = data;
+          console.log(this.storeEmployees);
         },
           (error) => console.log(error),
           () => console.log('Get all StoreEmployees complete'));
     }
   }
+
 
   getTransaction(transaction: Transaction) {
     this.messages = '';
@@ -101,7 +99,6 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
         .subscribe(result => {
           if (result.id > 0) {
             this.transaction = result;
-
             const images: any[] = [];
             const image = {
               link: 'assets/images/transactions/' + this.transaction.id + '/' + this.transaction.image,
@@ -118,81 +115,54 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
           }
         });
     } else {
-      this.transaction = new Transaction();
-      this.setDatasource([]);
+      this.clear([]);
     }
   }
 
-
-  getStoreProducts() {
-    this.appService.getObjects('/service/catalog/getMyProductsOnSale/'
-      + this.appService.appInfoStorage.language.id + '/' + this.store.id)
-      .subscribe((data: ProductDescription[]) => {
-        this.filteredProductOptions = data;
-        this.productOptions = data;
-      },
-        error => console.log(error),
-        () => console.log('Get all store product complete'));
-  }
-
-
-  filterOptions(val) {
-    if (val) {
-      const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
-      this.filteredProductOptions = this.productOptions
-        .filter(productDesc => productDesc.name.toLowerCase().startsWith(filterValue));
-    } else {
-      this.filteredProductOptions = this.productOptions;
-    }
-  }
 
   save() {
+    console.log('Save called');
+    if (this.justSubmitted) {
+      this.justSubmitted = false;
+      console.log('Just submitted');
+      return;
+    }
+    this.saving = true;
     this.messages = '';
-    this.errors = '';
     this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+
     if (!this.transaction.store.id) {
       this.transaction.store.id = this.store.id;
     }
     this.setToggleValues();
-    for (const img of this.picture) {
-      if (img && img.file) {
-        this.formData.append('file[]', img.file, 'picture.jpg');
-      }
+
+    this.formData = new FormData();
+    if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+      this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
     }
+
+    console.log(this.transaction);
     this.appService.saveWithFile(this.transaction, 'Transaction', this.formData, 'saveWithFile')
       .subscribe((data: Transaction) => {
         this.processResult(data, this.transaction, null);
         this.transaction = data;
         this.transaction.storeName = this.store.name;
-        this.transaction.transactionType.name = this.getTranName(this.transaction.transactionType);
         this.transactionSaveEvent.emit(this.transaction);
-        this.currentOption = '';
         this.transaction = new Transaction();
+        this.saving = false;
         this.setDatasource([]);
         this.picture = [];
       },
         error => console.log(error),
         () => console.log('Save Transaction complete'));
+
+     this.saving = false;
   }
 
-  getTranName(tType: TransactionType): string {
-    for (const t of this.appService.appInfoStorage.transactionTypes) {
-      if (t.transactionType.id === tType.id) {
-        return t.name;
-      }
-    }
-    return null;
-  }
   setToggleValues() {
     this.transaction.status = (this.transaction.status == null
       || this.transaction.status.toString() === 'false'
       || this.transaction.status.toString() === '0') ? 0 : 1;
   }
 
-  isEmpty(value: string): boolean {
-    '';
-    const val = value !== null && value !== undefined ? value.trim() : '';
-
-    return val.length === 0;
-  }
 }

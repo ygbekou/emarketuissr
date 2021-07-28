@@ -1,3 +1,8 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+</div>
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
@@ -86,7 +91,7 @@
           <mat-label> {{'COMMON.TOTAL' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="amount" [(ngModel)]="transaction.amount" name="amount"
-            #amount="ngModel" required>
+            pattern="-?(0|([1-9]\d*))(\.\d{2})?" #amount="ngModel" required>
           <!--   <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
           </mat-error>  -->

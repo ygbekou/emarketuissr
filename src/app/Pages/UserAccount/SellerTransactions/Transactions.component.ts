@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { StoreSearchCriteria, Store, Transaction, TransactionSearchCriteria, StoreEmployee } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, Transaction, TransactionSearchCriteria, StoreEmployee, TransactionType } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -70,6 +70,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    console.log('Transactions Page ...');
     this.searchCriteria.storeId = 0;
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
@@ -166,7 +167,19 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   }
 
   updateDataTable(transaction: Transaction) {
-    this.updateDatasourceData(this.transactionsDatasource, this.transactionsPaginator, this.transactionsSort, transaction);
+    const copyTransaction = {...transaction};
+    copyTransaction.transactionType.name = this.getTranName(transaction.transactionType);
+    this.updateDatasourceData(this.transactionsDatasource, this.transactionsPaginator, this.transactionsSort, copyTransaction);
     //this.selected.setValue(0);
   }
+
+  getTranName(tType: TransactionType): string {
+    for (const t of this.appService.appInfoStorage.transactionTypes) {
+      if (t.transactionType.id === tType.id) {
+        return t.name;
+      }
+    }
+    return null;
+  }
+
 }
