@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { StoreSearchCriteria, Store, Transaction, TransactionSearchCriteria, StoreEmployee, TransactionType } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TransactionComponent } from './Transaction.component';
 
@@ -22,7 +22,7 @@ export interface SearchResponse {
   templateUrl: './Transactions.component.html',
   styleUrls: ['./Transactions.component.scss']
 })
-export class TransactionsComponent extends BaseComponent implements OnInit {
+export class TransactionsComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   // transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
   transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'amount' ];
@@ -70,7 +70,6 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-
     this.searchCriteria.storeId = 0;
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
@@ -169,8 +168,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   updateDataTable(transaction: Transaction) {
     const copyTransaction = {...transaction};
     copyTransaction.transactionType.name = this.getTranName(transaction.transactionType);
-    this.updateDatasourceData(this.transactionsDatasource, this.transactionsPaginator, this.transactionsSort, copyTransaction);
-    //this.selected.setValue(0);
+    this.updateDatasourceData(this.transactionsDatasource, this.paginator, this.transactionsSort, copyTransaction);
   }
 
   getTranName(tType: TransactionType): string {
