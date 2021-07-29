@@ -17,7 +17,7 @@
 
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-    *ngIf="selectedStore && selectedStore.id > 0">
+    [hidden]="!selectedStore || selectedStore.id <= 0">
 
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
@@ -103,8 +103,7 @@
               <p *ngIf="transactionsDatasource?.data.length === 0" class="py-5 mb-0 text-center">
                 {{'MESSAGE.NO_DATA' | translate}}</p>
             </div>
-            <mat-paginator #MatPaginatorTransactions [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-              showFirstLastButtons></mat-paginator>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
           </div>
 
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">

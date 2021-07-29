@@ -56,6 +56,7 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Page Purchase Order Loaded ...');
     this.clear();
     this.getStores();
 
@@ -183,6 +184,6 @@ export class PurchaseOrdersComponent extends BaseComponent implements OnInit {
 
   updateDataTable(poHdr: PoHdr) {
     this.updateDatasourceData(this.purchaseOrdersDatasource, this.purchaseOrdersPaginator, this.purchaseOrdersSort, poHdr);
-    this.selected.setValue(0);
+    //this.selected.setValue(0);
   }
 }

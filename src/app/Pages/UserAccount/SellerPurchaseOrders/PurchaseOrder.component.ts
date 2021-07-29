@@ -193,7 +193,6 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
       this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
     }
 
-    console.log(this.poHdr);
     this.appService.saveWithFile(this.poHdr, 'PoHdr', this.formData, 'saveWithFile')
       .subscribe((data: PoHdr) => {
         this.processResult(data, this.poHdr, null);
@@ -218,6 +217,8 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         console.log(data);
         this.processResult(data, this.poHdr, null);
         this.poHdr = data;
+        this.poHdr.storeName = this.store.name;
+        this.poHdrSaveEvent.emit(this.poHdr);
         this.getPoDtls();
         this.saving = false;
       },

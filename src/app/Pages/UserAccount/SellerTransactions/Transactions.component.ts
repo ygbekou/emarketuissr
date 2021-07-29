@@ -27,7 +27,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   // transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
   transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'amount' ];
   transactionsDatasource: MatTableDataSource<Transaction>;
-  @ViewChild('MatPaginatorTransactions', { static: true }) transactionsPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) transactionsSort: MatSort;
 
 
@@ -70,7 +70,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log('Transactions Page ...');
+
     this.searchCriteria.storeId = 0;
     if (this.isAdminPage) {
       this.searchCriteria.status = 1;
@@ -124,7 +124,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
       this.appService.saveWithUrl('/service/finance/getTransactions', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.transactionsDatasource = new MatTableDataSource(data);
-          this.transactionsDatasource.paginator = this.transactionsPaginator;
+          this.transactionsDatasource.paginator = this.paginator;
           this.transactionsDatasource.sort = this.transactionsSort;
         },
           error => console.log(error),

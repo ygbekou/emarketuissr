@@ -152,11 +152,15 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
         this.saving = false;
         this.setDatasource([]);
         this.picture = [];
-      },
-        error => console.log(error),
-        () => console.log('Save Transaction complete'));
+      }, error => {
+          this.saving = false;
+          console.log(error);
+        }, () => {
+            this.saving = false;
+            console.log('Save Transaction complete');
+          }
+        );
 
-     this.saving = false;
   }
 
   setToggleValues() {
