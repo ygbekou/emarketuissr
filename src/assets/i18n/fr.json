@@ -830,7 +830,9 @@
     "SALES": "Ventes",
     "PAID_BILLS":"Factures payées",
     "UNPAID_BILLS":"Factures impayées",
-		"SPENDINGS": "Dépenses"
+		"SPENDINGS": "Dépenses",
+    "SELECTED_MENU": "Menu sélectionné",
+    "CAN_NOT_FIND_MENU": "Vous ne trouvez pas votre menu, cliquez sur + bouton pour l'ajouter."
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

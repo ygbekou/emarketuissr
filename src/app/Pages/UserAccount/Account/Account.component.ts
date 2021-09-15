@@ -75,6 +75,13 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'My deliveries', url: '/account/deliveries', icon: 'local_shipping' },
     ]
   }, {
+    name: 'Hospitality',
+    url: '/account/hospitality',
+    icon: 'account_circle',
+    children: [
+      { name: 'Building', url: '/account/seller-buildings', icon: 'building' }
+    ]
+  }, {
     name: 'Reports',
     url: '/account/selling',
     icon: 'account_circle',
@@ -142,6 +149,13 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Zones d\'expédition', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'Mes livreurs', url: '/account/my-shippers', icon: 'directions_run' },
       { name: 'Mes livraisons', url: '/account/deliveries', icon: 'local_shipping' },
+    ]
+  }, {
+    name: 'Hospitalité',
+    url: '/account/hospitality',
+    icon: 'account_circle',
+    children: [
+      { name: 'Imeuble', url: '/account/seller-buildings', icon: 'building' }
     ]
   }, {
     name: 'Etats',

@@ -79,6 +79,8 @@ import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
 import { FinancesModule } from 'src/app/AdminPanel/Finances/Finances.module';
 import { MyShippersComponent } from './MyShippers/MyShippers.component';
 import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
+import { BuildingComponent } from './Buildings/Building.component';
+import { BuildingsComponent } from './Buildings/Buildings.component';
 
 @NgModule({
   imports: [
@@ -181,7 +183,9 @@ import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-
     TransactionComponent,
     TransactionsComponent,
     SellerBillsComponent,
-    MyShippersComponent
+    MyShippersComponent,
+    BuildingComponent,
+    BuildingsComponent
   ],
   exports: [
     StoresComponent,

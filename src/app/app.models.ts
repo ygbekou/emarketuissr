@@ -2682,3 +2682,22 @@ export class BillPayment {
     this.status = 1;
   }
 }
+
+
+
+export class Building {
+  id: number;
+  store: Store;
+  image: string;
+  status = 1;
+  modifiedBy: number;
+  name: string;
+
+  type = 'Building';
+  action: string;
+
+  constructor() {
+    this.store = new Store();
+    this.status = 1;
+  }
+}

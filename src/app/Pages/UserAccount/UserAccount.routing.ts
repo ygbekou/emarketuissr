@@ -30,6 +30,7 @@ import { TransactionsComponent } from './SellerTransactions/Transactions.compone
 import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
 import { MyShippersComponent } from './MyShippers/MyShippers.component';
 import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
+import { BuildingsComponent } from './Buildings/Buildings.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -255,6 +256,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'my-shippers',
             component: MyShippersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'seller-buildings',
+            component: BuildingsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
