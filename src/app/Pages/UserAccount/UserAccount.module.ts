@@ -81,6 +81,12 @@ import { MyShippersComponent } from './MyShippers/MyShippers.component';
 import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
 import { BuildingComponent } from './Buildings/Building.component';
 import { BuildingsComponent } from './Buildings/Buildings.component';
+import { RoomComponent } from './rooms/Room.component';
+import { RoomsComponent } from './rooms/Rooms.component';
+import { RoomTypeComponent } from './roomTypes/RoomType.component';
+import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
+import { AmenityComponent } from './amenities/Amenity.component';
+import { AmenitiesComponent } from './amenities/Amenities.component';
 
 @NgModule({
   imports: [
@@ -185,7 +191,13 @@ import { BuildingsComponent } from './Buildings/Buildings.component';
     SellerBillsComponent,
     MyShippersComponent,
     BuildingComponent,
-    BuildingsComponent
+    BuildingsComponent,
+    RoomComponent,
+    RoomsComponent,
+    RoomTypeComponent,
+    RoomTypesComponent,
+    AmenityComponent,
+    AmenitiesComponent
   ],
   exports: [
     StoresComponent,

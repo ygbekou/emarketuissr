@@ -1,0 +1,83 @@
+<app-amenity (amenitySaveEvent)="amenitySaved($event)"></app-amenity>
+
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <fieldset>
+      <legend>
+        <h5 style="color:#00008b">{{'COMMON.LIST' | translate}}</h5>
+      </legend>
+      <div fxLayout="row wrap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div fxFlex="50" fxFlex.gt-sm="50" class="p-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex="10" fxFlex.gt-sm="10" class="p-1" *ngIf="userId !== 0">
+            <button (click)="action = 'add'; messages = '';" mat-fab color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="amenitiesDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef width="40%" mat-sort-header> {{'COMMON.NAME' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let amenityDesc"> {{amenityDesc.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="desc">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.DESCRIPTION' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let amenityDesc"> {{amenityDesc.description}} </td>
+            </ng-container>
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef> Image </th>
+              <td mat-cell *matCellDef="let amenityDesc"><img
+                  [src]="'assets/images/amenities/'+amenityDesc.amenity.id+'/'+amenityDesc.amenity.image"
+                  [style.width.px]="50" class="d-block"></td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let amenityDesc">
+                {{amenityDesc.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
+              <td mat-cell *matCellDef="let amenityDesc">
+                <a mat-icon-button (click)="getAmenityDetails(amenityDesc)" color="secondary"
+                  matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
+                  <mat-icon>info</mat-icon>
+                </a>
+                &nbsp;&nbsp;
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="amenitiesColumns"></tr>
+            <tr mat-row *matRowDef="let amenityDesc; columns: amenitiesColumns;"></tr>
+          </table>
+          <p *ngIf="amenitiesDatasource?.data?.length === 0" class="py-5 mb-0 text-center">
+            {{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator #MatPaginatorAmenities [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+
+
+      </div>
+    </div>
+    </fieldset>
+  </div>
+</div>

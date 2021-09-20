@@ -7,6 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BuildingComponent } from './Building.component';
+import { FormControl } from '@angular/forms';
+import { RoomsComponent } from '../rooms/Rooms.component';
+import { RoomTypesComponent } from '../roomTypes/RoomTypes.component';
 
 @Component({
   selector: 'app-buildings',
@@ -16,6 +19,8 @@ import { BuildingComponent } from './Building.component';
 export class BuildingsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(BuildingComponent, { static: false }) buildingView: BuildingComponent;
+  @ViewChild(RoomsComponent, { static: false }) roomsView: RoomsComponent;
+  @ViewChild(RoomTypesComponent, { static: false }) roomTypesView: RoomTypesComponent;
 
   displayedColumns: string[] = ['name', 'image', 'status', 'actions'];
   dataSource: MatTableDataSource<Building>;
@@ -26,6 +31,8 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
   stores: Store[] = [];
   selectedStore: Store;
+
+  selected = new FormControl(0);
 
   className = 'com.softenza.emarket.model.hospitality.Building';
 
@@ -114,6 +121,33 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
           this.buildingView.selectedStore = event.value;
         }
       }
+    }, 500);
+  }
+
+  selectBuilding(building: Building) {
+
+    setTimeout(() => {
+
+      if (this.buildingView) {
+        this.buildingView.getBuilding(building);
+      }
+
+      if (this.roomsView) {
+        this.roomsView.building = building;
+        this.roomsView.getRooms();
+        this.roomsView.roomComponent.building = building;
+        this.roomsView.roomComponent.deriveFloorList();
+        this.roomsView.roomComponent.getRoomTypes();
+      }
+
+      if (this.roomTypesView) {
+        this.roomTypesView.building = building;
+        this.roomTypesView.roomTypeComponent.building = building;
+        this.roomTypesView.getRoomTypes();
+      }
+
+      this.selected.setValue(1);
+
     }, 500);
   }
 

@@ -79,7 +79,8 @@ const TREE_DATA_EN: MenuNode[] = [
     url: '/account/hospitality',
     icon: 'account_circle',
     children: [
-      { name: 'Building', url: '/account/seller-buildings', icon: 'building' }
+      { name: 'Building', url: '/account/seller-buildings', icon: 'building' },
+      { name: 'Amenity', url: '/account/amenities', icon: 'amenity' }
     ]
   }, {
     name: 'Reports',
@@ -155,7 +156,8 @@ const TREE_DATA_FR: MenuNode[] = [
     url: '/account/hospitality',
     icon: 'account_circle',
     children: [
-      { name: 'Imeuble', url: '/account/seller-buildings', icon: 'building' }
+      { name: 'Imeubles', url: '/account/seller-buildings', icon: 'building' },
+      { name: 'Aménités', url: '/account/amenities', icon: 'amenity' }
     ]
   }, {
     name: 'Etats',

@@ -1,0 +1,61 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+   <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+         <button mat-icon-button color="primary" (click)="clear()" type="button"
+            matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
+            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+         </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+         <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+               <mat-icon>save</mat-icon>
+            </button> </div>
+         <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+         </div>
+      </div>
+   </div>
+
+   <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" class="p-1">
+         <div fxLayout="row wrap">
+            <div fxFlex="40" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
+                  <input matInput type="text" class="form-control" id="name{{i}}"
+                     [(ngModel)]="amenity.amenityDescs[i].name" name="name{{i}}" required>
+               </mat-form-field>
+               <div fxFlex="5"></div>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+            <div fxFlex="40" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.DESCRIPTION' | translate}} - {{lang.name}}</mat-label>
+                  <input matInput type="text" class="form-control" id="description{{i}}"
+                     [(ngModel)]="amenity.amenityDescs[i].description" name="description{{i}}">
+               </mat-form-field>
+               <div fxFlex="5"></div>
+            </div>
+         </div>
+         <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+               <mat-slide-toggle [(ngModel)]="amenity.status" name="status" #status="ngModel" class="my-2">
+                  {{ 'COMMON.STATUS' | translate }}
+               </mat-slide-toggle>
+            </div>
+         </div>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+
+         <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
+         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+            [linkEnabled]="false">
+         </input-file>
+
+      </div>
+   </div>
+</form>

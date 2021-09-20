@@ -2692,6 +2692,7 @@ export class Building {
   status = 1;
   modifiedBy: number;
   name: string;
+  nbrFloors: number;
 
   type = 'Building';
   action: string;
@@ -2700,4 +2701,97 @@ export class Building {
     this.store = new Store();
     this.status = 1;
   }
+}
+
+
+export class Room {
+  id: number;
+  roomType: RoomType;
+  roomNbr: number;
+  floorNbr: number;
+  image: string;
+  status = 1;
+  modifiedBy: number;
+  roomTypeDescs: RoomTypeDesc [];
+
+  type = 'Room';
+  action: string;
+
+  constructor() {
+    this.roomType = new RoomType();
+    this.status = 1;
+  }
+}
+
+
+export class RoomSearchCriteria {
+  id: number;
+  roomTypeId: number;
+  floorNbr: number;
+  buildingId: number;
+  storeId: number;
+  roomTypeName: string;
+  userId: number;
+  languageId: number;
+  status: number;
+}
+
+
+export class RoomType {
+  id: number;
+  building: Building;
+  price: number;
+  qty: number;
+  availableQty: number;
+  image: string;
+  status: number;
+  roomTypeDescs: RoomTypeDesc[] = [];
+  name: string;
+  modifiedBy: number;
+
+  type = 'RoomType';
+  action: string;
+
+  constructor() {
+    this.building = new Building();
+    this.status = 1;
+  }
+
+}
+
+export class RoomTypeDesc {
+  id: number;
+  language: Language;
+  roomType: RoomType;
+  name: string;
+  description: string;
+
+  type = 'RoomTypeDesc';
+}
+
+export class Amenity {
+  id: number;
+  image: string;
+  status: number;
+  amenityDescs: AmenityDesc[] = [];
+  name: string;
+  modifiedBy: number;
+
+  type = 'Amenity';
+  action: string;
+
+  constructor() {
+    this.status = 1;
+  }
+
+}
+
+export class AmenityDesc {
+  id: number;
+  language: Language;
+  amenity: Amenity;
+  name: string;
+  description: string;
+
+  type = 'AmenityDesc';
 }
