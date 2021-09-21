@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { RoomTypeAmenity, RoomSearchCriteria, RoomType, AmenityDesc, Amenity } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
@@ -15,17 +15,18 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   aAmenityColumns: string[] = ['image', 'amenityName', 'actions'];
-  aAmenityDatasource: MatTableDataSource<AmenityDesc>;
+  aAmenityDatasource: MatTableDataSource<Amenity>;
   @ViewChild('aAmenityPaginator', { static: true }) aAmenityPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) aAmenitySort: MatSort;
 
   sAmenityColumns: string[] = ['image', 'amenityName', 'actions'];
-  sAmenityDatasource: MatTableDataSource<AmenityDesc>;
+  sAmenityDatasource: MatTableDataSource<Amenity>;
   @ViewChild('sAmenityPaginator', { static: true }) sAmenityPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sAmenitySort: MatSort;
 
   messages = '';
   panelOpenState = false;
+  CLASS_NAME = 'com.softenza.emarket.model.hospitality.RoomTypeAmenity';
   //roomTypeAmenity: RoomTypeAmenity = new RoomTypeAmenity();
   searchCriteria: RoomSearchCriteria = new RoomSearchCriteria();
   //menuDescriptions: MenuDescription[] = [];
@@ -66,7 +67,7 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
         && (this.location.path().startsWith('/admin/'));
     });
 
-    this.aAmenityDatasource = new MatTableDataSource<AmenityDesc>([]);
+    this.aAmenityDatasource = new MatTableDataSource<Amenity>([]);
 
   }
 
@@ -86,7 +87,7 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
         roomTypeId: this.roomType.id,
         languageId: this.appService.appInfoStorage.language.id
       })
-      .subscribe((data: AmenityDesc[]) => {
+      .subscribe((data: Amenity[]) => {
         this.aAmenityDatasource = new MatTableDataSource(data);
         this.aAmenityDatasource.paginator = this.aAmenityPaginator;
         this.aAmenityDatasource.sort = this.aAmenitySort;
@@ -121,12 +122,12 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
   }
 
 
-  saveRoomTypeAmenity(amenityDesc: AmenityDesc) {
+  saveRoomTypeAmenity(amenity: Amenity) {
     const roomTypeAmenity = new RoomTypeAmenity();
-    const oldAmenityName = amenityDesc.name;
-    const oldAmenityImage = amenityDesc.amenity.image;
+    const oldAmenityName = amenity.name;
+    const oldAmenityImage = amenity.image;
     roomTypeAmenity.roomType = this.roomType;
-    roomTypeAmenity.amenity = amenityDesc.amenity;
+    roomTypeAmenity.amenity = amenity;
 
     this.appService.saveWithUrl('/service/crud/RoomTypeAmenity/save/', roomTypeAmenity)
       .subscribe((data: RoomTypeAmenity) => {
@@ -137,7 +138,7 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
         //productStoreMenu.product = new Product();
         //productStoreMenu.product.id = productStoreMenu.productId;
         this.updateDatasourceData(this.sAmenityDatasource, this.sAmenityPaginator, this.sAmenitySort, roomTypeAmenity);
-        this.processDataSourceDeleteResult({ result: 'SUCCESS' }, this.messages, amenityDesc, this.aAmenityDatasource);
+        this.processDataSourceDeleteResult({ result: 'SUCCESS' }, this.messages, amenity, this.aAmenityDatasource);
         this.aAmenityDatasource.data = Array.from(this.aAmenityDatasource.data);
       },
         error => console.log(error),
@@ -153,20 +154,18 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
 
     this.messages = '';
 
-    const amenityDesc = new AmenityDesc();
-    amenityDesc.amenity.id = roomTypeAmenity.amenity.id;
-    amenityDesc.name = roomTypeAmenity.amenityName;
+    const amenity = roomTypeAmenity.amenity;
 
-    this.appService.delete(roomTypeAmenity.id, 'RoomTypeAmenity')
+    this.appService.delete(roomTypeAmenity.id, this.CLASS_NAME)
       .subscribe(data => {
 
-        this.updateDatasourceData(this.aAmenityDatasource, this.aAmenityPaginator, this.aAmenitySort, amenityDesc);
-        this.processDataSourceDeleteResult(data, this.messages, amenityDesc, this.sAmenityDatasource);
+        this.updateDatasourceData(this.aAmenityDatasource, this.aAmenityPaginator, this.aAmenitySort, amenity);
+        this.processDataSourceDeleteResult(data, this.messages, roomTypeAmenity, this.sAmenityDatasource);
         this.sAmenityDatasource.data = Array.from(this.sAmenityDatasource.data);
 
       });
   }
-
+  
   public applyAvailableAmenityFilter(filterValue: string) {
     this.aAmenityDatasource.filter = filterValue.trim().toLowerCase();
     if (this.aAmenityDatasource.paginator) {

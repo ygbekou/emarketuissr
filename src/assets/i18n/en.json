@@ -840,7 +840,8 @@
 		"FLOOR_NBR": "Floor Number",
 		"ROOM_TYPE": "Room Type",
 		"NBR_FLOORS": "Number of floors",
-		"EXPAND_TO_ASSIGN_AMENITIES": "Expand to assign amenities"
+		"EXPAND_TO_ASSIGN_AMENITIES": "Expand to assign amenities",
+		"CLOSE_TO_SAVE_SPACE": "Close to save space"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
