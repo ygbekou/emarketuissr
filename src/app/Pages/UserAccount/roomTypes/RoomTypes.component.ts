@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { RoomTypeComponent } from './RoomType.component';
+import { RoomTypeAmenityComponent } from './RoomTypeAmenity.component';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
 
 
   @ViewChild(RoomTypeComponent, { static: false }) roomTypeComponent: RoomTypeComponent;
+  @ViewChild(RoomTypeAmenityComponent, { static: false }) roomTypeAmenityComponent: RoomTypeAmenityComponent;
+
   messages = '';
   button = 'filter';
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.RoomType';
@@ -108,6 +111,9 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
 
   getRoomTypeDetails(roomTypeDesc: any) {
     this.roomTypeComponent.getDescriptions(roomTypeDesc.roomType.id);
+    this.roomTypeAmenityComponent.roomType = roomTypeDesc.roomType;
+    this.roomTypeAmenityComponent.getRoomTypeUnassignedAmenities();
+    this.roomTypeAmenityComponent.getRoomTypeAmenities();
   }
 
   roomTypeSaved($event) {

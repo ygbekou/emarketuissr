@@ -1,0 +1,126 @@
+<!-- <div fxLayout="row" fxLayoutAlign="center center" *ngIf="storeMenu && storeMenu.id">
+  <h5 style="color:#00008b">{{'COMMON.SELECTED_MENU' | translate}}: {{storeMenu.menuName}}</h5>
+</div> -->
+<mat-accordion *ngIf="roomType && roomType.id > 0">
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        
+      </mat-panel-title>
+      <mat-panel-description>
+        <h5 style="color:#00008b">{{'COMMON.EXPAND_TO_ASSIGN_AMENITIES' | translate}}</h5>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div fxLayout="row wrap">
+
+      <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+        <legend>
+          <h5 style="color:#00008b">{{'COMMON.AVAILABLE' | translate}}</h5>
+        </legend>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="100">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyAvailableAmenityFilter($event.target.value)"
+                placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="aAmenityDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="amenityName">
+              <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let amenityDesc"> {{amenityDesc.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
+              <td mat-cell *matCellDef="let amenityDesc">
+                <img
+                  [src]="'assets/images/amenities/'+(amenityDesc.amenity?.image?(amenityDesc.amenity.id+'/'+amenityDesc.amenity?.image):'default.png')"
+                  [style.width.px]="50" class="d-block">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
+              <td mat-cell *matCellDef="let amenityDesc">
+                <a mat-icon-button (click)="saveRoomTypeAmenity(amenityDesc)" color="secondary"
+                  matTooltip="{{'COMMON.ADD' | translate}}">
+                  <mat-icon style="color: #006400">check</mat-icon>
+                </a>
+                &nbsp;&nbsp;
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="aAmenityColumns"></tr>
+            <tr mat-row *matRowDef="let amenityDesc; columns: aAmenityColumns;"></tr>
+          </table>
+          <p *ngIf="!aAmenityDatasource?.data || aAmenityDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+            {{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator #aAmenityPaginator [length]="10" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+          showFirstLastButtons></mat-paginator>
+      </div>
+
+
+
+      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
+
+      <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+        <legend>
+          <h5 style="color:#00008b">{{'COMMON.ASSIGNED' | translate}}</h5>
+        </legend>
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="100">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applySelectedAmenityFilter($event.target.value)"
+                placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="sAmenityDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="amenityName">
+              <th mat-header-cell *matHeaderCellDef width="50%" mat-sort-header> {{'COMMON.NAME' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let roomTypeAmenity"> {{roomTypeAmenity.amenity.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef width="30%"> Image </th>
+              <td mat-cell *matCellDef="let roomTypeAmenity">
+                <img
+                  [src]="'assets/images/amenities/'+(roomTypeAmenity?.amenity?.image?(roomTypeAmenity.amenity.id+'/'+roomTypeAmenity?.amenity?.image):'default.png')"
+                  [style.width.px]="50" class="d-block">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Actions</th>
+              <td mat-cell *matCellDef="let roomTypeAmenity">
+                <a mat-icon-button (click)="deleteRoomTypeAmenity(roomTypeAmenity)" color="secondary"
+                  matTooltip="{{'COMMON.REMOVE' | translate}}">
+                  <mat-icon style="color: #FF0000">remove</mat-icon>
+                </a>
+                &nbsp;&nbsp;
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="sAmenityColumns"></tr>
+            <tr mat-row *matRowDef="let roomTypeAmenity; columns: sAmenityColumns;"></tr>
+          </table>
+          <p *ngIf="!sAmenityDatasource?.data || sAmenityDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+            {{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator #sAmenityPaginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

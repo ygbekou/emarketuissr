@@ -234,6 +234,7 @@
 		"ARTICLE": "Article",
 		"ASSESSMENT": "Assessment",
 		"ASSIGN": "Assign",
+		"ASSIGNED": "Assigned",
 		"ASSIGN_TO": "Assign To",
 		"ASSIGNED_RESOURCES": "Assigned Resources",
 		"AUTHOR": "Author",
@@ -838,7 +839,8 @@
 		"ROOM_NBR": "Room Number",
 		"FLOOR_NBR": "Floor Number",
 		"ROOM_TYPE": "Room Type",
-		"NBR_FLOORS": "Number of floors"
+		"NBR_FLOORS": "Number of floors",
+		"EXPAND_TO_ASSIGN_AMENITIES": "Expand to assign amenities"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

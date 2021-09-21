@@ -2795,3 +2795,18 @@ export class AmenityDesc {
 
   type = 'AmenityDesc';
 }
+
+export class RoomTypeAmenity {
+  id: number;
+  roomType: RoomType;
+  amenity: Amenity;
+  price: number;
+  type = 'RoomTypeAmenity';
+
+  roomTypeName: string;
+  amenityName: string;
+  image: string;
+
+  constructor() {
+  }
+}
