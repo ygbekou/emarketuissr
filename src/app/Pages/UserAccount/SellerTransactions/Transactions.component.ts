@@ -136,7 +136,6 @@ export class TransactionsComponent extends BaseComponent implements OnInit, Afte
     if (this.transactionsDatasource.paginator) {
       this.transactionsDatasource.paginator.firstPage();
     }
-
   }
 
   getTransaction(transaction: any) {
@@ -145,13 +144,11 @@ export class TransactionsComponent extends BaseComponent implements OnInit, Afte
   }
 
   storeSelected(event) {
-
     setTimeout(() => {
       this.searchCriteria.storeId = this.selectedStore.id;
       this.search();
       this.selected.setValue(0);
       this.getMyStoreEmployees();
-
       if (this.transactionComponent) {
         if (event && !event.value) {
           this.transactionComponent.store = event;

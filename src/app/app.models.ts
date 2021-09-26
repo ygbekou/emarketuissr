@@ -356,7 +356,6 @@ export class NewsVideo {
   }
 }
 
-
 export class Section {
   id: number;
   name: string;
@@ -663,8 +662,6 @@ export class ZoneToGeoZone {
   deliveryTimeBegin: number;
   deliveryTimeEnd: number;
   deliveryTimeUnit = '';
-
-
   errors: string[];
   type = 'ZoneToGeoZone';
 
@@ -2484,7 +2481,7 @@ export class Transaction {
   amount: number;
   image: string;
   description: string;
-  status:  number;
+  status: number;
 
   storeName: string;
   modifiedBy: number;
