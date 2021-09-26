@@ -234,6 +234,7 @@
 		"ARTICLE": "Article",
 		"ASSESSMENT": "Assessment",
 		"ASSIGN": "Assign",
+		"ASSIGNED": "Assigned",
 		"ASSIGN_TO": "Assign To",
 		"ASSIGNED_RESOURCES": "Assigned Resources",
 		"AUTHOR": "Author",
@@ -828,7 +829,19 @@
 		"UNPAID_BILLS":"Unpaid Bills",
 		"FINANCE_SUMMARY": "Accounting Summary",
 		"SALES": "Sales",
-		"SPENDINGS": "Spendings"
+		"SPENDINGS": "Spendings",
+		"SELECTED_MENU": "Selected Menu",
+		"CAN_NOT_FIND_MENU": "Can't find your menu click + botton to add it.",
+		"AVAILABLE_QUANTITY": "Available Quantity",
+		"BUILDINGS": "Buildings",
+		"ROOMS": "Rooms",
+		"ROOM_TYPES": "Room Types",
+		"ROOM_NBR": "Room Number",
+		"FLOOR_NBR": "Floor Number",
+		"ROOM_TYPE": "Room Type",
+		"NBR_FLOORS": "Number of floors",
+		"EXPAND_TO_ASSIGN_AMENITIES": "Expand to assign amenities",
+		"CLOSE_TO_SAVE_SPACE": "Close to save space"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

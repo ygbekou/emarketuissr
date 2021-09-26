@@ -1,0 +1,80 @@
+<app-room (roomSaveEvent)="updateDataTable($event)"></app-room>
+<fieldset>
+    <legend>
+      <h5 style="color:#00008b">{{'COMMON.LIST' | translate}}</h5>
+    </legend>
+    <div fxLayout="row wrap" *ngIf="building && building.id > 0">
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div fxFlex="50" fxFlex.gt-sm="50" class="p-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex="10" fxFlex.gt-sm="10" class="p-1" *ngIf="userId !== 0">
+            <button (click)="action = 'add'; messages = '';" mat-fab color="primary"
+              matTooltip="{{'COMMON.ADD' | translate}}">
+              <mat-icon  class="mat-icon-xlg">add_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div class="table-wrapper">
+            <table mat-table [dataSource]="roomsDatasource" matSort class="w-100">
+
+              <ng-container matColumnDef="roomTypeName">
+                <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.ROOM_TYPE' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let room"> {{getRoomTypeName(room)}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="roomNbr">
+                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.ROOM_NBR' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let room"> {{room.roomNbr}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="floorNbr">
+                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.FLOOR_NBR' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let room"> {{room.floorNbr}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let room">
+                  {{room.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
+                <td mat-cell *matCellDef="let room">
+                  <a mat-icon-button (click)="getRoomDetails(room)" color="secondary"
+                    matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
+                    <mat-icon>info</mat-icon>
+                  </a>
+                  &nbsp;&nbsp;
+                  
+                </td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="roomsColumns"></tr>
+              <tr mat-row *matRowDef="let room; columns: roomsColumns;"
+               (click)="getRoomDetails(room)" ></tr>
+            </table>
+            <p *ngIf="roomsDatasource?.data?.length === 0" class="py-5 mb-0 text-center">
+              {{'MESSAGE.NO_DATA' | translate}}</p>
+          </div>
+          <mat-paginator #MatPaginatorRooms [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+            showFirstLastButtons></mat-paginator>
+
+        </div>
+  </div>
+</fieldset>

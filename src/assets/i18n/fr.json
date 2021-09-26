@@ -224,6 +224,7 @@
     "ARTICLE": "Article",
     "ASSESSMENT": "Évaluation",
     "ASSIGN": "Assigner",
+    "ASSIGNED": "Assigné",
     "ASSIGN_TO": "Assigner à",
     "ASSIGNED_RESOURCES": "Resources Assignés",
     "AUTHOR": "Autheur",
@@ -830,7 +831,19 @@
     "SALES": "Ventes",
     "PAID_BILLS":"Factures payées",
     "UNPAID_BILLS":"Factures impayées",
-		"SPENDINGS": "Dépenses"
+		"SPENDINGS": "Dépenses",
+    "SELECTED_MENU": "Menu sélectionné",
+    "CAN_NOT_FIND_MENU": "Vous ne trouvez pas votre menu, cliquez sur + bouton pour l'ajouter.",
+		"AVAILABLE_QUANTITY": "Quantité disponible",
+		"BUILDINGS": "Immeubles",
+		"ROOMS": "Chambres",
+		"ROOM_TYPES": "Types de chambre",
+		"ROOM_NBR": "Numero de chambre",
+		"FLOOR_NBR": "Numero de l'étage",
+		"ROOM_TYPE": "Type de chambre",
+		"NBR_FLOORS": "Nombre d'étages",
+		"EXPAND_TO_ASSIGN_AMENITIES": "Ouvrir pour attribuer des commodités",
+		"CLOSE_TO_SAVE_SPACE": "Fermer pour gagner de l'espace"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

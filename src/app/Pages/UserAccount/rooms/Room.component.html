@@ -1,0 +1,60 @@
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+
+   <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60" class="p-3">
+         <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+         </div>
+      </div>
+
+   </div>
+
+   
+      
+   <div fxLayout="row">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+         <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.ROOM_NBR' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="name" [(ngModel)]="room.roomNbr" name="name" required>
+         </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+         <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.FLOOR_NBR' | translate}} </mat-label>
+            <mat-select placeholder="floor" id="floor" name="floor" [(ngModel)]="room.floorNbr" required>
+               <mat-option *ngFor="let i of floors; let i = index" [value]="i">
+                  {{i}}
+               </mat-option>
+            </mat-select>
+         </mat-form-field>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+         <mat-form-field class="w-100 mb-3">
+            <mat-label> {{'COMMON.ROOM_TYPE' | translate}} </mat-label>
+            <mat-select placeholder="" id="roomType" name="roomType" [(ngModel)]="room.roomType" [compareWith]="compareObjects" required>
+               <mat-option *ngFor="let roomTypeDesc of roomTypeDescs; let i = index" [value]="roomTypeDesc.roomType">
+                  {{roomTypeDesc.name}}
+               </mat-option>
+            </mat-select>
+         </mat-form-field>
+      </div>
+         
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+         <mat-slide-toggle [(ngModel)]="room.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.STATUS' | translate }}
+         </mat-slide-toggle>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+         <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+               <mat-icon>save</mat-icon>
+            </button> 
+         </div>
+      </div>
+   </div>
+   
+</form>

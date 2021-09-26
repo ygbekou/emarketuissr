@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreMenu, MenuSearchCriteria, MenuDescription, ProductStoreMenu, ProductToStore, Product } from 'src/app/app.models';
+import { Store, StoreMenu, MenuSearchCriteria, MenuDescription, ProductStoreMenu, ProductToStore, Product, ProductMenu } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -35,11 +35,14 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   filteredMenuOptions: MenuDescription[];
 
   storeProductMenu: ProductStoreMenu = new ProductStoreMenu();
+  menu: ProductMenu = new ProductMenu();
 
   @Input() isAdminPage = false;
   @Input() canAcknowledge = false;
   @Input() store = new Store();
   @Output() storeMenuSaveEvent = new EventEmitter<any>();
+
+  addNew = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -111,6 +114,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
       this.appService.getOneWithChildsAndFiles(storeMenu.id, 'StoreMenu')
         .subscribe(result => {
           if (result.id > 0) {
+            this.addNew = false;
             this.storeMenu = result;
             console.log('got menu');
             console.log(this.storeMenu);
@@ -169,7 +173,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     if (val) {
       const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
       this.filteredMenuOptions = this.menuOptions
-        .filter(menuDesc => menuDesc.name.toLowerCase().startsWith(filterValue));
+        .filter(menuDesc => {menuDesc.name && menuDesc.name.toLowerCase().startsWith(filterValue)});
     } else {
       this.filteredMenuOptions = this.menuOptions;
     }
@@ -200,6 +204,50 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         () => console.log('Save StoreMenu complete'));
   }
 
+  saveMenu() {
+    this.messages = '';
+    this.menu.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.setMenuToggleValues();
+
+    this.appService.save(this.menu, 'Menu')
+      .subscribe((data: ProductMenu) => {
+        this.processResult(data, this.menu, null);
+        this.menu = data;
+        this.storeMenu.menu = this.menu;
+        this.addNew = false;
+        this.save();
+      },
+        error => console.log(error),
+        () => console.log('Save StoreMenu complete'));
+  }
+
+  addNewMenu() {
+    this.addNew = true;
+    this.storeMenu = new StoreMenu();
+    this.menu = new ProductMenu();
+    this.menu.menuDescriptions = [];
+    for (const lang of this.appService.appInfoStorage.languages) {
+      const md = new MenuDescription();
+      md.language = lang;
+      md.name = '';
+      this.menu.menuDescriptions.push(md);
+    }
+  }
+
+  cancel() {
+    this.addNew = false;
+    this.storeMenu = new StoreMenu();
+    this.menu = new ProductMenu();
+    this.menu.menuDescriptions = [];
+    for (const lang of this.appService.appInfoStorage.languages) {
+      const md = new MenuDescription();
+      md.language = lang;
+      md.name = '';
+      this.menu.menuDescriptions.push(md);
+    }
+  }
+
   validateSelectedMenu() {
 
     console.log(this.storeMenu);
@@ -221,6 +269,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
       return false;
     }
     console.log('3');
+
     return true;
   }
 
@@ -230,9 +279,24 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
       || this.storeMenu.status.toString() === '0') ? 0 : 1;
   }
 
+  setMenuToggleValues() {
+    this.menu.status = (this.menu.status == null
+      || this.menu.status.toString() === 'false'
+      || this.menu.status.toString() === '0') ? 0 : 1;
+  }
+
   setSelectedMenu(menuDesc: MenuDescription) {
     console.log(menuDesc);
+    this.storeMenu.id = undefined;
     this.storeMenu.menu = menuDesc.menu;
+
+    this.aProductDatasource = new MatTableDataSource([]);
+    this.aProductDatasource.paginator = this.aProductPaginator;
+    this.aProductDatasource.sort = this.aProductSort;
+
+    this.sProductDatasource = new MatTableDataSource([]);
+    this.sProductDatasource.paginator = this.sProductPaginator;
+    this.sProductDatasource.sort = this.sProductSort;
   }
 
   isEmpty(value: string): boolean {
