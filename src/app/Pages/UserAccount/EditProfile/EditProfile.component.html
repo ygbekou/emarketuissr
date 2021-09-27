@@ -527,6 +527,11 @@
             <mat-slide-toggle [(ngModel)]="store.waitressClose" name="waitressClose" #waitressClose="ngModel" class="my-2">
               {{ 'COMMON.WAITRESS_CAN_CLOSE' | translate }}
             </mat-slide-toggle>
+             <br />
+            <mat-slide-toggle [(ngModel)]="store.trackGuestCnt" name="trackGuestCnt" #trackGuestCnt="ngModel" class="my-2">
+              {{ 'COMMON.TRACK_GUEST_COUNT' | translate }}
+            </mat-slide-toggle>
+
           </div>
 
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">

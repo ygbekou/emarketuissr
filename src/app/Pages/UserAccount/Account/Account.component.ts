@@ -152,7 +152,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Mes livraisons', url: '/account/deliveries', icon: 'local_shipping' },
     ]
   }, {
-    name: 'Hospitalité',
+    name: 'Hotel',
     url: '/account/hospitality',
     icon: 'account_circle',
     children: [

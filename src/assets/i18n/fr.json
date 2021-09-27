@@ -6,6 +6,7 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "TRACK_GUEST_COUNT":"Enregistrer le nombre d'invités",
     "FEES":"Frais",
     "DAY_START_TIME":"Heure début de la jounée",
 		"WAITRESS_CAN_PRINT":"La serveuse peut imprimer",

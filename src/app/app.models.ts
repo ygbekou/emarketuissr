@@ -805,6 +805,7 @@ export class Store extends BaseModel {
   lockAfterXPrint: number;
   autoUpload: number;
   allowExRcpt: number;
+  trackGuestCnt: number;
   processingFeesPercentage: number;
   cashProFeePercent: number;
   maxDistance: number;

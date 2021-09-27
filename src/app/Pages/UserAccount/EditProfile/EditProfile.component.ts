@@ -289,6 +289,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.allowReopen.toString() === 'false'
          || this.store.allowReopen.toString() === '0') ? 0 : 1;
 
+      this.store.trackGuestCnt = (this.store.trackGuestCnt == null
+         || this.store.trackGuestCnt.toString() === 'false'
+         || this.store.trackGuestCnt.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);
