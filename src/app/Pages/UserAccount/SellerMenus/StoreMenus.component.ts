@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./StoreMenus.component.scss']
 })
 export class StoreMenusComponent extends BaseComponent implements OnInit {
-  storeMenusColumns: string[] = ['menuName', 'status'];
+  storeMenusColumns: string[] = ['menuName', 'showInKitchen', 'status'];
   storeMenusDatasource: MatTableDataSource<StoreMenu>;
   @ViewChild('MatPaginatorStoreMenus', { static: true }) storeMenusPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeMenusSort: MatSort;
@@ -65,6 +65,7 @@ export class StoreMenusComponent extends BaseComponent implements OnInit {
   compareObjects(o1: any, o2: any): boolean {
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
+
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
     if (this.isAdminPage) {

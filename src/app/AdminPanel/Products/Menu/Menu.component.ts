@@ -15,7 +15,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
 
   messages = '';
   menu: ProductMenu;
-  
+
   @Output() menuSaveEvent = new EventEmitter<ProductMenu>();
 
   constructor(
@@ -84,6 +84,10 @@ export class MenuComponent extends BaseComponent implements OnInit {
     this.menu.status = (this.menu.status == null
       || this.menu.status.toString() === 'false'
       || this.menu.status.toString() === '0') ? 0 : 1;
+
+    this.menu.showInKitchen = (this.menu.showInKitchen == null
+      || this.menu.showInKitchen.toString() === 'false'
+      || this.menu.showInKitchen.toString() === '0') ? 0 : 1;
   }
 
   cleanMenuDescriptions(menu: ProductMenu) {
@@ -97,6 +101,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
   save() {
     this.messages = '';
     try {
+      this.setMenuToggles();
       const thisMenu = {...this.menu};
       this.cleanMenuDescriptions(thisMenu);
 

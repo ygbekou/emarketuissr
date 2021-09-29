@@ -2292,6 +2292,7 @@ export class ProductMenu extends BaseModel {
   id: number;
   image: string;
   status = 1;
+  showInKitchen: number;
   modifiedBy: number;
   menuDescriptions: MenuDescription[] = [];
   name: string;
@@ -2316,6 +2317,7 @@ export class StoreMenu {
   id: number;
   store: Store;
   menu: ProductMenu;
+  showInKitchen: number;
   status = 1;
   modifiedBy: number;
 

@@ -11,7 +11,7 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-1">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label> {{'COMMON.MENU' | translate}}:</mat-label>
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}"   name="menuName" matInput
@@ -29,12 +29,19 @@
         {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
       </mat-error>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
       <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
         {{ 'COMMON.ENABLE' | translate }}
       </mat-slide-toggle>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-slide-toggle [(ngModel)]="storeMenu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
+          {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
+        </mat-slide-toggle>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="p-1">
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
         type="submit" [disabled]="!f.form.valid">
         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
@@ -79,6 +86,13 @@
           {{ 'COMMON.STATUS' | translate }}
         </mat-slide-toggle>
     </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-slide-toggle [(ngModel)]="menu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
+          {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
+        </mat-slide-toggle>
+    </div>
+  </div>
+  <div fxLayout="row">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
       <div class="text-center mt-2">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
@@ -91,7 +105,7 @@
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
       <div class="text-center mt-2">
-        <button color="primary" fxLayout="row" fxLayoutAlign="center center" (click)="cancel()">
+        <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="cancel()">
             <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
             <mat-icon>cancel</mat-icon>
         </button> </div>

@@ -277,18 +277,27 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     this.storeMenu.status = (this.storeMenu.status == null
       || this.storeMenu.status.toString() === 'false'
       || this.storeMenu.status.toString() === '0') ? 0 : 1;
+
+    this.storeMenu.showInKitchen = (this.storeMenu.showInKitchen == null
+      || this.storeMenu.showInKitchen.toString() === 'false'
+      || this.storeMenu.showInKitchen.toString() === '0') ? 0 : 1;
   }
 
   setMenuToggleValues() {
     this.menu.status = (this.menu.status == null
       || this.menu.status.toString() === 'false'
       || this.menu.status.toString() === '0') ? 0 : 1;
+
+    this.menu.showInKitchen = (this.menu.showInKitchen == null
+      || this.menu.showInKitchen.toString() === 'false'
+      || this.menu.showInKitchen.toString() === '0') ? 0 : 1;
   }
 
   setSelectedMenu(menuDesc: MenuDescription) {
     console.log(menuDesc);
     this.storeMenu.id = undefined;
     this.storeMenu.menu = menuDesc.menu;
+    this.storeMenu.showInKitchen = menuDesc.menu.showInKitchen;
 
     this.aProductDatasource = new MatTableDataSource([]);
     this.aProductDatasource.paginator = this.aProductPaginator;

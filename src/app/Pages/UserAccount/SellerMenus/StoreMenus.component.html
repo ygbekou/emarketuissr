@@ -55,6 +55,13 @@
                 <td mat-cell *matCellDef="let storeMenu"> {{storeMenu.menuName}} </td>
               </ng-container>
 
+              <ng-container matColumnDef="showInKitchen">
+                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SHOW_IN_KITCHEN' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let storeMenu">
+                  {{storeMenu.showInKitchen === 0 ? ('COMMON.NO'|translate):('COMMON.YES'|translate)}}</td>
+              </ng-container>
+
               <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
                 </th>
