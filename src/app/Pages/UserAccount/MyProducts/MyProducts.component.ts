@@ -128,7 +128,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.appService.saveWithUrl('/service/catalog/stores', storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
-        if (this.stores.length > 0) {
+        if (this.stores.length === 1) {
           this.selectedStore = this.stores[0];
           this.getProducts(this.stores[0]);
         }
