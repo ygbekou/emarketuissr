@@ -2685,101 +2685,115 @@ export class BillPayment {
 
 
 
-export class Building {
-  id: number;
-  store: Store;
-  image: string;
-  status = 1;
-  modifiedBy: number;
-  name: string;
-  nbrFloors: number;
-
-  type = 'Building';
-  action: string;
-
-  constructor() {
-    this.store = new Store();
-    this.status = 1;
-  }
+export class Reservation {
+  public id: number;
+  public userId: number;
+  public storeId: number;
+  public beginDate: Date;
+  public endDate: Date;
+  public rebate: number;
+  public total: number;
+  public quantity: number;
+  public firstName: string;
+  public lastName: string;
+  public idType: string;
+  public idNbr: string;
+  public contact: string;
+  public taxFees: number;
+  public status: number;
+  public offline: number;
+  public modifiedBy: number;
+  public storeDay: Date;
+  public createDate: Date;
+  public cashier: string;
+  // transient
+  public tempId: number;
+  public rooms: ReservationRoom[];
+  public type = 'Reservation';
 }
 
+export class ReservationRoom {
+  public id: number;
+  public reservId: number;
+  public roomId: number;
+  public nbrAdult: number;
+  public nbrChild: number;
+  public price: number;
+  public roomName: string;
+  public comments: string;
+  public status: number;
+  public tempId: number;
+  public type = 'ReservationRoom';
+}
 
 export class Room {
-  id: number;
-  roomType: RoomType;
-  roomNbr: number;
-  floorNbr: number;
-  image: string;
-  status = 1;
-  modifiedBy: number;
-  roomTypeDescs: RoomTypeDesc [];
-
-  type = 'Room';
-  action: string;
-
+  public id: number;
+  public roomType: RoomType;
+  public roomNbr: number;
+  public floorNbr: number;
+  public image: string;
+  public status = 1;
+  public building: Building;
+  public modifiedBy: number;
+  public roomTypeDescs: RoomTypeDesc[];
+  public type = 'Room';
+  public action: string;
   constructor() {
     this.roomType = new RoomType();
+    this.building = new Building();
     this.status = 1;
   }
 }
 
-
 export class RoomSearchCriteria {
-  id: number;
-  roomTypeId: number;
-  floorNbr: number;
-  buildingId: number;
-  storeId: number;
-  roomTypeName: string;
-  userId: number;
-  languageId: number;
-  status: number;
+  public id: number;
+  public roomTypeId: number;
+  public floorNbr: number;
+  public buildingId: number;
+  public storeId: number;
+  public roomTypeName: string;
+  public userId: number;
+  public languageId: number;
+  public status: number;
 }
 
-
 export class RoomType {
-  id: number;
-  building: Building;
-  price: number;
-  qty: number;
-  availableQty: number;
-  image: string;
-  status: number;
-  roomTypeDescs: RoomTypeDesc[] = [];
-  name: string;
-  modifiedBy: number;
-
-  type = 'RoomType';
-  action: string;
-
+  public id: number;
+  public price: number;
+  public qty: number;
+  public availableQty: number;
+  public image: string;
+  public status: number;
+  public roomTypeDescs: RoomTypeDesc[] = [];
+  public name: string;
+  public modifiedBy: number;
+  public type = 'RoomType';
+  public action: string;
   constructor() {
-    this.building = new Building();
     this.status = 1;
   }
 
 }
 
 export class RoomTypeDesc {
-  id: number;
-  language: Language;
-  roomType: RoomType;
-  name: string;
-  description: string;
+  public id: number;
+  public language: Language;
+  public roomType: RoomType;
+  public name: string;
+  public description: string;
 
-  type = 'RoomTypeDesc';
+  public type = 'RoomTypeDesc';
 }
 
 export class Amenity {
-  id: number;
-  image: string;
-  status: number;
-  amenityDescs: AmenityDesc[] = [];
-  name: string;
-  modifiedBy: number;
-
-  type = 'Amenity';
-  action: string;
-
+  public id: number;
+  public image: string;
+  public status: number;
+  public amenityDescs: AmenityDesc[] = [];
+  public name: string;
+  public modifiedBy: number;
+  public type = 'Amenity';
+  public action: string;
   constructor() {
     this.status = 1;
   }
@@ -2787,26 +2801,39 @@ export class Amenity {
 }
 
 export class AmenityDesc {
-  id: number;
-  language: Language;
-  amenity: Amenity;
-  name: string;
-  description: string;
+  public id: number;
+  public language: Language;
+  public amenity: Amenity;
+  public name: string;
+  public description: string;
 
-  type = 'AmenityDesc';
+  public type = 'AmenityDesc';
 }
 
 export class RoomTypeAmenity {
-  id: number;
-  roomType: RoomType;
-  amenity: Amenity;
-  price: number;
-  type = 'RoomTypeAmenity';
-
-  roomTypeName: string;
-  amenityName: string;
-  image: string;
-
+  public id: number;
+  public roomType: RoomType;
+  public amenity: Amenity;
+  public price: number;
+  public type = 'RoomTypeAmenity';
+  public roomTypeName: string;
+  public amenityName: string;
+  public image: string;
   constructor() {
+  }
+}
+
+export class Building {
+  public id: number;
+  public storeId: number;
+  public image: string;
+  public status = 1;
+  public modifiedBy: number;
+  public name: string;
+  public nbrFloors: number;
+  public type = 'Building';
+  public action: string;
+  constructor() {
+    this.status = 1;
   }
 }
