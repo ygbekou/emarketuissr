@@ -18,7 +18,7 @@ import { AmenityComponent } from './Amenity.component';
   styleUrls: ['./Amenities.component.scss']
 })
 export class AmenitiesComponent extends BaseComponent implements OnInit {
-  amenitiesColumns: string[] = ['name', 'desc', 'image', 'status', 'actions'];
+  amenitiesColumns: string[] = ['name', 'desc', 'image', 'status'];
   amenitiesDatasource: MatTableDataSource<AmenityDesc>;
   @ViewChild('MatPaginatorAmenities', { static: true }) amenitiesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) amenitiesSort: MatSort;

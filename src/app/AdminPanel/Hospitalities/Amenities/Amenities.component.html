@@ -49,19 +49,8 @@
                 {{amenityDesc.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>
             </ng-container>
 
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
-              <td mat-cell *matCellDef="let amenityDesc">
-                <a mat-icon-button (click)="getAmenityDetails(amenityDesc)" color="secondary"
-                  matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
-                  <mat-icon>info</mat-icon>
-                </a>
-                &nbsp;&nbsp;
-              </td>
-            </ng-container>
-
             <tr mat-header-row *matHeaderRowDef="amenitiesColumns"></tr>
-            <tr mat-row *matRowDef="let amenityDesc; columns: amenitiesColumns;"></tr>
+            <tr mat-row *matRowDef="let amenityDesc; columns: amenitiesColumns;" (click)="getAmenityDetails(amenityDesc)"></tr>
           </table>
           <p *ngIf="amenitiesDatasource?.data?.length === 0" class="py-5 mb-0 text-center">
             {{'MESSAGE.NO_DATA' | translate}}</p>
