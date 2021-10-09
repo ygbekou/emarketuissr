@@ -80,6 +80,9 @@ export class StoreMenusComponent extends BaseComponent implements OnInit {
   }
 
   changeOrderType(event) {
+    if (this.storeMenuComponent.addNew === true) {
+      this.storeMenuComponent.cancel();
+    }
   }
 
   private getStores() {

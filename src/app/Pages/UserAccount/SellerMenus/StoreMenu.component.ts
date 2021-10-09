@@ -84,8 +84,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     this.messages = '';
     this.storeMenu = new StoreMenu();
     this.currentOption = '';
-    console.log(this.storeMenu);
-    console.log(this.storeMenu.id > 0);
   }
 
   getStoreMenuUnassignedProducts() {
