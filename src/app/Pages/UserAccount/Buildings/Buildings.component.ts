@@ -20,7 +20,6 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(BuildingComponent, { static: false }) buildingView: BuildingComponent;
   @ViewChild(RoomsComponent, { static: false }) roomsView: RoomsComponent;
-  @ViewChild(RoomTypesComponent, { static: false }) roomTypesView: RoomTypesComponent;
 
   displayedColumns: string[] = ['name', 'image', 'status', 'actions'];
   dataSource: MatTableDataSource<Building>;
@@ -65,7 +64,7 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   getAll() {
     const parameters: string[] = [];
 
-    parameters.push('e.store.id = |sId|' + this.selectedStore.id + '|Integer');
+    parameters.push('e.storeId = |sId|' + this.selectedStore.id + '|Integer');
     this.appService.getAllByCriteria('com.softenza.emarket.model.hospitality.Building', parameters)
       .subscribe((data: Building[]) => {
         this.dataSource = new MatTableDataSource(data);
@@ -138,12 +137,6 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
         this.roomsView.roomComponent.building = building;
         this.roomsView.roomComponent.deriveFloorList();
         this.roomsView.roomComponent.getRoomTypes();
-      }
-
-      if (this.roomTypesView) {
-        this.roomTypesView.building = building;
-        this.roomTypesView.roomTypeComponent.building = building;
-        this.roomTypesView.getRoomTypes();
       }
 
       this.selected.setValue(1);

@@ -85,8 +85,6 @@ import { RoomComponent } from './rooms/Room.component';
 import { RoomsComponent } from './rooms/Rooms.component';
 import { RoomTypeComponent } from './roomTypes/RoomType.component';
 import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
-import { AmenityComponent } from './amenities/Amenity.component';
-import { AmenitiesComponent } from './amenities/Amenities.component';
 import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component';
 
 @NgModule({
@@ -197,8 +195,6 @@ import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component'
     RoomsComponent,
     RoomTypeComponent,
     RoomTypesComponent,
-    AmenityComponent,
-    AmenitiesComponent,
     RoomTypeAmenityComponent
   ],
   exports: [

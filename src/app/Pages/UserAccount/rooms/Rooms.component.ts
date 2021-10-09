@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Room, RoomSearchCriteria, Building, RoomTypeDesc } from 'src/app/app.models';
+import { Room, RoomSearchCriteria, Building, RoomTypeDesc, Store } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -91,11 +91,16 @@ export class RoomsComponent extends BaseComponent implements OnInit {
 
   getRooms() {
     const parameters: string[] = [];
-    parameters.push('e.roomType.building.id = |buildingId|' + this.building.id + '|Integer');
+    parameters.push('e.building.id = |bId|' + this.building.id + '|Integer');
 
     this.appService.getAllByCriteria(this.CLASS_NAME, parameters)
       .subscribe((data: Room[]) => {
         console.log(data);
+
+        for (const room of data) {
+          this.setRoomTypeName(room);
+        }
+
         this.setDataSource(data);
       },
         error => console.log(error),
@@ -134,10 +139,11 @@ export class RoomsComponent extends BaseComponent implements OnInit {
   }
 
 
-  getRoomTypeName(room: Room) {
+  setRoomTypeName(room: Room) {
     for (const roomTypeDesc of room.roomTypeDescs) {
       if (roomTypeDesc.language.id === this.appService.appInfoStorage.language.id) {
-        return roomTypeDesc.name;
+        room.roomTypeName = roomTypeDesc.name;
+        return;
       }
     }
 

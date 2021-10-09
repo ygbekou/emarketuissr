@@ -38,6 +38,10 @@ export const AdminPanelRoutes: Routes = [
                import('./Finances/Finances.module').then(m => m.FinancesModule)
          },
          {
+            path: 'hospitalities', loadChildren: () =>
+               import('./Hospitalities/Hospitalities.module').then(m => m.HospitalitiesModule)
+         },
+         {
             path: 'account', loadChildren: () =>
                import('./AdminAccount/AdminAccount.module').then(m => m.AdminAccountModule)
          },

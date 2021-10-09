@@ -2729,6 +2729,7 @@ export class ReservationRoom {
 export class Room {
   public id: number;
   public roomType: RoomType;
+  public roomTypeName: string;
   public roomNbr: number;
   public floorNbr: number;
   public image: string;
@@ -2761,6 +2762,7 @@ export class RoomType {
   public id: number;
   public price: number;
   public qty: number;
+  public storeId: number;
   public availableQty: number;
   public image: string;
   public status: number;

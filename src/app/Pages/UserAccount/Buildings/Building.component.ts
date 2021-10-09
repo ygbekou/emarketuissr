@@ -101,7 +101,7 @@ export class BuildingComponent extends BaseComponent implements OnInit {
     }
 
     this.saving = true;
-    this.building.store = this.selectedStore;
+    this.building.storeId = this.selectedStore.id;
     this.messages = '';
     try {
 

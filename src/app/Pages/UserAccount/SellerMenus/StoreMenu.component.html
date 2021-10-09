@@ -11,7 +11,7 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-1">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label> {{'COMMON.MENU' | translate}}:</mat-label>
         <input type="text" placeholder="{{'COMMON.SELECT'|translate}}"   name="menuName" matInput
@@ -29,33 +29,33 @@
         {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
       </mat-error>
     </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+      <button mat-fab color="secondary" (click)="addNewMenu()" 
+        matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
+        <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+      </button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2" class="p-1">
+    </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
       <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
         {{ 'COMMON.ENABLE' | translate }}
       </mat-slide-toggle>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-1">
         <mat-slide-toggle [(ngModel)]="storeMenu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
           {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
         </mat-slide-toggle>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="p-1">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2" class="p-1">
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
         type="submit" [disabled]="!f.form.valid">
         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
         <mat-icon>save</mat-icon>
       </button>
     </div>
-  </div>
-  <div fxLayout="row wrap">
-    <h5 style="color:green">{{'COMMON.CAN_NOT_FIND_MENU' | translate}}</h5>&nbsp;&nbsp;&nbsp;&nbsp;
-    <button mat-fab color="secondary" (click)="addNewMenu()" 
-      matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
-      <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
-    </button>
-
   </div>
 </form>
 

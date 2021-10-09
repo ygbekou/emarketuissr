@@ -79,8 +79,9 @@ const TREE_DATA_EN: MenuNode[] = [
     url: '/account/hospitality',
     icon: 'account_circle',
     children: [
-      { name: 'Building', url: '/account/seller-buildings', icon: 'hotel' },
-      { name: 'Amenity', url: '/account/amenities', icon: 'tv' }
+      { name: 'Rooms', url: '/account/rooms', icon: 'hotel' },
+      { name: 'Room Types', url: '/account/room-types', icon: 'room' },
+      { name: 'Amenities', url: '/account/amenities', icon: 'tv' }
     ]
   }, {
     name: 'Reports',
@@ -156,7 +157,8 @@ const TREE_DATA_FR: MenuNode[] = [
     url: '/account/hospitality',
     icon: 'account_circle',
     children: [
-      { name: 'Imeubles', url: '/account/seller-buildings', icon: 'hotel' },
+      { name: 'Chambres', url: '/account/rooms', icon: 'hotel' },
+      { name: 'Type de chambres', url: '/account/room-types', icon: 'room' },
       { name: 'Aménités', url: '/account/amenities', icon: 'tv' }
     ]
   }, {

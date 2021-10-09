@@ -31,7 +31,7 @@ import { SellerBillsComponent } from './SellerBillings/SellerBills.component';
 import { MyShippersComponent } from './MyShippers/MyShippers.component';
 import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
 import { BuildingsComponent } from './Buildings/Buildings.component';
-import { AmenitiesComponent } from './amenities/Amenities.component';
+import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -263,16 +263,16 @@ export const UserAccountRoutes: Routes = [
             }
          },
          {
-            path: 'seller-buildings',
-            component: BuildingsComponent,
+            path: 'room-types',
+            component: RoomTypesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
             }
          },
          {
-            path: 'amenities',
-            component: AmenitiesComponent,
+            path: 'rooms',
+            component: BuildingsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

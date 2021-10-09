@@ -64,7 +64,7 @@ export class RoomComponent extends BaseComponent implements OnInit {
   getRoomTypes() {
     const parameters: string[] = [];
     parameters.push('e.language.id = |languageId|' + this.appService.appInfoStorage.language.id + '|Integer');
-    parameters.push('e.roomType.building.id = |buildingId|' + this.building.id + '|Integer');
+    parameters.push('e.roomType.storeId = |stId|' + this.building.storeId + '|Integer');
 
     this.appService.getAllByCriteria(this.RTD_CLASS_NAME, parameters)
       .subscribe((data: RoomTypeDesc[]) => {
@@ -72,7 +72,7 @@ export class RoomComponent extends BaseComponent implements OnInit {
         this.roomTypeDescs = data;
       },
         error => console.log(error),
-        () => console.log('Get room type descs for building complete'));
+        () => console.log('Get room type descs for store complete'));
   }
 
   getRoom(room: Room) {
@@ -109,14 +109,22 @@ export class RoomComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.room.building = this.building;
     this.saving = true;
     this.messages = '';
     try {
 
-      this.appService.save(this.room, this.CLASS_NAME)
-        .subscribe((data: Room) => {
+      this.appService.saveWithUrl('/service/hospitality/saveRoom/', this.room)
+      .subscribe((data: Room) => {
           this.processResult(data, this.room, null);
           this.room = data;
+
+          for (const rtd of this.roomTypeDescs) {
+            if (this.room.roomType.id === rtd.roomType.id) {
+              this.room.roomTypeName = rtd.name;
+            }
+          }
+
           this.roomSaveEvent.emit(this.room);
           this.clear();
           this.saving = false;

@@ -2,9 +2,9 @@
 
    <div fxLayout="row wrap">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-         <button mat-icon-button color="primary" (click)="clear()" type="button"
-            matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
-            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+         <button color="primary" (click)="clear()" mat-fab
+            matTooltip="{{'COMMON.ADD' | translate}}" >
+            <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
          </button>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
@@ -12,7 +12,8 @@
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
                <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                <mat-icon>save</mat-icon>
-            </button> </div>
+            </button> 
+         </div>
          <div class="text-center mt-2" *ngIf="messages">
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
          </div>
@@ -52,14 +53,15 @@
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
                <mat-form-field appearance="outline" class="w-100">
                   <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
-                  <input matInput type="text" class="form-control" id="qty" [(ngModel)]="roomType.qty" name="qty">
+                  <input matInput type="text" class="form-control" id="qty" [(ngModel)]="roomType.qty" 
+                     name="qty" readonly>
                </mat-form-field>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
                <mat-form-field appearance="outline" class="w-100">
                   <mat-label> {{'COMMON.AVAILABLE_QUANTITY' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="availableQty" [(ngModel)]="roomType.availableQty"
-                     name="availableQty">
+                     name="availableQty" readonly>
                </mat-form-field>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">

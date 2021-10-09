@@ -73,6 +73,15 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin/hospitalities',
+    name: 'Hospitalities',
+    type: 'sub',
+    icon: 'hotel',
+    children: [
+      { state: 'amenities', name: 'Amenitiess', type: 'link' }
+    ]
+  },
+  {
     state: 'admin/system',
     name: 'System',
     type: 'sub',
@@ -161,6 +170,15 @@ const MENUITEMS_FR = [
       { state: 'services', name: 'Services', type: 'link' },
       { state: 'suppliers', name: 'Fournisseurs', type: 'link' },
       { state: 'bills', name: 'Facturation', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/hospitalities',
+    name: 'Hotelleries',
+    type: 'sub',
+    icon: 'hotel',
+    children: [
+      { state: 'amenities', name: 'Amenitées', type: 'link' }
     ]
   },
   {

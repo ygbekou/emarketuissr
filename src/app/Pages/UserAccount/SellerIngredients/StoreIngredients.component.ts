@@ -25,13 +25,13 @@ export interface SearchResponse {
 export class StoreIngredientsComponent extends BaseComponent implements OnInit {
   storeIngredientsColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status'];
   storeIngredientsDatasource: MatTableDataSource<StoreIngredient>;
-  @ViewChild('MatPaginatorStoreIngredients', { static: true }) storeIngredientsPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) storeIngredientsSort: MatSort;
+  @ViewChild('MatPaginatorStoreIngredients', { static: false }) storeIngredientsPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) storeIngredientsSort: MatSort;
 
   lowInventoryColumns: string[] = ['ingredientName', 'quantity', 'minimumQty', 'maximumQty', 'status'];
   lowInventoryDatasource: MatTableDataSource<StoreIngredient>;
-  @ViewChild('MatPaginatorLowInventory', { static: true }) lowInventoryPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) lowInventorySort: MatSort;
+  @ViewChild('MatPaginatorLowInventory', { static: false }) lowInventoryPaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) lowInventorySort: MatSort;
 
   @ViewChild(StoreIngredientComponent, { static: false }) storeIngredientComponent: StoreIngredientComponent;
   messages = '';

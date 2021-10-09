@@ -27,20 +27,14 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
   messages = '';
   panelOpenState = false;
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.RoomTypeAmenity';
-  //roomTypeAmenity: RoomTypeAmenity = new RoomTypeAmenity();
-  searchCriteria: RoomSearchCriteria = new RoomSearchCriteria();
-  //menuDescriptions: MenuDescription[] = [];
 
-  //currentOption: string;
-  //Options: MenuDescription[];
-  //filteredMenuOptions: MenuDescription[];
+  searchCriteria: RoomSearchCriteria = new RoomSearchCriteria();
 
   roomTypeAmenity: RoomTypeAmenity = new RoomTypeAmenity();
   roomType: RoomType = new RoomType();
 
   @Input() isAdminPage = false;
   @Input() canAcknowledge = false;
-  //@Output() storeMenuSaveEvent = new EventEmitter<any>();
 
   addNew = false;
 
@@ -79,6 +73,8 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
 
   clear() {
     this.messages = '';
+    this.aAmenityDatasource = new MatTableDataSource<Amenity>([]);
+    this.sAmenityDatasource = new MatTableDataSource<Amenity>([]);
   }
 
   getRoomTypeUnassignedAmenities() {
@@ -124,19 +120,16 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
 
   saveRoomTypeAmenity(amenity: Amenity) {
     const roomTypeAmenity = new RoomTypeAmenity();
-    const oldAmenityName = amenity.name;
     const oldAmenityImage = amenity.image;
-    roomTypeAmenity.roomType = this.roomType;
+    roomTypeAmenity.roomType = {...this.roomType};
+    roomTypeAmenity.roomType.roomTypeDescs = [];
     roomTypeAmenity.amenity = amenity;
 
     this.appService.saveWithUrl('/service/crud/RoomTypeAmenity/save/', roomTypeAmenity)
       .subscribe((data: RoomTypeAmenity) => {
         this.processResult(data, roomTypeAmenity, null);
         roomTypeAmenity.id = data.id;
-        //productStoreMenu.productName = oldProductName;
         roomTypeAmenity.image = oldAmenityImage;
-        //productStoreMenu.product = new Product();
-        //productStoreMenu.product.id = productStoreMenu.productId;
         this.updateDatasourceData(this.sAmenityDatasource, this.sAmenityPaginator, this.sAmenitySort, roomTypeAmenity);
         this.processDataSourceDeleteResult({ result: 'SUCCESS' }, this.messages, amenity, this.aAmenityDatasource);
         this.aAmenityDatasource.data = Array.from(this.aAmenityDatasource.data);
@@ -165,7 +158,7 @@ export class RoomTypeAmenityComponent extends BaseComponent implements OnInit, A
 
       });
   }
-  
+
   public applyAvailableAmenityFilter(filterValue: string) {
     this.aAmenityDatasource.filter = filterValue.trim().toLowerCase();
     if (this.aAmenityDatasource.paginator) {

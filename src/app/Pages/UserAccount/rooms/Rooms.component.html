@@ -12,12 +12,6 @@
                 autocomplete="off">
             </mat-form-field>
           </div>
-          <div fxFlex="10" fxFlex.gt-sm="10" class="p-1" *ngIf="userId !== 0">
-            <button (click)="action = 'add'; messages = '';" mat-fab color="primary"
-              matTooltip="{{'COMMON.ADD' | translate}}">
-              <mat-icon  class="mat-icon-xlg">add_circle</mat-icon>
-            </button>
-          </div>
         </div>
         <div class="text-center mt-2" *ngIf="messages">
           <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
@@ -30,7 +24,7 @@
               <ng-container matColumnDef="roomTypeName">
                 <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.ROOM_TYPE' | translate}}
                 </th>
-                <td mat-cell *matCellDef="let room"> {{getRoomTypeName(room)}} </td>
+                <td mat-cell *matCellDef="let room"> {{room.roomTypeName}} </td>
               </ng-container>
 
               <ng-container matColumnDef="roomNbr">

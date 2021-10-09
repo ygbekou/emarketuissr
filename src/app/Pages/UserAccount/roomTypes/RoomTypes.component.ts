@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { RoomSearchCriteria, RoomType, Building, RoomTypeDesc } from 'src/app/app.models';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { RoomSearchCriteria, RoomType, Building, RoomTypeDesc, Store, StoreSearchCriteria } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -42,6 +42,10 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
   selected = new FormControl(0);
   building: Building;
 
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+  stores: Store[] = [];
+  selectedStore: Store;
+
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute,
@@ -50,9 +54,9 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clear();
-    this.getRoomTypes();
-    this.setDataSource([]);
+    this.getStores();
+    //this.clear();
+    //this.setDataSource([]);
 
     this.activatedRoute.data.subscribe(value => {
       this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
@@ -76,14 +80,26 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
     this.searchCriteria = new RoomSearchCriteria();
   }
 
-  changeOrderType(event) {
+  private getStores() {
+    this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+        if (this.stores && this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.storeSelected(this.selectedStore);
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
   }
 
 
   getRoomTypes() {
     const parameters: string[] = [];
     parameters.push('e.language.id = |languageId|' + this.appService.appInfoStorage.language.id + '|Integer');
-    parameters.push('e.roomType.building.id = |buildingId|' + this.building.id + '|Integer');
+    parameters.push('e.roomType.storeId = |stId|' + this.selectedStore.id + '|Integer');
 
     this.appService.getAllByCriteria(this.RTD_CLASS_NAME, parameters)
       .subscribe((data: RoomTypeDesc[]) => {
@@ -109,6 +125,14 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
 
   }
 
+  storeSelected(event) {
+
+    setTimeout(() => {
+      this.getRoomTypes();
+      this.roomTypeComponent.storeId = this.selectedStore.id;
+    }, 500);
+  }
+
   getRoomTypeDetails(roomTypeDesc: any) {
     this.roomTypeComponent.getDescriptions(roomTypeDesc.roomType.id);
     this.roomTypeAmenityComponent.roomType = roomTypeDesc.roomType;
@@ -128,6 +152,13 @@ export class RoomTypesComponent extends BaseComponent implements OnInit {
           this.updateDataTable(element);
         }
     });
+  }
+
+  roomTypeCleared() {
+    if (this.roomTypeAmenityComponent) {
+      this.roomTypeAmenityComponent.clear();
+      this.roomTypeAmenityComponent.roomType = new RoomType();
+    }
   }
 
   updateDataTable(roomTypeDesc: RoomTypeDesc) {

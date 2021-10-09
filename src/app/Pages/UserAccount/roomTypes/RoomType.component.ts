@@ -15,7 +15,7 @@ export class RoomTypeComponent extends BaseComponent implements OnInit {
 
   messages = '';
   roomType: RoomType;
-  building: Building;
+  storeId: number;
 
   formData = new FormData();
   picture: any[] = [];
@@ -24,6 +24,7 @@ export class RoomTypeComponent extends BaseComponent implements OnInit {
 
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.RoomTypeDesc';
   @Output() roomTypeSaveEvent = new EventEmitter<RoomType>();
+  @Output() clearEvent = new EventEmitter();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -61,6 +62,8 @@ export class RoomTypeComponent extends BaseComponent implements OnInit {
       rtd.name = '';
       this.roomType.roomTypeDescs.push(rtd);
     }
+
+    this.clearEvent.emit();
   }
 
   getDescriptions(roomTypeId: number) {
@@ -116,7 +119,7 @@ export class RoomTypeComponent extends BaseComponent implements OnInit {
     this.saving = true;
     this.messages = '';
 
-    this.roomType.building = this.building;
+    this.roomType.storeId = this.storeId;
     this.setToggles();
     const thisRoomType = {...this.roomType};
     this.cleanDescriptions(thisRoomType);
