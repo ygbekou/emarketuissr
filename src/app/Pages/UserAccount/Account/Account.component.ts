@@ -80,8 +80,7 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Rooms', url: '/account/rooms', icon: 'hotel' },
-      { name: 'Room Types', url: '/account/room-types', icon: 'room' },
-      { name: 'Amenities', url: '/account/amenities', icon: 'tv' }
+      { name: 'Room Types', url: '/account/room-types', icon: 'room' }
     ]
   }, {
     name: 'Reports',
@@ -158,8 +157,7 @@ const TREE_DATA_FR: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Chambres', url: '/account/rooms', icon: 'hotel' },
-      { name: 'Type de chambres', url: '/account/room-types', icon: 'room' },
-      { name: 'Aménités', url: '/account/amenities', icon: 'tv' }
+      { name: 'Type de chambres', url: '/account/room-types', icon: 'room' }
     ]
   }, {
     name: 'Etats',

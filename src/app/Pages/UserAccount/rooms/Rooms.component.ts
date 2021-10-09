@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./Rooms.component.scss']
 })
 export class RoomsComponent extends BaseComponent implements OnInit {
-  roomsColumns: string[] = ['roomTypeName', 'roomNbr', 'floorNbr', 'status', 'actions'];
+  roomsColumns: string[] = ['roomTypeName', 'roomNbr', 'floorNbr', 'status'];
   roomsDatasource: MatTableDataSource<Room>;
   @ViewChild('MatPaginatorRooms', { static: true }) roomsPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) roomsSort: MatSort;

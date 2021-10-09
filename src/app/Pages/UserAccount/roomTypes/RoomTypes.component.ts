@@ -19,7 +19,7 @@ import { RoomTypeAmenityComponent } from './RoomTypeAmenity.component';
   styleUrls: ['./RoomTypes.component.scss']
 })
 export class RoomTypesComponent extends BaseComponent implements OnInit {
-  roomTypesColumns: string[] = ['name', 'price', 'qty', 'availableQty', 'status', 'actions'];
+  roomTypesColumns: string[] = ['name', 'price', 'qty', 'availableQty', 'status'];
   roomTypesDatasource: MatTableDataSource<RoomTypeDesc>;
   @ViewChild('MatPaginatorRoomTypes', { static: true }) roomTypesPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) roomTypesSort: MatSort;

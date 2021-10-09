@@ -9,7 +9,6 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BuildingComponent } from './Building.component';
 import { FormControl } from '@angular/forms';
 import { RoomsComponent } from '../rooms/Rooms.component';
-import { RoomTypesComponent } from '../roomTypes/RoomTypes.component';
 
 @Component({
   selector: 'app-buildings',
@@ -21,7 +20,7 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   @ViewChild(BuildingComponent, { static: false }) buildingView: BuildingComponent;
   @ViewChild(RoomsComponent, { static: false }) roomsView: RoomsComponent;
 
-  displayedColumns: string[] = ['name', 'image', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'image', 'status'];
   dataSource: MatTableDataSource<Building>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -32,6 +31,7 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   selectedStore: Store;
 
   selected = new FormControl(0);
+  selectedBldgId;
 
   className = 'com.softenza.emarket.model.hospitality.Building';
 
@@ -110,6 +110,7 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
 
     setTimeout(() => {
 
+      this.selected.setValue(0);
       this.getAll();
 
       if (this.buildingView) {
@@ -124,6 +125,8 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   }
 
   selectBuilding(building: Building) {
+
+    this.selectedBldgId = building.id;
 
     setTimeout(() => {
 

@@ -1,10 +1,10 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
 
    <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
-         <button mat-icon-button color="primary" (click)="clear()" type="button"
-            matTooltip="{{'COMMON.ADD' | translate}}" class="remove">
-            <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
+      <div fxFlex="30" fxFlex.gt-sm="30" class="p-1">
+         <button (click)="clear()" mat-fab color="primary"
+            matTooltip="{{'COMMON.ADD' | translate}}">
+            <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
          </button>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
@@ -40,9 +40,7 @@
                </mat-form-field>
                <div fxFlex="5"></div>
             </div>
-         </div>
-         <div fxLayout="row wrap">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+            <div fxFlex="10">
                <mat-slide-toggle [(ngModel)]="amenity.status" name="status" #status="ngModel" class="my-2">
                   {{ 'COMMON.STATUS' | translate }}
                </mat-slide-toggle>

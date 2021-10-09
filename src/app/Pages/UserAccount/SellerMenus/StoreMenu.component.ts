@@ -108,15 +108,12 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     this.messages = '';
     console.log(storeMenu);
     if (storeMenu && storeMenu.id > 0) {
-      // this.getStoreIngredientInventory(storeMenu.id);
       this.appService.getOneWithChildsAndFiles(storeMenu.id, 'StoreMenu')
         .subscribe(result => {
           if (result.id > 0) {
             this.addNew = false;
             this.storeMenu = result;
-            console.log('got menu');
-            console.log(this.storeMenu);
-            this.storeMenu.menuName = storeMenu.menu.name;
+            this.storeMenu.menuName = this.currentOption;
             this.getStoreMenuUnassignedProducts();
             this.getStoreMenuProducts();
           } else {
@@ -196,7 +193,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         this.storeMenu.menuName = this.currentOption;
         this.storeMenuSaveEvent.emit(this.storeMenu);
         this.getStoreMenu(this.storeMenu);
-        this.getStoreUnassignedMenus();
       },
         error => console.log(error),
         () => console.log('Save StoreMenu complete'));
@@ -214,6 +210,11 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         this.menu = data;
         this.storeMenu.menu = this.menu;
         this.addNew = false;
+        for (const menuDesc of this.menu.menuDescriptions) {
+          if (menuDesc.language.id === this.appService.appInfoStorage.language.id) {
+            this.storeMenu.menuName = menuDesc.name;
+          }
+        }
         this.save();
       },
         error => console.log(error),
@@ -292,10 +293,10 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   }
 
   setSelectedMenu(menuDesc: MenuDescription) {
-    console.log(menuDesc);
     this.storeMenu.id = undefined;
     this.storeMenu.menu = menuDesc.menu;
     this.storeMenu.showInKitchen = menuDesc.menu.showInKitchen;
+    this.storeMenu.menuName = menuDesc.name;
 
     this.aProductDatasource = new MatTableDataSource([]);
     this.aProductDatasource.paginator = this.aProductPaginator;

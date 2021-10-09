@@ -78,7 +78,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'hotel',
     children: [
-      { state: 'amenities', name: 'Amenitiess', type: 'link' }
+      { state: 'amenities', name: 'Amenities', type: 'link' }
     ]
   },
   {
