@@ -65,16 +65,16 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{reservationHistory.status}}</span><br/>
               <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="reservation.status"
                     (change)="onToggleGroupChange($event)" [disabled]="reservationHistory.id > 0 || reservation.status === 88">
-                <mat-button-toggle [disabled]="disableToggle(0)"  [value]="0">
+                <mat-button-toggle [disabled]="reservation.status > 0"  [value]="0">
                   {{'COMMON.NEW' | translate}}
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="disableToggle(1)"  [value]="1">
+                <mat-button-toggle [disabled]="reservation.status > 1"  [value]="1">
                   {{'COMMON.CHECKED_IN' | translate}}
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="disableToggle(5)"  [value]="5">
+                <mat-button-toggle [disabled]="reservation.status > 5"  [value]="5">
                   {{'COMMON.CHECKED_OUT' | translate}}
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="disableToggle(99)"  [value]="99">
+                <mat-button-toggle [disabled]="reservation.status > 0"  [value]="99">
                   {{'COMMON.CANCELLED' | translate}}
                 </mat-button-toggle>
               </mat-button-toggle-group>

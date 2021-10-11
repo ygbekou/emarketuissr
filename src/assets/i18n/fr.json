@@ -852,7 +852,10 @@
 		"NBR_ADULT": "Nb Adultes",
 		"NBR_CHILD": "Nb Enfants",
 		"RESERVATION_DETAILS": "Détails de la réservation",
-		"RESERVATION_HISTORY": "Historique de la réservation"
+		"RESERVATION_HISTORY": "Historique de la réservation",
+		"ROOM": "Chambre",
+		"CHECKED_IN": "Checked In",
+		"CHECKED_OUT": "Checked Out"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

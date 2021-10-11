@@ -256,7 +256,7 @@
       <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TOTAL' | translate}} </th>
       <td mat-cell *matCellDef="let resRoom">
         {{store.currency.symbolLeft}}
-        {{ resRoom.total?resRoom.total:0 | number:'1.0-2'}}
+        {{ resRoom.price?resRoom.price:0 | number:'1.0-2'}}
         {{store.currency.symbolRight}} </td>
       <td mat-footer-cell *matFooterCellDef>
         <span class="mobile-value bold">
@@ -302,10 +302,6 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="emptyFooter8">
-      <td mat-footer-cell *matFooterCellDef>
-      </td>
-    </ng-container>
     <ng-container matColumnDef="taxAmount">
       <td mat-footer-cell *matFooterCellDef>
         {{store.currency.symbolLeft}}
@@ -325,12 +321,6 @@
       <td mat-footer-cell *matFooterCellDef>
       </td>
     </ng-container>
-
-    <ng-container matColumnDef="emptyFooter5">
-      <td mat-footer-cell *matFooterCellDef>
-      </td>
-    </ng-container>
-
 
     <ng-container matColumnDef="totalAmount">
       <td mat-footer-cell *matFooterCellDef>

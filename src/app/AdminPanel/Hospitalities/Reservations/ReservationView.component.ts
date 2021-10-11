@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Order, OrderProduct, TabHdr, TabDtl, Store, Currency, ReservationRoom, Reservation } from 'src/app/app.models';
+import { Store, Currency, ReservationRoom, Reservation } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,12 +16,12 @@ import { Constants } from 'src/app/app.constants';
 })
 export class ReservationViewComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['room', 'price', 'total'];
-  displayedTaxesColumns = ['taxes', 'emptyFooter7', 'emptyFooter8', 'taxAmount'];
-  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'emptyFooter5', 'totalAmount'];
+  displayedTaxesColumns = ['taxes', 'emptyFooter7', 'taxAmount'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter4', 'totalAmount'];
 
   dataSource: MatTableDataSource<ReservationRoom>;
-  @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
-  @ViewChild(MatSort, { static: true }) onlineST: MatSort;
+  @ViewChild('MatPaginatorO', { static: true }) dataSourcePG: MatPaginator;
+  @ViewChild(MatSort, { static: true }) dataSourceST: MatSort;
 
   @Input() userId: number;
 
@@ -34,6 +34,7 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
   canEdit = false;
 
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.Reservation';
+  RR_CLASS_NAME = 'com.softenza.emarket.model.hospitality.ReservationRoom';
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -98,10 +99,7 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
             this.reservation = result;
             console.log(this.reservation);
             this.getStore(this.reservation.storeId);
-
-            this.dataSource = new MatTableDataSource(this.reservation.reservationRooms);
-            this.dataSource.paginator = this.onlinePG;
-            this.dataSource.sort = this.onlineST;
+            this.getReservationDetails();
           } else {
             this.reservation = new Reservation();
             this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -110,6 +108,23 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
           }
         });
     }
+  }
+
+  public getReservationDetails() {
+    const parameters: string[] = [];
+    parameters.push('e.reservId = |rId|' + this.reservation.id + '|Integer');
+    this.appService.getAllByCriteria(this.RR_CLASS_NAME, parameters)
+      .subscribe((data: ReservationRoom[]) => {
+        if (data && data.length > 0) {
+          this.reservation.reservationRooms = data;
+          this.dataSource = new MatTableDataSource(this.reservation.reservationRooms);
+          this.dataSource.paginator = this.dataSourcePG;
+          this.dataSource.sort = this.dataSourceST;
+        }
+      },
+        (error) => console.log(error),
+        () => console.log('Get all Reservation Rooms complete'));
+
   }
 
   public applyFilter(filterValue: string) {

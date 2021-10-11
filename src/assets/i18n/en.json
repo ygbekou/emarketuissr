@@ -850,7 +850,10 @@
 		"NBR_ADULT": "Nb Adults",
 		"NBR_CHILD": "Nb Child",
 		"RESERVATION_DETAILS": "Reservation Details",
-		"RESERVATION_HISTORY": "Reservation History"
+		"RESERVATION_HISTORY": "Reservation History",
+		"ROOM": "Room",
+		"CHECKED_IN": "Checked In",
+		"CHECKED_OUT": "Checked Out"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
