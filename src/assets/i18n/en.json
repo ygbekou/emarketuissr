@@ -842,7 +842,15 @@
 		"ROOM_TYPE": "Room Type",
 		"NBR_FLOORS": "Number of floors",
 		"EXPAND_TO_ASSIGN_AMENITIES": "Expand to assign amenities",
-		"CLOSE_TO_SAVE_SPACE": "Close to save space"
+		"CLOSE_TO_SAVE_SPACE": "Close to save space",
+		"RESERVATION": "Reservation",
+		"RESERVATION_ID": "Reservation Id",
+		"ONLINE_RESERVATIONS": "Online Reservations",
+		"STORE_RESERVATIONS": "Store Reservations",
+		"NBR_ADULT": "Nb Adults",
+		"NBR_CHILD": "Nb Child",
+		"RESERVATION_DETAILS": "Reservation Details",
+		"RESERVATION_HISTORY": "Reservation History"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

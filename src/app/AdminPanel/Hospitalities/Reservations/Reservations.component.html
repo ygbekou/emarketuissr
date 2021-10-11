@@ -1,0 +1,269 @@
+<a mat-button [routerLink]="['/admin/hospitalities/reservations']">{{'COMMON.RESERVATION' | translate}}s
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<button *ngIf="!appService.appInfoStorage.STORES || appService.appInfoStorage.STORES.length===0" 
+  mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
+<div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+  <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
+    [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+    <mat-form-field appearance="outline" class="w-100">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+        autocomplete="off">
+    </mat-form-field>
+  </div>
+</div>
+<div class="text-center mt-2" *ngIf="messages">
+  <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)">
+      <mat-tab label="{{'COMMON.ONLINE_RESERVATIONS' | translate}}">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="onlineDS" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>{{'COMMON.RESERVATION_ID'|translate}} </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.reservationId | number: '3.0'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="storeName">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.storeName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="customer">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.CUSTOMER'|translate}} </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.cFirstName}} {{reservation.cLastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
+              <td mat-cell *matCellDef="let reservation">
+                {{reservation.symbolLeft}}
+                {{reservation.total| number:'1.0-2'}}
+                {{reservation.symbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dateAdded">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.ORDER_DATE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.createDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="city">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CITY' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.city}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="country">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.COUNTRY' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.country}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="onlineReservationsColumns"></tr>
+            <tr mat-row *matRowDef="let reservation; columns: onlineReservationsColumns;"
+              [routerLink]="[ (userId?'/account/reservation-detail':'/admin/hospitalities/reservation-detail'), 'o' + reservation.reservationId]">
+            </tr>
+          </table>
+          <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.STORE_RESERVATIONS' | translate}}">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="storeDS" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>{{'COMMON.ORDER_ID'|translate}} </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.reservationId | number: '3.0'}} </td>
+            </ng-container>
+
+            <!-- Published Column -->
+            <ng-container matColumnDef="storeName">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.storeName}} </td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="cashier">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.CUSTOMER'|translate}} </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.cFirstName}} {{reservation.cLastName}} </td>
+            </ng-container>
+
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.status}} </td>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Total </th>
+              <td mat-cell *matCellDef="let reservation">
+                {{reservation.symbolLeft}}
+                {{reservation.total| number:'1.0-2'}}
+                {{reservation.symbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rebate">
+              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.REBATE'|translate}}
+              </th>
+              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                {{element.symbolLeft}}
+                {{element.rebate| number:'1.0-2'}}
+                {{element.symbolRight}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nbrAdult">
+              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.NBR_ADULT'|translate}}
+              </th>
+              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                {{element.nbrAdult }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nbrChild">
+              <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>{{'COMMON.NBR_CHILD'|translate}}
+              </th>
+              <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
+                {{element.nbrChild }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.ORDER_DATE' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let reservation"> {{reservation.createDate | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="storeReservationsColumns"></tr>
+            <tr mat-row *matRowDef="let reservation; columns: storeReservationsColumns;"
+              [routerLink]="[ (userId?'/account/reservation-detail':'/admin/hospitalities/reservation-detail'), 'o'+reservation.reservationId]">
+            </tr>
+          </table>
+          <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+    <mat-card>
+      <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+        <div fxLayout="row wrap">
+          <div class="text-center">
+            <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+          </div>
+          <div class="text-center" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+          </div>
+
+          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===0">
+            <mat-label> {{'COMMON.RESERVATION_ID' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.reservationId"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===0">
+            <mat-label> {{'COMMON.CUSTOMER_NAME' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.customerName"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===1">
+            <mat-label> {{'COMMON.CASHIER' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.customerName"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
+              <mat-option *ngFor="let store of appService.appInfoStorage.STORES" [value]="store.id">
+                {{store.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.reservationType === 1">
+            <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
+            <mat-select [(ngModel)]="searchCriteria.status" name="food">
+              <mat-option [value]="0">
+                {{'COMMON.IN_PROGRESS'|translate}}
+              </mat-option>
+              <mat-option [value]="1">
+                {{'COMMON.COMPLETED'|translate}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.MIN_TOTAL' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.minTotal"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.MAX_TOTAL' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.maxTotal"
+              name="model" #model="ngModel">
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+              [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+              [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <div class="text-center">
+            <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+              fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

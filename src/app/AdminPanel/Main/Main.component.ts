@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MediaChange, MediaObserver } from "@angular/flex-layout";
 import { Subscription } from 'rxjs';
+import { Store, StoreSearchCriteria } from 'src/app/app.models';
+import { AppService } from 'src/app/Services/app.service';
 
 @Component({
    selector: 'app-main-admin-panel',
@@ -24,8 +26,10 @@ export class MainAdminPanelComponent implements OnInit {
 
    /** Used for toggle the sidebar menu. **/
    @ViewChild('sidenav', { static: true }) sidenav;
+   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
 
    constructor(public coreService: AdminPanelServiceService,
+      public appService: AppService,
       public router: Router,
       private activatedRoute: ActivatedRoute,
       private deviceService: DeviceDetectorService,
@@ -33,6 +37,7 @@ export class MainAdminPanelComponent implements OnInit {
 
    ngOnInit() {
 
+      this.getStores();
       document.getElementById('html').classList.remove("user-end");
 
       this.deviceInfo = this.deviceService.getDeviceInfo();
@@ -67,6 +72,18 @@ export class MainAdminPanelComponent implements OnInit {
          document.getElementById('html').classList.remove("user-end");
       }
    }
+
+
+  private getStores() {
+    this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.appService.appInfoStorage.STORES = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
+  }
 
    /**
      * changeRTL method is used to change the layout of template rtl.

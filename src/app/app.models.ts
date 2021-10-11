@@ -2692,12 +2692,15 @@ export class Reservation {
   public beginDate: Date;
   public endDate: Date;
   public rebate: number;
+  public price: number;
   public total: number;
   public quantity: number;
   public firstName: string;
   public lastName: string;
   public idType: string;
   public idNbr: string;
+  public nbrAdult: string;
+  public nbrChild: string;
   public contact: string;
   public taxFees: number;
   public status: number;
@@ -2708,7 +2711,48 @@ export class Reservation {
   public cashier: string;
   // transient
   public tempId: number;
-  public rooms: ReservationRoom[];
+
+  public acceptLanguage: string;
+  public affialiateId: number;
+  public ip: string;
+  public email: string;
+  public paymentAddress1: string;
+  public paymentAddress2: string;
+  public paymentAddressFormat: string;
+  public paymentCity: string;
+  public paymentCode: string;
+  public paymentCompany: string;
+  public paymentCountry: string;
+  public paymentCountryId: string;
+  public paymentCustomField: string;
+  public paymentfirstName: string;
+  public paymentlastName: string;
+  public paymentMethod: string;
+  public paymentPostcode: string;
+  public paymentZone: string;
+  public paymentZoneId: number;
+  public shippingAddress1: string;
+  public shippingAddress2: string;
+  public shippingAddressFormat: string;
+  public shippingCity: string;
+  public shippingCode: string;
+  public shippingCompany: string;
+  public shippingCountry: string;
+  public shippingCountryId: number;
+  public shippingCustomField: string;
+  public shippingfirstName: string;
+  public shippinglastName: string;
+  public shippingMethod: string;
+  public shippingPostcode: string;
+  public shippingZone: string;
+  public shippingZoneId: number;
+  public storeName: string;
+  public storeUrl: string;
+  public telephone: string;
+  public comments: string;
+  public userAgent: string;
+
+  public reservationRooms: ReservationRoom[];
   public type = 'Reservation';
 }
 
@@ -2839,3 +2883,36 @@ export class Building {
     this.status = 1;
   }
 }
+
+export class ReservationSearchCriteria {
+  reservationId: number;
+  storeId: number;
+  userId: number;
+  langId: number;
+  status: number;
+  reservationType: number; // 0 -- online, 1-- store
+  customerName: string;
+  minTotal: number;
+  maxTotal: number;
+  beginDate: Date;
+  endDate: Date;
+}
+
+export class ReservationHistory {
+  id: number;
+  comment: string;
+  notify: number;
+  reservation: Reservation;
+  user: User;
+  status: number;
+  createDate: Date;
+  modifiedBy: number;
+  type = 'ReservationHistory';
+
+  constructor() {
+    this.reservation = new Reservation();
+    this.user = new User();
+    this.notify = 1;
+  }
+}
+

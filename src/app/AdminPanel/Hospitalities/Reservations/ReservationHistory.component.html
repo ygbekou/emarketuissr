@@ -1,0 +1,110 @@
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+        <ng-container matColumnDef="dateAdded">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Date </th>
+          <td mat-cell *matCellDef="let reservationHist"> {{reservationHist.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="user">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.ADDED_BY'|translate}} </th>
+          <td mat-cell *matCellDef="let reservationHist"> {{
+          reservationHist.user? (reservationHist.user.firstName
+          +' '+ reservationHist.user.lastName):'' }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comment">
+          <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> Note </th>
+          <td mat-cell *matCellDef="let reservationHist"> {{reservationHist.comment}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STATUS'|translate}} </th>
+          <td mat-cell *matCellDef="let reservationHist"> {{reservationHist.status}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="notified" *ngIf="canEdit">
+          <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CUSTOMER_NOTIFIED'|translate}}
+          </th>
+          <td mat-cell *matCellDef="let reservationHist">
+            <span *ngIf="reservationHist.notify === 1">{{'COMMON.YES' | translate}}</span>
+            <span *ngIf="reservationHist.notify === 0">{{'COMMON.NO' | translate}}</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions" *ngIf="canEdit">
+          <th mat-header-cell *matHeaderCellDef width="10%"> {{'COMMON.DELETE' | translate}} </th>
+          <td mat-cell *matCellDef="let reservationHist">      
+            <button mat-icon-button color="warn" (click)="remove(reservationHist.id)"
+              matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let reservationHist; columns: displayedColumns;"
+        (click)="edit(reservationHist.id)">
+        </tr>
+      </table>
+      <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <mat-card>
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate >
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngIf="canEdit">
+            
+              <mat-label>{{'COMMON.STATUS' | translate}}:</mat-label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{reservationHistory.status}}</span><br/>
+              <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="reservation.status"
+                    (change)="onToggleGroupChange($event)" [disabled]="reservationHistory.id > 0 || reservation.status === 88">
+                <mat-button-toggle [disabled]="disableToggle(0)"  [value]="0">
+                  {{'COMMON.NEW' | translate}}
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="disableToggle(1)"  [value]="1">
+                  {{'COMMON.CHECKED_IN' | translate}}
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="disableToggle(5)"  [value]="5">
+                  {{'COMMON.CHECKED_OUT' | translate}}
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="disableToggle(99)"  [value]="99">
+                  {{'COMMON.CANCELLED' | translate}}
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            <div fxLayout="row wrap" class="w-100">
+              <mat-slide-toggle [(ngModel)]="reservationHistory.notify" name="notify" #notify="ngModel" class="my-2" >
+                {{ 'COMMON.NOTIFY_CUSTOMER' | translate }}
+              </mat-slide-toggle>
+            </div>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"  *ngIf="canEdit"></div>
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="45">
+            <div fxLayout="row wrap" class="w-100">
+              <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+              <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="reservationHistory.comment"
+                name="comment" #comment="ngModel"></textarea>
+            </div>
+            <div  class="w-100">
+              <br/>
+              <button mat-raised-button color="primary" fxLayout="row" 
+                fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+                <mat-icon>save</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</div>

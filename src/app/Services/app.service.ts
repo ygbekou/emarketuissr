@@ -1087,6 +1087,7 @@ export class AppService {
             this.appInfoStorage.manufacturers = data;
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
+            
    }
 
    public getStoreCategories() {

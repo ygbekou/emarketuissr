@@ -7,7 +7,7 @@ import { InputFileModule } from 'ngx-input-file';
 import {
   MatSidenavModule,
   MatIconModule,
-  MatButtonModule,
+  MatButtonModule, 
   MatCardModule,
   MatMenuModule,
   MatFormFieldModule,
@@ -43,11 +43,17 @@ import { AmenitiesComponent } from './Amenities/Amenities.component';
 import { BillsComponent } from '../Finances/Billings/Bills.component';
 import { StoreServicesComponent } from '../Finances/StoreServices/StoreServices.component';
 import { HospitalitiesRoutes } from './Hospitalities.routing';
+import { ReservationsComponent } from './Reservations/Reservations.component';
+import { ReservationViewComponent } from './Reservations/ReservationView.component';
+import { ReservationHistoryComponent } from './Reservations/ReservationHistory.component';
 
 @NgModule({
   declarations: [
     AmenityComponent,
     AmenitiesComponent,
+    ReservationsComponent,
+    ReservationViewComponent,
+    ReservationHistoryComponent
   ],
   imports: [
     CommonModule,

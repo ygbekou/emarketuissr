@@ -9,6 +9,7 @@ export class AppInfoStorage {
   public CURRENCY_MASK_INTEGER;
   public CURRENCY_MASK_DECIMAL;
   public CURRENCY_FORMAT;
+  public STORES;
   public timePeriods: TimePeriod[] = [];
   public languages: Language[] = [];
   public taxClasses: any = [];

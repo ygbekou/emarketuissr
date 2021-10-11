@@ -844,7 +844,15 @@
 		"ROOM_TYPE": "Type de chambre",
 		"NBR_FLOORS": "Nombre d'étages",
 		"EXPAND_TO_ASSIGN_AMENITIES": "Ouvrir pour attribuer des commodités",
-		"CLOSE_TO_SAVE_SPACE": "Fermer pour gagner de l'espace"
+		"CLOSE_TO_SAVE_SPACE": "Fermer pour gagner de l'espace",
+    "RESERVATION": "Reservation",
+    "RESERVATION_ID": "No Reservation",
+		"ONLINE_RESERVATIONS": "Réservations en ligne",
+		"STORE_RESERVATIONS": "Réservations en boutique",
+		"NBR_ADULT": "Nb Adultes",
+		"NBR_CHILD": "Nb Enfants",
+		"RESERVATION_DETAILS": "Détails de la réservation",
+		"RESERVATION_HISTORY": "Historique de la réservation"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
