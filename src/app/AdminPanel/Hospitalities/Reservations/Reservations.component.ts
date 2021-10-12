@@ -49,15 +49,21 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
   }
 
   private clear() {
-    const oType = this.searchCriteria ? this.searchCriteria.reservationType : 0;
+    const oType = this.searchCriteria ? this.searchCriteria.source : 1;
     this.searchCriteria = new ReservationSearchCriteria();
-    this.searchCriteria.reservationType = oType;
+    this.searchCriteria.source = oType;
     this.searchCriteria.userId = this.userId;
     this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
   }
 
-  changeOrderType(event) {
-    this.searchCriteria.reservationType = event.index;
+  changeOrderSource(event) {
+    if (event.index === 0) {
+      this.searchCriteria.source = 1;
+    }
+    if (event.index === 1) {
+      this.searchCriteria.source = 2;
+    }
+
     this.search();
 
   }
@@ -80,7 +86,7 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
-      if (this.searchCriteria.reservationType === 0) {
+      if (this.searchCriteria.source === 1) {
         this.appService.saveWithUrl('/service/hospitality/onlineReservations', this.searchCriteria)
           .subscribe((data: any[]) => {
             this.onlineDS = new MatTableDataSource(data);
@@ -90,7 +96,7 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
             error => console.log(error),
             () => console.log('Get all Reservations complete'));
 
-      } else {
+      } else if (this.searchCriteria.source === 2) {
         this.appService.saveWithUrl('/service/hospitality/storeReservations', this.searchCriteria)
           .subscribe((data: any[]) => {
             this.storeDS = new MatTableDataSource(data);
@@ -104,12 +110,12 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
   }
 
   public applyFilter(filterValue: string) {
-    if (this.searchCriteria.reservationType === 0) {
+    if (this.searchCriteria.source === 1) {
       this.onlineDS.filter = filterValue.trim().toLowerCase();
       if (this.onlineDS.paginator) {
         this.onlineDS.paginator.firstPage();
       }
-    } else {
+    } else if (this.searchCriteria.source === 2) {
       this.storeDS.filter = filterValue.trim().toLowerCase();
       if (this.storeDS.paginator) {
         this.storeDS.paginator.firstPage();

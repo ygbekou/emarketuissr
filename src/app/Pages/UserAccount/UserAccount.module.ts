@@ -86,6 +86,9 @@ import { RoomsComponent } from './rooms/Rooms.component';
 import { RoomTypeComponent } from './roomTypes/RoomType.component';
 import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
 import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component';
+import { SalesReservationsComponent } from './Sales-reservations/Sales-reservations.component';
+import { HospitalitiesModule } from 'src/app/AdminPanel/Hospitalities/Hospitalities.module';
+import { ReservationDetailComponent } from './Reservation-detail/Reservation-detail.component';
 
 @NgModule({
   imports: [
@@ -130,6 +133,7 @@ import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component'
     TemplatesModule,
     ReportsModule,
     SalesModule,
+    HospitalitiesModule,
     MatPaginatorModule,
     MatButtonToggleModule,
     ProductsModule,
@@ -195,7 +199,9 @@ import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component'
     RoomsComponent,
     RoomTypeComponent,
     RoomTypesComponent,
-    RoomTypeAmenityComponent
+    RoomTypeAmenityComponent,
+    SalesReservationsComponent,
+    ReservationDetailComponent
   ],
   exports: [
     StoresComponent,

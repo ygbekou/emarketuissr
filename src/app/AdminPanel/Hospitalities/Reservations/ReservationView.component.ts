@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Constants } from 'src/app/app.constants';
 
 @Component({
-  selector: 'app-reservarions-overview',
+  selector: 'app-reservations-overview',
   templateUrl: './ReservationView.component.html',
   styleUrls: ['./Reservations.component.scss']
 })
@@ -93,7 +93,7 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
 
   getReservation(reservationId: number) {
     if (reservationId > 0) {
-      this.appService.getOneWithChildsAndFiles(reservationId, this.CLASS_NAME)
+      this.appService.getOne(reservationId, this.CLASS_NAME)
         .subscribe(result => {
           if (result.id > 0) {
             this.reservation = result;

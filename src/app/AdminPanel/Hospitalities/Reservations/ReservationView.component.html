@@ -175,7 +175,10 @@
         <span class="pull-left">
           <mat-icon>cached</mat-icon>
         </span>
-        {{reservation.status ===0?('COMMON.IN_PROGRESS'|translate) : ('COMMON.COMPLETED'|translate)}}
+        <span *ngIf="reservation.status === 0">{{'COMMON.NEW' | translate}}</span>
+        <span *ngIf="reservation.status === 1">{{'COMMON.CHECKED_IN' | translate}}</span>
+        <span *ngIf="reservation.status === 5">{{'COMMON.CHECKED_OUT' | translate}}</span>
+        <span *ngIf="reservation.status === 99">{{'COMMON.CANCELLED' | translate}}</span>
       </div>
       <div class="tile-body">
 
@@ -210,7 +213,7 @@
         <span class="pull-left">
           <mat-icon>people</mat-icon>
         </span>
-        {{reservation.nbrAdult}}
+        {{reservation.nbrAdult + reservation.nbrChild}}
       </div>
     </div>
   </div>
@@ -230,11 +233,12 @@
 <div class="table-wrapper" *ngIf="reservationType==='s'">
   <table mat-table [dataSource]="dataSource" matSort class="w-100">
     <!-- Product Column -->
+
     <ng-container matColumnDef="room">
-      <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> {{'COMMON.ROOM' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef width="45%" mat-sort-header> <h6>{{'COMMON.ROOM' | translate}}</h6> </th>
       <td mat-cell *matCellDef="let resRoom">
         <img *ngIf="resRoom.pic" [src]="'assets/images/roomtypes/'+resRoom.roomTypeId+'/'+resRoom.pic" [style.width.px]="40">
-        {{resRoom.roomName}} </td>
+        {{resRoom.buildingName}} - {{resRoom.roomTypeName}} - {{resRoom.roomName}} </td>
       <td mat-footer-cell *matFooterCellDef>
         <h6>{{'COMMON.SUB_TOTAL'|translate}}</h6>
       </td>
@@ -242,7 +246,7 @@
 
     <!-- Price Column -->
     <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.UNIT_PRICE' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> <h6>{{'COMMON.UNIT_PRICE' | translate}}</h6> </th>
       <td mat-cell *matCellDef="let resRoom">
         {{store.currency.symbolLeft}}
         {{ resRoom.price?resRoom.price:0 | number:'1.0-2'}}
@@ -253,7 +257,7 @@
 
     <!-- Total Column -->
     <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TOTAL' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> <h6>{{'COMMON.TOTAL' | translate}}</h6> </th>
       <td mat-cell *matCellDef="let resRoom">
         {{store.currency.symbolLeft}}
         {{ resRoom.price?resRoom.price:0 | number:'1.0-2'}}

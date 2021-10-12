@@ -80,7 +80,8 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Rooms', url: '/account/rooms', icon: 'hotel' },
-      { name: 'Room Types', url: '/account/room-types', icon: 'room' }
+      { name: 'Room Types', url: '/account/room-types', icon: 'room' },
+      { name: 'Reservations', url: '/account/sales-reservations', icon: 'room' }
     ]
   }, {
     name: 'Reports',
