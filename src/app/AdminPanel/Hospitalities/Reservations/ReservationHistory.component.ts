@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Order, OrderStatus, OrderHistory, User, ReservationHistory, Reservation } from 'src/app/app.models';
+import { ReservationHistory, Reservation } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -103,7 +103,7 @@ export class ReservationHistoryComponent extends BaseComponent implements OnInit
         }
 
         this.setToggleValues();
-        this.appService.saveWithUrl('/service/reservation/saveReservationHistory', this.reservationHistory)
+        this.appService.saveWithUrl('/service/hospitality/saveReservationHistory', this.reservationHistory)
           .subscribe(result => {
             this.processResult(result, this.reservation, null);
             if (result.id > 0) {
@@ -143,8 +143,9 @@ export class ReservationHistoryComponent extends BaseComponent implements OnInit
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
-  disableToggle(status: number) {
-    return true;
+  public onToggleGroupChange(event) {
+    console.log(event.value);
+    this.reservationHistory.status = event.value;
   }
 
 }

@@ -7,7 +7,7 @@ import { InputFileModule } from 'ngx-input-file';
 import {
   MatSidenavModule,
   MatIconModule,
-  MatButtonModule, 
+  MatButtonModule,
   MatCardModule,
   MatMenuModule,
   MatFormFieldModule,
@@ -40,8 +40,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from '../../Global/Global.module';
 import { AmenityComponent } from './Amenities/Amenity.component';
 import { AmenitiesComponent } from './Amenities/Amenities.component';
-import { BillsComponent } from '../Finances/Billings/Bills.component';
-import { StoreServicesComponent } from '../Finances/StoreServices/StoreServices.component';
 import { HospitalitiesRoutes } from './Hospitalities.routing';
 import { ReservationsComponent } from './Reservations/Reservations.component';
 import { ReservationViewComponent } from './Reservations/ReservationView.component';
@@ -120,6 +118,7 @@ import { ReservationHistoryComponent } from './Reservations/ReservationHistory.c
   ],
 
   exports: [
+    ReservationsComponent, ReservationViewComponent
   ]
 })
 export class HospitalitiesModule { }

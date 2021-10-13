@@ -32,6 +32,8 @@ import { MyShippersComponent } from './MyShippers/MyShippers.component';
 import { SalesFinanceDashboardComponent } from './Sales-finance-dashboard/Sales-finance-dashboard.component';
 import { BuildingsComponent } from './Buildings/Buildings.component';
 import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
+import { SalesReservationsComponent } from './Sales-reservations/Sales-reservations.component';
+import { ReservationDetailComponent } from './Reservation-detail/Reservation-detail.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -273,6 +275,22 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'rooms',
             component: BuildingsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'sales-reservations',
+            component: SalesReservationsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'reservationdetail/:id',
+            component: ReservationDetailComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

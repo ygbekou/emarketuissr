@@ -2764,6 +2764,8 @@ export class ReservationRoom {
   public nbrChild: number;
   public price: number;
   public roomName: string;
+  public roomTypeName: string;
+  public buildingName: string;
   public comments: string;
   public status: number;
   public tempId: number;
@@ -2886,6 +2888,7 @@ export class Building {
 
 export class ReservationSearchCriteria {
   reservationId: number;
+  source: number;
   storeId: number;
   userId: number;
   langId: number;

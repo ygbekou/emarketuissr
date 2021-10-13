@@ -22,7 +22,7 @@
 </div>
 <div fxLayout="row wrap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
-    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)">
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderSource($event)">
       <mat-tab label="{{'COMMON.ONLINE_RESERVATIONS' | translate}}">
         <div class="table-wrapper">
           <table mat-table [dataSource]="onlineDS" matSort class="w-100">
@@ -79,7 +79,7 @@
 
             <tr mat-header-row *matHeaderRowDef="onlineReservationsColumns"></tr>
             <tr mat-row *matRowDef="let reservation; columns: onlineReservationsColumns;"
-              [routerLink]="[ (userId?'/account/reservation-detail':'/admin/hospitalities/reservation-detail'), 'o' + reservation.reservationId]">
+              [routerLink]="[ (userId?'/account/reservationdetail':'/admin/hospitalities/reservation-detail'), 'o' + reservation.reservationId]">
             </tr>
           </table>
           <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
@@ -160,7 +160,7 @@
 
             <tr mat-header-row *matHeaderRowDef="storeReservationsColumns"></tr>
             <tr mat-row *matRowDef="let reservation; columns: storeReservationsColumns;"
-              [routerLink]="[ (userId?'/account/reservation-detail':'/admin/hospitalities/reservation-detail'), 'o'+reservation.reservationId]">
+              [routerLink]="[ (userId?'/account/reservationdetail':'/admin/hospitalities/reservation-detail'), 's'+reservation.reservationId]">
             </tr>
           </table>
           <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
@@ -188,19 +188,19 @@
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
           </div>
 
-          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===0">
+          <mat-form-field class="w-100" *ngIf="searchCriteria.source === 1">
             <mat-label> {{'COMMON.RESERVATION_ID' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.reservationId"
               name="model" #model="ngModel">
           </mat-form-field>
 
-          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===0">
+          <mat-form-field class="w-100" *ngIf="searchCriteria.source === 1">
             <mat-label> {{'COMMON.CUSTOMER_NAME' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.customerName"
               name="model" #model="ngModel">
           </mat-form-field>
 
-          <mat-form-field class="w-100" *ngIf="searchCriteria.reservationType ===1">
+          <mat-form-field class="w-100" *ngIf="searchCriteria.source === 2">
             <mat-label> {{'COMMON.CASHIER' | translate}}</mat-label>
             <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.customerName"
               name="model" #model="ngModel">
@@ -215,7 +215,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.reservationType === 1">
+          <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.source === 2">
             <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
             <mat-select [(ngModel)]="searchCriteria.status" name="food">
               <mat-option [value]="0">
