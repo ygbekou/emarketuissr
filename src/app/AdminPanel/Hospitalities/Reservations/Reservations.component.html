@@ -79,7 +79,7 @@
               [routerLink]="[ (userId?'/account/reservationdetail':'/admin/hospitalities/reservation-detail'), 'o' + reservation.reservationId]">
             </tr>
           </table>
-          <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+          <p *ngIf="onlineDS?.data?.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
         </div>
         <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
         </mat-paginator>
@@ -160,7 +160,7 @@
               [routerLink]="[ (userId?'/account/reservationdetail':'/admin/hospitalities/reservation-detail'), 's'+reservation.reservationId]">
             </tr>
           </table>
-          <p *ngIf="onlineDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+          <p *ngIf="onlineDS?.data?.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
         </div>
         <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
         </mat-paginator>
