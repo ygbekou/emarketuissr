@@ -158,7 +158,8 @@ const TREE_DATA_FR: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Chambres', url: '/account/rooms', icon: 'hotel' },
-      { name: 'Type de chambres', url: '/account/room-types', icon: 'room' }
+      { name: 'Type de chambres', url: '/account/room-types', icon: 'room' },
+      { name: 'Réservations', url: '/account/sales-reservations', icon: 'room' }
     ]
   }, {
     name: 'Etats',
