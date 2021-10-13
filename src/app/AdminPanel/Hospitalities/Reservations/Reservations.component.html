@@ -1,9 +1,6 @@
 <a mat-button [routerLink]="['/admin/hospitalities/reservations']">{{'COMMON.RESERVATION' | translate}}s
   <mat-icon>navigate_next</mat-icon>
 </a>
-<button *ngIf="!appService.appInfoStorage.STORES || appService.appInfoStorage.STORES.length===0" 
-  mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
-  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
 
 <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
   <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
