@@ -846,7 +846,7 @@
 		"RESERVATION": "Reservation",
 		"RESERVATION_ID": "Reservation Id",
 		"ONLINE_RESERVATIONS": "Online Reservations",
-		"STORE_RESERVATIONS": "Store Reservations",
+		"STORE_RESERVATIONS": "Walk-in Reservations",
 		"NBR_ADULT": "Nb Adults",
 		"NBR_CHILD": "Nb Child",
 		"RESERVATION_DETAILS": "Reservation Details",

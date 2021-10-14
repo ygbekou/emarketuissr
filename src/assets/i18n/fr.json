@@ -848,7 +848,7 @@
     "RESERVATION": "Reservation",
     "RESERVATION_ID": "No Reservation",
 		"ONLINE_RESERVATIONS": "Réservations en ligne",
-		"STORE_RESERVATIONS": "Réservations en boutique",
+		"STORE_RESERVATIONS": "Réservations présentielles",
 		"NBR_ADULT": "Nb Adultes",
 		"NBR_CHILD": "Nb Enfants",
 		"RESERVATION_DETAILS": "Détails de la réservation",

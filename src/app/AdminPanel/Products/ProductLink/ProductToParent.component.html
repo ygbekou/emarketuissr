@@ -16,7 +16,27 @@
       <td mat-cell *matCellDef="let productToParent"> {{productToParent.id}} </td>
     </ng-container>
 
-    <!-- Image Column -->
+    <ng-container matColumnDef="category">
+      <th style="width: 30% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{'COMMON.CATEGORY' | translate}} </th>
+      <td style="width: 30% !important;" mat-cell *matCellDef="let productToParent">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{'COMMON.SELECT_ONE' | translate }}</mat-label>
+          <input type="text" placeholder="" aria-label="Number" name="categoryOption" matInput
+            [(ngModel)]="productToParent.categoryDescription.name" [matAutocomplete]="auto1"
+            (ngModelChange)="filterCategoryOptions(productToParent)">
+          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+            <mat-autocomplete id="category" #auto1="matAutocomplete">
+            <mat-option *ngFor="let option of productToParent.filteredCategoryOptions"
+              (onSelectionChange)="categorySelected(productToParent, option)" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="parent">
       <th style="width: 30% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>
         {{'COMMON.PARENT_PRODUCT' | translate}} </th>
@@ -27,8 +47,7 @@
             [(ngModel)]="productToParent.parentProductDescription.name" [matAutocomplete]="auto"
             (ngModelChange)="filterParentOptions(productToParent)">
           <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-            <mat-autocomplete id="parent" #auto="matAutocomplete" [(ngModel)]="productToParent.parentProductDescription"
-            name="parent">
+            <mat-autocomplete id="parent" #auto="matAutocomplete">
             <mat-option *ngFor="let option of productToParent.filteredParentOptions"
               (onSelectionChange)="parentProductSelected(productToParent, option)" [value]="option.name">
               {{option.name}}
