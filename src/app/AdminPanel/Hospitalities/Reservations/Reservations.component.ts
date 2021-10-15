@@ -13,8 +13,8 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Reservations.component.scss']
 })
 export class ReservationsComponent extends BaseComponent implements OnInit {
-  onlineReservationsColumns: string[] = ['id', 'storeName', 'customer', 'status', 'total', 'city', 'country', 'dateAdded'];
-  storeReservationsColumns: string[] = ['id', 'storeName', 'cashier', 'status', 'total', 'rebate', 'nbrAdult', 'nbrChild', 'date'];
+  onlineReservationsColumns: string[] = ['id', 'customer', 'total', 'city', 'country', 'status', 'date'];
+  storeReservationsColumns: string[] = ['id', 'cashier', 'total', 'status', 'date'];
 
   onlineDS: MatTableDataSource<Reservation>;
   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;
@@ -31,7 +31,6 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
   searchCriteria: ReservationSearchCriteria;
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
   orderStatuses: OrderStatus[];
-  //stores: Store[] = [];
   colors = ['primary', 'secondary'];
 
   constructor(public appService: AppService,

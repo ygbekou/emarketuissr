@@ -280,8 +280,14 @@ export class ProductToParent {
   id: number;
   product: Product;
   parent: Product;
+  category: Category;
   quantity: number;
   currentOption: any;
+  currentCategoryOption: any;
+
+  categoryDescription: CategoryDescription = new CategoryDescription();
+  categoryOptions: CategoryDescription[] = [];
+  filteredCategoryOptions: CategoryDescription[] = [];
 
   parentProductDescription: ProductDescription = new ProductDescription();
   parentOptions: ProductDescription[] = [];
@@ -289,7 +295,6 @@ export class ProductToParent {
 
   type = 'ProductToParent';
   action = '';
-
 
 }
 

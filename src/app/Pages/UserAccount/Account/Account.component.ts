@@ -4,6 +4,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { StoreSearchCriteria, Store } from 'src/app/app.models';
 
 /**
  * Food data with nested structure.
@@ -209,6 +210,7 @@ export class AccountComponent implements OnInit {
     node => node.level, node => node.expandable);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
 
   constructor(public translate: TranslateService, public appService: AppService) {
 
@@ -238,6 +240,18 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getStores();
+  }
+
+  private getStores() {
+    this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = +this.appService.tokenStorage.getUserId();
+    this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.appService.appInfoStorage.STORES = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
   }
 
   toggleSidebar() {

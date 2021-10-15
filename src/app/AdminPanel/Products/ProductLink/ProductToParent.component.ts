@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, ProductDescription, ProductToParent } from 'src/app/app.models';
+import { Product, ProductDescription, ProductToParent, CategoryDescription } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
@@ -13,7 +13,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 export class ProductToParentComponent extends BaseComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'parent', 'quantity', 'actions'];
+  displayedColumns: string[] = ['id', 'category', 'parent', 'quantity', 'actions'];
   productToParentDatasource: MatTableDataSource<ProductToParent>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -28,6 +28,7 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
   errors: string;
 
   initialParentProductOptions: ProductDescription[];
+  initialCategoryOptions: CategoryDescription[];
 
 
   constructor(public appService: AppService,
@@ -36,13 +37,24 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCategories();
     this.getProductParentDescriptions();
-    this.getUnassignedParentProducts(0);
+    //this.getUnassignedParentProducts(0);
+  }
+
+  getCategories() {
+    const parameters: string[] = [];
+    parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
+    parameters.push('e.category.status = |sStatus|1|Integer');
+    this.appService.getAllByCriteria('CategoryDescription', parameters, ' order by e.category.sortOrder ')
+        .subscribe((data: CategoryDescription[]) => {
+          this.initialCategoryOptions = data;
+        },
+        error => console.log(error),
+        () => console.log('Get all CategoryDescription complete'));
   }
 
   getProductParentDescriptions() {
-
-    console.log('Language id: ' + this.appService.appInfoStorage.language.id);
 
     this.appService.getObjects('/service/catalog/assignedproductparentdescriptions/'
       + this.productId + '/' + this.appService.appInfoStorage.language.id)
@@ -56,13 +68,15 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
         () => console.log('Get all ProductDescription complete'));
   }
 
-  getUnassignedParentProducts(categoryId: number) {
+  getUnassignedParentProducts(productToParent: ProductToParent) {
 
-    if (categoryId !== undefined) {
+    if (productToParent.category && productToParent.category.id) {
       this.appService.getObjects('/service/catalog/unassignedproductparentdescriptions/' + this.appService.appInfoStorage.language.id
-        + '/' + categoryId + '/' + this.productId)
+        + '/' + productToParent.category.id + '/' + this.productId)
         .subscribe((data: ProductDescription[]) => {
           this.initialParentProductOptions = data;
+          console.log(data)
+          productToParent.filteredParentOptions = data;
         },
           error => console.log(error),
           () => console.log('Get all non related product complete'));
@@ -79,18 +93,23 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
       this.productToParentDatasource.data = [];
     }
     const newProductToParent = new ProductToParent();
-    newProductToParent.filteredParentOptions = this.initialParentProductOptions;
-    newProductToParent.parentOptions = this.initialParentProductOptions;
-    this.productToParentDatasource.data.unshift(newProductToParent);
-    this.productToParentDatasource = new MatTableDataSource<ProductToParent>(this.productToParentDatasource.data);
-    this.productToParentDatasource.paginator = this.paginator;
-    this.productToParentDatasource.sort = this.sort;
+    newProductToParent.filteredCategoryOptions = this.initialCategoryOptions;
+    newProductToParent.categoryOptions = this.initialCategoryOptions;
+    this.updateDatasourceData(this.productToParentDatasource, this.paginator, this.sort, newProductToParent);
   }
 
   parentProductSelected(productToParent: ProductToParent, selectedProdDesc: ProductDescription) {
 
     productToParent.parentProductDescription = selectedProdDesc;
     productToParent.parent = selectedProdDesc.product;
+
+  }
+
+  categorySelected(productToParent: ProductToParent, selectedCatDesc: CategoryDescription) {
+
+    productToParent.categoryDescription = selectedCatDesc;
+    productToParent.category = selectedCatDesc.category;
+    this.getUnassignedParentProducts(productToParent);
 
   }
 
@@ -187,8 +206,6 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
 
   filterParentOptions(productParent: ProductToParent) {
 
-    console.log(productParent.currentOption);
-
     if (!productParent.parentOptions) {
       productParent.parentOptions = this.initialParentProductOptions;
     }
@@ -203,6 +220,26 @@ export class ProductToParentComponent extends BaseComponent implements OnInit {
 
     productParent.filteredParentOptions = productParent.parentOptions;
     return productParent.parentOptions;
+  }
+
+
+  filterCategoryOptions(productParent: ProductToParent) {
+
+    if (!productParent.categoryOptions) {
+      productParent.categoryOptions = this.initialCategoryOptions;
+    }
+
+    if (productParent.categoryDescription.name) {
+      const filterValue = productParent.categoryDescription.name;
+
+      productParent.filteredCategoryOptions = productParent.categoryOptions.filter(catDesc =>
+        catDesc.name.toLowerCase().startsWith(filterValue));
+
+      return productParent.categoryOptions.filter(catDesc => catDesc.name.toLowerCase().startsWith(filterValue));
+    }
+
+    productParent.filteredCategoryOptions = productParent.categoryOptions;
+    return productParent.categoryOptions;
   }
 
 }
