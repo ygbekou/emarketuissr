@@ -111,26 +111,12 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
             this.optionOptions.splice(index, 1);
             this.currentOption = '';
             this.getProductStoreOption(data.id);
-            this.updateOptionField();
          },
             error => console.log(error),
             () => console.log('Save selected product option complete'));
 
    }
 
-   updateOptionField() {
-      let val = 0;
-      if (this.productStoreOptions && this.productStoreOptions.length > 0) {
-         val = 1;
-      }
-      this.appService.getObjects('/service/catalog/updateOptionField/' +
-         this.productToStoreId + '/' + val)
-         .subscribe((data) => {
-            // we're good. Boldly assuming everything is fine.
-         },
-            error => console.log(error),
-            () => console.log('updateOptionField complete'));
-   }
 
    requiredChanged() {
       this.productStoreOption.required = (this.productStoreOption.required == null
@@ -202,7 +188,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
          .subscribe(data => {
             this.removeItem(this.productStoreOptions, productStoreOption.id);
             this.processDeleteResult(data, this.messages);
-            this.updateOptionField();
+            this.productStoreOptionValues = [];
          });
    }
 
