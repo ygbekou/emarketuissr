@@ -455,8 +455,6 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                      },
                         error => console.log(error),
                         () => console.log('Get user active CreditCard complete for userId=' + userId));
-               } else if (this.user.paymentMethodCode === 'TMONEY') {
-                  this.processPaymentConfirmation();
                }
             } else {
                this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {
@@ -569,19 +567,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
                            this.order.preorderMinute = orderPreorderMinute;
                         });
                      } else {
-                        if (this.user.paymentMethodCode !== 'TMONEY'
-                           || this.payCash
-                           || (this.order.paymentCode && this.order.paymentCode === 'CASH')) {
-                           this.appService.completeOrder(+this.storeId);
-                           this.orderCompleteEvent.emit(this.order);
-                        } else {
-                           this.appService.storeOrderId(this.order);
-                           this.appService.completeOrder(+this.storeId);
-                           this.orderCompleteEvent.emit(this.order);
-                           const url = data.paygateGlobalPaymentUrl.replace('BASE_URL', Constants.webServer);
-                           window.location.href = url;
-                           return;
-                        }
+                        this.appService.completeOrder(+this.storeId);
+                        this.orderCompleteEvent.emit(this.order);
                      }
 
                   },
