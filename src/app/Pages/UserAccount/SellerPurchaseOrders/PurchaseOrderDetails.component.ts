@@ -221,7 +221,15 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
       poDtl.totalAmount = undefined;
       return;
     }
-    poDtl.totalAmount = poDtl.unitAmount * poDtl.quantity;
+    poDtl.totalAmount = Number((poDtl.unitAmount * poDtl.quantity).toFixed(2));
+  }
+
+  calculateUnitAmount (poDtl: PoDtl) {
+    if (!poDtl.totalAmount || !poDtl.quantity) {
+      poDtl.unitAmount = undefined;
+      return;
+    }
+    poDtl.unitAmount = Number((poDtl.totalAmount / poDtl.quantity).toFixed(2));
   }
 
   changeTab($event) {
