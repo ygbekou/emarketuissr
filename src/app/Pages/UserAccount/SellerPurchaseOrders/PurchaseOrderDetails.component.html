@@ -103,7 +103,7 @@
     <td mat-cell *matCellDef="let poDtl">
       <mat-form-field appearance="outline" style="width: 100%">
         <input type="text" aria-label="Number" name="totalAmount" matInput [(ngModel)]="poDtl.totalAmount" required
-          (ngModelChange)="poDtl.isTouched = true; poDtl.quantity = 1; poDtl.unitAmount = poDtl.totalAmount;">
+          (ngModelChange)="poDtl.isTouched = true; calculateUnitAmount(poDtl);">
       </mat-form-field>
     </td>
     <td mat-cell *matCellDef="let poDtl"> {{poDtl.totalAmount}}

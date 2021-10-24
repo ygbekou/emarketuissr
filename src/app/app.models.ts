@@ -2493,18 +2493,21 @@ export class Transaction {
   amount: number;
   image: string;
   description: string;
-  status: number;
+  status = 0;
 
   storeName: string;
   modifiedBy: number;
   receiverName: string;
   paidByName: string;
 
+  approvedBy: User;
+  approvedDate: Date;
+  approverName: string;
+
   type = 'Transaction';
 
   constructor() {
     this.store = new Store();
-    this.status = 1;
     this.transactionDate = new Date();
   }
 }

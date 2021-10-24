@@ -20,7 +20,7 @@
         <button mat-raised-button color="accent" (click)="submit()"
           matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="poHdr.id && poHdr.status<5"
           class="remove">
-          <span class="mx-1 uppercase">{{'COMMON.COMPLETE' | translate}}</span>
+          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
           <mat-icon>done_all</mat-icon>
         </button>
       </div>
@@ -190,8 +190,8 @@
         <h4  *ngIf="poHdr.status === 0"  style="color:#283593;">
           {{'COMMON.DRAFT' | translate}}
         </h4>
-        <h4 *ngIf="poHdr.status === 5" style="color:#00FF00">
-          {{'COMMON.COMPLETED' | translate}}
+        <h4 *ngIf="poHdr.status === 5" style="color:#006400">
+          {{'COMMON.SUBMITTED' | translate}}
         </h4>
         <h4 *ngIf="poHdr.status === 6" style="color:#0000FF">
           {{'COMMON.APPROVED' | translate}}

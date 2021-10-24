@@ -11,10 +11,44 @@
           type="submit" [disabled]="!f.form.valid ||!transaction.paidBy|| !transaction.paidBy.id">
           <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
         </button>
-      </div><!-- 
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-        <h4 style="color:#00008b">{{'COMMON.STORE' | translate}} - {{store.name}}</h4>
-      </div> -->
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="submit()"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="transaction.id && transaction.status < 5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
+          <mat-icon>done_all</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" (click)="approve()"
+          matTooltip="{{'COMMON.APPROVE' | translate}}" *ngIf="transaction.id && transaction.status === 5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.APPROVE' | translate}}</span>
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="reopen()"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="transaction.id && (transaction.status === 5 || transaction.status === 6)"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.REOPEN' | translate}}</span>
+          <mat-icon>undo</mat-icon>
+        </button>
+      </div>
+
+       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="warn" (click)="cancel()"
+          matTooltip="{{'COMMON.CANCEL' | translate}}" *ngIf="transaction.id && transaction.status<5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
@@ -112,11 +146,42 @@
             [(ngModel)]="transaction.description" name="description" #description="ngModel"></textarea>
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
         <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
           [linkEnabled]="false" >
         </input-file>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br />
+
+        <h4  *ngIf="transaction.status === 0"  style="color:#283593;">
+          {{'COMMON.DRAFT' | translate}}
+        </h4>
+        <h4 *ngIf="transaction.status === 5" style="color:#006400">
+          {{'COMMON.SUBMITTED' | translate}}
+        </h4>
+        <h4 *ngIf="transaction.status === 6" style="color:#0000FF">
+          {{'COMMON.APPROVED' | translate}}
+        </h4>
+        <h4  *ngIf="transaction.status === 9"  style="color:#FF0000;">
+          {{'COMMON.CANCELLED' | translate}}
+        </h4>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" 
+        *ngIf="transaction.approvedBy && transaction.approvedBy.id > 0 " class="p-1">
+        <mat-label>{{'COMMON.APPROVED_BY' | translate}}</mat-label><br />
+
+        <h4 style="color:#0000FF;">
+          {{transaction.approverName}}
+        </h4>
       </div>
     </div>
 

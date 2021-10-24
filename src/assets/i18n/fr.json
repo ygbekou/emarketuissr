@@ -224,6 +224,7 @@
     "APPLICATION_TITLE": "Titre de l'application",
     "APPROVE": "Approver",
     "APPROVED": "Apprové",
+		"APPROVED_BY": "Apprové Par",
     "PENDING_APPROVAL": "En attente d'approbation",
     "APPROVAL_STATUS": "Etat d'approbation",
     "ARTICLE": "Article",
