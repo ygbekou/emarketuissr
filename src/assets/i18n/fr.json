@@ -859,7 +859,8 @@
 		"RESERVATION_HISTORY": "Historique de la réservation",
 		"ROOM": "Chambre",
 		"CHECKED_IN": "Checked In",
-		"CHECKED_OUT": "Checked Out"
+		"CHECKED_OUT": "Checked Out",
+		"REOPEN": "Re-ouvrir"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
