@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreIngredient, IngredientSearchCriteria, IngredientDescription, StoreIngredientInventory } from 'src/app/app.models';
+import { Store, StoreIngredient, IngredientSearchCriteria, IngredientDescription, StoreIngredientInventory, Ingredient, ProductMenu, StoreMenu, MenuDescription } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -36,6 +36,9 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
   @Input() store = new Store();
   @Output() storeIngredientSaveEvent = new EventEmitter<any>();
 
+  addNew = false;
+  ingredient = new Ingredient();
+  
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute,
@@ -159,7 +162,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
 
   validateSelectedIngredient() {
 
-    if (typeof(this.storeIngredient.ingredientName) === 'string') {
+    if (!this.storeIngredient.ingredient && typeof(this.storeIngredient.ingredientName) === 'string') {
       const index = this.ingredientOptions.findIndex(x => x.name === this.storeIngredient.ingredientName);
       if (index === -1) {
         return false;
@@ -221,4 +224,60 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
     return val.length === 0;
   }
 
+
+
+  saveIngredient() {
+    this.messages = '';
+    this.ingredient.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.setIngredientToggleValues();
+
+    this.appService.save(this.ingredient, 'Ingredient')
+      .subscribe((data: Ingredient) => {
+        this.processResult(data, this.ingredient, null);
+        this.ingredient = data;
+        this.storeIngredient.ingredient = this.ingredient;
+        this.addNew = false;
+        for (const ingDesc of this.ingredient.ingredientDescriptions) {
+          if (ingDesc.language.id === this.appService.appInfoStorage.language.id) {
+            this.storeIngredient.ingredientName = ingDesc.name;
+          }
+        }
+        this.save();
+      },
+        error => console.log(error),
+        () => console.log('Save StoreMenu complete'));
+  }
+
+  addNewMenu() {
+    this.addNew = true;
+    this.storeIngredient = new StoreIngredient();
+    this.ingredient = new Ingredient();
+    this.ingredient.ingredientDescriptions = [];
+    for (const lang of this.appService.appInfoStorage.languages) {
+      const id = new IngredientDescription();
+      id.language = lang;
+      id.name = '';
+      this.ingredient.ingredientDescriptions.push(id);
+    }
+  }
+
+  cancel() {
+    this.addNew = false;
+    this.storeIngredient = new StoreIngredient();
+    this.ingredient = new Ingredient();
+    this.ingredient.ingredientDescriptions = [];
+    for (const lang of this.appService.appInfoStorage.languages) {
+      const id = new IngredientDescription();
+      id.language = lang;
+      id.name = '';
+      this.ingredient.ingredientDescriptions.push(id);
+    }
+  }
+
+  setIngredientToggleValues() {
+    this.ingredient.status = (this.ingredient.status == null
+      || this.ingredient.status.toString() === 'false'
+      || this.ingredient.status.toString() === '0') ? 0 : 1;
+  }
 }

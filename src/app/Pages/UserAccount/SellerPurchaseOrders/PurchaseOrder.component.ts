@@ -35,8 +35,10 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   @Input() store = new Store();
   @Output() poHdrSaveEvent = new EventEmitter<any>();
 
+  supplier: Supplier = new Supplier();
   saving = false;
   justSubmitted = false;
+  addNew = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -226,6 +228,26 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         () => console.log('Submit PoHrd complete'));
   }
 
+  reopen() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.poHdr.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/reopenPoHdr/', this.poHdr)
+      .subscribe((data: PoHdr) => {
+        console.log(data);
+        this.processResult(data, this.poHdr, null);
+        this.poHdr = data;
+        this.poHdr.storeName = this.store.name;
+        this.poHdrSaveEvent.emit(this.poHdr);
+        this.getPoDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Reopen PoHrd complete'));
+  }
+
   cancel() {
     this.poHdr.status = 9;
     this.justSubmitted = true;
@@ -278,4 +300,40 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
     }
   }
 
+
+  addNewSupplier() {
+    this.addNew = true;
+    this.supplier = new Supplier();
+  }
+
+  saveSupplier() {
+    this.messages = '';
+    this.supplier.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.setSupplierToggleValues();
+
+    this.appService.save(this.supplier, 'Supplier')
+      .subscribe((data: Supplier) => {
+        this.processResult(data, this.supplier, null);
+        this.supplier = data;
+        this.poHdr.supplier = this.supplier;
+        this.addNew = false;
+        this.suppliers.push(this.supplier);
+      },
+        error => console.log(error),
+        () => console.log('Save Supplier complete'));
+  }
+
+
+  setSupplierToggleValues() {
+    this.supplier.status = (this.supplier.status == null
+      || this.supplier.status.toString() === 'false'
+      || this.supplier.status.toString() === '0') ? 0 : 1;
+
+  }
+
+  cancelSupplier() {
+    this.addNew = false;
+    this.supplier = new Supplier();
+  }
 }

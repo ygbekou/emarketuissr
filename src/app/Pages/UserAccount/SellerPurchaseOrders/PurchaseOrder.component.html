@@ -3,7 +3,7 @@
     <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
   </div>
 </div>
-<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" *ngIf="!addNew" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
@@ -22,6 +22,15 @@
           class="remove">
           <span class="mx-1 uppercase">{{'COMMON.COMPLETE' | translate}}</span>
           <mat-icon>done_all</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="reopen()"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="poHdr.id && poHdr.status === 5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.REOPEN' | translate}}</span>
+          <mat-icon>undo</mat-icon>
         </button>
       </div>
 
@@ -77,7 +86,15 @@
           {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
         </mat-error>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+        <button mat-fab color="secondary" (click)="addNewSupplier()" 
+          matTooltip="{{'COMMON.ADD' | translate}} {{'COMMON.NEW' | translate}}" class="remove">
+          <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="26" fxFlex.lg="26" fxFlex.xl="26" class="p-3">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.PURCHASE_DATE' | translate}} </mat-label>
           <input matInput [matDatepicker]="picker" class="form-control" id="poDate" [(ngModel)]="poHdr.poDate"
@@ -171,7 +188,58 @@
   </div>
 </form>
 
-<div *ngIf="poHdr.id > 0">
+<form name="form" (ngSubmit)="f2.form.valid && saveSupplier()" #f2="ngForm" *ngIf="addNew" validate>
+  <div fxLayout="row wrap" *ngIf="store?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+     <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.NAME' | translate}}</mat-label>
+          <input matInput type="text" class="form-control" id="name" [(ngModel)]="supplier.name"
+              name="name" required>
+        </mat-form-field>
+        <div fxFlex="5"></div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-slide-toggle [(ngModel)]="supplier.status" name="status" #status="ngModel" class="my-2">
+          {{ 'COMMON.STATUS' | translate }}
+        </mat-slide-toggle>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+      <div class="text-center mt-2">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+            <mat-icon>save</mat-icon>
+        </button> </div>
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+      <div class="text-center mt-2">
+        <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="cancelSupplier()">
+            <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
+            <mat-icon>cancel</mat-icon>
+        </button> </div>
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+   </div>
+</form>
+
+<div *ngIf="!addNew && poHdr.id > 0">
   <mat-tab-group (selectedTabChange)="changeTab($event)">
     <mat-tab label="{{'COMMON.PRODUCT' | translate}}s">
       <app-purchase-order-details #ProductsComponent></app-purchase-order-details>
