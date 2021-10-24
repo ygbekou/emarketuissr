@@ -248,6 +248,28 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
         () => console.log('Reopen PoHrd complete'));
   }
 
+  approve() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.poHdr.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.poHdr.approvedBy = new User();
+    this.poHdr.approvedBy.id = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/approvePoHdr/', this.poHdr)
+      .subscribe((data: PoHdr) => {
+        console.log(data);
+        this.processResult(data, this.poHdr, null);
+        this.poHdr = data;
+        this.poHdr.storeName = this.store.name;
+        this.poHdrSaveEvent.emit(this.poHdr);
+        this.getPoDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Approve PoHrd complete'));
+  }
+
   cancel() {
     this.poHdr.status = 9;
     this.justSubmitted = true;

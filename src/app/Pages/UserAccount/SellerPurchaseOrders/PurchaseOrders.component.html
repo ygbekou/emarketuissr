@@ -93,7 +93,8 @@
                   <td mat-cell *matCellDef="let poHdr"> 
                     <span *ngIf="poHdr.status === 9" style="color: #ff0000;">{{'COMMON.CANCELLED'|translate}}</span>
                     <span *ngIf="poHdr.status === 0" style="color: #283593;">{{'COMMON.DRAFT'|translate}}</span>
-                    <span *ngIf="poHdr.status === 5" style="color: green;">{{'COMMON.COMPLETED'|translate}}</span>
+                    <span *ngIf="poHdr.status === 5" style="color: #00FF00;">{{'COMMON.COMPLETED'|translate}}</span>
+                    <span *ngIf="poHdr.status === 6" style="color: #0000FF;">{{'COMMON.APPROVED'|translate}}</span>
                   </td>
                 </ng-container>
 

@@ -26,8 +26,17 @@
       </div>
 
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" (click)="approve()"
+          matTooltip="{{'COMMON.APPROVE' | translate}}" *ngIf="poHdr.id && poHdr.status === 5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.APPROVE' | translate}}</span>
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
         <button mat-raised-button color="accent" (click)="reopen()"
-          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="poHdr.id && poHdr.status === 5"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="poHdr.id && (poHdr.status === 5 || poHdr.status === 6)"
           class="remove">
           <span class="mx-1 uppercase">{{'COMMON.REOPEN' | translate}}</span>
           <mat-icon>undo</mat-icon>
@@ -163,25 +172,42 @@
             name="description" #description="ngModel"></textarea>
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
         <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
           [linkEnabled]="true">
         </input-file>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
         <mat-label>{{'COMMON.ORDER_STATUS' | translate}}</mat-label><br />
 
         <h4  *ngIf="poHdr.status === 0"  style="color:#283593;">
           {{'COMMON.DRAFT' | translate}}
         </h4>
-        <h4 *ngIf="poHdr.status === 5" style="color:green">
+        <h4 *ngIf="poHdr.status === 5" style="color:#00FF00">
           {{'COMMON.COMPLETED' | translate}}
+        </h4>
+        <h4 *ngIf="poHdr.status === 6" style="color:#0000FF">
+          {{'COMMON.APPROVED' | translate}}
         </h4>
         <h4  *ngIf="poHdr.status === 9"  style="color:#FF0000;">
           {{'COMMON.CANCELLED' | translate}}
         </h4>
+      </div>
 
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" 
+        *ngIf="poHdr.approvedBy && poHdr.approvedBy.id > 0 " class="p-1">
+        <mat-label>{{'COMMON.APPROVED_BY' | translate}}</mat-label><br />
+
+        <h4 style="color:#0000FF;">
+          {{poHdr.approverName}}
+        </h4>
       </div>
     </div>
 

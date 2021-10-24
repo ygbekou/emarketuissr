@@ -2414,9 +2414,13 @@ export class PoHdr {
   image: string;
   description: string;
   status = 0;
+  approvedBy: User;
+  approvedDate: Date;
 
   storeName: string;
   modifiedBy: number;
+
+  approverName: String;
 
   type = 'PoHdr';
 

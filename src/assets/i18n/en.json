@@ -853,7 +853,8 @@
 		"RESERVATION_HISTORY": "Reservation History",
 		"ROOM": "Room",
 		"CHECKED_IN": "Checked In",
-		"CHECKED_OUT": "Checked Out"
+		"CHECKED_OUT": "Checked Out",
+		"REOPEN": "Reopen"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
