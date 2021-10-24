@@ -134,8 +134,10 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'receipts';
     } else if (this.subRpt > 6 && this.subRpt < 9) {
       rep.reportName = 'sales';
-    } else if (this.subRpt > 8 && this.subRpt < 11) {
+    } else if (this.subRpt > 8 && this.subRpt < 10) {
       rep.reportName = 'expenses';
+    } else if (this.subRpt > 9 && this.subRpt < 11) {
+      rep.reportName = 'pos';
     }
 
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());

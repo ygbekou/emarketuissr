@@ -73,7 +73,7 @@
           </p>
         </span>
 
-              <span>
+        <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
             <a mat-button (click)="runInvnReport(7)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
@@ -83,7 +83,7 @@
           </p>
         </span>
 
-              <span>
+        <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
             <a mat-button (click)="runInvnReport(8)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
@@ -93,39 +93,11 @@
           </p>
         </span>
 
-        <mat-form-field class="w-100" *ngIf="showParams">
-          <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
-          <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"
-            name="beginDate1" #beginDate1="ngModel" required>
-          <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #beginDatePicker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field class="w-100" *ngIf="showParams">
-          <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
-          <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate1" [(ngModel)]="endDate"
-            name="endDate1" #endDate1="ngModel" required>
-          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #endDatePicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field  *ngIf="showParams && allowExRcpt && subRpt === 6">
-          <mat-label> {{'COMMON.PERCENT_OF_RECEIPT'|translate}}</mat-label><br />
-           <input matInput type="text" placeholder="100" class="form-control" id="percentPrint1"
-            [(ngModel)]="percentPrint" name="percentPrint1" #percentPrint1="ngModel">
-       </mat-form-field>
-
-        <div class="text-center" *ngIf="showParams && !running">
-          <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row" [disabled]="!beginDate && endDate"
-            fxLayoutAlign="center center" type="submit">
-            <span class="mx-1 uppercase">{{'COMMON.RUN' | translate}}</span>
-            <mat-icon>filter_alt</mat-icon>
-          </button>
-        </div>
 
       </div>
 
 
-     <div *ngIf="rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <div *ngIf="rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
             <a mat-button (click)="runInvnReport(9)" routerLinkActive="horizontal-active-link"
@@ -146,6 +118,37 @@
         </span>
       </div>
 
+      <div *ngIf="rptType==2 || rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+        <mat-form-field class="w-100" *ngIf="showParams">
+          <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"
+            name="beginDate1" #beginDate1="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #beginDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="w-100" *ngIf="showParams">
+          <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate1" [(ngModel)]="endDate"
+            name="endDate1" #endDate1="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="showParams && allowExRcpt && subRpt === 6">
+          <mat-label> {{'COMMON.PERCENT_OF_RECEIPT'|translate}}</mat-label><br />
+          <input matInput type="text" placeholder="100" class="form-control" id="percentPrint1"
+            [(ngModel)]="percentPrint" name="percentPrint1" #percentPrint1="ngModel">
+        </mat-form-field>
+
+        <div class="text-center" *ngIf="showParams && !running">
+          <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row" [disabled]="!beginDate && endDate"
+            fxLayoutAlign="center center" type="submit">
+            <span class="mx-1 uppercase">{{'COMMON.RUN' | translate}}</span>
+            <mat-icon>filter_alt</mat-icon>
+          </button>
+        </div>
+
+      </div>
 
     </div>
 
