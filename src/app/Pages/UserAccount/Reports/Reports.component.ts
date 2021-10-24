@@ -86,7 +86,7 @@ export class ReportsComponent implements OnInit {
 
   runInvnReport(type: number) {
     this.showParams = false;
-    if (type === 3 || type === 4 || type === 5 || type === 6) {
+    if (type >= 3) {
       this.showParams = true;
       this.subRpt = type;
       return;
@@ -132,16 +132,18 @@ export class ReportsComponent implements OnInit {
     const rep = new RunReportVO();
     if (this.subRpt === 6) {
       rep.reportName = 'receipts';
-    } else {
+    } else if (this.subRpt > 6 && this.subRpt < 9) {
       rep.reportName = 'sales';
+    } else if (this.subRpt > 8 && this.subRpt < 11) {
+      rep.reportName = 'expenses';
     }
 
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
     const parm3 = new Parameter('dateDebut',
-      this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
+    this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
     const parm4 = new Parameter('dateFin',
-      this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
+    this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
     const parm5 = new Parameter('subRptId', '' + this.subRpt);
     const parm6 = new Parameter('percentPrint', '' + this.percentPrint);
     rep.parameters = [];

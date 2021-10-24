@@ -72,7 +72,7 @@ const TREE_DATA_EN: MenuNode[] = [
     icon: 'account_circle',
     children: [
       { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
-      { name: 'My shippers', url: '/account/shipping-zones', icon: 'directions_run' },
+      { name: 'My shippers', url: '/account/my-shippers', icon: 'directions_run' },
       { name: 'My deliveries', url: '/account/deliveries', icon: 'local_shipping' },
     ]
   }, {
@@ -91,6 +91,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Inventory Reports', url: '/account/reports/1', icon: 'inventory' },
       { name: 'Sales Reports', url: '/account/reports/2', icon: 'point_of_sale' },
+      { name: 'Expenses Reports', url: '/account/reports/3', icon: 'exposure' },
     ]
   }
 ];
@@ -169,6 +170,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Etats d\'inventaire', url: '/account/reports/1', icon: 'inventory' },
       { name: 'Etats de ventes', url: '/account/reports/2', icon: 'point_of_sale' },
+      { name: 'Etats de dépenses', url: '/account/reports/3', icon: 'exposure' },
     ]
   }
 ];

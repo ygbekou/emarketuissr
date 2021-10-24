@@ -73,6 +73,26 @@
           </p>
         </span>
 
+              <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(7)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_MENU'|translate}}</span>
+            </a>
+          </p>
+        </span>
+
+              <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(8)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_TABL'|translate}}</span>
+            </a>
+          </p>
+        </span>
+
         <mat-form-field class="w-100" *ngIf="showParams">
           <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
           <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"
@@ -103,6 +123,29 @@
         </div>
 
       </div>
+
+
+     <div *ngIf="rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(9)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.EXPENSES_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button (click)="runInvnReport(10)" routerLinkActive="horizontal-active-link"
+              [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon>done</mat-icon>
+              <span>{{'COMMON.PO_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+      </div>
+
 
     </div>
 
