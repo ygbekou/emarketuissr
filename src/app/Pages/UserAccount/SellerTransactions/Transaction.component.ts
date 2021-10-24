@@ -163,6 +163,82 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   }
 
+  submit() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/submitTransaction/', this.transaction)
+      .subscribe((data: Transaction) => {
+        console.log(data);
+        this.processResult(data, this.transaction, null);
+        this.transaction = data;
+        this.transaction.storeName = this.store.name;
+        this.transactionSaveEvent.emit(this.transaction);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Submit Transaction complete'));
+  }
+
+  reopen() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/reopenTransaction/', this.transaction)
+      .subscribe((data: Transaction) => {
+        this.processResult(data, this.transaction, null);
+        this.transaction = data;
+        this.transaction.storeName = this.store.name;
+        this.transactionSaveEvent.emit(this.transaction);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Reopen Transaction complete'));
+  }
+
+  approve() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.transaction.approvedBy = new User();
+    this.transaction.approvedBy.id = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/approveTransaction/', this.transaction)
+      .subscribe((data: Transaction) => {
+        console.log(data);
+        this.processResult(data, this.transaction, null);
+        this.transaction = data;
+        this.transaction.storeName = this.store.name;
+        this.transactionSaveEvent.emit(this.transaction);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Approve PoHrd complete'));
+  }
+
+  cancel() {
+    this.transaction.status = 9;
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+        this.appService.save(this.transaction, 'Transaction')
+      .subscribe((data: Transaction) => {
+        this.processResult(data, this.transaction, null);
+        this.transaction = data;
+        this.transaction.storeName = this.store.name;
+        this.transactionSaveEvent.emit(this.transaction);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Save Transaction complete'));
+  }
+
   setToggleValues() {
     this.transaction.status = (this.transaction.status == null
       || this.transaction.status.toString() === 'false'
