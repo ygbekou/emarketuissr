@@ -25,7 +25,7 @@ export interface SearchResponse {
 export class TransactionsComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   // transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
-  transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'amount' ];
+  transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'amount', 'status' ];
   transactionsDatasource: MatTableDataSource<Transaction>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) transactionsSort: MatSort;
