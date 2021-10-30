@@ -27,7 +27,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
 
-  displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'status', 'actions'];
+  displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'hourStart', 'hourEnd', 'actions'];
   productDiscountDatasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
@@ -372,6 +372,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     if (!this.validateProductDiscount(productDiscount)) {
       return;
     }
+    productDiscount.storeId = this.selectedStore.id;
     productDiscount.ptsId = this.productStore.id;
     productDiscount.modifiedBy = +this.appService.tokenStorage.getUserId();
     this.appService.save(productDiscount, 'ProducDiscount')

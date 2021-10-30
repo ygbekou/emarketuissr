@@ -220,9 +220,12 @@ export class ProductDescription {
 
 export class ProductDiscount {
   id: number;
+  storeId: number;
   ptsId: number;
   dateEnd: Date;
   dateStart: Date;
+  startHour: string;
+  endHour: string;
   price: number;
   priority: number;
   quantity: number;
