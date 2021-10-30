@@ -2477,6 +2477,9 @@ export class StoreEmployee {
   public employee: User;
   public status: number;
   public role: number;
+  public canApprove: number;
+  public canReprint: number;
+  public canReopen: number;
   public beginDate: Date;
   public endDate: Date;
   public type = 'StoreEmployee';
