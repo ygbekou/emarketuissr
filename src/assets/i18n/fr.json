@@ -6,6 +6,7 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "EXPENSE_STATUS":"Etat de la dépense",
     "TRACK_GUEST_COUNT":"Enregistrer le nombre d'invités",
     "FEES":"Frais",
     "DAY_START_TIME":"Heure début de la jounée",
