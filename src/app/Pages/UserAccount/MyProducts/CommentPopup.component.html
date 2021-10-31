@@ -1,0 +1,27 @@
+<ng-container>
+  <h1 mat-dialog-title class="primary-color">{{'COMMON.COMMENTS'|translate}}*</h1>
+  <mat-dialog-content class="mat-typography">
+    <form name="form" (ngSubmit)="f.form.valid && shouldClose()" #f="ngForm" validate>
+      <div fxLayout="row wrap">
+        <mat-form-field>
+          <textarea matInput rows="10" cols="50" class="form-control" id="comment" [(ngModel)]="productStore.quantityComment"
+              name="comment" #comment="ngModel" required></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions style="min-height: 80px;">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <button mat-button mat-dialog-close>{{'COMMON.CANCEL'|translate}}</button>
+      </div>
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" style="align-items: right">
+        <mat-error *ngIf="error" severity="error">
+          {{ error }}
+        </mat-error>
+        <button (click)="f.ngSubmit.emit()" mat-raised-button color="accent" class="w-50"
+          cdkFocusInitial>OK</button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</ng-container>

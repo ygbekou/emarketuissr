@@ -1092,7 +1092,7 @@ export class OptionValueDescription {
   type = 'OptionValueDescription';
 }
 
-export class ProductToStore {
+export class ProductToStore{
   id: number;
   product: Product;
   store: Store;
@@ -1123,6 +1123,10 @@ export class ProductToStore {
   productName: string;
   storeName: string;
   image: string;
+  quantityComment: string;
+  diffQty: number;
+  shouldPerformExtraUpdate: boolean;
+
 
   constructor() {
     this.subtract = 1;

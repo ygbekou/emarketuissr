@@ -57,6 +57,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescVO>;
   productStore: ProductToStore = new ProductToStore();
+  originalQty: number;
   public sidenavOpen = true;
   public psConfig: PerfectScrollbarConfigInterface = {
     wheelPropagation: true
@@ -77,6 +78,9 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   public reportRun = false;
   public disablePrice: boolean;
   public disablePercentage: boolean;
+
+  popupResponse: any;
+
   constructor(public appService: AppService,
     public translate: TranslateService,
     public mediaObserver: MediaObserver) {
@@ -288,6 +292,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
       .subscribe((data: ProductToStore) => {
         if (data !== null && data.id > 0) {
           this.productStore = data;
+          this.originalQty = data.quantity;
           this.prdStoreOptView.getProductToStoreSelectedOptions(data.id);
           this.prdStoreOptView.getProductToStoreUnselectedOptions(data.id);
         } else {
@@ -308,9 +313,40 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.stepper.selectedIndex = 2;
   }
 
+  public getCommentPopupResponse(response: any, value: any) {
+      if (response) {
+        console.log('Value returned from comment popup... ')
+        console.log(value);
+         this.productStore.quantityComment = value;
+      }
+   }
+
+
   sell() {
     this.messages = '';
     this.errors = '';
+
+    if (this.originalQty !== this.productStore.quantity) {
+      this.appService.commentPopup(this.productStore).
+        subscribe(res => { this.popupResponse = res;
+          if (this.productStore.quantityComment && this.productStore.quantityComment.trim().length > 0) {
+            this.productStore.shouldPerformExtraUpdate = true;
+            this.productStore.diffQty = this.productStore.quantity - this.originalQty;
+            this.proceedSell();
+          }
+        },
+            err => console.log(err),
+            () => this.getCommentPopupResponse(this.popupResponse, this.productStore)
+        );
+    } else {
+      this.proceedSell();
+    }
+
+  }
+
+
+  proceedSell() {
+
     this.productStore.product = new Product();
     this.productStore.product.id = this.productDesc.product.id;
     this.productStore.store = this.selectedStore;
@@ -326,15 +362,15 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.appService.save(this.productStore, 'ProductStore')
       .subscribe(result => {
         if (result.id > 0) {
-          if (result.id > 0) {
-            this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
-              this.messages = res['MESSAGE.SAVE_SUCCESS'];
-            });
-          } else {
-            this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-              this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
-            });
-          }
+          this.originalQty = this.productStore.quantity;
+          this.productStore.quantityComment = '';
+          this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+            this.messages = res['MESSAGE.SAVE_SUCCESS'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+          });
         }
       });
 

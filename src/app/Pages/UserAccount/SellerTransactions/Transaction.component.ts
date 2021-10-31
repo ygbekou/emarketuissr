@@ -12,7 +12,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
   templateUrl: './Transaction.component.html',
   styleUrls: ['./Transactions.component.scss']
 })
-export class TransactionComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class TransactionComponent extends BaseComponent implements OnInit {
 
   messages = '';
   transaction: Transaction = new Transaction();

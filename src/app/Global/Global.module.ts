@@ -99,6 +99,7 @@ import { InputFileModule } from 'ngx-input-file';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { StoreCatsComponent } from './StoreCats/StoreCats.component';
 import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
+import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 @NgModule({
    imports: [
       CommonModule,
@@ -200,6 +201,7 @@ import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/goog
       CustomerRewardComponent,
       StoreHeaderComponent,
       ProductOptionPopupComponent,
+      CommentPopupComponent,
       StoreCatsComponent
    ],
    exports: [
@@ -257,6 +259,7 @@ import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/goog
       CustomerRewardComponent,
       StoreHeaderComponent,
       ProductOptionPopupComponent,
+      CommentPopupComponent,
       StoreCatsComponent
    ],
    entryComponents: [
@@ -264,7 +267,8 @@ import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/goog
       ConfirmationPopupComponent,
       ReviewsComponent,
       TimerCountDownComponent,
-      ProductOptionPopupComponent
+      ProductOptionPopupComponent,
+      CommentPopupComponent
    ],
    providers: [
       AuthGuardService,
