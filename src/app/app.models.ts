@@ -2388,6 +2388,7 @@ export class Supplier {
 
 export class TransactionType {
   id: number;
+  approverOnly = 0;
   status = 1;
   transactionTypeDescriptions: TransactionTypeDescription[] = [];
   name: string;

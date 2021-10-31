@@ -862,7 +862,8 @@
 		"ROOM": "Chambre",
 		"CHECKED_IN": "Checked In",
 		"CHECKED_OUT": "Checked Out",
-		"REOPEN": "Re-ouvrir"
+		"REOPEN": "Re-ouvrir",
+		"APPROVER_ONLY": "Just Approbateur"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

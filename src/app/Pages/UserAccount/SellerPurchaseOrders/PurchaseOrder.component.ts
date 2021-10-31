@@ -39,6 +39,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   saving = false;
   justSubmitted = false;
   addNew = false;
+  storeEmployee: StoreEmployee;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -108,7 +109,13 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
       this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
         .subscribe((data: StoreEmployee[]) => {
           this.storeEmployees = data;
-          console.log(this.storeEmployees);
+          
+          this.storeEmployees.forEach(se => {
+            if (+this.appService.tokenStorage.getUserId() === se.employee.id) {
+              this.storeEmployee = se;
+            }
+          });
+
         },
           (error) => console.log(error),
           () => console.log('Get all StoreEmployees complete'));

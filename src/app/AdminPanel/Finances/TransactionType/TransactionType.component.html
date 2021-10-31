@@ -26,6 +26,11 @@
          <div fxFlex="5"></div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="25" class="p-1">
+         <mat-slide-toggle [(ngModel)]="transactionType.approverOnly" name="approverOnly" #approverOnly="ngModel" class="my-2">
+            {{ 'COMMON.APPROVER_ONLY' | translate }}
+         </mat-slide-toggle>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="25" class="p-1">
          <mat-slide-toggle [(ngModel)]="transactionType.status" name="status" #status="ngModel" class="my-2">
             {{ 'COMMON.STATUS' | translate }}
          </mat-slide-toggle>
