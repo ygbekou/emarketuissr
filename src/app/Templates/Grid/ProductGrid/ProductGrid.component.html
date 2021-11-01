@@ -77,7 +77,7 @@
                   <h6 class="secondary-color" style="text-decoration: line-through;"
                      *ngIf="prd.product.productDiscountPercentage > 0">
                      {{prd.product.symbolLeft}} 
-                        {{prd.product?.productDiscountPercentage | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                        {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
                   </h6>
