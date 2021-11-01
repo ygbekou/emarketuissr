@@ -314,12 +314,12 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   public getCommentPopupResponse(response: any, value: any) {
-      if (response) {
-        console.log('Value returned from comment popup... ')
-        console.log(value);
-         this.productStore.quantityComment = value;
-      }
-   }
+    if (response) {
+      console.log('Value returned from comment popup... ')
+      console.log(value);
+      this.productStore.quantityComment = value;
+    }
+  }
 
 
   sell() {
@@ -328,15 +328,16 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
     if (this.originalQty !== this.productStore.quantity) {
       this.appService.commentPopup(this.productStore).
-        subscribe(res => { this.popupResponse = res;
+        subscribe(res => {
+          this.popupResponse = res;
           if (this.productStore.quantityComment && this.productStore.quantityComment.trim().length > 0) {
             this.productStore.shouldPerformExtraUpdate = true;
             this.productStore.diffQty = this.productStore.quantity - this.originalQty;
             this.proceedSell();
           }
         },
-            err => console.log(err),
-            () => this.getCommentPopupResponse(this.popupResponse, this.productStore)
+          err => console.log(err),
+          () => this.getCommentPopupResponse(this.popupResponse, this.productStore)
         );
     } else {
       this.proceedSell();
@@ -351,12 +352,22 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.productStore.product.id = this.productDesc.product.id;
     this.productStore.store = this.selectedStore;
     this.productStore.modifiedBy = +this.appService.tokenStorage.getUserId();
+
     this.productStore.status = (this.productStore.status == null
       || this.productStore.status.toString() === 'false'
       || this.productStore.status.toString() === '0') ? 0 : 1;
+      
     this.productStore.availableOnline = (this.productStore.availableOnline == null
       || this.productStore.availableOnline.toString() === 'false'
       || this.productStore.availableOnline.toString() === '0') ? 0 : 1;
+
+    this.productStore.subtract = (this.productStore.subtract == null
+      || this.productStore.subtract.toString() === 'false'
+      || this.productStore.subtract.toString() === '0') ? 0 : 1;
+
+    this.productStore.allowNegInvn = (this.productStore.allowNegInvn == null
+      || this.productStore.allowNegInvn.toString() === 'false'
+      || this.productStore.allowNegInvn.toString() === '0') ? 0 : 1;
 
     console.log(this.productStore);
     this.appService.save(this.productStore, 'ProductStore')
