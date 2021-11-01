@@ -12,7 +12,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
   templateUrl: './Transaction.component.html',
   styleUrls: ['./Transactions.component.scss']
 })
-export class TransactionComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class TransactionComponent extends BaseComponent implements OnInit {
 
   messages = '';
   transaction: Transaction = new Transaction();
@@ -30,6 +30,10 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   saving = false;
   justSubmitted = false;
+
+  transactionTypes: any = [];
+  storeEmployee: StoreEmployee;
+
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -60,8 +64,13 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
 
   }
 
-  ngAfterViewInit() {
-
+  filterTransactionTypes() {
+    this.transactionTypes = [];
+    this.appService.appInfoStorage.transactionTypes.forEach(tt => {
+        if (this.storeEmployee.canApprove || tt.transactionType.approverOnly !== 1) {
+          this.transactionTypes.push(tt);
+        }
+    });
   }
 
   clear(data) {
@@ -84,7 +93,14 @@ export class TransactionComponent extends BaseComponent implements OnInit, After
       this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
         .subscribe((data: StoreEmployee[]) => {
           this.storeEmployees = data;
-          console.log(this.storeEmployees);
+
+          this.storeEmployees.forEach(se => {
+            if (+this.appService.tokenStorage.getUserId() === se.employee.id) {
+              this.storeEmployee = se;
+              this.filterTransactionTypes();
+            }
+          });
+
         },
           (error) => console.log(error),
           () => console.log('Get all StoreEmployees complete'));

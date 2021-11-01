@@ -17,7 +17,7 @@ export class TransactionTypesComponent extends BaseComponent implements OnInit {
 
   @ViewChild(TransactionTypeComponent, { static: false }) transactionTypeView: TransactionTypeComponent;
 
-  displayedColumns: string[] = ['name', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'approverOnly', 'status', 'actions'];
   dataSource: MatTableDataSource<TransactionTypeDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

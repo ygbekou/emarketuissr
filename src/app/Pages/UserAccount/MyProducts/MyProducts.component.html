@@ -363,7 +363,30 @@
                       </mat-form-field>
                     </td>
                   </ng-container>
-                  <ng-container matColumnDef="status">
+                  <ng-container matColumnDef="hourStart">
+                    <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                      SH
+                    </th>
+                    <td mat-cell *matCellDef="let productDiscount">
+                      <mat-form-field class="w-100">
+                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.startHour"
+                          name="startHour" #startHour="ngModel" pattern="([0-9][0-9]:[0-9][0-9])">
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="hourEnd">
+                    <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                      EH
+                    </th>
+                    <td mat-cell *matCellDef="let productDiscount">
+                      <mat-form-field class="w-100">
+                        <input matInput type="text" class="form-control" [(ngModel)]="productDiscount.endHour"
+                          name="endHour" #endHour="ngModel" pattern="([0-9][0-9]:[0-9][0-9])">
+                      </mat-form-field>
+                    </td>
+                  </ng-container>
+                  
+                  <!-- <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}*
                     </th>
                     <td mat-cell *matCellDef="let productDiscount">
@@ -371,7 +394,7 @@
                         class="my-2">
                       </mat-slide-toggle>
                     </td>
-                  </ng-container>
+                  </ng-container> -->
                   <!-- Actions Column -->
                   <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef> Actions

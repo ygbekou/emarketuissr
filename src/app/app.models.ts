@@ -220,9 +220,12 @@ export class ProductDescription {
 
 export class ProductDiscount {
   id: number;
+  storeId: number;
   ptsId: number;
   dateEnd: Date;
   dateStart: Date;
+  startHour: string;
+  endHour: string;
   price: number;
   priority: number;
   quantity: number;
@@ -1090,7 +1093,7 @@ export class OptionValueDescription {
   type = 'OptionValueDescription';
 }
 
-export class ProductToStore {
+export class ProductToStore{
   id: number;
   product: Product;
   store: Store;
@@ -1121,6 +1124,10 @@ export class ProductToStore {
   productName: string;
   storeName: string;
   image: string;
+  quantityComment: string;
+  diffQty: number;
+  shouldPerformExtraUpdate: boolean;
+
 
   constructor() {
     this.subtract = 1;
@@ -2012,6 +2019,7 @@ export class ProductOptionVO {
 export class RunReportVO {
   reportName: string;
   parameters: Parameter[];
+  reportFormat: string;
 }
 export class Parameter {
   name: string;
@@ -2386,6 +2394,7 @@ export class Supplier {
 
 export class TransactionType {
   id: number;
+  approverOnly = 0;
   status = 1;
   transactionTypeDescriptions: TransactionTypeDescription[] = [];
   name: string;

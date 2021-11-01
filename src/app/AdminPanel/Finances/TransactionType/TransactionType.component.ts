@@ -80,6 +80,10 @@ export class TransactionTypeComponent extends BaseComponent implements OnInit {
     this.transactionType.status = (this.transactionType.status == null
       || this.transactionType.status.toString() === 'false'
       || this.transactionType.status.toString() === '0') ? 0 : 1;
+
+    this.transactionType.approverOnly = (this.transactionType.approverOnly == null
+      || this.transactionType.approverOnly.toString() === 'false'
+      || this.transactionType.approverOnly.toString() === '0') ? 0 : 1;
   }
 
   cleanDescriptions(transactionType: TransactionType) {

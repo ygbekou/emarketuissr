@@ -861,7 +861,8 @@
 		"ROOM": "Room",
 		"CHECKED_IN": "Checked In",
 		"CHECKED_OUT": "Checked Out",
-		"REOPEN": "Reopen"
+		"REOPEN": "Reopen",
+		"APPROVER_ONLY": "Approver Only"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

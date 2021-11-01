@@ -18,6 +18,7 @@ export class ReportsComponent implements OnInit {
   error: string;
   showParams = false;
   fromAdmin = false;
+  reportFormat = 'pdf';
   beginDate: Date;
   endDate: Date;
   percentPrint = 100;
@@ -130,6 +131,7 @@ export class ReportsComponent implements OnInit {
   runRpt() {
     this.running = true;
     const rep = new RunReportVO();
+    rep.reportFormat = this.reportFormat;
     if (this.subRpt === 6) {
       rep.reportName = 'receipts';
     } else if (this.subRpt > 2 && this.subRpt < 9) {

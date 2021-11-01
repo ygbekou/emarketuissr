@@ -19,6 +19,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
+import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 
 interface Response {
    data: any;
@@ -185,6 +186,17 @@ export class AppService {
       productOptionPopup.componentInstance.productDesc = detailData;
 
       return productOptionPopup.afterClosed();
+   }
+
+   public commentPopup(productStore) {
+      let commentPopup: MatDialogRef<CommentPopupComponent>;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.direction = this.isDirectionRtl ? 'rtl' : 'ltr';
+
+      commentPopup = this.dialog.open(CommentPopupComponent, dialogConfig);
+      commentPopup.componentInstance.productStore = productStore;
+
+      return commentPopup.afterClosed();
    }
 
    public confirmationPopup(message: string) {
