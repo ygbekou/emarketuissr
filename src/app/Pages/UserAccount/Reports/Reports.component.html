@@ -119,6 +119,21 @@
       </div>
 
       <div *ngIf="rptType==2 || rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+
+        <div class="w-100" *ngIf="showParams">
+          <mat-label> Format*</mat-label><br />
+          <mat-radio-group id="reportFormat" class="form-control" [(ngModel)]="reportFormat" 
+            name="reportFormat" #format="ngModel" required>
+            <mat-radio-button value="pdf">
+              PDF
+            </mat-radio-button>
+            <mat-radio-button value="csv">
+              CSV
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        
+        
         <mat-form-field class="w-100" *ngIf="showParams">
           <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
           <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"

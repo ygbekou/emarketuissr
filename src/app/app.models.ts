@@ -2018,6 +2018,7 @@ export class ProductOptionVO {
 export class RunReportVO {
   reportName: string;
   parameters: Parameter[];
+  reportFormat: string;
 }
 export class Parameter {
   name: string;
