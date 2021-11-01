@@ -118,9 +118,9 @@
         </span>
       </div>
 
-      <div *ngIf="rptType==2 || rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <div *ngIf="rptType > 0" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
 
-        <div class="w-100" *ngIf="showParams">
+        <div class="w-100" *ngIf="showFormatParams">
           <mat-label> Format*</mat-label><br />
           <mat-radio-group id="reportFormat" class="form-control" [(ngModel)]="reportFormat" 
             name="reportFormat" #format="ngModel" required>
@@ -131,6 +131,7 @@
               CSV
             </mat-radio-button>
           </mat-radio-group>
+          <br/>
         </div>
         
         
@@ -155,7 +156,7 @@
             [(ngModel)]="percentPrint" name="percentPrint1" #percentPrint1="ngModel">
         </mat-form-field>
 
-        <div class="text-center" *ngIf="showParams && !running">
+        <div class="text-center" *ngIf="(showParams || showFormatParams) && !running">
           <button mat-raised-button (click)="runRpt()" color="primary" fxLayout="row" [disabled]="!beginDate && endDate"
             fxLayoutAlign="center center" type="submit">
             <span class="mx-1 uppercase">{{'COMMON.RUN' | translate}}</span>

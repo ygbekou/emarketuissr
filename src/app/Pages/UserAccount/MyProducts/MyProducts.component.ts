@@ -326,10 +326,10 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     this.messages = '';
     this.errors = '';
 
-    if (this.originalQty !== this.productStore.quantity) {
+    if (this.selectedStore.reasonRequired === 1 && this.originalQty !== this.productStore.quantity) {
       this.appService.commentPopup(this.productStore).
         subscribe(res => { this.popupResponse = res;
-          if (this.productStore.quantityComment && this.productStore.quantityComment.trim().length > 0) {
+          if (res.shouldSave && this.productStore.quantityComment && this.productStore.quantityComment.trim().length > 0) {
             this.productStore.shouldPerformExtraUpdate = true;
             this.productStore.diffQty = this.productStore.quantity - this.originalQty;
             this.proceedSell();
@@ -364,6 +364,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
         if (result.id > 0) {
           this.originalQty = this.productStore.quantity;
           this.productStore.quantityComment = '';
+          this.productStore.shouldPerformExtraUpdate = false;
+            this.productStore.diffQty = 0;
           this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
             this.messages = res['MESSAGE.SAVE_SUCCESS'];
           });

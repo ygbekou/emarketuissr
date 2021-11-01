@@ -17,6 +17,7 @@ export class ReportsComponent implements OnInit {
   stores: Store[] = [];
   error: string;
   showParams = false;
+  showFormatParams = false;
   fromAdmin = false;
   reportFormat = 'pdf';
   beginDate: Date;
@@ -46,6 +47,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.showParams = false;
+    this.showFormatParams = false;
     this.running = false;
     if (this.userId === undefined) {
       this.userId = Number(this.appService.tokenStorage.getUserId());
@@ -87,11 +89,17 @@ export class ReportsComponent implements OnInit {
 
   runInvnReport(type: number) {
     this.showParams = false;
+    this.showFormatParams = true;
+
     if (type >= 3) {
       this.showParams = true;
+    }
+
+    if (type > 0) {
       this.subRpt = type;
       return;
     }
+
     let qtyMax = 0;
     if (type === 1) { // all inventory
       qtyMax = 999999999;
@@ -107,7 +115,6 @@ export class ReportsComponent implements OnInit {
     this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
-        console.log(data);
         this.running = false;
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
       },
@@ -132,7 +139,9 @@ export class ReportsComponent implements OnInit {
     this.running = true;
     const rep = new RunReportVO();
     rep.reportFormat = this.reportFormat;
-    if (this.subRpt === 6) {
+    if (this.subRpt <= 2) {
+      rep.reportName = 'inventory';
+    } else if (this.subRpt === 6) {
       rep.reportName = 'receipts';
     } else if (this.subRpt > 2 && this.subRpt < 9) {
       rep.reportName = 'sales';
@@ -142,22 +151,35 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'pos';
     }
 
+
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
-    const parm3 = new Parameter('dateDebut',
-    this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
-    const parm4 = new Parameter('dateFin',
-    this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
-    const parm5 = new Parameter('subRptId', '' + this.subRpt);
-    const parm6 = new Parameter('percentPrint', '' + this.percentPrint);
-    rep.parameters = [];
-    rep.parameters.push(parm1, parm2, parm3, parm4, parm5, parm6);
+
+    if (this.subRpt <= 2) {
+      let qtyMax = 0;
+      if (this.subRpt === 1) { // all inventory
+        qtyMax = 999999999;
+      }
+      const parm3 = new Parameter('pQtyMax', qtyMax + '');
+      rep.parameters = [];
+      rep.parameters.push(parm1, parm2, parm3);
+    } else {
+      const parm3 = new Parameter('dateDebut',
+      this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
+      const parm4 = new Parameter('dateFin',
+      this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
+      const parm5 = new Parameter('subRptId', '' + this.subRpt);
+      const parm6 = new Parameter('percentPrint', '' + this.percentPrint);
+      rep.parameters = [];
+      rep.parameters.push(parm1, parm2, parm3, parm4, parm5, parm6);
+    }
     console.log(rep);
 
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);
         this.showParams = false;
+        this.showFormatParams = false;
         this.running = false;
         this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
       },

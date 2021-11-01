@@ -28,9 +28,8 @@ export class CommentPopupComponent implements OnInit {
   public shouldClose() {
     let errorFound = false;
     this.error = '';
-    console.log(' Bien ici ....');
+    this.productStore.shouldSave = true;
     if (!errorFound) {
-      console.log(' Closing ici ....');
       this.dialogRef.close(this.productStore);
     }
   }

@@ -1,10 +1,10 @@
 <ng-container>
-  <h1 mat-dialog-title class="primary-color">{{'COMMON.COMMENTS'|translate}}*</h1>
+  <h1 mat-dialog-title class="primary-color">{{'COMMON.REASON'|translate}}*</h1>
   <mat-dialog-content class="mat-typography">
     <form name="form" (ngSubmit)="f.form.valid && shouldClose()" #f="ngForm" validate>
       <div fxLayout="row wrap">
         <mat-form-field>
-          <textarea matInput rows="10" cols="50" class="form-control" id="comment" [(ngModel)]="productStore.quantityComment"
+          <textarea matInput rows="2" cols="100" class="form-control" id="comment" [(ngModel)]="productStore.quantityComment"
               name="comment" #comment="ngModel" required></textarea>
         </mat-form-field>
       </div>

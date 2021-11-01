@@ -862,7 +862,8 @@
 		"CHECKED_IN": "Checked In",
 		"CHECKED_OUT": "Checked Out",
 		"REOPEN": "Reopen",
-		"APPROVER_ONLY": "Approver Only"
+		"APPROVER_ONLY": "Approver Only",
+		"REASON": "Reason"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
