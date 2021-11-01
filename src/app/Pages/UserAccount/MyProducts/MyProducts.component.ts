@@ -26,8 +26,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
-
-  displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'hourStart', 'hourEnd', 'actions'];
+s
+  displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'hourStart', 'hourEnd', 'status', 'actions'];
   productDiscountDatasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
