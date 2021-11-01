@@ -293,6 +293,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.trackGuestCnt.toString() === 'false'
          || this.store.trackGuestCnt.toString() === '0') ? 0 : 1;
 
+      this.store.reasonRequired = (this.store.reasonRequired == null
+         || this.store.reasonRequired.toString() === 'false'
+         || this.store.reasonRequired.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);

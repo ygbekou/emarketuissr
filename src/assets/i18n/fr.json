@@ -6,6 +6,7 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "REQ_REASON_OVERRIDE":"Exiger un motif pour les dérogations",
     "EXPENSE_STATUS":"Etat de la dépense",
     "TRACK_GUEST_COUNT":"Enregistrer le nombre d'invités",
     "FEES":"Frais",

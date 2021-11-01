@@ -820,6 +820,7 @@ export class Store extends BaseModel {
   dayStartTime: string;
   waitressPrint: number;
   waitressClose: number;
+  reasonRequired: number;
   type = 'Store';
   constructor() {
     super();

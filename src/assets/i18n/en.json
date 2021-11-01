@@ -5,6 +5,7 @@
 		"HOME THREE": "Home Three",
 		"SHOP": "Shop",
 		"FEES":"Fees",
+		"REQ_REASON_OVERRIDE":"Require reason code for overrides",
 		"EXPENSE_STATUS":"Expense status",
 		"TRACK_GUEST_COUNT":"Track guest count",
 		"DAY_START_TIME":"Day start time",
