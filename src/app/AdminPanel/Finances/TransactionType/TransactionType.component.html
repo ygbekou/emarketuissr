@@ -17,7 +17,7 @@
    </div>
 
    <div fxLayout="row">
-      <div fxFlex="25" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+      <div fxFlex="50" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
          <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
             <input matInput type="text" class="form-control" id="name{{i}}"
@@ -25,21 +25,26 @@
          </mat-form-field>
          <div fxFlex="5"></div>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="25" class="p-1">
-         <mat-slide-toggle [(ngModel)]="transactionType.approverOnly" name="approverOnly" #approverOnly="ngModel" class="my-2">
-            {{ 'COMMON.APPROVER_ONLY' | translate }}
-         </mat-slide-toggle>
-      </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="25" class="p-1">
-         <mat-slide-toggle [(ngModel)]="transactionType.status" name="status" #status="ngModel" class="my-2">
-            {{ 'COMMON.STATUS' | translate }}
-         </mat-slide-toggle>
-      </div>
+
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
             <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
             <mat-icon>save</mat-icon>
          </button>
       </div>
+   </div>
+   <div fxLayout="row">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+         <mat-slide-toggle [(ngModel)]="transactionType.approverOnly" name="approverOnly" #approverOnly="ngModel"
+            class="my-2">
+            {{ 'COMMON.APPROVER_ONLY' | translate }}
+         </mat-slide-toggle>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+         <mat-slide-toggle [(ngModel)]="transactionType.status" name="status" #status="ngModel" class="my-2">
+            {{ 'COMMON.STATUS' | translate }}
+         </mat-slide-toggle>
+      </div>
+
    </div>
 </form>

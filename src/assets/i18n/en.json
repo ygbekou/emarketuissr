@@ -5,6 +5,7 @@
 		"HOME THREE": "Home Three",
 		"SHOP": "Shop",
 		"FEES":"Fees",
+		"SHOW_IN_BAR":"Show in bar",
 		"REQ_REASON_OVERRIDE":"Require reason code for overrides",
 		"EXPENSE_STATUS":"Expense status",
 		"TRACK_GUEST_COUNT":"Track guest count",
@@ -862,7 +863,8 @@
 		"CHECKED_IN": "Checked In",
 		"CHECKED_OUT": "Checked Out",
 		"REOPEN": "Reopen",
-		"APPROVER_ONLY": "Approver Only",
+		"APPROVER_ONLY": "Approval required",
+		"SUB_PRODUCT":"Sub product",
 		"REASON": "Reason"
 	},
 	"MESSAGE": {

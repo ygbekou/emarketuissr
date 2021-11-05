@@ -23,7 +23,7 @@ export interface SearchResponse {
   styleUrls: ['./StoreMenus.component.scss']
 })
 export class StoreMenusComponent extends BaseComponent implements OnInit {
-  storeMenusColumns: string[] = ['menuName', 'showInKitchen', 'status'];
+  storeMenusColumns: string[] = ['menuName', 'showInKitchen', 'showInBar', 'status'];
   storeMenusDatasource: MatTableDataSource<StoreMenu>;
   @ViewChild('MatPaginatorStoreMenus', { static: true }) storeMenusPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeMenusSort: MatSort;
