@@ -296,7 +296,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
 
-
+ 
   public applyFilter(filterValue: string, opt: number) {
     if (opt === 1) {
       this.dataSource.filter = filterValue.trim().toLowerCase();

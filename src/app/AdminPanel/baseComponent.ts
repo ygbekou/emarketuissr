@@ -144,4 +144,19 @@ export class BaseComponent {
     dataSource.paginator = paginator;
     dataSource.sort = sort;
   }
+
+  reinitializingDatasourceData(dataSource, paginator, sort, data) {
+   
+    dataSource.data = data;
+    dataSource = new MatTableDataSource(dataSource.data);
+    dataSource.paginator = paginator;
+    dataSource.sort = sort;
+  }
+
+  applyDatasourceFilter(dataSource, filterValue: string) {
+    dataSource.filter = filterValue.trim().toLowerCase();
+    if (dataSource.paginator) {
+      dataSource.paginator.firstPage();
+    }
+  }
 }

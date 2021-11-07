@@ -659,6 +659,8 @@
     "MAX_TOTAL": "Total maximal",
     "MIN_AMOUNT": "Montant minimal",
     "MAX_AMOUNT": "Montant maximal",
+		"MIN_QUANTITY": "Quantité minimale",
+		"MAX_QUANTITY": "Quantité maximale",
     "ORDERS": "Achats",
     "OVERRIDE": "Remplacer",
     "NOTIFY_CUSTOMER": "Notifier le client",
@@ -865,7 +867,14 @@
 		"CHECKED_OUT": "Checked Out",
 		"REOPEN": "Re-ouvrir",
 		"APPROVER_ONLY": "Just Approbateur",
-		"REASON": "Raison"
+		"REASON": "Raison",
+		"TRANSFER_QTY": "Quantité transféré",
+		"FROM_PRODUCTS": "Produits � transférer",
+		"TO_PRODUCTS": "Produits disponible",
+		"FROM_INGREDIENTS": "Ingrédients � transférer",
+    "TO_INGREDIENTS": "Ingrédients Disponible",
+    "FROM_STORE": "Boutique de depart",
+    "TO_STORE": "Boutique de fin"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

@@ -1,0 +1,147 @@
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+
+    <div fxLayout="row wrap">
+      <div fxFlex="50" fxFlex.gt-sm="50" class="p-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <input matInput (keyup)="applyDatasourceFilter(ingHistDatasource, $event.target.value)" 
+            placeholder="{{'COMMON.SEARCH' | translate}}" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="text-center mt-2" *ngIf="messages">
+      <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+    </div>
+
+    <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="ingHistDatasource" matSort class="w-100">
+
+            <ng-container matColumnDef="storeName">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.STORE' | translate}}</th>
+              <td mat-cell *matCellDef="let storeIngInv"> {{storeIngInv.storeName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ingredientName">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.INGREDIENT' | translate}}</th>
+              <td mat-cell *matCellDef="let storeIngInv"> {{storeIngInv.ingredientName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef width="8%" mat-sort-header> {{'COMMON.QUANTITY' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let storeIngInv"> {{storeIngInv.quantity}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createDate">
+              <th mat-header-cell *matHeaderCellDef width="8%" mat-sort-header>
+                {{'COMMON.DATE' | translate}}</th>
+              <td mat-cell *matCellDef="let storeIngInv">
+                {{storeIngInv.createDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fromStoreName">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.FROM_STORE' | translate}}</th>
+              <td mat-cell *matCellDef="let storeIngInv"> {{storeIngInv.fromStoreName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="toStoreName">
+              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.TO_STORE' | translate}}</th>
+              <td mat-cell *matCellDef="let storeIngInv"> {{storeIngInv.toStoreName}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="ingHistColumns"></tr>
+            <tr mat-row *matRowDef="let storeIngInv; columns: ingHistColumns;"></tr>
+          </table>
+          <p *ngIf="ingHistDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+            {{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator #MatPaginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+        <mat-card>
+          <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+            <div fxLayout="row wrap">
+              <div class="text-center">
+                <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+                  fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                  <mat-icon>filter_alt</mat-icon>
+                </button>
+              </div>
+
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
+                <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
+                  <mat-option *ngFor="let store of stores" [value]="store.id">
+                    {{store.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label> {{'COMMON.FROM_STORE' | translate}}</mat-label>
+                <mat-select [(ngModel)]="searchCriteria.fromStoreId" name="store">
+                  <mat-option *ngFor="let store of stores" [value]="store.id">
+                    {{store.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="w-100" appearance="fill">
+                <mat-label> {{'COMMON.TO_STORE' | translate}}</mat-label>
+                <mat-select [(ngModel)]="searchCriteria.toStoreId" name="store">
+                  <mat-option *ngFor="let store of stores" [value]="store.id">
+                    {{store.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                  [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+                <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #beginDatePicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                  [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.MIN_QUANTITY' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.minQuantity"
+                  name="model" #model="ngModel">
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.MAX_QUANTITY' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.maxQuantity"
+                  name="model" #model="ngModel">
+              </mat-form-field> -->
+
+              <div class="text-center">
+                <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+                  fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>

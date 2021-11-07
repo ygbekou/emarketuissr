@@ -1093,7 +1093,7 @@ export class OptionValueDescription {
   type = 'OptionValueDescription';
 }
 
-export class ProductToStore{
+export class ProductToStore {
   id: number;
   product: Product;
   store: Store;
@@ -1127,6 +1127,8 @@ export class ProductToStore{
   quantityComment: string;
   diffQty: number;
   shouldPerformExtraUpdate: boolean;
+
+  transferQty: number;
 
 
   constructor() {
@@ -2243,6 +2245,7 @@ export class StoreIngredient {
 
   storeName: string;
   ingredientName: string;
+  transferQty: number;
 
   type = 'StoreIngredient';
 
@@ -2944,3 +2947,82 @@ export class ReservationHistory {
   }
 }
 
+
+export class ProductTransfer {
+
+  productId: number;
+  fromPtsId: number;
+  fromStoreId: number;
+  toPtsId: number;
+  toStoreId: number;
+  quantity: number;
+  comment: string;
+  status = 1;
+  modifiedBy: number;
+
+  public constructor() {
+  }
+
+}
+
+
+export class IngredientTransfer {
+
+  ingredientId: number;
+  fromStIngId: number;
+  fromStoreId: number;
+  toStIngId: number;
+  toStoreId: number;
+  quantity: number;
+  comment: string;
+  status = 1;
+  modifiedBy: number;
+
+  public constructor() {
+  }
+
+}
+
+
+export class ProductHistory {
+
+  id: number;
+  product: Product;
+  ptsId: number;
+  quantity: number;
+  price: number;
+	comment: string;
+	fromPtsId: number;
+  toPtsId: number;
+  store: Store;
+	fromStore: Store;
+  toStore: Store;
+  modifiedBy: number;
+
+  storeName: string;
+  productName: string;
+
+  public constructor() {
+  }
+
+}
+
+
+export class PrdHistSearchCriteria {
+  id: number;
+  productId: number;
+  ingredientId: number;
+  langId: number;
+  ptsId: number;
+	fromPtsId: number;
+  toPtsId: number;
+  storeId: number;
+  fromStoreId: number;
+	toStoreId: number;
+  modifiedBy: number;
+
+  minQuantity: number;
+  maxQuantity: number;
+  beginDate: Date;
+  endDate: Date;
+}

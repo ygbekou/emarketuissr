@@ -89,6 +89,12 @@ import { RoomTypeAmenityComponent } from './roomTypes/RoomTypeAmenity.component'
 import { SalesReservationsComponent } from './Sales-reservations/Sales-reservations.component';
 import { HospitalitiesModule } from 'src/app/AdminPanel/Hospitalities/Hospitalities.module';
 import { ReservationDetailComponent } from './Reservation-detail/Reservation-detail.component';
+import { ProductTransferComponent } from './SellerTransfers/ProductTransfer.component';
+import { TransfersComponent } from './SellerTransfers/Transfers.component';
+import { IngredientTransferComponent } from './SellerTransfers/IngredientTransfer.component';
+import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHistories.component';
+import { PrdTransferHistoriesComponent } from './SellerTransferHistories/PrdTransferHistories.component';
+import { IngTransferHistoriesComponent } from './SellerTransferHistories/IngTransferHistories.component';
 
 @NgModule({
   imports: [
@@ -96,7 +102,7 @@ import { ReservationDetailComponent } from './Reservation-detail/Reservation-det
     RouterModule.forChild(UserAccountRoutes),
     MatAutocompleteModule,
     MatBadgeModule,
-    MatButtonModule,
+    MatButtonModule, 
     FlexLayoutModule,
     MatCardModule,
     MatMenuModule,
@@ -201,7 +207,13 @@ import { ReservationDetailComponent } from './Reservation-detail/Reservation-det
     RoomTypesComponent,
     RoomTypeAmenityComponent,
     SalesReservationsComponent,
-    ReservationDetailComponent
+    ReservationDetailComponent,
+    TransfersComponent,
+    ProductTransferComponent,
+    IngredientTransferComponent,
+    TransferHistoriesComponent,
+    PrdTransferHistoriesComponent,
+    IngTransferHistoriesComponent 
   ],
   exports: [
     StoresComponent,
