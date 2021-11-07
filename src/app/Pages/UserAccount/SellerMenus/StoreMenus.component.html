@@ -42,28 +42,30 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
           <div class="table-wrapper">
             <table mat-table [dataSource]="storeMenusDatasource" matSort class="w-100">
-              <!-- 
-                <ng-container matColumnDef="storeName">
-                  <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.STORE' | translate}}
-                  </th>
-                  <td mat-cell *matCellDef="let storeIngredient"> {{storeIngredient.storeName}} </td>
-                </ng-container> -->
 
               <ng-container matColumnDef="menuName">
-                <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.INGREDIENT' | translate}}
+                <th mat-header-cell *matHeaderCellDef width="40%" mat-sort-header> {{'COMMON.INGREDIENT' | translate}}
                 </th>
                 <td mat-cell *matCellDef="let storeMenu"> {{storeMenu.menuName}} </td>
               </ng-container>
 
+
               <ng-container matColumnDef="showInKitchen">
-                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SHOW_IN_KITCHEN' | translate}}
+                <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.SHOW_IN_KITCHEN' | translate}}
                 </th>
                 <td mat-cell *matCellDef="let storeMenu">
                   {{storeMenu.showInKitchen === 0 ? ('COMMON.NO'|translate):('COMMON.YES'|translate)}}</td>
               </ng-container>
 
+                <ng-container matColumnDef="showInBar">
+                <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.SHOW_IN_BAR' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let storeMenu">
+                  {{storeMenu.showInBar === 0 ? ('COMMON.NO'|translate):('COMMON.YES'|translate)}}</td>
+              </ng-container>
+
               <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
+                <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.STATUS' | translate}}
                 </th>
                 <td mat-cell *matCellDef="let storeMenu">
                   {{storeMenu.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>

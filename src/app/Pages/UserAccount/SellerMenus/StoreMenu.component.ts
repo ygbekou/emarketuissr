@@ -41,7 +41,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   @Input() canAcknowledge = false;
   @Input() store = new Store();
   @Output() storeMenuSaveEvent = new EventEmitter<any>();
-
   addNew = false;
 
   constructor(public appService: AppService,
@@ -52,6 +51,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
   }
 
   ngOnInit() {
+    console.log('Init called');
     this.activatedRoute.params.subscribe(params => {
       console.log(params);
       if (params.id === undefined || params.id === 0) {
@@ -97,7 +97,6 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         this.aProductDatasource = new MatTableDataSource(data);
         this.aProductDatasource.paginator = this.aProductPaginator;
         this.aProductDatasource.sort = this.aProductSort;
-
       },
         error => console.log(error),
         () => console.log('Get all store menu unassigned products complete'));
@@ -106,14 +105,14 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
 
   getStoreMenu(storeMenu: StoreMenu) {
     this.messages = '';
-    console.log(storeMenu);
     if (storeMenu && storeMenu.id > 0) {
       this.appService.getOneWithChildsAndFiles(storeMenu.id, 'StoreMenu')
         .subscribe(result => {
           if (result.id > 0) {
             this.addNew = false;
             this.storeMenu = result;
-            this.storeMenu.menuName = this.currentOption;
+            this.storeMenu.menuName = storeMenu.menuName;
+            this.storeMenu.menu.name = storeMenu.menuName;
             this.getStoreMenuUnassignedProducts();
             this.getStoreMenuProducts();
           } else {
@@ -141,6 +140,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
         this.menuDescriptions = data;
         this.menuOptions = data;
         this.filteredMenuOptions = data;
+        console.log(this.storeMenu);
       },
         error => console.log(error),
         () => console.log('Get menus complete'));
@@ -168,7 +168,7 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     if (val) {
       const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
       this.filteredMenuOptions = this.menuOptions
-        .filter(menuDesc => {menuDesc.name && menuDesc.name.toLowerCase().startsWith(filterValue)});
+        .filter(menuDesc => { menuDesc.name && menuDesc.name.toLowerCase().startsWith(filterValue) });
     } else {
       this.filteredMenuOptions = this.menuOptions;
     }
@@ -280,6 +280,10 @@ export class StoreMenuComponent extends BaseComponent implements OnInit, AfterVi
     this.storeMenu.showInKitchen = (this.storeMenu.showInKitchen == null
       || this.storeMenu.showInKitchen.toString() === 'false'
       || this.storeMenu.showInKitchen.toString() === '0') ? 0 : 1;
+
+    this.storeMenu.showInBar = (this.storeMenu.showInBar == null
+      || this.storeMenu.showInBar.toString() === 'false'
+      || this.storeMenu.showInBar.toString() === '0') ? 0 : 1;
   }
 
   setMenuToggleValues() {

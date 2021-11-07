@@ -2335,6 +2335,7 @@ export class StoreMenu {
   store: Store;
   menu: ProductMenu;
   showInKitchen: number;
+  showInBar: number;
   status = 1;
   modifiedBy: number;
 

@@ -1,7 +1,7 @@
 <form name="form" (ngSubmit)="f.form.valid && validateSelectedMenu() && save()" #f="ngForm" *ngIf="!addNew" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
-     <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
         <mat-icon>done</mat-icon> {{messages}}
       </div>
       <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
@@ -11,14 +11,15 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-1">
+    <div fxFlex.xs="100"  fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+      class="p-1">
       <mat-form-field appearance="outline" class="w-100">
         <mat-label> {{'COMMON.MENU' | translate}}:</mat-label>
-        <input type="text" placeholder="{{'COMMON.SELECT'|translate}}"   name="menuName" matInput
-          [matAutocomplete]="auto" [(ngModel)]="storeMenu.menuName" #menuName="ngModel" required
+        <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" name="menuName" matInput [matAutocomplete]="auto"
+          [(ngModel)]="storeMenu.menuName" #menuName="ngModel" required
           (ngModelChange)="filterOptions(storeMenu.menuName)">
         <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-          <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredMenuOptions " (onSelectionChange)="setSelectedMenu(option)"
             [value]="option.name">
             {{option.name}}
@@ -29,27 +30,25 @@
         {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
       </mat-error>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
-      <button mat-fab color="secondary" (click)="addNewMenu()" 
+
+    <div fxFlex.xs="100"   fxFlex.sm="20" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"
+      class="p-1">
+      <button mat-fab color="secondary" (click)="addNewMenu()"
         matTooltip="{{'COMMON.ADD' | translate}} {{'COMMON.NEW' | translate}}" class="remove">
-        <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
+        <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
       </button>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2" class="p-1">
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
-      <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
-        {{ 'COMMON.ENABLE' | translate }}
-      </mat-slide-toggle>
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-1">
-        <mat-slide-toggle [(ngModel)]="storeMenu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
-          {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
-        </mat-slide-toggle>
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="2" fxFlex.lg="2" fxFlex.xl="2" class="p-1">
-    </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+
+   <!--  <div fxFlex.xs="100" *ngIf="(storeMenu.id>0)" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+      class="p-1"> 
+        <h2 color="accent">{{currentOption}}</h2>
+        - {{currentOption}} - 
+        {{storeMenu.menuName}}-
+        {{storeMenu.menu.name}}
+ 
+    </div> -->
+
+    <div fxFlex.xs="100" fxFlex.sm="30" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
         type="submit" [disabled]="!f.form.valid">
         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
@@ -57,12 +56,31 @@
       </button>
     </div>
   </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+      <mat-slide-toggle [(ngModel)]="storeMenu.status" name="status" #status="ngModel" class="my-2">
+        {{ 'COMMON.ENABLE' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="30" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+      <mat-slide-toggle [(ngModel)]="storeMenu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel"
+        class="my-2">
+        {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
+      </mat-slide-toggle>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+      <mat-slide-toggle [(ngModel)]="storeMenu.showInBar" name="showInBar" #showInBar="ngModel" class="my-2">
+        {{ 'COMMON.SHOW_IN_BAR' | translate }}
+      </mat-slide-toggle>
+    </div>
+  </div>
 </form>
 
 <form name="form" (ngSubmit)="f2.form.valid && saveMenu()" #f2="ngForm" *ngIf="addNew" validate>
   <div fxLayout="row wrap" *ngIf="store?.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
-     <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
         <mat-icon>done</mat-icon> {{messages}}
       </div>
       <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
@@ -73,31 +91,31 @@
 
   <div fxLayout="row">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" class="p-1"
-        *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
-          <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="menu.menuDescriptions[i].name"
-              name="name{{i}}" required>
-        </mat-form-field>
-        <div fxFlex="5"></div>
+      *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label> {{'COMMON.NAME' | translate}} - {{lang.name}}</mat-label>
+        <input matInput type="text" class="form-control" id="name{{i}}" [(ngModel)]="menu.menuDescriptions[i].name"
+          name="name{{i}}" required>
+      </mat-form-field>
+      <div fxFlex="5"></div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
-        <mat-slide-toggle [(ngModel)]="menu.status" name="status" #status="ngModel" class="my-2">
-          {{ 'COMMON.STATUS' | translate }}
-        </mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="menu.status" name="status" #status="ngModel" class="my-2">
+        {{ 'COMMON.STATUS' | translate }}
+      </mat-slide-toggle>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
-        <mat-slide-toggle [(ngModel)]="menu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
-          {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
-        </mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="menu.showInKitchen" name="showInKitchen" #showInKitchen="ngModel" class="my-2">
+        {{ 'COMMON.SHOW_IN_KITCHEN' | translate }}
+      </mat-slide-toggle>
     </div>
   </div>
   <div fxLayout="row">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
       <div class="text-center mt-2">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
-            <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
-            <mat-icon>save</mat-icon>
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+          <mat-icon>save</mat-icon>
         </button> </div>
       <div class="text-center mt-2" *ngIf="messages">
         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
@@ -106,21 +124,21 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
       <div class="text-center mt-2">
         <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" (click)="cancel()">
-            <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
-            <mat-icon>cancel</mat-icon>
+          <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
+          <mat-icon>cancel</mat-icon>
         </button> </div>
       <div class="text-center mt-2" *ngIf="messages">
         <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
       </div>
     </div>
-   </div>
+  </div>
 </form>
 
 <!-- <div fxLayout="row" fxLayoutAlign="center center" *ngIf="storeMenu && storeMenu.id">
   <h5 style="color:#00008b">{{'COMMON.SELECTED_MENU' | translate}}: {{storeMenu.menuName}}</h5>
 </div> -->
 <div fxLayout="row wrap" *ngIf="storeMenu && storeMenu.id>0">
-  
+
   <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
     <legend>
       <h5 style="color:#00008b">{{'COMMON.AVAILABLE_PRODUCTS' | translate}}</h5>
