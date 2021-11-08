@@ -659,6 +659,8 @@
 		"MAX_TOTAL": "Max Total",
 		"MIN_AMOUNT": "Min Amount",
 		"MAX_AMOUNT": "Max Amount",
+		"MIN_QUANTITY": "Min Quantity",
+		"MAX_QUANTITY": "Max Quantity",
 		"ORDERS": "Orders",
 		"OVERRIDE": "Override",
 		"NOTIFY_CUSTOMER": "Notify Customer",
@@ -865,7 +867,14 @@
 		"REOPEN": "Reopen",
 		"APPROVER_ONLY": "Approval required",
 		"SUB_PRODUCT":"Sub product",
-		"REASON": "Reason"
+		"REASON": "Reason",
+		"TRANSFER_QTY": "Transfer Qty",
+		"FROM_PRODUCTS": "Products to transfer",
+		"TO_PRODUCTS": "Available Products",
+		"FROM_INGREDIENTS": "Ingredients to transfer",
+		"TO_INGREDIENTS": "Available Ingredients",
+		"FROM_STORE": "From Store",
+		"TO_STORE": "To Store"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

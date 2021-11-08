@@ -34,6 +34,9 @@ import { BuildingsComponent } from './Buildings/Buildings.component';
 import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
 import { SalesReservationsComponent } from './Sales-reservations/Sales-reservations.component';
 import { ReservationDetailComponent } from './Reservation-detail/Reservation-detail.component';
+import { ProductTransferComponent } from './SellerTransfers/ProductTransfer.component';
+import { TransfersComponent } from './SellerTransfers/Transfers.component';
+import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHistories.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -291,6 +294,22 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'reservationdetail/:id',
             component: ReservationDetailComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'transfers',
+            component: TransfersComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'transferHistories',
+            component: TransferHistoriesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']
