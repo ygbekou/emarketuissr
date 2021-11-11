@@ -23,7 +23,7 @@ export interface SearchResponse {
 })
 export class PrdTransferHistoriesComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  prdHistColumns: string[] = ['storeName', 'productName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
+  prdHistColumns: string[] = ['productName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
   prdHistDatasource: MatTableDataSource<ProductHistory>;
   @ViewChild('MatPaginator', { static: true }) prdHistPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) prdHistSort: MatSort;
@@ -61,7 +61,7 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
   }
 
   ngAfterViewInit() {
-   
+
   }
 
   private clear() {

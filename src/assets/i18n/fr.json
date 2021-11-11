@@ -997,7 +997,9 @@
     "EMAIL_INVALID": "Cet E-mail est invalide",
     "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères",
     "OPTION_IS_REQUIRED": "The option {{option_description}} is required",
-		"PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste"
+    "PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste",
+    "UNKNOWN_TRANSFER_PRODUCT": "Le produit � transférer n'est pas disponible dans la boutique de destination",
+		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination"
   },
   "DATE": {
     "1": "Jan",

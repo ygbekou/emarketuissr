@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { OrderStatus, StoreSearchCriteria, Store, Reservation, ReservationSearchCriteria } from 'src/app/app.models';
+import { OrderStatus, StoreSearchCriteria, Reservation, ReservationSearchCriteria } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';

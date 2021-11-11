@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreSearchCriteria, StoreIngredient, IngredientTransfer } from 'src/app/app.models';
+import { Store, StoreSearchCriteria, StoreIngredient, IngredientTransfer, StoreEmployee } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -37,6 +37,7 @@ export class IngredientTransferComponent extends BaseComponent implements OnInit
   stores: Store[] = [];
   savedStoreIngredient: StoreIngredient = new StoreIngredient();
   comment: string;
+  storeEmployee: StoreEmployee;
 
   addNew = false;
 
@@ -81,6 +82,28 @@ export class IngredientTransferComponent extends BaseComponent implements OnInit
         () => console.log('Get all Stores complete'));
   }
 
+  getStoreEmployee() {
+    if (+this.appService.tokenStorage.getUserId() > 0) {
+      const parameters: string[] = [];
+      parameters.push('e.employee.id = |userId|' + this.appService.tokenStorage.getUserId() + '|Integer');
+      parameters.push('e.store.id = |storeId|' + this.fromStore.id + '|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters)
+        .subscribe((data: StoreEmployee[]) => {
+          if (data && data.length > 0) {
+            this.storeEmployee = data[0];
+            if (this.storeEmployee.canTransfer === 0) {
+              this.fromIngredientColumns = ['image', 'ingredientName', 'qty'];
+            } else {
+              this.fromIngredientColumns = ['image', 'ingredientName', 'qty', 'transferQty', 'actions'];
+            }
+          }
+        },
+          error => console.log(error),
+          () => console.log('Get store employee complete for storeId = ' + this.fromStore.id + ' userId = '
+          + this.appService.tokenStorage.getUserId()));
+    }
+  }
+
   getFromIngredientStoreList() {
     this.appService.saveWithUrl('/service/catalog/getStoreIngredients/',
       {
@@ -111,6 +134,7 @@ export class IngredientTransferComponent extends BaseComponent implements OnInit
 
   fromStoreSelected(event) {
     setTimeout(() => {
+      this.getStoreEmployee();
       this.getFromIngredientStoreList();
     }, 500);
   }
@@ -142,6 +166,12 @@ export class IngredientTransferComponent extends BaseComponent implements OnInit
 
           fromStoreIng.quantity -= fromStoreIng.transferQty;
           fromStoreIng.transferQty = undefined;
+        } else {
+          if (data.errors[0] === 'UNKNOWN_TRANSFER_INGREDIENT') {
+            this.translate.get(['VALIDATION.UNKNOWN_TRANSFER_INGREDIENT']).subscribe(res => {
+              this.messages = res['VALIDATION.UNKNOWN_TRANSFER_INGREDIENT'];
+            });
+          }
         }
       },
       error => console.log(error),

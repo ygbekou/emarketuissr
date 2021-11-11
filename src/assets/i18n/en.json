@@ -996,7 +996,9 @@
 		"DUPLICATE_PRIORITY": "Priorities must be different for active discounts",
 		"SHORT_RESUME_TOO_LONG": "Short Resume is too long. Please Limit to 400 characters",
 		"OPTION_IS_REQUIRED": "The option {{option_description}} is required",
-		"PLEASE_SELECT_FROM_DROPDOWN": "Field is required - Please select from the list"
+		"PLEASE_SELECT_FROM_DROPDOWN": "Field is required - Please select from the list",
+		"UNKNOWN_TRANSFER_PRODUCT": "Product to transfer is not available in the destination store",
+		"UNKNOWN_TRANSFER_INGREDIENT": "Ingredient to transfer is not available in the destination store"
 	},
 	"DATE": {
 		"1": "Jan",

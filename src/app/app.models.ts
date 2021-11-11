@@ -1129,6 +1129,7 @@ export class ProductToStore {
   shouldPerformExtraUpdate: boolean;
 
   transferQty: number;
+  errors: string[];
 
 
   constructor() {
@@ -2246,6 +2247,7 @@ export class StoreIngredient {
   storeName: string;
   ingredientName: string;
   transferQty: number;
+  errors: string[];
 
   type = 'StoreIngredient';
 
@@ -2486,17 +2488,18 @@ export class POSearchCriteria {
 }
 
 export class StoreEmployee {
-  public id: number;
-  public store: Store;
-  public employee: User;
-  public status: number;
-  public role: number;
-  public canApprove: number;
-  public canReprint: number;
-  public canReopen: number;
-  public beginDate: Date;
-  public endDate: Date;
-  public type = 'StoreEmployee';
+  id: number;
+  store: Store;
+  employee: User;
+  status: number;
+  role: number;
+  canApprove: number;
+  canReprint: number;
+  canReopen: number;
+  canTransfer: number;
+  beginDate: Date;
+  endDate: Date;
+  type = 'StoreEmployee';
 }
 
 export class Transaction {
