@@ -32,32 +32,38 @@
           <table mat-table [dataSource]="prdHistDatasource" matSort class="w-100">
 
             <ng-container matColumnDef="productName">
-              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.PRODUCT' | translate}}</th>
+              <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.PRODUCT' | translate}}</th>
               <td mat-cell *matCellDef="let prdHist"> {{prdHist.productName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="quantity">
-              <th mat-header-cell *matHeaderCellDef width="8%" mat-sort-header> {{'COMMON.QUANTITY' | translate}}
+              <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.QUANTITY' | translate}}
               </th>
               <td mat-cell *matCellDef="let prdHist"> {{prdHist.quantity}} </td>
             </ng-container>
 
             <ng-container matColumnDef="createDate">
-              <th mat-header-cell *matHeaderCellDef width="8%" mat-sort-header>
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header>
                 {{'COMMON.DATE' | translate}}</th>
               <td mat-cell *matCellDef="let prdHist">
-                {{prdHist.createDate | date : 'mediumDate' : '' : translate.currentLang}} </td>
+                {{prdHist.createDate | date : 'short' : '' : translate.currentLang}} </td>
             </ng-container>
 
             <ng-container matColumnDef="fromStoreName">
-              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Source</th>
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Source</th>
               <td mat-cell *matCellDef="let prdHist"> {{prdHist.fromStoreName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="toStoreName">
-              <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Destination</th>
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Destination</th>
               <td mat-cell *matCellDef="let prdHist"> {{prdHist.toStoreName}} </td>
             </ng-container>
+
+               <ng-container matColumnDef="comment">
+              <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Note</th>
+              <td mat-cell *matCellDef="let prdHist"> {{prdHist.comment}} </td>
+            </ng-container>
+
 
             <tr mat-header-row *matHeaderRowDef="prdHistColumns"></tr>
             <tr mat-row *matRowDef="let prdHist; columns: prdHistColumns;"></tr>
@@ -119,7 +125,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                   <mat-label> {{'COMMON.RESPONSIBLE' | translate}} 
                   </mat-label>
-                  <mat-select [(ngModel)]="searchCriteria.userId" appearance="fill" name="purchaser">
+                  <mat-select [(ngModel)]="searchCriteria.modBy" appearance="fill" name="purchaser">
                     <mat-option [value]="">
                       
                     </mat-option>

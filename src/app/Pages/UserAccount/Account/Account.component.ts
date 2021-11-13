@@ -55,8 +55,8 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'My store products', url: '/account/my-items', icon: 'qr_code_2' },
       { name: 'Composite products', url: '/account/store-ingredients', icon: 'category' },
       { name: 'Menu (Restaurant)', url: '/account/store-menus', icon: 'restaurant_menu' },
-      { name: 'Inventory Transfer', url: '/account/transfers', icon: 'arrow_right_alt' },
-      { name: 'Product history', url: '/account/transferHistories', icon: 'arrow_right_alt' },
+      { name: 'Inventory Transfer', url: '/account/transfers', icon: 'sync_alt' },
+      { name: 'Product history', url: '/account/transferHistories', icon: 'history' },
      ]
   }, {
     name: 'Accounting',
@@ -136,8 +136,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Produits en vente', url: '/account/my-items', icon: 'qr_code_2' },
       { name: 'Produits Composites', url: '/account/store-ingredients', icon: 'category' },
       { name: 'Menu (Restaurant)', url: '/account/store-menus', icon: 'restaurant_menu' },
-      { name: 'Transfer d\'inventaire', url: '/account/transfers', icon: 'arrow_right_alt' },
-      { name: 'Historique produits', url: '/account/transferHistories', icon: 'arrow_right_alt' },
+      { name: 'Transfer d\'inventaire', url: '/account/transfers', icon: 'sync_alt' },
+      { name: 'Historique produits', url: '/account/transferHistories', icon: 'history' },
      ]
   }, {
     name: 'Comptabilité',

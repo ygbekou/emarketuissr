@@ -1,6 +1,5 @@
 <div fxLayout="row wrap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
       [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
       <mat-tab label="{{'COMMON.PRODUCT' | translate}}">

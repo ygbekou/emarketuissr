@@ -66,6 +66,7 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
 
   private clear() {
     this.searchCriteria = new PrdHistSearchCriteria();
+    this.searchCriteria.userId =  Number(this.appService.tokenStorage.getUserId());
   }
 
   changeOrderType(event) {
@@ -120,7 +121,7 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
   storeSelected(event) {
     setTimeout(() => {
       const beginDate = new Date();
-      beginDate.setDate(beginDate.getDate() - 30);
+      beginDate.setDate(beginDate.getDate() - 2);
       this.searchCriteria.beginDate = beginDate;
       this.searchCriteria.endDate = new Date();
 

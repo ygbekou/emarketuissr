@@ -23,11 +23,10 @@ export interface SearchResponse {
 })
 export class PrdTransferHistoriesComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  prdHistColumns: string[] = ['productName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
+  prdHistColumns: string[] = ['productName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName', 'comment' ];
   prdHistDatasource: MatTableDataSource<ProductHistory>;
   @ViewChild('MatPaginator', { static: true }) prdHistPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) prdHistSort: MatSort;
- 
   button = 'filter';
 
   @Input() userId: number;
@@ -66,6 +65,7 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
 
   private clear() {
     this.searchCriteria = new PrdHistSearchCriteria();
+    this.searchCriteria.userId =  Number(this.appService.tokenStorage.getUserId());
   }
 
   changeOrderType(event) {
@@ -107,9 +107,7 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
     } else {
       this.appService.saveWithUrl('/service/catalog/getProductHistories', this.searchCriteria)
         .subscribe((data: any[]) => {
-          //this.reinitializingDatasourceData(this.prdHistDatasource, this.prdHistPaginator, this.prdHistSort, data);
-
-          this.prdHistDatasource = new MatTableDataSource(data);
+           this.prdHistDatasource = new MatTableDataSource(data);
             this.prdHistDatasource.paginator = this.prdHistPaginator;
             this.prdHistDatasource.sort = this.prdHistSort;
         },
@@ -122,7 +120,7 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
   storeSelected(event) {
     setTimeout(() => {
       const beginDate = new Date();
-      beginDate.setDate(beginDate.getDate() - 30);
+      beginDate.setDate(beginDate.getDate() - 2);
       this.searchCriteria.beginDate = beginDate;
       this.searchCriteria.endDate = new Date();
 

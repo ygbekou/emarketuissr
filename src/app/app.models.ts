@@ -3024,7 +3024,7 @@ export class PrdHistSearchCriteria {
   fromStoreId: number;
 	toStoreId: number;
   userId: number;
-
+  modBy: number;
   minQuantity: number;
   maxQuantity: number;
   beginDate: Date;
