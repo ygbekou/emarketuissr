@@ -3023,7 +3023,7 @@ export class PrdHistSearchCriteria {
   storeId: number;
   fromStoreId: number;
 	toStoreId: number;
-  modifiedBy: number;
+  userId: number;
 
   minQuantity: number;
   maxQuantity: number;

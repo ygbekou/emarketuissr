@@ -119,7 +119,11 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
 
   storeSelected(event) {
     setTimeout(() => {
-      this.searchCriteria.storeId = this.selectedStore.id;
+      const beginDate = new Date();
+      beginDate.setDate(beginDate.getDate() - 30);
+      this.searchCriteria.beginDate = beginDate;
+      this.searchCriteria.endDate = new Date();
+
       this.search();
       this.getMyStoreEmployees();
     }, 500);

@@ -874,7 +874,8 @@
 		"FROM_INGREDIENTS": "Ingredients to transfer",
 		"TO_INGREDIENTS": "Available Ingredients",
 		"FROM_STORE": "From Store",
-		"TO_STORE": "To Store"
+		"TO_STORE": "To Store",
+		"RESPONSIBLE": "Responsible"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

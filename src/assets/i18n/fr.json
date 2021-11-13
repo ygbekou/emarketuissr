@@ -876,7 +876,8 @@
 		"FROM_INGREDIENTS": "Ingrédients � transférer",
     "TO_INGREDIENTS": "Ingrédients Disponible",
     "FROM_STORE": "Boutique de depart",
-    "TO_STORE": "Boutique de fin"
+    "TO_STORE": "Boutique de fin",
+		"RESPONSIBLE": "Responsable"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
