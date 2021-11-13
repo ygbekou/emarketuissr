@@ -161,6 +161,7 @@ export class ProductTransferComponent extends BaseComponent implements OnInit, A
         this.savedProductStore = data;
 
         if (this.savedProductStore.id > 0) {
+          this.savedProductStore.productName = fromPrdStore.productName;
           this.updateDatasourceData(this.toProductDatasource, this.toProductPaginator,
             this.toProductSort, this.savedProductStore);
 

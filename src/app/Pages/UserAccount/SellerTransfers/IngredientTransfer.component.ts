@@ -161,6 +161,7 @@ export class IngredientTransferComponent extends BaseComponent implements OnInit
         this.savedStoreIngredient = data;
 
         if (this.savedStoreIngredient.id > 0) {
+          this.savedStoreIngredient.ingredientName = fromStoreIng.ingredientName;
           this.updateDatasourceData(this.toIngredientDatasource, this.toIngredientPaginator,
             this.toIngredientSort, this.savedStoreIngredient);
 
