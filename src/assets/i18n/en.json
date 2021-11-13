@@ -869,12 +869,12 @@
 		"SUB_PRODUCT":"Sub product",
 		"REASON": "Reason",
 		"TRANSFER_QTY": "Transfer Qty",
-		"FROM_PRODUCTS": "Products to transfer",
-		"TO_PRODUCTS": "Available Products",
-		"FROM_INGREDIENTS": "Ingredients to transfer",
-		"TO_INGREDIENTS": "Available Ingredients",
-		"FROM_STORE": "From Store",
-		"TO_STORE": "To Store",
+		"FROM_PRODUCTS": "Source Products",
+		"TO_PRODUCTS": "Destination Products",
+		"FROM_INGREDIENTS": "Source Ingredients",
+		"TO_INGREDIENTS": "Destination Ingredients",
+		"FROM_STORE": "Source Store",
+		"TO_STORE": "Beneficiary Store",
 		"RESPONSIBLE": "Responsible"
 	},
 	"MESSAGE": {

@@ -871,12 +871,12 @@
     "SUB_PRODUCT":"Sous-produit",
 		"REASON": "Raison",
 		"TRANSFER_QTY": "Quantité transféré",
-		"FROM_PRODUCTS": "Produits � transférer",
-		"TO_PRODUCTS": "Produits disponible",
-		"FROM_INGREDIENTS": "Ingrédients � transférer",
-    "TO_INGREDIENTS": "Ingrédients Disponible",
-    "FROM_STORE": "Boutique de depart",
-    "TO_STORE": "Boutique de fin",
+		"FROM_PRODUCTS": "Produits source",
+		"TO_PRODUCTS": "Produits destination",
+		"FROM_INGREDIENTS": "Ingrédients source",
+    "TO_INGREDIENTS": "Ingrédients destination",
+    "FROM_STORE": "Boutique source",
+    "TO_STORE": "Boutique bénéficiaire",
 		"RESPONSIBLE": "Responsable"
   },
   "MESSAGE": {
