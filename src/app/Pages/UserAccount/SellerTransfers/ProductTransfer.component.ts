@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, ProductToStore, ProductTransfer, StoreSearchCriteria, GenericResponse } from 'src/app/app.models';
+import { Store, ProductToStore, ProductTransfer, StoreSearchCriteria, GenericResponse, StoreEmployee } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -37,6 +37,7 @@ export class ProductTransferComponent extends BaseComponent implements OnInit, A
   stores: Store[] = [];
   savedProductStore: ProductToStore = new ProductToStore();
   comment: string;
+  storeEmployee: StoreEmployee;
 
   addNew = false;
 
@@ -81,6 +82,28 @@ export class ProductTransferComponent extends BaseComponent implements OnInit, A
         () => console.log('Get all Stores complete'));
   }
 
+  getStoreEmployee() {
+    if (+this.appService.tokenStorage.getUserId() > 0) {
+      const parameters: string[] = [];
+      parameters.push('e.employee.id = |userId|' + this.appService.tokenStorage.getUserId() + '|Integer');
+      parameters.push('e.store.id = |storeId|' + this.fromStore.id + '|Integer');
+      this.appService.getAllByCriteria('StoreEmployee', parameters)
+        .subscribe((data: StoreEmployee[]) => {
+          if (data && data.length > 0) {
+            this.storeEmployee = data[0];
+            if (this.storeEmployee.canTransfer === 0) {
+              this.fromProductColumns = ['image', 'productName', 'qty'];
+            } else {
+              this.fromProductColumns = ['image', 'productName', 'qty', 'transferQty', 'actions'];
+            }
+          }
+        },
+          error => console.log(error),
+          () => console.log('Get store employee complete for storeId = ' + this.fromStore.id + ' userId = '
+          + this.appService.tokenStorage.getUserId()));
+    }
+  }
+
   getFromProductStoreList() {
     this.appService.saveWithUrl('/service/catalog/getStoreMenuUnassignedProductStores/',
       {
@@ -111,6 +134,7 @@ export class ProductTransferComponent extends BaseComponent implements OnInit, A
 
   fromStoreSelected(event) {
     setTimeout(() => {
+      this.getStoreEmployee();
       this.getFromProductStoreList();
     }, 500);
   }
@@ -142,6 +166,12 @@ export class ProductTransferComponent extends BaseComponent implements OnInit, A
 
           fromPrdStore.quantity -= fromPrdStore.transferQty;
           fromPrdStore.transferQty = undefined;
+        } else {
+          if (data.errors[0] === 'UNKNOWN_TRANSFER_PRODUCT') {
+            this.translate.get(['VALIDATION.UNKNOWN_TRANSFER_PRODUCT']).subscribe(res => {
+              this.messages = res['VALIDATION.UNKNOWN_TRANSFER_PRODUCT'];
+            });
+          }
         }
       },
       error => console.log(error),

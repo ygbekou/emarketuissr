@@ -23,7 +23,7 @@ export interface SearchResponse {
 })
 export class IngTransferHistoriesComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  ingHistColumns: string[] = ['storeName', 'ingredientName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
+  ingHistColumns: string[] = ['ingredientName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
   ingHistDatasource: MatTableDataSource<StoreIngredientInventory>;
   @ViewChild('MatPaginator', { static: true }) ingHistPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) ingHistSort: MatSort;
