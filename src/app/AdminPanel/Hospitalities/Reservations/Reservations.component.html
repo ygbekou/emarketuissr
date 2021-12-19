@@ -105,6 +105,7 @@
             <ng-container matColumnDef="status">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}</th>
               <td mat-cell *matCellDef="let storeIngredient">
+                <span *ngIf="storeIngredient.status === 0"> {{'COMMON.NEW'|translate}}</span>
                 <span *ngIf="storeIngredient.status === 1"> {{'COMMON.RESERVED'|translate}}</span>
                 <span *ngIf="storeIngredient.status === 2"> {{'COMMON.CONFIRMED'|translate}}</span>
                 <span *ngIf="storeIngredient.status === 3"> {{'COMMON.CHECKEDIN'|translate}}</span>

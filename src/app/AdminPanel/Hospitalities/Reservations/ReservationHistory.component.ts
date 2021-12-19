@@ -45,7 +45,7 @@ export class ReservationHistoryComponent extends BaseComponent implements OnInit
     if (this.reservation.id !== null && this.reservation.id !== undefined) {
       parameters.push('e.reservation.id = |reservationId|' + this.reservation.id + '|Integer');
     }
-    this.appService.getAllByCriteria(this.CLASS_NAME, parameters)
+    this.appService.getAllByCriteria(this.CLASS_NAME, parameters, ' ORDER BY e.createDate DESC')
       .subscribe((data: ReservationHistory[]) => {
         this.dataSource = new MatTableDataSource<ReservationHistory>(data);
         this.dataSource.paginator = this.paginator;
@@ -81,6 +81,13 @@ export class ReservationHistoryComponent extends BaseComponent implements OnInit
 
         this.processDataSourceDeleteResult(resp, this.messages, this.reservationHistory, this.dataSource);
       });
+  }
+
+  addNew() {
+    this.messages = '';
+    this.errors = '';
+    this.reservationHistory = new ReservationHistory();
+    this.reservationHistory.status = this.reservation.status;
   }
 
   save() {
