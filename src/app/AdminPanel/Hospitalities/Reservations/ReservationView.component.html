@@ -175,10 +175,12 @@
         <span class="pull-left">
           <mat-icon>cached</mat-icon>
         </span>
-        <span *ngIf="reservation.status === 0">{{'COMMON.NEW' | translate}}</span>
-        <span *ngIf="reservation.status === 1">{{'COMMON.CHECKED_IN' | translate}}</span>
-        <span *ngIf="reservation.status === 5">{{'COMMON.CHECKED_OUT' | translate}}</span>
-        <span *ngIf="reservation.status === 99">{{'COMMON.CANCELLED' | translate}}</span>
+        <span *ngIf="reservation.status === 0"> {{'COMMON.NEW'|translate}}</span>
+        <span *ngIf="reservation.status === 1"> {{'COMMON.RESERVED'|translate}}</span>
+        <span *ngIf="reservation.status === 2"> {{'COMMON.CONFIRMED'|translate}}</span>
+        <span *ngIf="reservation.status === 3"> {{'COMMON.CHECKEDIN'|translate}}</span>
+        <span *ngIf="reservation.status === 4"> {{'COMMON.CHECKEDOUT'|translate}}</span>
+        <span *ngIf="reservation.status === 99"> {{'COMMON.CANCELLED'|translate}}</span>
       </div>
       <div class="tile-body">
 
@@ -220,12 +222,7 @@
 </div>
 
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="reservation.comments">
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-    {{'MESSAGE.RESERVATION_REOPENED'|translate}}
-  </div>
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-    {{reservation.comments}}
-  </div>
+  <pre>{{'COMMON.COMMENTS'|translate}}:   {{reservation.comments}}</pre>
 </div>
 
 

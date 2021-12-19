@@ -14,7 +14,7 @@ import { BaseComponent } from '../../baseComponent';
 })
 export class ReservationsComponent extends BaseComponent implements OnInit {
   onlineReservationsColumns: string[] = ['id', 'customer', 'total', 'city', 'country', 'status', 'date'];
-  storeReservationsColumns: string[] = ['id', 'cashier', 'total', 'status', 'date'];
+  storeReservationsColumns: string[] = ['id', 'cashier', 'total', 'status', 'beginDate', 'endDate'];
 
   onlineDS: MatTableDataSource<Reservation>;
   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;

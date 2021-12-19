@@ -4,8 +4,8 @@
       <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
         <ng-container matColumnDef="dateAdded">
-          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Date </th>
-          <td mat-cell *matCellDef="let reservationHist"> {{reservationHist.createDate | date: 'MM/dd/yyyy hh:mm:ss'}} </td>
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> Date </th>
+          <td mat-cell *matCellDef="let reservationHist"> {{reservationHist.createDate | date: 'MM/dd/yyyy hh:mm:ss a'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="user">
@@ -23,10 +23,12 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STATUS'|translate}} </th>
           <td mat-cell *matCellDef="let reservationHist">
-            <span *ngIf="reservationHist.status === 0">{{'COMMON.NEW' | translate}}</span>
-            <span *ngIf="reservationHist.status === 1">{{'COMMON.CHECKED_IN' | translate}}</span>
-            <span *ngIf="reservationHist.status === 5">{{'COMMON.CHECKED_OUT' | translate}}</span>
-            <span *ngIf="reservationHist.status === 99">{{'COMMON.CANCELLED' | translate}}</span>
+            <span *ngIf="reservationHist.status === 0"> {{'COMMON.NEW'|translate}}</span>
+            <span *ngIf="reservationHist.status === 1"> {{'COMMON.RESERVED'|translate}}</span>
+            <span *ngIf="reservationHist.status === 2"> {{'COMMON.CONFIRMED'|translate}}</span>
+            <span *ngIf="reservationHist.status === 3"> {{'COMMON.CHECKEDIN'|translate}}</span>
+            <span *ngIf="reservationHist.status === 4"> {{'COMMON.CHECKEDOUT'|translate}}</span>
+            <span *ngIf="reservationHist.status === 99"> {{'COMMON.CANCELLED'|translate}}</span>
           </td>
         </ng-container>
 
@@ -74,12 +76,18 @@
                   {{'COMMON.NEW' | translate}}
                 </mat-button-toggle>
                 <mat-button-toggle [disabled]="reservation.status > 1"  [value]="1">
-                  {{'COMMON.CHECKED_IN' | translate}}
+                  {{'COMMON.RESERVED' | translate}}
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="reservation.status > 5"  [value]="5">
-                  {{'COMMON.CHECKED_OUT' | translate}}
+                <mat-button-toggle [disabled]="reservation.status > 2"  [value]="2">
+                  {{'COMMON.CONFIRMED' | translate}}
                 </mat-button-toggle>
-                <mat-button-toggle [disabled]="reservation.status > 0"  [value]="99">
+                <mat-button-toggle [disabled]="reservation.status > 3"  [value]="3">
+                  {{'COMMON.CHECKEDIN' | translate}}
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="reservation.status > 4"  [value]="4">
+                  {{'COMMON.CHECKEDOUT' | translate}}
+                </mat-button-toggle>
+                <mat-button-toggle [disabled]="reservation.status > 3"  [value]="99">
                   {{'COMMON.CANCELLED' | translate}}
                 </mat-button-toggle>
               </mat-button-toggle-group>
@@ -96,19 +104,26 @@
               <textarea matInput rows="5" cols="50" class="form-control" id="comment" [(ngModel)]="reservationHistory.comment"
                 name="comment" #comment="ngModel"></textarea>
             </div>
-            <div  class="w-100">
-              <br/>
+            <br/>
+            <div fxLayout="row wrap" class="w-100">
               <button mat-raised-button color="primary" fxLayout="row" 
                 fxLayoutAlign="center center" type="submit">
                 <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
                 <mat-icon>save</mat-icon>
               </button>
+              <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"></div>
+              <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center" type="button" (click)="addNew()">
+                <span class="mx-1 uppercase">{{'COMMON.ADD' | translate}}</span>
+                <mat-icon>add</mat-icon>
+              </button>
             </div>
+
           </div>
         </div>
         <div class="text-center mt-2" *ngIf="messages">
           <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
         </div>
+
       </form>
     </mat-card>
   </div>
