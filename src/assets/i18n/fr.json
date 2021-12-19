@@ -93,6 +93,7 @@
     "SALES_SUMMARY_PRD":"Sommaire ventes - Produit",
     "SALES_SUMMARY_TABL":"Sommaire ventes - Table",
     "SALES_SUMMARY_MENU":"Sommaire ventes - Menu",
+    "SALES_SUMMARY_PAY_METH":"Sommaire ventes - Méthode de payement",
     "EXPENSES_RPT":"Dépenses",
     "PO_RPT":"Commandes",
 		"SALES_SUMMARY_EMP":"Sommaire ventes - Acheteur/Vendeur",

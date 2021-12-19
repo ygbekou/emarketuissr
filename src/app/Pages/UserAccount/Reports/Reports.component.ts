@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-user-reports',
   templateUrl: './Reports.component.html',
@@ -149,6 +148,8 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'expenses';
     } else if (this.subRpt === 10) {
       rep.reportName = 'pos';
+    } else if (this.subRpt === 11) {
+      rep.reportName = 'sales';
     }
 
 

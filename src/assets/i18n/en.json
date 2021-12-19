@@ -99,6 +99,7 @@
     	"SALES_SUMMARY_MENU":"Sales summary by menu",
 		"MARGIN_ANALYSIS_RPT": "Margin analysis",
 		"SALES_SUMMARY_RPT": "Sales Summary",
+		"SALES_SUMMARY_PAY_METH":"Sales summary by payment method",
 		"EXPENSES_RPT":"Expenses",
     	"PO_RPT":"Purchase orders",
 		"ALL_INVENTORY_RPT": "All inventory report",
