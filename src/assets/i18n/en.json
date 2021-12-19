@@ -289,6 +289,8 @@
 		"CONFIRM": "Confirm",
 		"CONFIRM_PASSWORD": "Confirm Password",
 		"CONFIRMED": "Confirmed",
+		"CHECKEDIN": "Arrived",
+    	"CHECKEDOUT": "Left",
 		"CONNEXION": "Connection",
 		"CONTACT": "Contact",
 		"CONTACT_INFO": "Contact Information",
@@ -875,7 +877,8 @@
 		"TO_INGREDIENTS": "Destination Ingredients",
 		"FROM_STORE": "Source Store",
 		"TO_STORE": "Beneficiary Store",
-		"RESPONSIBLE": "Responsible"
+		"RESPONSIBLE": "Responsible",
+		"RESERVED": "Reserved"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -912,7 +915,7 @@
 		"SAVE_UNSUCCESS": "Save was unsuccessful. See errors below: ",
 		"SELECT_DATE_TIME": "Select date and time",
 		"SELECT_FUTURE_DATE": "Select future date and time",
-		"SELECT_LOCATION": "Sélectioner un emplacement",
+		"SELECT_LOCATION": "Sï¿½lectioner un emplacement",
 		"SELECT_DEPARTMENT": "Select a department",
 		"SEND_MESSAGE": "Send message",
 		"SEND_PASSWORD": "Send Password",

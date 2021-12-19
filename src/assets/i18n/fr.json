@@ -281,6 +281,8 @@
     "CONFIRM": "Confirmer",
     "CONFIRM_PASSWORD": "Confirmer mot de passe",
     "CONFIRMED": "Confirmé",
+    "CHECKEDIN": "Arrivé",
+    "CHECKEDOUT": "Parti",
     "CONNEXION": "Connexion",
     "CONTACT": "Contact",
     "CONTACT_INFO": "Contact",
@@ -835,7 +837,7 @@
 		"PAY_BILL": "Pay Facture",
 		"PAYMENT_DATE": "Date de payement",
     "PAYMENT_STATUS": "Etat du payement",
-    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas �tre sup�rieur au montant d�.",
+    "INVALID_PAYMENT_AMOUNT": "Le montant du paiement ne peut pas �tre sup�rieur au montant d�.",
 		"AMOUNT_TO_RECEIVE": "Montant a recevoir",
 		"NET_INCOME": "Revenu net",
     "FINANCE_SUMMARY": "Sommaire Comptable",
@@ -877,7 +879,8 @@
     "TO_INGREDIENTS": "Ingrédients destination",
     "FROM_STORE": "Boutique source",
     "TO_STORE": "Boutique bénéficiaire",
-		"RESPONSIBLE": "Responsable"
+    "RESPONSIBLE": "Responsable",
+    "RESERVED": "ReservÃ©"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -941,7 +944,7 @@
     "PAYMENT_DECLINED": "Votre paiement a été refusé. Veuillez vérifier et réessayer plus tard. ",
     "SYSTEM_ERROR": "Une erreur s'est produite dans le système. Veuillez contacter l'administrateur.",
     "PRODUCT_DISCOUNT_PRICE_AND_PERCENTAGE": "Le prix ou le pourcentage est requis.",
-    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin.",
+    "START_DATE_END_DATE_VALIDATE": "La date de début ne peut pas etre postérieure � la date de fin.",
     "REVIEW_SUBMITTED": "Votre avis a été soumis avec succès. Merci!",
     "REVIEW_UNDER_PROCESS": "Votre suggestion est en cours de traitement et une fois terminé, une notification vous sera envoyée. Merci pour votre patience.",
     "REVIEW_APPROVED": "Evaluation approuvé avec succès. Merci!",
@@ -951,7 +954,7 @@
     "EMAIL_VERIFICATION_CODE_SENT": "Un code de vérification est envoyé a votre adresse e-mail. Entrez-le ci-dessous pour continuer.",
     "INVALID_VERIFICATION_CODE": "Code de verification invalide",
     "ORDER_CANCELLED_NO_REFUND": "Votre commande a été annulée. Veuillez appeler pour le remboursement",
-		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
+		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
 		"CANCELLATION_DECLINED": "Annulation Déclinée",
     "ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!",
     "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse.",
@@ -999,8 +1002,8 @@
     "SHORT_RESUME_TOO_LONG": "Court CV est trop long. Veuillez limiter 400 caractères",
     "OPTION_IS_REQUIRED": "The option {{option_description}} is required",
     "PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste",
-    "UNKNOWN_TRANSFER_PRODUCT": "Le produit � transférer n'est pas disponible dans la boutique de destination",
-		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination"
+    "UNKNOWN_TRANSFER_PRODUCT": "Le produit � transférer n'est pas disponible dans la boutique de destination",
+		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination"
   },
   "DATE": {
     "1": "Jan",
