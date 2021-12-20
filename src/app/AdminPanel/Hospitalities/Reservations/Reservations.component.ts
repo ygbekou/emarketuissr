@@ -13,8 +13,8 @@ import { BaseComponent } from '../../baseComponent';
   styleUrls: ['./Reservations.component.scss']
 })
 export class ReservationsComponent extends BaseComponent implements OnInit {
-  onlineReservationsColumns: string[] = ['id', 'customer', 'checkinDate', 'checkoutDate', 'total', 'city', 'country', 'status'];
-  storeReservationsColumns: string[] = ['id', 'cashier', 'checkinDate', 'checkoutDate', 'total', 'status'];
+  onlineReservationsColumns: string[] = ['id', 'customer', 'beginDate', 'endDate', 'total', 'city', 'country', 'status'];
+  storeReservationsColumns: string[] = ['id', 'cashier', 'beginDate', 'endDate', 'total', 'status'];
 
   onlineDS: MatTableDataSource<Reservation>;
   @ViewChild('MatPaginatorO', { static: true }) onlinePG: MatPaginator;

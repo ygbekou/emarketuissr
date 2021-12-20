@@ -147,7 +147,12 @@
         <span class="pull-left">
           <mat-icon>event</mat-icon>
         </span>
-        <span>{{reservation.checkinDate | date: 'MM/dd/yyyy hh:mm:ss'}}   -   {{reservation.checkoutDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span>
+        <span>{{'COMMON.ARRIVAL_DATE' | translate}}: {{reservation.beginDate | date: 'MM/dd/yyyy'}}</span>
+        <br/>
+        <span class="pull-left">
+          <mat-icon>event</mat-icon>
+        </span>
+        <span>{{'COMMON.DEPARTURE_DATE' | translate}}: {{reservation.endDate | date: 'MM/dd/yyyy'}}</span>
         <br />
         <span class="pull-left">
           <mat-icon>emoji_people</mat-icon>
@@ -158,6 +163,11 @@
           <mat-icon>event_seat</mat-icon>
         </span>
         {{'COMMON.CUSTOMER'|translate}} : {{reservation.firstName}} {{reservation.lastName}}
+        <br/>
+        <span class="pull-left">
+          <mat-icon>phone</mat-icon>
+        </span>
+        {{'COMMON.PHONE'|translate}} : {{(reservation.country?'(+'+reservation.country.code+') ':'') + reservation.phone}}
       </div>
       <div class="tile-footer">
         <span class="pull-left">
@@ -175,7 +185,6 @@
         <span class="pull-left">
           <mat-icon>cached</mat-icon>
         </span>
-        <span *ngIf="reservation.status === 0"> {{'COMMON.NEW'|translate}}</span>
         <span *ngIf="reservation.status === 1"> {{'COMMON.RESERVED'|translate}}</span>
         <span *ngIf="reservation.status === 2"> {{'COMMON.CONFIRMED'|translate}}</span>
         <span *ngIf="reservation.status === 3"> {{'COMMON.CHECKEDIN'|translate}}</span>
@@ -183,6 +192,17 @@
         <span *ngIf="reservation.status === 99"> {{'COMMON.CANCELLED'|translate}}</span>
       </div>
       <div class="tile-body">
+
+        <span class="pull-left">
+          <mat-icon>event</mat-icon>
+        </span>
+        <span>{{'COMMON.CHECKIN_DATE' | translate}}: {{reservation.checkinDate | date: 'MM/dd/yyyy hh:mm:ss a'}}</span>
+        <br/>
+        <span class="pull-left">
+          <mat-icon>event</mat-icon>
+        </span>
+        <span>{{'COMMON.CHECKOUT_DATE' | translate}}: {{reservation.checkoutDate | date: 'MM/dd/yyyy hh:mm:ss a'}}</span>
+        <br />
 
         <span class="pull-left">
           <mat-icon>people</mat-icon>

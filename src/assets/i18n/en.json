@@ -880,7 +880,11 @@
 		"TO_STORE": "Beneficiary Store",
 		"RESPONSIBLE": "Responsible",
 		"RESERVED": "Reserved",
-		"HOTEL": "Hotel"
+		"HOTEL": "Hotel",
+		"ARRIVAL_DATE": "Arrival Date",
+		"DEPARTURE_DATE": "Departure Date",
+		"CHECKIN_DATE": "Actual Arrival Date",
+		"CHECKOUT_DATE": "Actual Departure Date"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

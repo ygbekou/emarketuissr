@@ -882,7 +882,11 @@
     "TO_STORE": "Boutique bénéficiaire",
     "RESPONSIBLE": "Responsable",
     "RESERVED": "Réservé",
-		"HOTEL": "Hotel"
+		"HOTEL": "Hotel",
+		"ARRIVAL_DATE": "Date d'arrivée",
+		"DEPARTURE_DATE": "Date de départ",
+		"CHECKIN_DATE": "Date d'arrivée actuelle",
+		"CHECKOUT_DATE": "Date de départ actuelle "
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
