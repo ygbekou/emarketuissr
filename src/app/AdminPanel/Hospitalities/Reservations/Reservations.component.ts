@@ -48,7 +48,7 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
   }
 
   private clear() {
-    const oType = this.searchCriteria ? this.searchCriteria.source : 1;
+    const oType = this.searchCriteria ? this.searchCriteria.source : 2;
     this.searchCriteria = new ReservationSearchCriteria();
     this.searchCriteria.source = oType;
     this.searchCriteria.userId = this.userId;
