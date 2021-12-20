@@ -2822,7 +2822,7 @@ export class Room {
   constructor() {
     this.roomType = new RoomType();
     this.building = new Building();
-    this.status = 1;
+    this.status = 0;
   }
 }
 

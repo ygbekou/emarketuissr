@@ -43,7 +43,7 @@
                 <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}
                 </th>
                 <td mat-cell *matCellDef="let room">
-                  {{room.status === 0 ? ('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</td>
+                  {{room.status === 0 ? ('COMMON.AVAILABLE'|translate):('COMMON.RESERVED'|translate)}}</td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="roomsColumns"></tr>
