@@ -879,7 +879,8 @@
 		"FROM_STORE": "Source Store",
 		"TO_STORE": "Beneficiary Store",
 		"RESPONSIBLE": "Responsible",
-		"RESERVED": "Reserved"
+		"RESERVED": "Reserved",
+		"HOTEL": "Hotel"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

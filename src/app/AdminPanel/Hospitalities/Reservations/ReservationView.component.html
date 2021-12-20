@@ -147,7 +147,7 @@
         <span class="pull-left">
           <mat-icon>event</mat-icon>
         </span>
-        {{reservation.createDate | date: 'MM/dd/yyyy hh:mm:ss'}}
+        <span>{{reservation.checkinDate | date: 'MM/dd/yyyy hh:mm:ss'}}   -   {{reservation.checkoutDate | date: 'MM/dd/yyyy hh:mm:ss'}}</span>
         <br />
         <span class="pull-left">
           <mat-icon>emoji_people</mat-icon>
@@ -157,7 +157,7 @@
         <span class="pull-left">
           <mat-icon>event_seat</mat-icon>
         </span>
-        Table : {{reservation.firstName}} {{reservation.lastName}}
+        {{'COMMON.CUSTOMER'|translate}} : {{reservation.firstName}} {{reservation.lastName}}
       </div>
       <div class="tile-footer">
         <span class="pull-left">
@@ -185,7 +185,7 @@
       <div class="tile-body">
 
         <span class="pull-left">
-          <mat-icon>shopping_cart</mat-icon>
+          <mat-icon>people</mat-icon>
         </span>
         {{'COMMON.NBR_ADULT'|translate}} :
         {{ reservation.nbrAdult }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

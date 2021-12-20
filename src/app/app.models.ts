@@ -2723,6 +2723,8 @@ export class Reservation {
   public storeId: number;
   public beginDate: Date;
   public endDate: Date;
+  public checkinDate: Date;
+  public checkoutDate: Date;
   public rebate: number;
   public price: number;
   public total: number;

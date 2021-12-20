@@ -282,8 +282,8 @@
     "CONFIRM": "Confirmer",
     "CONFIRM_PASSWORD": "Confirmer mot de passe",
     "CONFIRMED": "Confirmé",
-    "CHECKEDIN": "Arrivé",
-    "CHECKEDOUT": "Parti",
+    "CHECKEDIN": "Enregistré",
+    "CHECKEDOUT": "Cloturé",
     "CONNEXION": "Connexion",
     "CONTACT": "Contact",
     "CONTACT_INFO": "Contact",
@@ -881,7 +881,8 @@
     "FROM_STORE": "Boutique source",
     "TO_STORE": "Boutique bénéficiaire",
     "RESPONSIBLE": "Responsable",
-    "RESERVED": "ReservÃ©"
+    "RESERVED": "Réservé",
+		"HOTEL": "Hotel"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
