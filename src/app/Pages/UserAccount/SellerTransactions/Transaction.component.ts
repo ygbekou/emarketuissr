@@ -216,6 +216,24 @@ export class TransactionComponent extends BaseComponent implements OnInit {
         () => console.log('Reopen Transaction complete'));
   }
 
+    reject() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.transaction.modifiedBy = +this.appService.tokenStorage.getUserId();
+
+    this.appService.saveWithUrl('/service/finance/rejectTransaction/', this.transaction)
+      .subscribe((data: Transaction) => {
+        this.processResult(data, this.transaction, null);
+        this.transaction = data;
+        this.transaction.storeName = this.store.name;
+        this.transactionSaveEvent.emit(this.transaction);
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Reopen Transaction complete'));
+  }
+
   approve() {
     this.justSubmitted = true;
     this.saving = true;
