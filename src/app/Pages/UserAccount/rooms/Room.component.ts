@@ -109,6 +109,8 @@ export class RoomComponent extends BaseComponent implements OnInit {
       return;
     }
 
+    this.setToggles();
+
     this.room.building = this.building;
     this.saving = true;
     this.messages = '';
