@@ -66,7 +66,8 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Accounting dashboard', url: '/account/sales-finance-dashboard', icon: 'dashboard' },
       { name: 'Expenses', url: '/account/transactions', icon: 'receipt_long' },
       { name: 'Purchase Orders', url: '/account/purchase-orders', icon: 'shopping_basket' },
-      { name: 'Bills', url: '/account/seller-bills', icon: 'receipt' }
+      { name: 'Bills', url: '/account/seller-bills', icon: 'receipt' },
+      { name: 'Funds', url: '/account/funds', icon: 'money' },
     ]
   }, {
     name: 'Shipping',
@@ -147,7 +148,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Tableau de bord', url: '/account/sales-finance-dashboard', icon: 'dashboard' },
       { name: 'Dépenses', url: '/account/transactions', icon: 'receipt_long' },
       { name: 'Commandes', url: '/account/purchase-orders', icon: 'shopping_basket' },
-      { name: 'Factures', url: '/account/seller-bills', icon: 'receipt' }
+      { name: 'Factures', url: '/account/seller-bills', icon: 'receipt' },
+      { name: 'Fonds', url: '/account/funds', icon: 'money' },
     ]
   }, {
     name: 'Livraisons',

@@ -1,0 +1,72 @@
+<a mat-button [routerLink]="['/admin/fundTypes']">{{'COMMON.MENU' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" [routerLink]="['/admin/fundTypes']">
+  <h5>{{'COMMON.FUND_TYPE' | translate}}</h5>
+</a>
+<app-fund-type (saveEvent)="onSave($event)"></app-fund-type>
+<fieldset>
+  <legend>
+    <h5 style="color:#00008b">{{'COMMON.LIST' | translate}}</h5>
+  </legend>
+  <div fxLayout="row wrap">
+    <div fxFlex="100" fxFlex.gt-sm="90" class="p-1">
+      <mat-form-field appearance="outline" class="w-100">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+          autocomplete="off">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+    <mat-icon>done</mat-icon> {{messages}}
+  </div>
+  <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+    <mat-icon>close</mat-icon> {{messages}}
+  </div>
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
+        <td mat-cell *matCellDef="let fundTypeDesc"> {{fundTypeDesc.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="approverOnly">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.APPROVER_ONLY' | translate}} </th>
+        <td mat-cell *matCellDef="let fundTypeDesc">
+          <mat-checkbox [checked]="fundTypeDesc?.fundType?.approverOnly === 1" [disabled]="true">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+        <td mat-cell *matCellDef="let fundTypeDesc">
+          {{fundTypeDesc?.fundType?.status === 1 ? ('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let fundTypeDesc">
+          <button mat-icon-button color="primary"
+            (click)="fundTypeView.getDescriptions(fundTypeDesc.fundType.id)"
+            matTooltip="{{'COMMON.EDIT' | translate}}" class="remove">
+            <mat-icon>edit</mat-icon>
+          </button>
+          &nbsp;&nbsp;
+          <button mat-icon-button color="warn" (click)="remove(fundTypeDesc)"
+            matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let fundTypeDesc; columns: displayedColumns;">
+      </tr>
+    </table>
+    <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+  </div>
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</fieldset>

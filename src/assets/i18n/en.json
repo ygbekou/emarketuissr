@@ -884,7 +884,11 @@
 		"ARRIVAL_DATE": "Arrival Date",
 		"DEPARTURE_DATE": "Departure Date",
 		"CHECKIN_DATE": "Actual Arrival Date",
-		"CHECKOUT_DATE": "Actual Departure Date"
+		"CHECKOUT_DATE": "Actual Departure Date",
+		"FUND_STATUS":"Fund Status",
+		"FUND_TYPE":"Fund Type",
+		"FUND_DATE":"Fund Date",
+		"FUNDS": "Funds"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

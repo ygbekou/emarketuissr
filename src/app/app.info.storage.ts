@@ -32,6 +32,7 @@ export class AppInfoStorage {
   public manufacturers: any = [];
   public attributeGroups: any = [];
   public transactionTypes: any = [];
+  public fundTypes: any = [];
   public services: any = [];
   public optionTypes: any = ['Select', 'Radio', 'Checkbox', 'Text', 'Textarea', 'Date', 'Time', 'Date & Time'];
   public optionPrefixes: any = ['+', '-'];

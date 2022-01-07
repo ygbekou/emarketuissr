@@ -1,0 +1,199 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+</div>
+<form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
+  <div fxLayout="row wrap" *ngIf="store?.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+          *ngIf="!fund.id || (fund.id && fund.status < 5)" style="float: left;" type="submit"
+          [disabled]="!f.form.valid ||!fund.paidBy|| !fund.paidBy.id">
+          <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="submit()"
+          matTooltip="{{'COMMON.NO_CHANGE_ALLOWED' | translate}}" *ngIf="fund.id && fund.status < 5"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.SUBMIT' | translate}}</span>
+          <mat-icon>done_all</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="primary" (click)="approve()" matTooltip="{{'COMMON.APPROVE' | translate}}"
+          *ngIf="fund.id && fund.status === 5 
+            && storeEmployee.canApprove === 1" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.APPROVE' | translate}}</span>
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="reopen()" matTooltip="{{'COMMON.REOPEN' | translate}}" *ngIf="fund.id 
+            && (fund.status === 5 || fund.status === 6) && storeEmployee.canApprove === 1"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.REOPEN' | translate}}</span>
+          <mat-icon>undo</mat-icon>
+        </button>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="reject()" matTooltip="{{'COMMON.REJECT' | translate}}" *ngIf="fund.id 
+            && (fund.status === 5 || fund.status === 6) && storeEmployee.canApprove === 1"
+          class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.REJECT' | translate}}</span>
+          <mat-icon>search_off</mat-icon>
+        </button>
+      </div>
+
+
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="warn" (click)="cancel()" matTooltip="{{'COMMON.CANCEL' | translate}}"
+          *ngIf="fund.id && fund.status < 5" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+      <div class="text-center mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-center mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_PAYER' | translate}}
+            <!-- <font color="red">*</font> -->
+          </mat-label>
+          <mat-select [(ngModel)]="fund.paidBy" appearance="outline" name="paidBy" [compareWith]="compareObjects"
+            #paidBy="ngModel" required>
+            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
+              {{storeEmployee.employee.firstName}} {{storeEmployee.employee.lastName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!--   <mat-error *ngIf="f.submitted && paidBy.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error> -->
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.FUND_TYPE' | translate}}
+            <!-- <font color="red">*</font> -->
+          </mat-label>
+          <mat-select [(ngModel)]="fund.fundType" appearance="outline" name="fundType"
+            [compareWith]="compareObjects" #fundType="ngModel" required>
+            <mat-option *ngFor="let fundTypeDesc of fundTypes" [value]="fundTypeDesc.fundType">
+              {{fundTypeDesc.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!--  <mat-error *ngIf="f.submitted && fundType.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error> -->
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.FUND_DATE' | translate}}</mat-label>
+          <input matInput [matDatepicker]="picker" class="form-control" id="fundDate"
+            [(ngModel)]="fund.fundDate" name="fundDate" #fundDate="ngModel" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.SELECT_RECEIVER' | translate}}
+            <!-- <font color="red">*</font> -->
+          </mat-label>
+          <mat-select [(ngModel)]="fund.receivedBy" appearance="outline" name="receivedBy"
+            [compareWith]="compareObjects" #receivedBy="ngModel">
+            <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee">
+              {{storeEmployee.employee.lastName}} {{storeEmployee.employee.firstName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!--  <mat-error *ngIf="f.submitted && receiver.invalid" severity="error">
+          {{ 'VALIDATION.FIELD_REQUIRED' | translate }} - {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+        </mat-error> -->
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.TOTAL' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="fund.amount" name="amount"
+            pattern="-?(0|([1-9]\d*))(\.\d{2})?" #amount="ngModel" required>
+          <!--   <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>  -->
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.COMMENTS' | translate}}</mat-label>
+          <textarea matInput rows="7" cols="50" class="form-control" id="description"
+            [(ngModel)]="fund.description" name="description" #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
+        <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
+          [linkEnabled]="false">
+        </input-file>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+        <mat-label>{{'COMMON.FUND_STATUS' | translate}}</mat-label><br />
+
+        <h4 *ngIf="fund.status === 0" style="color:#283593;">
+          {{'COMMON.DRAFT' | translate}}
+        </h4>
+        <h4 *ngIf="fund.status === 4" style="color:#FF0000;">
+          {{'COMMON.REJECTED' | translate}}
+        </h4>
+        <h4 *ngIf="fund.status === 5" style="color:#006400">
+          {{'COMMON.SUBMITTED' | translate}}
+        </h4>
+        <h4 *ngIf="fund.status === 6" style="color:#0000FF">
+          {{'COMMON.APPROVED' | translate}}
+        </h4>
+        <h4 *ngIf="fund.status === 9" style="color:#FF0000;">
+          {{'COMMON.CANCELLED' | translate}}
+        </h4>
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33"
+        *ngIf="fund.approvedBy && fund.approvedBy.id > 0 " class="p-1">
+        <mat-label>{{'COMMON.APPROVED_BY' | translate}}</mat-label><br />
+
+        <h4 style="color:#0000FF;">
+          {{fund.approverName}}
+        </h4>
+      </div>
+    </div>
+
+  </div>
+</form>

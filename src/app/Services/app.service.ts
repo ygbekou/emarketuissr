@@ -1046,6 +1046,13 @@ export class AppService {
                }, error => console.log(error),
                   () => console.log('Get services complete'));
 
+            this.getAllByCriteria('FundTypeDescription', parameters, ' ')
+               .subscribe((data3: any[]) => {
+                  this.appInfoStorage.fundTypes = data3;
+               }, error => console.log(error),
+                  () => console.log('Get fundTypes complete'));
+
+
             parameters = [];
 
          }, error => console.log(error),

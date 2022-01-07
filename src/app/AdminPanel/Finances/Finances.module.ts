@@ -40,6 +40,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from '../../Global/Global.module';
 import { TransactionTypeComponent } from './TransactionType/TransactionType.component';
 import { TransactionTypesComponent } from './TransactionTypes/TransactionTypes.component';
+import { FundTypeComponent } from './FundType/FundType.component';
+import { FundTypesComponent } from './FundTypes/FundTypes.component';
 import { FinancesRoutes } from './Finances.routing';
 import { SupplierComponent } from './Suppliers/Supplier.component';
 import { SuppliersComponent } from './Suppliers/Suppliers.component';
@@ -55,6 +57,8 @@ import { BillPaymentComponent } from './Billings/BillPayment.component';
 
 @NgModule({
   declarations: [
+    FundTypeComponent,
+    FundTypesComponent,
     TransactionTypeComponent,
     TransactionTypesComponent,
     SupplierComponent,

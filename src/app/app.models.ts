@@ -3032,3 +3032,73 @@ export class PrdHistSearchCriteria {
   beginDate: Date;
   endDate: Date;
 }
+
+
+export class Fund {
+  id: number;
+  fundType: FundType;
+  store: Store;
+  paidBy: User;
+  receivedBy: User;
+  fundDate: Date;
+  amount: number;
+  image: string;
+  description: string;
+  status = 0;
+
+  storeName: string;
+  modifiedBy: number;
+  receivedByName: string;
+  paidByName: string;
+
+  approvedBy: User;
+  approvedDate: Date;
+  approverName: string;
+
+  type = 'Fund';
+
+  constructor() {
+    this.store = new Store();
+    this.fundDate = new Date();
+  }
+}
+
+export class FundSearchCriteria {
+
+  id: number;
+  fundId: number;
+  fundTypeId: number;
+  storeId: number;
+  storeName: string;
+  receiverId: number;
+  receiverName: string;
+  paidById: number;
+  paidByName: string;
+  status: number;
+  beginDate: Date;
+  endDate: Date;
+  userId: number;
+  minAmount: number;
+  maxAmount: number;
+}
+
+export class FundType {
+  id: number;
+  approverOnly = 0;
+  status = 1;
+  fundTypeDescriptions: FundTypeDescription[] = [];
+  name: string;
+
+  type = 'FundType';
+}
+
+export class FundTypeDescription {
+  id: number;
+  language: Language;
+  fundType: FundType;
+  name: string;
+
+  type = 'FundTypeDescription';
+}
+
+

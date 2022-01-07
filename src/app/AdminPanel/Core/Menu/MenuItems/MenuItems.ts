@@ -66,6 +66,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'account_balance',
     children: [
+      { state: 'fundTypes', name: 'Fund Types', type: 'link' },
       { state: 'transactionTypes', name: 'Transaction Types', type: 'link' },
       { state: 'services', name: 'Services', type: 'link' },
       { state: 'suppliers', name: 'Suppliers', type: 'link' },
@@ -167,6 +168,7 @@ const MENUITEMS_FR = [
     type: 'sub',
     icon: 'account_balance',
     children: [
+      { state: 'fundTypes', name: 'Types de Fond', type: 'link' },
       { state: 'transactionTypes', name: 'Types de Transaction', type: 'link' },
       { state: 'services', name: 'Services', type: 'link' },
       { state: 'suppliers', name: 'Fournisseurs', type: 'link' },

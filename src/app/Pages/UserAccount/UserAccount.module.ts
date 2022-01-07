@@ -95,6 +95,8 @@ import { IngredientTransferComponent } from './SellerTransfers/IngredientTransfe
 import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHistories.component';
 import { PrdTransferHistoriesComponent } from './SellerTransferHistories/PrdTransferHistories.component';
 import { IngTransferHistoriesComponent } from './SellerTransferHistories/IngTransferHistories.component';
+import { FundComponent } from './SellerFunds/Fund.component';
+import { FundsComponent } from './SellerFunds/Funds.component';
 
 @NgModule({
   imports: [
@@ -213,7 +215,9 @@ import { IngTransferHistoriesComponent } from './SellerTransferHistories/IngTran
     IngredientTransferComponent,
     TransferHistoriesComponent,
     PrdTransferHistoriesComponent,
-    IngTransferHistoriesComponent 
+    IngTransferHistoriesComponent,
+    FundComponent,
+    FundsComponent
   ],
   exports: [
     StoresComponent,
