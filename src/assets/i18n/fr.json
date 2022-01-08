@@ -890,7 +890,11 @@
     "FUND_STATUS":"Etat de fond",
     "FUND_TYPE":"Type de fond",
     "FUND_DATE":"Date de fond",
-		"FUNDS": "Fonds"
+		"FUNDS": "Fonds",
+		"INVENTORY_VALUE": "Valeur en inventaire",
+		"RECEIVED_PAYMENTS": "Payements recus",
+		"OUSTANDING_PAYMENTS": "Total Impayés",
+		"BALANCE": "Balance"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

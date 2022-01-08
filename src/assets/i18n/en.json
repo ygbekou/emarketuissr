@@ -888,7 +888,11 @@
 		"FUND_STATUS":"Fund Status",
 		"FUND_TYPE":"Fund Type",
 		"FUND_DATE":"Fund Date",
-		"FUNDS": "Funds"
+		"FUNDS": "Funds",
+		"INVENTORY_VALUE": "Inventory Value",
+		"RECEIVED_PAYMENTS": "Received Payments",
+		"OUSTANDING_PAYMENTS": "Oustanding Payments",
+		"BALANCE": "Balance"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

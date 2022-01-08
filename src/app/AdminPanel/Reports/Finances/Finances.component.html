@@ -138,6 +138,78 @@
          </div>
       </div>
 
+      <!--  Second row   -->
+
+      <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="storeId === 17">
+         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
+            <div class="tile tile-primary">
+               <div class="tile-heading">{{'COMMON.INVENTORY_VALUE'|translate}} <span class="pull-right">
+                     <i *ngIf="dashboard.onlineCustomers > dashboard.storeCustomers" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.onlineCustomers <= dashboard.storeCustomers" class="fa fa-caret-down"></i>
+                     {{(dashboard.spendingTotal > 0 ? (100 * dashboard.paidBillTotal / dashboard.spendingTotal) : 0)|number:'1.0-0'}}%</span>
+               </div>
+               <div class="tile-body">
+                  <i class="fa fa-money-bill-wave"></i>
+                  <h2 class="pull-right">{{(dashboard.inventoryValue ? dashboard.inventoryValue : 0)|number:'1.0-0'}}</h2>
+               </div>
+               <div class="tile-footer">
+                  <a
+                     [routerLink]="userId?'/account/my-items':'/admin/products'">{{'COMMON.VIEW_MORE'|translate}}...</a>
+               </div>
+            </div>
+         </div>
+         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
+            <div class="tile tile-primary">
+               <div class="tile-heading">{{'COMMON.RECEIVED_PAYMENTS'|translate}} <span class="pull-right">
+                     <i *ngIf="dashboard.receivedPayments > dashboard.oustandingPayments" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.receivedPayments <= dashboard.oustandingPayments" class="fa fa-caret-down"></i>
+                     {{(dashboard.totalPayments > 0 ? (100 * dashboard.receivedPayments / dashboard.totalPayments) : 0)|number:'1.0-0'}}%</span>
+               </div>
+               <div class="tile-body">
+                  <i class="fa fa-piggy-bank"></i>
+                  <h2 class="pull-right">{{(dashboard.receivedPayments ? dashboard.receivedPayments : 0)|number:'1.0-0'}}</h2>
+               </div>
+               <div class="tile-footer">
+                  <br/>
+               </div>
+            </div>
+         </div>
+         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
+            <div class="tile tile-primary">
+               <div class="tile-heading">{{'COMMON.OUSTANDING_PAYMENTS'|translate}} <span class="pull-right">
+                     <i *ngIf="dashboard.oustandingPayments > dashboard.receivedPayments" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.oustandingPayments <= dashboard.receivedPayments" class="fa fa-caret-down"></i>
+                     {{(dashboard.totalPayments > 0 ? (100 * dashboard.oustandingPayments / dashboard.totalPayments) : 0)|number:'1.0-0'}}%</span>
+               </div>
+               <div class="tile-body">
+                  <i class="fa fa-piggy-bank"></i>
+                  <h2 class="pull-right">{{(dashboard.oustandingPayments ? dashboard.oustandingPayments : 0)|number:'1.0-0'}}</h2>
+               </div>
+               <div class="tile-footer">
+                  <br/>
+               </div>
+            </div>
+         </div>
+
+         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
+            <div class="tile tile-primary">
+               <div class="tile-heading">{{'COMMON.BALANCE'|translate}} <span class="pull-right">
+                     <i *ngIf="dashboard.mainCompanyBalance > 0" class="fa fa-caret-up"></i>
+                     <i *ngIf="dashboard.mainCompanyBalance <= 0" class="fa fa-caret-down"></i>
+                     100%</span>
+               </div>
+               <div class="tile-body">
+                  <i class="fa fa-money-check-alt"></i>
+                  <h2 class="pull-right">{{(dashboard.mainCompanyBalance ? dashboard.mainCompanyBalance : 0)|number:'1.0-0'}}</h2>
+               </div>
+               <div class="tile-footer">
+                  </div>
+            </div>
+         </div>
+      </div>
+
+
+<!--    Third row    -->
       <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="24" fxFlex.lg="24" fxFlex.xl="24">
             <div class="tile tile-primary">
