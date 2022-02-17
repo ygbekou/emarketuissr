@@ -9,6 +9,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BuildingComponent } from './Building.component';
 import { FormControl } from '@angular/forms';
 import { RoomsComponent } from '../rooms/Rooms.component';
+import { BldgImagesComponent } from './BldgImages.component';
 
 @Component({
   selector: 'app-buildings',
@@ -18,6 +19,7 @@ import { RoomsComponent } from '../rooms/Rooms.component';
 export class BuildingsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(BuildingComponent, { static: false }) buildingView: BuildingComponent;
+  @ViewChild(BldgImagesComponent, { static: false }) bldgImagesView: BldgImagesComponent;
   @ViewChild(RoomsComponent, { static: false }) roomsView: RoomsComponent;
 
   displayedColumns: string[] = ['name', 'image', 'status'];
@@ -132,6 +134,11 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
 
       if (this.buildingView) {
         this.buildingView.getBuilding(building);
+      }
+
+      if (this.bldgImagesView) {
+        this.bldgImagesView.bldgId = building.id;
+        this.bldgImagesView.getBldg();
       }
 
       if (this.roomsView) {

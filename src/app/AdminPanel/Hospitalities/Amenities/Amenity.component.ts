@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Language, RoomType, RoomTypeDesc, Building, Amenity, AmenityDesc } from 'src/app/app.models';
+import { Language, RoomType, RoomTypeDesc, Building, Amenity, AmenityDesc, IconDesc } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -15,6 +15,7 @@ export class AmenityComponent extends BaseComponent implements OnInit {
 
   messages = '';
   amenity: Amenity;
+  iconDescs: IconDesc[];
 
   formData = new FormData();
   picture: any[] = [];
@@ -22,6 +23,8 @@ export class AmenityComponent extends BaseComponent implements OnInit {
   justSubmitted = false;
 
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.AmenityDesc';
+  ICON_CLASS_NAME = 'com.softenza.emarket.model.IconDesc';
+
   @Output() amenitySaveEvent = new EventEmitter<Amenity>();
 
   constructor(
@@ -40,6 +43,8 @@ export class AmenityComponent extends BaseComponent implements OnInit {
         this.getDescriptions(params.id);
       }
     });
+
+    this.getIcons();
 
   }
 
@@ -60,6 +65,18 @@ export class AmenityComponent extends BaseComponent implements OnInit {
       ad.name = '';
       this.amenity.amenityDescs.push(ad);
     }
+  }
+
+  getIcons() {
+    const parameters: string[] = [];
+    parameters.push('e.language.id = |langCode|' + this.appService.appInfoStorage.language.id + '|Integer');
+    parameters.push('e.icon.status = |staCode|1|Integer');
+    this.appService.getAllByCriteria(this.ICON_CLASS_NAME, parameters)
+      .subscribe((data: IconDesc[]) => {
+        this.iconDescs = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all OrderStatus complete'));
   }
 
   getDescriptions(amenityId: number) {

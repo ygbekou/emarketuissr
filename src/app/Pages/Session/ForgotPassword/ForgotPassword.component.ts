@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/app.models';
@@ -16,6 +16,10 @@ export class ForgotPasswordComponent implements OnInit {
   public loginForm: FormGroup;
   public hide = true;
   error: '';
+
+  @Output()
+  sendPasswordEvent = new EventEmitter<any>();
+  
   constructor(public fb: FormBuilder,
     public router: Router,
     private tokenStorage: TokenStorage,
@@ -37,6 +41,10 @@ export class ForgotPasswordComponent implements OnInit {
       if (user.email) {
         this.appService.resetPassword(user)
           .subscribe(() => {
+            this.sendPasswordEvent.emit(
+              this.translate.get(['MESSAGE.PASSWORD_SENT', 'COMMON.SUCCESS']).subscribe(res => {
+              this.error = res['MESSAGE.PASSWORD_SENT'];
+            }));
             this.translate.get(['MESSAGE.PASSWORD_SENT', 'COMMON.SUCCESS']).subscribe(res => {
               this.error = res['MESSAGE.PASSWORD_SENT'];
             })
@@ -48,4 +56,5 @@ export class ForgotPasswordComponent implements OnInit {
       });
     }
   }
+
 }

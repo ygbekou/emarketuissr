@@ -75,6 +75,10 @@
         </div>
       </mat-tab>
 
+      <mat-tab label="{{'COMMON.MEDIA' | translate}}" *ngIf="selectedBldgId > 0">
+        <app-bldg-images></app-bldg-images>
+      </mat-tab>
+
       <mat-tab label="{{'COMMON.ROOMS' | translate}}" *ngIf="selectedBldgId > 0">
         <app-rooms></app-rooms>
       </mat-tab>

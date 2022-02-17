@@ -26,13 +26,19 @@
   </div>
   <div class="mb-3">
     <!-- <mat-checkbox>Remember Me</mat-checkbox> -->
-    <span fxFlex></span> <a [routerLink]="['/session/forgot-password']">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
+    <span fxFlex></span>
+    <a [routerLink]="['/session/forgot-password']"
+      *ngIf="!forgotPasswordEvent">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
+    <a href="javascript:void(0);" (click)="forgotPassword()"
+      *ngIf="forgotPasswordEvent">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
   </div>
   <button color="accent" class="button-lg mb-3" mat-raised-button type="submit">
     {{'COMMON.SIGN_IN' | translate }}</button>
 
-  <button mat-button color="accent"  *ngIf="error">{{error}}</button>
+  <button mat-button color="accent" *ngIf="error">{{error}}</button>
   <p> <a mat-button [routerLink]="['/session/signup']" [queryParams]="{fromPage:fromPage}" color="accent"
       class="w-100">{{'COMMON.NEW_REGISTER' | translate }}</a>
+    <a href="javascript:void(0);" (click)="forgotPassword()"
+      *ngIf="forgotPasswordEvent">{{'COMMON.NEW_REGISTER'|translate}}?</a>
   </p>
 </form>

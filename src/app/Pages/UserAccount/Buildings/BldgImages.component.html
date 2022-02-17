@@ -1,0 +1,48 @@
+<form name="form" (ngSubmit)="f.form.valid && saveFiles()" #f="ngForm" validate>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+         <div class="text-center mt-2">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+               <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
+               <mat-icon>save</mat-icon>
+            </button> </div>
+         <div class="text-center mt-2" *ngIf="messages">
+            <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+         </div>
+      </div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+            <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.FIRST_IMAGE' | translate}}</span><span
+                  class="text-muted mx-3">(max: 1 image)</span></p>
+            <input-file [(ngModel)]="image1Files" name="firstFile" #firstFile="ngModel" fileLimit="1" fileAccept="image/*"
+               [linkEnabled]="false" multiple>
+            </input-file>
+         </div>
+         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+            <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.SECOND_IMAGE' | translate}}</span><span
+                  class="text-muted mx-3">(max: 1 image)</span></p>
+            <input-file [(ngModel)]="image2Files" name="secondFile" #secondFile="ngModel" fileLimit="1" fileAccept="image/*"
+               [linkEnabled]="false" multiple>
+            </input-file>
+         </div>
+         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
+            <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.THIRD_IMAGE' | translate}}</span><span
+                  class="text-muted mx-3">(max: 1 image)</span></p>
+            <input-file [(ngModel)]="image3Files" name="thirdFile" #thirdFile="ngModel" fileLimit="1" fileAccept="image/*"
+               [linkEnabled]="false" multiple>
+            </input-file>
+         </div>
+      </div>
+   </div>
+   <div fxLayout="row wrap">
+      <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
+         <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.OTHER_PICTURES' | translate}}</span><span
+               class="text-muted mx-3">(max: 20 images)</span></p>
+         <input-file [(ngModel)]="files" name="gallery" #gallery="ngModel" fileLimit="20" fileAccept="image/*"
+            [linkEnabled]="false" multiple>
+         </input-file>
+      </div>
+   </div>
+</form>

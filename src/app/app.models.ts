@@ -145,6 +145,8 @@ export class Employee {
 export class AuthToken {
   id: number;
   userName: string;
+  email: string;
+  phone: string;
   password: string;
   firstName: string;
   lastName: string;
@@ -824,6 +826,11 @@ export class Store extends BaseModel {
   waitressPrint: number;
   waitressClose: number;
   reasonRequired: number;
+  cityCountryName: string;
+  checkinHour: string;
+  checkoutHour: string;
+  pymtMethodReq: number;
+
   type = 'Store';
   constructor() {
     super();
@@ -1835,6 +1842,8 @@ export class PaymentMethodChangeVO {
   paymentMethodCode: string;
   paymentMethodCodeId: number;
   stripePaymentMethodId: string;
+  last4Digits: string;
+  tmoneyPhone: string;
 }
 
 export class CustomerHistory {
@@ -2231,6 +2240,30 @@ export class IngredientDescription {
   mediumDescription: string;
 
   type = 'IngredientDescription';
+}
+
+export class Icon extends BaseModel {
+  id: number;
+  code: string;
+  status = 1;
+  modifiedBy: number;
+  iconDescs: IconDesc[] = [];
+  name: string;
+
+  type = 'Icon';
+  action: string;
+}
+
+export class IconDesc {
+  id: number;
+  icon: Icon;
+  language: Language;
+  name: string;
+  desc: string;
+  shortDesc: string;
+  mediumDesc: string;
+
+  type = 'IconDesc';
 }
 
 export class StoreIngredient {
@@ -2718,76 +2751,139 @@ export class BillPayment {
 
 
 export class Reservation {
-  public id: number;
-  public userId: number;
-  public storeId: number;
-  public beginDate: Date;
-  public endDate: Date;
-  public checkinDate: Date;
-  public checkoutDate: Date;
-  public rebate: number;
-  public price: number;
-  public total: number;
-  public quantity: number;
-  public firstName: string;
-  public lastName: string;
-  public idType: string;
-  public idNbr: string;
-  public nbrAdult: string;
-  public nbrChild: string;
-  public contact: string;
-  public taxFees: number;
-  public status: number;
-  public offline: number;
-  public modifiedBy: number;
-  public storeDay: Date;
-  public createDate: Date;
-  public cashier: string;
+  id: number;
+  userId: number;
+  clientId: number;
+  storeId: number;
+  languageId: number;
+  beginDate: Date;
+  endDate: Date;
+  checkinDate: Date;
+  checkoutDate: Date;
+  rebate: number;
+  price: number;
+  total: number;
+  quantity: number;
+  firstName: string;
+  lastName: string;
+  sex: string;
+  idType: number;
+  idNbr: string;
+  nbrAdult: string;
+  nbrChild: string;
+  contact: string;
+  taxFees: number;
+  status: number;
+  offline: number;
+  modifiedBy: number;
+  storeDay: Date;
+  createDate: Date;
+  cashier: string;
   // transient
-  public tempId: number;
+  tempId: number;
+  country: Country;
+  phone: string;
+  days: number;
+  nbrRooms: number;
+  notMainGuest: boolean;
+  saveDetails: boolean;
 
-  public acceptLanguage: string;
-  public affialiateId: number;
-  public ip: string;
-  public email: string;
-  public paymentAddress1: string;
-  public paymentAddress2: string;
-  public paymentAddressFormat: string;
-  public paymentCity: string;
-  public paymentCode: string;
-  public paymentCompany: string;
-  public paymentCountry: string;
-  public paymentCountryId: string;
-  public paymentCustomField: string;
-  public paymentfirstName: string;
-  public paymentlastName: string;
-  public paymentMethod: string;
-  public paymentPostcode: string;
-  public paymentZone: string;
-  public paymentZoneId: number;
-  public shippingAddress1: string;
-  public shippingAddress2: string;
-  public shippingAddressFormat: string;
-  public shippingCity: string;
-  public shippingCode: string;
-  public shippingCompany: string;
-  public shippingCountry: string;
-  public shippingCountryId: number;
-  public shippingCustomField: string;
-  public shippingfirstName: string;
-  public shippinglastName: string;
-  public shippingMethod: string;
-  public shippingPostcode: string;
-  public shippingZone: string;
-  public shippingZoneId: number;
-  public storeName: string;
-  public storeUrl: string;
-  public telephone: string;
-  public comments: string;
-  public userAgent: string;
+  acceptLanguage: string;
+  affialiateId: number;
+  ip: string;
+  email: string;
+  confirmEmail: string;
+  address1: string;
+  address2: string;
+  city: string;
+  zipCode: string;
+  postCode: string;
+  telephone: string;
+  guestFirstName: string;
+  guestLastName: string;
+  guestEmail: string;
 
-  public reservationRooms: ReservationRoom[];
-  public type = 'Reservation';
+  nameOnCard: string;
+  stripePaymentMethodId: string;
+  pymtMethodCode: string;
+  pymtMethodName: string;
+  last4Digits: string;
+  cardTypeIndex: string;
+  tmoney: Tmoney;
+  flooz: Flooz;
+
+  storeName: string;
+  storeUrl: string;
+  comments: string;
+  userAgent: string;
+
+  currencyId: number;
+	currencyCode: string;
+  currencyDecimalPlace: number;
+
+  reservationRooms: ReservationRoom[];
+  roomTypeIds: number[];
+
+  type = 'Reservation';
+}
+
+export class ReservationVO {
+  reservationId: number;
+	userId: number;
+	storeId: number;
+	storeName: string;
+	image: string;
+	cFirstName: string;
+	cLastName: string;
+	gFirstName: string;
+	gLastName: string;
+	gEmail: string;
+	cashier: string;
+	days: number;
+	nbrAdult: number;
+	nbrChild: number;
+	nbrRooms: number;
+	email: string;
+	phone: string;
+	addr1: string;
+	addr2: string;
+	city: string;
+	zoneId: number;
+	zone: string;
+	zipCode: string;
+	countryId: number;
+	country: string;
+	paymentMethod: string;
+	price: number;
+	rebate: number;
+	total: number;
+	currencyCode: string;
+	currencyId: number;
+	symbolLeft: string;
+	symbolRight: string;
+	currencyDecimalPlace: string;
+	createDate: Date;
+	beginDate: Date;
+	endDate: Date;
+	checkinDate: Date;
+	checkoutDate: Date;
+	status: number;
+
+	reservationRooms: ReservationRoomVO[];
+
+}
+
+export class ReservationRoomVO {
+  id: number;
+	roomId: number;
+	reservId: number;
+	floorNumber: number;
+	roomName: string;
+	roomTypeName: string;
+	buildingName: string;
+	price: number;
+	nbrChild: number;
+	nbrAdult: number;
 }
 
 export class ReservationRoom {
@@ -2868,14 +2964,17 @@ export class RoomTypeDesc {
 }
 
 export class Amenity {
-  public id: number;
-  public image: string;
-  public status: number;
-  public amenityDescs: AmenityDesc[] = [];
-  public name: string;
-  public modifiedBy: number;
-  public type = 'Amenity';
-  public action: string;
+  id: number;
+  image: string;
+  status: number;
+  amenityDescs: AmenityDesc[] = [];
+  name: string;
+  modifiedBy: number;
+  iconId: number;
+  icon: Icon;
+  type = 'Amenity';
+  action: string;
+
   constructor() {
     this.status = 1;
   }
@@ -2906,15 +3005,22 @@ export class RoomTypeAmenity {
 }
 
 export class Building {
-  public id: number;
-  public storeId: number;
-  public image: string;
-  public status = 1;
-  public modifiedBy: number;
-  public name: string;
-  public nbrFloors: number;
-  public type = 'Building';
-  public action: string;
+  id: number;
+  storeId: number;
+  image: string;
+  image1: string;
+  image2: string;
+  image3: string;
+  status = 1;
+  modifiedBy: number;
+  name: string;
+  nbrFloors: number;
+  fileNames: string[];
+  remainingFileNames: string[] = [];
+  singleImage = false;
+  type = 'Building';
+  action: string;
+
   constructor() {
     this.status = 1;
   }
@@ -3102,3 +3208,131 @@ export class FundTypeDescription {
 }
 
 
+export class RoomVO {
+
+  id: number;
+  roomId: number;
+  floorNumber: number;
+	roomNumber: number;
+	roomTypeId: number;
+	roomTypeName: string;
+	cityName: string;
+  countryName: string;
+  price: number;
+
+	//Store
+	storeId: number;
+	storeName: string;
+	prodStoreId: number;
+	currencyId: number;
+	currencyCode: string;
+	symbolLeft: string;
+	symbolRight: string;
+	currencyDecimalPlace: number;
+
+	//
+	pQuantity: number;
+	pStockStatusId: number;
+	pPrice: number;
+	pPoints: number;
+	pTaxClassId: number;
+	pSold: number;
+	pPromo: number;
+	pStatus: number;
+	pMinimum: number;
+	pSortOrder: number;
+
+	fileNames: string[];
+	reviews: Review[];
+	ratingCountMaps: Map<number, number>;
+	taxRules: TaxRule[];
+
+	tax: number;
+	total: number;
+
+}
+
+
+export class RoomStoreVO {
+  id: number;
+  storeName: string;
+  image: string;
+  image1: string;
+  image2: string;
+  image3: string;
+  bldgId: number;
+	prodStoreId: number;
+	currencyId: number;
+	currencyCode: string;
+	symbolLeft: string;
+	symbolRight: string;
+  currencyDecimalPlace: number;
+  address1: string;
+  address2: string;
+  postCode: string;
+	cityName: string;
+	countryId: number;
+  countryName: string;
+  lowestPrice: number;
+  highestPrice: number;
+  rating: number;
+  ratingCount: number;
+  pymtMethodReq: number;
+
+	roomTyeVOs: RoomTypeVO[];
+
+  fileNames: string[];
+	reviews: Review[];
+	ratingCountMaps: Map<number, number>;
+	taxRules: TaxRule[];
+
+}
+
+export class RoomTypeVO {
+  id: number;
+	roomTypeName: string;
+	price: number;
+  qtyAvailable: number;
+
+  amenities: AmenityVO[];
+}
+
+export class RoomListVO {
+  roomTypes: string[];
+  roomStoreVOs: RoomStoreVO[];
+}
+
+export class AmenityVO {
+  id: number;
+	image: string;
+	name: string;
+	description: string;
+  language: Language;
+  iconId: string;
+  iconCode: string;
+
+}
+
+export class HotelSearchCriteria {
+  storeId: number;
+  priceMin: number;
+  priceMax: number;
+  roomTypeId: number;
+  roomTypeName: string;
+  checkinDate: Date;
+  checkoutDate: Date;
+  checkinTS: Date;
+  checkoutTS: Date;
+  isHourly = false;
+  beginHr: string;
+  endHr: string;
+  days: number;
+  text: string;
+  languageId: number;
+  rooms = 1;
+  adults = 1;
+  children = 0;
+  location: string;
+  address: Address;
+  withAmenities = false;
+}

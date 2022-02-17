@@ -92,7 +92,7 @@
           <div *ngIf="user.shippingAddress && pickUp === '0'">
             {{user.shippingAddress.firstName}} {{user.shippingAddress.lastName}}<br />
             {{user.shippingAddress.address1}} {{user.shippingAddress.address2}}<br />
-            {{user.shippingAddress.city}}, {{user.shippingAddress.zone.name}}
+            {{user.shippingAddress.city}}, {{user.shippingAddress?.zone?.name}}
             {{user.shippingAddress.postCode}}<br />
             {{user.shippingAddress.country.name}}<br />
           </div>
@@ -110,9 +110,9 @@
           <div *ngIf="user.billingAddress">
             {{user.billingAddress.firstName}} {{user.billingAddress.lastName}}<br />
             {{user.billingAddress.address1}} {{user.billingAddress.address2}}<br />
-            {{user.billingAddress.city}}, {{user.billingAddress.zone.name}}
+            {{user.billingAddress.city}}, {{user.billingAddress?.zone?.name}}
             {{user.billingAddress.postCode}}<br />
-            {{user.billingAddress.country.name}}<br>
+            {{user.billingAddress?.country?.name}}<br>
           </div>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">

@@ -38,6 +38,7 @@ import { ProductsToolbarComponent } from './products-toolbar/products-toolbar.co
 import { TranslateModule } from '@ngx-translate/core';
 import { MdePopoverModule } from '@material-extended/mde';
 import { PipesModule } from '../pipes/pipes.module';
+import { RoomGridComponent } from './Grid/RoomGrid/RoomGrid.component';
 
 @NgModule({
    imports: [
@@ -80,10 +81,12 @@ import { PipesModule } from '../pipes/pipes.module';
       Grid3Component,
       ReviewComponent,
       ShopDetailsComponent,
-      ProductsToolbarComponent
+      ProductsToolbarComponent,
+      RoomGridComponent
    ],
    exports: [
       ProductGridComponent,
+      RoomGridComponent,
       Grid3Component,
       ReviewComponent,
       ShopDetailsComponent,

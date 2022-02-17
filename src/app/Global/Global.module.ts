@@ -100,6 +100,7 @@ import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/Prod
 import { StoreCatsComponent } from './StoreCats/StoreCats.component';
 import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
+import { NumberRoomsPopupComponent } from '../Pages/rooms/RoomsList/NumberRoomsPopup.component';
 @NgModule({
    imports: [
       CommonModule,
@@ -202,7 +203,8 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       StoreHeaderComponent,
       ProductOptionPopupComponent,
       CommentPopupComponent,
-      StoreCatsComponent
+      StoreCatsComponent,
+      NumberRoomsPopupComponent,
    ],
    exports: [
       BrandslogoComponent,
@@ -260,7 +262,8 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       StoreHeaderComponent,
       ProductOptionPopupComponent,
       CommentPopupComponent,
-      StoreCatsComponent
+      StoreCatsComponent,
+      NumberRoomsPopupComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
@@ -268,7 +271,8 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       ReviewsComponent,
       TimerCountDownComponent,
       ProductOptionPopupComponent,
-      CommentPopupComponent
+      CommentPopupComponent,
+      NumberRoomsPopupComponent
    ],
    providers: [
       AuthGuardService,

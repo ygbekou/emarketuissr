@@ -103,7 +103,7 @@ export class ProductImagesComponent extends BaseComponent implements OnInit {
             this.formData.append('file[]', this.mainFiles[i].file, 'main_picture.' + this.mainFiles[i].file.name);
          } else {
             console.log(this.mainFiles[i]);
-            const pathSplitArray = this.files[i].link.split('/');
+            const pathSplitArray = this.mainFiles[i].link.split('/');
             product.remainingFileNames.push(pathSplitArray[pathSplitArray.length - 1]);
          }
       }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TokenStorage } from 'src/app/token.storage';
@@ -24,6 +24,9 @@ export class RegisterComponent implements OnInit {
   fromPage = '';
   verified = false;
   pageStatus = 'verify_email';
+
+  @Output()
+  registerEvent = new EventEmitter<any>();
 
   constructor(public fb: FormBuilder,
     public router: Router,
@@ -90,6 +93,11 @@ export class RegisterComponent implements OnInit {
           } else {
             this.tokenStorage.saveAuthData(data);
             this.appService.updateToken();
+
+            if (this.registerEvent) {
+                this.registerEvent.emit(1);
+                return;
+              }
 
             if (this.fromPage === 'checkout') {
               this.router.navigate(['/checkout/payment']);

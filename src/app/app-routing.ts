@@ -34,6 +34,10 @@ export const AppRoutes: Routes = [
                import('./Pages/Products/Products.module').then(m => m.ProductsModule)
          },
          {
+            path: 'rooms', loadChildren: () =>
+               import('./Pages/Rooms/Rooms.module').then(m => m.RoomsModule)
+         },
+         {
             path: 'cart',
             component: CartComponent
          },

@@ -65,11 +65,12 @@ export class TmoneysComponent implements OnInit {
     this.paymentMethodChange.userId = this.userId;
     this.paymentMethodChange.paymentMethodCodeId = tmoney.id;
     this.paymentMethodChange.paymentMethodCode = this.paymentType.toUpperCase();
+    this.paymentMethodChange.tmoneyPhone = tmoney.phoneNumber;
 
     this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
       .subscribe((data: any) => {
         this.getTmoneys();
-        this.changePaymentMethodEvent.emit(data);
+        this.changePaymentMethodEvent.emit(this.paymentMethodChange);
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));
