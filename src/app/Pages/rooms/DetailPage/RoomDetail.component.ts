@@ -1,12 +1,9 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { MediaObserver } from '@angular/flex-layout';
-import { RoomStoreVO, HotelSearchCriteria, RoomListVO, RoomTypeVO, Reservation, Country } from 'src/app/app.models';
+import { RoomStoreVO, HotelSearchCriteria, RoomListVO, Reservation, Country } from 'src/app/app.models';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 @Component({
@@ -83,7 +80,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                }
 
                this.currentHigh = 4;
-               //this.setDataSource(this.roomStore.roomTyeVOs);
+               // this.setDataSource(this.roomStore.roomTyeVOs);
             }
          },
             error => console.log(error),
@@ -124,21 +121,12 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       reserv.nbrRooms = this.searchCriteria.rooms;
 
       this.appService.saveWithUrl('/service/hospitality/reserve/',
-         reserv).subscribe((data: Reservation) => {
-            // if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
-            //    this.roomStore = data.roomStoreVOs[0];
-            //    this.setDataSource(this.roomStore.roomTyeVOs);
-            // }
+         reserv).subscribe(() => {
+
          },
             error => console.log(error),
             () => console.log('Get all getRoomsOnSale complete'));
    }
-
-   // setDataSource(data: RoomTypeVO[]) {
-   //    this.roomsDatasource = new MatTableDataSource(data);
-   //    this.roomsDatasource.paginator = this.roomsPaginator;
-   //    this.roomsDatasource.sort = this.roomsSort;
-   // }
 
    changeImageSrc(src: string) {
       document.getElementById('thirdImage').src = src;

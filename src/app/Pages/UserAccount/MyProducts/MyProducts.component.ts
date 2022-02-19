@@ -26,7 +26,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('sidenav', { static: false }) sidenav: any;
   @ViewChild('stepper', { static: false }) stepper: MatStepper;
-s
   displayedColumns: string[] = ['priority', 'quantity', 'price', 'percentage', 'dateStart', 'dateEnd', 'hourStart', 'hourEnd', 'status', 'actions'];
   productDiscountDatasource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
@@ -315,7 +314,7 @@ s
 
   public getCommentPopupResponse(response: any, value: any) {
       if (response) {
-        console.log('Value returned from comment popup... ')
+        console.log('Value returned from comment popup... ');
         console.log(value);
          this.productStore.quantityComment = value;
       }
@@ -356,7 +355,6 @@ s
     this.productStore.status = (this.productStore.status == null
       || this.productStore.status.toString() === 'false'
       || this.productStore.status.toString() === '0') ? 0 : 1;
-      
     this.productStore.availableOnline = (this.productStore.availableOnline == null
       || this.productStore.availableOnline.toString() === 'false'
       || this.productStore.availableOnline.toString() === '0') ? 0 : 1;
