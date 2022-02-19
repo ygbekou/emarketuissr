@@ -1,0 +1,98 @@
+<ng-container *ngIf="roomStore">
+
+  <div class="container">
+    <div class="product-detail-page">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <!-- <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+
+          </div> -->
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <div>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <h4>{{roomStore.storeName}}</h4>
+              </div> 
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
+                {{roomStore.postCode}}
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="center center">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <div fxFlex.xs="" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+                    <div fxLayout="row wrap" fxLayoutAlign="center center">
+                      <img mat-card-image class="medium-image"
+                        [src]="'assets/images/buildings/'+(firstImage?(roomStore.bldgId+'/'+firstImage):'default.png')"
+                        alt="Photo">
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="center center">
+                      <img mat-card-image class="medium-image"
+                        [src]="'assets/images/buildings/'+(secondImage?(roomStore.bldgId+'/'+secondImage):'default.png')"
+                        alt="Photo">
+                    </div>
+                  </div>
+                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+                    <img mat-card-image class="large-image" id="thirdImage"
+                      [src]="'assets/images/buildings/'+(thirdImage?(roomStore.bldgId+'/'+thirdImage):'default.png')"
+                      alt="Photo">
+                  </div>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="center center">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <div fxFlex.xs="5" fxFlex.sm="5" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5">
+                    <button mat-mini-fab color="warn" (click)="previous()" [disabled]="currentLow === 0"
+                      matTooltip="{{'COMMON.PREV' | translate}}">
+                      <mat-icon>chevron_left</mat-icon>
+                    </button>
+                  </div>
+                  <div fxFlex.xs="15" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15"
+                    *ngFor="let fn of fiveImages">
+                    <img mat-card-image class="small-image"
+                      (click)="changeImageSrc('assets/images/buildings/'+ roomStore.bldgId + '/' + fn)"
+                      [src]="'assets/images/buildings/'+ roomStore.bldgId + '/' + fn" alt="Photo">
+                  </div>
+                  <div fxFlex.xs="5" fxFlex.sm="5" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5">
+                    <button mat-mini-fab color="warn" (click)="next()" [disabled]="currentHigh === filesCopy.length - 1"
+                      matTooltip="{{'COMMON.NEXT' | translate}}">
+                      <mat-icon>chevron_right</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+                <mat-card>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap"
+                    *ngFor="let room of roomStore.roomTyeVOs">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                        <h5>{{room.roomTypeName}}</h5>
+                      </div>
+                      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                        <h5>
+                        {{roomStore.symbolLeft}}
+                        {{+searchCriteria.days * room.price * +searchCriteria.rooms | number: '1.' 
+                              + roomStore?.currencyDecimalPlace + '-'  
+                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                        {{roomStore.symbolRight}}
+                        </h5>
+                      </div>
+                      <div fxFlex.xs="50" fxFlex.sm="33" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                        <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                          [routerLink]="['/rooms/booking']" [queryParams]="{storeId: roomStore?.id, rooms: searchCriteria.rooms, adults: searchCriteria.adults, 
+                          days: searchCriteria.days, roomTypeName: room.roomTypeName, price: room.price,
+                          children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
+                          checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}">
+                          <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

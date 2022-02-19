@@ -572,6 +572,11 @@
             <mat-slide-toggle [(ngModel)]="store.reasonRequired" name="reasonRequired" #reasonRequired="ngModel" class="my-2">
               {{ 'COMMON.REQ_REASON_OVERRIDE' | translate }}
             </mat-slide-toggle>
+
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.pymtMethodReq" name="pymtMethodReq" #pymtMethodReq="ngModel" class="my-2">
+              {{ 'COMMON.PAYMENT_METHOD_REQUIRED' | translate }}
+            </mat-slide-toggle>
           </div>
         </div>
 

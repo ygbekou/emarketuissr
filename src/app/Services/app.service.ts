@@ -20,6 +20,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
+import { NumberRoomsPopupComponent } from '../Pages/rooms/RoomsList/NumberRoomsPopup.component';
 
 interface Response {
    data: any;
@@ -85,6 +86,9 @@ export class AppService {
    ssImage = 'https://www.kekouda.com/assets/images/company/logo.png';
    ssUrl = 'https://www.kekouda.com';
    ssDescription = 'Kekouda';
+   datePipe: any;
+   appService: any;
+   reservation: any;
 
    constructor(private http: HttpClient,
       private dialog: MatDialog,
@@ -1297,6 +1301,30 @@ export class AppService {
                });
                console.log('Which one? price asc');
                break;
+            case 'roomTypeAsc':
+               data = data.sort((a, b) => {
+                  if (a.roomTypeName.toLowerCase() > b.roomTypeName.toLowerCase()) {
+                     return 1;
+                  }
+                  if (a.roomTypeName.toLowerCase() < b.roomTypeName.toLowerCase()) {
+                     return -1;
+                  }
+                  return 0;
+               });
+               console.log('Which one? name asc');
+               break;
+            case 'roomTypeDesc':
+               data = data.sort((a, b) => {
+                  if (a.roomTypeName.toLowerCase() < b.roomTypeName.toLowerCase()) {
+                     return 1;
+                  }
+                  if (a.roomTypeName.toLowerCase() > b.roomTypeName.toLowerCase()) {
+                     return -1;
+                  }
+                  return 0;
+               });
+               console.log('Which one? name asc');
+               break;
             default:
                console.log('Which one? Default');
                break;
@@ -1324,5 +1352,4 @@ export class AppService {
          }
       };
    }
-
 }

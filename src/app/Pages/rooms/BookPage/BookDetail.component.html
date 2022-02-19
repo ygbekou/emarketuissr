@@ -1,0 +1,518 @@
+<ng-container *ngIf="roomStore">
+
+  <div class="inner-container">
+    <div class="product-detail-page">
+      <div class="container">
+        <div fxLayout="row wrap" fxLayoutAlign="center top" class="col-gap">
+          <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <mat-card>
+              <mat-label> {{'COMMON.YOUR_BOOKING_DETAIL' | translate}} </mat-label>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <mat-label> {{'COMMON.CHECKIN' | translate}} </mat-label><br />
+                  <h6>
+                    <mat-label> {{searchCriteria.checkinDate | date: 'mediumDate'}} </mat-label>
+                  </h6>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <mat-label> {{'COMMON.CHECKOUT' | translate}} </mat-label><br />
+                  <h6>
+                    <mat-label> {{searchCriteria.checkoutDate | date: 'mediumDate'}} </mat-label>
+                  </h6>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <mat-label> {{'COMMON.TOTAL_LENGTH_OF_STAY' | translate}}:</mat-label><br />
+                  <h6>
+                    <mat-label> {{searchCriteria.days}} {{'COMMON.NIGHTS' | translate}}</mat-label>
+                  </h6>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <h6>
+                    <mat-label> {{'COMMON.YOU_SELECTED' | translate}}</mat-label>
+                  </h6><br />
+                  <mat-label> {{searchCriteria.roomTypeName}}</mat-label>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <h6>
+                    <mat-label> {{'COMMON.SLEEPS' | translate}}</mat-label>
+                  </h6><br />
+                  <mat-label> {{searchCriteria.adults}} {{'COMMON.ADULTS' | translate}}</mat-label>
+                </div>
+              </div>
+            </mat-card>
+            <br />
+            <mat-card>
+              <h6>
+                <mat-label> {{'COMMON.SUMMARY' | translate}} </mat-label>
+              </h6>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <mat-label> {{searchCriteria.roomTypeName}} </mat-label>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <mat-label> {{+searchCriteria.days * roomTypeVO?.price * +searchCriteria.rooms | number: '1.'
+                           + roomStore?.currencyDecimalPlace + '-'  
+                           + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                    {{roomStore.symbolRight}}
+                  </mat-label>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <h6>
+                    <mat-label> {{'COMMON.PRICE' | translate}} </mat-label>
+                  </h6>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <h6>
+                    <mat-label> {{+searchCriteria.days * roomTypeVO?.price * +searchCriteria.rooms | number: '1.'
+                           + roomStore?.currencyDecimalPlace + '-'  
+                           + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                      {{roomStore.symbolRight}}
+                    </mat-label>
+                  </h6>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div fxFlex.xs="70" fxFlex.sm="70" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+            <mat-card>
+              <div fxLayout="row wrap" fxLayoutAlign="left top" class="col-gap">
+                <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                  <img mat-card-image style="max-width: 100% !important;"
+                    [src]="'assets/images/buildings/'+(roomStore.image?(roomStore.bldgId+'/'+roomStore?.image):'default.png')"
+                    alt="Photo">
+                </div>
+                <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+                      <h4>{{roomStore.storeName}}</h4>
+                      {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
+                      {{roomStore.postCode}}
+                    </div>
+                  </div>
+                  <br />
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <h5>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                        <mat-label> {{searchCriteria.roomTypeName}} </mat-label>
+                      </div>
+                    </h5>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <span *ngFor="let amenity of roomTypeVO.amenities" style="background-color: #e7fde9 !important; margin: 0px 5px 0px 0px !important;
+                        border: 1px solid transparent; border-color: #97e59c;">
+                        <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+            <br />
+            <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="!hasLoggedIn()">
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="button"
+                    (click)="wantToLogin = true; continueAsGuest = false;">
+                    <span class="mx-1 uppercase">{{'COMMON.LOGIN' | translate}}</span>
+                  </button>
+                </div>
+                <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
+                  fxLayoutAlign="right center">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="button"
+                    (click)=" continueAsGuest = true; wantToLogin = false;">
+                    <span class="mx-1 uppercase">{{'COMMON.CONTINUE_AS_GUEST' | translate}}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!hasLoggedIn() && wantToLogin ">
+              <app-sign-in (loginEvent)="goToStep2($event)" (forgotPasswordEvent)="onForgotPassword($event)">
+              </app-sign-in>
+            </div>
+            <div *ngIf="!hasLoggedIn() && forgotPassword " fxLayout="center" fxLayoutAlign="center">
+              <embryo-ForgotPassword (sendPasswordEvent)="onSendPassword();"></embryo-ForgotPassword>
+            </div>
+            <div *ngIf="!hasLoggedIn() && needToRegister " fxLayout="center" fxLayoutAlign="center">
+              <app-register (registerEvent)="onSendPassword();"></app-register>
+            </div>
+            <div *ngIf="(hasLoggedIn() || continueAsGuest) && step === 1 ">
+              <form name="form" (ngSubmit)="f1.form.valid && goToStep2()" #f1="ngForm" validate>
+                <mat-card style="background-color: #ebf3ff;">
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <h5>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                        <mat-label> {{'COMMON.ENTER_YOUR_DETAILS' | translate}} </mat-label>
+                      </div>
+
+                    </h5>
+                  </div>
+
+                  <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.FIRST_NAME' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="reserv.firstName"
+                            name="firstName" #firstName="ngModel" required>
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex.xs="5" fxFlex.sm="5" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"></div>
+                      <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.LAST_NAME' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="reserv.lastName"
+                            name="lastName" #lastName="ngModel" required>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                      <mat-form-field class="w-100">
+                        <mat-label> {{'COMMON.EMAIL' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="email" [(ngModel)]="reserv.email"
+                          name="email" #email="ngModel" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                      <mat-form-field class="w-100">
+                        <mat-label> {{'COMMON.PHONE' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="phone" [(ngModel)]="reserv.phone"
+                          name="phone" #phone="ngModel" required>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <mat-checkbox class="mb-2 d-block" [(ngModel)]="reserv.notMainGuest" id="notMainGuest"
+                      name="notMainGuest">
+                      <mat-label> {{'COMMON.I_AM_BOOKING_FOR_SOMEONE' | translate}}</mat-label>
+                    </mat-checkbox>
+                  </div>
+
+                  <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="reserv.notMainGuest">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.GUEST_FIRST_NAME' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="guestFirstName"
+                            [(ngModel)]="reserv.guestFirstName" name="guestFirstName" #guestFirstName="ngModel">
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex.xs="10" fxFlex.sm="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"></div>
+                      <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.GUEST_LAST_NAME' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="guestLastName"
+                            [(ngModel)]="reserv.guestLastName" name="guestLastName" #lastName="ngModel">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="left top" *ngIf="reserv.notMainGuest">
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                      <mat-form-field class="w-100">
+                        <mat-label> {{'COMMON.GUEST_EMAIL' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="guestEmail" [(ngModel)]="reserv.guestEmail"
+                          name="guestEmail" #guestEmail="ngModel">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-card>
+                <br />
+                <mat-card style="background-color: #ebf3ff;">
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <h5>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                        <mat-label> {{'COMMON.ENTER_YOUR_ADDRESS' | translate}} ({{'COMMON.OPTIONAL' | translate}})
+                        </mat-label>
+                      </div>
+                    </h5>
+                  </div>
+
+                  <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.ADDRESS' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="address1" [(ngModel)]="reserv.address1"
+                            name="address1" #address1="ngModel">
+                        </mat-form-field>
+                      </div>
+                      <div fxFlex.xs="5" fxFlex.sm="5" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"></div>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+                        <mat-form-field class="w-100">
+                          <mat-label> {{'COMMON.CITY' | translate}}</mat-label>
+                          <input matInput type="text" class="form-control" id="city" [(ngModel)]="reserv.city"
+                            name="city" #city="ngModel">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="left top">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+                      <mat-form-field class="w-100">
+                        <mat-label> {{'COMMON.ZIP_CODE' | translate}}</mat-label>
+                        <input matInput type="text" class="form-control" id="postCode" [(ngModel)]="reserv.postCode"
+                          name="postCode" #postCode="ngModel">
+                      </mat-form-field>
+                    </div>
+                    <div fxFlex.xs="5" fxFlex.sm="5" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5"></div>
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
+                      <mat-form-field class="w-100">
+                        <mat-label>{{'COMMON.COUNTRY' | translate}}</mat-label>
+                        <mat-select placeholder="{{'COMMON.COUNTRY' | translate}}" [compareWith]="compareObjects"
+                          id="country" name="country" [(ngModel)]="reserv.country" #country="ngModel">
+                          <mat-option *ngFor="let ctry of appService.appInfoStorage.countries" [value]="ctry">
+                            {{ctry.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </mat-card>
+                <div *ngIf="continueAsGuest">
+                  <br />
+                  <mat-card style="background-color: #ebf3ff;">
+                    <div fxLayout="row wrap" fxLayoutAlign="left top">
+                      <h5>
+                        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                          <mat-label> {{'COMMON.SAVE_YOUR_DETAILS' | translate}} </mat-label>
+                        </div>
+                      </h5>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="left top">
+                      <br />
+                      <div fxLayout="row wrap" fxLayoutAlign="left top">
+                        <mat-checkbox class="mb-2 d-block" [(ngModel)]="reserv.saveDetails" id="saveDetails"
+                          name="saveDetails">
+                          <mat-label> {{'COMMON.SAVE_MY_INFO' | translate}}</mat-label>
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+                <br />
+                <div fxLayout="row wrap" fxLayoutAlign="right right">
+                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxLayoutAlign="right right">
+                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                      type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.NEXT' | translate}}</span>
+                    </button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+            <br />
+
+            <!-- <app-PaymentChangeModel *ngIf="step === 2 && hasLoggedIn()" [fromPage]="'booking'"
+              (pymtMethodSelectEvent)="onPymtMethodSelect($event)" [userId]="reserv.userId">
+            </app-PaymentChangeModel> -->
+            <div *ngIf="step === 2">
+              <form name="form" (ngSubmit)="f2.form.valid && book()" #f2="ngForm" validate>
+                <br />
+                <mat-card style="background-color: #ebf3ff;">
+                  <div fxLayout="row wrap" fxLayoutAlign="center top">
+                    <h5>
+                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                        <mat-label> {{'COMMON.PAYMENT_DETAILS' | translate}} </mat-label>
+                      </div>
+                    </h5>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="center top">
+                    <p>
+                      {{'COMMON.PAY_UP_FRONT' | translate}}
+                    </p>
+                  </div>
+                   <div fxLayout="row wrap">
+                    <h6>{{'COMMON.CHOOSE_PAYMENT_METHOD' | translate}}</h6>
+                   </div>
+                  <div fxLayout="row wrap">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="step"
+                      (change)="onTogglePmntMethodChange($event)">
+                      <mat-button-toggle [value]="'CREDIT_CARD'">
+                        {{'COMMON.CREDIT_CARD' | translate}}
+                      </mat-button-toggle>
+                      <mat-button-toggle [value]="'TMONEY'">
+                        TMONEY
+                      </mat-button-toggle>
+                      <mat-button-toggle [value]="'FLOOZ'">
+                        FLOOZ
+                      </mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                  <br />
+                  <div fxLayout="row wrap">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="50" fxFlex.xl="50"
+                      *ngIf="reserv.pymtMethodCode === 'CREDIT_CARD'">
+                      <div class=" sr-root">
+                        <div class="sr-main">
+                          <form id="payment-form" class="sr-payment-form">
+                            <div class="sr-combo-inputs-row">
+                              <div>
+                                <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name" name="name"
+                                  [(ngModel)]="reserv.nameOnCard" #name="ngModel" required>
+                              </div>
+                              <br />
+                              <div class="sr-input sr-card-element" id="card-element"></div>
+                            </div>
+                            <div class="sr-field-error" id="card-errors" role="alert"></div>
+                            <br />
+                            <div fxLayout="row wrap">
+                              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                                <button id="submit" mat-raised-button color="primary">
+                                  <div class="spinner hidden" id="spinner"></div>
+                                  <span id="button-text">{{'COMMON.COMPLETE_BOOKING'|translate}}</span>
+                                  <!-- <mat-icon>save</mat-icon> -->
+                                  <span id="order-amount"></span>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                      *ngIf="reserv.pymtMethodCode === 'TMONEY' || reserv.pymtMethodCode === 'FLOOZ'">
+                      <div fxLayout="row wrap" class="col-gap">
+                        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+                          <mat-form-field class="w-100 mb-3">
+                            <input matInput placeholder="{{'COMMON.PHONE_NUMBER'|translate}}" id="phoneNumber"
+                              name="phoneNumber" [(ngModel)]="reserv.phone" #phoneNumber="ngModel" required>
+                            <mat-error *ngIf="f2.submitted && phoneNumber.invalid" severity="error">
+                              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="50" fxFlex.xl="50">
+                      <div>
+                        <div>
+                          <br />
+                          <div fxLayout="row wrap">
+                            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                            </div>
+                            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                              <div fxLayout="row wrap" fxLayoutAlign="right top">
+                                <a href="javascript:void(0)" class="primary-color"
+                                  (click)="step = 3">{{'COMMON.PAY_AT_REGISTER'|translate}}</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </mat-card>
+              </form>
+            </div>
+
+            <div *ngIf="step === 3 ">
+              <form name="form" (ngSubmit)="f1.form.valid && book()" #f1="ngForm" validate>
+                <h4>
+                  <mat-label> {{'COMMON.USER_INFO' | translate}} </mat-label>
+                </h4>
+                <div fxLayout="row wrap">
+                  {{'COMMON.FIRST_NAME' | translate}}: &nbsp;&nbsp; <h6>{{reserv.firstName}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.LAST_NAME' | translate}}: &nbsp;&nbsp; <h6>{{reserv.lastName}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.EMAIL' | translate}}: &nbsp;&nbsp; <h6>{{reserv.email}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.PHONE' | translate}}: &nbsp;&nbsp; <h6>{{reserv.phone}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.GUEST_FIRST_NAME' | translate}}: &nbsp;&nbsp; <h6>{{reserv.guestFirstName}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.GUEST_LAST_NAME' | translate}}: &nbsp;&nbsp; <h6>{{reserv.guestLastName}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  {{'COMMON.GUEST_EMAIL' | translate}}: &nbsp;&nbsp; <h6>{{reserv.guestEmail}}</h6>
+                </div>
+                <br />
+                <h4>
+                  <mat-label> {{'COMMON.BILLING_ADDRESS' | translate}} </mat-label>
+                </h4>
+                <div fxLayout="row wrap">
+                  <h6> {{reserv?.address1}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  <h6> {{reserv?.address2}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  <h6> {{reserv?.city}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  <h6> {{reserv?.postCode}}</h6>
+                </div>
+                <div fxLayout="row wrap">
+                  <h6> {{reserv?.country?.name}}</h6>
+                </div>
+
+                <br />
+                <h4>
+                  <mat-label> {{'COMMON.PAYMENT_DETAILS' | translate}} </mat-label>
+                </h4>
+                <div fxLayout="row wrap">
+                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+
+                    <div fxLayout="row wrap" fxLayoutGap="10px grid">
+                      {{'COMMON.PAYMENT_METHOD' | translate}}: &nbsp;&nbsp; <h6>{{reserv?.pymtMethodCode}}</h6>
+                    </div>
+                    <div fxLayout="row wrap" *ngIf="reserv.pymtMethodCode === 'CREDIT_CARD'">
+                      <img [src]="'assets/images/cards/' + reserv.cardTypeIndex + '.png'"
+                        style="height:auto; width: 25%;" class="d-block"> {{'COMMON.ENDING_IN' | translate}}&nbsp;&nbsp;
+                      <h6>xxx{{reserv.last4Digits}}</h6>
+                    </div>
+                    <div *ngIf="reserv.pymtMethodCode === 'TMONEY'">
+                      <div fxLayout="row wrap">
+                        {{'COMMON.PHONE_NUMBER' | translate}} : &nbsp;&nbsp; <h6>{{reserv?.tmoney?.phoneNumber}}</h6>
+                      </div>
+                    </div>
+                    <div *ngIf="reserv.pymtMethodCode === 'FLOOZ'">
+                      <div fxLayout="row wrap">
+                        {{'COMMON.PHONE_NUMBER' | translate}} : &nbsp;&nbsp; <h6>{{reserv?.flooz?.phoneNumber}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div fxLayout="row wrap" fxLayoutAlign="right right">
+                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxLayoutAlign="right right">
+                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                      type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.CONFIRM' | translate}}</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TokenStorage } from 'src/app/token.storage';
@@ -19,6 +19,12 @@ export class CommonSignInComponent implements OnInit {
 
   @Input()
   fromPage = '';
+
+  @Output()
+  loginEvent = new EventEmitter<any>();
+
+  @Output()
+  forgotPasswordEvent = new EventEmitter<any>();
 
   constructor(public fb: FormBuilder,
     public router: Router,
@@ -66,8 +72,14 @@ export class CommonSignInComponent implements OnInit {
             // console.log(data);
             if (data.token !== '' && data.token !== null) {
               console.log('login successful');
+              console.log(data);
               this.tokenStorage.saveAuthData(data);
               this.appService.updateToken();
+
+              if (this.loginEvent && this.loginEvent.observers.length > 0) {
+                this.loginEvent.emit(1);
+                return;
+              }
 
               if (this.fromPage === 'checkout') {
                 this.router.navigate(['/checkout/payment']);
@@ -84,7 +96,7 @@ export class CommonSignInComponent implements OnInit {
               } else if (this.appService.tokenStorage.getRole() === '3') { // admin
                 this.router.navigate(['/admin']);
               }
-              // this.router.navigate([this.tokenStorage.getHomePage()]);
+              
             } else {
               console.log('login failed');
               this.translate.get(['MESSAGE.INVALID_USER_PASS', 'COMMON.ERROR']).subscribe(res => {
@@ -122,6 +134,14 @@ export class CommonSignInComponent implements OnInit {
       this.translate.get(['MESSAGE.ERROR_OCCURRED', 'COMMON.ERROR']).subscribe(res => {
         this.error = res['MESSAGE.ERROR_OCCURRED'];
       });
+    }
+  }
+
+
+  forgotPassword() {
+    if (this.forgotPasswordEvent && this.forgotPasswordEvent.observers.length > 0) {
+      this.forgotPasswordEvent.emit(1);
+      return;
     }
   }
 

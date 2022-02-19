@@ -2,8 +2,7 @@
 
    <div fxLayout="row wrap">
       <div fxFlex="30" fxFlex.gt-sm="30" class="p-1">
-         <button (click)="clear()" mat-fab color="primary"
-            matTooltip="{{'COMMON.ADD' | translate}}">
+         <button (click)="clear()" mat-fab color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
             <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
          </button>
       </div>
@@ -30,7 +29,21 @@
                </mat-form-field>
                <div fxFlex="5"></div>
             </div>
+            <div fxFlex="20">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>{{'COMMON.ICON' | translate}}</mat-label>
+                  <mat-select placeholder="{{'COMMON.ICON' | translate}}" [compareWith]="compareObjects" id="icon"
+                     name="icon" [(ngModel)]="amenity.iconId" #icon="ngModel">
+                     <mat-option [value]="">
+                     </mat-option>
+                     <mat-option *ngFor="let icd of iconDescs" [value]="icd.icon.id">
+                        <mat-icon>{{icd.icon.code}}</mat-icon> -   {{icd.name}}
+                     </mat-option>
+                  </mat-select>
+               </mat-form-field>
+            </div>
          </div>
+
          <div fxLayout="row wrap">
             <div fxFlex="40" *ngFor="let lang of appService.appInfoStorage.languages; let i = index">
                <mat-form-field appearance="outline" class="w-100">

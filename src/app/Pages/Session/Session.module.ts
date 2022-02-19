@@ -84,6 +84,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       SignInComponent,
       ThankYouComponent,
       ForgotPasswordComponent
+   ],
+   exports: [
+      ForgotPasswordComponent,
+      RegisterComponent
    ]
 })
 export class SessionModule { }

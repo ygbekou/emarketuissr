@@ -44,6 +44,8 @@ import { HospitalitiesRoutes } from './Hospitalities.routing';
 import { ReservationsComponent } from './Reservations/Reservations.component';
 import { ReservationViewComponent } from './Reservations/ReservationView.component';
 import { ReservationHistoryComponent } from './Reservations/ReservationHistory.component';
+import { IconsComponent } from './Icons/Icons.component';
+import { IconComponent } from './Icons/Icon.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ReservationHistoryComponent } from './Reservations/ReservationHistory.c
     AmenitiesComponent,
     ReservationsComponent,
     ReservationViewComponent,
-    ReservationHistoryComponent
+    ReservationHistoryComponent,
+    IconComponent,
+    IconsComponent
   ],
   imports: [
     CommonModule,

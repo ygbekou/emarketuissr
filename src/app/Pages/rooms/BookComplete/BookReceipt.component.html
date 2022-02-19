@@ -1,0 +1,173 @@
+<ng-container>
+
+  <div class="inner-container">
+    <div class="product-detail-page">
+      <div class="container">
+        <div fxLayout="row wrap" fxLayoutAlign="center top" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+            <mat-card style="background-color: #ebf3ff;">
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <h5>
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                    <mat-label> {{'COMMON.RESERVATION_RECEIPT' | translate}} </mat-label>
+                  </div>
+
+                </h5>
+              </div>
+
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <span class="label-summary-text"> {{'COMMON.RESERV_NUMBER' | translate}}: </span> <span
+                  class="bold-text">{{reserv?.reservationId}}</span>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <span class="label-summary-text"> {{'COMMON.DATE' | translate}}: </span> <span
+                  class="bold-text">{{reserv?.createDate | date: 'fullDate'}}</span>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <span class="label-summary-text"> {{'COMMON.EMAIL' | translate}}: </span> <span
+                  class="bold-text">{{reserv?.email}}</span>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <span class="label-summary-text"> {{'COMMON.TOTAL' | translate}}: </span> <span
+                  class="bold-text">{{reserv?.total}}</span>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left top">
+                <span class="label-summary-text"> {{'COMMON.PAYMENT_METHOD' | translate}}: </span> <span
+                  class="bold-text">{{reserv?.paymentMethodName}}</span>
+              </div>
+
+              <br />
+
+              <h6>
+                <mat-label> {{'COMMON.YOUR_BOOKING_DETAIL' | translate}} </mat-label>
+              </h6>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.CHECKIN' | translate}} </span><br />
+                  <span class="bold-text"> {{reserv?.beginDate | date: 'mediumDate'}} </span>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.CHECKOUT' | translate}} </span><br />
+                  <span class="bold-text"> {{reserv?.endDate | date: 'mediumDate'}} </span>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.ROOM_TYPE' | translate}} </span><br />
+                  <span class="bold-text"> {{reserv?.reservationRooms[0].roomTypeName}} </span>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.TOTAL_LENGTH_OF_STAY' | translate}} </span><br />
+                  <span class="bold-text"> {{reserv?.days}} {{'COMMON.NIGHTS' | translate}} </span>
+                </div>
+              </div>
+              <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.NBR_ROOM' | translate}} </span><br />
+                  <span class="bold-text"> {{reserv?.nbrRooms}} </span>
+                </div>
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="label-text"> {{'COMMON.NBR_ADULT' | translate}} / {{'COMMON.NBR_CHILD' | translate}}
+                  </span><br />
+                  <span class="bold-text"> {{reserv?.nbrAdult}} / {{reserv?.nbrChild}} </span>
+                </div>
+              </div>
+
+              <br />
+
+              <h6>
+                <mat-label> {{'COMMON.PRICE_SUMMARY' | translate}} </mat-label>
+              </h6>
+
+              <div fxLayout="row wrap">
+
+                <span class="label-summary-text">{{'COMMON.TOTAL_BEFORE_TAX' | translate}}:</span>
+
+                <span class="bold-summary-text">{{reserv?.symbolLeft}}
+                  {{reserv?.price | number: '1.' + reserv?.currencyDecimalPlace + '-'  
+                          + reserv?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reserv?.symbolRight}}</span>
+
+              </div>
+              <div fxLayout="row wrap">
+                <span class="label-summary-text">{{'COMMON.ESTIMATED_TAX' | translate}}:</span>
+
+                <span class="bold-summary-text">{{reserv?.symbolLeft}}
+                  {{reserv?.taxFees | number: '1.' + reserv?.currencyDecimalPlace + '-'  
+                          + reserv?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reserv?.symbolRight}}</span>
+              </div>
+              <div fxLayout="row wrap" style="border-bottom: 1px solid #0052C2">
+                <span class="label-summary-text">{{'COMMON.TOTAL' | translate}}:</span>
+
+                <span class="bold-summary-text">{{reserv?.symbolLeft}}
+                  {{reserv?.total | number: '1.' + reserv?.currencyDecimalPlace + '-'  
+                          + reserv?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reserv?.symbolRight}}</span>
+              </div>
+
+
+              <br />
+
+              <h6>
+                <mat-label> {{'COMMON.USER_INFO' | translate}} </mat-label>
+              </h6>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.FIRST_NAME' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.cFirstName}} </span>
+                </div>
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.LAST_NAME' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.cLastName}} </span>
+                </div>
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.EMAIL' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.email}} </span>
+                </div>
+              </div>
+
+              <h6>
+                <mat-label> {{'COMMON.GUEST_INFO' | translate}} </mat-label>
+              </h6>
+              <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.GUEST_FIRST_NAME' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.gFirstName}} </span>
+                </div>
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.GUEST_LAST_NAME' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.gLastName}} </span>
+                </div>
+                <div fxFlex.xs="33" fxFlex.sm="33" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                  <span class="label-text"> {{'COMMON.GUEST_EMAIL' | translate}}: </span>
+                  <span class="bold-text"> {{reserv?.gEmail}} </span>
+                </div>
+              </div>
+
+              <h6>
+                <mat-label> {{'COMMON.BILLING_ADDRESS' | translate}} </mat-label>
+              </h6>
+              <div fxLayout="row wrap">
+                  <span> {{reserv?.addr1}} </span>
+              </div>
+              <div fxLayout="row wrap">
+                  <span> {{reserv?.addr2}} </span>
+              </div>
+              <div fxLayout="row wrap">
+                  <span> {{reserv?.city}} </span>
+              </div>
+              <div fxLayout="row wrap">
+                  <span> {{reserv?.postCode}} </span>
+              </div>
+              <div fxLayout="row wrap">
+                  <span> {{reserv?.country}} </span>
+              </div>
+
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

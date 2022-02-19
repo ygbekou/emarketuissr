@@ -76,11 +76,12 @@ export class PaymentCardsComponent implements OnInit {
     this.paymentMethodChange.paymentMethodCodeId = creditCard.id;
     this.paymentMethodChange.paymentMethodCode = 'CREDIT_CARD';
     this.paymentMethodChange.stripePaymentMethodId = creditCard.stripePaymentMethodId;
+    this.paymentMethodChange.last4Digits = creditCard.last4Digits;
 
     this.appService.saveWithUrl('/service/order/changePaymentMethod/', this.paymentMethodChange)
       .subscribe((data: any) => {
         this.getCreditCards();
-        this.changePaymentMethodEvent.emit(data);
+        this.changePaymentMethodEvent.emit(this.paymentMethodChange);
       },
         error => console.log(error),
         () => console.log('Changing Payment Method complete'));

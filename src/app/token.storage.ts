@@ -15,9 +15,12 @@ export class TokenStorage {
   public static MENUS = 'menus';
   public static NON_MENU_RESOURCES = 'non_menu_resources';
   public static USER_ID = 'user_id';
+  public static EMAIL = 'email';
+  public static PHONE = 'phone';
   public static USER_NAME = 'user_name';
   public static HOME_PAGE = 'home_page';
   public static USER = 'user';
+  public static DAY_START_TIME = 'day_start_time';
 
 
   constructor() { }
@@ -63,11 +66,18 @@ export class TokenStorage {
     window.localStorage.removeItem(TokenStorage.USER_NAME);
     window.localStorage.setItem(TokenStorage.USER_NAME, authData.userName + '');
 
+    window.localStorage.removeItem(TokenStorage.EMAIL);
+    window.localStorage.setItem(TokenStorage.EMAIL, authData.email);
+
+    window.localStorage.removeItem(TokenStorage.PHONE);
+    window.localStorage.setItem(TokenStorage.PHONE, authData.phone);
+
     window.localStorage.removeItem(TokenStorage.HOME_PAGE);
     window.localStorage.setItem(TokenStorage.HOME_PAGE, authData.homePage);
   }
 
   public clearAuthData() {
+    window.localStorage.removeItem(TokenStorage.USER);
     window.localStorage.removeItem(TokenStorage.TOKEN_KEY);
     window.localStorage.removeItem(TokenStorage.USER_GROUP_ID);
     window.localStorage.removeItem(TokenStorage.ROLE_NAME);
@@ -78,6 +88,8 @@ export class TokenStorage {
     window.localStorage.removeItem(TokenStorage.FIRST_TIME_LOGIN);
     window.localStorage.removeItem(TokenStorage.USER_ID);
     window.localStorage.removeItem(TokenStorage.USER_NAME);
+    window.localStorage.removeItem(TokenStorage.EMAIL);
+    window.localStorage.removeItem(TokenStorage.PHONE);
     window.localStorage.removeItem(TokenStorage.HOME_PAGE);
   }
 
@@ -139,6 +151,14 @@ export class TokenStorage {
     return window.localStorage.getItem(TokenStorage.USER_NAME);
   }
 
+  public getEmail(): string {
+    return window.localStorage.getItem(TokenStorage.EMAIL);
+  }
+
+  public getPhone(): string {
+    return window.localStorage.getItem(TokenStorage.PHONE);
+  }
+
   public getHomePage(): string {
     return window.localStorage.getItem(TokenStorage.HOME_PAGE);
   }
@@ -146,4 +166,5 @@ export class TokenStorage {
   public getUser(): User {
     return JSON.parse(window.localStorage.getItem(TokenStorage.USER));
   }
+
 }

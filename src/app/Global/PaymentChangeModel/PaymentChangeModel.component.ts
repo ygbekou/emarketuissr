@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PaymentCardsComponent } from 'src/app/Global/Cards/PaymentCards.component';
 import { TmoneysComponent } from 'src/app/Global/Tmoneys/Tmoneys.component';
-import { PaymentMethodChangeVO } from 'src/app/app.models';
+import { PaymentMethodChangeVO, CreditCard } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
+
 
 @Component({
    selector: 'app-PaymentChangeModel',
@@ -21,10 +22,14 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    paypalMethodStatus: number;
    deliveryMode: string;
    panelOpenState = false;
+   @Input()
    fromPage: string;
 
    @Input()
    userId: number;
+
+   @Output()
+   pymtMethodSelectEvent = new EventEmitter<any>();
 
    constructor(public appService: AppService,
       public router: Router,
@@ -40,7 +45,6 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
    ngOnInit() {
 
-
    }
 
    ngAfterViewInit() {
@@ -50,8 +54,7 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
    }
 
    onCardSaved($event) {
-
-      if (!(this.fromPage === 'checkout')) {
+      if (!(this.fromPage === 'checkout' || this.fromPage === 'booking')) {
          this.paymentCardsComponent.updateTable($event);
          this.paymentCardsComponent.getCreditCards();
       }
@@ -63,6 +66,8 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
       if (this.fromPage === 'checkout') {
          this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else if (this.fromPage === 'booking') {
+         this.pymtMethodSelectEvent.emit($event);
       } else {
          this.floozsComponent.getTmoneys();
          this.tmoneysComponent.getTmoneys();
@@ -84,6 +89,8 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
       if (this.fromPage === 'checkout') {
          this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else if (this.fromPage === 'booking') {
+         this.pymtMethodSelectEvent.emit($event);
       } else {
          this.floozsComponent.getTmoneys();
          this.paymentCardsComponent.getCreditCards();
@@ -104,6 +111,8 @@ export class PaymentChangeModelComponent implements OnInit, AfterViewInit {
 
       if (this.fromPage === 'checkout') {
          this.router.navigate(['/checkout/payment'],  { queryParams: { deliveryMode: this.deliveryMode } });
+      } else if (this.fromPage === 'booking') {
+         this.pymtMethodSelectEvent.emit($event);
       } else {
          this.tmoneysComponent.getTmoneys();
          this.paymentCardsComponent.getCreditCards();

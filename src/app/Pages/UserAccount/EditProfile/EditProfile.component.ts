@@ -297,6 +297,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.reasonRequired.toString() === 'false'
          || this.store.reasonRequired.toString() === '0') ? 0 : 1;
 
+      this.store.pymtMethodReq = (this.store.pymtMethodReq == null
+         || this.store.pymtMethodReq.toString() === 'false'
+         || this.store.pymtMethodReq.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);

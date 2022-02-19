@@ -80,7 +80,8 @@ const MENUITEMS = [
     icon: 'hotel',
     children: [
       { state: 'amenities', name: 'Amenities', type: 'link' },
-      { state: 'reservations', name: 'Reservations', type: 'link' }
+      { state: 'reservations', name: 'Reservations', type: 'link' },
+      { state: 'icons', name: 'Icons', type: 'link' },
     ]
   },
   {
@@ -182,7 +183,8 @@ const MENUITEMS_FR = [
     icon: 'hotel',
     children: [
       { state: 'amenities', name: 'Amenitées', type: 'link' },
-      { state: 'reservations', name: 'Reservations', type: 'link' }
+      { state: 'reservations', name: 'Reservations', type: 'link' },
+      { state: 'icons', name: 'Icons', type: 'link' }
     ]
   },
   {

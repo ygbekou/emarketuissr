@@ -1,0 +1,77 @@
+<ng-container style="width: 1000px !important;">
+  <h1 mat-dialog-title class="primary-color">{{productDesc?.name}}</h1>
+  <mat-dialog-content class="mat-typography" style="width: 500px !important;">
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <h5>{{'COMMON.ADULTS'|translate}}</h5>
+        </div>
+        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div style="display:block !important;">
+            <button mat color="accent" style="height: 30px !important;"
+              (click)="searchCriteria.adults = searchCriteria.adults - 1;"
+              [disabled]="searchCriteria.adults === 1"><i class="material-icons"> remove
+              </i></button>
+            <mat-form-field class="w-15" style="width: 60px !important;">
+              <input matInput type="text" class="form-control" id="qty" [(ngModel)]="searchCriteria.adults" name="adults"
+                style="text-align: center" required>
+            </mat-form-field>
+            <button mat color="primary" style="height: 30px !important;"
+              (click)="searchCriteria.adults = searchCriteria.adults + 1;"><i class="material-icons">
+                add_box
+              </i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <h5>{{'COMMON.CHILDREN'|translate}}</h5>
+      </div>
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div style="display:block !important;">
+          <button mat color="accent" style="height: 30px !important;"
+            (click)="searchCriteria.adults = searchCriteria.adults - 1;"
+            [disabled]="searchCriteria.adults === 1"><i class="material-icons"> remove
+            </i></button>
+          <mat-form-field class="w-15" style="width: 60px !important;">
+            <input matInput type="text" class="form-control" id="qty" [(ngModel)]="searchCriteria.adults" name="adults"
+              style="text-align: center" required>
+          </mat-form-field>
+          <button mat color="primary" style="height: 30px !important;"
+            (click)="searchCriteria.adults = searchCriteria.adults + 1;"><i class="material-icons">
+              add_box
+            </i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <h5>{{'COMMON.ROOMS'|translate}}</h5>
+      </div>
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div style="display:block !important;">
+          <button mat color="accent" style="height: 30px !important;"
+            (click)="searchCriteria.adults = searchCriteria.adults - 1;"
+            [disabled]="searchCriteria.adults === 1"><i class="material-icons"> remove
+            </i></button>
+          <mat-form-field class="w-15" style="width: 60px !important;">
+            <input matInput type="text" class="form-control" id="qty" [(ngModel)]="searchCriteria.adults" name="adults"
+              style="text-align: center" required>
+          </mat-form-field>
+          <button mat color="primary" style="height: 30px !important;"
+            (click)="searchCriteria.adults = searchCriteria.adults + 1;"><i class="material-icons">
+              add_box
+            </i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </mat-dialog-content>
+</ng-container>
