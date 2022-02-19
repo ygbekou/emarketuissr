@@ -45,21 +45,21 @@
          <div fxLayout="row wrap">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
+                  <mat-label> {{'COMMON.DAILY_PRICE' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="price" [(ngModel)]="roomType.price" name="price"
                      required>
                </mat-form-field>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label> {{'COMMON.QUANTITY' | translate}}</mat-label>
+                  <mat-label> {{'COMMON.NBR_ROOM' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="qty" [(ngModel)]="roomType.qty" 
                      name="qty" readonly>
                </mat-form-field>
             </div>
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label> {{'COMMON.AVAILABLE_QUANTITY' | translate}}</mat-label>
+                  <mat-label> {{'COMMON.NBR_AVAIL_ROOM' | translate}}</mat-label>
                   <input matInput type="text" class="form-control" id="availableQty" [(ngModel)]="roomType.availableQty"
                      name="availableQty" readonly>
                </mat-form-field>
@@ -70,6 +70,30 @@
                </mat-slide-toggle>
             </div>
          </div>
+                  <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.DAILY_VIP_PRICE' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="vipPrice" [(ngModel)]="roomType.vipPrice" name="vipPrice"
+                      >
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.HRLY_PRICE' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="qty" [(ngModel)]="roomType.hrlyPrice" 
+                     name="hrlyPrice"  >
+               </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+               <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.VIP_HRLY_PRICE' | translate}}</mat-label>
+                  <input matInput type="text" class="form-control" id="vipHrlyPrice" [(ngModel)]="roomType.vipHrlyPrice"
+                     name="vipHrlyPrice"  >
+               </mat-form-field>
+            </div> 
+         </div>
+
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
 

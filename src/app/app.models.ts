@@ -2841,6 +2841,9 @@ export class RoomSearchCriteria {
 export class RoomType {
   public id: number;
   public price: number;
+  public vipPrice: number;
+  public hrlyPrice: number;
+  public vipHrlyPrice: number;
   public qty: number;
   public storeId: number;
   public availableQty: number;

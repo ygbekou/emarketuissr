@@ -178,6 +178,12 @@
 
     </div>
 
+    <div fxLayout="row wrap" *ngIf="error && !running" xLayoutAlign="none" class="col-gap">
+      <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <h4><font color="red">{{error}}</font></h4>
+      </div>
+    </div>
+
     <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
       <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
         <mat-spinner></mat-spinner>
