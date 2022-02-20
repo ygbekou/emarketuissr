@@ -127,6 +127,7 @@
     "CART_EMPTY": "Le panier est vide",
     "WISH_EMPTY": "Votre liste de favoris est vide",
     "CHECKOUT": "Check-out",
+    "CHECKIN": "Check-In",
     "PAYMENT": "Paiement",
     "FASHION": "Mode",
     "GADGETS": "Gadgets",
@@ -932,7 +933,8 @@
     "SAVE_MY_INFO": "Sauvegardez vos informations, accélérera votre réservation la prochaine fois",
     "PAY_UP_FRONT": "Le paiement est exigé avant la réservation",
     "PAY_AT_REGISTER": "Je paierai à la caisse",
-		"CHOOSE_PAYMENT_METHOD": "Choisir une méthode de payement"
+		"CHOOSE_PAYMENT_METHOD": "Choisir une méthode de payement",
+		"ROOM_LIST": "Liste des chambres"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

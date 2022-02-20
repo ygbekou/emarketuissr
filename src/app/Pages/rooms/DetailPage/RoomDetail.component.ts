@@ -2,11 +2,8 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { MediaObserver } from '@angular/flex-layout';
-import { RoomStoreVO, HotelSearchCriteria, RoomListVO, RoomTypeVO, Reservation, Country } from 'src/app/app.models';
+import { RoomStoreVO, HotelSearchCriteria, RoomListVO, Reservation, Country } from 'src/app/app.models';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 @Component({
@@ -82,7 +79,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                   }
                }
 
-               this.currentHigh = 4;
+               this.currentHigh = this.filesCopy.length < 10 ? this.filesCopy.length - 1 : 9;
                //this.setDataSource(this.roomStore.roomTyeVOs);
             }
          },
@@ -146,23 +143,37 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
 
    previous() {
       let j = 0;
-      for (let i = this.currentLow - 1; i < this.currentLow + 11; i++) {
+      if (this.currentLow <= 0) {
+         return;
+      }
+
+      let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
+      for (let i = this.currentLow - 1; i < maxI; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
       }
 
-      this.currentLow--;
+      if (this.currentLow > 0) {
+         this.currentLow--;
+      }
       this.currentHigh--;
    }
 
    next() {
       let j = 0;
-      for (let i = this.currentLow + 1; i < this.currentLow + 13; i++) {
+      if (this.currentHigh >= this.filesCopy.length) {
+         return;
+      }
+
+      let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
+      for (let i = this.currentLow + 1; i < maxI; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
       }
 
       this.currentLow++;
-      this.currentHigh++;
+      if (this.currentHigh < maxI) {
+         this.currentHigh++;
+      }
    }
 }

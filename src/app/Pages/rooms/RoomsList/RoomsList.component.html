@@ -6,7 +6,19 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <ngx-slick-carousel class="carousel" [config]="slideConfig">
         <div ngxSlickItem *ngFor="let astore of stores">
-          <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id;setImage(); getData();">
+          <mat-card class="box-shadow-md p-4" (click)="selectStore(astore)"
+            *ngIf="!selectedStore || selectedStore.id !== astore.id">
+            <mat-card-content>
+              <a href="javascript:void(0)">
+                <img src="assets/images/stores/{{astore.id}}/{{astore.image}}">
+              </a>
+              <div class="myOverlay">
+                {{astore.address.city +', '+astore.address.country.name}}
+              </div>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="box-shadow-md p-4" (click)="unSelectStore()" style="background-color: lightblue;"
+            *ngIf="selectedStore && selectedStore.id === astore.id">
             <mat-card-content>
               <a href="javascript:void(0)">
                 <img src="assets/images/stores/{{astore.id}}/{{astore.image}}">
@@ -22,6 +34,15 @@
     <br />
   </div>
   <div fxLayout="row wrap" class="col-gap">
+    <!-- <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" fxLayoutAlign="center center"
+      *ngIf="selectedStore">
+      {{'COMMON.YOU_SELECTED'|translate}}: &nbsp;&nbsp;&nbsp;&nbsp;<strong>{{ selectedStore?.name}}</strong>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="button"
+        (click)="unSelectStore()">
+        <span class="mx-1 uppercase">{{'COMMON.CLEAR'|translate}}</span>
+      </button>
+    </div> -->
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div class="mat-card mb-4">
         <form name="form" (ngSubmit)="f.form.valid && getRooms()" #f="ngForm" validate>
@@ -166,8 +187,7 @@
             <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <mat-form-field class="w-100" appearance="fill">
                 <mat-label> {{'COMMON.SORTED_BY' | translate}}</mat-label>
-                <mat-select [(ngModel)]="sortSelect" name="sortSelect"
-                  (selectionChange)="sortSelected($event)">
+                <mat-select [(ngModel)]="sortSelect" name="sortSelect" (selectionChange)="sortSelected($event)">
                   <mat-option [value]="1">
                     {{'COMMON.LOWEST_PRICE'|translate}}
                   </mat-option>

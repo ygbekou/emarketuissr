@@ -931,7 +931,8 @@
 		"SAVE_MY_INFO": "Saving your information will speed up your booking next time",
 		"PAY_UP_FRONT": "Payment is required before reservation",
 		"PAY_AT_REGISTER": "I will pay at the register",
-		"CHOOSE_PAYMENT_METHOD": "Choose Payment Method"
+		"CHOOSE_PAYMENT_METHOD": "Choose Payment Method",
+		"ROOM_LIST": "Room list"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

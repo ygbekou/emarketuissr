@@ -2067,41 +2067,42 @@ export class TimeZone {
 }
 
 export class StoreCatVO {
-  public id: number;
-  public name: string;
-  public count: number;
+  id: number;
+  name: string;
+  count: number;
+  url: string;
 }
 
 export class StoreShipper {
-  public id: number;
-  public shipper: Shipper;
-  public store: Store;
-  public shipperStatus: number;
-  public storeStatus: number;
-  public shipCount: number;
+  id: number;
+  shipper: Shipper;
+  store: Store;
+  shipperStatus: number;
+  storeStatus: number;
+  shipCount: number;
   type = 'StoreShipper';
 }
 
 export class SalesSummary {
-  public id: number;
-  public store: Store;
-  public currency: Currency;
-  public year: number;
-  public month: number;
-  public paymentMethod: string;
-  public total: number;
-  public shippingCost: number;
-  public taxFees: number;
-  public processingFees: number;
-  public totalDue: number;
-  public totalPaid: number;
-  public totalRemaining: number;
-  public status: number;
-  public payoutId: number;
-  public acknowledger: User;
-  public acknowledgerFullName: string;
-  public acknowledgeDate: Date;
-  public modifiedBy: number;
+  id: number;
+  store: Store;
+  currency: Currency;
+  year: number;
+  month: number;
+  paymentMethod: string;
+  total: number;
+  shippingCost: number;
+  taxFees: number;
+  processingFees: number;
+  totalDue: number;
+  totalPaid: number;
+  totalRemaining: number;
+  status: number;
+  payoutId: number;
+  acknowledger: User;
+  acknowledgerFullName: string;
+  acknowledgeDate: Date;
+  modifiedBy: number;
 
   type = 'SalesSummary';
 

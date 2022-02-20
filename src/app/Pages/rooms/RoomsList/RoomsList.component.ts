@@ -56,6 +56,7 @@ export class RoomsListComponent implements OnInit {
    minDate: Date = new Date();
    minCheckoutDate: Date = new Date();
    sortSelect = 1;
+   selectedStore: Store;
 
 
    BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
@@ -123,38 +124,6 @@ export class RoomsListComponent implements OnInit {
       this.sort = this.sortings[0];
 
       this.dataSource = new MatTableDataSource();
-      this.getStoresAndData();
-
-
-      this.activatedRoute.params.subscribe(params => {
-
-         this.catId = 0;
-         this.marketId = 0;
-         this.storeCatId = 0;
-         console.log(params.type);
-         if (params.type) {
-            const type = params.type.substring(0, 3);
-            if (type === 'cat') {
-               this.catId = params.type.substring(3);
-            } else if (type === 'mak') {
-               this.marketId = params.type.substring(3);
-            } else if (type === 'stc') {
-               this.storeCatId = params.type.substring(3);
-            }
-
-            if (this.catId > 0 || this.marketId > 0 || this.storeCatId > 0) {
-               console.log('catId=' + this.catId
-                  + ', marketId=' + this.marketId
-                  + ', storeCatId=' + this.storeCatId);
-               if (this.storeCatId > 0) {
-                  this.getStoresAndData();
-               } else {
-                  this.getData();
-               }
-            }
-         }
-
-      });
 
       this.activatedRoute.queryParams.subscribe(params => {
          console.log(this.activatedRoute.queryParams);
@@ -166,6 +135,11 @@ export class RoomsListComponent implements OnInit {
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
                this.getStore();
+            }
+
+            if (queryParams['storeCatId'] !== undefined) {
+               this.storeCatId = queryParams['storeCatId'];
+               this.getStoresFromCat();
             }
 
          });
@@ -216,34 +190,30 @@ export class RoomsListComponent implements OnInit {
       }
       console.log(this.backgroundImg);
    }
-   public getStoresAndData() {
+
+
+   public getStoresFromCat() {
       // console.log('get store called');
-      this.stores = [];
-      const parameters: string[] = [];
-      parameters.push('e.displayWeb = |abc|1|Integer');
-      parameters.push('e.status = |xyz|1|Integer');
-      parameters.push('e.aprvStatus = |klm|1|Integer');
-      parameters.push('e.storeCat.id = |klz|8|Integer');
-      this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters, ' order by e.sortOrder ')
+
+      this.appService.getObjects('/service/catalog/getStoresFromCat/' + this.storeCatId + '/1')
          .subscribe((data: Store[]) => {
             this.stores = data;
             this.filteredStores = data;
-            // if (this.stores) {
-            //    this.store = this.stores[0];
-            //    this.storeId = this.store.id;
-            //    this.setImage();
-            //    this.storeCatId = 0;
-            //    this.getData();
-            // }
-         }, (error) => {
-            console.log(error);
-            console.log('Error occurred');
-         },
-            () => console.log('Get getStores complete'));
+            if (this.stores && this.stores.length === 1) {
+               this.store = this.stores[0];
+               //this.filteredStores = this.stores;
+               //this.getData();
+            } else if (this.stores && this.stores.length > 1) {
+            }
+         }, (error) => console.log(error),
+            () => console.log('Get all storeSpecs complete'));
    }
 
    // Getting all the product based on the Top Search
    getRooms() {
+      if (this.selectedStore) {
+         this.searchCriteria.storeId = this.selectedStore.id;
+      }
       let beginDateStr = new Date(this.searchCriteria.checkinDate.getTime() - (this.searchCriteria.checkinDate.getTimezoneOffset() * 60000))
          .toISOString()
          .split("T")[0]
@@ -272,7 +242,9 @@ export class RoomsListComponent implements OnInit {
 
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            this.applyGridFilter(data);
+            if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
+               this.applyGridFilter(data);
+            }
             console.log(data);
          },
             error => console.log(error),
@@ -369,16 +341,6 @@ export class RoomsListComponent implements OnInit {
       this.firstPagePagination();
       this.createDatasource(this.filterDataBySearchCriteria(this.searchCriteria, this.dummyCat));
       this.resetPagination();
-   }
-
-
-   public togglePopup(value) {
-      this.appService.numberRoomsPopup(value).
-         subscribe(res => { this.popupResponse = res; },
-            err => console.log(err),
-            () => this.getCartPopupResponse(this.popupResponse, value)
-         );
-
    }
 
    public getCartPopupResponse(response: any, value: any) {
@@ -551,6 +513,7 @@ export class RoomsListComponent implements OnInit {
 
    onCheckinDateChange() {
       this.minCheckoutDate = this.searchCriteria.checkinDate;
+      //this.searchCriteria.checkoutDate = undefined;
    }
 
    beginHourSelected(event) {
@@ -588,4 +551,17 @@ export class RoomsListComponent implements OnInit {
 
    }
 
+
+   selectStore(aStore: Store) {
+      this.selectedStore = aStore;
+      this.searchCriteria.location = aStore.cityCountryName;
+      this.searchCriteria.address = aStore.address;
+   }
+
+   unSelectStore() {
+      this.selectedStore = undefined;
+      this.searchCriteria.storeId = undefined;
+      this.searchCriteria.location = undefined;
+      this.searchCriteria.address = undefined;
+   }
 }

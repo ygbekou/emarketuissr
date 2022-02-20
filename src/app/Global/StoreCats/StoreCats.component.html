@@ -15,7 +15,7 @@
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
           *ngFor="let slide of storeCats">
-          <a [routerLink]="['/products'+'/stc'+slide.id]">
+          <a [routerLink]="[slide.url ? (slide.url) : ('/products'+'/stc'+slide.id)]" [queryParams] = "{storeCatId: slide.id}">
           <mat-card class="box-shadow-md p-4">
             <a href="javascript:void(0)">
               <img [src]="'assets/images/storecats/'+slide.id+'.jpg'" alt="Product">

@@ -10,9 +10,8 @@
       <mat-card class="product-card" *ngIf="viewType==='grid'">
          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-               <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" 
-               [queryParams] = "{storeId: roomStore?.id, rooms: searchCriteria.rooms, 
-                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeNam,
+               <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, rooms: searchCriteria.rooms, 
+                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
                   children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}">
                   <img mat-card-image
@@ -24,21 +23,32 @@
                <div fxLayout="row wrap">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                      <h5>
-                        <a *ngIf="roomStore?.id" [routerLink]="['/rooms/dtl/'+roomStore?.id]" class="title-link">{{roomStore?.storeName}}</a>
+                        <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
+                     rooms: searchCriteria.rooms, 
+                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
+                  children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
+                  checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"
+                           class="title-link">{{roomStore?.storeName}}</a>
                      </h5>
                   </div>
                </div>
                <div fxLayout="row wrap">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                     <a *ngIf="roomStore?.id" [routerLink]="['/rooms/dtl/'+roomStore?.id]" class="title-link">{{roomStore?.cityName}}, {{roomStore?.countryName}}</a>
+                     <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
+                     rooms: searchCriteria.rooms, 
+                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
+                  children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
+                  checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"
+                        class="title-link">{{roomStore?.cityName}}, {{roomStore?.countryName}}</a>
                   </div>
                </div>
-               <br/>
+               <br />
                <div fxLayout="row wrap" *ngFor="let roomType of roomStore.roomTyeVOs">
-                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" >
-                     {{roomType.roomTypeName}} {{roomStore.lowestPrice}} {{roomStore.highestPrice}}
+                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                     {{roomType.roomTypeName}}
                   </div>
-                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" style="text-align: right;">
+                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                     style="text-align: right;">
                      <h4>
                         {{roomStore.symbolLeft}}
                         {{roomType.price * searchCriteria.rooms | number: '1.' + roomStore?.currencyDecimalPlace + '-'  
@@ -48,31 +58,34 @@
                   </div>
                </div>
             </div>
-            
+
             <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
                <div fxLayout="row wrap">
                   <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist" *ngIf="fromPage==='buy'">
-                     <a (click)="productAddToWishlist(roomStore, i+'-wishlist')"><i class="material-icons"> favorite </i></a>
+                     <a (click)="productAddToWishlist(roomStore, i+'-wishlist')"><i class="material-icons"> favorite
+                        </i></a>
                   </div>
                </div>
-               <br/>
-               <br/>
+               <br />
+               <br />
                <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" style="text-align: right;">
-                     {{searchCriteria.rooms}} {{'COMMON.ROOMS'|translate}}, {{searchCriteria.days}} {{'COMMON.NIGHTS'|translate}}, {{searchCriteria.adults}} {{'COMMON.ADULTS'|translate}}
+                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+                     style="text-align: right;">
+                     {{searchCriteria.rooms}} {{'COMMON.ROOMS'|translate}}, {{searchCriteria.days}}
+                     {{'COMMON.NIGHTS'|translate}}, {{searchCriteria.adults}} {{'COMMON.ADULTS'|translate}}
                   </div>
                </div>
-               
+
             </div>
          </div>
-         
-         
+
+
          <!-- <div class="rating-star">
             <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
          </div> -->
-         
+
          <mat-card-content class="product-content relative">
-            
+
          </mat-card-content>
       </mat-card>
    </div>
