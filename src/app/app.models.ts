@@ -2824,6 +2824,7 @@ export class Reservation {
 
   reservationRooms: ReservationRoom[];
   roomTypeIds: number[];
+  errors: string[];
 
   type = 'Reservation';
 }
@@ -3014,7 +3015,6 @@ export class Building {
   image: string;
   image1: string;
   image2: string;
-  image3: string;
   status = 1;
   modifiedBy: number;
   name: string;

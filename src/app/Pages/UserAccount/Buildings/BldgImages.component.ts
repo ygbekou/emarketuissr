@@ -18,10 +18,8 @@ export class BldgImagesComponent extends BaseComponent implements OnInit {
    messages: string;
    formData: FormData;
    mainFiles: any[];
-
    image1Files: any[];
    image2Files: any[];
-   image3Files: any[];
    files: any[];
 
    picture: any;
@@ -41,7 +39,6 @@ export class BldgImagesComponent extends BaseComponent implements OnInit {
       this.mainFiles = [];
       this.image1Files = [];
       this.image2Files = [];
-      this.image3Files = [];
       this.files = [];
       this.appService.getOneWithChildsAndFiles(this.bldgId, this.className)
          .subscribe(result => {
@@ -73,14 +70,7 @@ export class BldgImagesComponent extends BaseComponent implements OnInit {
                            preview: 'assets/images/buildings/' + this.bldgId + '/' + item
                         }
                      );
-                  } else if (item === this.bldg.image3) {
-                     this.image3Files.push(
-                        {
-                           link: 'assets/images/buildings/' + this.bldgId + '/' + item,
-                           preview: 'assets/images/buildings/' + this.bldgId + '/' + item
-                        }
-                     );
-                  } else {
+                  }  else {
                      const image = {
                         link: 'assets/images/buildings/' + this.bldgId + '/' + item,
                         preview: 'assets/images/buildings/' + this.bldgId + '/' + item
@@ -111,12 +101,11 @@ export class BldgImagesComponent extends BaseComponent implements OnInit {
       this.listFiles(bldg, this.mainFiles, 'main_picture.');
       this.listFiles(bldg, this.image1Files, 'image1.');
       this.listFiles(bldg, this.image2Files, 'image2.');
-      this.listFiles(bldg, this.image3Files, 'image3.');
       this.listFiles(bldg, this.files, 'picture.');
 
       bldg.singleImage = false;
       if (this.files.length > 0 || this.mainFiles.length > 0 || this.image1Files.length > 0
-         || this.image2Files.length > 0 || this.image3Files.length > 0) {
+         || this.image2Files.length > 0) {
          console.log(bldg);
 
          this.appService.saveWithFile(bldg, this.className, this.formData, 'manageFiles')

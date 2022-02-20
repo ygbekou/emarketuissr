@@ -338,9 +338,9 @@
                       {{'COMMON.PAY_UP_FRONT' | translate}}
                     </p>
                   </div>
-                   <div fxLayout="row wrap">
+                  <div fxLayout="row wrap">
                     <h6>{{'COMMON.CHOOSE_PAYMENT_METHOD' | translate}}</h6>
-                   </div>
+                  </div>
                   <div fxLayout="row wrap">
                     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="step"
                       (change)="onTogglePmntMethodChange($event)">
@@ -364,8 +364,10 @@
                           <form id="payment-form" class="sr-payment-form">
                             <div class="sr-combo-inputs-row">
                               <div>
-                                <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name" name="name"
-                                  [(ngModel)]="reserv.nameOnCard" #name="ngModel" required>
+                                <mat-form-field class="w-100">
+                                  <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name"
+                                    name="name" [(ngModel)]="reserv.nameOnCard" #name="ngModel" required>
+                                </mat-form-field>
                               </div>
                               <br />
                               <div class="sr-input sr-card-element" id="card-element"></div>
@@ -412,7 +414,7 @@
                             <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                               <div fxLayout="row wrap" fxLayoutAlign="right top">
                                 <a href="javascript:void(0)" class="primary-color"
-                                  (click)="step = 3; reserv.pymtMethodCode = undefined">{{'COMMON.PAY_AT_REGISTER'|translate}}</a>
+                                  (click)="payAtRegister()">{{'COMMON.PAY_AT_REGISTER'|translate}}</a>
                               </div>
                             </div>
                           </div>
@@ -427,9 +429,16 @@
 
             <div *ngIf="step === 3 ">
               <form name="form" (ngSubmit)="f1.form.valid && book()" #f1="ngForm" validate>
-                <h4>
-                  <mat-label> {{'COMMON.USER_INFO' | translate}} </mat-label>
-                </h4>
+                <div fxLayout="row wrap">
+                  <span class="custom_h4">
+                    <mat-label> {{'COMMON.USER_INFO' | translate}} </mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+                  </span>
+                  <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" type="button"
+                      (click)="editUserInfo()">
+                      <span class="mx-1 uppercase">{{'COMMON.EDIT' | translate}}</span>
+                    </button>
+                </div>
+                
                 <div fxLayout="row wrap">
                   {{'COMMON.FIRST_NAME' | translate}}: &nbsp;&nbsp; <h6>{{reserv.firstName}}</h6>
                 </div>
@@ -473,13 +482,23 @@
 
                 <br />
                 <h4>
-                  <mat-label> {{'COMMON.PAYMENT_DETAILS' | translate}} </mat-label>
+                  <div fxLayout="row wrap">
+                  <span class="custom_h4">
+                    <mat-label> {{'COMMON.PAYMENT_DETAILS' | translate}} </mat-label> &nbsp; &nbsp; &nbsp; &nbsp;
+                  </span>
+                  <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" type="button"
+                      (click)="editPymtInfo()">
+                      <span class="mx-1 uppercase">{{'COMMON.EDIT' | translate}}</span>
+                    </button>
+                </div>
                 </h4>
                 <div fxLayout="row wrap">
                   <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
 
                     <div fxLayout="row wrap" fxLayoutGap="10px grid">
-                      {{'COMMON.PAYMENT_METHOD' | translate}}: &nbsp;&nbsp; <h6>{{reserv?.pymtMethodCode}}</h6>
+                      {{'COMMON.PAYMENT_METHOD' | translate}}: &nbsp;&nbsp; <h6
+                        *ngIf="reserv.pymtMethodCode !== 'AT_REGISTER'">{{reserv?.pymtMethodCode}}</h6>
+                      <h6 *ngIf="reserv.pymtMethodCode === 'AT_REGISTER'">{{'COMMON.AT_REGISTER' | translate}}</h6>
                     </div>
                     <div fxLayout="row wrap" *ngIf="reserv.pymtMethodCode === 'CREDIT_CARD'">
                       <img [src]="'assets/images/cards/' + reserv.cardTypeIndex + '.png'"
@@ -499,6 +518,9 @@
                   </div>
                 </div>
                 <br />
+                <div fxLayout="row wrap" fxLayoutAlign="right right">
+                  <mat-error severity="error">{{errors}}</mat-error>
+                </div>
                 <div fxLayout="row wrap" fxLayoutAlign="right right">
                   <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxLayoutAlign="right right">

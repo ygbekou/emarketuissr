@@ -14,23 +14,23 @@
    <div fxLayout="row wrap">
       <div fxFlex="100" fxLayoutAlign="start center" class="my-3 px-2">
          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
-            <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.FIRST_IMAGE' | translate}}</span><span
+            <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.MAIN_IMAGE' | translate}}</span><span
                   class="text-muted mx-3">(max: 1 image)</span></p>
-            <input-file [(ngModel)]="image1Files" name="firstFile" #firstFile="ngModel" fileLimit="1" fileAccept="image/*"
+            <input-file [(ngModel)]="mainFiles" name="mainFile" #mainFile="ngModel" fileLimit="1" fileAccept="image/*"
                [linkEnabled]="false" multiple>
             </input-file>
          </div>
          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
             <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.SECOND_IMAGE' | translate}}</span><span
                   class="text-muted mx-3">(max: 1 image)</span></p>
-            <input-file [(ngModel)]="image2Files" name="secondFile" #secondFile="ngModel" fileLimit="1" fileAccept="image/*"
+            <input-file [(ngModel)]="image1Files" name="firstFile" #firstFile="ngModel" fileLimit="1" fileAccept="image/*"
                [linkEnabled]="false" multiple>
             </input-file>
          </div>
          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="33" fxFlex.xl="33">
             <p class="mb-0"><span class="uppercase fw-500">{{'COMMON.THIRD_IMAGE' | translate}}</span><span
                   class="text-muted mx-3">(max: 1 image)</span></p>
-            <input-file [(ngModel)]="image3Files" name="thirdFile" #thirdFile="ngModel" fileLimit="1" fileAccept="image/*"
+            <input-file [(ngModel)]="image2Files" name="secondFile" #secondFile="ngModel" fileLimit="1" fileAccept="image/*"
                [linkEnabled]="false" multiple>
             </input-file>
          </div>

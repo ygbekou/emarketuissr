@@ -236,7 +236,7 @@ export class RoomsListComponent implements OnInit {
 
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
       const diffInMs = Math.abs(this.searchCriteria.checkoutDate - this.searchCriteria.checkinDate);
-      this.searchCriteria.days = diffInMs / (1000 * 60 * 60 * 24);
+      this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
       this.searchCritCopy = { ... this.searchCriteria };
 

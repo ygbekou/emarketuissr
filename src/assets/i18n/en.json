@@ -932,7 +932,7 @@
 		"HIGHEST_PRICE": "Highest Price",
 		"FIRST_IMAGE": "First Image",
 		"SECOND_IMAGE": "Second Image",
-		"THIRD_IMAGE": "Third Image",
+		"MAIN_IMAGE": "Main Image",
 		"CONTINUE_AS_GUEST": "Continue as Guest",
 		"OPTIONAL": "Optional",
 		"SAVE_MY_INFO": "Saving your information will speed up your booking next time",
@@ -1030,7 +1030,8 @@
 		"INVALID_DELIVERY_TIME": "Begin Delivery Time cannot be greater than End Delivery Time",
 		"INVALID_DELIVERY_UNIT": "Select a Time Unit from the list",
 		"UPDATE_ADDRESS_POSITION":"We could not geolocalize your address. Update it for shipping",
-		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}"
+		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}",
+		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

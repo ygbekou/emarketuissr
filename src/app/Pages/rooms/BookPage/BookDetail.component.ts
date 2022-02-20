@@ -246,7 +246,9 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
             } else {
                this.reserv.pymtMethodCode = 'CREDIT_CARD';
                this.reserv.pymtMethodName = 'Credit Card';
-               this.book(result);
+               this.reserv.stripePaymentMethodId = result.paymentMethod.id;
+               this.step = 3;
+               //this.book(result);
             }
          })
          .then(function (result) {
@@ -268,7 +270,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    }
 
 
-   book(result) {
+   book(result: any) {
       console.log(result);
       this.setReserv();
       if (result) {
@@ -277,13 +279,19 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
       this.appService.saveWithUrl('/service/hospitality/reserve',
          this.reserv)
-         .subscribe(result2 => {
-            console.log(result2);
-            if (result2.errors === null || result2.errors.length === 0) {
-               this.step = 3;
-               this.reserv = result2;
-               this.router.navigate(['/rooms/reservations/' + this.reserv.id],
-                  { queryParams: {} });
+         .subscribe((savedRes: Reservation) => {
+            console.log(savedRes);
+            if (savedRes.errors === null || savedRes.errors.length === 0) {
+               if (savedRes.status === 5) {
+                  this.translate.get(['MESSAGE.PAYMENT_UNSUCCESS']).subscribe(res => {
+                  this.errors = res['MESSAGE.PAYMENT_UNSUCCESS'];
+               });
+               } else {
+                  this.step = 3;
+                  this.reserv = savedRes;
+                  this.router.navigate(['/rooms/reservations/' + this.reserv.id],
+                     { queryParams: {} });
+               }
             } else {
                this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
                   this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
@@ -295,6 +303,10 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
    goToStep2() {
       this.step = 2;
+
+      if (this.reserv.pymtMethodCode === 'CREDIT_CARD') {
+         this.initPaymentMethod()
+      }
    }
 
    hasLoggedIn() {
@@ -313,8 +325,16 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
    payAtRegister() {
       this.step = 3;
-      this.reserv.pymtMethodCode = undefined;
+      this.reserv.pymtMethodCode = 'AT_REGISTER';
       this.reserv.phone = '';
    }
 
+   editUserInfo() {
+      this.step = 1;
+   }
+
+   editPymtInfo() {
+      this.step = 2;
+      this.initPaymentMethod()
+   }
 }

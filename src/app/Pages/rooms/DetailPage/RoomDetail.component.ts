@@ -26,7 +26,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    searchCriteria: HotelSearchCriteria = new HotelSearchCriteria();
    firstImage = '';
    secondImage = '';
-   thirdImage = '';
+   mainImage = '';
    filesCopy = [];
    fiveImages = [];
    currentLow = 0;
@@ -61,7 +61,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                this.roomStore = data.roomStoreVOs[0];
                this.firstImage = this.roomStore.image1;
                this.secondImage = this.roomStore.image2;
-               this.thirdImage = this.roomStore.image3;
+               this.mainImage = this.roomStore.image;
 
                let j = 0;
                for (let i = 0; i < this.roomStore.fileNames.length; i++) {
@@ -139,9 +139,13 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       }
 
       let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
-      for (let i = this.currentLow - 1; i < maxI; i++) {
+      for (let i = this.currentLow - 1; i < this.filesCopy.length; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
+
+         if (j === 12) {
+            break;
+         }
       }
 
       if (this.currentLow > 0) {
@@ -157,13 +161,16 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       }
 
       let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
-      for (let i = this.currentLow + 1; i < maxI; i++) {
+      for (let i = this.currentLow + 1; i < this.filesCopy.length; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
+         if (j === 12) {
+            break;
+         }
       }
 
       this.currentLow++;
-      if (this.currentHigh < maxI) {
+      if (this.currentHigh < this.filesCopy.length) {
          this.currentHigh++;
       }
    }

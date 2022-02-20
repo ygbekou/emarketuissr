@@ -934,7 +934,7 @@
 		"HIGHEST_PRICE": "Prix plus élevé",
 		"FIRST_IMAGE": "Première Image",
 		"SECOND_IMAGE": "Deuxième Image",
-		"THIRD_IMAGE": "Troisième Image",
+		"MAIN_IMAGE": "Image principale",
 		"CONTINUE_AS_GUEST": "Continuer en tant que visiteur",
     "OPTIONAL": "Optionelle",
     "SAVE_MY_INFO": "Sauvegardez vos informations, accélérera votre réservation la prochaine fois",
@@ -1031,7 +1031,8 @@
  		"CHOOSE_LATER_DELIVERY_DATE": "Nous ne livrons pas en ce moment. Choisissez la date/heure de livraison",
 		"CHOOSE_LATER_PICKUP_DATE": "La boutique est fermée en ce moment. Choisissez la date/heure a laquelle vous passez prendre",
 		"INVALID_DELIVERY_UNIT": "Sélectionnez une unité de temps dans la liste",
-		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}"
+		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}",
+		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
