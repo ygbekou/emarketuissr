@@ -89,7 +89,7 @@ export class ReportsComponent implements OnInit {
   runInvnReport(type: number) {
     this.showParams = false;
     this.showFormatParams = true;
-
+    this.error = '';
     if (type >= 3) {
       this.showParams = true;
     }
@@ -114,8 +114,17 @@ export class ReportsComponent implements OnInit {
     this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
+         console.log(data);
         this.running = false;
-        this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+        if (data && data.length > 0 && !data[0].startsWith('ERROR :')) {
+          this.showParams = false;
+          this.showFormatParams = false;
+          this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+        } else {
+          this.translate.get(['MESSAGE.GOV_ERROR_OCCURRED']).subscribe(res => {
+            this.error = res['MESSAGE.GOV_ERROR_OCCURRED'] + ' ' + data[0];
+          });
+        }
       },
         error => {
           console.log(error);
@@ -136,6 +145,7 @@ export class ReportsComponent implements OnInit {
 
   runRpt() {
     this.running = true;
+    this.error = '';
     const rep = new RunReportVO();
     rep.reportFormat = this.reportFormat;
     if (this.subRpt <= 2) {
@@ -166,9 +176,9 @@ export class ReportsComponent implements OnInit {
       rep.parameters.push(parm1, parm2, parm3);
     } else {
       const parm3 = new Parameter('dateDebut',
-      this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
+        this.datePipe.transform(this.beginDate, 'MM/dd/yyyy') + ' 00:00:00');
       const parm4 = new Parameter('dateFin',
-      this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
+        this.datePipe.transform(this.endDate, 'MM/dd/yyyy') + ' 23:59:59');
       const parm5 = new Parameter('subRptId', '' + this.subRpt);
       const parm6 = new Parameter('percentPrint', '' + this.percentPrint);
       rep.parameters = [];
@@ -179,10 +189,16 @@ export class ReportsComponent implements OnInit {
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);
-        this.showParams = false;
-        this.showFormatParams = false;
         this.running = false;
-        this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+        if (data && data.length > 0 && !data[0].startsWith('ERROR :')) {
+          this.showParams = false;
+          this.showFormatParams = false;
+          this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+        } else {
+          this.translate.get(['MESSAGE.GOV_ERROR_OCCURRED']).subscribe(res => {
+            this.error = res['MESSAGE.GOV_ERROR_OCCURRED'] + ' ' + data[0];
+          });
+        }
       },
         error => {
           console.log(error);

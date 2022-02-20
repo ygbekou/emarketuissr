@@ -137,7 +137,8 @@ export class ProductsListComponent implements OnInit {
                   + ', marketId=' + this.marketId
                   + ', storeCatId=' + this.storeCatId);
                if (this.storeCatId > 0) {
-                  this.getStoresAndData();
+                  this.getStoresFromCat();
+                  // this.getStoresAndData();
                } else {
                   this.getData();
                }
@@ -205,6 +206,23 @@ export class ProductsListComponent implements OnInit {
       }
       console.log(this.backgroundImg);
    }
+
+   public getStoresFromCat() {
+      this.appService.getObjects('/service/catalog/getStoresFromCat/' + this.storeCatId + '/1')
+         .subscribe((data: Store[]) => {
+            this.stores = data;
+            console.log(this.stores);
+            if (this.stores) {
+               this.store = this.stores[0];
+               this.storeId = this.store.id;
+               this.setImage();
+               this.storeCatId = 0;
+               this.getData();
+            }
+         }, (error) => console.log(error),
+            () => console.log('Get all storeSpecs complete'));
+   }
+
    public getStoresAndData() {
       // console.log('get store called');
       this.stores = [];
