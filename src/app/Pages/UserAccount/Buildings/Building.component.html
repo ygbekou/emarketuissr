@@ -45,11 +45,5 @@
             {{ 'COMMON.STATUS' | translate }}
          </mat-slide-toggle>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
-         <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
-         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
-            [linkEnabled]="false" >
-         </input-file>
-      </div>
    </div>
 </form>

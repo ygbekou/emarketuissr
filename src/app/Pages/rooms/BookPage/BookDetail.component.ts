@@ -25,7 +25,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    backgroundColor = '#4c76b2';
    color = '#fff';
 
-   roomStore: RoomStoreVO;
+   roomStore: RoomStoreVO = new RoomStoreVO();
    roomTypeVO: RoomTypeVO;
    storeId: number;
    searchCriteria: HotelSearchCriteria = new HotelSearchCriteria();
@@ -136,29 +136,14 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       this.reserv.roomTypeIds.push(this.searchCriteria.roomTypeId);
       this.reserv.storeId = this.searchCriteria.storeId;
       this.reserv.languageId = this.appService.appInfoStorage.language.id;
-      //this.reserv.userId = Number(this.appService.tokenStorage.getUserId());
-      //this.reserv.clientId = Number(this.appService.tokenStorage.getUserId());
       this.reserv.beginDate = this.searchCriteria.checkinDate;
       this.reserv.endDate = this.searchCriteria.checkoutDate;
-      //reserv.firstName = this.appService.tokenStorage.getFirstName();
-      //reserv.lastName = this.appService.tokenStorage.getLastName();
       this.reserv.nbrAdult = this.searchCriteria.adults + '';
       this.reserv.nbrChild = this.searchCriteria.children + '';
       this.reserv.quantity = this.searchCriteria.rooms;
-      //reserv.contact = this.appService.tokenStorage.getFirstName() + ' '
-      //   + this.appService.tokenStorage.getLastName();
-      //reserv.cashier = this.appService.tokenStorage.getFirstName() + ' '
-      //   + this.appService.tokenStorage.getLastName();
-      //reserv.email = 'test@gmail.com';
-      //reserv.sex = 'M';
-      //reserv.comments = 'Reserving Hotel';
-      //reserv.country = new Country();
-      //reserv.country.id = 228;
-      //reserv.phone = '888-999-202';
-      //reserv.idType = 1;
-      //reserv.idNbr = 'G1203698696'
       this.reserv.days = this.searchCriteria.days;
       this.reserv.nbrRooms = this.searchCriteria.rooms;
+      this.reserv.roomTypes = this.appService.selectedRoomStore.roomTyeVOs;
 
    }
 
@@ -284,8 +269,8 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
             if (savedRes.errors === null || savedRes.errors.length === 0) {
                if (savedRes.status === 5) {
                   this.translate.get(['MESSAGE.PAYMENT_UNSUCCESS']).subscribe(res => {
-                  this.errors = res['MESSAGE.PAYMENT_UNSUCCESS'];
-               });
+                     this.errors = res['MESSAGE.PAYMENT_UNSUCCESS'];
+                  });
                } else {
                   this.step = 3;
                   this.reserv = savedRes;
@@ -325,7 +310,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
    payAtRegister() {
       this.step = 3;
-      this.reserv.pymtMethodCode = 'AT_REGISTER';
+      this.reserv.pymtMethodCode = 'PAY_AT_REGISTER';
       this.reserv.phone = '';
    }
 
@@ -336,5 +321,13 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    editPymtInfo() {
       this.step = 2;
       this.initPaymentMethod()
+   }
+
+   gotoConfirmation() {
+      this.step = 3;
+   }
+
+   counter(i: number) {
+      return new Array(i);
    }
 }

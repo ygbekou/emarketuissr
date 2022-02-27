@@ -2824,6 +2824,7 @@ export class Reservation {
 
   reservationRooms: ReservationRoom[];
   roomTypeIds: number[];
+  roomTypes: RoomTypeVO[];
   errors: string[];
 
   type = 'Reservation';
@@ -3282,8 +3283,10 @@ export class RoomStoreVO {
   rating: number;
   ratingCount: number;
   pymtMethodReq: number;
-
-	roomTyeVOs: RoomTypeVO[];
+  
+  roomTyeVOs: RoomTypeVO[];
+  nbrRooms = 0;
+  total = 0;
 
   fileNames: string[];
 	reviews: Review[];
@@ -3297,6 +3300,8 @@ export class RoomTypeVO {
 	roomTypeName: string;
 	price: number;
   qtyAvailable: number;
+  nbRooms = 0;
+  total: number;
 
   amenities: AmenityVO[];
 }

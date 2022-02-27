@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
@@ -33,10 +33,12 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    currentHigh = 0;
 
    constructor(public appService: AppService,
+      public router: Router,
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
       private activatedRoute: ActivatedRoute) {
       super(translate);
+      this.appService.selectedRoomStore = new RoomStoreVO();
    }
 
    ngOnInit() {
@@ -173,5 +175,39 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       if (this.currentHigh < this.filesCopy.length) {
          this.currentHigh++;
       }
+   }
+
+   counter(i: number) {
+      return new Array(i);
+   }
+
+   goToCheckout() {
+      
+      if (this.appService.selectedRoomStore.roomTyeVOs.length > 0) {
+         this.router.navigate(['/rooms/booking/'],
+            {
+               queryParams: {
+                  storeId: this.searchCriteria.storeId,
+                  checkinDate: this.searchCriteria.checkinDate,
+                  checkoutDate: this.searchCriteria.checkoutDate,
+                  rooms: this.searchCriteria.rooms,
+                  days: this.searchCriteria.days
+               }
+            });
+      }
+   }
+
+
+   roomChanged() {
+      this.appService.selectedRoomStore = new RoomStoreVO();
+      this.appService.selectedRoomStore.roomTyeVOs = [];
+      this.roomStore.roomTyeVOs.forEach(rt => {
+         if (rt.nbRooms > 0) {
+            rt.total = rt.price * rt.nbRooms * this.searchCriteria.days;
+            this.appService.selectedRoomStore.total += rt.total;
+            this.appService.selectedRoomStore.nbrRooms += +rt.nbRooms;
+            this.appService.selectedRoomStore.roomTyeVOs.push(rt);
+         }
+      });
    }
 }
