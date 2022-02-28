@@ -2757,6 +2757,7 @@ export class Reservation {
   clientId: number;
   storeId: number;
   languageId: number;
+  language: Language;
   beginDate: Date;
   endDate: Date;
   checkinDate: Date;

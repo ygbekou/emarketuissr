@@ -522,7 +522,7 @@
                     <div fxLayout="row wrap" fxLayoutGap="10px grid">
                       {{'COMMON.PAYMENT_METHOD' | translate}}: &nbsp;&nbsp; <h6
                         *ngIf="reserv.pymtMethodCode !== 'PAY_AT_REGISTER'">{{reserv?.pymtMethodCode}}</h6>
-                      <h6 *ngIf="reserv.pymtMethodCode === 'PAY_AT_REGISTER'">{{'COMMON.AT_REGISTER' | translate}}</h6>
+                      <h6 *ngIf="reserv.pymtMethodCode === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}</h6>
                     </div>
                     <div fxLayout="row wrap" *ngIf="reserv.pymtMethodCode === 'CREDIT_CARD'">
                       <img [src]="'assets/images/cards/' + reserv.cardTypeIndex + '.png'"
@@ -534,7 +534,7 @@
                         {{'COMMON.PHONE_NUMBER' | translate}} : &nbsp;&nbsp; <h6>{{reserv?.phone}}</h6>
                       </div>
                     </div>
-                  </div>
+                  </div> 
                 </div>
                 <br />
                 <div fxLayout="row wrap" fxLayoutAlign="right right">

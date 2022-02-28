@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MediaObserver } from '@angular/flex-layout';
-import { RoomStoreVO, HotelSearchCriteria, RoomListVO, RoomTypeVO, Reservation, Tmoney, Flooz } from 'src/app/app.models';
+import { Language, RoomStoreVO, HotelSearchCriteria, RoomListVO, RoomTypeVO, Reservation, Tmoney, Flooz } from 'src/app/app.models';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 declare var Stripe: any;
 
@@ -136,6 +136,8 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       this.reserv.roomTypeIds.push(this.searchCriteria.roomTypeId);
       this.reserv.storeId = this.searchCriteria.storeId;
       this.reserv.languageId = this.appService.appInfoStorage.language.id;
+      this.reserv.language = new Language();
+      this.reserv.language.id = this.appService.appInfoStorage.language.id;
       this.reserv.beginDate = this.searchCriteria.checkinDate;
       this.reserv.endDate = this.searchCriteria.checkoutDate;
       this.reserv.nbrAdult = this.searchCriteria.adults + '';
@@ -143,6 +145,8 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       this.reserv.quantity = this.searchCriteria.rooms;
       this.reserv.days = this.searchCriteria.days;
       this.reserv.nbrRooms = this.searchCriteria.rooms;
+      this.reserv.currencyCode = this.roomStore.currencyCode;
+      this.reserv.currencyId = this.roomStore.currencyId;
       this.reserv.roomTypes = this.appService.selectedRoomStore.roomTyeVOs;
 
    }
