@@ -28,6 +28,8 @@ export class ReportsComponent implements OnInit {
   @Input()
   userId;
   rptType = 0;
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+  selectedStore: Store;
   constructor(public appService: AppService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
@@ -64,7 +66,9 @@ export class ReportsComponent implements OnInit {
         }
       });
   }
-
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
     storeSearchCriteria.status = 1;
@@ -75,6 +79,9 @@ export class ReportsComponent implements OnInit {
         this.stores = data;
         console.log(this.stores);
         if (this.stores) {
+          if (this.stores && this.stores.length === 1) {
+            this.selectedStore = this.stores[0];
+          }
           this.stores.forEach((st) => {
             if (st.allowExRcpt === 1) {
               this.allowExRcpt = true;
@@ -114,7 +121,7 @@ export class ReportsComponent implements OnInit {
     this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
-         console.log(data);
+        console.log(data);
         this.running = false;
         if (data && data.length > 0 && !data[0].startsWith('ERROR :')) {
           this.showParams = false;

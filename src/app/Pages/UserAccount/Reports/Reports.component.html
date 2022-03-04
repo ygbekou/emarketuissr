@@ -2,17 +2,35 @@
   <form name="form" #f="ngForm" validate>
     <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
       <!-- <h4>{{'COMMON.REPORTS'|translate}}</h4> -->
-      <h4 *ngIf="rptType==1">{{'COMMON.INVENTORY_RPT' | translate}}</h4>
-      <h4 *ngIf="rptType==2"> {{'COMMON.SALES_RPT' | translate}}</h4>
+      <h4 *ngIf="subRpt===1">{{'COMMON.INVENTORY_RPT' | translate}}</h4>
+      <h4 *ngIf="subRpt===2"> {{'COMMON.SALES_RPT' | translate}}</h4>
+      <h4 *ngIf="subRpt===2"> {{'COMMON.EXPENSES_RPT' | translate}}</h4>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-      <div *ngIf="rptType==1" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+        <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
+          <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>
+          </mat-label>
+          <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedStore" appearance="outline" name="store">
+            <mat-option *ngFor="let store of stores" [value]="store">
+              {{store.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button *ngIf="!stores || stores.length===0" mat-raised-button color="accent"
+          [routerLink]="['/account/profile/edit']"
+          [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}
+        </button>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+      <div *ngIf="subRpt===1" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
         <!-- <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
           {{'COMMON.INVENTORY_RPT' | translate}}
         </a> -->
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===1?'accent':'primary'" (click)="runInvnReport(1)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.ALL_INVENTORY_RPT'|translate}}</span>
@@ -21,7 +39,7 @@
         </span>
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===2?'accent':'primary'" (click)="runInvnReport(2)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.LOW_INVENTORY_RPT'|translate}}</span>
@@ -30,14 +48,14 @@
         </span>
       </div>
 
-      <div *ngIf="rptType==2" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <div *ngIf="subRpt===2" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
 
         <!-- <a mat-button color="accent" class="w-100 text-left" style="text-align: left;text-transform: uppercase;">
           {{'COMMON.SALES_RPT' | translate}}
         </a> -->
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(3)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===3?'accent':'primary'" (click)="runInvnReport(3)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_PRD'|translate}}</span>
@@ -46,7 +64,7 @@
         </span>
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(4)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===4?'accent':'primary'" (click)="runInvnReport(4)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_EMP'|translate}}</span>
@@ -55,7 +73,7 @@
         </span>
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(5)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===5?'accent':'primary'" (click)="runInvnReport(5)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_CAT'|translate}}</span>
@@ -65,7 +83,7 @@
 
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(6)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===6?'accent':'primary'" (click)="runInvnReport(6)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.RECEIPTS'|translate}}</span>
@@ -75,7 +93,7 @@
 
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(7)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===7?'accent':'primary'" (click)="runInvnReport(7)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_MENU'|translate}}</span>
@@ -85,7 +103,7 @@
 
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(8)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===8?'accent':'primary'" (click)="runInvnReport(8)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_TABL'|translate}}</span>
@@ -93,9 +111,9 @@
           </p>
         </span>
 
-               <span>
+        <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(11)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===11?'accent':'primary'" (click)="runInvnReport(11)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.SALES_SUMMARY_PAY_METH'|translate}}</span>
@@ -107,10 +125,10 @@
       </div>
 
 
-      <div *ngIf="rptType==3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+      <div *ngIf="subRpt===3" fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(9)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===9?'accent':'primary'" (click)="runInvnReport(9)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.EXPENSES_RPT'|translate}}</span>
@@ -119,7 +137,7 @@
         </span>
         <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
-            <a mat-button (click)="runInvnReport(10)" routerLinkActive="horizontal-active-link"
+            <a mat-button [color]="subRpt===10?'accent':'primary'" (click)="runInvnReport(10)" routerLinkActive="horizontal-active-link"
               [routerLinkActiveOptions]="{exact:true}">
               <mat-icon>done</mat-icon>
               <span>{{'COMMON.PO_RPT'|translate}}</span>
@@ -132,8 +150,8 @@
 
         <div class="w-100" *ngIf="showFormatParams">
           <mat-label> Format*</mat-label><br />
-          <mat-radio-group id="reportFormat" class="form-control" [(ngModel)]="reportFormat" 
-            name="reportFormat" #format="ngModel" required>
+          <mat-radio-group id="reportFormat" class="form-control" [(ngModel)]="reportFormat" name="reportFormat"
+            #format="ngModel" required>
             <mat-radio-button value="pdf">
               PDF
             </mat-radio-button>
@@ -141,10 +159,10 @@
               Excel
             </mat-radio-button>
           </mat-radio-group>
-          <br/>
+          <br />
         </div>
-        
-        
+
+
         <mat-form-field class="w-100" *ngIf="showParams">
           <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
           <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate1" [(ngModel)]="beginDate"
@@ -180,7 +198,9 @@
 
     <div fxLayout="row wrap" *ngIf="error && !running" xLayoutAlign="none" class="col-gap">
       <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
-      <h4><font color="red">{{error}}</font></h4>
+        <h4>
+          <font color="red">{{error}}</font>
+        </h4>
       </div>
     </div>
 
