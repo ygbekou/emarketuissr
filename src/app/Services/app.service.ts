@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -80,6 +80,7 @@ export class AppService {
    // Custom
    private headers: HttpHeaders;
    appInfoStorage: AppInfoStorage;
+   selectedRoomStore: RoomStoreVO;
 
    // Social Share
    ssTitle = 'Kekouda';

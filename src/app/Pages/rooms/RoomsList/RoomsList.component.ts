@@ -239,7 +239,7 @@ export class RoomsListComponent implements OnInit {
       this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
       this.searchCritCopy = { ... this.searchCriteria };
-
+ 
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
             if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
