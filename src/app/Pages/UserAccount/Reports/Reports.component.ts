@@ -116,8 +116,9 @@ export class ReportsComponent implements OnInit {
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
     const parm3 = new Parameter('pQtyMax', qtyMax + '');
+    const parm4 = new Parameter('storeId', this.selectedStore.id + '');
     rep.parameters = [];
-    rep.parameters.push(parm1, parm2, parm3);
+    rep.parameters.push(parm1, parm2, parm3, parm4);
     this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
@@ -167,6 +168,8 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'pos';
     } else if (this.subRpt === 11) {
       rep.reportName = 'sales';
+    } else if (this.subRpt === 12) {
+      rep.reportName = 'bilan';
     }
 
 
@@ -191,8 +194,8 @@ export class ReportsComponent implements OnInit {
       rep.parameters = [];
       rep.parameters.push(parm1, parm2, parm3, parm4, parm5, parm6);
     }
+    rep.parameters.push(new Parameter('storeId', this.selectedStore.id + ''));
     console.log(rep);
-
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);
