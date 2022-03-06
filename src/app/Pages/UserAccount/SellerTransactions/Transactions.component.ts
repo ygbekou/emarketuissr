@@ -25,7 +25,7 @@ export interface SearchResponse {
 export class TransactionsComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   // transactionsColumns: string[] = ['transactionType', 'paidBy', 'receiver', 'transactionDate', 'salaryDate', 'amount', 'actions'];
-  transactionsColumns: string[] = ['id', 'transactionType', 'paidBy', 'receiver', 'description', 'transactionDate', 'amount', 'status' ];
+  transactionsColumns: string[] = ['id', 'transactionType', 'paidBy', 'receiver', 'description', 'transactionDate', 'amount', 'status'];
   transactionsDatasource: MatTableDataSource<Transaction>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) transactionsSort: MatSort;
@@ -80,6 +80,10 @@ export class TransactionsComponent extends BaseComponent implements OnInit, Afte
   private clear() {
     this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
     this.searchCriteria = new TransactionSearchCriteria();
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    this.searchCriteria.beginDate = d;
+    this.searchCriteria.endDate = new Date();
   }
 
   changeOrderType(event) {
@@ -163,7 +167,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit, Afte
   }
 
   updateDataTable(transaction: Transaction) {
-    const copyTransaction = {...transaction};
+    const copyTransaction = { ...transaction };
     copyTransaction.transactionType.name = this.getTranName(transaction.transactionType);
     this.updateDatasourceData(this.transactionsDatasource, this.paginator, this.transactionsSort, copyTransaction);
   }

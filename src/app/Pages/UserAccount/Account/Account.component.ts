@@ -44,7 +44,8 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Sales summary', url: '/account/sales-summaries', icon: 'summarize' },
-      { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },
+      { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },      
+      { name: 'Sales audit', url: '/account/sales-audit', icon: 'content_copy' },
     ]
   }, {
     name: 'Products',
@@ -127,6 +128,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Tableau de bord', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Détails ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Payements', url: '/account/sales-summaries', icon: 'summarize' },
+      { name: 'Audit des ventes', url: '/account/sales-audit', icon: 'content_copy' },
+
     ]
   }, {
     name: 'Produits',

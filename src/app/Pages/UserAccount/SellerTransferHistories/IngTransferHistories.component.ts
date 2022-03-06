@@ -23,7 +23,7 @@ export interface SearchResponse {
 })
 export class IngTransferHistoriesComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  ingHistColumns: string[] = ['ingredientName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName' ];
+  ingHistColumns: string[] = ['ingredientName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName'];
   ingHistDatasource: MatTableDataSource<StoreIngredientInventory>;
   @ViewChild('MatPaginator', { static: true }) ingHistPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) ingHistSort: MatSort;
@@ -66,7 +66,13 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
 
   private clear() {
     this.searchCriteria = new PrdHistSearchCriteria();
-    this.searchCriteria.userId =  Number(this.appService.tokenStorage.getUserId());
+    const beginDate = new Date();
+    const endDate = new Date();
+    beginDate.setDate(beginDate.getDate() - 1);
+    endDate.setDate(endDate.getDate() + 1);
+    this.searchCriteria.beginDate = beginDate;
+    this.searchCriteria.endDate = endDate;
+    this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
   }
 
   changeOrderType(event) {
@@ -78,7 +84,7 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
-        if (this.stores && this.stores.length === 1) {
+        if (this.stores && this.stores.length > 0) {
           this.selectedStore = this.stores[0];
           this.storeSelected(this.selectedStore);
         }
@@ -103,8 +109,14 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
   }
 
   search() {
+    const diff = Math.ceil((this.searchCriteria.endDate.getTime() - this.searchCriteria.beginDate.getTime()) / (1000 * 3600 * 24));
+    console.log(diff);
     if (this.button.endsWith('clear')) {
       this.clear();
+    } else if (!(diff >= 0 && diff <= 30)) {
+      this.translate.get(['VALIDATION.INVALID_DATE_RANGE', 'COMMON.ERROR']).subscribe(res => {
+        this.messages = res['VALIDATION.INVALID_DATE_RANGE'];
+      });
     } else {
       this.appService.saveWithUrl('/service/catalog/getStoreIngInventories', this.searchCriteria)
         .subscribe((data: any[]) => {
@@ -120,11 +132,7 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
 
   storeSelected(event) {
     setTimeout(() => {
-      const beginDate = new Date();
-      beginDate.setDate(beginDate.getDate() - 2);
-      this.searchCriteria.beginDate = beginDate;
-      this.searchCriteria.endDate = new Date();
-
+      this.searchCriteria.storeId = this.selectedStore.id;
       this.search();
       this.getMyStoreEmployees();
     }, 500);

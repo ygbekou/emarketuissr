@@ -98,6 +98,8 @@ import { IngTransferHistoriesComponent } from './SellerTransferHistories/IngTran
 import { FundComponent } from './SellerFunds/Fund.component';
 import { FundsComponent } from './SellerFunds/Funds.component';
 import { BldgImagesComponent } from './Buildings/BldgImages.component';
+import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
+import { TranlogComponent } from './Sales-audit/Tranlog.component';
 
 @NgModule({
   imports: [
@@ -219,7 +221,9 @@ import { BldgImagesComponent } from './Buildings/BldgImages.component';
     IngTransferHistoriesComponent,
     FundComponent,
     FundsComponent,
-    BldgImagesComponent
+    BldgImagesComponent,
+    TranlogsComponent,
+    TranlogComponent
   ],
   exports: [
     StoresComponent,

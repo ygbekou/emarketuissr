@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <h1 style="color: #283593;">{{'COMMON.ORDER_ID' | translate}} :
-      {{(orderType==='o'?order.id:storeOrder.id)  | number: '3.0'}} </h1>
+      {{ appService.pad((orderType==='o'?order.id:storeOrder.id),6) }} </h1>
   </div>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="orderType==='o'">

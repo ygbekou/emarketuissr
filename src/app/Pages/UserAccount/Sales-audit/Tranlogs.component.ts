@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
-import { StoreSearchCriteria, Store, StoreEmployee, ProductHistory, PrdHistSearchCriteria } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, Tranlog, TranlogSearchCriteria, StoreEmployee, TranlogType } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+import { TranlogComponent } from './Tranlog.component';
 
 export interface SearchResponse {
   document: string;
@@ -17,22 +18,28 @@ export interface SearchResponse {
 
 
 @Component({
-  selector: 'app-prdtransfer-histories',
-  templateUrl: './PrdTransferHistories.component.html',
-  styleUrls: ['./TransferHistories.component.scss']
+  selector: 'app-tranlogs',
+  templateUrl: './Tranlogs.component.html',
+  styleUrls: ['./Tranlogs.component.scss']
 })
-export class PrdTransferHistoriesComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class TranlogsComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  prdHistColumns: string[] = ['productName', 'quantity', 'createDate', 'fromStoreName', 'toStoreName', 'comment'];
-  prdHistDatasource: MatTableDataSource<ProductHistory>;
-  @ViewChild('MatPaginator', { static: true }) prdHistPaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) prdHistSort: MatSort;
+  // tranlogsColumns: string[] = ['tranlogType', 'paidBy', 'receiver', 'tranlogDate', 'salaryDate', 'amount', 'actions'];
+  tranlogsColumns: string[] = ['refNbr', 'author', 'oldQty', 'newQty',
+   'oldPrice', 'newPrice', 'oldRebate', 'newRebate', 'tranlogDate', 'operation'];
+  tranlogsDatasource: MatTableDataSource<Tranlog>;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) tranlogsSort: MatSort;
+
+
+  @ViewChild(TranlogComponent, { static: false }) tranlogComponent: TranlogComponent;
+  messages = '';
   button = 'filter';
 
   @Input() userId: number;
   @Input() isAdminPage = false;
 
-  searchCriteria: PrdHistSearchCriteria = new PrdHistSearchCriteria();
+  searchCriteria: TranlogSearchCriteria = new TranlogSearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
   stores: Store[] = [];
   colors = ['primary', 'secondary'];
@@ -52,26 +59,22 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
   ngOnInit() {
     this.clear();
     this.getStores();
+  }
 
-    this.activatedRoute.data.subscribe(value => {
-      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
-        && (this.location.path().startsWith('/admin/'));
-    });
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
   ngAfterViewInit() {
-
+    this.search();
   }
 
   private clear() {
-    this.searchCriteria = new PrdHistSearchCriteria();
-    const beginDate = new Date();
-    const endDate = new Date();
-    beginDate.setDate(beginDate.getDate() - 1);
-    endDate.setDate(endDate.getDate() + 1);
-    this.searchCriteria.beginDate = beginDate;
-    this.searchCriteria.endDate = endDate;
-    this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+    this.searchCriteria = new TranlogSearchCriteria();
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
+    this.searchCriteria.beginDate = d;
+    this.searchCriteria.endDate = new Date();
   }
 
   changeOrderType(event) {
@@ -85,6 +88,7 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
         this.stores = data;
         if (this.stores && this.stores.length > 0) {
           this.selectedStore = this.stores[0];
+          this.getMyStoreEmployees();
           this.storeSelected(this.selectedStore);
         }
       },
@@ -93,9 +97,10 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
   }
 
   public getMyStoreEmployees() {
-    if (this.searchCriteria.storeId) {
+    this.storeEmployees = [];
+    if (this.selectedStore) {
       const parameters: string[] = [];
-      parameters.push('e.store.id = |sId|' + this.searchCriteria.storeId + '|Integer');
+      parameters.push('e.store.id = |sId|' + this.selectedStore.id + '|Integer');
       parameters.push('e.store.status = |storeStatus|1|Integer');
       parameters.push('e.status = |employeeStatus|1|Integer');
       this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
@@ -117,26 +122,35 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
         this.messages = res['VALIDATION.INVALID_DATE_RANGE'];
       });
     } else {
-      this.appService.saveWithUrl('/service/catalog/getProductHistories', this.searchCriteria)
+      this.appService.saveWithUrl('/service/order/tranlogs', this.searchCriteria)
         .subscribe((data: any[]) => {
-          this.prdHistDatasource = new MatTableDataSource(data);
-          this.prdHistDatasource.paginator = this.prdHistPaginator;
-          this.prdHistDatasource.sort = this.prdHistSort;
+          // console.log(data);
+          this.tranlogsDatasource = new MatTableDataSource(data);
+          this.tranlogsDatasource.paginator = this.paginator;
+          this.tranlogsDatasource.sort = this.tranlogsSort;
         },
           error => console.log(error),
-          () => console.log('Get prd histories complete'));
+          () => console.log('Get tranlogs complete'));
     }
   }
 
+  public applyFilter(filterValue: string) {
+    this.tranlogsDatasource.filter = filterValue.trim().toLowerCase();
+    if (this.tranlogsDatasource.paginator) {
+      this.tranlogsDatasource.paginator.firstPage();
+    }
+  }
+
+  getTranlog(tranlog: any) {
+    this.selected.setValue(1);
+    this.tranlogComponent.getTranlog(tranlog);
+  }
 
   storeSelected(event) {
+    this.getMyStoreEmployees();
     setTimeout(() => {
       this.searchCriteria.storeId = this.selectedStore.id;
       this.search();
-      this.getMyStoreEmployees();
     }, 500);
-  }
-  compareObjects(o1: any, o2: any): boolean {
-    return o1 && o2 ? (o1.id === o2.id) : false;
   }
 }
