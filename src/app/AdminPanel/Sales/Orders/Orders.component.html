@@ -29,7 +29,7 @@
             <!-- ID Column -->
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>{{'COMMON.ORDER_ID'|translate}} </th>
-              <td mat-cell *matCellDef="let order"> {{order.orderId | number: '3.0'}} </td>
+              <td mat-cell *matCellDef="let order"> {{appService.pad(order.orderId,6)}} </td>
             </ng-container>
 
             <!-- Published Column -->
@@ -100,7 +100,7 @@
             <ng-container matColumnDef="id">
               <th class="text-nowrap px-3" mat-header-cell *matHeaderCellDef>ID</th>
               <td class="text-nowrap px-3" mat-cell *matCellDef="let element">
-                <div>{{element.thId | number: '3.0'}}</div>
+                <div>{{ appService.pad(element.thId,6) }}</div>
               </td>
             </ng-container>
             <ng-container matColumnDef="storeName">
@@ -182,9 +182,34 @@
               <mat-icon>filter_alt</mat-icon>
             </button>
           </div>
-          <div class="text-center" *ngIf="messages">
+          <!--   <div class="text-center" *ngIf="messages">
             <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
-          </div>
+          </div> -->
+
+          <mat-form-field class="w-100" appearance="fill">
+            <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
+            <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedStore" name="store" required>
+              <mat-option *ngFor="let store of stores" [value]="store">
+                {{store.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+              [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel" required>
+            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #beginDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+              [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel" required>
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
 
           <mat-form-field class="w-100" *ngIf="searchCriteria.orderType ===0">
             <mat-label> {{'COMMON.ORDER_ID' | translate}}</mat-label>
@@ -204,6 +229,12 @@
               name="model" #model="ngModel">
           </mat-form-field>
 
+          <mat-form-field class="w-100" *ngIf="searchCriteria.orderType ===1">
+            <mat-label>Reference</mat-label>
+            <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.refNbr" name="model"
+              #model="ngModel">
+          </mat-form-field>
+
           <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.orderType ===0">
             <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
             <mat-select [(ngModel)]="searchCriteria.orderStatus" name="food">
@@ -213,14 +244,6 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field class="w-100" appearance="fill">
-            <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
-            <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
-              <mat-option *ngFor="let store of stores" [value]="store.id">
-                {{store.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
 
           <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.orderType ===1">
             <mat-label> {{'COMMON.ORDER_STATUS' | translate}}</mat-label>
@@ -246,21 +269,7 @@
               name="model" #model="ngModel">
           </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
-            <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
-              [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
-            <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #beginDatePicker></mat-datepicker>
-          </mat-form-field>
 
-          <mat-form-field class="w-100">
-            <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
-            <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
-              [(ngModel)]="searchCriteria.endDate" name="beginDate" #endDate="ngModel">
-            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #endDatePicker></mat-datepicker>
-          </mat-form-field>
 
           <div class="text-center">
             <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"

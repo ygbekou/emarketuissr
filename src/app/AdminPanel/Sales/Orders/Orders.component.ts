@@ -32,7 +32,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   orderStatuses: OrderStatus[];
   stores: Store[] = [];
   colors = ['primary', 'secondary'];
-
+  selectedStore: Store;
   constructor(public appService: AppService,
     public translate: TranslateService) {
     super(translate);
@@ -44,16 +44,19 @@ export class OrdersComponent extends BaseComponent implements OnInit {
     }
     this.clear();
     this.getStores();
-    this.search();
     this.getOrderStatuses();
   }
 
   private clear() {
+    this.messages = '';
     const oType = this.searchCriteria ? this.searchCriteria.orderType : 0;
     this.searchCriteria = new OrderSearchCriteria();
     this.searchCriteria.orderType = oType;
     this.searchCriteria.userId = this.userId;
     this.searchCriteria.langId = this.appService.appInfoStorage.language.id;
+    this.searchCriteria.storeId = this.selectedStore ? this.selectedStore.id : 0;
+    this.searchCriteria.beginDate = new Date();
+    this.searchCriteria.endDate = new Date();
   }
 
   changeOrderType(event) {
@@ -62,12 +65,20 @@ export class OrdersComponent extends BaseComponent implements OnInit {
 
   }
 
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
   private getStores() {
     this.storeSearchCriteria.status = 1;
     this.storeSearchCriteria.userId = this.userId;
     this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
       .subscribe((data: Store[]) => {
         this.stores = data;
+        if (this.stores && this.stores.length > 0) {
+          this.selectedStore = this.stores[0];
+          this.storeSearchCriteria.storeId = this.stores[0].id;
+          this.search();
+        }
       },
         error => console.log(error),
         () => console.log('Get all Stores complete'));
@@ -86,8 +97,16 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   search() {
+    this.messages = '';
     console.log(this.searchCriteria);
-    if (this.button.endsWith('clear')) {
+    this.searchCriteria.storeId = this.selectedStore.id;
+    const diff = Math.ceil((this.searchCriteria.endDate.getTime() - this.searchCriteria.beginDate.getTime()) / (1000 * 3600 * 24));
+    console.log(diff);
+    if (!(diff >= 0 && diff <= 30)) {
+      this.translate.get(['VALIDATION.INVALID_DATE_RANGE', 'COMMON.ERROR']).subscribe(res => {
+        this.messages = res['VALIDATION.INVALID_DATE_RANGE'];
+      });
+    } else if (this.button.endsWith('clear')) {
       this.clear();
     } else {
 

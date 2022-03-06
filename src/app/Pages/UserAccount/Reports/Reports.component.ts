@@ -28,6 +28,8 @@ export class ReportsComponent implements OnInit {
   @Input()
   userId;
   rptType = 0;
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
+  selectedStore: Store;
   constructor(public appService: AppService,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
@@ -64,7 +66,9 @@ export class ReportsComponent implements OnInit {
         }
       });
   }
-
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
+  }
   private getStores() {
     const storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
     storeSearchCriteria.status = 1;
@@ -75,6 +79,9 @@ export class ReportsComponent implements OnInit {
         this.stores = data;
         console.log(this.stores);
         if (this.stores) {
+          if (this.stores && this.stores.length === 1) {
+            this.selectedStore = this.stores[0];
+          }
           this.stores.forEach((st) => {
             if (st.allowExRcpt === 1) {
               this.allowExRcpt = true;
@@ -109,12 +116,13 @@ export class ReportsComponent implements OnInit {
     const parm1 = new Parameter('pUserId', this.appService.tokenStorage.getUserId());
     const parm2 = new Parameter('pLang', this.appService.appInfoStorage.language.code);
     const parm3 = new Parameter('pQtyMax', qtyMax + '');
+    const parm4 = new Parameter('storeId', this.selectedStore.id + '');
     rep.parameters = [];
-    rep.parameters.push(parm1, parm2, parm3);
+    rep.parameters.push(parm1, parm2, parm3, parm4);
     this.running = true;
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
-         console.log(data);
+        console.log(data);
         this.running = false;
         if (data && data.length > 0 && !data[0].startsWith('ERROR :')) {
           this.showParams = false;
@@ -160,6 +168,8 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'pos';
     } else if (this.subRpt === 11) {
       rep.reportName = 'sales';
+    } else if (this.subRpt === 12) {
+      rep.reportName = 'bilan';
     }
 
 
@@ -184,8 +194,8 @@ export class ReportsComponent implements OnInit {
       rep.parameters = [];
       rep.parameters.push(parm1, parm2, parm3, parm4, parm5, parm6);
     }
+    rep.parameters.push(new Parameter('storeId', this.selectedStore.id + ''));
     console.log(rep);
-
     this.appService.saveWithUrl('/service/report/run/', rep)
       .subscribe((data: any) => {
         console.log(data);

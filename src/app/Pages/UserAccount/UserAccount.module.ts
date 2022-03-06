@@ -98,6 +98,8 @@ import { IngTransferHistoriesComponent } from './SellerTransferHistories/IngTran
 import { FundComponent } from './SellerFunds/Fund.component';
 import { FundsComponent } from './SellerFunds/Funds.component';
 import { BldgImagesComponent } from './Buildings/BldgImages.component';
+import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
+import { TranlogComponent } from './Sales-audit/Tranlog.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
 
 @NgModule({
@@ -220,6 +222,9 @@ import { OpenReservationsComponent } from './Open-reservations/Open-reservations
     IngTransferHistoriesComponent,
     FundComponent,
     FundsComponent,
+    BldgImagesComponent,
+    TranlogsComponent,
+    TranlogComponent,
     BldgImagesComponent,
     OpenReservationsComponent
   ],

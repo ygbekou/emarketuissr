@@ -38,6 +38,7 @@ import { ProductTransferComponent } from './SellerTransfers/ProductTransfer.comp
 import { TransfersComponent } from './SellerTransfers/Transfers.component';
 import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHistories.component';
 import { FundsComponent } from './SellerFunds/Funds.component';
+import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
 
 export const UserAccountRoutes: Routes = [
@@ -320,6 +321,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'transferHistories',
             component: TransferHistoriesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'sales-audit',
+            component: TranlogsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

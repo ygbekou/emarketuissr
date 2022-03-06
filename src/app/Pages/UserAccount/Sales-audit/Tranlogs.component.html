@@ -1,0 +1,258 @@
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
+      <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>
+      </mat-label>
+      <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedStore" appearance="outline" name="store"
+        (selectionChange)="storeSelected($event)">
+        <mat-option *ngFor="let store of stores" [value]="store">
+          {{store.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button *ngIf="!stores || stores.length===0" mat-raised-button color="accent"
+      [routerLink]="['/account/profile/edit']"
+      [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+    [hidden]="!selectedStore || selectedStore.id <= 0">
+
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
+      [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="Operations">
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="tranlogsDatasource" matSort class="w-100">
+
+                <!--     <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef width="5%" mat-sort-header>
+                    N<sup>o</sup></th>
+                  <td mat-cell *matCellDef="let tranlog"> {{ appService.pad(tranlog.id,6)}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="refNbr">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    Reference</th>
+                  <td mat-cell *matCellDef="let tranlog"> {{tranlog.refNbr}} </td>
+                </ng-container>
+
+                <!--    <ng-container matColumnDef="tabHdrId">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    Table N<sup>o</sup> </th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{appService.pad(tranlog.tabHdrId,6)}}
+                  </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="author">
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header>
+                    {{'COMMON.AUTHOR' | translate}}</th>
+                  <td mat-cell *matCellDef="let tranlog"> {{tranlog.author}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="oldQty">
+                  <th mat-header-cell *matHeaderCellDef width="5%" mat-sort-header> {{'COMMON.QTY_BEFORE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog"> {{tranlog.oldQty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="newQty">
+                  <th mat-header-cell *matHeaderCellDef width="5%" mat-sort-header> {{'COMMON.QTY_AFTER' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog"> {{tranlog.newQty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="oldPrice">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.PRICE_BEFORE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{selectedStore.currency.symbolLeft}}
+                    {{tranlog.oldPrice| number:'1.0-2'}}
+                    {{selectedStore.currency.symbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="newPrice">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.PRICE_AFTER' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{selectedStore.currency.symbolLeft}}
+                    {{tranlog.newPrice| number:'1.0-2'}}
+                    {{selectedStore.currency.symbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="oldRebate">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.REBATE_BEFORE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{selectedStore.currency.symbolLeft}}
+                    {{tranlog.oldRebate| number:'1.0-2'}}
+                    {{selectedStore.currency.symbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="newRebate">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.REBATE_AFTER' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{selectedStore.currency.symbolLeft}}
+                    {{tranlog.newRebate| number:'1.0-2'}}
+                    {{selectedStore.currency.symbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tranlogDate">
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header>
+                    Date</th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    {{tranlog.createDate | date : 'short' : '' : translate.currentLang}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="operation">
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header>Operation</th>
+                  <td mat-cell *matCellDef="let tranlog">
+                    <span *ngIf="tranlog.operation === 0"
+                      style="color: #ff0000;">{{'COMMON.DELETE_HDR'|translate}}</span>
+                    <span *ngIf="tranlog.operation === 1"
+                      style="color: #283593;">{{'COMMON.UPDATE_HDR'|translate}}</span>
+                    <span *ngIf="tranlog.operation === 2"
+                      style="color: #ff0000;">{{'COMMON.DELETE_DTL'|translate}}</span>
+                    <span *ngIf="tranlog.operation === 3"
+                      style="color: #006400;">{{'COMMON.UPDATE_DTL'|translate}}</span>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tranlogsColumns"></tr>
+                <tr mat-row *matRowDef="let tranlog; columns: tranlogsColumns;" (click)="getTranlog(tranlog)"></tr>
+              </table>
+              <p *ngIf="tranlogsDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+                {{'MESSAGE.NO_DATA' | translate}}</p>
+            </div>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-card>
+              <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+                <div fxLayout="row wrap">
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                      <mat-icon>filter_alt</mat-icon>
+                    </button>
+                  </div>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel" required>
+                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #beginDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel" required>
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label> {{'COMMON.AUTHOR' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.userId" appearance="fill" name="paidBy">
+                      <mat-option *ngFor="let storeEmployee of storeEmployees" [value]="storeEmployee.employee.id">
+                        {{storeEmployee.employee.firstName}} {{storeEmployee.employee.lastName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="fill">
+                    <mat-label> Operation</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.operation" name="status">
+                      <mat-option [value]="0">
+                        {{'COMMON.DELETE_HDR'|translate}}
+                      </mat-option>
+                      <mat-option [value]="1">
+                        {{'COMMON.UPDATE_HDR'|translate}}
+                      </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.DELETE_DTL'|translate}}
+                      </mat-option>
+                      <mat-option [value]="3">
+                        {{'COMMON.UPDATE_DTL'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="w-100">
+                    <mat-label> Table N<sup>o</sup></mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.tabHdrId"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> Reference</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.refNbr"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.PRODUCT'|translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.prdName"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.PRINT_COUNT'|translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.prtCount"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-card>
+          </div>
+        </div>
+
+      </mat-tab>
+
+      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+        <app-tranlog></app-tranlog>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+
+</div>

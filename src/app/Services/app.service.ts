@@ -1111,7 +1111,7 @@ export class AppService {
             this.appInfoStorage.manufacturers = data;
          }, error => console.log(error),
             () => console.log('Get manufacturer complete'));
-            
+
    }
 
    public getStoreCategories() {
@@ -1352,5 +1352,16 @@ export class AppService {
             totalPages: totalPages,
          }
       };
+   }
+
+   public pad(num: number, size: number): string {
+      if (num) {
+         let s = num + '';
+         while (s.length < size) { s = '0' + s; }
+         return s;
+      } else {
+         return '';
+      }
+
    }
 }

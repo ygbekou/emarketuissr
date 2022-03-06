@@ -1784,6 +1784,7 @@ export class OrderSearchCriteria {
   status: number;
   orderType: number; // 0 -- online, 1-- store
   customerName: string;
+  refNbr: string;
   orderStatus: OrderStatus;
   returnStatus: ReturnStatus;
   minTotal: number;
@@ -3289,7 +3290,6 @@ export class RoomStoreVO {
   rating: number;
   ratingCount: number;
   pymtMethodReq: number;
-  
   roomTyeVOs: RoomTypeVO[];
   nbrRooms = 0;
   total = 0;
@@ -3351,4 +3351,41 @@ export class HotelSearchCriteria {
   location: string;
   address: Address;
   withAmenities = false;
+}
+
+export class Tranlog {
+  public id: number;
+  public userId: number;
+  public storeId: number;
+  public refNbr: string;
+  public data: string;
+  public tabHdrId: number;
+  public tabDtlId: number;
+  public oldQty: number;
+  public newQty: number;
+  public oldPrice: number;
+  public newPrice: number;
+  public oldRebate: number;
+  public newRebate: number;
+  public ptsId: number;
+  public prdId: number;
+  public prdName: string;
+  public prtCount: number;
+  public tabStatus: number;
+  public operation: number;
+  public author: string;
+  public createDate: Date;
+}
+
+export class TranlogSearchCriteria {
+  storeId: number;
+  userId: number;
+  refNbr: string;
+  operation: number;
+  tabHdrId: number;
+  author: string;
+  prdName: string;
+  beginDate: Date;
+  endDate: Date;
+  prtCount: number;
 }

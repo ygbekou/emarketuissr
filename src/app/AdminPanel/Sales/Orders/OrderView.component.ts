@@ -60,8 +60,10 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
           this.getOrder(Number(paramId.substring(1)));
         } else if (paramId.charAt(0) === 's') {
           this.getStoreOrder(Number(paramId.substring(1)));
+        } else if (paramId.charAt(0) === 'r') {
+          this.orderType = 's';
+          this.getStoreOrderByRef(paramId.substring(1));
         }
-
       }
     });
 
@@ -90,6 +92,20 @@ export class OrderViewComponent extends BaseComponent implements OnInit {
   public getStoreOrder(id: number) {
     const parameters: string[] = [];
     parameters.push('e.id = |stta|' + id + '|Integer');
+    this.appService.getAllByCriteria('com.softenza.emarket.model.TabHdr', parameters,
+      ' ')
+      .subscribe((data: TabHdr[]) => {
+        this.storeOrder = data[0];
+        this.getStore(this.storeOrder.storeId);
+        this.setStoreOrderDetails();
+      },
+        (error) => console.log(error),
+        () => console.log('Get all Open tabs complete'));
+  }
+
+    public getStoreOrderByRef(ref: string) {
+    const parameters: string[] = [];
+    parameters.push('e.refNbr = |stta|' + ref + '|String');
     this.appService.getAllByCriteria('com.softenza.emarket.model.TabHdr', parameters,
       ' ')
       .subscribe((data: TabHdr[]) => {

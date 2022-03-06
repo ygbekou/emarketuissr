@@ -130,6 +130,22 @@
                     </button>
                   </div>
 
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel" required>
+                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #beginDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel" required>
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
                   <mat-form-field appearance="fill" class="w-100">
                     <mat-label> {{'COMMON.TRANSACTION_TYPE' | translate}} </mat-label>
                     <mat-select [(ngModel)]="searchCriteria.transactionTypeId" appearance="outline"
@@ -183,21 +199,7 @@
                     </mat-select>
                   </mat-form-field>
 
-                  <mat-form-field class="w-100">
-                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
-                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
-                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
-                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #beginDatePicker></mat-datepicker>
-                  </mat-form-field>
 
-                  <mat-form-field class="w-100">
-                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
-                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
-                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
-                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #endDatePicker></mat-datepicker>
-                  </mat-form-field>
 
                   <mat-form-field class="w-100">
                     <mat-label> {{'COMMON.MIN_AMOUNT' | translate}}</mat-label>
