@@ -938,7 +938,10 @@
 		"PAY_UP_FRONT": "Payment is required before reservation",
 		"PAY_AT_REGISTER": "I will pay at the register",
 		"CHOOSE_PAYMENT_METHOD": "Choose Payment Method",
-		"ROOM_LIST": "Room list"
+		"ROOM_LIST": "Room list",
+		"RESERVATION_DATE": "Reservation Date",
+		"RESERVATION_DETAIL": "Reservation Details",
+    	"OPEN_RESERVATIONS": "Open Reservations"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -1030,7 +1033,8 @@
 		"INVALID_DELIVERY_UNIT": "Select a Time Unit from the list",
 		"UPDATE_ADDRESS_POSITION":"We could not geolocalize your address. Update it for shipping",
 		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}",
-		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again."
+		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again.",
+		"PLEASE_SELECT_A_ROOM": "Please select your rooms"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

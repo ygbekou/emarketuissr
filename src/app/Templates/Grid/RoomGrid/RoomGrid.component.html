@@ -47,14 +47,22 @@
                   <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                      {{roomType.roomTypeName}}
                   </div>
+
                   <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                      style="text-align: right;">
-                     <h4>
+                     {{roomStore.symbolLeft}}
+                        {{roomType.price | number: '1.' + roomStore?.currencyDecimalPlace + '-'  
+                           + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                        {{roomStore.symbolRight}}
+                     *
+                     {{searchCriteria.rooms}}
+                     =
+                     <h6>
                         {{roomStore.symbolLeft}}
                         {{roomType.price * searchCriteria.rooms | number: '1.' + roomStore?.currencyDecimalPlace + '-'  
                            + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
                         {{roomStore.symbolRight}}
-                     </h4>
+                     </h6>
                   </div>
                </div>
             </div>

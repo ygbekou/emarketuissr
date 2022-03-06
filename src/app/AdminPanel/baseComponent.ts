@@ -1,6 +1,11 @@
 import {Component} from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
-import { MatTableDataSource } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material';
+
 @Component({
 	template: ``,
   providers: []
@@ -15,6 +20,16 @@ export class BaseComponent {
   dataSource: any;
   paginator: any;
   sort: any;
+
+
+  
+   actionButtonLabel: string = 'Retry';
+   action: boolean = true;
+   setAutoHide: boolean = true;
+   autoHide: number = 2000;
+   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+   verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor
     (
       protected translate: TranslateService

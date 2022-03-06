@@ -93,7 +93,7 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
             this.onlineDS.sort = this.onlineST;
           },
             error => console.log(error),
-            () => console.log('Get all Reservations complete'));
+            () => console.log('Get online Reservations complete'));
 
       } else if (this.searchCriteria.source === 2) {
         this.appService.saveWithUrl('/service/hospitality/storeReservations', this.searchCriteria)
@@ -103,7 +103,7 @@ export class ReservationsComponent extends BaseComponent implements OnInit {
             this.storeDS.sort = this.storeST;
           },
             error => console.log(error),
-            () => console.log('Get all Reservations complete'));
+            () => console.log('Get store Reservations complete'));
       }
     }
   }

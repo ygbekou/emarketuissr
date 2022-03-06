@@ -16,7 +16,7 @@
                 {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
                 {{roomStore.postCode}}
               </div>
-              <br/>
+              <br />
               <div fxLayout="row wrap" fxLayoutAlign="center center">
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                   <div fxFlex.xs="" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="30" fxFlex.xl="30">
@@ -104,14 +104,15 @@
                           <h6>{{roomType.roomTypeName}}</h6>
                         </div>
                         <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-                          <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects" style="width: 100px;" id="currency"
-                            name="currency" [(ngModel)]="roomType.nbRooms" #rmtRms="ngModel"
-                            (selectionChange)="roomChanged();">
+                          <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects"
+                            style="width: 100px;" id="currency" name="currency" [(ngModel)]="roomType.nbRooms"
+                            #rmtRms="ngModel" (selectionChange)="roomChanged();">
                             <mat-option [value]="0">
-                              0
+                              <h6>0</h6>
                             </mat-option>
-                            <mat-option *ngFor="let rm of counter(searchCriteria.rooms); let i = index" [value]="rm">
-                              <h6>{{rm}}</h6>
+                            <mat-option *ngFor="let rm of counter(roomType.roomIds.length); let i = index"
+                              [value]="i + 1">
+                              <h6>{{i + 1}}</h6>
                             </mat-option>
                           </mat-select>
 
@@ -158,7 +159,7 @@
                       </h4>
                     </div>
                     <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-                      (click)="goToCheckout()" [disabled]="!(appService.selectedRoomStore.total > 0)">
+                      (click)="goToCheckout()">
                       <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
                     </button>
                   </div>
@@ -166,7 +167,8 @@
 
 
               </mat-card>
-
+              <br />
+              <br />
             </div>
           </div>
         </div>

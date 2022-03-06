@@ -242,15 +242,15 @@ export class RoomsListComponent implements OnInit {
  
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
+            //if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
                this.applyGridFilter(data);
-            }
+            //}
             console.log(data);
          },
             error => console.log(error),
             () => console.log('Get all getRoomsOnSale complete'));
    }
-
+ 
    applyGridFilter(data) {
       // Make a copy of the backend returned data to avoid going to backend when a filtering is made.
       this.roomList = data;

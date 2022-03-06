@@ -940,7 +940,10 @@
     "PAY_UP_FRONT": "Le paiement est exigé avant la réservation",
     "PAY_AT_REGISTER": "Je paierai à la caisse",
 		"CHOOSE_PAYMENT_METHOD": "Choisir une méthode de payement",
-		"ROOM_LIST": "Liste des chambres"
+    "ROOM_LIST": "Liste des chambres",
+		"RESERVATION_DATE": "Date de Réservation",
+    "RESERVATION_DETAIL": "Détails Réservation",
+    "OPEN_RESERVATIONS": "Réservations en cours"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1031,7 +1034,8 @@
 		"CHOOSE_LATER_PICKUP_DATE": "La boutique est fermée en ce moment. Choisissez la date/heure a laquelle vous passez prendre",
 		"INVALID_DELIVERY_UNIT": "Sélectionnez une unité de temps dans la liste",
 		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}",
-		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer."
+		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer.",
+		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

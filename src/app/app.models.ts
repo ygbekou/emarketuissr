@@ -2834,7 +2834,9 @@ export class Reservation {
 export class ReservationVO {
   reservationId: number;
 	userId: number;
-	storeId: number;
+  storeId: number;
+  buildingId: number;
+  source: number;
 	storeName: string;
 	image: string;
 	cFirstName: string;
@@ -2871,7 +2873,8 @@ export class ReservationVO {
 	endDate: Date;
 	checkinDate: Date;
 	checkoutDate: Date;
-	status: number;
+  status: number;
+  isCancellable: Boolean;
 
 	reservationRooms: ReservationRoomVO[];
 
@@ -2885,7 +2888,8 @@ export class ReservationRoomVO {
 	roomName: string;
 	roomTypeName: string;
 	buildingName: string;
-	price: number;
+  price: number;
+  total: number;
 	nbrChild: number;
 	nbrAdult: number;
 }
@@ -3039,6 +3043,7 @@ export class ReservationSearchCriteria {
   userId: number;
   langId: number;
   status: number;
+  statuses: number[];
   reservationType: number; // 0 -- online, 1-- store
   customerName: string;
   minTotal: number;
@@ -3303,6 +3308,7 @@ export class RoomTypeVO {
   qtyAvailable: number;
   nbRooms = 0;
   total: number;
+  roomIds: number[];
 
   amenities: AmenityVO[];
 }

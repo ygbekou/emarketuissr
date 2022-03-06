@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition
+} from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,10 +19,9 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 })
 export class RoomDetailComponent extends BaseComponent implements OnInit {
 
-   // roomsColumns: string[] = ['roomTypeName', 'price', 'actions'];
-   // roomsDatasource: MatTableDataSource<RoomTypeVO>;
-   // @ViewChild('MatPaginatorRooms', { static: true }) roomsPaginator: MatPaginator;
-   // @ViewChild(MatSort, { static: true }) roomsSort: MatSort;
+   snackMessage: string = 'Please select a room.';
+
+    addExtraClass: boolean = false;
 
    backgroundColor = '#4c76b2';
    color = '#fff';
@@ -36,7 +41,8 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       public router: Router,
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
-      private activatedRoute: ActivatedRoute) {
+      private activatedRoute: ActivatedRoute,
+      public snackBar: MatSnackBar) {
       super(translate);
       this.appService.selectedRoomStore = new RoomStoreVO();
    }
@@ -182,7 +188,15 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    goToCheckout() {
-      
+      if (this.appService.selectedRoomStore.total <= 0) {
+         this.translate.get(['MESSAGE.PLEASE_SELECT_A_ROOM']).subscribe(res => {
+            this.snackMessage = res['MESSAGE.PLEASE_SELECT_A_ROOM'];
+         });
+         this.action = false;
+         this.open();
+         return;
+      }
+
       if (this.appService.selectedRoomStore.roomTyeVOs.length > 0) {
          this.router.navigate(['/rooms/booking/'],
             {
@@ -209,5 +223,13 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
             this.appService.selectedRoomStore.roomTyeVOs.push(rt);
          }
       });
+   }
+
+   open() {
+      let config = new MatSnackBarConfig();
+      config.verticalPosition = this.verticalPosition;
+      config.horizontalPosition = this.horizontalPosition;
+      config.duration = this.setAutoHide ? this.autoHide : 0;
+      this.snackBar.open(this.snackMessage, this.action ? this.actionButtonLabel : undefined, config);
    }
 }

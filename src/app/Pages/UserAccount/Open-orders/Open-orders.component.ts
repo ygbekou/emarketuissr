@@ -61,15 +61,6 @@ export class OpenOrdersComponent extends BaseComponent implements OnInit {
         () => console.log('Get all Orders complete'));
   }
 
-  setOrderDetails(order: OnlineOrderVO) {
-    this.appService.getOneWithChildsAndFiles(order.orderId, 'Order')
-      .subscribe(result => {
-        if (result.id > 0) {
-          order.orderProducts = result.orderProducts;
-        }
-      });
-  }
-
   getBoughtProducts() {
     this.appService.saveWithUrl('/service/catalog/getBoughtProducts/', new ProductSearchCriteria(
       this.appService.appInfoStorage.language.id, 0, 0, 0, '0', 1, 0, 10, Number(this.appService.tokenStorage.getUserId()), 0, 0
