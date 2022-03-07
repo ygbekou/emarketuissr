@@ -2815,6 +2815,7 @@ export class Reservation {
   tmoney: Tmoney;
   flooz: Flooz;
 
+  cancellationReason: string;
   storeName: string;
   storeUrl: string;
   comments: string;

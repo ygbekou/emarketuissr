@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewChecked, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, MarketingDescription, CategoryDescription, Store, CartItem, RoomStoreVO, RoomListVO, HotelSearchCriteria
@@ -228,29 +228,30 @@ export class RoomsListComponent implements OnInit {
       if (this.searchCriteria.endHr) {
          this.searchCriteria.checkoutTS = new Date(beginDateStr + 'T' + this.searchCriteria.endHr + ':59:59');
       } else {
-         let endDateStr = new Date(this.searchCriteria.checkoutDate.getTime() - (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
+         const endDateStr = new Date(this.searchCriteria.checkoutDate.getTime()
+         - (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
             .toISOString()
-            .split("T")[0]
+            .split('T')[0]
          this.searchCriteria.checkoutTS = new Date(endDateStr + 'T23:59:59');
       }
 
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
-      const diffInMs = Math.abs(this.searchCriteria.checkoutDate - this.searchCriteria.checkinDate);
-      this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24));
+      const diffInMs = Math.abs(this.searchCriteria.checkoutDate.valueOf() - this.searchCriteria.checkinDate.valueOf());
+      this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
 
       this.searchCritCopy = { ... this.searchCriteria };
- 
+
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
             //if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
-               this.applyGridFilter(data);
+            this.applyGridFilter(data);
             //}
             console.log(data);
          },
             error => console.log(error),
             () => console.log('Get all getRoomsOnSale complete'));
    }
- 
+
    applyGridFilter(data) {
       // Make a copy of the backend returned data to avoid going to backend when a filtering is made.
       this.roomList = data;

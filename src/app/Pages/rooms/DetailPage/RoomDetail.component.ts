@@ -20,6 +20,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 export class RoomDetailComponent extends BaseComponent implements OnInit {
 
    snackMessage: string = 'Please select a room.';
+   action = true;
 
     addExtraClass: boolean = false;
 
@@ -137,7 +138,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    changeImageSrc(src: string) {
-      document.getElementById('thirdImage').src = src;
+      document.getElementById('thirdImage')[0].src = src;
    }
 
    previous() {
@@ -230,6 +231,6 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       config.verticalPosition = this.verticalPosition;
       config.horizontalPosition = this.horizontalPosition;
       config.duration = this.setAutoHide ? this.autoHide : 0;
-      this.snackBar.open(this.snackMessage, this.action ? this.actionButtonLabel : undefined, config);
+      this.snackBar.open(this.snackMessage, undefined, config);
    }
 }

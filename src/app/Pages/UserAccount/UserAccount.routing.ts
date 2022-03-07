@@ -40,6 +40,7 @@ import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHi
 import { FundsComponent } from './SellerFunds/Funds.component';
 import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
+import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -337,6 +338,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'open-reservations',
             component: OpenReservationsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'reservation-cancel/:reservationId',
+            component: CancelReservationsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

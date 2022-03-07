@@ -953,7 +953,8 @@
 		"ROOM_LIST": "Room list",
 		"RESERVATION_DATE": "Reservation Date",
 		"RESERVATION_DETAIL": "Reservation Details",
-    	"OPEN_RESERVATIONS": "Open Reservations"
+		"OPEN_RESERVATIONS": "Open Reservations",
+		"CANCEL_RESERVATION": "Cancel Reservation"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -1031,6 +1032,9 @@
 		"CANCELLATION_DECLINED": "Cancellation Declined",
 		"SET_PHONE": " Set the correct phone number in user profile",
 		"ORDER_CANCELLATION_SUCCESSFUL": "Your order # {{order_number}} is successfully cancelled. Thank You!",
+		"RESERV_CANCELLATION_SUCCESSFUL": "Your reservation # {{reserv_number}} is successfully cancelled. Thank You!",
+		"RESERV_CANCELLED_NO_REFUND": "Your reservation was cancelled. Call for refund",
+		"RESERV_NOT_ELLIGIBLE_FOR_CANCELLATION": "Reservation Not Eligible for Cancellation",
 		"STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} does not ship to this address.",
 		"STORE_PICKUP_NOT_AVAILABLE": "{{store_name}} does not allow pickups.",
 		"STORE_CLOSED": "{{store_name}} is closed at this moment. It will be open tomorrow from {{open_time}} to {{close_time}}. ",

@@ -101,6 +101,7 @@ import { BldgImagesComponent } from './Buildings/BldgImages.component';
 import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
 import { TranlogComponent } from './Sales-audit/Tranlog.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
+import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
 
 @NgModule({
   imports: [
@@ -226,7 +227,8 @@ import { OpenReservationsComponent } from './Open-reservations/Open-reservations
     TranlogsComponent,
     TranlogComponent,
     BldgImagesComponent,
-    OpenReservationsComponent
+    OpenReservationsComponent,
+    CancelReservationsComponent
   ],
   exports: [
     StoresComponent,

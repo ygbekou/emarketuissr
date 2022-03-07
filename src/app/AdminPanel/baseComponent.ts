@@ -24,7 +24,6 @@ export class BaseComponent {
 
   
    actionButtonLabel: string = 'Retry';
-   action: boolean = true;
    setAutoHide: boolean = true;
    autoHide: number = 2000;
    horizontalPosition: MatSnackBarHorizontalPosition = 'right';

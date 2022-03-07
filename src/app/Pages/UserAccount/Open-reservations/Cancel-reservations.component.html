@@ -1,0 +1,103 @@
+<div class="inner-container bg-white section-gap-xs" *ngIf="action === 'cancelling'; else elseBlock">
+  <div class="container">
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="reservation">
+        <mat-card>
+          <form name="form" (ngSubmit)="f.form.valid && cancel()" #f="ngForm" validate>
+            <h5>{{'COMMON.CANCEL_RESERVATION' | translate}}</h5>
+
+            <div fxLayout="row wrap" class="col-gap" *ngFor="let rr of reservation.reservationRooms">
+              <div fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15"
+                style="text-align: center!important;">
+
+                <a class="p-link" *ngIf="reservation.image" [routerLink]="['/rooms/search?storeCatId=9']">
+                  <img [style.width.px]="40" mat-card-image
+                    [src]="'assets/images/buildings/'+reservation.buildingId+'/'+reservation.image" alt="Photo">
+                </a>
+              </div>
+              <div fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85">
+                <a class="p-link" [routerLink]="['/rooms/search?storeCatId=9']">
+                  {{rr.roomTypeName}} {{rr.roomName}}</a><br />
+                <!-- <span *ngFor="let mapEntry of orderProduct.orderOptionMap | keyvalue; let i = index;">
+                          <label>{{mapEntry.key}}: </label>
+                          <span *ngFor="let option of mapEntry.value">
+                            {{option.optionValueDescriptionName}}{{option.value}}&nbsp;
+                          </span>
+                          <span>&nbsp;&nbsp;</span>
+                        </span> -->
+                <h6 class="accent-color">
+                  {{'COMMON.PRICE'|translate}}:
+                  {{reservation.symbolLeft}}
+                  {{rr.price | number: '1.' + reservation.currencyDecimalPlace + '-'  
+                            + reservation.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reservation.symbolRight}}
+                  | {{'COMMON.QTY'|translate}}: {{reservation.days}}
+                  | {{'COMMON.TOTAL'|translate}}:
+                  {{reservation.symbolLeft}}
+                  {{rr.total | number: '1.' + reservation.currencyDecimalPlace + '-'  
+                            + reservation.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reservation.symbolRight}}
+                </h6>
+              </div>
+            </div>
+
+            <div fxLayout="row wrap">
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+                <mat-form-field class="w-100 mb-3">
+                  <mat-label>{{'COMMON.CANCELLATION_REASON'|translate}}</mat-label>
+                  <mat-select placeholder="{{'COMMON.CANCELLATION_REASON' | translate}}" [compareWith]="compareObjects"
+                    id="cancelReason" name="cancelReason" [(ngModel)]="cancellationReason" #cancelReason="ngModel"
+                    required>
+                    <mat-option *ngFor="let reason of cancellationReasons" [value]="reason">
+                      {{reason.description}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="f.submitted && cancelReason.invalid" severity="error">
+                    {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                <div class="text-left mt-2" fxFlex.gt-sm="25" *ngIf="!isAdmin">
+                  <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" type="submit"
+                    *ngIf="reservation.isCancellable">
+                    <span class="mx-1 uppercase">{{'COMMON.CANCEL_RESERVATION' | translate}}</span>
+                    <mat-icon>save</mat-icon>
+                  </button>
+                </div>
+                <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+                  <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+                </div>
+                <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+                  <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #elseBlock>
+  <div class="section-gap-lg text-center" *ngIf="action === 'cancelled'">
+    <mat-card>
+      <mat-icon color="accent" class="review-icon"> rate_review</mat-icon>
+      <h4>
+        {{messages}}
+      </h4>
+    </mat-card>
+
+    <a href="javascript:void(0)" class="primary-color" [routerLink]="['/']">{{'MESSAGE.GO_SHOPPING'|translate}}</a>
+    &nbsp; | &nbsp;
+    <a href="javascript:void(0)" class="primary-color"
+      [routerLink]="['/account/open-reservations']">{{'COMMON.VIEW_OPEN_RESERVATIONS'|translate}}</a>
+
+  </div>
+</ng-template>
