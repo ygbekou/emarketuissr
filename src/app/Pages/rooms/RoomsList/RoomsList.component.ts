@@ -233,7 +233,8 @@ export class RoomsListComponent implements OnInit {
       if (this.searchCriteria.endHr) {
          this.searchCriteria.checkoutTS = new Date(beginDateStr + 'T' + this.searchCriteria.endHr + ':59:59');
       } else {
-         const endDateStr = new Date(this.searchCriteria.checkoutDate.getTime() -
+         const endDateStr = new Date(
+            this.searchCriteria.checkoutDate.getTime() -
             (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
             .toISOString()
             .split('T')[0];
@@ -241,7 +242,7 @@ export class RoomsListComponent implements OnInit {
       }
 
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
-      const diffInMs = Math.abs(this.searchCriteria.checkoutDate - this.searchCriteria.checkinDate);
+      const diffInMs = Math.abs(this.searchCriteria.checkoutDate.getTime() - this.searchCriteria.checkinDate.getTime());
       this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
       this.searchCritCopy = { ... this.searchCriteria };

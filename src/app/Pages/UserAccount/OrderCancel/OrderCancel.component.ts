@@ -23,7 +23,7 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
   canEdit = false;
   cancellationReason;
 
-  action = 'cancelling';
+  theaction = 'cancelling';
   isAdmin = false;
 
   constructor(public appService: AppService,
@@ -88,11 +88,11 @@ export class OrderCancelComponent extends BaseComponent implements OnInit {
           this.translate.get(['MESSAGE.' + data.errors[0]]).subscribe(res => {
             this.errors = res['MESSAGE.' + data.errors[0]];
             if (data.errors[0] === 'ORDER_CANCELLED_NO_REFUND') {
-              this.action = 'cancelled';
+              this.theaction = 'cancelled';
             }
           });
         } else {
-          this.action = 'cancelled';
+          this.theaction = 'cancelled';
           this.translate.get('MESSAGE.ORDER_CANCELLATION_SUCCESSFUL', { order_number: order.id }).subscribe(res => {
             this.messages = res;
           });
