@@ -2813,8 +2813,19 @@ export class Reservation {
   last4Digits: string;
   cardTypeIndex: string;
   tmoney: Tmoney;
-  flooz: Flooz;
+  flooz: Flooz; 
 
+  shippingMethod: string;
+  paymentCountry: string;
+  paymentfirstName: string;
+  paymentlastName: string;
+  paymentAddress1: string;
+  paymentAddress2: string;
+  paymentCity: string;
+  paymentZone: string;
+  paymentPostcode: string;
+
+  cancellationReason: string;
   storeName: string;
   storeUrl: string;
   comments: string;
@@ -2876,6 +2887,8 @@ export class ReservationVO {
 	checkoutDate: Date;
   status: number;
   isCancellable: Boolean;
+  taxFees: number;
+  postCode: string;
 
 	reservationRooms: ReservationRoomVO[];
 

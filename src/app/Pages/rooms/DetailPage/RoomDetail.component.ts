@@ -21,6 +21,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
 
    snackMessage = 'Please select a room.';
    addExtraClass = false;
+   action = true;
    backgroundColor = '#4c76b2';
    color = '#fff';
    roomStore: RoomStoreVO;
@@ -85,7 +86,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                }
 
                this.currentHigh = this.filesCopy.length < 10 ? this.filesCopy.length - 1 : 9;
-               // this.setDataSource(this.roomStore.roomTyeVOs);
+               //this.setDataSource(this.roomStore.roomTyeVOs);
             }
          },
             error => console.log(error),
@@ -136,6 +137,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       const myImg = document.getElementById('thirdImage') as HTMLImageElement;
       myImg.src = src;
       // document.getElementById('thirdImage').src = src;
+      document.getElementById('thirdImage')[0].src = src;
    }
 
    previous() {
@@ -228,6 +230,6 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       config.verticalPosition = this.verticalPosition;
       config.horizontalPosition = this.horizontalPosition;
       config.duration = this.setAutoHide ? this.autoHide : 0;
-      this.snackBar.open(this.snackMessage, this.action ? this.actionButtonLabel : undefined, config);
+      this.snackBar.open(this.snackMessage, undefined, config);
    }
 }

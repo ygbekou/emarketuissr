@@ -956,7 +956,8 @@
     "ROOM_LIST": "Liste des chambres",
 		"RESERVATION_DATE": "Date de Réservation",
     "RESERVATION_DETAIL": "Détails Réservation",
-    "OPEN_RESERVATIONS": "Réservations en cours"
+    "OPEN_RESERVATIONS": "Réservations en cours",
+		"CANCEL_RESERVATION": "Annuler la réservation"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1034,6 +1035,9 @@
 		"ORDER_NOT_ELLIGIBLE_FOR_CANCELLATION": "Commande non éligible � l'annulation",
 		"CANCELLATION_DECLINED": "Annulation Déclinée",
     "ORDER_CANCELLATION_SUCCESSFUL": "Votre commande # {{order_number}} a été annulée avec succès. Merci!",
+    "RESERV_CANCELLATION_SUCCESSFUL": "Votre réservation # {{reserv_number}} a été annulée avec succès. Merci!",
+    "RESERV_CANCELLED_NO_REFUND": "Votre réservation a été annulée. Veuillez appeler pour le remboursement",
+		"RESERV_NOT_ELLIGIBLE_FOR_CANCELLATION": "Réservation non éligible � l'annulation",
     "STORE_DOESNOT_SHIP_TO_ADDRESS": "{{store_name}} ne livre pas sur cette adresse.",
     "STORE_PICKUP_NOT_AVAILABLE": "{{store_name}} ne permet pas les prises en boutique.",
     "STORE_CLOSED": "{{store_name}} est fermée en ce moment.  Elle sera ouverte demain de {{open_time}} a {{close_time}}. ",

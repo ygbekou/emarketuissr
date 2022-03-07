@@ -28,7 +28,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
   canEdit = false;
   reviewClass: string;
 
-  raction = 'saving';
+  action = 'saving';
   isAdmin = false;
 
   constructor(public appService: AppService,
@@ -54,7 +54,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
       }
 
 
-      this.raction = 'saving';
+      this.action = 'saving';
       this.messages = '';
       this.errors = '';
       this.reviewType = params.reviewType;
@@ -175,7 +175,7 @@ export class ReviewComponent extends BaseComponent implements OnInit {
           this.processResult(result, this.review, null);
           if (result.id > 0) {
             if (!this.isAdmin) {
-              this.raction = 'saved';
+              this.action = 'saved';
               this.review = new Review();
               this.getBoughtProducts();
             }

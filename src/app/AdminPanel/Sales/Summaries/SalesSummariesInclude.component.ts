@@ -23,6 +23,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
 
   messages = '';
   button = 'filter';
+  action = '';
 
   @Input() userId: number;
 
