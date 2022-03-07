@@ -134,7 +134,9 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    changeImageSrc(src: string) {
-      document.getElementById('thirdImage').src = src;
+      const myImg = document.getElementById('thirdImage') as HTMLImageElement;
+      myImg.src = src;
+      // document.getElementById('thirdImage').src = src;
    }
 
    previous() {

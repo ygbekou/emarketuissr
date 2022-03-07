@@ -24,16 +24,11 @@ import {
 	MatSelectModule,
 	MatSnackBarModule,
 	MatTooltipModule,
-	MatChipsModule,
-	MatListModule,
-	MatSidenavModule,
-	MatTabsModule,
-	MatProgressBarModule,
-	MatCheckboxModule,
-	MatSliderModule,
-	MatRadioModule,
-	MatGridListModule,
-	MatPaginatorModule,
+	MatChipsModule,	MatListModule,
+	MatSidenavModule,	MatTabsModule,
+	MatProgressBarModule,	MatCheckboxModule,
+	MatSliderModule,	MatRadioModule,
+	MatGridListModule,	MatPaginatorModule,
 	MatSlideToggleModule,
 	MatDialogModule,
 	MatAutocompleteModule,
@@ -47,7 +42,6 @@ import { RoomsListComponent } from './RoomsList/RoomsList.component';
 import { RoomDetailComponent } from './DetailPage/RoomDetail.component';
 import { BookDetailComponent } from './BookPage/BookDetail.component';
 import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
-import { NumberRoomsPopupComponent } from './RoomsList/NumberRoomsPopupComponent';
 
 @NgModule({
 	imports: [
