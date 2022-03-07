@@ -1,4 +1,4 @@
-<div class="inner-container bg-white section-gap-xs" *ngIf="action === 'cancelling'; else elseBlock">
+<div class="inner-container bg-white section-gap-xs" *ngIf="theaction === 'cancelling'; else elseBlock">
     <div class="container" >
       <div fxLayout="row wrap" fxLayoutAlign="center center" > 
         
@@ -79,7 +79,7 @@
 </div>
 
 <ng-template #elseBlock>
-  <div class="section-gap-lg text-center" *ngIf="action === 'cancelled'">
+  <div class="section-gap-lg text-center" *ngIf="theaction === 'cancelled'">
     <mat-card>
       <mat-icon color="accent" class="review-icon"> rate_review</mat-icon>
       <h4> 

@@ -95,7 +95,6 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
 
 
    reserve(roomTypeId: number) {
-
       console.log('Room Type ID: ' + roomTypeId);
       const reserv = new Reservation();
       reserv.roomTypeIds = [];

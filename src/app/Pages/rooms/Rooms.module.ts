@@ -10,10 +10,7 @@ import { SessionModule } from '../Session/Session.module';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-	MatButtonModule,
-	MatCardModule,
-	MatMenuModule,
-	MatToolbarModule,
+	MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule,
 	MatIconModule,
 	MatInputModule,
 	MatDatepickerModule,
@@ -34,6 +31,7 @@ import {
 	MatAutocompleteModule,
 	MatButtonToggleModule
 } from '@angular/material';
+
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
@@ -91,8 +89,7 @@ import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
 		RoomsListComponent,
 		RoomDetailComponent,
 		BookDetailComponent,
-		BookReceiptComponent,
-		NumberRoomsPopupComponent
+		BookReceiptComponent
 	],
 	entryComponents: [
 	],
