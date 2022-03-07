@@ -19,13 +19,10 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 })
 export class RoomDetailComponent extends BaseComponent implements OnInit {
 
-   snackMessage: string = 'Please select a room.';
-
-    addExtraClass: boolean = false;
-
+   snackMessage = 'Please select a room.';
+   addExtraClass = false;
    backgroundColor = '#4c76b2';
    color = '#fff';
-
    roomStore: RoomStoreVO;
    storeId: number;
    searchCriteria: HotelSearchCriteria = new HotelSearchCriteria();
@@ -88,7 +85,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                }
 
                this.currentHigh = this.filesCopy.length < 10 ? this.filesCopy.length - 1 : 9;
-               //this.setDataSource(this.roomStore.roomTyeVOs);
+               // this.setDataSource(this.roomStore.roomTyeVOs);
             }
          },
             error => console.log(error),
@@ -124,7 +121,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       reserv.country.id = 228;
       reserv.phone = '888-999-202';
       reserv.idType = 1;
-      reserv.idNbr = 'G1203698696'
+      reserv.idNbr = 'G1203698696';
       reserv.days = this.searchCriteria.days;
       reserv.nbrRooms = this.searchCriteria.rooms;
 
@@ -146,7 +143,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
          return;
       }
 
-      let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
+      const maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
       for (let i = this.currentLow - 1; i < this.filesCopy.length; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
@@ -168,7 +165,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
          return;
       }
 
-      let maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
+      const maxI = this.currentLow + 9 > this.filesCopy.length - 1 ? this.filesCopy.length - 1 : this.currentLow + 9;
       for (let i = this.currentLow + 1; i < this.filesCopy.length; i++) {
          this.fiveImages[j] = this.filesCopy[i];
          j++;
@@ -226,7 +223,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    open() {
-      let config = new MatSnackBarConfig();
+      const config = new MatSnackBarConfig();
       config.verticalPosition = this.verticalPosition;
       config.horizontalPosition = this.horizontalPosition;
       config.duration = this.setAutoHide ? this.autoHide : 0;

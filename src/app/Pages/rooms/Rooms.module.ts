@@ -33,7 +33,7 @@ import {
 	MatSliderModule,
 	MatRadioModule,
 	MatGridListModule,
-	MatPaginatorModule, 
+	MatPaginatorModule,
 	MatSlideToggleModule,
 	MatDialogModule,
 	MatAutocompleteModule,
@@ -47,6 +47,7 @@ import { RoomsListComponent } from './RoomsList/RoomsList.component';
 import { RoomDetailComponent } from './DetailPage/RoomDetail.component';
 import { BookDetailComponent } from './BookPage/BookDetail.component';
 import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
+import { NumberRoomsPopupComponent } from './RoomsList/NumberRoomsPopupComponent';
 
 @NgModule({
 	imports: [
@@ -89,18 +90,19 @@ import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
 		SlickCarouselModule,
 		MatSlideToggleModule,
 		PipesModule,
-		  MatAutocompleteModule,
-		  MatButtonToggleModule
+		MatAutocompleteModule,
+		MatButtonToggleModule
 	],
 	declarations: [
 		RoomsListComponent,
 		RoomDetailComponent,
 		BookDetailComponent,
-		BookReceiptComponent
+		BookReceiptComponent,
+		NumberRoomsPopupComponent
 	],
-	entryComponents: [ 
-   ],
-   exports: [
-   ]
+	entryComponents: [
+	],
+	exports: [
+	]
 })
 export class RoomsModule { }

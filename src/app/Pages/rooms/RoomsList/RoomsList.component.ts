@@ -59,8 +59,12 @@ export class RoomsListComponent implements OnInit {
    selectedStore: Store;
 
 
-   BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
-   END_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+   BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08',
+      '09', '10', '11', '12', '13', '14', '15', '16', '17', '18',
+      '19', '20', '21', '22', '23'];
+   END_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08', '09',
+      '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
+      '20', '21', '22', '23'];
 
    public sortings = [
       { code: 'priceasc', name: 'Prix ascendant' },
@@ -115,12 +119,12 @@ export class RoomsListComponent implements OnInit {
 
    ngOnInit() {
 
-      //if (this.appService.appInfoStorage.language.code === 'en') {
+      // if (this.appService.appInfoStorage.language.code === 'en') {
       this.sortings = [
          { code: 'storeNameAsc', name: 'Store Name ascending' },
          { code: 'storeNameDsc', name: 'Store Name descending' },
          { code: 'rating', name: 'Rating' }];
-      //}
+      // }
       this.sort = this.sortings[0];
 
       this.dataSource = new MatTableDataSource();
@@ -201,8 +205,8 @@ export class RoomsListComponent implements OnInit {
             this.filteredStores = data;
             if (this.stores && this.stores.length === 1) {
                this.store = this.stores[0];
-               //this.filteredStores = this.stores;
-               //this.getData();
+               // this.filteredStores = this.stores;
+               // this.getData();
             } else if (this.stores && this.stores.length > 1) {
             }
          }, (error) => console.log(error),
@@ -214,9 +218,10 @@ export class RoomsListComponent implements OnInit {
       if (this.selectedStore) {
          this.searchCriteria.storeId = this.selectedStore.id;
       }
-      let beginDateStr = new Date(this.searchCriteria.checkinDate.getTime() - (this.searchCriteria.checkinDate.getTimezoneOffset() * 60000))
+      const beginDateStr = new Date(this.searchCriteria.checkinDate.getTime()
+         - (this.searchCriteria.checkinDate.getTimezoneOffset() * 60000))
          .toISOString()
-         .split("T")[0]
+         .split('T')[0];
 
 
       if (this.searchCriteria.beginHr) {
@@ -228,9 +233,10 @@ export class RoomsListComponent implements OnInit {
       if (this.searchCriteria.endHr) {
          this.searchCriteria.checkoutTS = new Date(beginDateStr + 'T' + this.searchCriteria.endHr + ':59:59');
       } else {
-         let endDateStr = new Date(this.searchCriteria.checkoutDate.getTime() - (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
+         const endDateStr = new Date(this.searchCriteria.checkoutDate.getTime() -
+            (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
             .toISOString()
-            .split("T")[0]
+            .split('T')[0];
          this.searchCriteria.checkoutTS = new Date(endDateStr + 'T23:59:59');
       }
 
@@ -239,18 +245,18 @@ export class RoomsListComponent implements OnInit {
       this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24));
 
       this.searchCritCopy = { ... this.searchCriteria };
- 
+
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            //if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
-               this.applyGridFilter(data);
-            //}
+            // if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
+            this.applyGridFilter(data);
+            // }
             console.log(data);
          },
             error => console.log(error),
             () => console.log('Get all getRoomsOnSale complete'));
    }
- 
+
    applyGridFilter(data) {
       // Make a copy of the backend returned data to avoid going to backend when a filtering is made.
       this.roomList = data;
@@ -439,7 +445,7 @@ export class RoomsListComponent implements OnInit {
 
    filterDataBySearchCriteria(searchCriteria, dummyCat) {
       const filteredData = this.roomList.roomStoreVOs.filter(function (data) {
-         let found = true;
+         const found = true;
          // if (searchCriteria.priceMin && searchCriteria.priceMax) {
 
          //    if (!(data..price >= searchCriteria.priceMin
@@ -505,7 +511,10 @@ export class RoomsListComponent implements OnInit {
       if (val) {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredStores = this.stores
-            .filter(store => { store.address.city && store.address.city.toLowerCase().startsWith(filterValue) });
+            .filter((store) => {
+               store.address.city
+                  && store.address.city.toLowerCase().startsWith(filterValue);
+            });
       } else {
          this.filteredStores = this.stores;
       }
@@ -513,7 +522,7 @@ export class RoomsListComponent implements OnInit {
 
    onCheckinDateChange() {
       this.minCheckoutDate = this.searchCriteria.checkinDate;
-      //this.searchCriteria.checkoutDate = undefined;
+      // this.searchCriteria.checkoutDate = undefined;
    }
 
    beginHourSelected(event) {

@@ -211,7 +211,7 @@
   <div fxLayout="row wrap" *ngIf="payout.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
       *ngIf="!payout.reversePayoutId">
-      <app-sales-summaries-include [action]="'fromSalesSummaryDetails'"
+      <app-sales-summaries-include [theaction]="'fromSalesSummaryDetails'"
         (selectSalesSummaryEvent)="getSalesSummary($event.id); getPayout(payout.id);"></app-sales-summaries-include>
     </div>
   </div>

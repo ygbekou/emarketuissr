@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
-import { StoreSearchCriteria, Store, Tranlog, TranlogSearchCriteria, StoreEmployee, TranlogType } from 'src/app/app.models';
+import { StoreSearchCriteria, Store, Tranlog, TranlogSearchCriteria, StoreEmployee} from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';

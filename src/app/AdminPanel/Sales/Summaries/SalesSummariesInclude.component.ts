@@ -42,7 +42,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
   @Output() selectSalesSummaryEvent = new EventEmitter<any>();
 
   selectedSalesSummaryIds: number[] = [];
-  @Input() action = 'add';
+  @Input() theaction = 'add';
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -120,7 +120,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
     this.selection.toggle(row);
     this.totalDue = 0;
     this.selectedSalesSummaryIds = [];
-    this.salesSummariesDatasource.data.forEach(row => {
+    this.salesSummariesDatasource.data.forEach((row) => {
       if (this.selection.isSelected(row)) {
         this.totalDue += row.totalDue;
         this.selectedSalesSummaryIds.push(row.id);
@@ -136,7 +136,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
 
   setDataSource(data, action, total) {
     this.action = action;
-    if (this.action !== 'add' && this.salesSummariesColumns[0] === 'select') {
+    if (this.theaction !== 'add' && this.salesSummariesColumns[0] === 'select') {
       this.salesSummariesColumns.splice(0, 1);
     }
     if (total) {
@@ -149,7 +149,7 @@ export class SalesSummariesIncludeComponent extends BaseComponent implements OnI
 
 
   selectSalesSummary(ss: any) {
-    console.log(ss)
+    // console.log(ss)
     this.selectSalesSummaryEvent.emit(ss);
   }
 }

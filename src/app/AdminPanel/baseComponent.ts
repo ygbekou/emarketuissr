@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import { TranslateService} from '@ngx-translate/core';
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {
   MatTableDataSource,
   MatSnackBarHorizontalPosition,
@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 
 @Component({
-	template: ``,
+  template: ``,
   providers: []
 })
 export class BaseComponent {
@@ -20,15 +20,12 @@ export class BaseComponent {
   dataSource: any;
   paginator: any;
   sort: any;
-
-
-  
-   actionButtonLabel: string = 'Retry';
-   action: boolean = true;
-   setAutoHide: boolean = true;
-   autoHide: number = 2000;
-   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  actionButtonLabel = 'Retry';
+  action = true;
+  setAutoHide = true;
+  autoHide = 2000;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor
     (
@@ -41,20 +38,20 @@ export class BaseComponent {
       this.hasError = false;
       entityObject = result;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-          this.messages = res['MESSAGE.SAVE_SUCCESS'];
+        this.messages = res['MESSAGE.SAVE_SUCCESS'];
       });
 
       if (entityObject.user && entityObject.user.birthDate != null) {
-          entityObject.user.birthDate = new Date(entityObject.user.birthDate);
+        entityObject.user.birthDate = new Date(entityObject.user.birthDate);
       }
       if (pictureUrl) {
-          pictureUrl = '';
+        pictureUrl = '';
       }
     } else {
       this.hasError = true;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR']).subscribe(res => {
-          this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
-          ?  res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
+        this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
+          ? res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
       });
     }
   }
@@ -64,20 +61,20 @@ export class BaseComponent {
       this.hasError = false;
       entityObject = result;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_SUCCESS']).subscribe(res => {
-          this.messages = res['MESSAGE.SAVE_SUCCESS'];
+        this.messages = res['MESSAGE.SAVE_SUCCESS'];
       });
 
       if (entityObject.user && entityObject.user.birthDate != null) {
-          entityObject.user.birthDate = new Date(entityObject.user.birthDate);
+        entityObject.user.birthDate = new Date(entityObject.user.birthDate);
       }
       if (pictureUrl) {
-          pictureUrl = '';
+        pictureUrl = '';
       }
     } else {
       this.hasError = true;
       this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR']).subscribe(res => {
-          this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
-          ?  res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
+        this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
+          ? res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
       });
     }
   }
@@ -94,13 +91,13 @@ export class BaseComponent {
 
   protected processDeleteResult(result, messages) {
     if (result.errors === undefined || result.errors === null || result.errors.length > 0) {
-        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
-            this.messages = res['MESSAGE.DELETE_SUCCESS'];
-        });
+      this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+        this.messages = res['MESSAGE.DELETE_SUCCESS'];
+      });
     } else {
-        this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
-            messages = res['MESSAGE.DELETE_UNSUCCESS'] + ': ' + res['MESSAGE.' + result.errors[0]];
-        });
+      this.translate.get(['COMMON.DELETE', 'MESSAGE.DELETE_UNSUCCESS', 'MESSAGE.' + result.errors[0]]).subscribe(res => {
+        messages = res['MESSAGE.DELETE_UNSUCCESS'] + ': ' + res['MESSAGE.' + result.errors[0]];
+      });
     }
   }
 
@@ -132,7 +129,7 @@ export class BaseComponent {
     if (index !== undefined) {
       dataSource.data.splice(index, 1);
     }
-    dataSource = new MatTableDataSource <any>(dataSource.data);
+    dataSource = new MatTableDataSource<any>(dataSource.data);
     dataSource.paginator = this.paginator;
     dataSource.sort = this.sort;
 
@@ -161,7 +158,6 @@ export class BaseComponent {
   }
 
   reinitializingDatasourceData(dataSource, paginator, sort, data) {
-   
     dataSource.data = data;
     dataSource = new MatTableDataSource(dataSource.data);
     dataSource.paginator = paginator;
