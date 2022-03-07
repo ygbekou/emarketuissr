@@ -20,7 +20,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
-import { NumberRoomsPopupComponent } from '../Pages/rooms/RoomsList/NumberRoomsPopup.component';
 
 interface Response {
    data: any;
