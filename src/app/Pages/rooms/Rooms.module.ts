@@ -24,16 +24,11 @@ import {
 	MatSelectModule,
 	MatSnackBarModule,
 	MatTooltipModule,
-	MatChipsModule,
-	MatListModule,
-	MatSidenavModule,
-	MatTabsModule,
-	MatProgressBarModule,
-	MatCheckboxModule,
-	MatSliderModule,
-	MatRadioModule,
-	MatGridListModule,
-	MatPaginatorModule, 
+	MatChipsModule,	MatListModule,
+	MatSidenavModule,	MatTabsModule,
+	MatProgressBarModule,	MatCheckboxModule,
+	MatSliderModule,	MatRadioModule,
+	MatGridListModule,	MatPaginatorModule,
 	MatSlideToggleModule,
 	MatDialogModule,
 	MatAutocompleteModule,
@@ -89,18 +84,19 @@ import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
 		SlickCarouselModule,
 		MatSlideToggleModule,
 		PipesModule,
-		  MatAutocompleteModule,
-		  MatButtonToggleModule
+		MatAutocompleteModule,
+		MatButtonToggleModule
 	],
 	declarations: [
 		RoomsListComponent,
 		RoomDetailComponent,
 		BookDetailComponent,
-		BookReceiptComponent
+		BookReceiptComponent,
+		NumberRoomsPopupComponent
 	],
-	entryComponents: [ 
-   ],
-   exports: [
-   ]
+	entryComponents: [
+	],
+	exports: [
+	]
 })
 export class RoomsModule { }

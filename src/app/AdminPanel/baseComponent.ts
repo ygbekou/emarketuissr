@@ -20,14 +20,11 @@ export class BaseComponent {
   dataSource: any;
   paginator: any;
   sort: any;
-
-
-  
-   actionButtonLabel: string = 'Retry';
-   setAutoHide: boolean = true;
-   autoHide: number = 2000;
-   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  actionButtonLabel = 'Retry';
+  setAutoHide = true;
+  autoHide = 2000;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor
     (
@@ -160,7 +157,6 @@ export class BaseComponent {
   }
 
   reinitializingDatasourceData(dataSource, paginator, sort, data) {
-   
     dataSource.data = data;
     dataSource = new MatTableDataSource(dataSource.data);
     dataSource.paginator = paginator;

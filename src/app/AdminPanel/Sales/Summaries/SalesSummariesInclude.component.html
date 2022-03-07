@@ -4,7 +4,7 @@
     *ngIf="salesSummariesDatasource?.data && salesSummariesDatasource.data?.length > 0">
     <div class="table-wrapper">
       <table mat-table [dataSource]="salesSummariesDatasource" matSort class="w-100">
-        <ng-container matColumnDef="select" *ngIf="action === 'add'">
+        <ng-container matColumnDef="select" *ngIf="theaction === 'add'">
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null"
                           [checked]="selection.hasValue() && isAllSelected()"
@@ -73,10 +73,10 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="salesSummariesColumns"></tr>
-        <ng-container *ngIf="action === 'fromSalesSummaryDetails'">
+        <ng-container *ngIf="theaction === 'fromSalesSummaryDetails'">
           <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;" (click)="selectSalesSummary(salesSummary)"></tr>
         </ng-container>
-        <ng-container *ngIf="action !== 'fromSalesSummaryDetails'">
+        <ng-container *ngIf="theaction !== 'fromSalesSummaryDetails'">
           <tr mat-row *matRowDef="let salesSummary; columns: salesSummariesColumns;"></tr>
         </ng-container>
       </table>

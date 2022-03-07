@@ -4,7 +4,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-NumberRoomsPopup',
+  selector: 'app-number-rooms-popup',
   templateUrl: './NumberRoomsPopup.component.html',
   styleUrls: ['./RoomsList.component.scss']
 })
