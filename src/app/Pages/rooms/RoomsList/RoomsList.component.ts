@@ -520,9 +520,9 @@ export class RoomsListComponent implements OnInit {
       }
    }
 
-   onCheckinDateChange() {
+   onCheckinDateChange(event) {
       this.minCheckoutDate = this.searchCriteria.checkinDate;
-      //this.searchCriteria.checkoutDate = undefined;
+      // this.searchCriteria.checkoutDate = undefined;
    }
 
    beginHourSelected(event) {
