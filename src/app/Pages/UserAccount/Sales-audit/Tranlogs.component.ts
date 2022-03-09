@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
-import { StoreSearchCriteria, Store, Tranlog, TranlogSearchCriteria, StoreEmployee} from 'src/app/app.models';
+import { StoreSearchCriteria, Store, Tranlog, TranlogSearchCriteria, StoreEmployee } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,11 +22,11 @@ export interface SearchResponse {
   templateUrl: './Tranlogs.component.html',
   styleUrls: ['./Tranlogs.component.scss']
 })
-export class TranlogsComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class TranlogsComponent extends BaseComponent implements OnInit {
 
   // tranlogsColumns: string[] = ['tranlogType', 'paidBy', 'receiver', 'tranlogDate', 'salaryDate', 'amount', 'actions'];
   tranlogsColumns: string[] = ['refNbr', 'author', 'oldQty', 'newQty',
-   'oldPrice', 'newPrice', 'oldRebate', 'newRebate', 'tranlogDate', 'operation'];
+    'oldPrice', 'newPrice', 'oldRebate', 'newRebate', 'tranlogDate', 'operation'];
   tranlogsDatasource: MatTableDataSource<Tranlog>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) tranlogsSort: MatSort;
@@ -65,12 +65,13 @@ export class TranlogsComponent extends BaseComponent implements OnInit, AfterVie
     return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
-  ngAfterViewInit() {
-    this.search();
-  }
-
+  /*   ngAfterViewInit() {
+      this.search();
+    }
+   */
   private clear() {
     this.searchCriteria = new TranlogSearchCriteria();
+    this.searchCriteria.storeId = this.selectedStore ? this.selectedStore.id : 0;
     const d = new Date();
     d.setDate(d.getDate() - 1);
     this.searchCriteria.beginDate = d;
