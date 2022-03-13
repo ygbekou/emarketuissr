@@ -32,8 +32,8 @@
                   class="bold-text">{{reserv?.total}}</span>
               </div>
               <div fxLayout="row wrap" fxLayoutAlign="left top">
-                <span class="label-summary-text"> {{'COMMON.PAYMENT_METHOD' | translate}}: </span> <span
-                  class="bold-text">{{reserv?.paymentMethod}}</span>
+                <span class="label-summary-text"> {{'COMMON.PAYMENT_METHOD' | translate}}: </span> 
+                <span class="bold-text" *ngIf="reserv.paymentMethod === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}</span>
               </div>
 
               <br />

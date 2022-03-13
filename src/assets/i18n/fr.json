@@ -1052,7 +1052,8 @@
 		"INVALID_DELIVERY_UNIT": "Sélectionnez une unité de temps dans la liste",
 		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}",
 		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer.",
-		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres"
+		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres",
+		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

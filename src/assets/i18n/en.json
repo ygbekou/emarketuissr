@@ -1051,7 +1051,8 @@
 		"UPDATE_ADDRESS_POSITION": "We could not geolocalize your address. Update it for shipping",
 		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}",
 		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again.",
-		"PLEASE_SELECT_A_ROOM": "Please select your rooms"
+		"PLEASE_SELECT_A_ROOM": "Please select your rooms",
+		"PAYMENT_METHOD_REQUIRED": "Payment Method Required"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

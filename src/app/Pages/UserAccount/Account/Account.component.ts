@@ -86,7 +86,8 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Rooms', url: '/account/rooms', icon: 'hotel' },
       { name: 'Room Types', url: '/account/room-types', icon: 'room' },
-      { name: 'Reservations', url: '/account/sales-reservations', icon: 'room' }
+      { name: 'Reservations', url: '/account/sales-reservations', icon: 'room' },
+      { name: 'My Reservations', url: '/account/open-reservations', icon: 'room' }
     ]
   }, {
     name: 'Reports',
@@ -170,7 +171,8 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Chambres', url: '/account/rooms', icon: 'hotel' },
       { name: 'Type de chambres', url: '/account/room-types', icon: 'room' },
-      { name: 'Réservations', url: '/account/sales-reservations', icon: 'room' }
+      { name: 'Réservations', url: '/account/sales-reservations', icon: 'room' },
+      { name: 'Mes Réservations', url: '/account/open-reservations', icon: 'room' }
     ]
   }, {
     name: 'Etats',
