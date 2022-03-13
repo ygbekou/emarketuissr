@@ -5,6 +5,7 @@
 		"HOME THREE": "Home Three",
 		"SHOP": "Shop",
 		"FEES": "Fees",
+		"PAYMENT_METHOD_REQUIRED":"Payment required for reservation",
 		"THIRD_IMAGE":"Third image",
 		"PRINT_COUNT": "Print count",
 		"QTY_BEFORE": "Qty before",
