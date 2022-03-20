@@ -50,12 +50,21 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    ngOnInit() {
       this.activatedRoute.queryParams.subscribe(params => {
          this.searchCriteria.storeId = params.storeId;
-         this.searchCriteria.checkinDate = new Date(params.checkinDate.substr(0, 4), params.checkinDate.substr(5, 2) - 1,
+         if (params.checkinDate) {
+            this.searchCriteria.checkinDate = new Date(params.checkinDate.substr(0, 4), params.checkinDate.substr(5, 2) - 1,
             params.checkinDate.substr(8, 2));
-         this.searchCriteria.checkoutDate = new Date(params.checkoutDate.substr(0, 4), params.checkoutDate.substr(5, 2) - 1,
+         } else {
+            this.searchCriteria.checkinDate = new Date();
+         }
+         if (params.checkoutDate) {
+            this.searchCriteria.checkoutDate = new Date(params.checkoutDate.substr(0, 4), params.checkoutDate.substr(5, 2) - 1,
             params.checkoutDate.substr(8, 2));
-         this.searchCriteria.rooms = params.rooms;
-         this.searchCriteria.days = params.days;
+         } else {
+            this.searchCriteria.checkoutDate = new Date();
+         }
+
+         this.searchCriteria.rooms = params.rooms ? params.rooms : 1;
+         this.searchCriteria.days = params.days ? params.days : 1;
          this.searchCriteria.roomTypeName = params.roomTypeName;
          this.getRoomStore();
       });
