@@ -55,7 +55,7 @@ export class TransferHistoriesComponent extends BaseComponent implements OnInit,
   }
 
   ngAfterViewInit() {
-   
+
   }
 
 }

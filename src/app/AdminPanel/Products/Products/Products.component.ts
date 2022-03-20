@@ -17,13 +17,13 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   dataSource: MatTableDataSource<ProductDescription>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  messages = ''; 
+  messages = '';
   constructor(public appService: AppService,
     public translate: TranslateService) {
       super(translate);
     }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getAll();
   }
 
