@@ -1,0 +1,111 @@
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div class="mat-card mb-4">
+        <form name="form" (ngSubmit)="f.form.valid && getRooms()" #f="ngForm" validate>
+          <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-3" *ngIf="page === 'list'">
+              <mat-form-field appearance="outline" class="w-100">
+                <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
+                  matInput [matAutocomplete]="auto" [(ngModel)]="searchCriteria.location" required
+                  (ngModelChange)="filterOptions(searchCriteria.location)">
+                <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                <mat-autocomplete id="option1" #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredStores " (onSelectionChange)=" searchCriteria.location = option.address.city;
+                          searchCriteria.address = option.address" [value]="option.cityCountryName">
+                    {{option.cityCountryName}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-error *ngIf="f.submitted && (!searchCriteria.address || !searchCriteria.address.id)  "
+                severity="error">
+                {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
+              </mat-error>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="15" fxFlex.xl="15" class="p-3" 
+            [ngStyle]="hasInvalidDates ? 
+                            {'border-style': 'solid', 'border-width': '1px', 'border-color': 'red'} : ''">
+              <mat-form-field class="w-100 mb-3" appearance="outline">
+                <mat-label> {{'COMMON.CHECKIN_DATE' | translate}}
+                </mat-label>
+                <input matInput [matDatepicker]="checkinDatePicker" [(ngModel)]="searchCriteria.checkinDate"
+                  class="form-control" [min]="minDate" id="value" name="value"
+                  (dateChange)="onCheckinDateChange($event)" required>
+                <mat-datepicker-toggle matSuffix [for]="checkinDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #checkinDatePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="7" fxFlex.xl="7" class="p-3">
+              <mat-checkbox class="mb-2 d-block" [(ngModel)]="searchCriteria.isHourly" id="isHourly" name="isHourly">
+                <mat-label> {{'COMMON.HOURLY' | translate}}</mat-label>
+              </mat-checkbox>
+            </div>
+
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="15" fxFlex.xl="15" class="p-3"
+              *ngIf="searchCriteria.isHourly === true">
+              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label> {{'COMMON.BEGIN' | translate}} Hr</mat-label>
+                  <mat-select [(ngModel)]="searchCriteria.beginHr" name="beginHr"
+                    (selectionChange)="beginHourSelected($event)">
+                    <mat-option *ngFor="let hr of BEGIN_HOURS" [value]="hr">
+                      {{hr}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <mat-form-field class="w-100" appearance="outline">
+                  <mat-label> {{'COMMON.END' | translate}} Hr</mat-label>
+                  <mat-select [(ngModel)]="searchCriteria.endHr" name="endHr">
+                    <mat-option *ngFor="let hr of END_HOURS" [value]="hr">
+                      {{hr}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="15" fxFlex.xl="15" class="p-3"
+              *ngIf="searchCriteria.isHourly === false" [ngStyle]="hasInvalidDates ? 
+                            {'border-style': 'solid', 'border-width': '1px', 'border-color': 'red'} : ''">
+              <mat-form-field class="w-100 mb-3" appearance="outline">
+                <mat-label> {{'COMMON.CHECKOUT_DATE' | translate}}
+                </mat-label>
+                <input matInput [matDatepicker]="checkoutDatePicker" [(ngModel)]="searchCriteria.checkoutDate"
+                  class="form-control" [min]="minCheckoutDate" id="value" name="value" required>
+                <mat-datepicker-toggle matSuffix [for]="checkoutDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #checkoutDatePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label> {{'COMMON.ADULTS' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="adults" name="adults"
+                  [(ngModel)]="searchCriteria.adults" required>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label> {{'COMMON.CHILDREN' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="children" name="children"
+                  [(ngModel)]="searchCriteria.children" required>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label> {{'COMMON.ROOMS' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="rooms" name="rooms"
+                  [(ngModel)]="searchCriteria.rooms" required>
+              </mat-form-field>
+            </div>
+
+
+            <div fxFlex.xs="10" fxFlex.sm="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
+              <button  mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                <span class="mx-1 uppercase">{{buttonLabel}}</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>

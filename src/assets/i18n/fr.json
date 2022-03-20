@@ -958,7 +958,10 @@
 		"RESERVATION_DATE": "Date de Réservation",
     "RESERVATION_DETAIL": "Détails Réservation",
     "OPEN_RESERVATIONS": "Réservations en cours",
-		"CANCEL_RESERVATION": "Annuler la réservation"
+		"CANCEL_RESERVATION": "Annuler la réservation",
+		"BROWSE_BY_HOTEL": "Naviguer par hôtels",
+    "CHANGE_SEARCH": "Changer la recherche",
+		"NO_ROOM_AVAILABLE": "Aucune chambre disponible pour les critères saisis."
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

@@ -28,8 +28,11 @@
                   class="bold-text">{{reserv?.email}}</span>
               </div>
               <div fxLayout="row wrap" fxLayoutAlign="left top">
-                <span class="label-summary-text"> {{'COMMON.TOTAL' | translate}}: </span> <span
-                  class="bold-text">{{reserv?.total}}</span>
+                <span class="label-summary-text"> {{'COMMON.TOTAL' | translate}}: </span> 
+                   <span class="bold-summary-text">{{reserv?.symbolLeft}}
+                  {{reserv?.total | number: '1.' + reserv?.currencyDecimalPlace + '-'  
+                          + reserv?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                  {{reserv?.symbolRight}}</span>
               </div>
               <div fxLayout="row wrap" fxLayoutAlign="left top">
                 <span class="label-summary-text"> {{'COMMON.PAYMENT_METHOD' | translate}}: </span> 

@@ -37,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { RoomsRoutes } from './Rooms.routing';
 import { RoomsListComponent } from './RoomsList/RoomsList.component';
+import { RoomsSearchComponent } from './RoomsSearch/RoomsSearch.component';
 import { RoomDetailComponent } from './DetailPage/RoomDetail.component';
 import { BookDetailComponent } from './BookPage/BookDetail.component';
 import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
@@ -87,8 +88,9 @@ import { BookReceiptComponent } from './BookComplete/BookReceipt.component';
 	],
 	declarations: [
 		RoomsListComponent,
+		RoomsSearchComponent,
 		RoomDetailComponent,
-		BookDetailComponent,
+		BookDetailComponent, 
 		BookReceiptComponent
 	],
 	entryComponents: [
