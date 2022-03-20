@@ -10,11 +10,25 @@
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <div>
               <div fxLayout="row wrap" fxLayoutAlign="center center">
-                <h4>{{roomStore.storeName}}</h4>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80"
+                  fxLayoutAlign="center center">
+                  <h4>{{roomStore.storeName}}</h4>
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="top right"
+                    (click)="scroll('info_and_prices')">
+                    <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+                  </button>
+                </div>
+
               </div>
               <div fxLayout="row wrap" fxLayoutAlign="center center">
-                {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
-                {{roomStore.postCode}}
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80"
+                  fxLayoutAlign="center center">
+                  {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
+                  {{roomStore.postCode}}
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"></div>
               </div>
               <br />
               <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -64,109 +78,123 @@
                   </div>
                 </div>
               </div>
-
-              <mat-card>
-                <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
-                  <h4>{{'COMMON.ROOM_LIST'|translate}}</h4>
-                </div>
-                <div fxLayout="row wrap" fxLayoutAlign="center center">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="90" fxFlex.xl="90">
-                    <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
-                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-                          <h5>{{'COMMON.ROOM_TYPE'|translate}}</h5>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-                          <h5>{{'COMMON.ROOMS'|translate}}</h5>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                          <h5>{{'COMMON.PRICE'|translate}}</h5>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-                          <h5>{{'COMMON.NIGHTS'|translate}}</h5>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                          <h5>{{'COMMON.TOTAL'|translate}}</h5>
+              <br />
+              <div id="info_and_prices">
+                <mat-card>
+                  <app-room-search [searchCriteria]="searchCriteria" [page]="'detail'"
+                    (searchEvent)="searchEventHandler($event)"></app-room-search>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                    <h4>{{'COMMON.ROOM_LIST'|translate}}</h4>
+                  </div>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="90" fxFlex.xl="90">
+                      <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+                        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+                            <h5>{{'COMMON.ROOM_TYPE'|translate}}</h5>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+                            <h5>{{'COMMON.ROOMS'|translate}}</h5>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                            <h5>{{'COMMON.PRICE'|translate}}</h5>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+                            <h5>{{'COMMON.NIGHTS'|translate}}</h5>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                            <h5>{{'COMMON.TOTAL'|translate}}</h5>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="10" fxFlex.xl="10">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="10" fxFlex.xl="10">
 
+                    </div>
                   </div>
-                </div>
-                <div fxLayout="row wrap" fxLayoutAlign="center center">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="90" fxFlex.xl="90">
-                    <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap"
-                      *ngFor="let roomType of roomStore.roomTyeVOs">
-                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-                          <h6>{{roomType.roomTypeName}}</h6>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-                          <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects"
-                            style="width: 100px;" id="currency" name="currency" [(ngModel)]="roomType.nbRooms"
-                            #rmtRms="ngModel" (selectionChange)="roomChanged();">
-                            <mat-option [value]="0">
-                              <h6>0</h6>
-                            </mat-option>
-                            <mat-option *ngFor="let rm of counter(roomType.roomIds.length); let i = index"
-                              [value]="i + 1">
-                              <h6>{{i + 1}}</h6>
-                            </mat-option>
-                          </mat-select>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center"
+                    *ngIf="roomStore && roomStore.roomTyeVOs && roomStore.roomTyeVOs.length > 0">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="90" fxFlex.xl="90">
+                      <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap"
+                        *ngFor="let roomType of roomStore.roomTyeVOs">
+                        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+                            <h6>{{roomType.roomTypeName}}</h6>
+                            <span *ngFor="let amenity of roomType.amenities"
+                              style="color: #008009 !important; font-size: .85em !important; padding-right: 2px !important;">
+                              <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
+                            </span>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" [ngStyle]="hasError && appService.selectedRoomStore.total <= 0 ? 
+                            {'border-style': 'solid', 'border-width': '1px', 'border-color': 'red'} : ''">
+                            <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects"
+                              style="width: 100px;" id="currency" name="currency" [(ngModel)]="roomType.nbRooms"
+                              #rmtRms="ngModel" (selectionChange)="roomChanged();">
+                              <mat-option [value]="0">
+                                <h6>0</h6>
+                              </mat-option>
+                              <mat-option *ngFor="let rm of counter(roomType.roomIds.length); let i = index"
+                                [value]="i + 1">
+                                <h6>{{i + 1}}</h6>
+                              </mat-option>
+                            </mat-select>
 
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                          <h6>
-                            {{roomStore.symbolLeft}}
-                            {{+roomType.price | number: '1.' 
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                            <h6>
+                              {{roomStore.symbolLeft}}
+                              {{+roomType.price | number: '1.' 
                               + roomStore?.currencyDecimalPlace + '-'  
                               + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                            {{roomStore.symbolRight}}
-                          </h6>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-                          <h6>
-                            {{roomStore.symbolLeft}}
-                            {{+searchCriteria.days}}
-                          </h6>
-                        </div>
-                        <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-                          <h6>
-                            {{roomStore.symbolLeft}}
-                            {{+searchCriteria.days * roomType.price * +roomType.nbRooms | number: '1.' 
+                              {{roomStore.symbolRight}}
+                            </h6>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+                            <h6>
+                              {{roomStore.symbolLeft}}
+                              {{+searchCriteria.days}}
+                            </h6>
+                          </div>
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                            <h6>
+                              {{roomStore.symbolLeft}}
+                              {{+searchCriteria.days * roomType.price * +roomType.nbRooms | number: '1.' 
                               + roomStore?.currencyDecimalPlace + '-'  
                               + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                            {{roomStore.symbolRight}}
-                          </h6>
+                              {{roomStore.symbolRight}}
+                            </h6>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="10" fxFlex.xl="10">
-                    <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.nbrRooms > 0">
-                      {{appService.selectedRoomStore.nbrRooms}} {{'COMMON.ROOMS'|translate}} {{'COMMON.FOR'|translate}}
-                    </div>
-                    <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.total > 0">
-                      <h4>
-                        {{roomStore.symbolLeft}}
-                        {{appService.selectedRoomStore.total | number: '1.' 
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="10" fxFlex.xl="10">
+                      <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.nbrRooms > 0">
+                        {{appService.selectedRoomStore.nbrRooms}} {{'COMMON.ROOMS'|translate}}
+                        {{'COMMON.FOR'|translate}}
+                      </div>
+                      <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.total > 0">
+                        <h4>
+                          {{roomStore.symbolLeft}}
+                          {{appService.selectedRoomStore.total | number: '1.' 
                               + roomStore?.currencyDecimalPlace + '-'  
                               + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                        {{roomStore.symbolRight}}
-                      </h4>
+                          {{roomStore.symbolRight}}
+                        </h4>
+                      </div>
+                      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                        (click)="goToCheckout()">
+                        <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+                      </button>
                     </div>
-                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-                      (click)="goToCheckout()">
-                      <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
-                    </button>
                   </div>
-                </div>
 
-
-              </mat-card>
+                  <div fxLayout="row wrap" fxLayoutAlign="center center"
+                    *ngIf="!roomStore || !roomStore.roomTyeVOs || roomStore.roomTyeVOs.length === 0">
+                    {{'COMMON.NO_ROOM_AVAILABLE'|translate}}
+                  </div>
+                </mat-card>
+              </div>
               <br />
               <br />
             </div>

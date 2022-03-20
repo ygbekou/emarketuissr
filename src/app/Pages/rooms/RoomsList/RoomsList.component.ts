@@ -143,6 +143,12 @@ export class RoomsListComponent implements OnInit {
 
             if (queryParams['storeCatId'] !== undefined) {
                this.storeCatId = queryParams['storeCatId'];
+               this.searchCritCopy.rooms = 1;
+               this.searchCritCopy.adults = 1;
+               this.searchCritCopy.days = 1;
+               this.searchCritCopy.children = 1;
+               this.searchCritCopy.checkinDate = new Date();
+               this.searchCritCopy.checkoutDate = new Date();
                this.getStoresFromCat();
             }
 
@@ -572,5 +578,9 @@ export class RoomsListComponent implements OnInit {
       this.searchCriteria.storeId = undefined;
       this.searchCriteria.location = undefined;
       this.searchCriteria.address = undefined;
+   }
+
+   searchEventHandler(data: RoomListVO) {
+      this.applyGridFilter(data);
    }
 }

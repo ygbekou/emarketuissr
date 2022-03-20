@@ -2945,15 +2945,16 @@ export class Room {
 }
 
 export class RoomSearchCriteria {
-  public id: number;
-  public roomTypeId: number;
-  public floorNbr: number;
-  public buildingId: number;
-  public storeId: number;
-  public roomTypeName: string;
-  public userId: number;
-  public languageId: number;
-  public status: number;
+  id: number;
+  roomTypeId: number;
+  floorNbr: number;
+  buildingId: number;
+  storeId: number;
+  roomTypeName: string;
+  userId: number;
+  languageId: number;
+  status: number;
+
 }
 
 export class RoomType {
@@ -3364,6 +3365,7 @@ export class HotelSearchCriteria {
   location: string;
   address: Address;
   withAmenities = false;
+  roomStoreOnly = false;
 }
 
 export class Tranlog {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition
+   MatSnackBar,
+   MatSnackBarConfig,
+   MatSnackBarHorizontalPosition,
+   MatSnackBarVerticalPosition
 } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
@@ -34,6 +34,8 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    fiveImages = [];
    currentLow = 0;
    currentHigh = 0;
+   hasError = false;
+   hasInvalidDates = false;
 
    constructor(public appService: AppService,
       public router: Router,
@@ -48,8 +50,10 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    ngOnInit() {
       this.activatedRoute.queryParams.subscribe(params => {
          this.searchCriteria.storeId = params.storeId;
-         this.searchCriteria.checkinDate = new Date(params.checkinDate);
-         this.searchCriteria.checkoutDate = new Date(params.checkoutDate);
+         this.searchCriteria.checkinDate = new Date(params.checkinDate.substr(0, 4), params.checkinDate.substr(5, 2) - 1,
+            params.checkinDate.substr(8, 2));
+         this.searchCriteria.checkoutDate = new Date(params.checkoutDate.substr(0, 4), params.checkoutDate.substr(5, 2) - 1,
+            params.checkoutDate.substr(8, 2));
          this.searchCriteria.rooms = params.rooms;
          this.searchCriteria.days = params.days;
          this.searchCriteria.roomTypeName = params.roomTypeName;
@@ -59,6 +63,36 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    getRoomStore() {
+      if (this.searchCriteria.checkinDate > this.searchCriteria.checkoutDate) {
+         this.hasInvalidDates = true;
+         return;
+
+      }
+
+      const beginDateStr = new Date(this.searchCriteria.checkinDate.getTime())
+         .toISOString()
+         .split('T')[0];
+
+
+      if (this.searchCriteria.beginHr) {
+         this.searchCriteria.checkinTS = new Date(beginDateStr + 'T' + this.searchCriteria.beginHr + ':00:00');
+      } else {
+         this.searchCriteria.checkinTS = new Date(beginDateStr + 'T00:00:00');
+      }
+
+      if (this.searchCriteria.endHr) {
+         this.searchCriteria.checkoutTS = new Date(beginDateStr + 'T' + this.searchCriteria.endHr + ':59:59');
+      } else {
+         const endDateStr = new Date(this.searchCriteria.checkoutDate.getTime())
+            .toISOString()
+            .split('T')[0];
+         this.searchCriteria.checkoutTS = new Date(endDateStr + 'T23:59:59');
+      }
+
+      this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
+      const diffInMs = Math.abs(this.searchCriteria.checkoutDate.valueOf() - this.searchCriteria.checkinDate.valueOf());
+      this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
       this.searchCriteria.withAmenities = true;
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
@@ -70,18 +104,20 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                this.mainImage = this.roomStore.image;
 
                let j = 0;
-               for (let i = 0; i < this.roomStore.fileNames.length; i++) {
-                  if (this.roomStore.fileNames[i] === this.roomStore.image
-                     || this.roomStore.fileNames[i] === this.roomStore.image1
-                     || this.roomStore.fileNames[i] === this.roomStore.image2
-                     || this.roomStore.fileNames[i] === this.roomStore.image3) {
-                     continue;
-                  } else {
-                     if (j < 12) {
-                        this.fiveImages.push(this.roomStore.fileNames[i]);
+               if (this.roomStore.fileNames) {
+                  for (let i = 0; i < this.roomStore.fileNames.length; i++) {
+                     if (this.roomStore.fileNames[i] === this.roomStore.image
+                        || this.roomStore.fileNames[i] === this.roomStore.image1
+                        || this.roomStore.fileNames[i] === this.roomStore.image2
+                        || this.roomStore.fileNames[i] === this.roomStore.image3) {
+                        continue;
+                     } else {
+                        if (j < 12) {
+                           this.fiveImages.push(this.roomStore.fileNames[i]);
+                        }
+                        this.filesCopy.push(this.roomStore.fileNames[i]);
+                        j++;
                      }
-                     this.filesCopy.push(this.roomStore.fileNames[i]);
-                     j++;
                   }
                }
 
@@ -193,6 +229,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
             this.snackMessage = res['MESSAGE.PLEASE_SELECT_A_ROOM'];
          });
          this.action = false;
+         this.hasError = true;
          this.open();
          return;
       }
@@ -231,5 +268,17 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       config.horizontalPosition = this.horizontalPosition;
       config.duration = this.setAutoHide ? this.autoHide : 0;
       this.snackBar.open(this.snackMessage, undefined, config);
+   }
+
+   searchEventHandler(data: RoomListVO) {
+      this.roomStore = data.roomStoreVOs[0];
+   }
+
+   scroll(sectionId) {
+      let element = document.getElementById(sectionId);
+
+      if (element) {
+         element.scrollIntoView(); // scroll to a particular element
+      }
    }
 }
