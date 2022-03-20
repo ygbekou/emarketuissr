@@ -25,8 +25,8 @@ export interface SearchResponse {
 export class TranlogsComponent extends BaseComponent implements OnInit {
 
   // tranlogsColumns: string[] = ['tranlogType', 'paidBy', 'receiver', 'tranlogDate', 'salaryDate', 'amount', 'actions'];
-  tranlogsColumns: string[] = ['refNbr', 'author', 'oldQty', 'newQty',
-    'oldPrice', 'newPrice', 'oldRebate', 'newRebate', 'tranlogDate', 'operation'];
+  tranlogsColumns: string[] = ['tranlogDate', 'author', 'oldQty', 'newQty',
+    'oldPrice', 'newPrice', 'oldRebate', 'newRebate', 'operation'];
   tranlogsDatasource: MatTableDataSource<Tranlog>;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) tranlogsSort: MatSort;

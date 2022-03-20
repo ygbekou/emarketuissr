@@ -2278,7 +2278,7 @@ export class StoreIngredient {
   quantity: number;
   status = 1;
   modifiedBy: number;
-
+  createDate: Date;
   storeName: string;
   ingredientName: string;
   transferQty: number;

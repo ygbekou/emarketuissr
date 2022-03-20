@@ -117,6 +117,8 @@ export class PrdTransferHistoriesComponent extends BaseComponent implements OnIn
         this.messages = res['VALIDATION.INVALID_DATE_RANGE'];
       });
     } else {
+      this.searchCriteria.storeId = this.selectedStore.id;
+      // console.log(this.searchCriteria);
       this.appService.saveWithUrl('/service/catalog/getProductHistories', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.prdHistDatasource = new MatTableDataSource(data);

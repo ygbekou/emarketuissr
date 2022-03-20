@@ -184,7 +184,7 @@ export class ProductsListComponent implements OnInit {
             .subscribe(result => {
                if (result.id > 0) {
                   this.store = result;
-                  console.log(this.store);
+                  // console.log(this.store);
                   this.setImage();
                   this.storeId = this.store.id;
                   this.getData();
@@ -211,7 +211,7 @@ export class ProductsListComponent implements OnInit {
       this.appService.getObjects('/service/catalog/getStoresFromCat/' + this.storeCatId + '/1')
          .subscribe((data: Store[]) => {
             this.stores = data;
-            console.log(this.stores);
+            // console.log(this.stores);
             if (this.stores) {
                this.store = this.stores[0];
                this.storeId = this.store.id;
@@ -234,7 +234,7 @@ export class ProductsListComponent implements OnInit {
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters, ' order by e.sortOrder ')
          .subscribe((data: Store[]) => {
             this.stores = data;
-            console.log(this.stores);
+            // console.log(this.stores);
             if (this.stores) {
                this.store = this.stores[0];
                this.storeId = this.store.id;
@@ -253,18 +253,18 @@ export class ProductsListComponent implements OnInit {
    getProducts() {
       let crit = null;
       if (this.searchText && this.searchText !== '0') {
-         console.log('this.searchText is not null =' + this.searchText);
+         // console.log('this.searchText is not null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             0, 0, 0, this.searchText, 1, 0, 0, 0, 0, 0);
       } else {
-         console.log('this.searchText is null =' + this.searchText);
+         // console.log('this.searchText is null =' + this.searchText);
          crit = new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
             this.storeId, this.marketId, this.catId, this.searchText, 1, 0, 0, 0, this.storeCatId, 0);
       }
       console.log(crit);
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', crit).subscribe((data: ProductListVO) => {
          this.applyGridFilter(data);
-         console.log(data);
+         // console.log(data);
       },
          error => console.log(error),
          () => console.log('Get all getProductsOnSale complete'));
@@ -342,7 +342,7 @@ export class ProductsListComponent implements OnInit {
             .subscribe((data: CategoryDescription[]) => {
                if (data && data.length > 0) {
                   this.catDesc = data[0];
-                  console.log(this.catDesc);
+                  // console.log(this.catDesc);
                }
             }, error => console.log(error),
                () => console.log('Get all Category Item complete'));

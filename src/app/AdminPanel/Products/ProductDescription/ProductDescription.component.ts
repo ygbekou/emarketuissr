@@ -58,8 +58,8 @@ export class ProductDescriptionComponent implements OnInit {
    onLangChanged(event) {
       this.messages = '';
       let found = false;
-      console.log('tab changed lang =' + event.tab.textLabel);
-      console.log(this.product.productDescriptions);
+      // console.log('tab changed lang =' + event.tab.textLabel);
+      // console.log(this.product.productDescriptions);
       this.product.productDescriptions.forEach(prodDesc => {
          if (prodDesc.language.name === event.tab.textLabel) {
             console.log('Found : ' + prodDesc.language.name + ' : ' + prodDesc.name);
@@ -71,8 +71,8 @@ export class ProductDescriptionComponent implements OnInit {
 
       if (!found) {
          this.appService.appInfoStorage.languages.forEach(language => {
-            console.log('creating product desc');
-            console.log(language.name + 'creating product desc' + event.tab.textLabel);
+            // console.log('creating product desc');
+            // console.log(language.name + 'creating product desc' + event.tab.textLabel);
             if (language.name === event.tab.textLabel) {
                const pd = new ProductDescription();
                pd.language = language;

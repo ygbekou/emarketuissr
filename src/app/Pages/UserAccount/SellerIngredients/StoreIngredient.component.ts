@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreIngredient, IngredientSearchCriteria, IngredientDescription, StoreIngredientInventory, Ingredient, ProductMenu, StoreMenu, MenuDescription } from 'src/app/app.models';
+import { Store, StoreIngredient, IngredientSearchCriteria, IngredientDescription, StoreIngredientInventory, Ingredient } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 
@@ -38,7 +38,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
 
   addNew = false;
   ingredient = new Ingredient();
-  
+
   constructor(public appService: AppService,
     public translate: TranslateService,
     private activatedRoute: ActivatedRoute,
@@ -99,7 +99,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
 
   getStoreUnassignedIngredients() {
     this.searchCriteria.storeId = this.store.id;
-    this.searchCriteria.languageId = this.appService.appInfoStorage.language.id
+    this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
 
     this.appService.saveWithUrl('/service/catalog/getStoreUnassignedIngredients', this.searchCriteria)
       .subscribe((data: any[]) => {
@@ -188,6 +188,7 @@ export class StoreIngredientComponent  extends BaseComponent implements OnInit, 
 
     this.appService.save(this.storeIngredientInventory, 'StoreIngredientInventory')
       .subscribe((data: StoreIngredientInventory) => {
+        console.log(data);
         this.processResult(data, this.storeIngredientInventory, null);
         this.storeIngredientInventory = data;
         this.addQuantityToStoreIngredient(this.storeIngredientInventory.quantity);

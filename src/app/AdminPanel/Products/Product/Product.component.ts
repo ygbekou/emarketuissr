@@ -107,8 +107,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
         if (data !== null && data.length > 0) {
           this.product = data[0].product;
-          console.log('In product');
-          console.log(this.product);
+          // console.log('In product');
+          // console.log(this.product);
           this.product.productDescriptions = data;
           this.productDescriptionView.product = this.product;
           this.productDescriptionView.refreshLangObjects();

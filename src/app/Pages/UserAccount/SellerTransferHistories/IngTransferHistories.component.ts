@@ -118,6 +118,7 @@ export class IngTransferHistoriesComponent extends BaseComponent implements OnIn
         this.messages = res['VALIDATION.INVALID_DATE_RANGE'];
       });
     } else {
+      this.searchCriteria.storeId = this.selectedStore.id;
       this.appService.saveWithUrl('/service/catalog/getStoreIngInventories', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.ingHistDatasource = new MatTableDataSource(data);
