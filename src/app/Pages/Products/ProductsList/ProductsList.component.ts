@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewChecked, AfterContentChecked } f
 import { AppService } from '../../../Services/app.service';
 import {
    Language, Pagination, ProductDescVO, MarketingDescription, CategoryDescription, SearchCriteria,
-   ProductListVO, Store, ProductSearchCriteria, CartItem
+   ProductListVO, Store, ProductSearchCriteria, CartItem, StoreCategoryDesc
 } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,6 @@ export class ProductsListComponent implements OnInit {
    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
    @ViewChild(MatSort, { static: true }) sort: any;
    @ViewChild('sidenav', { static: false }) sidenav: any;
-
    dataSource: MatTableDataSource<ProductDescVO>;
    public viewType = 'grid';
    public viewCol = 33.3;
@@ -38,6 +37,9 @@ export class ProductsListComponent implements OnInit {
    marketId = 0;
    searchText = '0';
    storeId = 0;
+   running = true;
+   resultCount = 0;
+   storeCategoryDesc = new StoreCategoryDesc();
    store = new Store();
    stores: Store[] = [];
    markDesc: MarketingDescription = new MarketingDescription();
@@ -112,15 +114,17 @@ export class ProductsListComponent implements OnInit {
             { code: 'rating', name: 'Rating' }];
       }
       this.sort = this.sortings[0];
-
       this.dataSource = new MatTableDataSource();
-
-
       this.activatedRoute.params.subscribe(params => {
-
          this.catId = 0;
          this.marketId = 0;
          this.storeCatId = 0;
+         this.stores = [];
+         this.store = new Store();
+         this.storeId = 0;
+         this.productList = new ProductListVO();
+         this.currentFilteredProductList = undefined;
+         this.running = true;
          console.log(params.type);
          if (params.type) {
             const type = params.type.substring(0, 3);
@@ -137,6 +141,7 @@ export class ProductsListComponent implements OnInit {
                   + ', marketId=' + this.marketId
                   + ', storeCatId=' + this.storeCatId);
                if (this.storeCatId > 0) {
+                  this.getStoreCategories(this.storeCatId);
                   this.getStoresFromCat();
                   // this.getStoresAndData();
                } else {
@@ -144,7 +149,6 @@ export class ProductsListComponent implements OnInit {
                }
             }
          }
-
       });
 
       this.activatedRoute.queryParams.subscribe(params => {
@@ -158,7 +162,6 @@ export class ProductsListComponent implements OnInit {
                this.storeId = queryParams['storeId'];
                this.getStore();
             }
-
          });
       });
 
@@ -174,7 +177,46 @@ export class ProductsListComponent implements OnInit {
             this.viewCol = 33.3;
          }
       });
+   }
 
+   public getStoreCategories(storeCatId: number) {
+      const parameters: string[] = [];
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Language',
+         parameters, ' order by e.sortOrder ')
+         .subscribe((data: Language[]) => {
+            let lang = navigator.language;
+            if (lang) {
+               lang = lang.substring(0, 2);
+            }
+            if (Cookie.get('lang')) {
+               lang = Cookie.get('lang');
+               console.log('Using cookie lang=' + Cookie.get('lang'));
+            } else if (lang) {
+               console.log('Using browser lang=' + lang);
+               // this.translate.use(lang);
+            } else {
+               lang = 'fr';
+               console.log('Using default lang=fr');
+            }
+            data.forEach(language => {
+               if (language.code === lang) {
+                  const parameters2: string[] = [];
+                  parameters2.push('e.language.id = |langCode|' + language.id + '|Integer');
+                  parameters2.push('e.storeCat.id = |stC|' + storeCatId + '|Integer');
+                  this.appService.getAllByCriteria('com.softenza.emarket.model.StoreCategoryDesc', parameters2,
+                     ' order by e.storeCat.sortOrder ')
+                     .subscribe((data2: StoreCategoryDesc[]) => {
+                        if (data2 && data2.length > 0) {
+                           this.storeCategoryDesc = data2[0];
+                        }
+                     },
+                        (error) => console.log(error),
+                        () => console.log('Get all StoreCategoryDesc complete'));
+               }
+            });
+
+         }, error => console.log(error),
+            () => console.log('Get Languages complete'));
    }
 
    getStore() {
@@ -212,7 +254,7 @@ export class ProductsListComponent implements OnInit {
          .subscribe((data: Store[]) => {
             this.stores = data;
             // console.log(this.stores);
-            if (this.stores) {
+            if (this.stores && this.stores.length === 1) {
                this.store = this.stores[0];
                this.storeId = this.store.id;
                this.setImage();
@@ -264,6 +306,7 @@ export class ProductsListComponent implements OnInit {
       console.log(crit);
       this.appService.saveWithUrl('/service/catalog/getProductsOnSale/', crit).subscribe((data: ProductListVO) => {
          this.applyGridFilter(data);
+         this.resultCount = data && data.productDescVOs ? data.productDescVOs.length : 0;
          // console.log(data);
       },
          error => console.log(error),
@@ -284,10 +327,13 @@ export class ProductsListComponent implements OnInit {
       }
 
       this.createDatasource(data.productDescVOs);
+      this.running = false;
    }
 
    public getData() {
       const parameters: string[] = [];
+      this.productList = new ProductListVO();
+      this.currentFilteredProductList = undefined;
       this.appService.getAllByCriteria('com.softenza.emarket.model.Language',
          parameters, ' order by e.sortOrder ')
          .subscribe((data: Language[]) => {
@@ -509,6 +555,8 @@ export class ProductsListComponent implements OnInit {
 
       this.currentFilteredProductList = new ProductListVO();
       this.currentFilteredProductList.productDescVOs = filteredData;
+      this.resultCount = this.currentFilteredProductList.productDescVOs ?
+         this.currentFilteredProductList.productDescVOs.length : 0;
       return filteredData;
    }
 
@@ -523,7 +571,7 @@ export class ProductsListComponent implements OnInit {
             this.message = res['MESSAGE.NO_RESULT_FOUND'];
          });
       }
-
+      // this.resultCount = result.data.length;
       this.dataSource = new MatTableDataSource(result.data);
       this.pagination = result.pagination;
    }

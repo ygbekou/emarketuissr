@@ -1,27 +1,70 @@
-<app-store-header *ngIf="store.id > 0" [store]="store" [backgroundImg] ="backgroundImg">
+<app-store-header *ngIf="store.id > 0" [store]="store" [backgroundImg]="backgroundImg">
 </app-store-header>
 <div class="container">
-  <div fxLayout="row wrap" class="col-gap" *ngIf="stores && stores.length>1">
+  <div class="section-gap pb-0" *ngIf="stores && stores.length>1 && !store.id">
+    <div class="container">
+      <mat-toolbar color="primary" style="height:175px" class="section-title-toolbar">
+        <mat-toolbar-row>
+          <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+            <div class="block-title">
+              <h2 class="text-inverse mb-0 text-xxl">{{storeCategoryDesc.name}}</h2>
+            </div>
+           </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="shop-card-gap px-4">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let astore of stores">
+            <a href="javascript:void(0)"  (click)="store=astore;storeId=astore.id;setImage(); getData();">
+              <mat-card class="box-shadow-md p-4">
+                <a href="javascript:void(0)">
+                  <img style="max-height: 100px!important; width:100%!important;" [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
+                </a>
+                <mat-card-content class="pt-3">
+                  <h5> <strong> {{astore.name}}</strong></h5>
+                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
+                </mat-card-content>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap" class="col-gap" *ngIf="stores && stores.length>1 && store.id >0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <ngx-slick-carousel class="carousel" [config]="slideConfig">
         <div ngxSlickItem *ngFor="let astore of stores">
-          <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id;setImage(); getData();">
+           <a href="javascript:void(0)"  (click)="running=true;store=astore;storeId=astore.id;setImage(); getData();">
+              <mat-card class="box-shadow-md p-4" style="padding: 0.5em!important;">
+                <a href="javascript:void(0)">
+                  <img style="max-height: 75px!important; width:100%!important;" [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
+                </a>
+                <mat-card-content class="pt-3">
+                  <h6> <strong> {{astore.name}}</strong></h6>
+                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
+                </mat-card-content>
+              </mat-card>
+            </a> 
+       <!--    <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id;setImage(); getData();">
             <mat-card-content>
               <a href="javascript:void(0)">
-                <img src="assets/images/stores/{{astore.id}}/{{astore.image}}">
+                <img max-height="50px" src="assets/images/stores/{{astore.id}}/{{astore.image}}">
               </a>
               <div class="myOverlay">
-                {{astore.address.city +', '+astore.address.country.name}}
+                  {{astore.address.city +', '+astore.address.country.name}} 
+                 <strong> {{astore.name}}</strong> 
+                  <font color="#ff5722"><strong>{{astore.address.city +', '+astore.address.country.name}}</strong> </font>
               </div>
             </mat-card-content>
-          </mat-card>
+          </mat-card> -->
         </div>
       </ngx-slick-carousel>
     </div>
     <br />
   </div>
-  <div fxLayout="row wrap" class="col-gap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+  <div fxLayout="row wrap" class="col-gap" *ngIf="store.id > 0 || !(stores.length>0)">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
       <div class="mat-card mb-4">
         <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
           <div fxLayout="row wrap" *ngIf="productList.categories && productList.categories.length>1">
@@ -62,15 +105,25 @@
         </form>
       </div>
     </div>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
       <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
             <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">
-                {{ catDesc.name}}
+                {{ catDesc.name}} 
+                <font color="#ff5722" *ngIf="!running"> ({{resultCount}})  </font>
+              
               </h6>
-              <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h6>
+              <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">
+                {{markDesc.name}}
+                <font color="#ff5722" *ngIf="!running"> ({{resultCount}})  </font>
+              </h6>
+
+               <h6 class="text-inverse mb-0 text-xxl" *ngIf="!(marketId>0) && !(catId>0)"> 
+                <font color="#ff5722" *ngIf="!running">  {{resultCount}}  {{'COMMON.PRODUCT'|translate}}s </font>
+              </h6>
+
             </div>
             <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <mat-form-field class="w-100">
@@ -79,30 +132,13 @@
               </mat-form-field>
             </div>
             <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-              <!-- <span *ngIf="isHomePage"> -->
-              <!-- <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-                {{'COMMON.SHOW'|translate}} {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-              </a> -->
-              <!-- <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
-                <span (mouseleave)="countsMenuTrigger.closeMenu()">
-                  <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
-                    <span>{{count}}</span>
-                  </button>
-                </span>
-              </mat-menu> -->
-              <mat-form-field appearance="fill"> 
+              <mat-form-field appearance="fill">
                 <mat-select [(value)]="count" color="accent" style="text-align: right;">
                   <mat-option [value]="count" *ngFor="let count of counts" (click)="changeCount(count)">
-                    {{count}} {{'COMMON.PER_PAGE'|translate}} 
+                    {{count}} {{'COMMON.PER_PAGE'|translate}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- </span>        -->
-              <!--
-                <button mat-icon-button (click)="viewCol = 100; viewType='list'; count=1;">
-                  <mat-icon>view_list</mat-icon>
-                </button>
-                -->
               <button mat-icon-button (click)="viewCol = 50; viewType='grid';">
                 <svg class="mat-icon mat-icon-sm" viewBox="0 0 25 25">
                   <path d="M3,11H11V3H3M3,21H11V13H3M13,21H21V13H13M13,3V11H21V3" />
@@ -111,17 +147,19 @@
               <button mat-icon-button fxShow="false" fxShow.gt-md (click)="viewCol = 33.3; viewType='grid';">
                 <mat-icon>view_module</mat-icon>
               </button>
-
               <button fxShow="false" fxShow.gt-md mat-icon-button (click)="viewCol = 25; viewType='grid';">
                 <mat-icon>view_comfy</mat-icon>
               </button>
-
             </div>
-
           </div>
         </mat-toolbar-row>
       </mat-toolbar>
-      <div fxLayout="row wrap" *ngIf="!productList.productDescVOs || productList.productDescVOs.length===0">
+    <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
+      <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+      <div fxLayout="row wrap" *ngIf="!running && (!productList.productDescVOs || productList.productDescVOs.length===0)">
         <div fxFlex="100" class="px-2 pb-2 pt-0">
           <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
             {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
@@ -143,7 +181,6 @@
     </div>
   </div>
 </div>
-
 <div class="container">
   <app-Reviews *ngIf="store.id > 0" [reviewType]="'store'" [details]="store"></app-Reviews>
 </div>

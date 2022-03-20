@@ -1,12 +1,8 @@
 <ng-container *ngIf="roomStore">
-
   <div class="container">
     <div class="product-detail-page">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-          <!-- <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-
-          </div> -->
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
             <div>
               <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -80,7 +76,7 @@
               </div>
               <br />
               <div id="info_and_prices">
-                <mat-card>
+                <mat-card  style="box-shadow:none!important">
                   <app-room-search [searchCriteria]="searchCriteria" [page]="'detail'"
                     (searchEvent)="searchEventHandler($event)"></app-room-search>
                   <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">

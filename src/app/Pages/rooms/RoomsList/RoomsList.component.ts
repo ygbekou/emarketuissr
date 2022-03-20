@@ -119,12 +119,12 @@ export class RoomsListComponent implements OnInit {
 
    ngOnInit() {
 
-      //if (this.appService.appInfoStorage.language.code === 'en') {
+      // if (this.appService.appInfoStorage.language.code === 'en') {
       this.sortings = [
          { code: 'storeNameAsc', name: 'Store Name ascending' },
          { code: 'storeNameDsc', name: 'Store Name descending' },
          { code: 'rating', name: 'Rating' }];
-      //}
+      // }
       this.sort = this.sortings[0];
 
       this.dataSource = new MatTableDataSource();
@@ -211,8 +211,8 @@ export class RoomsListComponent implements OnInit {
             this.filteredStores = data;
             if (this.stores && this.stores.length === 1) {
                this.store = this.stores[0];
-               //this.filteredStores = this.stores;
-               //this.getData();
+               // this.filteredStores = this.stores;
+               // this.getData();
             } else if (this.stores && this.stores.length > 1) {
             }
          }, (error) => console.log(error),
@@ -254,9 +254,9 @@ export class RoomsListComponent implements OnInit {
 
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            //if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
+            // if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
             this.applyGridFilter(data);
-            //}
+            // }
             console.log(data);
          },
             error => console.log(error),

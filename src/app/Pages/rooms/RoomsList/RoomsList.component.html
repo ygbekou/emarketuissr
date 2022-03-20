@@ -1,133 +1,107 @@
-<app-store-header *ngIf="store?.id > 0" [store]="store" [backgroundImg]="backgroundImg">
-</app-store-header>
+<!-- <app-store-header *ngIf="store?.id > 0" [store]="store" [backgroundImg]="backgroundImg">
+</app-store-header> -->
 
 <div class="container">
-  <div fxLayout="row wrap" class="col-gap">
-    <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [stores]="stores"
-      [filteredStores]="filteredStores"></app-room-search>
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-      *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length >= 0">
-      <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
+  <div class="section-gap pb-0" *ngIf="stores && stores.length>1 && !store.id">
+    <div class="container">
+      <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [stores]="stores"
+        [filteredStores]="filteredStores"></app-room-search>
+
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+          *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length >= 0">
+          <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
+            <mat-toolbar-row>
+              <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+                <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                  <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">
+                    {{ catDesc.name}}
+                  </h6>
+                  <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h6>
+                </div>
+
+                <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+                  <mat-form-field appearance="fill">
+                    <mat-select [(value)]="count" color="accent" style="text-align: right;">
+                      <mat-option [value]="count" *ngFor="let count of counts" (click)="changeCount(count)">
+                        {{count}} {{'COMMON.PER_PAGE'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                  <mat-form-field class="w-100" appearance="fill">
+                    <mat-label> {{'COMMON.SORTED_BY' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="sortSelect" name="sortSelect" (selectionChange)="sortSelected($event)">
+                      <mat-option [value]="1">
+                        {{'COMMON.LOWEST_PRICE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.HIGHEST_PRICE'|translate}}
+                      </mat-option>
+                      <mat-option [value]="3">
+                        {{'COMMON.RATING'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-toolbar-row>
+          </mat-toolbar>
+          <div fxLayout="row wrap" *ngIf="!roomList.roomStoreVOs || roomList.roomStoreVOs.length===0">
+            <div fxFlex="100" class="px-2 pb-2 pt-0">
+              <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+                {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
+              </mat-chip>
+            </div>
+          </div>
+          <div fxLayout="row wrap" *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length>0">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+              <embryo-RoomGrid [currency]="appService?.currency" [roomStores]="dataSource.filteredData"
+                [searchCriteria]="searchCritCopy" [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'buy'"
+                (addToWishList)="addToWishList($event)" gridThree="true">
+              </embryo-RoomGrid>
+            </div>
+          </div>
+          <mat-paginator *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length>0" [length]="pagination?.total"
+            [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
+          </mat-paginator>
+        </div>
+      </div>
+
+      <mat-toolbar color="primary" style="height:175px" class="section-title-toolbar">
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
-            <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-              <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">
-                {{ catDesc.name}}
-              </h6>
-              <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h6>
+            <div class="block-title">
+              <h2 class="text-inverse mb-0 text-xxl">{{'COMMON.TOP_HOTELS'|translate}}</h2>
             </div>
-
-            <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
-              <!-- <span *ngIf="isHomePage"> -->
-              <!-- <a mat-button [matMenuTriggerFor]="countsMenu" #countsMenuTrigger="matMenuTrigger">
-                {{'COMMON.SHOW'|translate}} {{count}}<mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
-              </a> -->
-              <!-- <mat-menu #countsMenu="matMenu" xPosition="before" overlapTrigger="true">
-                <span (mouseleave)="countsMenuTrigger.closeMenu()">
-                  <button mat-menu-item *ngFor="let count of counts" (click)="changeCount(count)">
-                    <span>{{count}}</span>
-                  </button>
-                </span>
-              </mat-menu> -->
-              <mat-form-field appearance="fill">
-                <mat-select [(value)]="count" color="accent" style="text-align: right;">
-                  <mat-option [value]="count" *ngFor="let count of counts" (click)="changeCount(count)">
-                    {{count}} {{'COMMON.PER_PAGE'|translate}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-              <mat-form-field class="w-100" appearance="fill">
-                <mat-label> {{'COMMON.SORTED_BY' | translate}}</mat-label>
-                <mat-select [(ngModel)]="sortSelect" name="sortSelect" (selectionChange)="sortSelected($event)">
-                  <mat-option [value]="1">
-                    {{'COMMON.LOWEST_PRICE'|translate}}
-                  </mat-option>
-                  <mat-option [value]="2">
-                    {{'COMMON.HIGHEST_PRICE'|translate}}
-                  </mat-option>
-                  <mat-option [value]="3">
-                    {{'COMMON.RATING'|translate}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-
           </div>
         </mat-toolbar-row>
       </mat-toolbar>
-      <div fxLayout="row wrap" *ngIf="!roomList.roomStoreVOs || roomList.roomStoreVOs.length===0">
-        <div fxFlex="100" class="px-2 pb-2 pt-0">
-          <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-            {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
-          </mat-chip>
-        </div>
-      </div>
-      <div fxLayout="row wrap" *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length>0">
-        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
-          <embryo-RoomGrid [currency]="appService?.currency" [roomStores]="dataSource.filteredData"
-            [searchCriteria]="searchCritCopy" [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'buy'"
-            (addToWishList)="addToWishList($event)" gridThree="true">
-          </embryo-RoomGrid>
-        </div>
-      </div>
-      <mat-paginator *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length>0" [length]="pagination?.total"
-        [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
-      </mat-paginator>
-    </div>
-  </div>
-
-  <div>
-    <h2>{{'COMMON.BROWSE_BY_HOTEL'|translate}}</h2>
-    <div fxLayout="row wrap" class="col-gap" *ngIf="stores && stores.length>1">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-        <ngx-slick-carousel class="carousel" [config]="slideConfig">
-          <div ngxSlickItem *ngFor="let astore of stores">
-            <!-- <mat-card class="box-shadow-md p-4"
-              *ngIf="!selectedStore || selectedStore.id !== astore.id">
-              <mat-card-content>
-                <a class="p-link" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: astore.id, rooms: searchCritCopy.rooms, 
-                  adults: searchCritCopy.adults, days: searchCritCopy.days,
-                  children: searchCritCopy.children, checkinDate: searchCritCopy.checkinDate | date: 'yyyy-MM-dd', 
-                  checkoutDate: searchCritCopy.checkoutDate | date: 'yyyy-MM-dd'}">
-                  <img mat-card-image
-                     [src]="'assets/images/stores/'+(astore?.image?(astore.id+'/'+astore?.image):'default.png')"
-                     alt="Photo">
-               </a>
-                <div class="myOverlay" style="height: 60px;">
-                  {{astore.address.address1}} {{astore.address.address2}}<br>
-                  {{astore.address.city}}, {{astore.address.zone?.name}} {{astore.address.postCode}}<br>
-                  {{astore.address?.country.name}}
-                </div>
-              </mat-card-content>
-            </mat-card> -->
-            <a class="p-link" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: astore.id, rooms: searchCritCopy.rooms, 
+      <div class="shop-card-gap px-4">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
+            *ngFor="let astore of stores">
+            <a [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: astore.id, rooms: searchCritCopy.rooms, 
                   adults: searchCritCopy.adults, days: searchCritCopy.days,
                   children: searchCritCopy.children, checkinDate: searchCritCopy.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCritCopy.checkoutDate | date: 'yyyy-MM-dd'}">
               <mat-card class="box-shadow-md p-4">
-                <mat-card-content>
+                <img style="max-height: 100px!important; width:100%!important;"
+                  [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
 
-                  <img mat-card-image
-                    [src]="'assets/images/stores/'+(astore?.image?(astore.id+'/'+astore?.image):'default.png')"
-                    alt="Photo">
-
-                  <div class="myOverlay" style="height: 60px;">s
-                    {{astore.address.address1}} {{astore.address.address2}}<br>
-                    {{astore.address.city}}, {{astore.address.zone?.name}} {{astore.address.postCode}}<br>
-                    {{astore.address?.country.name}}
-                  </div>
+                <mat-card-content class="pt-3">
+                  <h5> <strong> {{astore.name}}</strong></h5>
+                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
                 </mat-card-content>
               </mat-card>
             </a>
           </div>
-        </ngx-slick-carousel>
+        </div>
       </div>
-      <br />
     </div>
   </div>
+
 </div>
 
 <div class="container">
