@@ -52,13 +52,13 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
          this.searchCriteria.storeId = params.storeId;
          if (params.checkinDate) {
             this.searchCriteria.checkinDate = new Date(params.checkinDate.substr(0, 4), params.checkinDate.substr(5, 2) - 1,
-            params.checkinDate.substr(8, 2));
+               params.checkinDate.substr(8, 2));
          } else {
             this.searchCriteria.checkinDate = new Date();
          }
          if (params.checkoutDate) {
             this.searchCriteria.checkoutDate = new Date(params.checkoutDate.substr(0, 4), params.checkoutDate.substr(5, 2) - 1,
-            params.checkoutDate.substr(8, 2));
+               params.checkoutDate.substr(8, 2));
          } else {
             this.searchCriteria.checkoutDate = new Date();
          }
@@ -131,7 +131,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                }
 
                this.currentHigh = this.filesCopy.length < 10 ? this.filesCopy.length - 1 : 9;
-               //this.setDataSource(this.roomStore.roomTyeVOs);
+               // this.setDataSource(this.roomStore.roomTyeVOs);
             }
          },
             error => console.log(error),

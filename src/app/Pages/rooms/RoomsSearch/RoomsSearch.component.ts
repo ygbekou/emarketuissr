@@ -14,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
    templateUrl: './RoomsSearch.component.html',
    styleUrls: ['./RoomsSearch.component.scss']
 })
-export class RoomsSearchComponent implements OnInit {
+export class RoomsSearchComponent implements OnInit, AfterViewInit {
 
    storeCatId = 0;
    marketId = 0;
@@ -109,13 +109,13 @@ export class RoomsSearchComponent implements OnInit {
       const diffInMs = Math.abs(this.searchCriteria.checkoutDate.valueOf() - this.searchCriteria.checkinDate.valueOf());
       this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
 
-      this.searchCritCopy = { ... this.searchCriteria }; 
+      this.searchCritCopy = { ... this.searchCriteria };
 
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            //if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
+            // if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
             this.searchEvent.emit(data);
-            //}
+            // }
             console.log(data);
          },
             error => console.log(error),
@@ -153,12 +153,11 @@ export class RoomsSearchComponent implements OnInit {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredStores = this.stores
             .filter((store) => {
-               store.address.city
+           /*     store.address.city
                   && store.address.city.toLowerCase().startsWith(filterValue);
-               
                   console.log(store.address.city);
                console.log(store.address.city
-                  && store.address.city.toLowerCase().startsWith(filterValue));
+                  && store.address.city.toLowerCase().startsWith(filterValue)); */
             });
 
             console.log(this.filteredStores);

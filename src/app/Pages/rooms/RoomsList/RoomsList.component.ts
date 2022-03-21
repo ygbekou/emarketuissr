@@ -518,8 +518,8 @@ export class RoomsListComponent implements OnInit {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredStores = this.stores
             .filter((store) => {
-               store.address.city
-                  && store.address.city.toLowerCase().startsWith(filterValue);
+              /*  store.address.city
+                  && store.address.city.toLowerCase().startsWith(filterValue); */
             });
       } else {
          this.filteredStores = this.stores;
