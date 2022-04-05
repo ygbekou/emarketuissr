@@ -14,8 +14,6 @@ export class RoomGridComponent implements OnInit {
    @Input() days: number;
    @Input() rooms: number;
    @Input() adults: number;
-
-
    @Input() currency: string;
    @Input() fromPage: string;
    @Input() gridLength: any;
@@ -24,22 +22,17 @@ export class RoomGridComponent implements OnInit {
    @Output() selectRoomStore: EventEmitter<any> = new EventEmitter();
    @Output() removeRoomStore: EventEmitter<any> = new EventEmitter();
    @Input() gridThree = false;
-
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
    @Output() addToWishList: EventEmitter<any> = new EventEmitter();
-
    loaded = false;
    lg = 25;
    xl = 25;
-
    trackByObjectID(index, hit) {
       return hit.objectID;
    }
 
    constructor(public appService: AppService) { }
-
    ngOnInit() {
-
       if (this.gridThree) {
          this.lg = 33;
          this.xl = 33;
@@ -76,6 +69,4 @@ export class RoomGridComponent implements OnInit {
          return true;
       }
    }
-
-
 }

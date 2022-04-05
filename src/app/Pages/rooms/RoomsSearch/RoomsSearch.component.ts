@@ -14,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
    templateUrl: './RoomsSearch.component.html',
    styleUrls: ['./RoomsSearch.component.scss']
 })
-export class RoomsSearchComponent implements OnInit, AfterViewInit {
+export class RoomsSearchComponent implements OnInit {
 
    storeCatId = 0;
    marketId = 0;
@@ -31,18 +31,15 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
    selectedStore: Store;
    message: string;
    errors: string;
-
+   running = false;
    @Input()
    stores: Store[] = [];
    @Input()
    filteredStores: Store[];
-
    @Output()
    searchEvent = new EventEmitter<any>();
-
    buttonLabel = 'Go';
    hasInvalidDates = false;
-
    BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08',
       '09', '10', '11', '12', '13', '14', '15', '16', '17', '18',
       '19', '20', '21', '22', '23'];
@@ -58,9 +55,7 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
       private activatedRoute: ActivatedRoute) { }
 
    ngOnInit() {
-
       this.activatedRoute.queryParams.subscribe(params => {
-
       });
    }
 
@@ -74,12 +69,13 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
 
    // Getting all the product based on the Top Search
    getRooms() {
+      this.running = true;
+      this.errors = '';
       if (this.searchCriteria.checkinDate > this.searchCriteria.checkoutDate) {
          this.hasInvalidDates = true;
+         this.running = false;
          return;
-
       }
-
       if (this.selectedStore) {
          this.searchCriteria.storeId = this.selectedStore.id;
       }
@@ -87,8 +83,6 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
          - (this.searchCriteria.checkinDate.getTimezoneOffset() * 60000))
          .toISOString()
          .split('T')[0];
-
-
       if (this.searchCriteria.beginHr) {
          this.searchCriteria.checkinTS = new Date(beginDateStr + 'T' + this.searchCriteria.beginHr + ':00:00');
       } else {
@@ -104,22 +98,27 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
             .split('T')[0];
          this.searchCriteria.checkoutTS = new Date(endDateStr + 'T23:59:59');
       }
-
       this.searchCriteria.languageId = this.appService.appInfoStorage.language.id;
       const diffInMs = Math.abs(this.searchCriteria.checkoutDate.valueOf() - this.searchCriteria.checkinDate.valueOf());
       this.searchCriteria.days = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
-
       this.searchCritCopy = { ... this.searchCriteria };
-
       this.appService.saveWithUrl('/service/hospitality/getRoomsForSale/',
          this.searchCriteria).subscribe((data: RoomListVO) => {
-            // if (data.roomStoreVOs && data.roomStoreVOs.length > 0) {
-            this.searchEvent.emit(data);
-            // }
+            this.running = false;
             console.log(data);
+            if (!data || !data.roomStoreVOs || !(data.roomStoreVOs.length > 0)) {
+               this.errors = '-';
+            }
+            this.searchEvent.emit(data);
          },
-            error => console.log(error),
-            () => console.log('Get all getRoomsOnSale complete'));
+            error => {
+               console.log(error);
+               this.running = false;
+            },
+            () => {
+               console.log('Get all getRoomsOnSale complete');
+               this.running = false;
+            });
    }
 
 
@@ -148,19 +147,19 @@ export class RoomsSearchComponent implements OnInit, AfterViewInit {
       this.searchCriteria.address = undefined;
    }
 
-    filterOptions(val) {
+   filterOptions(val) {
       if (val) {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredStores = this.stores
             .filter((store) => {
-           /*     store.address.city
-                  && store.address.city.toLowerCase().startsWith(filterValue);
-                  console.log(store.address.city);
-               console.log(store.address.city
-                  && store.address.city.toLowerCase().startsWith(filterValue)); */
+               /*     store.address.city
+                      && store.address.city.toLowerCase().startsWith(filterValue);
+                      console.log(store.address.city);
+                   console.log(store.address.city
+                      && store.address.city.toLowerCase().startsWith(filterValue)); */
             });
 
-            console.log(this.filteredStores);
+         console.log(this.filteredStores);
       } else {
          this.filteredStores = this.stores;
       }

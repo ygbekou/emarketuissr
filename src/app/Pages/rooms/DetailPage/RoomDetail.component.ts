@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { RoomStoreVO, HotelSearchCriteria, RoomListVO, Reservation, Country } from 'src/app/app.models';
+import { RoomStoreVO, HotelSearchCriteria, RoomTypeVO, RoomListVO, Reservation, Country } from 'src/app/app.models';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 @Component({
@@ -289,5 +289,14 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
       if (element) {
          element.scrollIntoView(); // scroll to a particular element
       }
+   }
+
+   increaseRoom(roomType: RoomTypeVO) {
+      roomType.nbRooms++;
+       this.roomChanged();
+   }
+   decreaseRoom(roomType: RoomTypeVO) {
+      roomType.nbRooms--;
+       this.roomChanged();
    }
 }

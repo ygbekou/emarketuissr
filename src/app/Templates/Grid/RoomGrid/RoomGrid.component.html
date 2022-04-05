@@ -1,100 +1,66 @@
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="roomStores && roomStores.length > 0">
-   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{viewCol}}" fxFlex.lg="{{viewCol}}" fxFlex.xl="{{viewCol}}"
+   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33"
       *ngFor="let roomStore of roomStores; let i=index; trackBy: trackByObjectID">
 
-      <embryo-ShopDetails [currency]="currency" [detailData]="roomStore" [fromPage]="fromPage" *ngIf="viewType==='list'"
-         (selectRoomStore)="selectForSaleRoomStore(roomStore)">
-      </embryo-ShopDetails>
-
-      <!-- Multiple show room store grid -->
-      <mat-card class="product-card" *ngIf="viewType==='grid'">
-         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-               <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, rooms: searchCriteria.rooms, 
+      <mat-card class="box-shadow-md p-4" style="padding: 0.75em!important;">
+         <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, rooms: searchCriteria.rooms, 
                   adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
                   children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}">
-                  <img mat-card-image
-                     [src]="'assets/images/buildings/'+(roomStore?.image?(roomStore.bldgId+'/'+roomStore?.image):'default.png')"
-                     alt="Photo">
-               </a>
-            </div>
-            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-               <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                     <h5>
-                        <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
+            <img mat-card-image
+               [src]="'assets/images/buildings/'+(roomStore?.image?(roomStore.bldgId+'/'+roomStore?.image):'default.png')"
+               alt="Photo">
+         </a>
+         <mat-card-content class="pt-3">
+            <h4>
+               <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
                      rooms: searchCriteria.rooms, 
                   adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
                   children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"
-                           class="title-link">{{roomStore?.storeName}}</a>
-                     </h5>
-                  </div>
-               </div>
-               <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                     <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
-                     rooms: searchCriteria.rooms, 
-                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
-                  children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
-                  checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"
-                        class="title-link">{{roomStore?.cityName}}, {{roomStore?.countryName}}</a>
-                  </div>
-               </div>
-               <br />
-               <div fxLayout="row wrap" *ngFor="let roomType of roomStore.roomTyeVOs">
-                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                     <h6>{{roomType.roomTypeName}}</h6>
-                  </div>
-
-                  <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                     style="text-align: right;">
-                     {{roomStore.symbolLeft}}
+                  class="title-link">{{roomStore?.storeName}}</a>
+            </h4>
+            <h6 style="color: #283593!important;">
+               {{'COMMON.LOCATION'|translate}}: <strong>{{roomStore?.cityName}}, {{roomStore?.countryName}}</strong>
+            </h6>
+            <div fxLayout="row wrap" *ngFor="let roomType of roomStore.roomTyeVOs">
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                  <h6>{{roomType.roomTypeName}}
+                     <font style="color: #ff5722!important;">
+                        ( {{roomStore.symbolLeft}}
                         {{roomType.price | number: '1.' + roomStore?.currencyDecimalPlace + '-'  
                            + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                        {{roomStore.symbolRight}}
-                     *
-                     {{searchCriteria.rooms}}
-                     *
+                        {{roomStore.symbolRight}})
+                     </font>
+                  </h6>
+                  <p style="color: grey;" *ngIf="searchCriteria.rooms>1 || searchCriteria.days>1">
+                     {{searchCriteria.rooms}} {{'COMMON.ROOMS'|translate}},
                      {{searchCriteria.days}}
-                     =
-                     <h6>
+                     {{'COMMON.DAYS'|translate}}:
+                     <strong>
                         {{roomStore.symbolLeft}}
                         {{roomType.price * searchCriteria.rooms * searchCriteria.days | number: '1.' + roomStore?.currencyDecimalPlace + '-'  
                            + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
                         {{roomStore.symbolRight}}
-                     </h6>
-                  </div>
+                     </strong>
+                  </p>
                </div>
             </div>
-
-            <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-               <div fxLayout="row wrap">
-                  <div class="wishlist-icon {{i}}-wishlist" id="{{i}}-wishlist" *ngIf="fromPage==='buy'">
-                     <a (click)="productAddToWishlist(roomStore, i+'-wishlist')"><i class="material-icons"> favorite
-                        </i></a>
-                  </div>
+            <div fxLayout="row wrap" fxLayoutAlign="center center">
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                </div>
-               <br />
-               <br />
-               <div fxLayout="row wrap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-                     style="text-align: right;">
-                     {{searchCriteria.rooms}} {{'COMMON.ROOMS'|translate}}, {{searchCriteria.days}}
-                     {{'COMMON.NIGHTS'|translate}}, {{searchCriteria.adults}} {{'COMMON.ADULTS'|translate}}
-                  </div>
+               <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <a mat-flat-button color="accent" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']"
+                     [queryParams]="{storeId: roomStore?.id, 
+                     rooms: searchCriteria.rooms, 
+                  adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
+                  children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
+                  checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"
+                     class="title-link">{{'COMMON.SELECT'|translate}}
+                     <i class="material-icons"> task_alt </i>
+                  </a>
                </div>
-
             </div>
-         </div>
-
-
-         <!-- <div class="rating-star">
-            <embryo-Rating [rate]="prd.product.rating"></embryo-Rating>
-         </div> -->
-
-         <mat-card-content class="product-content relative">
 
          </mat-card-content>
       </mat-card>

@@ -25,7 +25,7 @@ export class RoomsListComponent implements OnInit {
 
    dataSource: MatTableDataSource<RoomStoreVO>;
    public viewType = 'grid';
-   public viewCol = 100;
+   public viewCol = 33;
    public count = 48;
    public backgroundImg: any;
    public searchFields: any;

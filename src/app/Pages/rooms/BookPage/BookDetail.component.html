@@ -1,18 +1,15 @@
 <ng-container *ngIf="roomStore">
-
   <div class="inner-container">
     <div class="product-detail-page">
       <div class="container">
         <div fxLayout="row wrap" fxLayoutAlign="center top" class="col-gap">
-          <div fxFlex.xs="30" fxFlex.sm="30" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
             <mat-card>
-              
               <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
-                <h4>
+                <h4 style="color: #283593!important;">
                   <mat-label> {{'COMMON.YOUR_BOOKING_DETAIL' | translate}} </mat-label>
                 </h4>
               </div>
-                   
               <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   <mat-label> {{'COMMON.CHECKIN' | translate}} </mat-label><br />
@@ -44,10 +41,9 @@
             </mat-card>
             <br />
             <mat-card>
-              <h4>
+              <h4 style="color: #283593!important;">
                 <mat-label> {{'COMMON.SUMMARY' | translate}} </mat-label>
               </h4>
-
               <div *ngFor="let roomType of appService.selectedRoomStore.roomTyeVOs">
                 <div fxLayout="row wrap" fxLayoutAlign="center center">
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
@@ -80,7 +76,6 @@
                   </div>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="center center">
-
                   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                     {{'COMMON.SUB_TOTAL'|translate}}:
                     <h6>
@@ -94,9 +89,8 @@
                 </div>
                 <mat-divider></mat-divider>
               </div>
-              <br/>
+              <br />
               <div fxLayout="row wrap" fxLayoutAlign="center center">
-
                 <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                   <span class="custom_h5">{{'COMMON.TOTAL'|translate}}: &nbsp;&nbsp;&nbsp;&nbsp;
                     {{roomStore.symbolLeft}}
@@ -109,30 +103,21 @@
               </div>
             </mat-card>
           </div>
-          <div fxFlex.xs="70" fxFlex.sm="70" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
-            <mat-card>
-              <div fxLayout="row wrap" fxLayoutAlign="left top" class="col-gap">
-                <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-                  <img mat-card-image style="max-width: 100% !important;"
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="70" fxFlex.lg="70" fxFlex.xl="70">
+            <mat-card style="padding: 0em!important;margin: 0px!important;">
+              <div style="padding: 0em!important;margin: 0px!important;" fxLayout="row wrap" fxLayoutAlign="left top"
+                class="col-gap">
+                <div style="padding: 0em!important;margin: 0px!important;" fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40"
+                  fxFlex.lg="40" fxFlex.xl="40">
+                  <img mat-card-image style="height: 70px!important; width:auto!important; margin: 0px!important;"
                     [src]="'assets/images/buildings/'+(roomStore.image?(roomStore.bldgId+'/'+roomStore?.image):'default.png')"
                     alt="Photo">
                 </div>
-                <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-                  <div fxLayout="row wrap" fxLayoutAlign="left top">
-                    <div fxFlex.xs="75" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
-                      <h4>{{roomStore.storeName}}</h4>
-                      {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
-                      {{roomStore.postCode}}
-                    </div>
-                  </div>
-                  <br />
-                  <div fxLayout="row wrap" fxLayoutAlign="left top">
-                    <h5>
-                      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-                        <mat-label> {{searchCriteria.roomTypeName}} </mat-label>
-                      </div>
-                    </h5>
-                  </div>
+                <div style="padding: 0em!important;margin: 0px!important;" fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60"
+                  fxFlex.lg="60" fxFlex.xl="60">
+                  <h4 style="color: #283593!important;">{{roomStore.storeName}}</h4>
+                  {{roomStore.address1}} {{roomStore.address2}} {{roomStore.cityName}} {{roomStore.countryName}}
+                  {{roomStore.postCode}}
                 </div>
               </div>
             </mat-card>
@@ -169,11 +154,10 @@
               <form name="form" (ngSubmit)="f1.form.valid && goToStep2()" #f1="ngForm" validate>
                 <mat-card style="background-color: #ebf3ff;">
                   <div fxLayout="row wrap" fxLayoutAlign="left top">
-                    <h5>
+                    <h5 style="color: #283593!important;">
                       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                         <mat-label> {{'COMMON.ENTER_YOUR_DETAILS' | translate}} </mat-label>
                       </div>
-
                     </h5>
                   </div>
 
@@ -253,7 +237,7 @@
                 <br />
                 <mat-card style="background-color: #ebf3ff;">
                   <div fxLayout="row wrap" fxLayoutAlign="left top">
-                    <h5>
+                    <h5 style="color: #283593!important;">
                       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                         <mat-label> {{'COMMON.ENTER_YOUR_ADDRESS' | translate}} ({{'COMMON.OPTIONAL' | translate}})
                         </mat-label>
@@ -336,33 +320,28 @@
 
               </form>
             </div>
-
             <br />
-
-            <!-- <app-PaymentChangeModel *ngIf="step === 2 && hasLoggedIn()" [fromPage]="'booking'"
-              (pymtMethodSelectEvent)="onPymtMethodSelect($event)" [userId]="reserv.userId">
-            </app-PaymentChangeModel> -->
             <div *ngIf="step === 2">
               <form name="form" (ngSubmit)="f2.form.valid && gotoConfirmation()" #f2="ngForm" validate>
                 <br />
                 <mat-card style="background-color: #ebf3ff;">
                   <div fxLayout="row wrap" fxLayoutAlign="center top">
-                    <h5>
+                    <h5 style="color: #283593!important;">
                       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
                         <mat-label> {{'COMMON.PAYMENT_DETAILS' | translate}} </mat-label>
                       </div>
                     </h5>
                   </div>
-                  <div fxLayout="row wrap" fxLayoutAlign="center top">
+                  <!-- <div fxLayout="row wrap" fxLayoutAlign="center top">
                     <p>
                       {{'COMMON.PAY_UP_FRONT' | translate}}
                     </p>
-                  </div>
+                  </div> -->
                   <div fxLayout="row wrap">
                     <h6>{{'COMMON.CHOOSE_PAYMENT_METHOD' | translate}}</h6>
                   </div>
                   <div fxLayout="row wrap">
-                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="step"
+                    <mat-button-toggle-group color="primary" name="fontStyle" aria-label="Font Style" [(ngModel)]="step"
                       (change)="onTogglePmntMethodChange($event)">
                       <mat-button-toggle [value]="'CREDIT_CARD'">
                         {{'COMMON.CREDIT_CARD' | translate}}
@@ -408,10 +387,8 @@
                         </div>
                       </div>
                     </div>
-
                     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                       *ngIf="reserv.pymtMethodCode === 'TMONEY' || reserv.pymtMethodCode === 'FLOOZ'">
-
                       <div fxLayout="row wrap" class="col-gap">
                         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
                           <mat-form-field class="w-100 mb-3">
@@ -431,30 +408,27 @@
                         </div>
                       </div>
                     </div>
-
-                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="50" fxFlex.xl="50">
-                      <div>
-                        <div>
-                          <br />
-                          <div fxLayout="row wrap">
-                            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                            </div>
-                            <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                              <div fxLayout="row wrap" fxLayoutAlign="right top">
-                                <a href="javascript:void(0)" class="primary-color"
+                    <div style="text-align: right;" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="50"
+                      fxFlex.xl="50">
+                      <!--    <a href="javascript:void(0)" class="primary-color"
                                   (click)="payAtRegister()">{{'COMMON.PAY_AT_REGISTER'|translate}}</a>
-                              </div>
-                            </div>
-                          </div>
+                    -->
+
+                      <div fxLayout="row wrap">
+                        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+                        </div>
+                        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+                          <button mat-flat-button color="accent" fxLayout="row" fxLayoutAlign="right right"
+                            type="submit" (click)="payAtRegister()">
+                            <span class="mx-1 uppercase">{{'COMMON.PAY_AT_REGISTER' | translate}}</span>
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </mat-card>
               </form>
             </div>
-
             <div *ngIf="step === 3 ">
               <form name="form" (ngSubmit)="f1.form.valid && book()" #f1="ngForm" validate>
                 <div fxLayout="row wrap">
@@ -526,7 +500,8 @@
                     <div fxLayout="row wrap" fxLayoutGap="10px grid">
                       {{'COMMON.PAYMENT_METHOD' | translate}}: &nbsp;&nbsp; <h6
                         *ngIf="reserv.pymtMethodCode !== 'PAY_AT_REGISTER'">{{reserv?.pymtMethodCode}}</h6>
-                      <h6 *ngIf="reserv.pymtMethodCode === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}</h6>
+                      <h6 *ngIf="reserv.pymtMethodCode === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}
+                      </h6>
                     </div>
                     <div fxLayout="row wrap" *ngIf="reserv.pymtMethodCode === 'CREDIT_CARD'">
                       <img [src]="'assets/images/cards/' + reserv.cardTypeIndex + '.png'"
@@ -538,7 +513,7 @@
                         {{'COMMON.PHONE_NUMBER' | translate}} : &nbsp;&nbsp; <h6>{{reserv?.phone}}</h6>
                       </div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
                 <br />
                 <div fxLayout="row wrap" fxLayoutAlign="right right">

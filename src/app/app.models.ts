@@ -2813,7 +2813,7 @@ export class Reservation {
   last4Digits: string;
   cardTypeIndex: string;
   tmoney: Tmoney;
-  flooz: Flooz; 
+  flooz: Flooz;
 
   shippingMethod: string;
   paymentCountry: string;
@@ -2832,7 +2832,7 @@ export class Reservation {
   userAgent: string;
 
   currencyId: number;
-	currencyCode: string;
+  currencyCode: string;
   currencyDecimalPlace: number;
 
   reservationRooms: ReservationRoom[];
@@ -2845,67 +2845,67 @@ export class Reservation {
 
 export class ReservationVO {
   reservationId: number;
-	userId: number;
+  userId: number;
   storeId: number;
   buildingId: number;
   source: number;
-	storeName: string;
-	image: string;
-	cFirstName: string;
-	cLastName: string;
-	gFirstName: string;
-	gLastName: string;
-	gEmail: string;
-	cashier: string;
-	days: number;
-	nbrAdult: number;
-	nbrChild: number;
-	nbrRooms: number;
-	email: string;
-	phone: string;
-	addr1: string;
-	addr2: string;
-	city: string;
-	zoneId: number;
-	zone: string;
-	zipCode: string;
-	countryId: number;
-	country: string;
-	paymentMethod: string;
-	price: number;
-	rebate: number;
-	total: number;
-	currencyCode: string;
-	currencyId: number;
-	symbolLeft: string;
-	symbolRight: string;
-	currencyDecimalPlace: string;
-	createDate: Date;
-	beginDate: Date;
-	endDate: Date;
-	checkinDate: Date;
-	checkoutDate: Date;
+  storeName: string;
+  image: string;
+  cFirstName: string;
+  cLastName: string;
+  gFirstName: string;
+  gLastName: string;
+  gEmail: string;
+  cashier: string;
+  days: number;
+  nbrAdult: number;
+  nbrChild: number;
+  nbrRooms: number;
+  email: string;
+  phone: string;
+  addr1: string;
+  addr2: string;
+  city: string;
+  zoneId: number;
+  zone: string;
+  zipCode: string;
+  countryId: number;
+  country: string;
+  paymentMethod: string;
+  price: number;
+  rebate: number;
+  total: number;
+  currencyCode: string;
+  currencyId: number;
+  symbolLeft: string;
+  symbolRight: string;
+  currencyDecimalPlace: string;
+  createDate: Date;
+  beginDate: Date;
+  endDate: Date;
+  checkinDate: Date;
+  checkoutDate: Date;
   status: number;
   isCancellable: Boolean;
   taxFees: number;
   postCode: string;
 
-	reservationRooms: ReservationRoomVO[];
+  reservationRooms: ReservationRoomVO[];
 
 }
 
 export class ReservationRoomVO {
   id: number;
-	roomId: number;
-	reservId: number;
-	floorNumber: number;
-	roomName: string;
-	roomTypeName: string;
-	buildingName: string;
+  roomId: number;
+  reservId: number;
+  floorNumber: number;
+  roomName: string;
+  roomTypeName: string;
+  buildingName: string;
   price: number;
   total: number;
-	nbrChild: number;
-	nbrAdult: number;
+  nbrChild: number;
+  nbrAdult: number;
 }
 
 export class ReservationRoom {
@@ -3129,11 +3129,11 @@ export class ProductHistory {
   ptsId: number;
   quantity: number;
   price: number;
-	comment: string;
-	fromPtsId: number;
+  comment: string;
+  fromPtsId: number;
   toPtsId: number;
   store: Store;
-	fromStore: Store;
+  fromStore: Store;
   toStore: Store;
   modifiedBy: number;
 
@@ -3152,11 +3152,11 @@ export class PrdHistSearchCriteria {
   ingredientId: number;
   langId: number;
   ptsId: number;
-	fromPtsId: number;
+  fromPtsId: number;
   toPtsId: number;
   storeId: number;
   fromStoreId: number;
-	toStoreId: number;
+  toStoreId: number;
   userId: number;
   modBy: number;
   minQuantity: number;
@@ -3239,42 +3239,42 @@ export class RoomVO {
   id: number;
   roomId: number;
   floorNumber: number;
-	roomNumber: number;
-	roomTypeId: number;
-	roomTypeName: string;
-	cityName: string;
+  roomNumber: number;
+  roomTypeId: number;
+  roomTypeName: string;
+  cityName: string;
   countryName: string;
   price: number;
 
-	//Store
-	storeId: number;
-	storeName: string;
-	prodStoreId: number;
-	currencyId: number;
-	currencyCode: string;
-	symbolLeft: string;
-	symbolRight: string;
-	currencyDecimalPlace: number;
+  //Store
+  storeId: number;
+  storeName: string;
+  prodStoreId: number;
+  currencyId: number;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
+  currencyDecimalPlace: number;
 
-	//
-	pQuantity: number;
-	pStockStatusId: number;
-	pPrice: number;
-	pPoints: number;
-	pTaxClassId: number;
-	pSold: number;
-	pPromo: number;
-	pStatus: number;
-	pMinimum: number;
-	pSortOrder: number;
+  //
+  pQuantity: number;
+  pStockStatusId: number;
+  pPrice: number;
+  pPoints: number;
+  pTaxClassId: number;
+  pSold: number;
+  pPromo: number;
+  pStatus: number;
+  pMinimum: number;
+  pSortOrder: number;
 
-	fileNames: string[];
-	reviews: Review[];
-	ratingCountMaps: Map<number, number>;
-	taxRules: TaxRule[];
+  fileNames: string[];
+  reviews: Review[];
+  ratingCountMaps: Map<number, number>;
+  taxRules: TaxRule[];
 
-	tax: number;
-	total: number;
+  tax: number;
+  total: number;
 
 }
 
@@ -3287,17 +3287,17 @@ export class RoomStoreVO {
   image2: string;
   image3: string;
   bldgId: number;
-	prodStoreId: number;
-	currencyId: number;
-	currencyCode: string;
-	symbolLeft: string;
-	symbolRight: string;
+  prodStoreId: number;
+  currencyId: number;
+  currencyCode: string;
+  symbolLeft: string;
+  symbolRight: string;
   currencyDecimalPlace: number;
   address1: string;
   address2: string;
   postCode: string;
-	cityName: string;
-	countryId: number;
+  cityName: string;
+  countryId: number;
   countryName: string;
   lowestPrice: number;
   highestPrice: number;
@@ -3309,18 +3309,19 @@ export class RoomStoreVO {
   total = 0;
 
   fileNames: string[];
-	reviews: Review[];
-	ratingCountMaps: Map<number, number>;
-	taxRules: TaxRule[];
+  reviews: Review[];
+  ratingCountMaps: Map<number, number>;
+  taxRules: TaxRule[];
 
 }
 
 export class RoomTypeVO {
   id: number;
-	roomTypeName: string;
-	price: number;
+  roomTypeName: string;
+  price: number;
   qtyAvailable: number;
   nbRooms = 0;
+  image: string;
   total: number;
   roomIds: number[];
 
@@ -3334,9 +3335,9 @@ export class RoomListVO {
 
 export class AmenityVO {
   id: number;
-	image: string;
-	name: string;
-	description: string;
+  image: string;
+  name: string;
+  description: string;
   language: Language;
   iconId: string;
   iconCode: string;

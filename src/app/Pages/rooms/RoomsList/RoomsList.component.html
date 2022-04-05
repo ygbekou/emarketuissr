@@ -1,25 +1,14 @@
-<!-- <app-store-header *ngIf="store?.id > 0" [store]="store" [backgroundImg]="backgroundImg">
-</app-store-header> -->
-
 <div class="container">
   <div class="section-gap pb-0" *ngIf="stores && stores.length>1 && !store.id">
     <div class="container">
       <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [stores]="stores"
         [filteredStores]="filteredStores"></app-room-search>
-
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
           *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length >= 0">
           <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
             <mat-toolbar-row>
               <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
-                <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                  <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">
-                    {{ catDesc.name}}
-                  </h6>
-                  <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">{{markDesc.name}}</h6>
-                </div>
-
                 <div fxShow="false" fxShow.gt-xs Flex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
                   <mat-form-field appearance="fill">
                     <mat-select [(value)]="count" color="accent" style="text-align: right;">
@@ -68,7 +57,6 @@
           </mat-paginator>
         </div>
       </div>
-
       <mat-toolbar color="primary" style="height:175px" class="section-title-toolbar">
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
@@ -89,7 +77,6 @@
               <mat-card class="box-shadow-md p-4">
                 <img style="max-height: 100px!important; width:100%!important;"
                   [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
-
                 <mat-card-content class="pt-3">
                   <h5> <strong> {{astore.name}}</strong></h5>
                   <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
@@ -101,7 +88,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="container">

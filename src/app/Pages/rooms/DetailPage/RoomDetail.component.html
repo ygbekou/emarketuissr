@@ -66,7 +66,78 @@
       <mat-card style="box-shadow:none!important">
         <app-room-search [searchCriteria]="searchCriteria" [page]="'detail'" (searchEvent)="searchEventHandler($event)">
         </app-room-search>
-        <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+        <mat-toolbar color="primary" style="height:175px" class="section-title-toolbar">
+          <mat-toolbar-row fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <div class="block-title">
+                <h6 class="text-inverse mb-0 text-xxl">{{'COMMON.ROOMS'|translate}}</h6>
+              </div>
+            </div>
+            <div  fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+              <h6 style="color: #ff5722!important;"  *ngIf="appService.selectedRoomStore.nbrRooms > 0"> 
+                {{appService.selectedRoomStore.nbrRooms}} {{'COMMON.ROOMS'|translate}}
+                {{'COMMON.FOR'|translate}} 
+                  {{roomStore.symbolLeft}}
+                  {{appService.selectedRoomStore.total | number: '1.' 
+                              + roomStore?.currencyDecimalPlace + '-'  
+                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                  {{roomStore.symbolRight}}
+               </h6> 
+              <button  *ngIf="appService.selectedRoomStore.nbrRooms > 0" mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"
+                (click)="goToCheckout()">
+                <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+              </button> 
+            </div>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="shop-card-gap px-4" style="margin-top: -80px;">
+          <div fxLayout="row wrap" class="col-gap">
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33"
+              *ngFor="let roomType of roomStore.roomTyeVOs">
+              <mat-card class="box-shadow-md p-4" style="padding: 0.75em!important;">
+                <img  mat-card-image
+                  [src]="'assets/images/roomtypes/'+(roomType.image?(roomType.id+'/'+roomType?.image):'default.png')"
+                  alt="Room">
+                <mat-card-content class="pt-3">
+                  <h6> <strong> {{roomType.roomTypeName}} </strong></h6>
+                  <h6 style="color: #ff5722!important;">
+                    {{'COMMON.PRICE'|translate}}:
+                    {{roomStore.symbolLeft}}
+                    {{+roomType.price | number: '1.' 
+                              + roomStore?.currencyDecimalPlace + '-'  
+                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+                    {{roomStore.symbolRight}}
+                  </h6>
+                  <h6 style="color: #283593!important;">
+                    {{'COMMON.AVAILABLE'|translate}}: <strong>{{roomType.roomIds.length}}</strong>
+                  </h6>
+                  <h6 style="color: #283593!important;">
+                    {{'COMMON.RESERVED'|translate}}: <strong>{{roomType.nbRooms}}</strong>
+                  </h6>
+                  <span *ngFor="let amenity of roomType.amenities"
+                    style="color: #008009 !important; font-size: .85em !important; padding-right: 2px !important;">
+                    <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
+                  </span>
+
+                  <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                      <button style="align-self: flex-end;" mat-fab *ngIf="roomType.nbRooms>0"
+                        (click)="decreaseRoom(roomType)"><i class="material-icons"> remove_shopping_cart </i></button>
+                    </div>
+                    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                      <button style="align-self: flex-end;" mat-fab *ngIf="roomType.nbRooms<roomType.roomIds.length"
+                        (click)="increaseRoom(roomType)"><i class="material-icons"> add_shopping_cart </i></button>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+
+
+        <!--         <div fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
           <h4>{{'COMMON.ROOM_LIST'|translate}}</h4>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="center center"
@@ -87,75 +158,76 @@
             <h5>{{'COMMON.TOTAL'|translate}}</h5>
           </div>
         </div>
-        <div fxLayout="row wrap" fxLayoutAlign="center center" 
-        style="border-bottom-color: aqua;"
-          *ngFor="let roomType of roomStore.roomTyeVOs"> 
-            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-              <h6>{{roomType.roomTypeName}}</h6>
-              <span *ngFor="let amenity of roomType.amenities"
-                style="color: #008009 !important; font-size: .85em !important; padding-right: 2px !important;">
-                <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
-              </span>
-            </div>
-            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" [ngStyle]="hasError && appService.selectedRoomStore.total <= 0 ? 
-                            {'border-style': 'solid', 'border-width': '1px', 'border-color': 'red'} : ''">
-              <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects"
-                style="width: 100px;" id="currency" name="currency" [(ngModel)]="roomType.nbRooms" #rmtRms="ngModel"
-                (selectionChange)="roomChanged();">
-                <mat-option [value]="0">
-                  <h6>0</h6>
-                </mat-option>
-                <mat-option *ngFor="let rm of counter(roomType.roomIds.length); let i = index" [value]="i + 1">
-                  <h6>{{i + 1}}</h6>
-                </mat-option>
-              </mat-select>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" style="border-bottom-color: aqua;"
+          *ngFor="let roomType of roomStore.roomTyeVOs">
 
+
+
+
+
+
+
+
+
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+            <h6>{{roomType.roomTypeName}}</h6>
+            <span *ngFor="let amenity of roomType.amenities"
+              style="color: #008009 !important; font-size: .85em !important; padding-right: 2px !important;">
+              <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
+            </span>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" [ngStyle]="hasError && appService.selectedRoomStore.total <= 0 ? 
+                            {'border-style': 'solid', 'border-width': '1px', 'border-color': 'red'} : ''">
+            <mat-select placeholder="{{'COMMON.SELECT'|translate}}" [compareWith]="compareObjects" style="width: 100px;"
+              id="currency" name="currency" [(ngModel)]="roomType.nbRooms" #rmtRms="ngModel"
+              (selectionChange)="roomChanged();">
+              <mat-option [value]="0">
+                <h6>0</h6>
+              </mat-option>
+              <mat-option *ngFor="let rm of counter(roomType.roomIds.length); let i = index" [value]="i + 1">
+                <h6>{{i + 1}}</h6>
+              </mat-option>
+            </mat-select>
+
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+            <h6>
+              {{roomStore.symbolLeft}}
+              {{+roomType.price | number: '1.' 
+                              + roomStore?.currencyDecimalPlace + '-'  
+                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
+              {{roomStore.symbolRight}}
+            </h6>
+          </div>
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
+            <h6>
+              {{roomStore.symbolLeft}}
+              {{+searchCriteria.days}}
+            </h6>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+            <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.nbrRooms > 0">
+              {{appService.selectedRoomStore.nbrRooms}} {{'COMMON.ROOMS'|translate}}
+              {{'COMMON.FOR'|translate}}
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-              <h6>
+            <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.total > 0">
+              <h4>
                 {{roomStore.symbolLeft}}
-                {{+roomType.price | number: '1.' 
+                {{appService.selectedRoomStore.total | number: '1.' 
                               + roomStore?.currencyDecimalPlace + '-'  
                               + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
                 {{roomStore.symbolRight}}
-              </h6>
+              </h4>
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10">
-              <h6>
-                {{roomStore.symbolLeft}}
-                {{+searchCriteria.days}}
-              </h6>
-            </div>
-    <!--         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
-              <h6>
-                {{roomStore.symbolLeft}}
-                {{+searchCriteria.days * roomType.price * +roomType.nbRooms | number: '1.' 
-                              + roomStore?.currencyDecimalPlace + '-'  
-                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                {{roomStore.symbolRight}}
-              </h6>
-            </div> -->
-            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-              <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.nbrRooms > 0">
-                {{appService.selectedRoomStore.nbrRooms}} {{'COMMON.ROOMS'|translate}}
-                {{'COMMON.FOR'|translate}}
-              </div>
-              <div fxLayout="row wrap" *ngIf="appService.selectedRoomStore.total > 0">
-                <h4>
-                  {{roomStore.symbolLeft}}
-                  {{appService.selectedRoomStore.total | number: '1.' 
-                              + roomStore?.currencyDecimalPlace + '-'  
-                              + roomStore?.currencyDecimalPlace : appService?.appInfoStorage.language.locale}}
-                  {{roomStore.symbolRight}}
-                </h4>
-              </div>
-              <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-                (click)="goToCheckout()">
-                <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
-              </button>
-            </div>
- 
-        </div>
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+              (click)="goToCheckout()">
+              <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+            </button>
+          </div>
+
+        </div> -->
+
         <div fxLayout="row wrap" fxLayoutAlign="center center"
           *ngIf="!roomStore || !roomStore.roomTyeVOs || roomStore.roomTyeVOs.length === 0">
           <h5 style="color: #ff5722;"> {{'COMMON.NO_ROOM_AVAILABLE'|translate}}</h5>
