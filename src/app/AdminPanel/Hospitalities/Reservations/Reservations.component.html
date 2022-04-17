@@ -1,12 +1,30 @@
-<a mat-button [routerLink]="['/admin/hospitalities/reservations']">{{'COMMON.RESERVATION' | translate}}s
+<!-- <a mat-button [routerLink]="['/admin/hospitalities/reservations']">{{'COMMON.RESERVATION' | translate}}s
   <mat-icon>navigate_next</mat-icon>
-</a>
+</a> -->
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+    <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
+      <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>
+      </mat-label>
+      <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedStore" appearance="outline" name="store"
+        (selectionChange)="storeSelected($event)">
+        <mat-option *ngFor="let store of stores" [value]="store">
+          {{store.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button *ngIf="!stores || stores.length===0" mat-raised-button color="accent"
+      [routerLink]="['/account/profile/edit']"
+      [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
 
+  </div>
+</div>
+<!-- 
 <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
   <h4>{{'COMMON.MY_STORES'|translate}}</h4> <button mat-raised-button color="accent"
     [routerLink]="['/account/profile/edit']" [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD'|translate}}</button>
-</div>
-<div fxLayout="row wrap">
+</div> -->
+<div fxLayout="row wrap" *ngIf="selectedStore">
   <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
     <mat-form-field appearance="outline" class="w-100">
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
@@ -17,7 +35,7 @@
 <div class="text-center mt-2" *ngIf="messages">
   <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
 </div>
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" [hidden]="!selectedStore || selectedStore.id <= 0">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderSource($event)">
            <mat-tab label="{{'COMMON.STORE_RESERVATIONS' | translate}}">
@@ -142,8 +160,6 @@
 
     </mat-tab-group>
   </div>
-
-
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
     <mat-card>
       <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
@@ -178,14 +194,14 @@
               name="model" #model="ngModel">
           </mat-form-field>
 
-          <mat-form-field class="w-100" appearance="fill">
+     <!--      <mat-form-field class="w-100" appearance="fill">
             <mat-label> {{'COMMON.HOTEL' | translate}}</mat-label>
             <mat-select [(ngModel)]="searchCriteria.storeId" name="store">
               <mat-option *ngFor="let store of appService.appInfoStorage.STORES" [value]="store.id">
                 {{store.name}}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
 
           <mat-form-field class="w-100" appearance="fill" *ngIf="searchCriteria.source === 2">
             <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>

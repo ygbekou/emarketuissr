@@ -170,6 +170,8 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'sales';
     } else if (this.subRpt === 12) {
       rep.reportName = 'bilan';
+    } else if (this.subRpt === 13) {
+      rep.reportName = 'hotel_rooms_history';
     }
 
 

@@ -129,6 +129,17 @@
           </p>
         </span>
 
+         <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button [color]="subRpt===13?'accent':'primary'" (click)="runInvnReport(13)"
+              routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon *ngIf="subRpt===13">done_all</mat-icon>
+              <mat-icon *ngIf="!(subRpt===13)">done</mat-icon>
+              <span>{{'COMMON.ROOM_SUMMARY_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+
 
       </div>
 

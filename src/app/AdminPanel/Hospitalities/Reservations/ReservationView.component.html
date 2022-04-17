@@ -1,7 +1,19 @@
+
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <h1 style="color: #283593;">{{'COMMON.RESERVATION_ID' | translate}} :
-      {{reservation.id | number: '3.0'}} </h1>
+      {{reservation.id | number: '3.0'}} 
+         <button mat-fab color="accent" (click)="generatePdf()"
+          matTooltip="{{'COMMON.PRINT' | translate}}" class="remove">
+         <!--  <span class="mx-1 uppercase">{{'COMMON.PRINT' | translate}}</span> -->
+          <mat-icon>print</mat-icon>
+        </button> 
+    </h1>
+  </div>
+</div>
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
   </div>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="reservationType==='o'">

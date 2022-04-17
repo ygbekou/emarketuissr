@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Store, Currency, ReservationRoom, Reservation } from 'src/app/app.models';
+import { Store, Currency, ReservationRoom, Reservation, RunReportVO, Parameter } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,7 +32,7 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
   reservationType = 'r';
   deviceInfo = null;
   canEdit = false;
-
+  saving = false;
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.Reservation';
   RR_CLASS_NAME = 'com.softenza.emarket.model.hospitality.ReservationRoom';
 
@@ -139,4 +139,41 @@ export class ReservationViewComponent extends BaseComponent implements OnInit {
     return val.length === 0;
   }
 
+  public openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    if (win) {
+      win.focus();
+    }
+  }
+
+  public async generatePdf() {
+    this.errors = '';
+    this.saving = true;
+    const rep = new RunReportVO();
+    rep.reportFormat = 'pdf';
+    rep.reportName = 'hotel_receipt';
+    rep.parameters = [];
+    rep.parameters.push(new Parameter('resvId', this.reservation.id + ''));
+    rep.parameters.push(new Parameter('storeId', this.reservation.storeId + ''));
+    console.log(rep);
+    this.appService.saveWithUrl('/service/report/run/', rep)
+      .subscribe(async (data: any) => {
+        console.log(data);
+        this.saving = false;
+        if (data && data.length > 0 && !data[0].startsWith('ERROR :')) {
+          this.openInNewTab(Constants.webServer + '/assets/reports/' + data[0]);
+        } else {
+          this.translate.get(['MESSAGE.GOV_ERROR_OCCURRED']).subscribe((res) => {
+            this.errors = res['MESSAGE.GOV_ERROR_OCCURRED'] + ' ' + data[0];
+          });
+        }
+      },
+        (error) => {
+          console.log(error);
+          this.saving = false;
+        },
+        () => {
+          console.log('generatePdf complete ');
+        });
+  }
 }
