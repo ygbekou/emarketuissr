@@ -6,6 +6,7 @@
 		"SHOP": "Shop",
 		"FEES": "Fees",
 		"ROOM_SUMMARY_RPT":"Hotel Room summary",
+		"ROOM_SALES_SUMMARY":"Hotel sales summary",
 		"ARRIVAL_TIME":"Arrival time",
 		"DEPARTURE_TIME":"Departure time",
 		"PAYMENT_METHOD_REQUIRED":"Payment required for reservation",

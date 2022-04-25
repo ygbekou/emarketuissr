@@ -3246,7 +3246,7 @@ export class RoomVO {
   countryName: string;
   price: number;
 
-  //Store
+  // Store
   storeId: number;
   storeName: string;
   prodStoreId: number;
@@ -3405,3 +3405,4 @@ export class TranlogSearchCriteria {
   endDate: Date;
   prtCount: number;
 }
+
