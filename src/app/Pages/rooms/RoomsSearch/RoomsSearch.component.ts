@@ -47,6 +47,7 @@ export class RoomsSearchComponent implements OnInit {
       '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
       '20', '21', '22', '23'];
 
+   cities: Store[];
 
    constructor(public appService: AppService,
       public translate: TranslateService,
@@ -59,7 +60,9 @@ export class RoomsSearchComponent implements OnInit {
       });
    }
 
+   // tslint:disable-next-line:use-lifecycle-interface
    ngAfterViewInit() {
+      this.cities = this.filteredStores;
       if (this.page === 'detail') {
          this.translate.get(['COMMON.CHANGE_SEARCH']).subscribe(res => {
             this.buttonLabel = res['COMMON.CHANGE_SEARCH'];
@@ -149,19 +152,11 @@ export class RoomsSearchComponent implements OnInit {
 
    filterOptions(val) {
       if (val) {
-         const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
-         this.filteredStores = this.stores
-            .filter((store) => {
-               /*     store.address.city
-                      && store.address.city.toLowerCase().startsWith(filterValue);
-                      console.log(store.address.city);
-                   console.log(store.address.city
-                      && store.address.city.toLowerCase().startsWith(filterValue)); */
-            });
-
-         console.log(this.filteredStores);
+         this.cities = this.filteredStores.filter((store) => {
+            return (store.cityCountryName) ? store.cityCountryName.toLowerCase().indexOf(val.toLowerCase()) > -1 : false;
+         });
       } else {
-         this.filteredStores = this.stores;
+         this.cities = this.filteredStores;
       }
    }
 }

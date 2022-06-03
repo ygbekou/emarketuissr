@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { Bill, BillPayment } from 'src/app/app.models';
+import { Bill, BillPayment, StoreEmployee, User } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,7 +16,7 @@ import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 
 export class BillPaymentComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  billPayColumns: string[] = ['id', 'dueDate', 'paymentDate', 'amount', 'status'];
+  billPayColumns: string[] = ['id', 'dueDate', 'paymentDate', 'amount', 'receiver', 'status'];
   billPayDatasource: MatTableDataSource<BillPayment>;
   @ViewChild('billPayPaginator', { static: true }) billPayPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) billPaySort: MatSort;
@@ -30,6 +30,9 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
   billPayments: BillPayment[] = [];
   saving = false;
   justSubmitted = false;
+
+  storeEmployees: StoreEmployee[] = [];
+  selectedPurchaser: User;
 
   isFromAdmin = true;
   hasError = false;
@@ -45,10 +48,11 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
 
   ngOnInit() {
     this.clear([]);
+    this.getMyStoreEmployees();
   }
 
   ngAfterViewInit() {
-
+    
   }
 
   clear(data) {
@@ -57,6 +61,20 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
     this.billPayment = new BillPayment();
     this.picture = [];
   }
+
+  public getMyStoreEmployees() {
+    const parameters: string[] = [];
+    parameters.push('e.store.id = |sId|17|Integer');
+    parameters.push('e.store.status = |storeStatus|1|Integer');
+    parameters.push('e.status = |employeeStatus|1|Integer');
+    this.appService.getAllByCriteria('StoreEmployee', parameters, ' ')
+      .subscribe((data: StoreEmployee[]) => {
+        this.storeEmployees = data;
+      },
+        (error) => console.log(error),
+        () => console.log('Get all StoreEmployees complete'));
+  }
+
 
   setDatasource(data) {
     this.billPayDatasource = new MatTableDataSource<BillPayment>(data);

@@ -45,7 +45,7 @@
             (ngModelChange)="filterOptions(searchCriteria.location)">
           <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
           <mat-autocomplete id="option1" #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredStores " (onSelectionChange)=" searchCriteria.location = option.address.city;
+            <mat-option *ngFor="let option of cities " (onSelectionChange)="searchCriteria.location = option.address.city;
                           searchCriteria.address = option.address" [value]="option.cityCountryName">
               {{option.cityCountryName}}
             </mat-option>

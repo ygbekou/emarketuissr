@@ -76,7 +76,7 @@
                   checkoutDate: searchCritCopy.checkoutDate | date: 'yyyy-MM-dd'}">
               <mat-card class="box-shadow-md p-4">
                 <img style="max-height: 100px!important; width:100%!important;"
-                  [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
+                  [src]="'assets/images/stores/' + astore.id + '/' + (astore.storeFrontImage?astore.storeFrontImage:astore.image)" alt="Boutique">
                 <mat-card-content class="pt-3">
                   <h5> <strong> {{astore.name}}</strong></h5>
                   <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>

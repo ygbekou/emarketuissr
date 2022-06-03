@@ -2738,7 +2738,7 @@ export class BillPayment {
   amount: number;
   image: string;
   status: number;
-
+  receivedBy: User;
   isTouched = false;
   modifiedBy: number;
 
@@ -3307,7 +3307,7 @@ export class RoomStoreVO {
   roomTyeVOs: RoomTypeVO[];
   nbrRooms = 0;
   total = 0;
-
+  storeDesc: string;
   fileNames: string[];
   reviews: Review[];
   ratingCountMaps: Map<number, number>;

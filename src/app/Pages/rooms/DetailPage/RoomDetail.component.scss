@@ -10,8 +10,8 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  height: 100%;
-  width: auto;
+  height: 100%!important;
+  width: auto!important;
   max-height: 350px;
 }
 
@@ -19,8 +19,8 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 90%;
-  // height: auto;
+  width: auto!important;
+  height: 50%!important;
   max-height: 175px;
 }
 
@@ -40,6 +40,13 @@ a {
   color: #0066c0;
 }
 
+.section-gap {
+    padding: 1rem 0;
+    padding-top: 1rem;
+    padding-right: 0px;
+    padding-bottom: 1rem;
+    padding-left: 0px;
+}
 /* .mat-card {
   display: block;
   position: relative;

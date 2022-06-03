@@ -204,11 +204,10 @@ export class RoomsListComponent implements OnInit {
 
    public getStoresFromCat() {
       // console.log('get store called');
-
       this.appService.getObjects('/service/catalog/getStoresFromCat/' + this.storeCatId + '/1')
          .subscribe((data: Store[]) => {
             this.stores = data;
-            this.filteredStores = data;
+            this.filterCities();
             if (this.stores && this.stores.length === 1) {
                this.store = this.stores[0];
                // this.filteredStores = this.stores;
@@ -219,6 +218,18 @@ export class RoomsListComponent implements OnInit {
             () => console.log('Get all storeSpecs complete'));
    }
 
+   filterCities() {
+      this.filteredStores = [];
+      if (this.stores && this.stores.length > 0) {
+         for (const st of this.stores) {
+             const index: number = this.filteredStores.findIndex((tb) => tb.cityCountryName === st.cityCountryName);
+             console.log(st.cityCountryName + '--' + index);
+             if (index === -1) {
+                this.filteredStores.push(st);
+             }
+         }
+      }
+   }
    // Getting all the product based on the Top Search
    getRooms() {
       if (this.selectedStore) {
@@ -240,7 +251,7 @@ export class RoomsListComponent implements OnInit {
          this.searchCriteria.checkoutTS = new Date(beginDateStr + 'T' + this.searchCriteria.endHr + ':59:59');
       } else {
          const endDateStr = new Date(this.searchCriteria.checkoutDate.getTime()
-         - (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
+            - (this.searchCriteria.checkoutDate.getTimezoneOffset() * 60000))
             .toISOString()
             .split('T')[0];
          this.searchCriteria.checkoutTS = new Date(endDateStr + 'T23:59:59');
@@ -518,8 +529,8 @@ export class RoomsListComponent implements OnInit {
          const filterValue = typeof val === 'string' ? val.toLowerCase() : val.name.toLowerCase();
          this.filteredStores = this.stores
             .filter((store) => {
-              /*  store.address.city
-                  && store.address.city.toLowerCase().startsWith(filterValue); */
+               /*  store.address.city
+                   && store.address.city.toLowerCase().startsWith(filterValue); */
             });
       } else {
          this.filteredStores = this.stores;

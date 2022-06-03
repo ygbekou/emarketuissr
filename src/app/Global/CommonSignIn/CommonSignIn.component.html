@@ -38,7 +38,7 @@
   <button mat-button color="accent" *ngIf="error">{{error}}</button>
   <p> <a mat-button [routerLink]="['/session/signup']" [queryParams]="{fromPage:fromPage}" color="accent"
       class="w-100">{{'COMMON.NEW_REGISTER' | translate }}</a>
-    <a href="javascript:void(0);" (click)="forgotPassword()"
-      *ngIf="forgotPasswordEvent">{{'COMMON.NEW_REGISTER'|translate}}?</a>
+<!--     <a href="javascript:void(0);" (click)="forgotPassword()"
+      *ngIf="forgotPasswordEvent">{{'COMMON.NEW_REGISTER'|translate}}?</a> -->
   </p>
 </form>

@@ -111,7 +111,7 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
                this.firstImage = this.roomStore.image1;
                this.secondImage = this.roomStore.image2;
                this.mainImage = this.roomStore.image;
-
+               console.log(this.roomStore.fileNames);
                let j = 0;
                if (this.roomStore.fileNames) {
                   for (let i = 0; i < this.roomStore.fileNames.length; i++) {

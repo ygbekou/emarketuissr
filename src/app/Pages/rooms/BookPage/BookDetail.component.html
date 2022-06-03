@@ -50,7 +50,7 @@
                     <h5>{{roomType.roomTypeName}}</h5>
                     <span *ngFor="let amenity of roomType.amenities" style="background-color: #e7fde9 !important; margin: 0px 5px 0px 0px !important;
                           border: 1px solid transparent; border-color: #97e59c;">
-                      <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.description}}
+                      <mat-icon>{{amenity.iconCode}}</mat-icon> {{amenity.name}}
                     </span>
                   </div>
                 </div>
@@ -130,13 +130,13 @@
                     <span class="mx-1 uppercase">{{'COMMON.LOGIN' | translate}}</span>
                   </button>
                 </div>
-                <div fxFlex.xs="25" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                   fxLayoutAlign="right center">
                   <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="button"
                     (click)=" continueAsGuest = true; wantToLogin = false;">
                     <span class="mx-1 uppercase">{{'COMMON.CONTINUE_AS_GUEST' | translate}}</span>
                   </button>
-                </div>
+                </div> 
               </div>
             </div>
 
