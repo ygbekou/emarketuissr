@@ -22,7 +22,7 @@ export class BuildingsComponent extends BaseComponent implements OnInit {
   @ViewChild(BldgImagesComponent, { static: false }) bldgImagesView: BldgImagesComponent;
   @ViewChild(RoomsComponent, { static: false }) roomsView: RoomsComponent;
 
-  displayedColumns: string[] = ['name', 'image', 'status'];
+  displayedColumns: string[] = ['name', 'buildingType', 'status'];
   dataSource: MatTableDataSource<Building>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

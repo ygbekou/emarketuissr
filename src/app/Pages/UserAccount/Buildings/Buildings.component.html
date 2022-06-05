@@ -25,11 +25,7 @@
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
           [hidden]="!selectedStore || selectedStore.id <= 0">
-
-
           <app-building (buildingSaveEvent)="onBuildingSave($event)"></app-building>
-
-
           <fieldset>
             <legend>
               <h5 style="color:#00008b">{{'COMMON.LIST' | translate}}</h5>
@@ -37,22 +33,35 @@
             <div class="text-center mt-2" *ngIf="messages">
               <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
             </div>
-
             <div class="table-wrapper">
               <table mat-table [dataSource]="dataSource" matSort class="w-100">
-
                 <!-- Title Column -->
                 <ng-container matColumnDef="name">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.NAME' | translate}} </th>
-                  <td mat-cell *matCellDef="let building"> {{building.name}} </td>
+                  <td mat-cell *matCellDef="let building">
+                    <img  align="left"
+                      [src]="building.image?('assets/images/buildings/'+building.id+'/'+building.image):('assets/images/buildings/default.png')" [style.width.px]="50"
+                      class="d-block">
+                    {{building.name}} </td>
                 </ng-container>
 
                 <!-- Image Column -->
-                <ng-container matColumnDef="image">
-                  <th mat-header-cell *matHeaderCellDef> Image </th>
-                  <td mat-cell *matCellDef="let building"><img
-                      [src]="'assets/images/buildings/'+building.id+'/'+building.image" [style.width.px]="50"
-                      class="d-block"></td>
+                <ng-container matColumnDef="buildingType">
+                  <th mat-header-cell *matHeaderCellDef> Type </th>
+                  <td mat-cell *matCellDef="let building">
+                       <span *ngIf="building.buildingType === 1"
+                      style="color: #ff0000;">{{'COMMON.HOTEL'|translate}}</span>
+                    <span *ngIf="building.buildingType === 2"
+                      style="color: #ff0000;">{{'COMMON.APPARTMENT'|translate}}</span>
+                    <span *ngIf="building.buildingType === 3" 
+                      style="color: #283593;">{{'COMMON.VILLA'|translate}}</span>
+                    <span *ngIf="building.buildingType === 4"
+                      style="color: #006400;">{{'COMMON.RESORT'|translate}}</span>
+                    <span *ngIf="building.buildingType === 5"
+                      style="color: #0000FF;">{{'COMMON.CABIN'|translate}}</span>
+                    <span *ngIf="building.buildingType === 6"
+                      style="color: #0000FF;">{{'COMMON.COTTAGE'|translate}}</span>
+                  </td>
                 </ng-container>
 
                 <!-- Title Column -->

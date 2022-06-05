@@ -3045,7 +3045,9 @@ export class Building {
   singleImage = false;
   type = 'Building';
   action: string;
-
+  buildingType: number;
+  address: Address;
+  description: string;
   constructor() {
     this.status = 1;
   }

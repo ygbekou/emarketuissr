@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Building, Store } from 'src/app/app.models';
+import { Building, Store, Address } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -17,7 +17,7 @@ export class BuildingComponent extends BaseComponent implements OnInit {
   building: Building;
   selectedStore: Store;
   CLASS_NAME = 'com.softenza.emarket.model.hospitality.Building';
-
+  addresses: Address[] = [];
   formData = new FormData();
   picture: any[] = [];
   saving = false;
@@ -33,6 +33,7 @@ export class BuildingComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAddresses();
     this.activatedRoute.params.subscribe(params => {
       if (params.id === undefined || params.id === 0) {
         this.clear();
@@ -42,6 +43,25 @@ export class BuildingComponent extends BaseComponent implements OnInit {
       }
     });
 
+  }
+
+  getAddresses() {
+    console.log('Get addresses called');
+    const userId = Number(this.appService.tokenStorage.getUserId());
+    if (userId > 0) {
+      const parameters: string[] = [];
+      parameters.push('e.user.id = |userId|' + userId + '|Integer');
+      this.appService.getAllByCriteria('com.softenza.emarket.model.Address', parameters)
+        .subscribe((data: Address[]) => {
+          this.addresses = data;
+        },
+          error => console.log(error),
+          () => console.log('Get all addresses complete for userId=' + userId));
+    }
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1 && o2 ? (o1.id === o2.id) : false;
   }
 
   clearMessages($event) {
@@ -119,18 +139,16 @@ export class BuildingComponent extends BaseComponent implements OnInit {
           this.saving = false;
           this.picture = [];
         }, error => {
-            this.saving = false;
-            console.log(error);
-          }, () => {
-              this.saving = false;
-              console.log('Save Building complete');
-            }
-          );
+          this.saving = false;
+          console.log(error);
+        }, () => {
+          this.saving = false;
+          console.log('Save Building complete');
+        }
+        );
 
     } catch (e) {
       console.log(e);
     }
   }
-
-
 }
