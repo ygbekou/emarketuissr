@@ -830,6 +830,7 @@ export class Store extends BaseModel {
   checkinHour: string;
   checkoutHour: string;
   pymtMethodReq: number;
+  catUrl: string;
 
   type = 'Store';
   constructor() {
@@ -1989,6 +1990,7 @@ export class TabDtl {
 export class StoreCategory {
   id: number;
   sortOrder: number;
+  url: string;
 }
 
 export class StoreCategoryDesc {
@@ -3033,6 +3035,7 @@ export class RoomTypeAmenity {
 export class Building {
   id: number;
   storeId: number;
+  principal = 1;
   image: string;
   image1: string;
   image2: string;
@@ -3050,6 +3053,7 @@ export class Building {
   description: string;
   constructor() {
     this.status = 1;
+    this.principal = 1;
   }
 }
 
@@ -3289,6 +3293,8 @@ export class RoomStoreVO {
   image2: string;
   image3: string;
   bldgId: number;
+  bldgName: string;
+  bldgType: number;
   prodStoreId: number;
   currencyId: number;
   currencyCode: string;
@@ -3348,6 +3354,7 @@ export class AmenityVO {
 
 export class HotelSearchCriteria {
   storeId: number;
+  buildingId: number;
   priceMin: number;
   priceMax: number;
   roomTypeId: number;
@@ -3369,6 +3376,7 @@ export class HotelSearchCriteria {
   address: Address;
   withAmenities = false;
   roomStoreOnly = false;
+  buildingType = 1;
 }
 
 export class Tranlog {
@@ -3408,3 +3416,25 @@ export class TranlogSearchCriteria {
   prtCount: number;
 }
 
+export class BuildingVO {
+  buildingId: number;
+	storeId: number;
+	buildingName: string;
+	storeName: string;
+  nbrFloors: number;
+  buildingType: number;
+	image: string;
+	image1: string;
+	image2: string;
+	image3: string;
+	principal: number;
+	address1: string;
+	address2: string;
+	postCode: string;
+	city: string;
+	zoneId: number;
+	zoneName: string;
+	countryId: number;
+	countryName: string;
+	fileNames: string [];
+}

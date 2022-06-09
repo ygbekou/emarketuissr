@@ -9,28 +9,56 @@
       </div>
     </div>
     <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-1" *ngIf="page === 'list'">
+        <mat-form-field class="w-100" appearance="fill">
+          <mat-label> Type </mat-label>
+          <mat-select [(ngModel)]="searchCriteria.buildingType" name="buildingType">
+            <mat-option [value]="0">
+              {{'COMMON.ALL'|translate}}
+            </mat-option>
+            <mat-option [value]="1">
+              {{'COMMON.HOTEL'|translate}}
+            </mat-option>
+            <mat-option [value]="2">
+              {{'COMMON.APPARTMENT'|translate}}
+            </mat-option>
+            <mat-option [value]="3">
+              {{'COMMON.VILLA'|translate}}
+            </mat-option>
+            <mat-option [value]="4">
+              {{'COMMON.RESORT'|translate}}
+            </mat-option>
+            <mat-option [value]="5">
+              {{'COMMON.CABIN'|translate}}
+            </mat-option>
+            <mat-option [value]="6">
+              {{'COMMON.COTTAGE'|translate}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-form-field class="w-100" appearance="standard">
           <mat-label> {{'COMMON.ADULTS' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="adults" name="adults" [(ngModel)]="searchCriteria.adults"
             required>
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-form-field class="w-100" appearance="standard">
           <mat-label> {{'COMMON.CHILDREN' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="children" name="children"
             [(ngModel)]="searchCriteria.children" required>
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-form-field class="w-100" appearance="standard">
           <mat-label> {{'COMMON.ROOMS' | translate}}</mat-label>
           <input matInput type="text" class="form-control" id="rooms" name="rooms" [(ngModel)]="searchCriteria.rooms"
             required>
         </mat-form-field>
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-checkbox class="mb-2 d-block" [(ngModel)]="searchCriteria.isHourly" id="isHourly" name="isHourly">
           <mat-label> {{'COMMON.COMMING_FOR_FEW_HRS' | translate}}</mat-label>
         </mat-checkbox>
@@ -45,13 +73,13 @@
             (ngModelChange)="filterOptions(searchCriteria.location)">
           <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
           <mat-autocomplete id="option1" #auto="matAutocomplete">
-            <mat-option *ngFor="let option of cities " (onSelectionChange)="searchCriteria.location = option.address.city;
-                          searchCriteria.address = option.address" [value]="option.cityCountryName">
-              {{option.cityCountryName}}
+            <mat-option *ngFor="let option of filteredCities " (onSelectionChange)="searchCriteria.location = option;"
+              [value]="option">
+              {{option}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <mat-error *ngIf="f.submitted && (!searchCriteria.address || !searchCriteria.address.id)  " severity="error">
+        <mat-error *ngIf="f.submitted && !searchCriteria.location  " severity="error">
           {{ 'VALIDATION.PLEASE_SELECT_FROM_DROPDOWN' | translate }}
         </mat-error>
       </div>
@@ -108,14 +136,13 @@
         </button>
       </div>
     </div>
-        <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
+    <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
       <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
         <mat-spinner></mat-spinner>
       </div>
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="center center"
-          *ngIf="!running && errors">
-          <h5 style="color: #ff5722;"> {{'COMMON.NO_ROOM_AVAILABLE'|translate}}</h5>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="!running && errors">
+      <h5 style="color: #ff5722;"> {{'COMMON.NO_ROOM_AVAILABLE'|translate}}</h5>
     </div>
   </form>
 </div>

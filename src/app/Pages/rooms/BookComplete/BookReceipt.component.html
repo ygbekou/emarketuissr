@@ -40,7 +40,7 @@
               <div fxLayout="row wrap" fxLayoutAlign="left" class="col-gap">
                 <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   <span class="label-text"> {{'COMMON.ROOM_TYPE' | translate}} </span><br />
-                  <span class="bold-text"> {{reserv?.reservationRooms[0].roomTypeName}} </span>
+                  <span class="bold-text"> {{reserv && reserv.reservationRooms && reserv?.reservationRooms[0]?.roomTypeName}} </span>
                 </div>
                 <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   <span class="label-text"> {{'COMMON.TOTAL_LENGTH_OF_STAY' | translate}} </span><br />
@@ -91,7 +91,7 @@
               <div fxLayout="row wrap" fxLayoutAlign="left top">
                 <span class="label-summary-text"> {{'COMMON.PAYMENT_METHOD' | translate}}: </span>
                 <span class="bold-text"
-                  *ngIf="reserv.paymentMethod === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}</span>
+                  *ngIf="reserv && reserv.paymentMethod === 'PAY_AT_REGISTER'">{{'COMMON.PAY_AT_REGISTER' | translate}}</span>
               </div>
 
               <div fxLayout="row wrap" style="border-bottom: 1px solid #0052C2">
@@ -115,7 +115,7 @@
                 </div> -->
               </div>
                
-              <div *ngIf="reserv.gLastName!=reserv.cLastName && reserv.gFirstName!=reserv.cFirstName" fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
+              <div *ngIf="reserv && reserv.gLastName!=reserv.cLastName && reserv.gFirstName!=reserv.cFirstName" fxLayout="row wrap" fxLayoutAlign="center center" class="col-gap">
                 <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                   <span class="label-text"> {{'COMMON.GUEST_FIRST_NAME' | translate}}: </span>
                   <span class="bold-text"> {{reserv?.gFirstName}} </span>
@@ -129,10 +129,10 @@
                   <span class="bold-text"> {{reserv?.gEmail}} </span>
                 </div> -->
               </div>
-              <h6 *ngIf="reserv.country && reserv.city">
+              <h6 *ngIf="reserv && reserv.country && reserv.city">
                 <mat-label> {{'COMMON.BILLING_ADDRESS' | translate}} </mat-label>
               </h6>
-              <address class="mb-4" *ngIf="reserv.country && reserv.city">
+              <address class="mb-4" *ngIf="reserv && reserv.country && reserv.city">
                 {{reserv?.addr1}} {{reserv?.addr2}}<br>
                 {{reserv?.city}},  {{reserv?.postCode}}<br>
                 {{reserv?.country}}

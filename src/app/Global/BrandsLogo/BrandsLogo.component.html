@@ -20,7 +20,7 @@
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20"
           *ngFor="let store of stores">
-          <a [routerLink]="['/products']" [queryParams]="{storeId:store.id}">
+          <a [routerLink]="[store.catUrl]" [queryParams]="{storeId:store.id}">
           <mat-card class="box-shadow-md p-4">
             <a href="javascript:void(0)">
               <img src="assets/images/stores/{{store.id}}/{{store.image}}" alt="">

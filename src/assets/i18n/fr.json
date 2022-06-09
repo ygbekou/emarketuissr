@@ -976,7 +976,8 @@
 		"CANCEL_RESERVATION": "Annuler la réservation",
 		"BROWSE_BY_HOTEL": "Naviguer par hôtels",
     "CHANGE_SEARCH": "Changer la recherche",
-		"NO_ROOM_AVAILABLE": "Aucune chambre disponible pour les critères saisis."
+		"NO_ROOM_AVAILABLE": "Aucune chambre disponible pour les critères saisis.",
+		"MAIN_BUILDING": "Bldg Principal" 
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

@@ -48,8 +48,16 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    }
 
    ngOnInit() {
+      console.log('I am here ... ');
       this.activatedRoute.queryParams.subscribe(params => {
-         this.searchCriteria.storeId = params.storeId;
+         if (params.storeId > 0) {
+            this.searchCriteria.storeId = params.storeId;
+         }
+
+         if (params.bdgId > 0) {
+            this.searchCriteria.buildingId = params.bdgId;
+         }
+
          if (params.checkinDate) {
             this.searchCriteria.checkinDate = new Date(params.checkinDate.substr(0, 4), params.checkinDate.substr(5, 2) - 1,
                params.checkinDate.substr(8, 2));
@@ -66,6 +74,13 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
          this.searchCriteria.rooms = params.rooms ? params.rooms : 1;
          this.searchCriteria.days = params.days ? params.days : 1;
          this.searchCriteria.roomTypeName = params.roomTypeName;
+
+         if (params.bdgType) {
+            this.searchCriteria.buildingType = params.bdgType;
+         } else {
+            this.searchCriteria.buildingType = 0;
+         }
+
          this.getRoomStore();
       });
 
@@ -293,10 +308,14 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
 
    increaseRoom(roomType: RoomTypeVO) {
       roomType.nbRooms++;
-       this.roomChanged();
+      this.roomChanged();
    }
    decreaseRoom(roomType: RoomTypeVO) {
       roomType.nbRooms--;
-       this.roomChanged();
+      this.roomChanged();
+   }
+
+   isHotel(storeId: number) {
+      return storeId === 0;
    }
 }

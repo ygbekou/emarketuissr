@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppService } from '../../../Services/app.service';
+import { formatDate } from '@angular/common';
 import {
-   Language, Pagination, MarketingDescription, CategoryDescription, Store, CartItem, RoomStoreVO, RoomListVO, HotelSearchCriteria
+   Language, Pagination, MarketingDescription, CategoryDescription, Store, CartItem, RoomStoreVO,
+   RoomListVO, HotelSearchCriteria, BuildingVO
 } from 'src/app/app.models';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, MatSort, MatTableDataSource, MatSortable } from '@angular/material';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Subscription } from 'rxjs';
@@ -40,6 +42,7 @@ export class RoomsListComponent implements OnInit {
    storeId = 0;
    store = new Store();
    stores: Store[] = [];
+   buildings: BuildingVO[] = [];
    filteredStores: Store[];
    markDesc: MarketingDescription = new MarketingDescription();
    catDesc: CategoryDescription = new CategoryDescription();
@@ -58,6 +61,7 @@ export class RoomsListComponent implements OnInit {
    sortSelect = 1;
    selectedStore: Store;
 
+   cities: string[] = [];
 
    BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08',
       '09', '10', '11', '12', '13', '14', '15', '16', '17', '18',
@@ -112,6 +116,7 @@ export class RoomsListComponent implements OnInit {
       ]
    };
    constructor(public appService: AppService,
+      public router: Router,
       public translate: TranslateService,
       public mediaObserver: MediaObserver,
       private sanitizer: DomSanitizer,
@@ -138,7 +143,8 @@ export class RoomsListComponent implements OnInit {
             }
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
-               this.getStore();
+               this.searchCriteria.storeId = this.storeId;
+               this.getStoresFromCat();
             }
 
             if (queryParams['storeCatId'] !== undefined) {
@@ -181,7 +187,7 @@ export class RoomsListComponent implements OnInit {
                   console.log(this.store);
                   this.setImage();
                   this.storeId = this.store.id;
-                  this.getData();
+                  //this.getData();
                }
             });
       }
@@ -203,33 +209,54 @@ export class RoomsListComponent implements OnInit {
 
 
    public getStoresFromCat() {
-      // console.log('get store called');
-      this.appService.getObjects('/service/catalog/getStoresFromCat/' + this.storeCatId + '/1')
-         .subscribe((data: Store[]) => {
-            this.stores = data;
-            this.filterCities();
-            if (this.stores && this.stores.length === 1) {
-               this.store = this.stores[0];
-               // this.filteredStores = this.stores;
-               // this.getData();
-            } else if (this.stores && this.stores.length > 1) {
+      this.appService.saveWithUrl('/service/hospitality/getBuildings/',
+         this.searchCriteria).subscribe((data: BuildingVO[]) => {
+            this.buildings = data;
+
+            if (this.buildings.length === 1) {
+               const bldg = this.buildings[0];
+               this.router.navigate(['/rooms/detail/'],
+                  {
+                     queryParams: {
+                        storeId: bldg.buildingType === 1 ? bldg.storeId : 0,
+                        bdgId: bldg.buildingType === 1 ? 0 : bldg.buildingId,
+                        checkinDate: formatDate(Date.now(), 'yyyy-MM-dd', 'en-US'),
+                        checkoutDate: formatDate(Date.now(), 'yyyy-MM-dd', 'en-US'),
+                        rooms: 1,
+                        adults: 1,
+                        days: 1,
+                        children: 1
+                     }
+                  });
+            } else {
+               data.forEach(bldg => {
+                  if (bldg.city && bldg.city.trim().length > 0 && !(this.cities.indexOf(bldg.city + ', ' + bldg.countryName) !== -1)) {
+                     this.cities.push(bldg.city + ', ' + bldg.countryName);
+                  }
+               });
+
+              this.cities = this.cities.sort();
+
             }
-         }, (error) => console.log(error),
-            () => console.log('Get all storeSpecs complete'));
+         },
+            error => console.log(error),
+            () => console.log('Get all buildings complete'));
    }
 
    filterCities() {
       this.filteredStores = [];
       if (this.stores && this.stores.length > 0) {
          for (const st of this.stores) {
-             const index: number = this.filteredStores.findIndex((tb) => tb.cityCountryName === st.cityCountryName);
-             console.log(st.cityCountryName + '--' + index);
-             if (index === -1) {
-                this.filteredStores.push(st);
-             }
+            const index: number = this.filteredStores.findIndex((tb) => tb.cityCountryName === st.cityCountryName);
+            console.log(st.cityCountryName + '--' + index);
+            if (index === -1) {
+               this.filteredStores.push(st);
+            }
          }
       }
    }
+
+
    // Getting all the product based on the Top Search
    getRooms() {
       if (this.selectedStore) {
@@ -312,45 +339,11 @@ export class RoomsListComponent implements OnInit {
             data.forEach(language => {
                if (language.code === lang) {
                   this.getRooms();
-                  this.getMarkDescs(language.id);
-                  this.getCatDescs(language.id);
                }
             });
 
          }, error => console.log(error),
             () => console.log('Get Languages complete'));
-   }
-
-   getMarkDescs(langId: number) {
-      const parameters: string[] = [];
-      if (this.marketId > 0) {
-         parameters.push('e.marketing.id = |marketingId|' + this.marketId + '|Integer');
-         parameters.push('e.language.id = |langId|' + langId + '|Integer');
-         this.appService.getAllByCriteria('com.softenza.emarket.model.MarketingDescription', parameters)
-            .subscribe((data: MarketingDescription[]) => {
-               if (data && data.length > 0) {
-                  this.markDesc = data[0];
-               }
-            },
-               error => console.log(error),
-               () => console.log('Get all Marketing Item complete'));
-      }
-   }
-
-   getCatDescs(langId: number) {
-      const parameters: string[] = [];
-      if (this.catId > 0) {
-         parameters.push('e.category.id = |categoryId|' + this.catId + '|Integer');
-         parameters.push('e.language.id = |langId|' + langId + '|Integer');
-         this.appService.getAllByCriteria('com.softenza.emarket.model.CategoryDescription', parameters)
-            .subscribe((data: CategoryDescription[]) => {
-               if (data && data.length > 0) {
-                  this.catDesc = data[0];
-                  console.log(this.catDesc);
-               }
-            }, error => console.log(error),
-               () => console.log('Get all Category Item complete'));
-      }
    }
 
    public applyFilter(filterValue: string) {
@@ -593,5 +586,9 @@ export class RoomsListComponent implements OnInit {
 
    searchEventHandler(data: RoomListVO) {
       this.applyGridFilter(data);
+   }
+
+   isHotel(bdg: BuildingVO) {
+      return bdg.buildingType === 1
    }
 }

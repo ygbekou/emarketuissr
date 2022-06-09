@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="section-gap pb-0" *ngIf="stores && stores.length>1 && !store.id">
+  <div class="section-gap pb-0" *ngIf="buildings && buildings.length>0">
     <div class="container">
-      <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [stores]="stores"
+      <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [cities]="cities" [stores]="stores"
         [filteredStores]="filteredStores"></app-room-search>
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
@@ -69,17 +69,20 @@
       <div class="shop-card-gap px-4">
         <div fxLayout="row wrap" class="col-gap">
           <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
-            *ngFor="let astore of stores">
-            <a [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: astore.id, rooms: searchCritCopy.rooms, 
+            *ngFor="let bdg of buildings">
+            <a [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: (isHotel(bdg) ? bdg.storeId: 0), 
+                  bdgId: (isHotel(bdg) ? 0: bdg.buildingId), rooms: searchCritCopy.rooms, 
                   adults: searchCritCopy.adults, days: searchCritCopy.days,
                   children: searchCritCopy.children, checkinDate: searchCritCopy.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCritCopy.checkoutDate | date: 'yyyy-MM-dd'}">
               <mat-card class="box-shadow-md p-4">
-                <img style="max-height: 100px!important; width:100%!important;"
-                  [src]="'assets/images/stores/' + astore.id + '/' + (astore.storeFrontImage?astore.storeFrontImage:astore.image)" alt="Boutique">
+                <img style="max-height: 100px!important; width:100%!important;" *ngIf="bdg.buildingType !== 1"
+                  [src]="'assets/images/buildings/' + bdg.buildingId + '/' + bdg.image" alt="Boutique">
+                <img style="max-height: 100px!important; width:100%!important;" *ngIf="bdg.buildingType === 1"
+                  [src]="'assets/images/stores/' + bdg.storeId + '/' + bdg.image" alt="Boutique">
                 <mat-card-content class="pt-3">
-                  <h5> <strong> {{astore.name}}</strong></h5>
-                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
+                  <h5> <strong> {{bdg.buildingName}}</strong></h5>
+                  <font color="#ff5722"><strong>{{bdg.city + ", " + bdg.zoneName + ', ' + bdg.countryName}}</strong> </font>
                 </mat-card-content>
               </mat-card>
             </a>

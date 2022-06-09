@@ -974,7 +974,8 @@
 		"CANCEL_RESERVATION": "Cancel Reservation",
 		"BROWSE_BY_HOTEL": "Browse by hotels",
 		"CHANGE_SEARCH": "Change Search",
-		"NO_ROOM_AVAILABLE": "No available room for the criteria entered."
+		"NO_ROOM_AVAILABLE": "No available room for the criteria entered.",
+		"MAIN_BUILDING": "Main Bldg" 
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

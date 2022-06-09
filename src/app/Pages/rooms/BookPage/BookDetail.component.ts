@@ -298,6 +298,11 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       }
    }
 
+   goToStep1() {
+      this.step = 1;
+      this.copyUserInfo();
+   }
+
    hasLoggedIn() {
       return this.appService.tokenStorage.getUserId() && Number(this.appService.tokenStorage.getUserId()) > 0;
    }

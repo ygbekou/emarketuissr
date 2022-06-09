@@ -141,7 +141,7 @@
             </div>
 
             <div *ngIf="!hasLoggedIn() && wantToLogin ">
-              <app-sign-in (loginEvent)="goToStep2($event)" (forgotPasswordEvent)="onForgotPassword($event)">
+              <app-sign-in (loginEvent)="goToStep1($event)" (forgotPasswordEvent)="onForgotPassword($event)">
               </app-sign-in>
             </div>
             <div *ngIf="!hasLoggedIn() && forgotPassword " fxLayout="center" fxLayoutAlign="center">

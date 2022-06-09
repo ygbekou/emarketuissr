@@ -109,6 +109,10 @@ export class BuildingComponent extends BaseComponent implements OnInit {
     this.building.status = (this.building.status == null
       || this.building.status.toString() === 'false'
       || this.building.status.toString() === '0') ? 0 : 1;
+
+    this.building.principal = (this.building.principal == null
+      || this.building.principal.toString() === 'false'
+      || this.building.principal.toString() === '0') ? 0 : 1;
   }
 
 
@@ -119,6 +123,9 @@ export class BuildingComponent extends BaseComponent implements OnInit {
       console.log('Just submitted');
       return;
     }
+
+
+    this.setToggles();
 
     this.saving = true;
     this.building.storeId = this.selectedStore.id;

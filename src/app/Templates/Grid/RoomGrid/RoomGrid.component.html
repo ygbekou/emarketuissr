@@ -3,7 +3,10 @@
       *ngFor="let roomStore of roomStores; let i=index; trackBy: trackByObjectID">
 
       <mat-card class="box-shadow-md p-4" style="padding: 0.75em!important;">
-         <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, rooms: searchCriteria.rooms, 
+         <a class="p-link" *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{
+                  storeId: roomStore.bldgType === 1 ? roomStore?.id: 0, 
+                  bdgId: roomStore.bldgType === 1 ? 0: roomStore.bldgId, 
+                  rooms: searchCriteria.rooms, 
                   adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
                   children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}">
@@ -13,8 +16,10 @@
          </a>
          <mat-card-content class="pt-3">
             <h4>
-               <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{storeId: roomStore?.id, 
-                     rooms: searchCriteria.rooms, 
+               <a *ngIf="roomStore?.id" [routerLink]="['/rooms/detail/']" [queryParams]="{
+                  storeId: roomStore.bldgType === 1 ? roomStore?.id: 0, 
+                  bdgId: roomStore.bldgType === 1 ? 0: roomStore.bldgId, 
+                  rooms: searchCriteria.rooms, 
                   adults: searchCriteria.adults, days: searchCriteria.days, roomTypeName: roomStore.roomTypeName,
                   children: searchCriteria.children, checkinDate: searchCriteria.checkinDate | date: 'yyyy-MM-dd', 
                   checkoutDate: searchCriteria.checkoutDate | date: 'yyyy-MM-dd'}"

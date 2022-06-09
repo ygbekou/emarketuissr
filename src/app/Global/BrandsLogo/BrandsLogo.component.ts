@@ -157,8 +157,13 @@ export class BrandslogoComponent implements OnInit, OnChanges {
                for (const cat of this.storeCategories) {
                   if (store.storeCat.id === cat.storeCat.id) {
                      store.catName = cat.name;
+                     store.catUrl = cat.storeCat.url;
                      break;
                   }
+               }
+
+               if (!store.catUrl) {
+                  store.catUrl = '/products';
                }
             });
          },

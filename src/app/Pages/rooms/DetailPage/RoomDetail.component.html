@@ -2,7 +2,7 @@
   <div class="section-gap pb-0">
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" fxLayoutAlign="center center">
-        <h2 style="color: #283593;margin-bottom: 0em;;margin-top: 0em;">{{roomStore.storeName}}</h2>
+        <h2 style="color: #283593;margin-bottom: 0em;;margin-top: 0em;">{{searchCriteria.storeId > 0 ? roomStore.storeName : roomStore.bldgName}}</h2>
       </div>
       <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" fxLayoutAlign="center center">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="top right"
