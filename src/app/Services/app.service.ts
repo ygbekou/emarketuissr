@@ -387,8 +387,6 @@ export class AppService {
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
          const pickUp = window.localStorage.getItem('deliveryMode')
             && window.localStorage.getItem('deliveryMode') === '1' ? true : false;
-         console.log('pickUp = ' + pickUp);
-         console.log('Shipping mode = ' + this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode);
          if (!pickUp) {
             if (this.navbarCartShippingGeoZoneMap[storeId]) {
                if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
@@ -1362,5 +1360,29 @@ export class AppService {
          return '';
       }
 
+   }
+
+
+   getBuildingTypeLabel(buildingType: number) {
+
+      let bldgTypeStr = '';
+      this.translate.get(['COMMON.HOTEL', 'COMMON.APPARTMENT', 'COMMON.VILLA',
+         'COMMON.RESORT', 'COMMON.CABIN', 'COMMON.COTTAGE']).subscribe(res => {
+            if (buildingType === 1) {
+               bldgTypeStr = res['COMMON.HOTEL'];
+            } else if (buildingType === 2) {
+               bldgTypeStr = res['COMMON.APPARTMENT'];
+            } else if (buildingType === 3) {
+               bldgTypeStr =  res['COMMON.VILLA'];
+            } else if (buildingType === 4) {
+               bldgTypeStr =  res['COMMON.RESORT'];
+            } else if (buildingType === 5) {
+               bldgTypeStr =  res['COMMON.CABIN'];
+            } else if (buildingType === 6) {
+               bldgTypeStr =  res['COMMON.COTTAGE'];
+            }
+         });
+
+         return bldgTypeStr;
    }
 }

@@ -62,6 +62,7 @@ export class RoomsListComponent implements OnInit {
    selectedStore: Store;
 
    cities: string[] = [];
+   topPropertiesLabel = '';
 
    BEGIN_HOURS = ['00', '01', '03', '04', '05', '06', '07', '08',
       '09', '10', '11', '12', '13', '14', '15', '16', '17', '18',
@@ -115,6 +116,8 @@ export class RoomsListComponent implements OnInit {
          }
       ]
    };
+
+
    constructor(public appService: AppService,
       public router: Router,
       public translate: TranslateService,
@@ -123,6 +126,14 @@ export class RoomsListComponent implements OnInit {
       private activatedRoute: ActivatedRoute) { }
 
    ngOnInit() {
+
+      this.translate.get('COMMON.TOP_PROPERTIES',
+         {
+            store_name: this.store.name,
+            max_distance: this.store.maxDistance,
+         }).subscribe((res) => {
+            this.topPropertiesLabel = res;
+         });
 
       // if (this.appService.appInfoStorage.language.code === 'en') {
       this.sortings = [
@@ -145,6 +156,7 @@ export class RoomsListComponent implements OnInit {
                this.storeId = queryParams['storeId'];
                this.searchCriteria.storeId = this.storeId;
                this.getStoresFromCat();
+               this.getStore();
             }
 
             if (queryParams['storeCatId'] !== undefined) {
@@ -184,10 +196,12 @@ export class RoomsListComponent implements OnInit {
             .subscribe(result => {
                if (result.id > 0) {
                   this.store = result;
-                  console.log(this.store);
-                  this.setImage();
-                  this.storeId = this.store.id;
-                  //this.getData();
+                  this.translate.get('COMMON.TOP_STORE_PROPERTIES',
+                  {
+                     STORE_NAME: this.store.name
+                  }).subscribe((res) => {
+                     this.topPropertiesLabel = res;
+                  });
                }
             });
       }
@@ -235,7 +249,7 @@ export class RoomsListComponent implements OnInit {
                   }
                });
 
-              this.cities = this.cities.sort();
+               this.cities = this.cities.sort();
 
             }
          },

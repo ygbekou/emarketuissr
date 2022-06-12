@@ -18,7 +18,7 @@
         <address class="mb-4">
           <strong>{{addr.firstName}} {{addr.lastName}}</strong><br>
           {{addr.address1}} {{addr.address2}}<br>
-          {{addr.city}}, {{addr.zone?.name}} {{addr.postCode}}<br>
+          {{addr.city}} <span *ngIf="addr.district">({{addr.district}})</span>, {{addr.zone?.name}} {{addr.postCode}}<br>
           {{addr.country.name}}
         </address>
 

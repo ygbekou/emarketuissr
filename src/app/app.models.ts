@@ -886,31 +886,32 @@ export class Customer {
 } */
 
 export class Address {
-  public id: number;
-  public address1: string;
-  public address2: string;
-  public city: string;
-  public company: string;
-  public user: User;
-  public country: Country;
-  public customer: Customer;
-  public firstName: string;
-  public lastName: string;
-  public postCode: string;
-  public middleName: string;
-  public addressType: number;
-  public billTo: number;
-  public shipTo: number;
-  public zone: Zone;
-  public status = 0;
-  public phone: string;
-  public email: string;
-  public longitude: number;
-  public latitude: number;
-  public name: string;
-  public gPlaceId: string;
-  public countryCode: string;
-  public type = 'Address';
+  id: number;
+  address1: string;
+  address2: string;
+  district: string;
+  city: string;
+  company: string;
+  user: User;
+  country: Country;
+  customer: Customer;
+  firstName: string;
+  lastName: string;
+  postCode: string;
+  middleName: string;
+  addressType: number;
+  billTo: number;
+  shipTo: number;
+  zone: Zone;
+  status = 0;
+  phone: string;
+  email: string;
+  longitude: number;
+  latitude: number;
+  name: string;
+  gPlaceId: string;
+  countryCode: string;
+  type = 'Address';
   constructor() {
     this.status = 0;
     this.billTo = 0;
@@ -3036,6 +3037,7 @@ export class Building {
   id: number;
   storeId: number;
   principal = 1;
+  fullRental = 0;
   image: string;
   image1: string;
   image2: string;
@@ -3304,6 +3306,7 @@ export class RoomStoreVO {
   address1: string;
   address2: string;
   postCode: string;
+  district: string;
   cityName: string;
   countryId: number;
   countryName: string;
@@ -3316,6 +3319,7 @@ export class RoomStoreVO {
   nbrRooms = 0;
   total = 0;
   storeDesc: string;
+  fullRental: number;
   fileNames: string[];
   reviews: Review[];
   ratingCountMaps: Map<number, number>;
@@ -3430,7 +3434,8 @@ export class BuildingVO {
 	principal: number;
 	address1: string;
 	address2: string;
-	postCode: string;
+  postCode: string;
+  district: string;
 	city: string;
 	zoneId: number;
 	zoneName: string;

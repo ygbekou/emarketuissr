@@ -41,6 +41,12 @@
             {{ 'COMMON.STATUS' | translate }}
          </mat-slide-toggle>
       </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+         <mat-slide-toggle [(ngModel)]="building.fullRental" name="fullRental" #fullRental="ngModel" class="my-2">
+            {{ 'COMMON.FULL_RENTAL' | translate }}
+         </mat-slide-toggle>
+      </div>
    </div>
 
    <div fxLayout="row">
@@ -49,14 +55,14 @@
             <mat-label>{{'COMMON.ADDRESS' | translate}}</mat-label>
             <mat-select placeholder="{{'COMMON.ADDRESS' | translate}}" [compareWith]="compareObjects" id="address"
                name="address" [(ngModel)]="building.address" #address="ngModel"  >
-               <mat-option *ngFor="let cat of addresses" [value]="cat">
-                  {{cat.city +', '+ cat.country.name}}
+               <mat-option *ngFor="let addr of addresses" [value]="addr">
+                  {{addr.city}}<span *ngIf="addr.district">({{addr.district}})</span>, {{addr.country.name}}
                </mat-option>
             </mat-select>
          </mat-form-field>
          <address class="mb-4" *ngIf="building.address">
             {{building.address.address1}} {{building.address.address2}}<br>
-            {{building.address.city}}, {{building.address.zone?.name}} {{building.address.postCode}}<br>
+            {{building.address.city}}<span *ngIf="building.address.district">({{building.address.district}})</span>, {{building.address.zone?.name}} {{building.address.postCode}}<br>
             {{building.address.country.name}}
          </address>
          <br />

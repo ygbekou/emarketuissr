@@ -76,7 +76,7 @@
 
               <font color="green"
                 *ngIf="appService.distance>0 && appService.navbarCartShippingGeoZoneMap[this.storeId].geoZone.shippingMode===2">
-               <br/> <strong>
+                <br /> <strong>
                   Distance: {{appService.distance}} km
                 </strong>
               </font>
@@ -212,13 +212,15 @@
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
         <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-          {{'COMMON.TOTAL' | translate}}:
+          <strong>{{'COMMON.TOTAL' | translate}}:</strong>
         </div>
         <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
-          {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
-          {{appService?.navbarCartTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+          <strong>
+            {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
+            {{appService?.navbarCartTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
             + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
-          {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
+            {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
+          </strong>
         </div>
       </div>
 

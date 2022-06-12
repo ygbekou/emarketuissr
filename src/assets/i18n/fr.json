@@ -977,7 +977,11 @@
 		"BROWSE_BY_HOTEL": "Naviguer par hôtels",
     "CHANGE_SEARCH": "Changer la recherche",
 		"NO_ROOM_AVAILABLE": "Aucune chambre disponible pour les critères saisis.",
-		"MAIN_BUILDING": "Bldg Principal" 
+		"MAIN_BUILDING": "Bldg Principal",
+		"DISTRICT": "Quartier",
+		"FULL_RENTAL": "Louer en entier",
+    "TOP_PROPERTIES": "TOP Propriétés",
+		"TOP_STORE_PROPERTIES": "Propriétés de {{STORE_NAME}}"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

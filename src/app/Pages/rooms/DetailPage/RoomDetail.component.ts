@@ -318,4 +318,10 @@ export class RoomDetailComponent extends BaseComponent implements OnInit {
    isHotel(storeId: number) {
       return storeId === 0;
    }
+
+   reserveFullRental() {
+      this.roomStore.roomTyeVOs[0].nbRooms++;
+      this.roomChanged();
+      this.goToCheckout();
+   }
 }

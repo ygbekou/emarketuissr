@@ -2,12 +2,19 @@
   <div class="section-gap pb-0">
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" fxLayoutAlign="center center">
-        <h2 style="color: #283593;margin-bottom: 0em;;margin-top: 0em;">{{searchCriteria.storeId > 0 ? roomStore.storeName : roomStore.bldgName}}</h2>
+        <h2 style="color: #283593;margin-bottom: 0em;;margin-top: 0em;">
+          {{searchCriteria.storeId > 0 ? roomStore.storeName : roomStore.bldgName}}</h2>
       </div>
-      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" fxLayoutAlign="center center">
+      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="roomStore.fullRental !== 1" fxLayoutAlign="center center">
         <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="top right"
           (click)="scroll('info_and_prices')">
           <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.RESERVE'|translate}}</span>
+        </button>
+      </div>
+      <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="roomStore.fullRental === 1">
+        <button *ngIf="roomStore.roomTyeVOs[0].roomIds.length > 0" mat-raised-button color="primary" fxLayout="row"
+          fxLayoutAlign="center center" (click)="reserveFullRental()">
+          <span style="font-size:12px;" class="mx-1 uppercase">{{'COMMON.CHECKOUT'|translate}}</span>
         </button>
       </div>
     </div>
@@ -15,7 +22,8 @@
       <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" fxLayoutAlign="center center">
         <h5 style="color: #ff5722;margin-bottom: 0.5em;margin-left: 0.5em;margin-top: 0em;">
           {{roomStore.address1}} {{roomStore.address2}}
-          {{roomStore.cityName}}, {{roomStore.countryName}}
+          {{roomStore.cityName}}<span *ngIf="roomStore.district">({{roomStore.district}})</span>,
+          {{roomStore.countryName}}
         </h5>
       </div>
       <div fxFlex.xs="20" fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
@@ -64,7 +72,7 @@
         </button>
       </div>
     </div>
-    <div id="info_and_prices">
+    <div id="info_and_prices" *ngIf="roomStore.fullRental !== 1">
       <mat-card style="box-shadow:none!important">
         <app-room-search [searchCriteria]="searchCriteria" [page]="'detail'" (searchEvent)="searchEventHandler($event)">
         </app-room-search>

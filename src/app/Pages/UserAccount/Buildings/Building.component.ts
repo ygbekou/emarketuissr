@@ -113,6 +113,10 @@ export class BuildingComponent extends BaseComponent implements OnInit {
     this.building.principal = (this.building.principal == null
       || this.building.principal.toString() === 'false'
       || this.building.principal.toString() === '0') ? 0 : 1;
+
+    this.building.fullRental = (this.building.fullRental == null
+      || this.building.fullRental.toString() === 'false'
+      || this.building.fullRental.toString() === '0') ? 0 : 1;
   }
 
 

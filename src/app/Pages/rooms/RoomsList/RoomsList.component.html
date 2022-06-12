@@ -2,7 +2,7 @@
   <div class="section-gap pb-0" *ngIf="buildings && buildings.length>0">
     <div class="container">
       <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [cities]="cities" [stores]="stores"
-        [filteredStores]="filteredStores"></app-room-search>
+        [filteredStores]="filteredStores" *ngIf="!storeId"></app-room-search>
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
           *ngIf="roomList.roomStoreVOs && roomList.roomStoreVOs.length >= 0">
@@ -61,7 +61,9 @@
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
             <div class="block-title">
-              <h2 class="text-inverse mb-0 text-xxl">{{'COMMON.TOP_HOTELS'|translate}}</h2>
+              <h2 class="text-inverse mb-0 text-xxl">
+                {{topPropertiesLabel}}
+              </h2>
             </div>
           </div>
         </mat-toolbar-row>
@@ -82,7 +84,8 @@
                   [src]="'assets/images/stores/' + bdg.storeId + '/' + bdg.image" alt="Boutique">
                 <mat-card-content class="pt-3">
                   <h5> <strong> {{bdg.buildingName}}</strong></h5>
-                  <font color="#ff5722"><strong>{{bdg.city + ", " + bdg.zoneName + ', ' + bdg.countryName}}</strong> </font>
+                  <font color="#FF5722"><strong>{{bdg.city}}<span *ngIf="bdg.district">({{bdg.district}})</span>, {{bdg.countryName}}</strong> </font><br/>
+                  <font color="#0000FF">{{appService.getBuildingTypeLabel(bdg.buildingType)}}</font>
                 </mat-card-content>
               </mat-card>
             </a>

@@ -975,7 +975,11 @@
 		"BROWSE_BY_HOTEL": "Browse by hotels",
 		"CHANGE_SEARCH": "Change Search",
 		"NO_ROOM_AVAILABLE": "No available room for the criteria entered.",
-		"MAIN_BUILDING": "Main Bldg" 
+		"MAIN_BUILDING": "Main Bldg",
+		"DISTRICT": "District",
+		"FULL_RENTAL": "Rent In Full",
+		"TOP_PROPERTIES": "Top Properties",
+		"TOP_STORE_PROPERTIES": "{{STORE_NAME}}'s Properties"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
