@@ -127,11 +127,7 @@ export class RoomsListComponent implements OnInit {
 
    ngOnInit() {
 
-      this.translate.get('COMMON.TOP_PROPERTIES',
-         {
-            store_name: this.store.name,
-            max_distance: this.store.maxDistance,
-         }).subscribe((res) => {
+      this.translate.get('COMMON.TOP_PROPERTIES').subscribe((res) => {
             this.topPropertiesLabel = res;
          });
 
