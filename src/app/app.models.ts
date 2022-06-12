@@ -3038,6 +3038,8 @@ export class Building {
   storeId: number;
   principal = 1;
   fullRental = 0;
+  onlineBooking = 0;
+  topProperty = 0;
   image: string;
   image1: string;
   image2: string;
@@ -3381,6 +3383,7 @@ export class HotelSearchCriteria {
   withAmenities = false;
   roomStoreOnly = false;
   buildingType = 1;
+  topProperty;
 }
 
 export class Tranlog {

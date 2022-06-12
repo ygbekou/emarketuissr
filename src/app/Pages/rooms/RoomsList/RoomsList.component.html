@@ -1,7 +1,7 @@
 <div class="container">
   <div class="section-gap pb-0" *ngIf="buildings && buildings.length>0">
     <div class="container">
-      <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [cities]="cities" [stores]="stores"
+      <app-room-search [searchCriteria]="searchCriteria" (searchEvent)="searchEventHandler($event)" [stores]="stores"
         [filteredStores]="filteredStores" *ngIf="!storeId"></app-room-search>
       <div fxLayout="row wrap" class="col-gap">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"

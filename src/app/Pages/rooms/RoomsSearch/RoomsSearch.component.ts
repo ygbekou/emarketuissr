@@ -36,7 +36,6 @@ export class RoomsSearchComponent implements OnInit {
    stores: Store[] = [];
    @Input()
    filteredStores: Store[];
-   @Input()
    cities: string [];
    filteredCities: string [];
    @Output()
@@ -60,16 +59,26 @@ export class RoomsSearchComponent implements OnInit {
    ngOnInit() {
       this.activatedRoute.queryParams.subscribe(params => {
       });
+
+      this.getLocations();
    }
 
    // tslint:disable-next-line:use-lifecycle-interface
    ngAfterViewInit() {
-      this.filteredCities = this.cities;
       if (this.page === 'detail') {
          this.translate.get(['COMMON.CHANGE_SEARCH']).subscribe(res => {
             this.buttonLabel = res['COMMON.CHANGE_SEARCH'];
          });
       }
+   }
+
+   public getLocations() {
+      this.appService.getObjects('/service/hospitality/buildingLocations/').subscribe((data: string[]) => {
+         this.cities = data;
+         this.filteredCities = this.cities;
+      },
+         error => console.log(error),
+         () => console.log('Get all building locations complete'));
    }
 
    // Getting all the product based on the Top Search

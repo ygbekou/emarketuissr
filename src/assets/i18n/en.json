@@ -979,7 +979,9 @@
 		"DISTRICT": "District",
 		"FULL_RENTAL": "Rent In Full",
 		"TOP_PROPERTIES": "Top Properties",
-		"TOP_STORE_PROPERTIES": "{{STORE_NAME}}'s Properties"
+		"TOP_STORE_PROPERTIES": "{{STORE_NAME}}'s Properties",
+		"ONLINE_BOOKING": "Online Booking",
+		"TOP_PROPERTY": "Top Property"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

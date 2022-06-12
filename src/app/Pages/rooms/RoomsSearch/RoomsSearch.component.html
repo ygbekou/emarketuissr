@@ -70,7 +70,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <input type="text" placeholder="{{'MESSAGE.GOING_WHERE'|translate}}" aria-label="Number" name="currentOption"
             matInput [matAutocomplete]="auto" [(ngModel)]="searchCriteria.location" required
-            (ngModelChange)="filterOptions(searchCriteria.location)">
+            (ngModelChange)="filterOptions(searchCriteria.location)" (ngFocus)="filterOptions(searchCriteria.location)">
           <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
           <mat-autocomplete id="option1" #auto="matAutocomplete">
             <mat-option *ngFor="let option of filteredCities " (onSelectionChange)="searchCriteria.location = option;"

@@ -128,8 +128,8 @@ export class RoomsListComponent implements OnInit {
    ngOnInit() {
 
       this.translate.get('COMMON.TOP_PROPERTIES').subscribe((res) => {
-            this.topPropertiesLabel = res;
-         });
+         this.topPropertiesLabel = res;
+      });
 
       // if (this.appService.appInfoStorage.language.code === 'en') {
       this.sortings = [
@@ -151,6 +151,7 @@ export class RoomsListComponent implements OnInit {
             if (queryParams['storeId'] !== undefined) {
                this.storeId = queryParams['storeId'];
                this.searchCriteria.storeId = this.storeId;
+               this.searchCriteria.topProperty = 1;
                this.getStoresFromCat();
                this.getStore();
             }
@@ -163,6 +164,7 @@ export class RoomsListComponent implements OnInit {
                this.searchCritCopy.children = 1;
                this.searchCritCopy.checkinDate = new Date();
                this.searchCritCopy.checkoutDate = new Date();
+               this.searchCriteria.topProperty = 1;
                this.getStoresFromCat();
             }
 
@@ -193,11 +195,11 @@ export class RoomsListComponent implements OnInit {
                if (result.id > 0) {
                   this.store = result;
                   this.translate.get('COMMON.TOP_STORE_PROPERTIES',
-                  {
-                     STORE_NAME: this.store.name
-                  }).subscribe((res) => {
-                     this.topPropertiesLabel = res;
-                  });
+                     {
+                        STORE_NAME: this.store.name
+                     }).subscribe((res) => {
+                        this.topPropertiesLabel = res;
+                     });
                }
             });
       }
@@ -238,20 +240,12 @@ export class RoomsListComponent implements OnInit {
                         children: 1
                      }
                   });
-            } else {
-               data.forEach(bldg => {
-                  if (bldg.city && bldg.city.trim().length > 0 && !(this.cities.indexOf(bldg.city + ', ' + bldg.countryName) !== -1)) {
-                     this.cities.push(bldg.city + ', ' + bldg.countryName);
-                  }
-               });
-
-               this.cities = this.cities.sort();
-
-            }
+            } 
          },
             error => console.log(error),
             () => console.log('Get all buildings complete'));
    }
+
 
    filterCities() {
       this.filteredStores = [];
