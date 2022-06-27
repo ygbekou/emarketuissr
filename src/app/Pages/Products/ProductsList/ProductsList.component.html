@@ -60,7 +60,7 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
       <div class="mat-card mb-4">
         <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
-          <div fxLayout="row wrap" *ngIf="store">
+          <div fxLayout="row wrap" *ngIf="store && store.name">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <h4 class="mb-3" style="color:#283593;"> {{store.name}}</h4>
               <hr color="accent" style="margin: 0rem 0" />
