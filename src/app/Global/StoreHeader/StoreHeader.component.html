@@ -4,16 +4,18 @@
       <div *ngIf="!store.storeFrontImage" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
         <img src="assets/images/stores/{{store.id}}/{{store.image}}">
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{store.storeFrontImage?100:80}}" fxFlex.lg="{{store.storeFrontImage?100:80}}" fxFlex.xl="{{store.storeFrontImage?100:80}}">
-        <h1 class="mb-3"> {{store.name}}</h1>
-        <h6 class="mb-3">{{store.catName}}
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="{{store.banner?100:80}}" fxFlex.lg="{{store.banner?100:80}}" fxFlex.xl="{{store.storeFrontImage?100:80}}">
+       <!--  <h1 class="mb-3" style="background-color:rgba(194, 197, 204, 0.3);"> {{store.name}}</h1>
+        <h6 class="mb-3" style="background-color:rgba(194, 197, 204, 0.3);">{{store.catName}}
           {{store.address?('| '+store.address.city+', '+store.address.country.name):''}}
           {{store.phone? ('| '+ ('COMMON.PHONE'|translate) +': '+ store.phone):'' }} |
           <a [routerLink]="['/products']" fragment="reviews" class="a-link-normal">
             {{store.reviews?store.reviews.length:0}}
             {{'COMMON.REVIEW'|translate}}{{(store.reviews&&store.reviews.length > 0) ? 's ('+store.ratingAverage+'/5)' : ''}}
           </a>
-        </h6>
+        </h6> -->
+        <h6 class="mb-3"  style="color:rgba(194, 197, 204, 0.1);"> . </h6>
+        <h6 class="mb-3" style="color:rgba(194, 197, 204, 0.1);"> . </h6>
       </div>
     </div>
   </div>

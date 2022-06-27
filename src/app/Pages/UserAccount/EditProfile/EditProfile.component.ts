@@ -30,6 +30,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
    formData: FormData;
    picture: any[] = [];
    picture1: any[] = [];
+   picture2: any[] = [];
    picture0: any[] = [];
    storeShippers: StoreShipper[] = [];
    addresses: Address[] = [];
@@ -301,12 +302,19 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.pymtMethodReq.toString() === 'false'
          || this.store.pymtMethodReq.toString() === '0') ? 0 : 1;
 
+      this.store.isHotel = (this.store.isHotel == null
+         || this.store.isHotel.toString() === 'false'
+         || this.store.isHotel.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);
       this.formData = new FormData();
       if (this.picture1 && this.picture1.length > 0 && this.picture1[0].file) {
          this.formData.append('file[]', this.picture1[0].file, 'picture.' + this.picture1[0].file.name);
+      }
+      if (this.picture2 && this.picture2.length > 0 && this.picture2[0].file) {
+         this.formData.append('file[]', this.picture2[0].file, 'banner.' + this.picture2[0].file.name);
       }
       if (this.picture0 && this.picture0.length > 0 && this.picture0[0].file) {
          this.formData.append('file[]', this.picture0[0].file, 'storeFrontImage.' + this.picture0[0].file.name);
@@ -370,6 +378,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
       console.log(storeId);
       if (storeId > 0) {
          this.picture1 = [];
+         this.picture2 = [];
          this.picture0 = [];
          this.appService.getOneWithChildsAndFiles(storeId, 'Store')
             .subscribe(result => {
@@ -392,6 +401,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                   };
                   images0.push(image0);
                   this.picture0 = images0;
+
+                  const images2: any[] = [];
+                  const image2 = {
+                     link: 'assets/images/stores/' + this.store.id + '/' + this.store.banner,
+                     preview: 'assets/images/stores/' + this.store.id + '/' + this.store.banner
+                  };
+                  images2.push(image2);
+                  this.picture2 = images2;
 
                } else {
                   this.translate.get(['COMMON.READ', 'MESSAGE.READ_FAILED']).subscribe(res => {

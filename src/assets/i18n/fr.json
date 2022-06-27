@@ -6,6 +6,8 @@
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "IS_HOTEL":"C'est un hotel",
+    "STORE_BANNER":"Baniere de la boutique",
     "APPARTMENT":"Appartment",
     "VILLA":"Villa",
     "RESORT":"Station balnéaire",

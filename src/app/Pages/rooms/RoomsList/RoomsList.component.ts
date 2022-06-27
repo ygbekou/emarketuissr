@@ -224,7 +224,7 @@ export class RoomsListComponent implements OnInit {
       this.appService.saveWithUrl('/service/hospitality/getBuildings/',
          this.searchCriteria).subscribe((data: BuildingVO[]) => {
             this.buildings = data;
-
+            console.log(this.buildings);
             if (this.buildings.length === 1) {
                const bldg = this.buildings[0];
                this.router.navigate(['/rooms/detail/'],
@@ -240,7 +240,7 @@ export class RoomsListComponent implements OnInit {
                         children: 1
                      }
                   });
-            } 
+            }
          },
             error => console.log(error),
             () => console.log('Get all buildings complete'));

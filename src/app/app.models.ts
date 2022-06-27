@@ -764,6 +764,7 @@ export class Store extends BaseModel {
   email: string;
   image: string;
   storeFrontImage: string;
+  banner: string;
   phone: string;
   status: number;
   aprvStatus: number;
@@ -831,7 +832,8 @@ export class Store extends BaseModel {
   checkoutHour: string;
   pymtMethodReq: number;
   catUrl: string;
-
+  isHotel: number;
+  
   type = 'Store';
   constructor() {
     super();
@@ -986,6 +988,7 @@ export class MarketingDescription {
 
 export class MarketingProduct {
   id: number;
+  ptsId: number;
   product: Product;
   store: Store;
   marketing: Marketing;

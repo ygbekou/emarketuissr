@@ -237,9 +237,9 @@ export class ProductsListComponent implements OnInit {
 
    setImage() {
       if (this.store) {
-         if (this.store.storeFrontImage) {
+         if (this.store.banner) {
             this.backgroundImg = this.sanitizer.bypassSecurityTrustStyle('url(' +
-               '/assets/images/stores/' + this.store.id + '/' + this.store.storeFrontImage + ')');
+               '/assets/images/stores/' + this.store.id + '/' + this.store.banner + ')');
          } else {
             this.backgroundImg = this.sanitizer.bypassSecurityTrustStyle('url(/assets/images/page-title-bar.jpg)');
          }
@@ -325,7 +325,7 @@ export class ProductsListComponent implements OnInit {
       if (this.productList && this.productList.categories) {
          this.productList.categories.unshift(this.dummyCat);
       }
-
+      this.productList.categories = this.productList.categories.filter((x): x is string => x !== null);
       this.createDatasource(data.productDescVOs);
       this.running = false;
    }

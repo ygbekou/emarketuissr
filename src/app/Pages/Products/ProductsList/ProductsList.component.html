@@ -9,20 +9,24 @@
             <div class="block-title">
               <h2 class="text-inverse mb-0 text-xxl">{{storeCategoryDesc.name}}</h2>
             </div>
-           </div>
+          </div>
         </mat-toolbar-row>
       </mat-toolbar>
       <div class="shop-card-gap px-4">
         <div fxLayout="row wrap" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let astore of stores">
-            <a href="javascript:void(0)"  (click)="store=astore;storeId=astore.id;setImage(); getData();">
+          <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25"
+            *ngFor="let astore of stores">
+            <a href="javascript:void(0)" (click)="store=astore;storeId=astore.id;setImage(); getData();">
               <mat-card class="box-shadow-md p-4">
                 <a href="javascript:void(0)">
-                  <img style="max-height: 100px!important; width:100%!important;" [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
+                  <img style="max-height: 100px!important; width:100%!important;"
+                    [src]="'assets/images/stores/' + astore.id + '/' + (astore.storeFrontImage?astore.storeFrontImage:astore.image)" alt="Boutique">
                 </a>
                 <mat-card-content class="pt-3">
                   <h5> <strong> {{astore.name}}</strong></h5>
-                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
+                  <font color="#ff5722"><strong>                  
+                   {{astore.address.city +', '+astore.address.country.name +(astore.address.district?' ('+astore.address.district+')':'')}}
+                  </strong> </font>
                 </mat-card-content>
               </mat-card>
             </a>
@@ -35,29 +39,18 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <ngx-slick-carousel class="carousel" [config]="slideConfig">
         <div ngxSlickItem *ngFor="let astore of stores">
-           <a href="javascript:void(0)"  (click)="running=true;store=astore;storeId=astore.id;setImage(); getData();">
-              <mat-card class="box-shadow-md p-4" style="padding: 0.5em!important;">
-                <a href="javascript:void(0)">
-                  <img style="max-height: 75px!important; width:100%!important;" [src]="'assets/images/stores/' + astore.id + '/' + astore.image" alt="Boutique">
-                </a>
-                <mat-card-content class="pt-3">
-                  <h6> <strong> {{astore.name}}</strong></h6>
-                  <font color="#ff5722"><strong>{{astore.cityCountryName}}</strong> </font>
-                </mat-card-content>
-              </mat-card>
-            </a> 
-       <!--    <mat-card class="box-shadow-md p-4" (click)="store=astore;storeId=astore.id;setImage(); getData();">
-            <mat-card-content>
+          <a href="javascript:void(0)" (click)="running=true;store=astore;storeId=astore.id;setImage(); getData();">
+            <mat-card class="box-shadow-md p-4" style="padding: 0.5em!important;">
               <a href="javascript:void(0)">
-                <img max-height="50px" src="assets/images/stores/{{astore.id}}/{{astore.image}}">
+                <img style="max-height: 75px!important; width:100%!important;"
+                  [src]="'assets/images/stores/' + astore.id + '/' + (astore.storeFrontImage?astore.storeFrontImage:astore.image)" alt="Boutique">
               </a>
-              <div class="myOverlay">
-                  {{astore.address.city +', '+astore.address.country.name}} 
-                 <strong> {{astore.name}}</strong> 
-                  <font color="#ff5722"><strong>{{astore.address.city +', '+astore.address.country.name}}</strong> </font>
-              </div>
-            </mat-card-content>
-          </mat-card> -->
+              <mat-card-content class="pt-3">
+                <h6> <strong> {{astore.name}}</strong></h6>
+                <font color="#ff5722"><strong>{{astore.address.country.name +(astore.address.district?' ('+astore.address.district+')':'')}}</strong> </font>
+              </mat-card-content>
+            </mat-card>
+          </a>
         </div>
       </ngx-slick-carousel>
     </div>
@@ -67,8 +60,23 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
       <div class="mat-card mb-4">
         <form name="form" (ngSubmit)="f.form.valid && applyAllFilter()" #f="ngForm" validate>
+          <div fxLayout="row wrap" *ngIf="store">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+              <h4 class="mb-3" style="color:#283593;"> {{store.name}}</h4>
+              <hr color="accent" style="margin: 0rem 0" />
+              <h6 class="mb-3" style="color:#283593;">{{store.catName}}
+                {{store.address?('| '+store.address.city+', '+store.address.country.name +(store.address.district?'| '+store.address.district:'')):''}}
+                {{store.phone? ('| '+ ('COMMON.PHONE'|translate) +': '+ store.phone):'' }} |
+                <a [routerLink]="['/products']" fragment="reviews" class="a-link-normal">
+                  {{store.reviews?store.reviews.length:0}}
+                  {{'COMMON.REVIEW'|translate}}{{(store.reviews&&store.reviews.length > 0) ? 's ('+store.ratingAverage+'/5)' : ''}}
+                </a>
+              </h6>
+            </div>
+          </div>
+
           <div fxLayout="row wrap" *ngIf="productList.categories && productList.categories.length>1">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
               <mat-form-field class="w-100">
                 <mat-select placeholder="{{'COMMON.CATEGORY' | translate }}" id="category" name="category"
                   [(ngModel)]="searchCriteria.category" #category="ngModel">
@@ -82,21 +90,21 @@
           </div>
           <mat-label> {{'COMMON.PRICE' | translate}}</mat-label>
           <div fxLayout="row wrap">
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
               <mat-form-field class="w-100">
                 <mat-label> {{'COMMON.MIN' | translate}}</mat-label>
                 <input matInput type="text" class="form-control" id="priceMin" [(ngModel)]="searchCriteria.priceMin"
                   name="priceMin" #priceMin="ngModel">
               </mat-form-field>
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="p-3">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
               <mat-form-field class="w-100">
                 <mat-label> {{'COMMON.MAX' | translate}}</mat-label>
                 <input matInput type="text" class="form-control" id="priceMax" [(ngModel)]="searchCriteria.priceMax"
                   name="priceMax" #priceMax="ngModel">
               </mat-form-field>
             </div>
-            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-3">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
               <button mat-mini-fab color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
                 <span class="mx-1 uppercase">GO</span>
               </button>
@@ -106,24 +114,27 @@
       </div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75">
+      <span *ngFor="let category of productList.categories">
+        <a style="line-height: 18px;" mat-button color="primary" (click)="searchCriteria.category=category; applyAllFilter()"
+          routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}">
+          {{category}}
+        </a> | 
+      </span>
       <mat-toolbar color="primary" [ngStyle]="height" class="section-title-toolbar">
         <mat-toolbar-row>
           <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
             <div class="block-title" Flex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-              <h6 class="text-inverse mb-0 text-xxl" *ngIf="catId>0">
-                {{ catDesc.name}} 
-                <font color="#ff5722" *ngIf="!running"> ({{resultCount}})  </font>
-              
-              </h6>
-              <h6 class="text-inverse mb-0 text-xxl" *ngIf="marketId>0">
+              <p class="text-inverse mb-0 text-sm" *ngIf="catId>0">
+                {{ catDesc.name}}
+                <font color="#fefefe" *ngIf="!running"> ({{resultCount}}) </font>
+              </p>
+              <p class="text-inverse mb-0 text-sm" *ngIf="marketId>0">
                 {{markDesc.name}}
-                <font color="#ff5722" *ngIf="!running"> ({{resultCount}})  </font>
-              </h6>
-
-               <h6 class="text-inverse mb-0 text-xxl" *ngIf="!(marketId>0) && !(catId>0)"> 
-                <font color="#ff5722" *ngIf="!running">  {{resultCount}}  {{'COMMON.PRODUCT'|translate}}s </font>
-              </h6>
-
+                <font color="#fefefe" *ngIf="!running"> ({{resultCount}}) </font>
+              </p>
+              <p class="text-inverse mb-0 text-sm" *ngIf="!(marketId>0) && !(catId>0)">
+                <font color="#fefefe" *ngIf="!running"> {{resultCount}} {{'COMMON.PRODUCT'|translate}}s </font>
+              </p>
             </div>
             <div fxShow="true" fxShow.gt-xs fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
               <mat-form-field class="w-100">
@@ -154,12 +165,13 @@
           </div>
         </mat-toolbar-row>
       </mat-toolbar>
-    <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
-      <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
-        <mat-spinner></mat-spinner>
+      <div fxLayout="row wrap" *ngIf="running" xLayoutAlign="none" class="col-gap">
+        <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100" ngClass.xs="pt-5">
+          <mat-spinner></mat-spinner>
+        </div>
       </div>
-    </div>
-      <div fxLayout="row wrap" *ngIf="!running && (!productList.productDescVOs || productList.productDescVOs.length===0)">
+      <div fxLayout="row wrap"
+        *ngIf="!running && (!productList.productDescVOs || productList.productDescVOs.length===0)">
         <div fxFlex="100" class="px-2 pb-2 pt-0">
           <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
             {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}

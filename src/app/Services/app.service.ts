@@ -1373,16 +1373,23 @@ export class AppService {
             } else if (buildingType === 2) {
                bldgTypeStr = res['COMMON.APPARTMENT'];
             } else if (buildingType === 3) {
-               bldgTypeStr =  res['COMMON.VILLA'];
+               bldgTypeStr = res['COMMON.VILLA'];
             } else if (buildingType === 4) {
-               bldgTypeStr =  res['COMMON.RESORT'];
+               bldgTypeStr = res['COMMON.RESORT'];
             } else if (buildingType === 5) {
-               bldgTypeStr =  res['COMMON.CABIN'];
+               bldgTypeStr = res['COMMON.CABIN'];
             } else if (buildingType === 6) {
-               bldgTypeStr =  res['COMMON.COTTAGE'];
+               bldgTypeStr = res['COMMON.COTTAGE'];
             }
          });
 
-         return bldgTypeStr;
+      return bldgTypeStr;
    }
+
+   public updateObject = (url: string): Observable<GenericResponse> => {
+      const actionUrl = Constants.apiServer + url;
+      return this.http.get<GenericResponse>(actionUrl, { headers: this.headers })
+         .pipe(catchError(this.handleError));
+   }
+
 }

@@ -298,7 +298,7 @@
       </mat-tab>
       <mat-tab label="{{'COMMON.MEDIA' | translate}}">
         <div fxLayout="row wrap" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
             <div class="example-container">
               <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_FRONT_IMG' | translate}}</h4>
               <input-file [(ngModel)]="picture0" name="gallery0" #gallery0="ngModel" fileLimit="1" fileAccept="image/*"
@@ -306,10 +306,18 @@
               </input-file>
             </div>
           </div>
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
             <div class="example-container">
               <h4 class="text-muted text-left fw-600 mb-3">Logo</h4>
               <input-file [(ngModel)]="picture1" name="gallery1" #gallery1="ngModel" fileLimit="1" fileAccept="image/*"
+                [linkEnabled]="true">
+              </input-file>
+            </div>
+          </div>
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+            <div class="example-container">
+              <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_BANNER' | translate}}</h4>
+              <input-file [(ngModel)]="picture2" name="gallery2" #gallery2="ngModel" fileLimit="1" fileAccept="image/*"
                 [linkEnabled]="true">
               </input-file>
             </div>
@@ -530,6 +538,10 @@
              <br />
             <mat-slide-toggle [(ngModel)]="store.trackGuestCnt" name="trackGuestCnt" #trackGuestCnt="ngModel" class="my-2">
               {{ 'COMMON.TRACK_GUEST_COUNT' | translate }}
+            </mat-slide-toggle>
+              <br />
+            <mat-slide-toggle [(ngModel)]="store.isHotel" name="isHotel" #isHotel="ngModel" class="my-2">
+              {{ 'COMMON.IS_HOTEL' | translate }}
             </mat-slide-toggle>
 
           </div>

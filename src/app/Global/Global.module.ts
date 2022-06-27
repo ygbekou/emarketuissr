@@ -98,6 +98,7 @@ import { ReviewComponent } from './Review/Review.component';
 import { InputFileModule } from 'ngx-input-file';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { StoreCatsComponent } from './StoreCats/StoreCats.component';
+import { TopStoresComponent } from './TopStores/TopStores.component';
 import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 @NgModule({
@@ -203,6 +204,7 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       ProductOptionPopupComponent,
       CommentPopupComponent,
       StoreCatsComponent,
+      TopStoresComponent,
    ],
    exports: [
       BrandslogoComponent,
@@ -261,6 +263,7 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       ProductOptionPopupComponent,
       CommentPopupComponent,
       StoreCatsComponent,
+      TopStoresComponent,
    ],
    entryComponents: [
       ReviewPopupComponent,

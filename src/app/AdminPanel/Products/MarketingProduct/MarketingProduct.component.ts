@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   CategoryDescription, Product, Store, Pagination, ProductToStore, Marketing, MarketingProduct,
-  ProductDescVO, ProductSearchCriteria, ProductListVO, SearchCriteria
+  ProductDescVO, ProductSearchCriteria, ProductListVO, SearchCriteria, GenericResponse
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -269,6 +269,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
 
 
   getSelectedProducts() {
+     this.selectedProducts = [];
     this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
       new ProductSearchCriteria(
         this.appService.appInfoStorage.language.id, 0, this.marketing.id, 0, '0', 0, 0, 0, 0, 0, 0
@@ -444,13 +445,19 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
   }
 
   removeProduct($event) {
-    console.log($event);
-    this.appService.delete($event.product.ptsId, 'com.softenza.emarket.model.MarketingProduct')
-      .subscribe(resp => {
-        if (resp.result === 'SUCCESS') {
-          this.getSelectedProducts();
-        }
-      });
+        this.appService.updateObject('/service/catalog/deleteProductMarketing/' +
+        this.marketing.id + '/'
+        + $event.product.ptsId).subscribe(async (data: GenericResponse) => {
+          if (data.result === 'SUCCESS') {
+            this.getSelectedProducts();
+          } else {
+             this.translate.get(['MESSAGE.DELETE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+              this.errors = res['MESSAGE.DELETE_UNSUCCESS'];
+            });
+          }
+        },
+          (error) => console.log(error),
+          () => console.log('closeTab complete'));
   }
 
   sell() {
@@ -458,6 +465,7 @@ export class MarketingProductComponent extends BaseComponent implements OnInit {
     this.errors = '';
     this.marketingProduct.product = new Product();
     this.marketingProduct.product.id = this.prodDescVO.product.id;
+    this.marketingProduct.ptsId = this.prodDescVO.product.ptsId;
     this.marketingProduct.store = this.selectedStore;
     this.marketingProduct.marketing = this.marketing;
     this.marketingProduct.modifiedBy = +this.appService.tokenStorage.getUserId();

@@ -1,0 +1,34 @@
+<div class="section-gap pb-0" *ngIf="stores">
+  <div class="container">
+    <mat-toolbar color="primary" style="height:180px" class="section-title-toolbar">
+      <mat-toolbar-row>
+        <div fxLayoutAlign="space-between" class="w-100 toolbar-title">
+          <div class="block-title">
+            <h2 class="text-inverse mb-0 text-xxl">{{'COMMON.TOP_SHOPS'|translate}}</h2>
+          </div>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="shop-card-gap px-4">
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" *ngFor="let store of stores">
+          <a [routerLink]="[store.catUrl]" [queryParams]="{storeId:store.id}">
+            <mat-card class="box-shadow-md p-4">
+              <a href="javascript:void(0)">
+                <img  style="max-height: 100px!important; width:100%!important;" src="assets/images/stores/{{store.id}}/{{store.storeFrontImage?store.storeFrontImage:store.image}}"
+                  alt="">
+              </a>
+              <mat-card-content class="pt-3">
+                <h5 style="color: #283593;">{{store.name}} </h5>
+                <h6 style="color: #ff5722;">{{store.catName}}</h6>
+                <p>
+                  {{store.address.city +', '+store.address.country.name +(store.address.district?' ('+store.address.district+')':'')}}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
