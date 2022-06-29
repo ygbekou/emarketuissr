@@ -73,6 +73,7 @@ export class TopStoresComponent implements OnInit {
    getStores() {
       const parameters: string[] = [];
       parameters.push('e.displayWeb = |abc|1|Integer');
+      parameters.push('e.onlineStore = |efg|1|Integer');
       parameters.push('e.aprvStatus = |xyz|1|Integer');
       parameters.push('e.status = |klm|1|Integer');
       this.appService.getAllByCriteria('com.softenza.emarket.model.Store', parameters)
