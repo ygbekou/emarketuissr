@@ -1358,11 +1358,14 @@ export class CartItem {
 export class ProductListVO {
   categories: string[];
   productDescVOs: ProductDescVO[];
+  //storeCats: StoreCategoryDesc[];
+	//viewType: string;
 }
 
 export class ProductVO {
   id: number;
   dateAvailable: number;
+  availableOnline: number;
   ean: string;
   height: number;
   image: string;
@@ -2002,6 +2005,8 @@ export class StoreCategoryDesc {
   storeCat: StoreCategory;
   language: Language;
   name: string;
+
+  //stores: Store[];
 }
 
 export class EmailVerification {

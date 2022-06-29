@@ -25,7 +25,8 @@ import {
    MatSliderModule,
    MatRadioModule,
    MatDialogModule,
-   MatGridListModule
+   MatGridListModule,
+   MatSlideToggleModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -62,6 +63,7 @@ import { RoomGridComponent } from './Grid/RoomGrid/RoomGrid.component';
       MatChipsModule,
       MatListModule,
       MatSidenavModule,
+      MatSlideToggleModule,
       MatTabsModule,
       MatProgressBarModule,
       MatCheckboxModule,

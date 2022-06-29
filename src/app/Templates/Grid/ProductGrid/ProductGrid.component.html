@@ -76,14 +76,14 @@
                <div fxFlex fxLayoutAlign="space-between">
                   <h6 class="secondary-color" style="text-decoration: line-through;"
                      *ngIf="prd.product.productDiscountPercentage > 0">
-                     {{prd.product.symbolLeft}} 
-                        {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}}
+                     {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
                   </h6>
                   <h6 class="accent-color" *ngIf="prd.product.productDiscountPercentage > 0">
-                     {{prd.product.symbolLeft}} 
-                        {{prd.product?.percentagePrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}}
+                     {{prd.product?.percentagePrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
                   </h6>
@@ -92,8 +92,8 @@
                   </h6>
                   <h6 class="accent-color"
                      *ngIf="prd.product.productDiscountPercentage === undefined || prd.product.productDiscountPercentage <= 0">
-                     {{prd.product.symbolLeft}} 
-                        {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                     {{prd.product.symbolLeft}}
+                     {{prd.product?.price | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
 
@@ -101,8 +101,8 @@
                   <h6 class="accent-color" *ngIf="prd.product.productDiscountQuantity > 0 
                   && prd.product.productDiscountPrice > 0">
                      {{'COMMON.BUY'|translate}} {{prd.product.productDiscountQuantity}}
-                     {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}} 
-                        {{prd.product?.productDiscountPrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
+                     {{'COMMON.FOR'|translate}} {{prd.product.symbolLeft}}
+                     {{prd.product?.productDiscountPrice | number: '1.' + prd.product.currencyDecimalPlace + '-'  
                         + prd.product.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
                      {{prd.product.symbolRight}}
                   </h6>
@@ -124,10 +124,20 @@
                      </i></button>
                </ng-container>
             </div>
+            
             <div class="m-icon" *ngIf="fromPage==='marketing'">
                <ng-container *ngIf="prd">
                   <button mat-fab (click)="removeProductFromList(prd)"><i class="material-icons"> delete_sweep
                      </i></button>
+               </ng-container>
+            </div>
+
+            <div *ngIf="fromPage==='sell'">
+               <ng-container *ngIf="prd">
+                  <mat-slide-toggle (click)="toggleAvailableOnline(prd)" name="availableOnline"
+                     [(ngModel)]="prd.product.availableOnline" class="my-2">
+                    {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
+                  </mat-slide-toggle>
                </ng-container>
             </div>
          </mat-card-content>

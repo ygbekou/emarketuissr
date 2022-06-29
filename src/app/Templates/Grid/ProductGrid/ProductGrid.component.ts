@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CartItem } from 'src/app/app.models';
+import { CartItem, ProductVO, ProductDescVO, GenericResponse } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
    selector: 'embryo-ProductGrid',
@@ -20,6 +21,8 @@ export class ProductGridComponent implements OnInit {
    @Output() removeProduct: EventEmitter<any> = new EventEmitter();
    @Input() gridThree = false;
 
+   public errors: string;
+
    @Output() addToCart: EventEmitter<any> = new EventEmitter();
 
    @Output() addToWishList: EventEmitter<any> = new EventEmitter();
@@ -32,7 +35,8 @@ export class ProductGridComponent implements OnInit {
       return hit.objectID;
    }
 
-   constructor(public appService: AppService) { }
+   constructor(public appService: AppService,
+      public translate: TranslateService) { }
 
    ngOnInit() {
 
@@ -40,6 +44,9 @@ export class ProductGridComponent implements OnInit {
          this.lg = 33;
          this.xl = 33;
       }
+
+      console.log('Products:  ');
+      console.log(this.products);
    }
 
    public selectForSaleProduct(product: any) {
@@ -48,6 +55,28 @@ export class ProductGridComponent implements OnInit {
 
    public removeProductFromList(product: any) {
       this.removeProduct.emit(product);
+   }
+
+   toggleAvailableOnline(prdDescVo: ProductDescVO) {
+      const availOnline = prdDescVo.product.availableOnline = (prdDescVo.product.availableOnline == null
+         || prdDescVo.product.availableOnline.toString() === 'false'
+         || prdDescVo.product.availableOnline.toString() === '0') ? 1 : 0;
+
+      this.appService.updateObject('/service/catalog/setOnlineOffline/' +
+         prdDescVo.product.ptsId + '/' + availOnline + '/'
+         + this.appService.tokenStorage.getUserId()).subscribe(async (data: GenericResponse) => {
+            if (data.result === 'SUCCESS') {
+               this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_SUCCESS'];
+               });
+            } else {
+               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+               });
+            }
+         },
+            (error) => console.log(error),
+            () => console.log('closeTab complete'));
    }
 
    public addToCartProduct(value: any) {
