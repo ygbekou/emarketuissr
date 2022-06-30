@@ -43,12 +43,12 @@ export class LanguageDropDownComponent implements OnInit {
    }
 
    public changeLang(data) {
-      if (data.code === 'fr') {
-         this.flag = this.flags[0];
-      } else {
-         this.flag = this.flags[1];
-      }
-      this.flag = data.code;
+      // if (data.code === 'fr') {
+      //    this.flag = this.flags[0];
+      // } else {
+      //    this.flag = this.flags[1];
+      // }
+      this.flag = data;
       this.translate.use(data.code);
       Cookie.set('lang', data.code);
       console.log(data);
@@ -59,7 +59,7 @@ export class LanguageDropDownComponent implements OnInit {
             break;
          }
       }
-      window.location.reload();
+      //window.location.reload();
 
    }
 

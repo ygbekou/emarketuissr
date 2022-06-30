@@ -9,9 +9,9 @@
         </button>
     </span>
 </mat-menu> -->
- 
-<mat-select [(value)]="flag.code" color="accent" style="text-align: right;">
-<mat-option [value]="flag.code" *ngFor="let flag of flags" (click)="changeLang(flag)">
-    {{flag.code}}
-</mat-option>
-</mat-select> 
+
+<mat-select color="accent" style="text-align: right;">
+    <mat-option [value]="flag.code" *ngFor="let flag of flags" (click)="changeLang(flag)">
+        {{flag.code}}
+    </mat-option>
+</mat-select>
