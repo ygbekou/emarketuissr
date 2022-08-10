@@ -326,7 +326,20 @@ export class ProductsListComponent implements OnInit {
          this.productList.categories.unshift(this.dummyCat);
       }
       this.productList.categories = this.productList.categories.filter((x): x is string => x !== null);
-      this.createDatasource(data.productDescVOs);
+
+      const uniqueIds = [];
+      this.createDatasource(data.productDescVOs.filter(element => {
+         const isDuplicate = uniqueIds.includes(element.product.ptsId);
+
+         if (!isDuplicate) {
+            uniqueIds.push(element.product.ptsId);
+            return true;
+         }
+
+         return false;
+      }));
+      //this.createDatasource(unique);
+
       this.running = false;
    }
 
@@ -519,6 +532,7 @@ export class ProductsListComponent implements OnInit {
    }
 
    filterDataBySearchCriteria(searchCriteria, dummyCat) {
+      const uniqueIds = [];
       const filteredData = this.productList.productDescVOs.filter(function (data) {
          let found = true;
          if (searchCriteria.priceMin && searchCriteria.priceMax) {
@@ -549,6 +563,22 @@ export class ProductsListComponent implements OnInit {
                found = false;
             }
          }
+
+
+         // Filter out duplicate
+         if (found) {
+            const isDuplicate = uniqueIds.includes(data.product.ptsId);
+
+            if (!isDuplicate) {
+               uniqueIds.push(data.product.ptsId);
+
+            } else {
+
+               found = false;
+            }
+         }
+
+
          console.log('Filter Predicate called.');
          return found;
       });
