@@ -128,7 +128,16 @@
             </a>
           </p>
         </span>
-
+        <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button [color]="subRpt===15?'accent':'primary'" (click)="runInvnReport(15)"
+              routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon *ngIf="subRpt===15">done_all</mat-icon>
+              <mat-icon *ngIf="!(subRpt===15)">done</mat-icon>
+              <span>{{'COMMON.SALES_SUMMARY_ACCOUNTING'|translate}}</span>
+            </a>
+          </p>
+        </span>
          <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
             <a mat-button [color]="subRpt===13?'accent':'primary'" (click)="runInvnReport(13)"
@@ -150,6 +159,8 @@
             </a>
           </p>
         </span>
+
+
 
       </div>
 

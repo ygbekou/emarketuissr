@@ -46,7 +46,7 @@ export class ProductGridComponent implements OnInit {
       }
 
       console.log('Products:  ');
-      console.log(this.products);
+      // console.log(this.products);
    }
 
    public selectForSaleProduct(product: any) {
@@ -58,7 +58,7 @@ export class ProductGridComponent implements OnInit {
    }
 
    toggleAvailableOnline(prdDescVo: ProductDescVO) {
-      const availOnline = prdDescVo.product.availableOnline = (prdDescVo.product.availableOnline == null
+      const availOnline  = (prdDescVo.product.availableOnline == null
          || prdDescVo.product.availableOnline.toString() === 'false'
          || prdDescVo.product.availableOnline.toString() === '0') ? 1 : 0;
 
