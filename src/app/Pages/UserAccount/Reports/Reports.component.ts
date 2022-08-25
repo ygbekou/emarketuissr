@@ -176,6 +176,8 @@ export class ReportsComponent implements OnInit {
       rep.reportName = 'hotel_sales';
     } else if (this.subRpt === 15) {
       rep.reportName = 'sales';
+    } else if (this.subRpt === 16) {
+      rep.reportName = 'po_extract';
     }
 
 

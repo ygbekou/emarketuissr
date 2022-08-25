@@ -138,6 +138,7 @@
             </a>
           </p>
         </span>
+
          <span>
           <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
             <a mat-button [color]="subRpt===13?'accent':'primary'" (click)="runInvnReport(13)"
@@ -183,6 +184,16 @@
               <mat-icon *ngIf="subRpt===10">done_all</mat-icon>
               <mat-icon *ngIf="!(subRpt===10)">done</mat-icon>
               <span>{{'COMMON.PO_RPT'|translate}}</span>
+            </a>
+          </p>
+        </span>
+                  <span>
+          <p fxLayout="row" fxLayoutAlign="start center" class="mt-1">
+            <a mat-button [color]="subRpt===16?'accent':'primary'" (click)="runInvnReport(16)"
+              routerLinkActive="horizontal-active-link" [routerLinkActiveOptions]="{exact:true}">
+              <mat-icon *ngIf="subRpt===16">done_all</mat-icon>
+              <mat-icon *ngIf="!(subRpt===16)">done</mat-icon>
+              <span>{{'COMMON.PO_ACCOUNTING'|translate}}</span>
             </a>
           </p>
         </span>

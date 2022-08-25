@@ -2,6 +2,7 @@
 	"COMMON": {
 		"SHOP": "Shop",
 		"FEES": "Fees",
+		"PO_ACCOUNTING":"Purchases - Accounting",
 		"SALES_SUMMARY_ACCOUNTING":"Sales summary - Accounting",
 		"RECEIPTS":"Sales Receipts",
 		"IS_HOTEL":"It's a hotel",
