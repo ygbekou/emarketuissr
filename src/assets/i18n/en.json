@@ -1,10 +1,10 @@
 {
 	"COMMON": {
-		"HOME ONE": "Home One",
-		"HOME TWO": "Home Two",
-		"HOME THREE": "Home Three",
 		"SHOP": "Shop",
 		"FEES": "Fees",
+		"PO_ACCOUNTING":"Purchases - Accounting",
+		"SALES_SUMMARY_ACCOUNTING":"Sales summary - Accounting",
+		"RECEIPTS":"Sales Receipts",
 		"IS_HOTEL":"It's a hotel",
 		"STORE_BANNER":"Store banner",
 		"APPARTMENT": "Appartment",

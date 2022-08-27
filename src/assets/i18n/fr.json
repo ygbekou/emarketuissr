@@ -1,11 +1,10 @@
 {
   "COMMON": {
-    "HOME ONE": "Première maison",
-    "HOME TWO": "Maison deux",
-    "HOME THREE": "Maison trois",
     "SHOP": "Boutique",
     "OUT_OF": "sur",
     "OR": "ou",
+    "PO_ACCOUNTING":"Achats - Comptabilité",
+    "SALES_SUMMARY_ACCOUNTING":"Sommaire ventes - Comptabilité",
     "IS_HOTEL":"C'est un hotel",
     "STORE_BANNER":"Baniere de la boutique",
     "APPARTMENT":"Appartment",
@@ -46,7 +45,7 @@
     "EXPENSE":"Dépense",
     "INVALID_CARD":"Carte de crédit/débit invalide",
     "ZONE_STATE": "Zone/Etat",
-     "NAME_ADDRESS":"Nommer cette adresse. Ex. Maison.",
+    "NAME_ADDRESS":"Nommer cette adresse. Ex. Maison.",
     "MY_CURRENT_POSITION":"Ma position GPS",
     "TYPE_ADDRESS_PLACE":"Taper l'adresse ou le nom de la place",
     "PAYMENT_DATE_REQ":"Date payement requise",
