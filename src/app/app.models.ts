@@ -2506,6 +2506,7 @@ export class PoDtl {
   productName: string;
   ingredientName: string;
   isTouched = false;
+  isSubmitted = false;
   modifiedBy: number;
 
   type = 'PoDtl';
