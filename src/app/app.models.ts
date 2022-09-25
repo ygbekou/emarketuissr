@@ -287,6 +287,8 @@ export class ProductToParent {
   parent: Product;
   category: Category;
   quantity: number;
+  store: Store;
+  required: number;
   currentOption: any;
   currentCategoryOption: any;
 

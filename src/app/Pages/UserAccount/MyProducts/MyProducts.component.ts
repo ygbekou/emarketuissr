@@ -14,6 +14,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ProductStoreOptionsComponent } from 'src/app/AdminPanel/Products/ProductStoreOptions/ProductStoreOptions.component';
 import { Constants } from 'src/app/app.constants';
 import { ProductStoreIngredientsComponent } from 'src/app/AdminPanel/Products/ProductStoreIngredients/ProductStoreIngredients.component';
+import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/ComboProduct.component';
 
 @Component({
   selector: 'app-my-products',
@@ -33,6 +34,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
 
   @ViewChild(ProductStoreOptionsComponent, { static: false }) prdStoreOptView: ProductStoreOptionsComponent;
   @ViewChild(ProductStoreIngredientsComponent, { static: false }) prdStoreIngredientsView: ProductStoreIngredientsComponent;
+  @ViewChild(ComboProductComponent, { static: false }) comboProductView: ComboProductComponent;
 
   categories: CategoryDescription[][] = [];
   categoryId = 0;
@@ -306,6 +308,11 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
         this.prdStoreIngredientsView.productToStoreId = this.productStore.id;
         this.prdStoreIngredientsView.storeId = this.productStore.store.id;
         this.prdStoreIngredientsView.resetDatasource(this.productStore.productStoreIngredients);
+
+        this.comboProductView.productToStore = this.productStore;
+        this.comboProductView.storeId = this.productStore.store.id;
+        this.comboProductView.getProductParentDescriptions();
+
       },
         error => console.log(error),
         () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
@@ -500,7 +507,6 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   changeTab($event) {
     console.log('Tab changed');
     this.messages = '';
-
     this.prdStoreIngredientsView.getProductToStoreSelectedOptions(this.productStore.id);
     this.prdStoreIngredientsView.getProductStoreOptionValues(this.productStore.id, null);
   }

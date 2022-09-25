@@ -430,6 +430,10 @@
           <app-productstore-ingredients [productToStore]="productStore" [productToStoreId]="productStore.id">
           </app-productstore-ingredients>
         </mat-tab>
+        <mat-tab  label="{{'COMMON.SUB_PRODUCT' | translate}}s">
+          <app-combo-product [productToStore]="productStore" [storeId]="selectedStore.id" [productToStoreId]="productStore.id">
+          </app-combo-product>
+        </mat-tab>
       </mat-tab-group>
     </mat-step>
   </mat-horizontal-stepper>

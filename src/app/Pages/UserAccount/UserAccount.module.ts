@@ -102,6 +102,7 @@ import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
 import { TranlogComponent } from './Sales-audit/Tranlog.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
 import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
+import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/ComboProduct.component';
 
 @NgModule({
   imports: [
@@ -109,7 +110,7 @@ import { CancelReservationsComponent } from './Open-reservations/Cancel-reservat
     RouterModule.forChild(UserAccountRoutes),
     MatAutocompleteModule,
     MatBadgeModule,
-    MatButtonModule, 
+    MatButtonModule,
     FlexLayoutModule,
     MatCardModule,
     MatMenuModule,
@@ -228,7 +229,8 @@ import { CancelReservationsComponent } from './Open-reservations/Cancel-reservat
     TranlogComponent,
     BldgImagesComponent,
     OpenReservationsComponent,
-    CancelReservationsComponent
+    CancelReservationsComponent,
+    ComboProductComponent,
   ],
   exports: [
     StoresComponent,
