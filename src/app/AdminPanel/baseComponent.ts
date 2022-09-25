@@ -48,9 +48,11 @@ export class BaseComponent {
       }
     } else {
       this.hasError = true;
-      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR']).subscribe(res => {
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR', 'MESSAGE.ALREADY_EXISTS']).subscribe(res => {
           this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
-          ?  res['MESSAGE.SYSTEM_ERROR'] : result.errors[0]);
+          ?  res['MESSAGE.SYSTEM_ERROR'] :
+          (result.errors[0] === 'ALREADY_EXISTS' ? res['MESSAGE.ALREADY_EXISTS'] : result.errors[0])
+          );
       });
     }
   }

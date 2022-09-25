@@ -1083,7 +1083,8 @@
 		"INVALID_PAYMENT_METHOD": "Selected Payment method {{payment_method}} doesn't support the store currency {{currency_code}}",
 		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again.",
 		"PLEASE_SELECT_A_ROOM": "Please select your rooms",
-		"PAYMENT_METHOD_REQUIRED": "Payment Method Required"
+		"PAYMENT_METHOD_REQUIRED": "Payment Method Required",
+		"ALREADY_EXISTS": "Already exists"
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",
@@ -1118,7 +1119,8 @@
 		"OPTION_IS_REQUIRED": "The option {{option_description}} is required",
 		"PLEASE_SELECT_FROM_DROPDOWN": "Field is required - Please select from the list",
 		"UNKNOWN_TRANSFER_PRODUCT": "Product to transfer is not available in the destination store",
-		"UNKNOWN_TRANSFER_INGREDIENT": "Ingredient to transfer is not available in the destination store"
+		"UNKNOWN_TRANSFER_INGREDIENT": "Ingredient to transfer is not available in the destination store",
+		"NUMERIC_FIELD": "Field format ####.##"
 	},
 	"DATE": {
 		"1": "Jan",

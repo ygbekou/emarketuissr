@@ -1083,7 +1083,8 @@
 		"INVALID_PAYMENT_METHOD": "Le mode de paiement sélectionné {{payment_method}} ne supporte la devise du magasin {{currency_code}}",
 		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer.",
 		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres",
-		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis"
+		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis",
+		"ALREADY_EXISTS": "Existe déjà"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
@@ -1118,7 +1119,8 @@
     "OPTION_IS_REQUIRED": "The option {{option_description}} is required",
     "PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste",
     "UNKNOWN_TRANSFER_PRODUCT": "Le produit � transférer n'est pas disponible dans la boutique de destination",
-		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination"
+		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination",
+		"NUMERIC_FIELD": "Format du champ ####.##"
   },
   "DATE": {
     "1": "Jan",

@@ -119,6 +119,7 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
   savePoDtl(poDtl: PoDtl, index: number) {
     this.saving = true;
     this.messages = '';
+    poDtl.isSubmitted = true;
     poDtl.modifiedBy = +this.appService.tokenStorage.getUserId();
     poDtl.poHdr = this.poHdr;
 
@@ -137,7 +138,7 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
         this.poDtlDatasource.data[index] = data;
         this.setDatasource(this.poDtlDatasource.data);
         this.saving = false;
-        
+
         if (poDtl.product.id > 0) {
           this.filteredProductOptions = this.productOptions;
         } else if (poDtl.ingredient.id > 0) {
@@ -151,8 +152,8 @@ export class PurchaseOrderDetailsComponent extends BaseComponent implements OnIn
   removePoDtl(poDtl: PoDtl, index: number) {
 
     if (!poDtl.id) {
-        this.poDtlDatasource.data.splice(index, 1);
-        this.resetDatasource(this.poDtlDatasource.data, index);
+        this.resetDatasource(this.poDtlDatasource, index);
+        this.setDatasource(this.poDtlDatasource.data);
         return;
     }
 

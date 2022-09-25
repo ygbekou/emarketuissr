@@ -121,10 +121,11 @@
           <mat-label> {{'COMMON.SUB_TOTAL' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="subTotal" [(ngModel)]="poHdr.subTotal" name="subTotal"
-            #subTotal="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{2})?" required>
-          <mat-error *ngIf="f.submitted && subTotal.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            #subTotal="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{1,2})?" required>
+          <mat-error *ngIf="subTotal.invalid" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}. {{ 'VALIDATION.NUMERIC_FIELD' | translate }}
           </mat-error>
+
         </mat-form-field>
       </div>
 
@@ -133,9 +134,9 @@
           <mat-label> {{'COMMON.TAXES' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="taxes" [(ngModel)]="poHdr.taxes" name="taxes"
-            #taxes="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{2})?">
-          <mat-error *ngIf="f.submitted && taxes.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            #taxes="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{1,2})?">
+          <mat-error *ngIf="taxes.invalid" severity="error">
+            {{ 'VALIDATION.NUMERIC_FIELD' | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -145,9 +146,9 @@
           <mat-label> {{'COMMON.REBATE' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="discount" [(ngModel)]="poHdr.discount" name="discount"
-            #discount="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{2})?">
-          <mat-error *ngIf="f.submitted && discount.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            #discount="ngModel" (ngModelChange)="calculateAmount();" pattern="-?(0|([1-9]\d*))(\.\d{1,2})?">
+          <mat-error *ngIf="discount.invalid" severity="error">
+            {{ 'VALIDATION.NUMERIC_FIELD' | translate }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -158,9 +159,6 @@
           </mat-label>
           <input matInput type="text" class="form-control" id="amount" [(ngModel)]="poHdr.amount" name="amount"
             [disabled]="true" #amount="ngModel" required>
-          <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
-            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
-          </mat-error>
         </mat-form-field>
       </div>
     </div>

@@ -40,7 +40,7 @@
           [matAutocomplete]="auto" [(ngModel)]="poDtl.productName" required
           (ngModelChange)="poDtl.isTouched = true; filterOptions(poDtl.productName)">
         <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-          <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredProductOptions " (onSelectionChange)="poDtl.isTouched = true; 
                   poDtl.product.id = option.product.id" [value]="option.name">
             {{option.name}}
@@ -61,7 +61,7 @@
           [matAutocomplete]="auto" [(ngModel)]="poDtl.ingredientName" required
           (ngModelChange)="poDtl.isTouched = true; filterIngredientOptions(poDtl.productName)">
         <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-          <mat-autocomplete id="option1" #auto="matAutocomplete">
+        <mat-autocomplete id="option1" #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredIngredientOptions " (onSelectionChange)="poDtl.isTouched = true; 
                   poDtl.ingredient.id = option.ingredient.id" [value]="option.ingredient.name">
             {{option.ingredient.name}}
@@ -81,8 +81,11 @@
     <td mat-cell *matCellDef="let poDtl" width="5%">
       <mat-form-field appearance="outline" style="width: 100px">
         <input type="text" aria-label="Number" name="quantity" matInput [(ngModel)]="poDtl.quantity" required
-          (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);">
+          (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);" #quantity="ngModel">
       </mat-form-field>
+      <mat-error *ngIf="poDtl.isSubmitted && quantity.invalid" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+      </mat-error>
     </td>
   </ng-container>
 
@@ -92,8 +95,12 @@
     <td mat-cell *matCellDef="let poDtl">
       <mat-form-field appearance="outline" style="width: 100%">
         <input type="text" aria-label="Number" name="unitPrice" matInput [(ngModel)]="poDtl.unitAmount" required
-          (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);">
+          (ngModelChange)="poDtl.isTouched = true; calculateTotalAmount(poDtl);" pattern="-?(0|([1-9]\d*))(\.\d{1,2})?" 
+          #unitPrice="ngModel">
       </mat-form-field>
+      <mat-error *ngIf="poDtl.isSubmitted && unitPrice.invalid" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}. {{ 'VALIDATION.NUMERIC_FIELD' | translate }}
+      </mat-error>
     </td>
   </ng-container>
 
@@ -103,8 +110,12 @@
     <td mat-cell *matCellDef="let poDtl">
       <mat-form-field appearance="outline" style="width: 100%">
         <input type="text" aria-label="Number" name="totalAmount" matInput [(ngModel)]="poDtl.totalAmount" required
-          (ngModelChange)="poDtl.isTouched = true; calculateUnitAmount(poDtl);">
+          (ngModelChange)="poDtl.isTouched = true; calculateUnitAmount(poDtl);" pattern="-?(0|([1-9]\d*))(\.\d{1,2})?"
+          #totalAmount="ngModel">
       </mat-form-field>
+      <mat-error *ngIf="poDtl.isSubmitted && totalAmount.invalid" severity="error">
+        {{ 'VALIDATION.FIELD_REQUIRED' | translate }}. {{ 'VALIDATION.NUMERIC_FIELD' | translate }}
+      </mat-error>
     </td>
     <td mat-cell *matCellDef="let poDtl"> {{poDtl.totalAmount}}
     </td>
@@ -115,16 +126,16 @@
     <th mat-header-cellwidth="20%" *matHeaderCellDef> Actions
       <button (click)="addPoDtl()" mat-fab color="primary" matTooltip="{{'COMMON.ADD' | translate}}"
         [disabled]="poHdr.status >=5">
-        <mat-icon   class="mat-icon-xlg">add_circle</mat-icon>
-    </button>
+        <mat-icon class="mat-icon-xlg">add_circle</mat-icon>
+      </button>
     </th>
     <td mat-cell *matCellDef="let poDtl; let i = index">
       <button mat-icon-button color="primary" (click)="savePoDtl(poDtl, i)" matTooltip="{{'COMMON.SAVE' | translate}}"
-        [disabled]="!poDtl.isTouched || poHdr.status >=5" class="remove">
+        [disabled]="!poDtl.isTouched || poHdr.status >=5" class="save">
         <mat-icon>save</mat-icon>
       </button>
       &nbsp;&nbsp;
-      <button mat-icon-button color="warn" (click)="removePoDtl(poDtl)" matTooltip="{{'COMMON.DELETE' | translate}}"
+      <button mat-icon-button color="warn" (click)="removePoDtl(poDtl, i)" matTooltip="{{'COMMON.DELETE' | translate}}"
         [disabled]="poHdr.status >=5" class="remove">
         <mat-icon>delete</mat-icon>
       </button>
