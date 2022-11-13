@@ -983,7 +983,8 @@
 		"TOP_PROPERTIES": "Top Properties",
 		"TOP_STORE_PROPERTIES": "{{STORE_NAME}}'s Properties",
 		"ONLINE_BOOKING": "Online Booking",
-		"TOP_PROPERTY": "Top Property"
+		"TOP_PROPERTY": "Top Property",
+		"COPY_PRODUCTS": "Copy Products"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -1084,7 +1085,8 @@
 		"PAYMENT_UNSUCCESS": "The booking failed due to unsuccessful payment. Please check your payment method and try again.",
 		"PLEASE_SELECT_A_ROOM": "Please select your rooms",
 		"PAYMENT_METHOD_REQUIRED": "Payment Method Required",
-		"ALREADY_EXISTS": "Already exists"
+		"ALREADY_EXISTS": "Already exists",
+		"OBJECT_HAS_CHILD": "This product has being sold in the system. It cannot be deleted."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

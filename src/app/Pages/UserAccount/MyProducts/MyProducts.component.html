@@ -260,18 +260,29 @@
                 </div>
               </div>
               <div fxLayout="row wrap">
-                <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                <div fxFlex="100" fxFlex.gt-sm="100" class="p-1">
+                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+                    <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+                  </div>
+                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+                    <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+                  </div>
+                </div>
+              </div>
+              <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="100" class="p-1">
                   <div class="text-left mt-2" fxFlex.gt-sm="25">
                     <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center" type="submit">
                       <span class="mx-1 uppercase"> {{'COMMON.SAVE'|translate}}</span>
                       <mat-icon>save</mat-icon>
                     </button>
                   </div>
-                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
-                    <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
-                  </div>
-                  <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
-                    <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+                  <div class="text-left mt-2" fxFlex.gt-sm="5"></div>
+                  <div class="text-left mt-2" fxFlex.gt-sm="25">
+                    <button mat-raised-button fxLayout="row" fxLayoutAlign="center center" type="button" (click)="deletePts(productStore.id)">
+                      <span class="mx-1 uppercase"> {{'COMMON.DELETE'|translate}}</span>
+                      <mat-icon>delete</mat-icon>
+                    </button>
                   </div>
                 </div>
               </div>

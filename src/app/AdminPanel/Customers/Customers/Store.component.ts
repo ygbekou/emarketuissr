@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store, Currency } from 'src/app/app.models';
+import { Store, Currency, GenericResponse } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
@@ -20,6 +20,10 @@ export class StoreComponent extends BaseComponent implements OnInit {
   picture: any[] = [];
   currencies: Currency[] = [];
   store: Store;
+  stores: Store[] = [];
+  selectedStore: Store;
+
+  //searchCriteria: FundSearchCriteria = new FundSearchCriteria();
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -138,5 +142,48 @@ export class StoreComponent extends BaseComponent implements OnInit {
   }
 
   changeTab($event) {
+    if ($event.index === 0) {
+    } else if ($event.index === 1) {
+    } else if ($event.index === 2) {
+      this.getStores();
+    }
   }
+
+  getStores() {
+    this.appService.saveWithUrl('/service/catalog/stores', {status: 1, userId: +this.appService.tokenStorage.getUserId()})
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
+  }
+
+  storeSelected(event) {
+    setTimeout(() => {
+      this.messages = '';
+      this.errors = '';
+    }, 500);
+  }
+
+
+  copyItemsFromStore() {
+    this.messages = '';
+    this.errors = '';
+    this.appService.updateObject('/service/catalog/copyItemsFromStore/'
+    + this.selectedStore.id + '/' + this.store.id + '/' + this.appService.tokenStorage.getUserId())
+      .subscribe(async (data: GenericResponse) => {
+      if (data.result === 'SUCCESS') {
+        this.translate.get(['MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+          this.errors = res['MESSAGE.SAVE_SUCCESS'];
+        });
+      } else {
+        this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+          this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+        });
+      }
+    },
+      (error) => console.log(error),
+      () => console.log('Copy products complete'));
+  }
+
 }

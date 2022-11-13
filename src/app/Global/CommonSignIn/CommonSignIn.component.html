@@ -28,9 +28,9 @@
     <!-- <mat-checkbox>Remember Me</mat-checkbox> -->
     <span fxFlex></span>
     <a [routerLink]="['/session/forgot-password']"
-      *ngIf="!forgotPasswordEvent">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
+      *ngIf="!hasObservers()">{{'COMMON.FORGOT_PASSWORD'|translate}}? dwekwhk</a>
     <a href="javascript:void(0);" (click)="forgotPassword()"
-      *ngIf="forgotPasswordEvent">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
+      *ngIf="hasObservers()">{{'COMMON.FORGOT_PASSWORD'|translate}}?</a>
   </div>
   <button color="accent" class="button-lg mb-3" mat-raised-button type="submit">
     {{'COMMON.SIGN_IN' | translate }}</button>

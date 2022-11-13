@@ -984,7 +984,8 @@
     "TOP_PROPERTIES": "TOP Propriétés",
 		"TOP_STORE_PROPERTIES": "Propriétés de {{STORE_NAME}}",
 		"ONLINE_BOOKING": "Réservation en ligne",
-		"TOP_PROPERTY": "Top Propriété"
+		"TOP_PROPERTY": "Top Propriété",
+		"COPY_PRODUCTS": "Copier Produits"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1084,7 +1085,8 @@
 		"PAYMENT_UNSUCCESS": "La réservation a échoué en raison du paiement. Veuillez vérifier votre mode de paiement et réessayer.",
 		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres",
 		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis",
-		"ALREADY_EXISTS": "Existe déjà"
+		"ALREADY_EXISTS": "Existe déjà",
+		"OBJECT_HAS_CHILD": "Ce produit a été vendu dans le système. Il ne peut pas être supprimé."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

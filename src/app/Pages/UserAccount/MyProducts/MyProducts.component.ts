@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CategoryDescription, ProductDescription, Product, Store, Pagination,
   ProductToStore, ProductDiscount, ProductSearchCriteria, ProductListVO,
-  ProductDescVO, SearchCriteria, StoreSearchCriteria, RunReportVO, Parameter, ProductStoreIngredient
+  ProductDescVO, SearchCriteria, StoreSearchCriteria, RunReportVO, Parameter, ProductStoreIngredient, GenericResponse
 } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -320,12 +320,12 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   }
 
   public getCommentPopupResponse(response: any, value: any) {
-      if (response) {
-        console.log('Value returned from comment popup... ');
-        console.log(value);
-         this.productStore.quantityComment = value;
-      }
-   }
+    if (response) {
+      console.log('Value returned from comment popup... ');
+      console.log(value);
+      this.productStore.quantityComment = value;
+    }
+  }
 
 
   sell() {
@@ -342,8 +342,8 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
             this.proceedSell();
           }
         },
-            err => console.log(err),
-            () => this.getCommentPopupResponse(this.popupResponse, this.productStore)
+          err => console.log(err),
+          () => this.getCommentPopupResponse(this.popupResponse, this.productStore)
         );
     } else {
       this.proceedSell();
@@ -381,7 +381,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
           this.originalQty = this.productStore.quantity;
           this.productStore.quantityComment = '';
           this.productStore.shouldPerformExtraUpdate = false;
-            this.productStore.diffQty = 0;
+          this.productStore.diffQty = 0;
           this.translate.get(['MESSAGE.SAVE_SUCCESS', 'COMMON.SUCCESS']).subscribe(res => {
             this.messages = res['MESSAGE.SAVE_SUCCESS'];
           });
@@ -546,4 +546,30 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     const win = window.open(url, '_blank');
     win.focus();
   }
+
+  deletePts(ptsId: number) {
+    this.messages = '';
+    this.errors = '';
+    this.appService.updateObject('/service/catalog/deleteProductFromStore/' + ptsId)
+      .subscribe(async (data: GenericResponse) => {
+      if (data.result === 'SUCCESS') {
+        this.translate.get(['MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+          this.errors = res['MESSAGE.DELETE_SUCCESS'];
+        });
+        this.stepper.selectedIndex = 0;
+        this.createDatasource([]);
+      } else if (data.result === 'OBJECT_HAS_CHILD') {
+        this.translate.get(['MESSAGE.OBJECT_HAS_CHILD']).subscribe(res => {
+          this.errors = res['MESSAGE.OBJECT_HAS_CHILD'];
+        });
+      } else {
+        this.translate.get(['MESSAGE.DELETE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+          this.errors = res['MESSAGE.DELETE_UNSUCCESS'];
+        });
+      }
+    },
+      (error) => console.log(error),
+      () => console.log('closeTab complete'));
+  }
+
 }

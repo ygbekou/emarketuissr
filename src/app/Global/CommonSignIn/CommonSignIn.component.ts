@@ -137,9 +137,12 @@ export class CommonSignInComponent implements OnInit {
     }
   }
 
+  hasObservers() {
+    return this.forgotPasswordEvent && this.forgotPasswordEvent.observers.length > 0;
+  }
 
   forgotPassword() {
-    if (this.forgotPasswordEvent && this.forgotPasswordEvent.observers.length > 0) {
+    if (this.hasObservers()) {
       this.forgotPasswordEvent.emit(1);
       return;
     }

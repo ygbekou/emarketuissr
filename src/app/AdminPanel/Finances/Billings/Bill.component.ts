@@ -213,6 +213,41 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
         () => console.log('Submit Bill complete'));
   }
 
+  approve() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.bill.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.appService.saveWithUrl('/service/finance/approveBill/', this.bill)
+      .subscribe((data: Bill) => {
+        console.log(data);
+        this.processResult(data, this.bill, null);
+        this.bill = data;
+        this.getBillDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Submit Bill complete'));
+  }
+
+
+  reopen() {
+    this.justSubmitted = true;
+    this.saving = true;
+    this.messages = '';
+    this.bill.modifiedBy = +this.appService.tokenStorage.getUserId();
+    this.appService.saveWithUrl('/service/finance/reopenBill/', this.bill)
+      .subscribe((data: Bill) => {
+        console.log(data);
+        this.processResult(data, this.bill, null);
+        this.bill = data;
+        this.getBillDtls();
+        this.saving = false;
+      },
+        error => console.log(error),
+        () => console.log('Reopen Bill complete'));
+  }
+
   cancel() {
     this.justSubmitted = true;
     this.saving = true;

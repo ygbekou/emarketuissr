@@ -152,4 +152,36 @@
   <mat-tab label="{{'COMMON.SERVICE' | translate}}s">
     <app-store-services #ServicesComponent></app-store-services>
   </mat-tab>
+  <mat-tab label="{{'COMMON.COPY_PRODUCTS' | translate}}">
+    <form name="form" (ngSubmit)="f_copy_prds.form.valid && copyItemsFromStore()" #f_copy_prds="ngForm" validate>
+      <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
+        <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>
+        </mat-label>
+        <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedStore" appearance="outline" name="store"
+          (selectionChange)="storeSelected($event)">
+          <mat-option *ngFor="let store of stores" [value]="store">
+            {{store.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+          <div class="text-left mt-2" fxFlex.gt-sm="25">
+            <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+              <span class="mx-1 uppercase">{{'COMMON.COPY_PRODUCTS' | translate}}</span>
+              <mat-icon>copy</mat-icon>
+            </button> 
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+            <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+          </div>
+          <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+            <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </mat-tab>
 </mat-tab-group>

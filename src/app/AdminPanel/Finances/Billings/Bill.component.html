@@ -24,8 +24,22 @@
         </button>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
-        <button mat-raised-button color="warn" (click)="cancel()" matTooltip="{{'COMMON.SUBMIT' | translate}}"
-          *ngIf="bill.id && bill.status<2" class="remove">
+        <button mat-raised-button color="accent" (click)="approve()" matTooltip="{{'COMMON.APPROVE' | translate}}"
+          *ngIf="bill.id && bill.status === 4" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.APPROVE' | translate}}</span>
+          <mat-icon>done_all</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="accent" (click)="reopen()" matTooltip="{{'COMMON.REOPEN' | translate}}"
+          *ngIf="bill.id && bill.status === 1" class="remove">
+          <span class="mx-1 uppercase">{{'COMMON.REOPEN' | translate}}</span>
+          <mat-icon>undo</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25">
+        <button mat-raised-button color="warn" (click)="cancel()" matTooltip="{{'COMMON.CANCEL' | translate}}"
+          *ngIf="bill.id && (bill.status === 0 || bill.status === 4)" class="remove">
           <span class="mx-1 uppercase">{{'COMMON.CANCEL' | translate}}</span>
           <mat-icon>close</mat-icon>
         </button>

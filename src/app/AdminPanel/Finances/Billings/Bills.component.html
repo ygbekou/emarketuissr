@@ -93,6 +93,7 @@
                   <td mat-cell *matCellDef="let bill">
                     <strong>
                     <span *ngIf="bill.status === 0" style="color: #036cff">{{'COMMON.DRAFT'|translate}}</span>
+                    <span *ngIf="bill.status === 4" style="color: #036cff">{{'COMMON.SUBMITTED'|translate}}</span>
                     <span *ngIf="bill.status === 1" style="color: red">{{'COMMON.UNPAID'|translate}}</span>
                     <span *ngIf="bill.status === 2" style="color: #8100ff">{{'COMMON.PARTIALLY_PAID'|translate}}</span>
                     <span *ngIf="bill.status === 5" style="color: #009A17">{{'COMMON.PAID'|translate}}</span>
