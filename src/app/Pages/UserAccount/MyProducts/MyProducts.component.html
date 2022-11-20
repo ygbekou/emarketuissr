@@ -277,9 +277,10 @@
                       <mat-icon>save</mat-icon>
                     </button>
                   </div>
-                  <div class="text-left mt-2" fxFlex.gt-sm="5"></div>
+                  <div class="text-left mt-2" fxFlex.gt-sm="50"></div>
                   <div class="text-left mt-2" fxFlex.gt-sm="25">
-                    <button mat-raised-button fxLayout="row" fxLayoutAlign="center center" type="button" (click)="deletePts(productStore.id)">
+                    <button mat-raised-button fxLayout="row" fxLayoutAlign="center center" type="button"
+                      (click)="deletePts(productStore.id)">
                       <span class="mx-1 uppercase"> {{'COMMON.DELETE'|translate}}</span>
                       <mat-icon>delete</mat-icon>
                     </button>
@@ -293,7 +294,8 @@
       <mat-tab-group (selectedTabChange)="changeTab($event)">
         <mat-tab label="Options">
           <!-- Add Options Setion         -->
-          <app-productstore-options [productToStore]="productStore" [productToStoreId]="productStore.id">
+          <app-productstore-options #ProductStoreOptionsComponent [productToStore]="productStore"
+            [productToStoreId]="productStore.id">
           </app-productstore-options>
         </mat-tab>
         <mat-tab label="Promotions">
@@ -396,7 +398,7 @@
                       </mat-form-field>
                     </td>
                   </ng-container>
-                  
+
                   <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS' | translate}}*
                     </th>
@@ -441,9 +443,72 @@
           <app-productstore-ingredients [productToStore]="productStore" [productToStoreId]="productStore.id">
           </app-productstore-ingredients>
         </mat-tab>
-        <mat-tab  label="{{'COMMON.SUB_PRODUCT' | translate}}s">
-          <app-combo-product [productToStore]="productStore" [storeId]="selectedStore.id" [productToStoreId]="productStore.id">
+        <mat-tab label="{{'COMMON.SUB_PRODUCT' | translate}}s">
+          <app-combo-product [productToStore]="productStore" [storeId]="selectedStore.id"
+            [productToStoreId]="productStore.id">
           </app-combo-product>
+        </mat-tab>
+        <mat-tab label="{{'COMMON.COPY_OPTIONS' | translate}}">
+          <form name="form" (ngSubmit)="f_copy_options.form.valid && copyOptionsFromPts()" #f_copy_options="ngForm"
+            validate>
+            <div fxLayout="row wrap">
+              <div fxFlex="40">
+                <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
+                  <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>
+                  </mat-label>
+                  <mat-select [compareWith]="compareObjects" [(ngModel)]="copyOptionsStore" appearance="outline"
+                    name="store" (selectionChange)="storeSelected($event)">
+                    <mat-option *ngFor="let store of stores" [value]="store">
+                      {{store.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="50">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label> {{'COMMON.SELECT_PRODUCT' | translate}} <font color="red">*</font>
+                  </mat-label>
+                  <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedPrd" appearance="outline" name="store"
+                    (selectionChange)="productSelected($event)">
+                    <mat-option *ngFor="let prd of copyOptionsProducts" [value]="prd">
+                      {{prd.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="10">
+                <br />
+                <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                  <span class="mx-1 uppercase">{{'COMMON.COPY' | translate}}</span>
+                  <mat-icon>copy</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <app-productstore-options #copyOptionsProductStoreOptionsComponent [productToStore]="copyOptionsPrdStore"
+                [productToStoreId]="copyOptionsPrdStore.id" [page]="'copy'">
+              </app-productstore-options>
+            </div>
+
+            <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+                <div class="text-left mt-2" fxFlex.gt-sm="25">
+                  <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
+                    <span class="mx-1 uppercase">{{'COMMON.COPY' | translate}}</span>
+                    <mat-icon>copy</mat-icon>
+                  </button>
+                </div>
+                <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
+                  <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+                </div>
+                <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="errors">
+                  <p><a mat-button color="accent" class="w-100">{{errors}}</a></p>
+                </div>
+              </div>
+            </div>
+          </form>
+
         </mat-tab>
       </mat-tab-group>
     </mat-step>

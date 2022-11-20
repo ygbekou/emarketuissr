@@ -32,9 +32,10 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) productDiscountPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) productDiscountSort: MatSort;
 
-  @ViewChild(ProductStoreOptionsComponent, { static: false }) prdStoreOptView: ProductStoreOptionsComponent;
+  @ViewChild('ProductStoreOptionsComponent', { static: false }) prdStoreOptView: ProductStoreOptionsComponent;
   @ViewChild(ProductStoreIngredientsComponent, { static: false }) prdStoreIngredientsView: ProductStoreIngredientsComponent;
   @ViewChild(ComboProductComponent, { static: false }) comboProductView: ComboProductComponent;
+  @ViewChild('copyOptionsProductStoreOptionsComponent', { static: false }) copyPrdStoreOptView: ProductStoreOptionsComponent;
 
   categories: CategoryDescription[][] = [];
   categoryId = 0;
@@ -54,6 +55,13 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
   products: ProductDescVO[] = [];
   currentFilteredProducts: ProductDescVO[] = [];
   productSearchCriteria: SearchCriteria = new SearchCriteria();
+
+  copyOptionsProducts: ProductDescVO[] = [];
+  copyOptionsStore: Store = new Store();
+  copyOptionsPrdStore: ProductToStore = new ProductToStore();
+
+  // This is used to copy options.
+  selectedPrd: ProductDescVO;
 
   stores: Store[] = [];
   dataSource: MatTableDataSource<ProductDescVO>;
@@ -157,6 +165,18 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
       },
         error => console.log(error),
         () => console.log('Get all getProductsForCategoryForSale complete'));
+  }
+
+  getCopyOptionProducts(store: Store) {
+    this.appService.saveWithUrl('/service/catalog/getProductsOnSale/',
+      new ProductSearchCriteria(this.appService.appInfoStorage.language.id,
+        store.id, 0, 0, '0', 0, 0, 0, 0, 0, 1))
+      .subscribe((data: ProductListVO) => {
+        this.copyOptionsProducts = data.productDescVOs;
+
+      },
+        error => console.log(error),
+        () => console.log('Get all store product complete'));
   }
 
 
@@ -547,29 +567,100 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
     win.focus();
   }
 
-  deletePts(ptsId: number) {
+   public deletePts(ptsId: number) {
+      const message = 'Are you sure you want to delete this product from the store?';
+      this.appService.confirmationPopup(message).
+         subscribe(res => {this.popupResponse = res;},
+                   err => console.log(err),
+                   ()  => this.proceedDeletePts(this.popupResponse, ptsId)
+                  );
+   }
+
+  proceedDeletePts(response, ptsId: number) {
     this.messages = '';
     this.errors = '';
-    this.appService.updateObject('/service/catalog/deleteProductFromStore/' + ptsId)
-      .subscribe(async (data: GenericResponse) => {
-      if (data.result === 'SUCCESS') {
-        this.translate.get(['MESSAGE.DELETE_SUCCESS']).subscribe(res => {
-          this.errors = res['MESSAGE.DELETE_SUCCESS'];
-        });
-        this.stepper.selectedIndex = 0;
-        this.createDatasource([]);
-      } else if (data.result === 'OBJECT_HAS_CHILD') {
-        this.translate.get(['MESSAGE.OBJECT_HAS_CHILD']).subscribe(res => {
-          this.errors = res['MESSAGE.OBJECT_HAS_CHILD'];
-        });
-      } else {
-        this.translate.get(['MESSAGE.DELETE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-          this.errors = res['MESSAGE.DELETE_UNSUCCESS'];
-        });
-      }
-    },
-      (error) => console.log(error),
-      () => console.log('closeTab complete'));
+
+    if (response) {
+      this.appService.updateObject('/service/catalog/deleteProductFromStore/' + ptsId)
+        .subscribe(async (data: GenericResponse) => {
+        if (data.result === 'SUCCESS') {
+          this.translate.get(['MESSAGE.DELETE_SUCCESS']).subscribe(res => {
+            this.errors = res['MESSAGE.DELETE_SUCCESS'];
+          });
+          this.stepper.selectedIndex = 0;
+          this.createDatasource([]);
+        } else if (data.result === 'OBJECT_HAS_CHILD') {
+          this.translate.get(['MESSAGE.OBJECT_HAS_CHILD']).subscribe(res => {
+            this.errors = res['MESSAGE.OBJECT_HAS_CHILD'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.DELETE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.DELETE_UNSUCCESS'];
+          });
+        }
+      },
+        (error) => console.log(error),
+        () => console.log('closeTab complete'));
+    }
   }
 
+
+  productSelected(event) {
+    setTimeout(() => {
+      this.messages = '';
+      this.errors = '';
+
+      this.appService.getObject('/service/catalog/getProductToStore/' + this.copyOptionsStore.id + '/' + this.selectedPrd.product.id)
+      .subscribe((data: ProductToStore) => {
+        if (data !== null && data.id > 0) {
+          this.copyOptionsPrdStore = data;
+
+          this.copyPrdStoreOptView.getProductToStoreSelectedOptions(this.copyOptionsPrdStore.id);
+        }
+         },
+        error => console.log(error),
+        () => console.log('Get ProductToStore complete for store=' + this.selectedStore.id + ' and ' + this.productDesc.product.id));
+    }, 500);
+  }
+
+  storeSelected(event) {
+
+    setTimeout(() => {
+      this.getCopyOptionProducts(this.copyOptionsStore);
+    }, 500);
+  }
+
+
+   public copyOptionsFromPts() {
+      const message = 'Are you sure you want to copy these options?';
+      this.appService.confirmationPopup(message).
+         subscribe(res => {this.popupResponse = res;},
+                   err => console.log(err),
+                   ()  => this.proceedCopyOptionsFromPts(this.popupResponse)
+                  );
+   }
+
+  proceedCopyOptionsFromPts(response) {
+
+    this.messages = '';
+    this.errors = '';
+    if (response) {
+      this.appService.updateObject('/service/catalog/copyOptionsFromPts/'
+      + this.copyOptionsStore.id + '/' + this.selectedPrd.product.id + '/'
+      + this.productStore.id + '/' + this.appService.tokenStorage.getUserId())
+        .subscribe(async (data: GenericResponse) => {
+        if (data.result === 'SUCCESS') {
+          this.translate.get(['MESSAGE.SAVE_SUCCESS']).subscribe(res => {
+            this.errors = res['MESSAGE.SAVE_SUCCESS'];
+          });
+        } else {
+          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+          });
+        }
+      },
+        (error) => console.log(error),
+        () => console.log('Copy products complete'));
+    }
+  }
 }

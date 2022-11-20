@@ -15,6 +15,7 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
 
    @Input() productToStore: ProductToStore;
    @Input() productToStoreId: number;
+   @Input() page = 'original';
 
    messages: string;
    currentOption: string;
@@ -66,6 +67,10 @@ export class ProductStoreOptionsComponent extends BaseComponent implements OnIni
    }
 
    getProductToStoreSelectedOptions(productToStoreId: number) {
+      this.productStoreOptions = [];
+      this.productStoreOption = new ProductStoreOption();
+      this.optionValues = [];
+      this.productStoreOptionValues = [];
       this.appService.getObjects('/service/catalog/producttostoreselectedoptions/'
          + productToStoreId + '/' + this.appService.appInfoStorage.language.id)
          .subscribe((data: ProductStoreOption[]) => {

@@ -984,7 +984,8 @@
 		"TOP_STORE_PROPERTIES": "{{STORE_NAME}}'s Properties",
 		"ONLINE_BOOKING": "Online Booking",
 		"TOP_PROPERTY": "Top Property",
-		"COPY_PRODUCTS": "Copy Products"
+		"COPY_PRODUCTS": "Copy Products",
+		"COPY_OPTIONS": "Copy Options"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

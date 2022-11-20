@@ -985,7 +985,8 @@
 		"TOP_STORE_PROPERTIES": "Propriétés de {{STORE_NAME}}",
 		"ONLINE_BOOKING": "Réservation en ligne",
 		"TOP_PROPERTY": "Top Propriété",
-		"COPY_PRODUCTS": "Copier Produits"
+		"COPY_PRODUCTS": "Copier Produits",
+		"COPY_OPTIONS": "Copier Options"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

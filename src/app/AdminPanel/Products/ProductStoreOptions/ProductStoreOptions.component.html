@@ -1,5 +1,5 @@
 <div fxLayout="row wrap">
-   <div fxFlex="30">
+   <div fxFlex="30" *ngIf="page === 'original'">
       <mat-form-field appearance="outline" class="w-100">
          <input type="text" placeholder="{{'COMMON.SELECT'|translate}}" aria-label="Number" name="currentOption"
             matInput [matAutocomplete]="auto" [(ngModel)]="currentOption" required
@@ -17,7 +17,7 @@
    <div fxFlex="30">
       <div *ngFor="let productStoreOption of productStoreOptions; let i = index;" class="step-section">
          <div [ngStyle]="getStyle(productStoreOption)" fxLayout="row">
-            <div fxFlex="30">
+            <div fxFlex="30" *ngIf="page === 'original'">
                <button mat-icon-button color="warn" (click)="deleteProductStoreOption(productStoreOption, i)"
                   matTooltip="{{'COMMON.DELETE' | translate}}" class="remove">
                   <mat-icon>delete</mat-icon>
