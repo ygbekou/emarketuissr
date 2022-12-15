@@ -878,6 +878,25 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+   public downloadWithFileUsingUrl = (url: string, entity: any, formData: FormData): Observable<any> => {
+      let head = new HttpHeaders();
+      if (this.tokenStorage.hasToken()) {
+         head = head.set('Authorization', 'Bearer ' + this.tokenStorage.getToken());
+      }
+      
+
+      entity.modifiedBy = this.tokenStorage.getUserId;
+      const toAdd = JSON.stringify(entity);
+      formData.append('dto', new Blob([toAdd],
+         {
+            type: 'application/json'
+         }));
+
+      const actionUrl = Constants.apiServer + url;
+      return this.http.post<Blob>(actionUrl, formData, { headers: head, responseType: 'blob' as 'json' })
+         .pipe(catchError(this.handleError));
+   }
+
    public authenticate = (user: User): Observable<AuthToken> => {
       const toAdd = JSON.stringify(user);
       const actionUrl = Constants.apiServer + '/service/token/authenticate';

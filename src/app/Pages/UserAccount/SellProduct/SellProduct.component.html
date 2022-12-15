@@ -1,129 +1,153 @@
- 
-  <a mat-button [routerLink]="['/account/sell-item']">{{'COMMON.PRODUCT_SALE' | translate}}
-    <mat-icon>navigate_next</mat-icon>
-  </a>
-  <a mat-button color="accent" *ngIf="selectedStore && selectedStore.id>0">
-    <h5>{{'COMMON.STORE' | translate}} : {{selectedStore.name}}</h5>
-  </a>
+<a mat-button [routerLink]="['/account/sell-item']">{{'COMMON.PRODUCT_SALE' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<a mat-button color="accent" *ngIf="selectedStore && selectedStore.id>0">
+  <h5>{{'COMMON.STORE' | translate}} : {{selectedStore.name}}</h5>
+</a>
 
-  <div fxLayout="row wrap" class="col-gap">
+<div fxLayout="row wrap" class="col-gap">
 
-    <mat-horizontal-stepper [linear]="true" #stepper>
-      <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
-        <div fxLayout="row wrap" class="col-gap">
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-            *ngIf="!stores || stores.length===0">
-            <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
-              [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
-          </div>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
+      <div fxLayout="row wrap" class="col-gap">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+          *ngIf="!stores || stores.length===0">
+          <button mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+            [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
         </div>
-        <div fxLayout="row wrap" class="col-gap">
+      </div>
+      <div fxLayout="row wrap" class="col-gap">
 
-          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-            *ngFor="let store of stores">
-            <div class="tile tile-primary">
-              <div class="tile-heading">{{store.name}} <span class="pull-right">
-                  <i *ngIf="store.aprvStatus===0" class="fa fa-spinner"></i>
-                  <i *ngIf="store.aprvStatus===1" class="fa fa-check"></i>
-                  {{store.aprvStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
-              </div>
-              <div class="tile-body">
-                <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                    <img height="100%" src="assets/images/stores/{{store.id}}/{{store.image}}">
-                    <br />
-                    <span class="pull-left">
-                      <i *ngIf="store.status===0" class="fa fa-exclamation-circle"></i>
-                      <i *ngIf="store.status===1" class="fa fa-check-circle"></i>
-                      {{store.status===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</span>
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
-                    <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{store.phone}}</span><br />
-                    <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{store.email}}</span><br />
-                    <span class="pull-left" *ngIf="store.address"><i class="fa fa-map-marker fa-sm"></i>
-                      {{store.address.city}}, {{store.address.country.name}}</span>
-                    <div [innerHTML]="store?.description"></div>
-                  </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngFor="let store of stores">
+          <div class="tile tile-primary">
+            <div class="tile-heading">{{store.name}} <span class="pull-right">
+                <i *ngIf="store.aprvStatus===0" class="fa fa-spinner"></i>
+                <i *ngIf="store.aprvStatus===1" class="fa fa-check"></i>
+                {{store.aprvStatus===0?('COMMON.PENDING_APPROVAL'|translate):('COMMON.APPROVED'|translate)}}</span>
+            </div>
+            <div class="tile-body">
+              <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
+                  <img height="100%" src="assets/images/stores/{{store.id}}/{{store.image}}">
+                  <br />
+                  <span class="pull-left">
+                    <i *ngIf="store.status===0" class="fa fa-exclamation-circle"></i>
+                    <i *ngIf="store.status===1" class="fa fa-check-circle"></i>
+                    {{store.status===0?('COMMON.INACTIVE'|translate):('COMMON.ACTIVE'|translate)}}</span>
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+                  <span class="pull-left"><i class="fa fa-phone fa-sm"></i> {{store.phone}}</span><br />
+                  <span class="pull-left"><i class="fa fa-envelope fa-sm"></i> {{store.email}}</span><br />
+                  <span class="pull-left" *ngIf="store.address"><i class="fa fa-map-marker fa-sm"></i>
+                    {{store.address.city}}, {{store.address.country.name}}</span>
+                  <div [innerHTML]="store?.description"></div>
                 </div>
               </div>
-              <div class="tile-footer">
-                <div fxLayout="row wrap" class="col-gap">
-                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                  </div>
-                  <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                    <span class="pull-right">
-                      <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap"
-                        *ngIf="store.status===0 || store.aprvStatus ===0">
-                        {{'COMMON.STORE_NOT_ACTIVATED'|translate}}
-                      </mat-chip>
+            </div>
+            <div class="tile-footer">
+              <div fxLayout="row wrap" class="col-gap">
+                <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <span class="pull-right">
+                    <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap"
+                      *ngIf="store.status===0 || store.aprvStatus ===0">
+                      {{'COMMON.STORE_NOT_ACTIVATED'|translate}}
+                    </mat-chip>
 
-                      <button *ngIf="store.status===1 && store.aprvStatus ===1" mat-raised-button color="accent"
-                        (click)="selectedStore=store;stepper.selectedIndex=1;">
-                        <mat-icon>done</mat-icon>
-                        {{'COMMON.SELECT'|translate}}
-                      </button>
-                    </span>
-                  </div>
+                    <button *ngIf="store.status===1 && store.aprvStatus ===1" mat-raised-button color="accent"
+                      (click)="selectedStore=store;stepper.selectedIndex=1;">
+                      <mat-icon>done</mat-icon>
+                      {{'COMMON.SELECT'|translate}}
+                    </button>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_CATEGORY'|translate}}</ng-template>
-        <div fxLayout="row wrap" *ngIf="!(selectedStore.id>0)">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
-            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'COMMON.SELECT_STORE'|translate}}
-            </mat-chip>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{'COMMON.SELECT_CATEGORY'|translate}}</ng-template>
+      <mat-tab-group>
+        <mat-tab label="{{'COMMON.SELECT' | translate}}">
+          <div fxLayout="row wrap" *ngIf="!(selectedStore.id>0)">
+            <div fxFlex="100" fxFlex.gt-sm="100" class="p-3">
+              <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+                {{'COMMON.SELECT_STORE'|translate}}
+              </mat-chip>
+            </div>
           </div>
-        </div>
-        <div fxLayout="row wrap" *ngIf="selectedStore.id>0">
-          <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
-              <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
-                [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(indexOfelement)"
-                name="category" #category="ngModel">
-                <mat-option *ngFor="let category of cats" [value]="category">
-                  {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+          <div fxLayout="row wrap" *ngIf="selectedStore.id>0">
+            <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngFor="let cats of categories; let indexOfelement=index;">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>{{'COMMON.CATEGORY' | translate }}</mat-label>
+                <mat-select id="category" [(ngModel)]="selectedCatDescs[indexOfelement]"
+                  [(value)]="selectedCatDescs[indexOfelement]" (selectionChange)="categorySelected(indexOfelement)"
+                  name="category" #category="ngModel">
+                  <mat-option *ngFor="let category of cats" [value]="category">
+                    {{category.name}} <span *ngIf="category.category.childCount > 0"> > </span>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-      </mat-step>
-      <mat-step>
-        <ng-template matStepLabel>{{'COMMON.SELECT_PRODUCT'|translate}}</ng-template>
-        <div fxLayout="row wrap" *ngIf="!products || products.length===0">
-          <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
-              {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
-            </mat-chip>
+        </mat-tab>
+        <mat-tab label="{{'COMMON.IMPORT_PRODUCTS' | translate}}">
+          <div fxLayout="row wrap" *ngIf="selectedStore.id>0">
+            <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
+              <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
+              <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept=".xls,.xlsx"
+                [linkEnabled]="false">
+              </input-file>
+            </div>
+            <div fxFlex="10">
+              <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                (click)="importProducts()" type="button">
+                <span class="mx-1 uppercase">{{'COMMON.IMPORT_PRODUCTS' | translate}}</span>
+                <mat-icon>copy</mat-icon>
+              </button>
+            </div>
           </div>
-        </div>
-        <div fxLayout="row wrap" *ngIf="products && products.length>0">
-          <div fxFlex="100" class="px-2 pb-2 pt-0">
-            <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
-              (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
-              (onSearchClick)="searchClicked($event)" (onChangeSorting)="changeSorting($event)"
-              (onChangeViewType)="changeViewType($event)">
-            </app-products-toolbar>
+          <div fxLayout="row wrap">
+            <div class="text-center mt-2" *ngIf="messages">
+              <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+            </div>
           </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{'COMMON.SELECT_PRODUCT'|translate}}</ng-template>
+      <div fxLayout="row wrap" *ngIf="!products || products.length===0">
+        <div fxFlex="100" class="px-2 pb-2 pt-0">
+          <mat-chip selected disableRipple="true" color="warn" class="uppercase ws-nowrap">
+            {{'MESSAGE.NO_PRODUCT_FOUND'|translate}}
+          </mat-chip>
         </div>
-        <div fxLayout="row wrap" *ngIf="products && products.length>0">
-          <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
-            <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
-              [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
-              (addToWishList)="addToWishList($event)" (selectProduct)="quickSell($event)" gridThree="true">
-            </embryo-ProductGrid>
-          </div>
+      </div>
+      <div fxLayout="row wrap" *ngIf="products && products.length>0">
+        <div fxFlex="100" class="px-2 pb-2 pt-0">
+          <app-products-toolbar [showSidenavToggle]="false" [dataSource]="dataSource"
+            (onSidenavToggle)="sidenav.toggle()" (onChangeCount)="changeCount($event)"
+            (onSearchClick)="searchClicked($event)" (onChangeSorting)="changeSorting($event)"
+            (onChangeViewType)="changeViewType($event)">
+          </app-products-toolbar>
         </div>
-        <mat-paginator *ngIf="products && products.length>0" [length]="pagination?.total"
-          [pageSize]="pagination?.perPage" (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
-        </mat-paginator>
-      </mat-step>
-    </mat-horizontal-stepper>
-  </div> 
+      </div>
+      <div fxLayout="row wrap" *ngIf="products && products.length>0">
+        <div fxFlex="100" fxFlex.gt-sm="100" class="p-3" *ngIf="dataSource">
+          <embryo-ProductGrid [currency]="appService?.currency" [products]="dataSource.filteredData"
+            [viewType]="viewType" [viewCol]="viewCol" [fromPage]="'sell'" (addToCart)="addToCart($event)"
+            (addToWishList)="addToWishList($event)" (selectProduct)="quickSell($event)" gridThree="true">
+          </embryo-ProductGrid>
+        </div>
+      </div>
+      <mat-paginator *ngIf="products && products.length>0" [length]="pagination?.total" [pageSize]="pagination?.perPage"
+        (page)="onPageChange($event)" class="w-100 mat-elevation-z1">
+      </mat-paginator>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

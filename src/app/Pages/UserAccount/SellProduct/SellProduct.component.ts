@@ -10,6 +10,7 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { MatStepper, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-sell-product',
@@ -57,6 +58,11 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   public message: string;
   public errors: string;
   public watcher: Subscription;
+
+  formData = new FormData();
+  picture: any[] = [];
+  justSubmitted = false;
+  saving = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -414,6 +420,50 @@ export class SellProductComponent extends BaseComponent implements OnInit {
           }
         }
       });
+
+  }
+
+
+  importProducts() {
+    console.log('Import product started ...');
+    if (this.justSubmitted) {
+      this.justSubmitted = false;
+      console.log('Just submitted');
+      return;
+    }
+    this.saving = true;
+    this.messages = '';
+
+    this.formData = new FormData();
+    if (this.picture && this.picture.length > 0 && this.picture[0].file) {
+      this.formData.append('file[]', this.picture[0].file, 'picture.' + this.picture[0].file.name);
+    }
+
+
+    this.appService.downloadWithFileUsingUrl('/service/catalog/importProducts', {
+      storeId: this.selectedStore.id,
+      modifiedBy: +this.appService.tokenStorage.getUserId()
+    }, this.formData)
+      .subscribe((data: any) => {
+
+        this.saving = false;
+
+        const blob = new Blob([data], { type: 'application/vnd.ms-excel;charset=utf-8' });
+        saveAs(blob, 'productImportResult.xlsx');
+
+        this.translate.get(['MESSAGE.PRODUCTS_IMPORT_COMPLETED']).subscribe(res => {
+          this.messages = res['MESSAGE.PRODUCTS_IMPORT_COMPLETED'];
+        });
+
+        //this.picture = [];
+      }, error => {
+        this.saving = false;
+        console.log(error);
+      }, () => {
+        this.saving = false;
+        console.log('Save Transaction complete');
+      }
+      );
 
   }
 

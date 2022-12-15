@@ -986,7 +986,8 @@
 		"ONLINE_BOOKING": "Réservation en ligne",
 		"TOP_PROPERTY": "Top Propriété",
 		"COPY_PRODUCTS": "Copier Produits",
-		"COPY_OPTIONS": "Copier Options"
+		"COPY_OPTIONS": "Copier Options",
+		"IMPORT_PRODUCTS": "Importer des produits"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1087,7 +1088,8 @@
 		"PLEASE_SELECT_A_ROOM": "Veuillez sélectionner vos chambres",
 		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis",
 		"ALREADY_EXISTS": "Existe déjà",
-		"OBJECT_HAS_CHILD": "Ce produit a été vendu dans le système. Il ne peut pas être supprimé."
+    "OBJECT_HAS_CHILD": "Ce produit a été vendu dans le système. Il ne peut pas être supprimé.",
+    "PRODUCTS_IMPORT_COMPLETED": "L'importation du produit est terminée. Veuillez vérifier le fichier téléchargé pour le resultat"
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
