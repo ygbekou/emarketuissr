@@ -152,7 +152,7 @@
   <mat-tab label="{{'COMMON.SERVICE' | translate}}s">
     <app-store-services #ServicesComponent></app-store-services>
   </mat-tab>
-  <mat-tab label="{{'COMMON.COPY_PRODUCTS' | translate}}">
+  <mat-tab label="{{'COMMON.COPY_PRODUCTS' | translate}}" *ngIf="store.isLive === 0">
     <form name="form" (ngSubmit)="f_copy_prds.form.valid && copyItemsFromStore()" #f_copy_prds="ngForm" validate>
       <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
         <mat-label> {{'COMMON.SELECT_STORE' | translate}} <font color="red">*</font>

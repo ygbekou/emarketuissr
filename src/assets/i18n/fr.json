@@ -987,7 +987,8 @@
 		"TOP_PROPERTY": "Top Propriété",
 		"COPY_PRODUCTS": "Copier Produits",
 		"COPY_OPTIONS": "Copier Options",
-		"IMPORT_PRODUCTS": "Importer des produits"
+		"IMPORT_PRODUCTS": "Importer des produits",
+		"IS_LIVE": "En Ligne"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

@@ -284,6 +284,10 @@
               <mat-slide-toggle [(ngModel)]="store.onlineStore" name="onlineStore" #onlineStore="ngModel" class="my-2">
                 {{ 'COMMON.ONLINE_STORE' | translate }}
               </mat-slide-toggle>
+              <div class="divider"></div>
+              <mat-slide-toggle [(ngModel)]="store.isLive" name="isLive" #isLive="ngModel" class="my-2">
+                {{ 'COMMON.IS_LIVE' | translate }}
+              </mat-slide-toggle>
             </div>
           </div>
         </div>

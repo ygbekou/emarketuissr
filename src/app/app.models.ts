@@ -835,6 +835,7 @@ export class Store extends BaseModel {
   pymtMethodReq: number;
   catUrl: string;
   isHotel: number;
+  isLive: number;
   
   type = 'Store';
   constructor() {

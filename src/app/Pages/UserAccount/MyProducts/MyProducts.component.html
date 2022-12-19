@@ -278,7 +278,7 @@
                     </button>
                   </div>
                   <div class="text-left mt-2" fxFlex.gt-sm="50"></div>
-                  <div class="text-left mt-2" fxFlex.gt-sm="25">
+                  <div class="text-left mt-2" fxFlex.gt-sm="25" *ngIf="selectedStore.isLive === 0">
                     <button mat-raised-button fxLayout="row" fxLayoutAlign="center center" type="button"
                       (click)="deletePts(productStore.id)">
                       <span class="mx-1 uppercase"> {{'COMMON.DELETE'|translate}}</span>
@@ -448,7 +448,7 @@
             [productToStoreId]="productStore.id">
           </app-combo-product>
         </mat-tab>
-        <mat-tab label="{{'COMMON.COPY_OPTIONS' | translate}}">
+        <mat-tab label="{{'COMMON.COPY_OPTIONS' | translate}}" *ngIf="selectedStore.isLive === 0">
           <form name="form" (ngSubmit)="f_copy_options.form.valid && copyOptionsFromPts()" #f_copy_options="ngForm"
             validate>
             <div fxLayout="row wrap">

@@ -986,7 +986,8 @@
 		"TOP_PROPERTY": "Top Property",
 		"COPY_PRODUCTS": "Copy Products",
 		"COPY_OPTIONS": "Copy Options",
-		"IMPORT_PRODUCTS": "Import Products"
+		"IMPORT_PRODUCTS": "Import Products",
+		"IS_LIVE": "Is Live"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

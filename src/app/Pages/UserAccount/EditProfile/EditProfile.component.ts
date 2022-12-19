@@ -306,6 +306,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
          || this.store.isHotel.toString() === 'false'
          || this.store.isHotel.toString() === '0') ? 0 : 1;
 
+      this.store.isLive = (this.store.isLive == null
+         || this.store.isLive.toString() === 'false'
+         || this.store.isLive.toString() === '0') ? 0 : 1;
+
       this.store.modifiedBy = +this.appService.tokenStorage.getUserId();
       this.store.owner = this.user;
       console.log(this.store);
