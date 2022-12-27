@@ -659,6 +659,9 @@ export class GeoZone {
   delEnd0: string;
   kmRate: number;
   shippingWeightKm: number;
+  kmFlatRate: number;
+  kmFlatLimit: number;
+  
   constructor() {
     this.status = 1;
   }

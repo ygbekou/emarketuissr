@@ -987,7 +987,8 @@
 		"COPY_PRODUCTS": "Copy Products",
 		"COPY_OPTIONS": "Copy Options",
 		"IMPORT_PRODUCTS": "Import Products",
-		"IS_LIVE": "Is Live"
+		"IS_LIVE": "Is Live",
+		"FLAT_RATE_LIMIT": "Flat Rate Dist. Limit"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
