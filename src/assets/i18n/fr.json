@@ -799,7 +799,8 @@
 		"ADD_PAYMENT_TO_PROCEED":"Indiquez votre méthode de payement pour continuer",
 		"TOTAL_DUE": "Total Due",
 		"TOTAL_PAID": "Total Payé",
-		"SALES_SUMMARIES": "Sommaires des ventes",
+    "SALES_SUMMARIES": "Sommaires des ventes",
+		"DELIVERIES_SUMMARIES": "Sommaires des livraisons",
 		"PAYMENTS": "Payements",
 		"PAYOUTS": "Payements",
 		"PROOF_PAYOUT_ID": "Numéro de réference",
@@ -989,7 +990,9 @@
 		"COPY_OPTIONS": "Copier Options",
 		"IMPORT_PRODUCTS": "Importer des produits",
 		"IS_LIVE": "En Ligne",
-		"FLAT_RATE_LIMIT": "Limite de dist. forfaitaire"
+		"FLAT_RATE_LIMIT": "Limite de dist. forfaitaire",
+		"TOTAL_DELIV_COST": "Cout total Deliv.",
+		"DELIVERY_COUNT": "Delivery Count"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

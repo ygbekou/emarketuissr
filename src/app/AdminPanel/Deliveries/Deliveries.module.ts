@@ -23,42 +23,34 @@ import {
   MatTabsModule,
   MatGridListModule,
   MatRadioModule,
-  MatDatepickerModule,
   MatButtonToggleModule,
   MatSlideToggleModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatAutocompleteModule,
+  MatTooltipModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatStepperModule,
+  MatChipsModule,
+  MatBadgeModule,
+  MatDialogModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { GlobalModule } from '../../Global/Global.module';
-import { SystemRoutes } from './System.routing';
-import { LanguagesComponent } from './Languages/Languages.component';
-import { CurrenciesComponent } from './Currencies/Currencies.component';
-import { StockStatusesComponent } from './StockStatuses/StockStatuses.component';
-import { OrderStatusesComponent } from './OrderStatuses/OrderStatuses.component';
-import { ReturnStatusesComponent } from './ReturnStatuses/ReturnStatuses.component';
-import { ReturnActionsComponent } from './ReturnActions/ReturnActions.component';
-import { ReturnReasonsComponent } from './ReturnReasons/ReturnReasons.component';
-import { CountriesComponent } from './Countries/Countries.component';
-import { ZonesComponent } from './Zones/Zones.component';
-import { GeoZonesComponent } from './GeoZones/GeoZones.component';
-import { TaxRatesComponent } from './TaxRates/TaxRates.component';
-import { TaxClassesComponent } from './TaxClasses/TaxClasses.component';
-import { WeightClassComponent } from './WeightClass/WeightClass.component';
-import { WeightClassesComponent } from './WeightClasses/WeightClasses.component';
-import { LengthClassesComponent } from './LengthClasses/LengthClasses.component';
-import { LengthClassComponent } from './LengthClass/LengthClass.component';
-import { ConfigsComponent } from './configs/configs.component';
-import { StoresComponent } from './Stores/Stores.component';
-import { ShippersComponent } from './Shippers/Shippers.component';
+import { DeliveriesRoutes } from './Deliveries.routing';
+import { DeliveriesSummariesComponent } from './Summaries/DeliveriesSummaries.component';
+import { DeliveriesSummaryComponent } from './Summaries/DeliveriesSummary.component';
+import { DeliveryPayoutsComponent } from './Payouts/DeliveryPayouts.component';
+import { SalesModule } from '../Sales/Sales.module';
+
 
 @NgModule({
-  declarations: [LanguagesComponent, CurrenciesComponent, OrderStatusesComponent,
-    StockStatusesComponent, ReturnStatusesComponent, ReturnActionsComponent,
-    ReturnReasonsComponent, CountriesComponent, ZonesComponent, GeoZonesComponent,
-    TaxRatesComponent, TaxClassesComponent, WeightClassComponent, WeightClassesComponent,
-    LengthClassesComponent, LengthClassComponent, ConfigsComponent, StoresComponent, ShippersComponent],
+  declarations: [
+    DeliveriesSummariesComponent,
+    DeliveriesSummaryComponent,
+    DeliveryPayoutsComponent
+  ],
   imports: [
     CommonModule,
     FlexLayoutModule,
@@ -71,27 +63,34 @@ import { ShippersComponent } from './Shippers/Shippers.component';
     MatMenuModule,
     MatOptionModule,
     MatFormFieldModule,
-    MatInputModule,
     MatDatepickerModule,
     MatTableModule,
     MatRadioModule,
     MatDividerModule,
     MatListModule,
-    RouterModule.forChild(SystemRoutes),
+    MatDialogModule,
+    RouterModule.forChild(DeliveriesRoutes),
     TranslateModule,
     MatPaginatorModule,
     MatSortModule,
     MatGridListModule,
     GlobalModule,
+    SalesModule,
     FormsModule,
     MatTabsModule,
     ReactiveFormsModule,
     MatButtonToggleModule,
     MatSlideToggleModule,
-    MatSlideToggleModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatInputModule,
+    MatAutocompleteModule,
     InputFileModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatChipsModule,
+    MatBadgeModule,
     QuillModule.forRoot({
       theme: 'snow',
       modules: {
@@ -117,7 +116,8 @@ import { ShippersComponent } from './Shippers/Shippers.component';
 
   ],
   exports: [
-      
-  ]
+    DeliveriesSummariesComponent,
+    DeliveriesSummaryComponent,
+    DeliveryPayoutsComponent]
 })
-export class SystemModule { }
+export class DeliveriesModule { }

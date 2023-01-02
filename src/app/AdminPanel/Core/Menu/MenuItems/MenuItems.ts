@@ -51,6 +51,16 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'admin/deliveries',
+    name: 'Deliveries',
+    type: 'sub',
+    icon: 'commute',
+    children: [
+      { state: 'deliv/summaries', name: 'Summaries', type: 'link' },
+      { state: 'deliv/payouts/0', name: 'Payouts', type: 'link' }
+    ]
+  },
+  {
     state: 'admin/customers',
     name: 'Customers',
     type: 'sub',
@@ -151,6 +161,16 @@ const MENUITEMS_FR = [
       { state: 'reviews', name: 'Reviews', type: 'link' },
       { state: 'summaries', name: 'Sommaire des ventes', type: 'link' },
       { state: 'payouts/0', name: 'Payements', type: 'link' }
+    ]
+  },
+  {
+    state: 'admin/deliveries',
+    name: 'Livraisons',
+    type: 'sub',
+    icon: 'commute',
+    children: [
+      { state: 'deliv/summaries', name: 'Sommaires', type: 'link' },
+      { state: 'deliv/payouts/0', name: 'Payements', type: 'link' }
     ]
   },
   {

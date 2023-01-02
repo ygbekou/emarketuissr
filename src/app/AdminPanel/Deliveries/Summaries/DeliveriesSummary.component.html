@@ -1,0 +1,288 @@
+<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
+  <div fxLayout="row wrap">
+
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3"
+      *ngIf="deliveriesSummary.status === 2 && !isAdminPage">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+        (click)="acknowledgeDeliveriesSummary()" [disabled]="!f.form.valid" *ngIf="payout.id && payout.status === 1">
+        <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE' | translate}}</span>
+        <mat-icon>done_all</mat-icon>
+      </button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <div class="text-center mt-2" *ngIf="messages">
+        <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" *ngIf="deliveriesSummary && deliveriesSummary.id>0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="47" fxFlex.lg="47" fxFlex.xl="47">
+      <div class="tile tile-primary">
+        <div class="tile-heading">
+          <span class="pull-left" *ngIf="deliveriesSummary.status === 1" style="color:yellow">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.UNPAID' | translate}}
+            </h5>
+          </span>
+          <span class="pull-left" *ngIf="deliveriesSummary.status === 2" style="color:#00FF00">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.PAYMENT_SUBMITTED' | translate}}
+            </h5>
+          </span>
+          <span class="pull-left" *ngIf="deliveriesSummary.status === 3" style="color:#00FF00">
+            <h5>
+              <mat-icon>sync</mat-icon>{{'COMMON.PAYMENT_ACKNOWLEDGED' | translate}}
+            </h5>
+          </span>
+        </div>
+        <div class="tile-body">
+          <span class="pull-left">
+            <mat-icon>money</mat-icon>
+          </span>
+          {{'COMMON.CURRENCY' | translate}}: {{deliveriesSummary.currency?.title}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>schedule</mat-icon>
+          </span>
+          {{'COMMON.MONTH' | translate}}/{{'COMMON.YEAR' | translate}}:
+          {{deliveriesSummary.month}}/{{deliveriesSummary.year}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>payment</mat-icon>
+          </span>
+          {{'COMMON.PAYMENT_METHOD' | translate}}: {{deliveriesSummary.paymentMethod}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>person</mat-icon>
+          </span>
+          {{'COMMON.ACKNOWLEDGER' | translate}}:
+          {{deliveriesSummary.acknowledgerFullName }}
+          <br />
+          <span class="pull-left">
+            <mat-icon>schedule</mat-icon>
+          </span>
+          {{'COMMON.ACKNOWLEDGE_DATE' | translate}}: {{deliveriesSummary.acknowledgeDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+        </div>
+        <div class="tile-footer">
+          <h5> <span class="pull-left">
+              <mat-icon>store</mat-icon>
+            </span>
+
+            {{'COMMON.STORE' | translate}}:
+            {{deliveriesSummary.shipper.name}}</h5>
+        </div>
+      </div>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="6" fxFlex.lg="6" fxFlex.xl="6">
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="47" fxFlex.lg="47" fxFlex.xl="47">
+      <div class="tile tile-primary">
+        <div class="tile-heading">
+          <span class="pull-left" [style.color]="deliveriesSummary.totalRemaining!==0.0?'yellow':'#00ff00'">
+            <h5>
+              <span class="pull-left">
+                <mat-icon>credit_score</mat-icon>
+              </span>
+              {{'COMMON.TOTAL_PAID' | translate}}:
+              {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalPaid | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{deliveriesSummary.currency?.symbolRight}}
+              <span class="pull-left">
+                <mat-icon>payment</mat-icon>
+              </span>
+              {{'COMMON.TOTAL_REMAINING' | translate}}:
+              {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalRemaining | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{deliveriesSummary.currency?.symbolRight}}
+            </h5>
+          </span>
+        </div>
+        <div class="tile-body">
+          <span class="pull-left">
+            <mat-icon>shopping_cart</mat-icon>
+          </span>
+          {{'COMMON.DELIVERY_COUNT' | translate}}: {{deliveriesSummary.ordersCnt}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>money</mat-icon>
+          </span>
+          {{'COMMON.TOTAL_DELIV_COST'|translate}}:
+          {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.total | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{deliveriesSummary.currency?.symbolRight}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>credit_score</mat-icon>
+          </span>
+          {{'COMMON.TOTAL_DUE'|translate}}:
+          {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalDue | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{deliveriesSummary.currency?.symbolRight}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>payment</mat-icon>
+          </span>
+          {{'COMMON.TOTAL_PAID'|translate}}:
+          {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalPaid | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{deliveriesSummary.currency?.symbolRight}}
+          <br />
+          <span class="pull-left">
+            <mat-icon>credit_card</mat-icon>
+          </span>
+          {{'COMMON.TOTAL_REMAINING'|translate}}:
+          {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalRemaining | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{deliveriesSummary.currency?.symbolRight}}
+        </div>
+        <div class="tile-footer">
+          <h5> <span class="pull-left">
+              <mat-icon>account_balance_wallet</mat-icon>
+            </span>
+            {{'COMMON.TOTAL_DUE' | translate}}:
+            {{deliveriesSummary.currency?.symbolLeft}} {{deliveriesSummary.totalDue | number: '1.' + deliveriesSummary.currency?.decimalPlace + '-'  
+            + deliveriesSummary.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+            {{deliveriesSummary.currency?.symbolRight}}
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <h4 style="color:blue">{{'COMMON.PAYMENT_DETAILS' | translate}}</h4>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <mat-label> {{'COMMON.PROOF_PAYOUT_ID' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{payout.proofPayoutId}}
+      <br />
+      <mat-label style="color: #ff5722"> {{'COMMON.TOTAL' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label style="color: #ff5722">
+        {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
+            + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+        {{payout.currency?.symbolRight}}
+      </mat-label>
+      <br />
+      <mat-label> {{'COMMON.COMMENTS' | translate}}:</mat-label>
+      <div [innerHTML]="payout.comment"></div>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <mat-label> {{'COMMON.PAYOUT_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {{payout.payoutDate | date: 'dd/MM/yyyy'}}
+      <br />
+      <mat-label> {{'COMMON.CREATE_DATE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label>
+        {{payout.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}
+      </mat-label>
+      <br />
+      <mat-label> {{'COMMON.PAYER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <mat-label>
+        {{payout.payerFullName }}
+      </mat-label>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="!payout.image">
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="payout.image">
+      <mat-label> {{'COMMON.PAYMENT_RECEIPT' | translate}} ({{'COMMON.CLICK_TO_DOWNLOAD' | translate}})</mat-label>
+      <br />
+      <a href="assets/images/payouts/{{payout.id}}/{{payout.image}}" download>
+        <img src="assets/images/payouts/{{payout.id}}/{{payout.image}}" style="height: 100px; width: 200px;"
+          alt="{{'COMMON.PAYMENT_RECEIPT' | translate}}">
+      </a>
+    </div>
+  </div>
+
+
+  <!-- Begining Orders of the delivery summary-->
+  <div class="table-wrapper">
+    <h4 style="color:blue">{{'COMMON.ORDERS'|translate}}</h4>
+    <table mat-table [dataSource]="onlineOrdersDS" matSort class="w-100">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>{{'COMMON.ORDER_ID'|translate}} </th>
+        <td mat-cell *matCellDef="let order"> {{appService.pad(order.orderId,6)}} </td>
+      </ng-container>
+
+      <!-- Published Column -->
+      <ng-container matColumnDef="storeName">
+        <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.STORE' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let order"> {{order.storeName}} </td>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.CUSTOMER'|translate}} </th>
+        <td mat-cell *matCellDef="let order"> {{order.cFirstName}} {{order.cLastName}} </td>
+      </ng-container>
+
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.ORDER_STATUS'|translate}}
+        </th>
+        <td mat-cell *matCellDef="let order"> {{order.status}} </td>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="shippingCost">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SHIPPING_RATE' | translate}} </th>
+        <td mat-cell *matCellDef="let order">
+          {{order.symbolLeft}}
+          {{order.shippingCost| number:'1.0-2'}}
+          {{order.symbolRight}}
+        </td>
+      </ng-container>
+
+      <!-- Published Column -->
+      <ng-container matColumnDef="dateAdded">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.ORDER_DATE' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let order"> {{order.createDate | date: 'dd/MM/yyyy'}} </td>
+      </ng-container>
+
+      <!-- Published Column -->
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.CITY' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let order"> {{order.city}} </td>
+      </ng-container>
+
+      <!-- Published Column -->
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.COUNTRY' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let order"> {{order.country}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="onlineOrdersColumns"></tr>
+      <tr mat-row *matRowDef="let order; columns: onlineOrdersColumns;">
+      </tr>
+    </table>
+    <p *ngIf="onlineOrdersDS?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+  </div>
+  <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+  </mat-paginator>
+
+  <!-- End Orders of the delivery summary-->
+
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+      <h4 style="color:blue">{{'COMMON.DELIVERIES_SUMMARIES' | translate}}</h4>
+    </div>
+  </div>
+  <div fxLayout="row wrap" *ngIf="payout.id > 0">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
+      *ngIf="!payout.reversePayoutId">
+      <app-deliveries-summaries-include [theaction]="'fromSalesSummaryDetails'"
+        (selectDeliveriesSummaryEvent)="getDeliveriesSummary($event.id); getPayout(payout.id);">
+      </app-deliveries-summaries-include>
+    </div>
+  </div>
+</form>

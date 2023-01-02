@@ -801,6 +801,7 @@
 		"TOTAL_DUE": "Total Due",
 		"TOTAL_PAID": "Total Paid",
 		"SALES_SUMMARIES": "Sales Summaries",
+		"DELIVERIES_SUMMARIES": "Deliveries Summaries",
 		"PAYMENTS": "Payments",
 		"PAYOUTS": "Payout",
 		"PROOF_PAYOUT_ID": "Reference Number",
@@ -988,7 +989,9 @@
 		"COPY_OPTIONS": "Copy Options",
 		"IMPORT_PRODUCTS": "Import Products",
 		"IS_LIVE": "Is Live",
-		"FLAT_RATE_LIMIT": "Flat Rate Dist. Limit"
+		"FLAT_RATE_LIMIT": "Flat Rate Dist. Limit",
+		"TOTAL_DELIV_COST": "Total Deliv. Cost",
+		"DELIVERY_COUNT": "Delivery Count"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
