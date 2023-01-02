@@ -92,6 +92,7 @@ export class DeliveriesSummaryComponent extends BaseComponent implements OnInit 
 
   getPayout(payoutId: number) {
     this.messages = '';
+
     if (payoutId > 0) {
       this.appService.getOneWithChildsAndFiles(payoutId, 'Payout')
         .subscribe(result => {
@@ -117,6 +118,11 @@ export class DeliveriesSummaryComponent extends BaseComponent implements OnInit 
             });
           }
         });
+    } else {
+      this.payout = new Payout();
+            setTimeout(() => {
+              this.deliveriesSummariesIncludeComponent.setDataSource([], 'fromDeliveriesSummaryDetails', null);
+            }, 500);
     }
   }
 

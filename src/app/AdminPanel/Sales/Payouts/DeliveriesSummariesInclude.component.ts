@@ -150,6 +150,10 @@ export class DeliveriesSummariesIncludeComponent extends BaseComponent implement
     if (total) {
       this.totalDue = total;
     }
+
+    if (!data || data.length === 0) {
+      this.totalDue = null;
+    }
     this.deliveriesSummariesDatasource = new MatTableDataSource(data);
     this.deliveriesSummariesDatasource.paginator = this.deliveriesSummariesPaginator;
     this.deliveriesSummariesDatasource.sort = this.deliveriesSummariesSort;
