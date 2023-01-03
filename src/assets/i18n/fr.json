@@ -988,7 +988,10 @@
 		"COPY_PRODUCTS": "Copier Produits",
 		"COPY_OPTIONS": "Copier Options",
 		"IMPORT_PRODUCTS": "Importer des produits",
-		"IS_LIVE": "En Production"
+    "IS_LIVE": "En Production",
+    "FLAT_RATE_LIMIT": "Limite de distance forfaitaire",
+		"TOTAL_DELIV_COST": "Cout total livraison.",
+		"DELIVERY_COUNT": "Nombre de livraisons"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
