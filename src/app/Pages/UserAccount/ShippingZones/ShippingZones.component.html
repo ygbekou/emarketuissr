@@ -196,7 +196,29 @@
         </div>
 
 
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==2">
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngIf="geoZone.shippingMode==2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.FLAT_RATE' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="kmFlatRate"
+              [(ngModel)]="geoZone.kmFlatRate" name="kmFlatRate" #kmFlatRate="ngModel" required>
+            <mat-error *ngIf="ff.submitted && kmFlatRate.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngIf="geoZone.shippingMode==2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label> {{'COMMON.FLAT_RATE_LIMIT' | translate}}
+            </mat-label>
+            <input matInput type="text" class="form-control" id="kmFlatLimit"
+              [(ngModel)]="geoZone.kmFlatLimit" name="kmFlatLimit" #kmFlatLimit="ngModel" required>
+            <mat-error *ngIf="ff.submitted && kmFlatLimit.invalid" severity="error">
+              {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngIf="geoZone.shippingMode==2">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.RATE_PER_KM' | translate}}
             </mat-label>
@@ -207,7 +229,7 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-sm="33" class="p-3" *ngIf="geoZone.shippingMode==2">
+        <div fxFlex="100" fxFlex.gt-sm="25" class="p-3" *ngIf="geoZone.shippingMode==2">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label> {{'COMMON.SHIPPING_WEIGHT_KM' | translate}}
             </mat-label>

@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -20,6 +20,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
+import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
 
 interface Response {
    data: any;
@@ -225,6 +226,21 @@ export class AppService {
       this.dialog.closeAll();
    }
 
+
+   public shipperSearch(searchCriteria: any) {
+      let popup: MatDialogRef<ShipperSearchComponent>;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.direction = this.isDirectionRtl ? 'rtl' : 'ltr';
+      dialogConfig.maxWidth = '300vw';
+      dialogConfig.maxHeight = '300vh';
+      dialogConfig.width = '800px';
+      dialogConfig.height = '500px';
+
+      popup = this.dialog.open(ShipperSearchComponent, dialogConfig);
+      popup.componentInstance.searchCriteria = searchCriteria;
+
+      return popup.afterClosed();
+   }
 
 
 
@@ -883,7 +899,7 @@ export class AppService {
       if (this.tokenStorage.hasToken()) {
          head = head.set('Authorization', 'Bearer ' + this.tokenStorage.getToken());
       }
-      
+
 
       entity.modifiedBy = this.tokenStorage.getUserId;
       const toAdd = JSON.stringify(entity);

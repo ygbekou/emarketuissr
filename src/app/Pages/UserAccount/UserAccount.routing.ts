@@ -41,6 +41,7 @@ import { FundsComponent } from './SellerFunds/Funds.component';
 import { TranlogsComponent } from './Sales-audit/Tranlogs.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
 import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
+import { SellerDeliveriesSummariesComponent } from './Deliveries-summaries/SellerDeliveriesSummaries.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -154,6 +155,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'sales-summaries',
             component: SellerSalesSummariesComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'deliveries-summaries',
+            component: SellerDeliveriesSummariesComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

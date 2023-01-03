@@ -1,10 +1,17 @@
 <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" validate>
   <div fxLayout="row wrap">
-    <div fxFlex.xs="100" fxFlex.sm="75" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75" class="p-3" *ngIf="isAdminPage">
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="isAdminPage">
       <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
         type="submit" [disabled]="!f.form.valid" *ngIf="payout.id && payout.total > 0 && !payout.reversePayoutId">
         <span class="mx-1 uppercase">{{'COMMON.SAVE' | translate}}</span>
         <mat-icon>save</mat-icon>
+      </button>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="isAdminPage">
+      <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
+        type="button" (click)="clear();">
+        <span class="mx-1 uppercase">{{'COMMON.ADD' | translate}}</span>
+        <mat-icon>add</mat-icon>
       </button>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="25" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3" *ngIf="isAdminPage">
@@ -34,7 +41,8 @@
     <mat-step>
       <ng-template matStepLabel>{{'COMMON.SELECT_STORE'|translate}}</ng-template>
       <div fxLayout="row wrap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3"
+          *ngIf="type === 'sale'">
           <mat-form-field class="w-100">
             <mat-label> {{'COMMON.STORE' | translate}}</mat-label>
             <mat-select [(ngModel)]="payout.store" name="store" #store="ngModel" [compareWith]="compareObjects"
@@ -49,9 +57,22 @@
           </mat-form-field>
         </div>
 
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3"
+          *ngIf="type === 'delivery'">
+          <mat-form-field class="w-100">
+            <mat-label> {{'COMMON.SHIPPER' | translate}}</mat-label>
+            <input matInput type="text" class="form-control" id="shipperName" [(ngModel)]="payout.shipperName"
+              name="shipperName" #shipperName="ngModel">
+            <button mat-icon-button color="primary" (click)="openSearchPopup()"
+              matTooltip="{{'COMMON.SELECT_SHIPPER' | translate}}" class="remove">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
           <mat-label> {{'COMMON.CURRENCY' | translate}}</mat-label><br />
-          {{payout.store.currency?.title}}
+          {{payout.currency?.title}}
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-3">
@@ -66,8 +87,12 @@
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10" class="p-3">
-          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" *ngIf="type === 'sale'"
             (click)="searchSalesSummaries()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" *ngIf="type === 'delivery'" 
+            (click)="searchDeliveriesSummaries()">
             <mat-icon>search</mat-icon>
           </button>
         </div>
@@ -85,8 +110,12 @@
     <mat-step [completed]="payout.total !== 0">
       <ng-template matStepLabel>{{'COMMON.SELECT_TRANSACTION'|translate}}</ng-template>
       <div fxLayout="row wrap">
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
+        
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3" [hidden]="type !== 'sale'">
           <app-sales-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-sales-summaries-include>
+        </div>
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3" [hidden]="type !== 'delivery'">
+          <app-deliveries-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-deliveries-summaries-include>
         </div>
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
           <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" style="float: left;"
@@ -171,13 +200,17 @@
         *ngIf="payout.total < 0 && payout.reversePayoutId">{{'COMMON.REVERSAL' | translate}}</h4>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="type === 'sale'">
         <mat-label> {{'COMMON.STORE' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <mat-label> {{payout.store.name}}</mat-label>
       </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3" *ngIf="type === 'delivery'">
+        <mat-label> {{'COMMON.SHIPPER' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <mat-label> {{payout.shipper.name}}</mat-label>
+      </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-label> {{'COMMON.CURRENCY' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {{payout.store.currency?.title}}
+        {{payout.currency?.title}}
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
         <mat-label> {{'COMMON.YEAR' | translate}}:</mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -189,9 +222,9 @@
         <mat-label style="color: #ff5722"> {{'COMMON.TOTAL_DUE' | translate}}</mat-label>
         <br />
         <h6 style="color: #ff5722">
-          {{payout.store.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.store.currency?.decimalPlace + '-'  
-              + payout.store.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
-          {{payout.store.currency?.symbolRight}}
+          {{payout.currency?.symbolLeft}} {{payout.total | number: '1.' + payout.currency?.decimalPlace + '-'  
+              + payout.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+          {{payout.currency?.symbolRight}}
         </h6>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-3">
@@ -237,9 +270,14 @@
       </div>
     </div>
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
-      *ngIf="!payout.reversePayoutId">
+      *ngIf="!payout.reversePayoutId && type === 'sale'">
       <h6 style="color:blue">{{'COMMON.SALES_SUMMARIES' | translate}}</h6>
       <app-sales-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-sales-summaries-include>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-3"
+      *ngIf="!payout.reversePayoutId && type === 'delivery'">
+      <h6 style="color:blue">{{'COMMON.DELIVERIES_SUMMARIES' | translate}}</h6>
+      <app-deliveries-summaries-include (totalDueCompleteEvent)="updateTotalDue($event)"></app-deliveries-summaries-include>
     </div>
   </div>
 </form>

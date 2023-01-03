@@ -29,6 +29,10 @@ export const AdminPanelRoutes: Routes = [
                import('./Sales/Sales.module').then(m => m.SalesModule)
          },
          {
+            path: 'deliveries', loadChildren: () =>
+               import('./Deliveries/Deliveries.module').then(m => m.DeliveriesModule)
+         },
+         {
             path: 'customers', loadChildren: () =>
                import('./Customers/Customers.module').then(m => m.CustomersModule)
          },

@@ -101,6 +101,7 @@ import { StoreCatsComponent } from './StoreCats/StoreCats.component';
 import { TopStoresComponent } from './TopStores/TopStores.component';
 import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
+import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
 @NgModule({
    imports: [
       CommonModule,
@@ -205,6 +206,7 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       CommentPopupComponent,
       StoreCatsComponent,
       TopStoresComponent,
+      ShipperSearchComponent
    ],
    exports: [
       BrandslogoComponent,
@@ -264,6 +266,7 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       CommentPopupComponent,
       StoreCatsComponent,
       TopStoresComponent,
+      ShipperSearchComponent
    ],
    entryComponents: [
       ReviewPopupComponent,
@@ -272,6 +275,7 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
       TimerCountDownComponent,
       ProductOptionPopupComponent,
       CommentPopupComponent,
+      ShipperSearchComponent
    ],
    providers: [
       AuthGuardService,

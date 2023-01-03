@@ -48,6 +48,13 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Sales audit', url: '/account/sales-audit', icon: 'content_copy' },
     ]
   }, {
+    name: 'Deliveries',
+    url: '/account/delivery',
+    icon: 'account_circle',
+    children: [
+      { name: 'Summary', url: '/account/deliveries-summaries', icon: 'summarize' }
+    ]
+  }, {
     name: 'Products',
     url: '/account/selling',
     icon: 'account_circle',
@@ -77,6 +84,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'My shippers', url: '/account/my-shippers', icon: 'directions_run' },
+      { name: 'My stores', url: '/account/deliveries', icon: 'store' },
       { name: 'My deliveries', url: '/account/deliveries', icon: 'local_shipping' },
     ]
   }, {
@@ -133,6 +141,13 @@ const TREE_DATA_FR: MenuNode[] = [
 
     ]
   }, {
+    name: 'Livraisons',
+    url: '/account/delivery',
+    icon: 'account_circle',
+    children: [
+      { name: 'Sommaire', url: '/account/deliveries-summaries', icon: 'summarize' }
+    ]
+  }, {
     name: 'Produits',
     url: '/account/selling',
     icon: 'account_circle',
@@ -162,6 +177,7 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Zones d\'expédition', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'Mes livreurs', url: '/account/my-shippers', icon: 'directions_run' },
+      { name: 'Mes boutiques', url: '/account/deliveries', icon: 'store' },
       { name: 'Mes livraisons', url: '/account/deliveries', icon: 'local_shipping' },
     ]
   }, {

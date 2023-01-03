@@ -82,7 +82,7 @@ export const SalesRoutes: Routes = [
             data: {
                expectedRole: ['Administrator']
             }
-         },
+         }
       ]
    }
 ];

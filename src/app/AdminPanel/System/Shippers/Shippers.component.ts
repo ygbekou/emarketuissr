@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Shipper } from 'src/app/app.models';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -12,23 +12,46 @@ import { AppService } from 'src/app/Services/app.service';
   styleUrls: ['./Shippers.component.scss']
 })
 export class ShippersComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'phone',
-   'status','deliveryCount','rating', 'sortOrder'];
+  displayedColumns: string[] = ['id', 'name', 'phone', 'status', 'deliveryCount', 'rating', 'sortOrder'];
   dataSource: MatTableDataSource<Shipper>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   shipper: Shipper = new Shipper();
   messages = '';
   errors = '';
   selectedTab = 0;
+
+  @Input()
+  shipperName: string;
+  @Input()
+  shipperLastName: string;
+  @Input()
+  shipperFirstName: string;
+
+
+
   constructor(public appService: AppService,
-    private translate: TranslateService) { }
+    private translate: TranslateService) {
+
+    }
 
   ngOnInit() {
     this.getAll();
   }
+  
   getAll() {
     const parameters: string[] = [];
+    if (this.shipperName) {
+      parameters.push('e.name = |shipperName|' + this.shipperName + '|String');
+    }
+    if (this.shipperLastName) {
+      parameters.push('e.user.lastName = |shipperLastName|' + this.shipperLastName + '|String');
+    }
+    if (this.shipperFirstName) {
+      parameters.push('e.user.firstName = |shipperFirstName|' + this.shipperFirstName + '|String');
+    }
+
     this.appService.getAllByCriteria('com.softenza.emarket.model.Shipper', parameters)
       .subscribe((data: Shipper[]) => {
         this.dataSource = new MatTableDataSource(data);

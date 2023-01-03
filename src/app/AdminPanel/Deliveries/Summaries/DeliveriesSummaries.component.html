@@ -1,0 +1,231 @@
+<a mat-button [routerLink]="['/admin/deliveries/summaries']">{{'COMMON.DELIVERIES_SUMMARIES' | translate}}
+  <mat-icon>navigate_next</mat-icon>
+</a>
+<button *ngIf="!stores || stores.length===0" mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
+  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
+
+<div fxLayout="row wrap">
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+
+    <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="changeOrderType($event)"
+      [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+      <mat-tab label="{{'COMMON.DELIVERIES_SUMMARIES' | translate}}">
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="100">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'COMMON.SEARCH' | translate}}"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-center mt-2" *ngIf="messages">
+          <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
+        </div>
+
+        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+          <div fxFlex.xs="100" fxFlex.sm="80" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80">
+            <div class="table-wrapper">
+              <table mat-table [dataSource]="deliveriesSummariesDatasource" matSort class="w-100">
+
+                <ng-container matColumnDef="shipperName">
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.SHIPPER' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary"> {{deliveriesSummary.shipperName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="monthyear">
+                  <th mat-header-cell *matHeaderCellDef width="6%" mat-sort-header>
+                    {{'COMMON.PERIOD'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary">
+                    {{deliveriesSummary.month}}/{{deliveriesSummary.year}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="paymentMethod">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.METHOD'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary"> {{deliveriesSummary.paymentMethod}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.TOTAL_DELIV_COST'|translate}} </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary" class="text-left">
+                    {{deliveriesSummary.currencySymbolLeft}} {{deliveriesSummary.total | number: '1.' + deliveriesSummary.currencyDecimalPlace + '-'  
+                + deliveriesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{deliveriesSummary.currencySymbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalDue">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_DUE'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary" class="text-left"
+                    [ngStyle]="{'color': deliveriesSummary.totalDue < 0 ? '#ff5722' : '#000000'}">
+                    {{deliveriesSummary.currencySymbolLeft}} {{deliveriesSummary.totalDue | number: '1.' + deliveriesSummary.currencyDecimalPlace + '-'  
+                + deliveriesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{deliveriesSummary.currencySymbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalPaid">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.TOTAL_PAID'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary" class="text-left">
+                    {{deliveriesSummary.currencySymbolLeft}} {{deliveriesSummary.totalPaid | number: '1.' + deliveriesSummary.currencyDecimalPlace + '-'  
+                + deliveriesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{deliveriesSummary.currencySymbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalRemaining">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.TOTAL_REMAINING'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary" class="text-left">
+                    {{deliveriesSummary.currencySymbolLeft}} {{deliveriesSummary.totalRemaining | number: '1.' + deliveriesSummary.currencyDecimalPlace + '-'  
+                + deliveriesSummary.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
+                    {{deliveriesSummary.currencySymbolRight}}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.STATUS'|translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let deliveriesSummary" class="text-left">
+                    <span style="color: #0000FF" *ngIf="deliveriesSummary.status === 2">
+                      {{'COMMON.PAY_SUBMITTED'|translate}}
+                    </span>
+                    <span style="color: #008000" *ngIf="deliveriesSummary.status === 3">
+                      {{'COMMON.PAY_ACKNOWLEDGED'|translate}} </span>
+                    <span style="color: #FF0000" *ngIf="deliveriesSummary.status === 1 || deliveriesSummary.totalPaid === 0">
+                      {{'COMMON.UNPAID'|translate}}
+                    </span>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
+                  <td mat-cell *matCellDef="let deliveriesSummary">
+                    <a mat-icon-button
+                      (click)="getDeliveriesSummaryDetails(deliveriesSummary.id, deliveriesSummary.payoutId)"
+                      color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
+                      <mat-icon>info</mat-icon>
+                    </a>
+                    &nbsp;&nbsp;
+                    <button mat-raised-button (click)="acknowledgeDeliveriesSummary(deliveriesSummary.id)"
+                      color="accent" fxLayout="row" fxLayoutAlign="center center"
+                      *ngIf="deliveriesSummary.status === 2 && !isAdminPage"
+                      matTooltip="{{'COMMON.ACKNOWLEDGE' | translate}}">
+                      <span class="mx-1 uppercase">{{'COMMON.ACKNOWLEDGE_SHORT' | translate}}</span>
+                      <mat-icon>done_all</mat-icon>
+                    </button>
+
+                  </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="deliveriesSummariesColumns"></tr>
+                <tr mat-row *matRowDef="let deliveriesSummary; columns: deliveriesSummariesColumns;"></tr>
+              </table>
+              <p *ngIf="deliveriesSummariesDatasource?.data.length === 0" class="py-5 mb-0 text-center">
+                {{'MESSAGE.NO_DATA' | translate}}</p>
+            </div>
+            <mat-paginator [pageSize]="10" #MatPaginatorO [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-card>
+              <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
+
+                <div fxLayout="row wrap">
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='filter'" color="primary" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.FILTER' | translate}}</span>
+                      <mat-icon>filter_alt</mat-icon>
+                    </button>
+                  </div>
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.SHIPPER' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="shipperName"
+                      [(ngModel)]="searchCriteria.shipperName" name="shipperName" #shipperName="ngModel">
+                      <button mat-icon-button color="primary" (click)="openSearchPopup()"
+                      matTooltip="{{'COMMON.SELECT_SHIPPER' | translate}}" class="remove">
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.YEAR' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.year"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.MONTH' | translate}}</mat-label>
+                    <input matInput type="text" class="form-control" id="model" [(ngModel)]="searchCriteria.month"
+                      name="model" #model="ngModel">
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="fill">
+                    <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
+                    <mat-select [(ngModel)]="searchCriteria.status" name="status">
+                      <mat-option [value]="-1">
+                        {{'COMMON.ALL_STATUS'|translate}}
+                      </mat-option>
+                      <mat-option [value]="1">
+                        {{'COMMON.UNPAID'|translate}}
+                      </mat-option>
+                      <mat-option [value]="2">
+                        {{'COMMON.PAID'|translate}}
+                      </mat-option>
+                      <mat-option [value]="3">
+                        {{'COMMON.ACKNOWLEDGED'|translate}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.START_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="beginDatePicker" class="form-control" id="beginDate"
+                      [(ngModel)]="searchCriteria.beginDate" name="beginDate" #beginDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="beginDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #beginDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="w-100">
+                    <mat-label> {{'COMMON.END_DATE' | translate}}</mat-label><br />
+                    <input matInput [matDatepicker]="endDatePicker" class="form-control" id="endDate"
+                      [(ngModel)]="searchCriteria.endDate" name="endDate" #endDate="ngModel">
+                    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endDatePicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <div class="text-center">
+                    <button mat-raised-button (click)="button='clear'" color="accent" fxLayout="row"
+                      fxLayoutAlign="center center" type="submit">
+                      <span class="mx-1 uppercase">{{'COMMON.CLEAR' | translate}}</span>
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="{{'COMMON.DETAILS' | translate}}">
+        <app-deliveries-summary></app-deliveries-summary>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+
+</div>

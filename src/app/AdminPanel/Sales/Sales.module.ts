@@ -32,7 +32,8 @@ import {
   MatNativeDateModule,
   MatStepperModule,
   MatChipsModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatDialogModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
@@ -52,6 +53,7 @@ import { PayoutsComponent } from './Payouts/Payouts.component';
 import { PayoutComponent } from './Payouts/Payout.component';
 import { SalesSummariesIncludeComponent } from './Summaries/SalesSummariesInclude.component';
 import { SalesSummaryComponent } from './Summaries/SalesSummary.component';
+import { DeliveriesSummariesIncludeComponent } from './Payouts/DeliveriesSummariesInclude.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { SalesSummaryComponent } from './Summaries/SalesSummary.component';
     ReviewsTableComponent,
     SalesSummariesComponent,
     SalesSummariesIncludeComponent,
+    DeliveriesSummariesIncludeComponent,
     SalesSummaryComponent,
     PayoutsComponent,
     PayoutComponent
@@ -87,6 +90,7 @@ import { SalesSummaryComponent } from './Summaries/SalesSummary.component';
     MatRadioModule,
     MatDividerModule,
     MatListModule,
+    MatDialogModule,
     RouterModule.forChild(SalesRoutes),
     TranslateModule,
     MatPaginatorModule,
@@ -132,7 +136,13 @@ import { SalesSummaryComponent } from './Summaries/SalesSummary.component';
     })
 
   ],
-  exports: [OrdersComponent, OrderViewComponent, SalesSummariesComponent, SalesSummariesIncludeComponent, SalesSummaryComponent,
-     PayoutComponent, PayoutsComponent]
+  exports: [OrdersComponent,
+    OrderViewComponent,
+    SalesSummariesComponent,
+    SalesSummariesIncludeComponent,
+    DeliveriesSummariesIncludeComponent,
+    SalesSummaryComponent,
+    PayoutComponent,
+    PayoutsComponent]
 })
 export class SalesModule { }

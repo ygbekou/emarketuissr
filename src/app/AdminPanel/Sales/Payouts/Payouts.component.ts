@@ -36,6 +36,7 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   @Input() userId: number;
   @Input() isAdminPage = true;
   @Input() canAcknowledge = false;
+  @Input() type = 'sale';
 
   searchCriteria: PayoutSearchCriteria = new PayoutSearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
@@ -53,6 +54,12 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.type === 'delivery') {
+      this.payoutColumns[2] = 'shipperName';
+      this.searchCriteria.typeString = this.type;
+    }
+
     this.activatedRoute.params.subscribe(params => {
       if (params.id === undefined || +params.id === 0) {
         setTimeout(() => {
@@ -84,7 +91,6 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   }
 
   selectPayout(payoutId: number) {
-    //this.payoutComponent.isAdminPage = this.isAdminPage;
     this.payoutComponent.canAcknowledge = this.canAcknowledge;
     this.payoutComponent.getPayout(payoutId);
     this.selected.setValue(1);
@@ -106,6 +112,7 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
       this.clear();
     } else {
 
+      this.searchCriteria.typeString = this.type;
       this.searchCriteria.userId = +this.appService.tokenStorage.getUserId();
       this.appService.saveWithUrl('/service/order/payouts', this.searchCriteria)
         .subscribe((data: any[]) => {
@@ -136,6 +143,17 @@ export class PayoutsComponent extends BaseComponent implements OnInit {
   updateDataTable(payoutVo: PayoutVO) {
     this.updateDatasourceData(this.payoutDatasource, this.payoutPaginator, this.payoutSort, payoutVo);
     this.payoutComponent.getPayout(payoutVo.id, false);
+  }
+
+  openSearchPopup() {
+    this.appService.shipperSearch(this.searchCriteria).
+      subscribe(res => {
+        console.log(res);
+      },
+        err => console.log(err),
+        () => console.log('Shipper search done... ')
+      );
+
   }
 
 }

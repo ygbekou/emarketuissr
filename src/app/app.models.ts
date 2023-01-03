@@ -659,6 +659,9 @@ export class GeoZone {
   delEnd0: string;
   kmRate: number;
   shippingWeightKm: number;
+  kmFlatRate: number;
+  kmFlatLimit: number;
+  
   constructor() {
     this.status = 1;
   }
@@ -1806,6 +1809,7 @@ export class OrderSearchCriteria {
   miscText2: string;
   miscNum1: number;
   miscNum2: number;
+  deliveriesSummaryId: number;
 }
 
 export class UserSearchCriteria {
@@ -2059,7 +2063,7 @@ export class Parameter {
 
 export class Shipper {
   id: number;
-  name: number;
+  name: string;
   image: number;
   description: number;
   phone: number;
@@ -2136,6 +2140,10 @@ export class SalesSummarySearchCriteria {
   currencyCode: string;
   storeId: number;
   storeName: string;
+  shipperId: number;
+  shipperName: string;
+  shipperFirstName: string;
+  shipperLastName: string;
   status: number;
   paymentMethods: string[];
   userId: number;
@@ -2148,6 +2156,9 @@ export class SalesSummarySearchCriteria {
 export class Payout {
   public id: number;
   public store: Store;
+  public shipper: Shipper;
+  public shipperId: number;
+  public shipperName: string;
   public currency: Currency;
   public year: number;
   public total: number;
@@ -2164,6 +2175,11 @@ export class Payout {
   public salesSummaryIds: number[];
   public salesSummarys: SalesSummary[];
   public salesSummaryVOs: [];
+
+  public deliveriesSummaryIds: number[];
+  public deliveriesSummarys: DeliveriesSummary[];
+  public deliveriesSummaryVOs: [];
+
   public payerFullName: string;
 
   type = 'Payout';
@@ -2172,6 +2188,7 @@ export class Payout {
     this.store = new Store();
     this.currency = new Currency();
     this.payer = new User();
+    this.shipper = new Shipper();
   }
 }
 
@@ -2180,6 +2197,8 @@ export class PayoutVO {
   id: number;
   storeId: number;
   storeName: string;
+  shipperId: number;
+  shipperName: string;
   total: number;
   year: number;
   image: string;
@@ -2197,8 +2216,14 @@ export class PayoutVO {
 
   constructor(payout: Payout) {
     this.id = payout.id;
-    this.storeId = payout.store.id;
-    this.storeName = payout.store.name;
+    if (payout.store) {
+      this.storeId = payout.store.id;
+      this.storeName = payout.store.name;
+    }
+    if (payout.shipper) {
+      this.shipperId = payout.shipper.id;
+      this.shipperName = payout.shipper.name;
+    }
     this.total = payout.total;
     this.year = payout.year;
     this.image = payout.image;
@@ -2223,12 +2248,15 @@ export class PayoutSearchCriteria {
   currencyCode: string;
   storeId: number;
   storeName: string;
+  shipperId: number;
+  shipperName: string;
   status: number;
   proofPayoutId: string[];
   userId: number;
   payoutDate: Date;
   beginDate: Date;
   endDate: Date;
+  typeString: string;
 }
 
 
@@ -3458,3 +3486,32 @@ export class BuildingVO {
 	countryName: string;
 	fileNames: string [];
 }
+
+export class DeliveriesSummary {
+  id: number;
+  shipper: Shipper;
+  currency: Currency;
+  year: number;
+  month: number;
+  paymentMethod: string;
+  total: number;
+  totalDue: number;
+  totalPaid: number;
+  totalRemaining: number;
+  status: number;
+  payoutId: number;
+  acknowledger: User;
+  acknowledgerFullName: string;
+  acknowledgeDate: Date;
+  modifiedBy: number;
+  ordersCnt: number;
+
+  type = 'DeliveriesSummary';
+
+  constructor() {
+    this.acknowledger = new User();
+    this.shipper = new Shipper();
+    this.currency = new Currency();
+  }
+}
+

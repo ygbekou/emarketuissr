@@ -65,6 +65,7 @@ import { ReportsComponent } from './Reports/Reports.component';
 import { ShippingZonesComponent } from './ShippingZones/ShippingZones.component';
 import { DeliveriesComponent } from './Deliveries/Deliveries.component';
 import { SellerSalesSummariesComponent } from './Sales-summaries/SellerSalesSummaries.component';
+import { SellerDeliveriesSummariesComponent } from './Deliveries-summaries/SellerDeliveriesSummaries.component';
 import { SellerPayoutsComponent } from './Sales-payouts/SellerPayouts.component';
 import { StoreIngredientComponent } from './SellerIngredients/StoreIngredient.component';
 import { StoreIngredientsComponent } from './SellerIngredients/StoreIngredients.component';
@@ -103,6 +104,7 @@ import { TranlogComponent } from './Sales-audit/Tranlog.component';
 import { OpenReservationsComponent } from './Open-reservations/Open-reservations.component';
 import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
 import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/ComboProduct.component';
+import { DeliveriesModule } from 'src/app/AdminPanel/Deliveries/Deliveries.module';
 
 @NgModule({
   imports: [
@@ -147,6 +149,7 @@ import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/C
     TemplatesModule,
     ReportsModule,
     SalesModule,
+    DeliveriesModule,
     HospitalitiesModule,
     MatPaginatorModule,
     MatButtonToggleModule,
@@ -188,6 +191,7 @@ import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/C
     SalesFinanceDashboardComponent,
     SalesOrdersComponent,
     SellerSalesSummariesComponent,
+    SellerDeliveriesSummariesComponent,
     SellerPayoutsComponent,
     OrderDetailComponent,
     ClientDashboardComponent,
