@@ -988,7 +988,7 @@
 		"COPY_PRODUCTS": "Copier Produits",
 		"COPY_OPTIONS": "Copier Options",
 		"IMPORT_PRODUCTS": "Importer des produits",
-		"IS_LIVE": "En Ligne"
+		"IS_LIVE": "En Production"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
