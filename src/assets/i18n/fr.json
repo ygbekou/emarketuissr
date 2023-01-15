@@ -800,7 +800,6 @@
 		"TOTAL_DUE": "Total Due",
 		"TOTAL_PAID": "Total Payé",
     "SALES_SUMMARIES": "Sommaires des ventes",
-		"DELIVERIES_SUMMARIES": "Sommaires des livraisons",
 		"PAYMENTS": "Payements",
 		"PAYOUTS": "Payements",
 		"PROOF_PAYOUT_ID": "Numéro de réference",
@@ -989,15 +988,10 @@
 		"COPY_PRODUCTS": "Copier Produits",
 		"COPY_OPTIONS": "Copier Options",
 		"IMPORT_PRODUCTS": "Importer des produits",
-		"IS_LIVE": "En Ligne",
-		"FLAT_RATE_LIMIT": "Limite de dist. forfaitaire",
-		"TOTAL_DELIV_COST": "Cout total Deliv.",
-    "DELIVERY_COUNT": "Delivery Count",
-    "ADD_CASH": "Ajouter argent",
-		"MY_WALLETS": "Mes portefeuilles",
-		"MAKE_TRANSFER": "Make Transfer",
-		"ADD_CASH_TO_WALLET": "Ajouter argent au portefeuille",
-		"WALLET": "Portefeuille"
+    "IS_LIVE": "En Production",
+    "FLAT_RATE_LIMIT": "Limite de distance forfaitaire",
+		"TOTAL_DELIV_COST": "Cout total livraison.",
+		"DELIVERY_COUNT": "Nombre de livraisons"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

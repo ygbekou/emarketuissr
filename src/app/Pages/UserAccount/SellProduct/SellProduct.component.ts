@@ -29,7 +29,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   finalSelectedCatDescs: CategoryDescription[] = [];
   finalDeletedCatDescs: number[] = [];
   selectedCatDescs: CategoryDescription[] = [];
-  depth = 0;
+  depth = 0; 
   messages: string;
   product: Product = new Product();
   productDesc: ProductDescription = new ProductDescription();
@@ -87,7 +87,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.saving = false;
     this.getStores();
 
     this.product = new Product();
@@ -424,7 +424,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
   }
 
 
-  importProducts() {
+  importProducts() { 
     console.log('Import product started ...');
     if (this.justSubmitted) {
       this.justSubmitted = false;
@@ -446,7 +446,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
     }, this.formData)
       .subscribe((data: any) => {
 
-        this.saving = false;
+        this.saving = false; 
 
         const blob = new Blob([data], { type: 'application/vnd.ms-excel;charset=utf-8' });
         saveAs(blob, 'productImportResult.xlsx');
@@ -457,7 +457,7 @@ export class SellProductComponent extends BaseComponent implements OnInit {
 
         //this.picture = [];
       }, error => {
-        this.saving = false;
+        this.saving = false; 
         console.log(error);
       }, () => {
         this.saving = false;

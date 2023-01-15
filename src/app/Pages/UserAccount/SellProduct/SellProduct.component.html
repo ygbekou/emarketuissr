@@ -105,12 +105,18 @@
             </div>
             <div fxFlex="10">
               <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
-                (click)="importProducts()" type="button">
+                (click)="importProducts()" type="button" [disabled] ="saving">
                 <span class="mx-1 uppercase">{{'COMMON.IMPORT_PRODUCTS' | translate}}</span>
                 <mat-icon>copy</mat-icon>
               </button>
             </div>
           </div>
+           <div fxLayout="row wrap">
+            <div class="text-center mt-2" *ngIf="saving">
+             <mat-spinner></mat-spinner>
+            </div>
+          </div>
+
           <div fxLayout="row wrap">
             <div class="text-center mt-2" *ngIf="messages">
               <p><a mat-button color="accent" class="w-100">{{messages}}</a></p>
