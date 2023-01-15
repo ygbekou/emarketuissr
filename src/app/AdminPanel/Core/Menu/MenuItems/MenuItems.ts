@@ -54,7 +54,7 @@ const MENUITEMS = [
     state: 'admin/deliveries',
     name: 'Deliveries',
     type: 'sub',
-    icon: 'commute',
+    icon: 'local_shipping',
     children: [
       { state: 'deliv/summaries', name: 'Summaries', type: 'link' },
       { state: 'deliv/payouts/0', name: 'Payouts', type: 'link' }
@@ -167,7 +167,7 @@ const MENUITEMS_FR = [
     state: 'admin/deliveries',
     name: 'Livraisons',
     type: 'sub',
-    icon: 'commute',
+    icon: 'local_shipping',
     children: [
       { state: 'deliv/summaries', name: 'Sommaires', type: 'link' },
       { state: 'deliv/payouts/0', name: 'Payements', type: 'link' }

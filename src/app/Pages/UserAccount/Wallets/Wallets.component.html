@@ -1,0 +1,185 @@
+<mat-card>
+  <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+    <h4>{{'COMMON.MY_WALLETS'|translate}}</h4>
+    <button mat-raised-button color="accent" type="button"
+      (click)="addWallet();">{{'COMMON.ADD_NEW'|translate}}</button>
+
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngFor="let wallet of wallets">
+      <div class="tile tile-primary">
+        <div class="tile-heading">{{'COMMON.CURRENCY'|translate}} : {{wallet.currency.code}} <span
+            class="pull-right"></span>
+
+          <div class="tile-body">
+            <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <h4> {{'COMMON.BALANCE'|translate}}: </h4>
+              </div>
+              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <h4> {{wallet.balance}} </h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile-footer">
+            <div fxLayout="row wrap" class="col-gap">
+              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <span class="pull-right">
+                  <button mat-raised-button color="accent" (click)="addCash(wallet);"
+                    type="button">{{'COMMON.ADD_CASH'|translate}}
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+      <form name="form" (ngSubmit)="f.form.valid && saveWalletTrans()" #f="ngForm" validate>
+        <div fxLayout="row wrap" *ngIf="walletTrans">
+
+          <div fxLayout="row wrap" fxLayoutAlign="center top">
+            <h5 style="color: #283593!important;">
+              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+                <mat-label *ngIf="!walletTrans.wallet.id"> {{'COMMON.ADD_NEW' | translate}}
+                  {{'COMMON.WALLET' | translate}} </mat-label>
+                <mat-label *ngIf="walletTrans.wallet.id > 0"> {{'COMMON.ADD_CASH_TO_WALLET' | translate}} </mat-label>
+              </div>
+            </h5>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1"
+            *ngIf="!walletTrans.wallet.id">
+            <mat-form-field class="w-100">
+              <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>
+              <mat-select placeholder="{{'COMMON.CURRENCY' | translate}}" [compareWith]="compareObjects" id="currency"
+                name="currency" [(ngModel)]="walletTrans.currency" #currency="ngModel" required>
+                <mat-option *ngFor="let cur of appService.appInfoStorage.currencies" [value]="cur">
+                  {{cur.code +' - '+ cur.title}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f.submitted && currency.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1"
+            *ngIf="walletTrans.wallet.id > 0">
+
+            <mat-label>{{'COMMON.CURRENCY' | translate}}</mat-label>: {{walletTrans.wallet.currency.code 
+              + ' - ' + walletTrans.wallet.currency.title}}
+
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+            <mat-form-field class="w-100">
+              <mat-label> {{'COMMON.AMOUNT' | translate}}</mat-label>
+              <input matInput type="text" class="form-control" id="amount" [(ngModel)]="walletTrans.amount"
+                name="amount" #amount="ngModel" required>
+              <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
+            <mat-card style="background-color: #ebf3ff;">
+              <div fxLayout="row wrap">
+                <h6>{{'COMMON.CHOOSE_PAYMENT_METHOD' | translate}}</h6>
+              </div>
+              <div fxLayout="row wrap">
+                <mat-button-toggle-group color="primary" name="fontStyle" aria-label="Font Style" [(ngModel)]="step"
+                  (change)="onTogglePmntMethodChange($event)">
+                  <mat-button-toggle [value]="'CREDIT_CARD'">
+                    {{'COMMON.CREDIT_CARD' | translate}}
+                  </mat-button-toggle>
+                  <mat-button-toggle [value]="'TMONEY'">
+                    TMONEY
+                  </mat-button-toggle>
+                  <mat-button-toggle [value]="'FLOOZ'">
+                    FLOOZ
+                  </mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+              <br />
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+                  *ngIf="walletTrans.paymentMethodCode === 'CREDIT_CARD'">
+                  <div class=" sr-root">
+                    <div class="sr-main">
+                      <form id="payment-form" class="sr-payment-form">
+                        <div class="sr-combo-inputs-row">
+                          <div>
+                            <mat-form-field class="w-100">
+                              <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name" name="name"
+                                [(ngModel)]="walletTrans.nameOnCard" #name="ngModel" required>
+                            </mat-form-field>
+                          </div>
+                          <br />
+                          <div class="sr-input sr-card-element" id="card-element"></div>
+                        </div>
+                        <div class="sr-field-error" id="card-errors" role="alert"></div>
+                        <br />
+                        <div fxLayout="row wrap">
+                          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                            <button id="submit" mat-raised-button color="primary">
+                              <div class="spinner hidden" id="spinner"></div>
+                              <span id="button-text">{{'COMMON.MAKE_TRANSFER'|translate}}</span>
+                              <!-- <mat-icon>save</mat-icon> -->
+                              <span id="order-amount"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+                  *ngIf="walletTrans.paymentMethodCode === 'TMONEY' || walletTrans.paymentMethodCode === 'FLOOZ'">
+                  <div fxLayout="row wrap" class="col-gap">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+                      <mat-form-field class="w-100 mb-3">
+                        <input matInput placeholder="{{'COMMON.PHONE_NUMBER'|translate}}" id="phoneNumber"
+                          name="phoneNumber" [(ngModel)]="walletTrans.phone" #phoneNumber="ngModel" required>
+                        <mat-error *ngIf="f.submitted && phoneNumber.invalid" severity="error">
+                          {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div fxLayout="row wrap" class="col-gap">
+                    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+                      <button mat-raised-button color="accent" fxLayout="row" fxLayoutAlign="center center"
+                        type="submit">
+                        <span class="mx-1 uppercase"> {{'COMMON.SAVE'|translate}}</span>
+                        <mat-icon>save</mat-icon>
+                      </button>
+                    </div>
+                    <div class="text-left mt-2" fxFlex.gt-sm="50"></div>
+                  </div>
+                </div>
+
+              </div>
+              
+            </mat-card>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="90" fxFlex.lg="90" fxFlex.xl="90" class="p-3">
+      <div class="text-left mt-2" style="color: green; font-size: large;" *ngIf="!hasError && messages">
+        <mat-icon>done</mat-icon> {{messages}}
+      </div>
+      <div class="text-left mt-2" style="color: #ff5722; font-size: large;" *ngIf="hasError && messages">
+        <mat-icon>close</mat-icon> {{messages}}
+      </div>
+    </div>
+  </div>
+</mat-card>

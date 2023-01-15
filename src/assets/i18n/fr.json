@@ -992,7 +992,12 @@
 		"IS_LIVE": "En Ligne",
 		"FLAT_RATE_LIMIT": "Limite de dist. forfaitaire",
 		"TOTAL_DELIV_COST": "Cout total Deliv.",
-		"DELIVERY_COUNT": "Delivery Count"
+    "DELIVERY_COUNT": "Delivery Count",
+    "ADD_CASH": "Ajouter argent",
+		"MY_WALLETS": "Mes portefeuilles",
+		"MAKE_TRANSFER": "Make Transfer",
+		"ADD_CASH_TO_WALLET": "Ajouter argent au portefeuille",
+		"WALLET": "Portefeuille"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

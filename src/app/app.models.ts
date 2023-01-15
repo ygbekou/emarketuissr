@@ -661,7 +661,7 @@ export class GeoZone {
   shippingWeightKm: number;
   kmFlatRate: number;
   kmFlatLimit: number;
-  
+
   constructor() {
     this.status = 1;
   }
@@ -839,7 +839,7 @@ export class Store extends BaseModel {
   catUrl: string;
   isHotel: number;
   isLive: number;
-  
+
   type = 'Store';
   constructor() {
     super();
@@ -1365,7 +1365,7 @@ export class ProductListVO {
   categories: string[];
   productDescVOs: ProductDescVO[];
   //storeCats: StoreCategoryDesc[];
-	//viewType: string;
+  //viewType: string;
 }
 
 export class ProductVO {
@@ -3465,26 +3465,26 @@ export class TranlogSearchCriteria {
 
 export class BuildingVO {
   buildingId: number;
-	storeId: number;
-	buildingName: string;
-	storeName: string;
+  storeId: number;
+  buildingName: string;
+  storeName: string;
   nbrFloors: number;
   buildingType: number;
-	image: string;
-	image1: string;
-	image2: string;
-	image3: string;
-	principal: number;
-	address1: string;
-	address2: string;
+  image: string;
+  image1: string;
+  image2: string;
+  image3: string;
+  principal: number;
+  address1: string;
+  address2: string;
   postCode: string;
   district: string;
-	city: string;
-	zoneId: number;
-	zoneName: string;
-	countryId: number;
-	countryName: string;
-	fileNames: string [];
+  city: string;
+  zoneId: number;
+  zoneName: string;
+  countryId: number;
+  countryName: string;
+  fileNames: string[];
 }
 
 export class DeliveriesSummary {
@@ -3515,3 +3515,53 @@ export class DeliveriesSummary {
   }
 }
 
+export class WalletTransType {
+  id: number;
+  status: number;
+  createBy: number;
+
+  name: string;
+
+  type = 'WalletTransType';
+}
+
+export class WalletTransTypeDesc {
+  id: number;
+  language: Language;
+  walletTransType: WalletTransType;
+  name: string;
+
+  type = 'WalletTransTypeDesc';
+}
+
+export class Wallet {
+  id: number;
+  user: User;
+  currency: Currency;
+  balance: number;
+  balanceMin: number;
+  status: number;
+  createBy: number;
+  modBy: number;
+
+  type = 'Wallet';
+}
+
+export class WalletTrans {
+  id: number;
+  wallet: Wallet;
+  currency: Currency;
+  amount: number;
+  walletTransType: WalletTransType;
+  paymentMethodCode: string;
+  paymentIntentId: string;
+  stripePaymentMethodId: string;
+  phone: string;
+  status: number;
+  createBy: number;
+  modBy: number;
+
+  nameOnCard: string;
+
+  type = 'WalletTrans';
+}

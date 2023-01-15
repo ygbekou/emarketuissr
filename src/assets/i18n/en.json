@@ -991,7 +991,12 @@
 		"IS_LIVE": "Is Live",
 		"FLAT_RATE_LIMIT": "Flat Rate Dist. Limit",
 		"TOTAL_DELIV_COST": "Total Deliv. Cost",
-		"DELIVERY_COUNT": "Delivery Count"
+		"DELIVERY_COUNT": "Delivery Count",
+		"ADD_CASH": "Add Cash",
+		"MY_WALLETS": "My Wallets",
+		"MAKE_TRANSFER": "Make Transfer",
+		"ADD_CASH_TO_WALLET": "Add Cash To Wallet",
+		"WALLET": "Wallet"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

@@ -29,6 +29,14 @@ const TREE_DATA_EN: MenuNode[] = [
     ]
   },
   {
+    name: 'Wallets',
+    url: '/account/wallets',
+    icon: 'account_balance_wallet',
+    children: [
+      { name: 'My Wallets', url: '/account/wallets', icon: 'account_balance_wallet' }
+    ]
+  },
+  {
     name: 'Orders',
     url: '/account/buying',
     icon: '',
@@ -46,13 +54,6 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Sales summary', url: '/account/sales-summaries', icon: 'summarize' },
       { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },      
       { name: 'Sales audit', url: '/account/sales-audit', icon: 'content_copy' },
-    ]
-  }, {
-    name: 'Deliveries',
-    url: '/account/delivery',
-    icon: 'account_circle',
-    children: [
-      { name: 'Summary', url: '/account/deliveries-summaries', icon: 'summarize' }
     ]
   }, {
     name: 'Products',
@@ -85,7 +86,7 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Shipping zones', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'My shippers', url: '/account/my-shippers', icon: 'directions_run' },
       { name: 'My stores', url: '/account/deliveries', icon: 'store' },
-      { name: 'My deliveries', url: '/account/deliveries', icon: 'local_shipping' },
+      { name: 'My deliveries', url: '/account/deliveries-summaries', icon: 'local_shipping' },
     ]
   }, {
     name: 'Hospitality',
@@ -129,6 +130,14 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Détails Achats', url: '/account/open-orders', icon: 'shopping_cart' },
     ]
   }, {
+    name: 'Portefeuilles',
+    url: '/account/wallets',
+    icon: 'money',
+    children: [
+      { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' }
+
+    ]
+  }, {
     name: 'Ventes',
     url: '/account/selling',
     icon: 'account_circle',
@@ -139,13 +148,6 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Payements', url: '/account/sales-summaries', icon: 'summarize' },
       { name: 'Audit des ventes', url: '/account/sales-audit', icon: 'content_copy' },
 
-    ]
-  }, {
-    name: 'Livraisons',
-    url: '/account/delivery',
-    icon: 'account_circle',
-    children: [
-      { name: 'Sommaire', url: '/account/deliveries-summaries', icon: 'summarize' }
     ]
   }, {
     name: 'Produits',
@@ -178,7 +180,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Zones d\'expédition', url: '/account/shipping-zones', icon: 'local_shipping' },
       { name: 'Mes livreurs', url: '/account/my-shippers', icon: 'directions_run' },
       { name: 'Mes boutiques', url: '/account/deliveries', icon: 'store' },
-      { name: 'Mes livraisons', url: '/account/deliveries', icon: 'local_shipping' },
+      { name: 'Mes livraisons', url: '/account/deliveries-summaries', icon: 'local_shipping' },
     ]
   }, {
     name: 'Hotel',
