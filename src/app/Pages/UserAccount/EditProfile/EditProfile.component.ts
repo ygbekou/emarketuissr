@@ -6,7 +6,7 @@ import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
 import { StoreServicesComponent } from 'src/app/AdminPanel/Finances/StoreServices/StoreServices.component';
 
 @Component({

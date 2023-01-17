@@ -153,7 +153,7 @@
       </div>
     </div>
     <mat-tab-group class="table-tab-list" color="accent" (selectedTabChange)="storeTabChanged($event)">
-      <mat-tab  label="{{'COMMON.STORE_INFO' | translate}}">
+      <mat-tab label="{{'COMMON.STORE_INFO' | translate}}">
         <div fxLayout="row wrap" class="col-gap">
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
             <div class="example-container">
@@ -275,8 +275,8 @@
               <button mat-fab color="warn" (click)="generateStoreCode()">
                 <mat-icon>cached</mat-icon>
               </button>
-              <br/>
-              
+              <br />
+
               <mat-slide-toggle [(ngModel)]="store.status" name="status" #status="ngModel" class="my-2">
                 {{ 'COMMON.ENABLE' | translate }}
               </mat-slide-toggle>
@@ -318,7 +318,7 @@
               </input-file>
             </div>
           </div>
-              <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
             <div class="example-container">
               <h4 class="text-muted text-left fw-600 mb-3">{{'COMMON.STORE_BANNER' | translate}}</h4>
               <input-file [(ngModel)]="picture2" name="gallery2" #gallery2="ngModel" fileLimit="1" fileAccept="image/*"
@@ -505,9 +505,42 @@
 
         <div fxLayout="row wrap">
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.MAX_SHIPPER_DIST'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="maxShipperDistance"
+                [(ngModel)]="store.maxShipperDistance" name="maxShipperDistance"
+                #maxShipperDistance="ngModel" min="0" max="999999">
+            </mat-form-field> 
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.MAX_SHIPPER_WAIT'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="maxShipperWait"
+                [(ngModel)]="store.maxShipperWait" name="maxShipperWait" #maxShipperWait="ngModel" min="0"
+                max="999999"   >
+            </mat-form-field> 
+          </div>
+        </div>
 
-             <mat-form-field class="w-100 mb-3">
-              <mat-label>{{'COMMON.FLASH_PROMO'|translate}}  </mat-label>
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.POINT_VALUE'|translate}} </mat-label>
+              <input matInput type="text" class="form-control" id="pointValue"
+                [(ngModel)]="store.pointValue" name="pointValue"
+                #pointValue="ngModel" min="0" max="999999">
+            </mat-form-field> 
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+           
+          </div>
+        </div>
+
+        <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
+
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.FLASH_PROMO'|translate}} </mat-label>
               <input matInput type="text" class="form-control" id="flashPromo" [(ngModel)]="store.flashPromo"
                 name="flashPromo" #flashPromo="ngModel">
             </mat-form-field>
@@ -532,18 +565,21 @@
               {{ 'COMMON.SEND_SMS_SHIPPER' | translate }}
             </mat-slide-toggle>
             <br />
-            <mat-slide-toggle [(ngModel)]="store.waitressPrint" name="waitressPrint" #waitressPrint="ngModel" class="my-2">
+            <mat-slide-toggle [(ngModel)]="store.waitressPrint" name="waitressPrint" #waitressPrint="ngModel"
+              class="my-2">
               {{ 'COMMON.WAITRESS_CAN_PRINT' | translate }}
             </mat-slide-toggle>
             <br />
-            <mat-slide-toggle [(ngModel)]="store.waitressClose" name="waitressClose" #waitressClose="ngModel" class="my-2">
+            <mat-slide-toggle [(ngModel)]="store.waitressClose" name="waitressClose" #waitressClose="ngModel"
+              class="my-2">
               {{ 'COMMON.WAITRESS_CAN_CLOSE' | translate }}
             </mat-slide-toggle>
-             <br />
-            <mat-slide-toggle [(ngModel)]="store.trackGuestCnt" name="trackGuestCnt" #trackGuestCnt="ngModel" class="my-2">
+            <br />
+            <mat-slide-toggle [(ngModel)]="store.trackGuestCnt" name="trackGuestCnt" #trackGuestCnt="ngModel"
+              class="my-2">
               {{ 'COMMON.TRACK_GUEST_COUNT' | translate }}
             </mat-slide-toggle>
-              <br />
+            <br />
             <mat-slide-toggle [(ngModel)]="store.isHotel" name="isHotel" #isHotel="ngModel" class="my-2">
               {{ 'COMMON.IS_HOTEL' | translate }}
             </mat-slide-toggle>
@@ -551,13 +587,13 @@
           </div>
 
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-            
-              <mat-form-field class="w-100 mb-3">
-              <mat-label>{{'COMMON.DAY_START_TIME'|translate}}  </mat-label>
+
+            <mat-form-field class="w-100 mb-3">
+              <mat-label>{{'COMMON.DAY_START_TIME'|translate}} </mat-label>
               <input matInput type="text" class="form-control" id="dayStartTime" [(ngModel)]="store.dayStartTime"
                 name="dayStartTime" #dayStartTime="ngModel">
             </mat-form-field>
-            
+
             <mat-slide-toggle [(ngModel)]="store.acceptPickupCash" name="acceptPickupCash" #acceptPickupCash="ngModel"
               class="my-2">
               {{ 'COMMON.ACCEPT_PICKUP_CASH' | translate }}
@@ -583,14 +619,16 @@
             <mat-slide-toggle [(ngModel)]="store.allowPickup" name="allowPickup" #allowPickup="ngModel" class="my-2">
               {{ 'COMMON.ALLOW_PICKUP' | translate }}
             </mat-slide-toggle>
-            
+
             <br />
-            <mat-slide-toggle [(ngModel)]="store.reasonRequired" name="reasonRequired" #reasonRequired="ngModel" class="my-2">
+            <mat-slide-toggle [(ngModel)]="store.reasonRequired" name="reasonRequired" #reasonRequired="ngModel"
+              class="my-2">
               {{ 'COMMON.REQ_REASON_OVERRIDE' | translate }}
             </mat-slide-toggle>
 
             <br />
-            <mat-slide-toggle [(ngModel)]="store.pymtMethodReq" name="pymtMethodReq" #pymtMethodReq="ngModel" class="my-2">
+            <mat-slide-toggle [(ngModel)]="store.pymtMethodReq" name="pymtMethodReq" #pymtMethodReq="ngModel"
+              class="my-2">
               {{ 'COMMON.PAYMENT_METHOD_REQUIRED' | translate }}
             </mat-slide-toggle>
           </div>
