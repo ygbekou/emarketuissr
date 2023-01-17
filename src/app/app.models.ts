@@ -3560,6 +3560,8 @@ export class WalletTrans {
   modBy: number;
 
   nameOnCard: string;
+  language: Language;
+  errors: string[];
 
   type = 'WalletTrans';
 }

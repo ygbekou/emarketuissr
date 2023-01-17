@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Wallet, WalletTrans, User } from 'src/app/app.models';
+import { Wallet, WalletTrans, User, Language } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
@@ -33,17 +33,17 @@ export class WalletsComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
 
-     if (this.userId === undefined) {
-       this.userId = Number(this.appService.tokenStorage.getUserId());
-     } else {
-       this.fromAdmin = true;
-     }
+    if (this.userId === undefined) {
+      this.userId = Number(this.appService.tokenStorage.getUserId());
+    } else {
+      this.fromAdmin = true;
+    }
     this.getWallets();
 
   }
 
   ngAfterViewInit() {
-   
+
   }
 
   private getWallets() {
@@ -61,6 +61,7 @@ export class WalletsComponent extends BaseComponent implements OnInit {
 
 
   addCash(wallet: Wallet) {
+    this.messages = '';
     wallet.modBy = +this.appService.tokenStorage.getUserId();
     this.walletTrans = new WalletTrans();
     this.walletTrans.currency = wallet.currency;
@@ -69,6 +70,7 @@ export class WalletsComponent extends BaseComponent implements OnInit {
   }
 
   addWallet() {
+    this.messages = '';
     this.sWallet = new Wallet();
     this.sWallet.user = new User();
     this.sWallet.user.id = +this.appService.tokenStorage.getUserId();
@@ -82,14 +84,25 @@ export class WalletsComponent extends BaseComponent implements OnInit {
   saveWalletTrans() {
     this.walletTrans.createBy = +this.appService.tokenStorage.getUserId();
     this.walletTrans.modBy = +this.appService.tokenStorage.getUserId();
+    this.walletTrans.language = new Language();
+    this.walletTrans.language = this.appService.appInfoStorage.language;
     this.appService.saveWithUrl('/service/finance/saveWalletTrans',
       this.walletTrans)
       .subscribe((data: WalletTrans) => {
-        this.processResult(data, this.walletTrans, null);
-        if (data.id) {
+        if (data.id && (data.errors === null || data.errors.length === 0)) {
+          this.hasError = false;
           this.walletTrans = null;
           this.messages = '';
           this.getWallets();
+        } else {
+          this.hasError = true;
+          console.log(data);
+          this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR', 'MESSAGE.PAYMENT_DECLINED']).subscribe(res => {
+            this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (data.errors[0] === 'SYSTEM_ERROR'
+              ? res['MESSAGE.SYSTEM_ERROR'] :
+              (data.errors[0] === 'PAYMENT_DECLINED' ? res['MESSAGE.PAYMENT_DECLINED'] : data.errors[0])
+            );
+          });
         }
       },
         error => console.log(error),
@@ -171,39 +184,39 @@ export class WalletsComponent extends BaseComponent implements OnInit {
   * Collect card details and pay for the order
   */
   saveCard(stripe, card, clientSecret) {
-      this.errors = '';
-      stripe
-         .createPaymentMethod('card', card)
-         .then(result => {
-            if (result.error) {
-               this.translate.get(['MESSAGE.INVALID_CARD', 'COMMON.ERROR']).subscribe(res => {
-                  this.errors = res['MESSAGE.INVALID_CARD'];
-               });
-               this.messages = result.error;
-               this.hasError = true;
-            } else {
-               this.walletTrans.paymentMethodCode = 'CREDIT_CARD';
-               this.walletTrans.stripePaymentMethodId = result.paymentMethod.id;
-               this.saveWalletTrans();
-            }
-         })
-         .then(function (result) {
-            console.log(result);
-            if (result) {
-               return result.json();
-            }
-         })
-         .then(function (response) {
-            if (response && response.error) {
-               // showError(response.error);
-            } else if (response && response.requiresAction) {
-               // Request authentication
-               // handleAction(response.clientSecret);
-            } else {
-               // orderComplete(response.clientSecret);
-            }
-         });
-   }
+    this.errors = '';
+    stripe
+      .createPaymentMethod('card', card)
+      .then(result => {
+        if (result.error) {
+          this.translate.get(['MESSAGE.INVALID_CARD', 'COMMON.ERROR']).subscribe(res => {
+            this.errors = res['MESSAGE.INVALID_CARD'];
+          });
+          this.messages = result.error;
+          this.hasError = true;
+        } else {
+          this.walletTrans.paymentMethodCode = 'CREDIT_CARD';
+          this.walletTrans.stripePaymentMethodId = result.paymentMethod.id;
+          this.saveWalletTrans();
+        }
+      })
+      .then(function (result) {
+        console.log(result);
+        if (result) {
+          return result.json();
+        }
+      })
+      .then(function (response) {
+        if (response && response.error) {
+          // showError(response.error);
+        } else if (response && response.requiresAction) {
+          // Request authentication
+          // handleAction(response.clientSecret);
+        } else {
+          // orderComplete(response.clientSecret);
+        }
+      });
+  }
 
 
 }
