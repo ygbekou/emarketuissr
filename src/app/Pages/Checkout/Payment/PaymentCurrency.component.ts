@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, ViewChil
 import { AppService } from '../../../Services/app.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod } from 'src/app/app.models';
+import { User, CreditCard, Order, ZoneToGeoZone, Store, TimePeriod, Errors } from 'src/app/app.models';
 import { Constants } from 'src/app/app.constants';
 import { DatePipe } from '@angular/common';
 
@@ -28,6 +28,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    @Input() user: User = new User();
    error: string;
    message: string;
+   pointsMessage: string;
+   pointsError: Errors;
    storeHoursMessage: string;
    paymentMethodError: string;
    notify = false;
@@ -38,6 +40,8 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    @Input() pickUp: '0' | '1';
    @Input() scheduleForLater: boolean;
    allStepDone = false;
+
+   applyPoint: boolean;
 
    @Input()
    storeId: number;
@@ -65,6 +69,9 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
    maxScheduleDate: Date;
 
    payCash = false;
+
+   usedPoints: number;
+   usedPointsValue: number;
 
    constructor(public appService: AppService,
       public router: Router,
@@ -494,12 +501,14 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
 
    placeYourOrder() {
       const orderId = this.order === null ? this.order.id : null;
-      // this.order = new Order();
+
+      this.order.errors = [];
       this.order.id = orderId;
       this.order.products = this.appService.localStorageCartProductsMap[this.storeId];
       this.order.total = this.appService.navbarCartTotalMap[this.storeId];
       this.order.shippingCost = this.appService.navbarCartShippingMap[this.storeId];
-      // this.order.taxFees = this.appService.navbarCartShippingMap[this.storeId];
+      this.order.pointsValue = this.appService.navbarCartPointsValueMap[this.storeId];
+      this.order.walletAmount = this.appService.navbarCartWalletMap[this.storeId];
       this.order.userId = this.user.id;
       this.order.language = this.appService.appInfoStorage.language;
       this.order.userAgent = this.appService.getUserAgent();

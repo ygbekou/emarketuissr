@@ -1721,6 +1721,9 @@ export class Order {
   total: number;
   shippingCost: number;
   taxFees: number;
+  pointsValue: number;
+  walletAmount: number;
+  pymtMethAmount: number;
   tracking: string;
   userAgent: string;
   createDate: Date;
@@ -3544,6 +3547,8 @@ export class Wallet {
   createBy: number;
   modBy: number;
 
+  availableBalance: number;
+
   type = 'Wallet';
 }
 
@@ -3566,4 +3571,21 @@ export class WalletTrans {
   errors: string[];
 
   type = 'WalletTrans';
+}
+
+export class DiscountCard {
+  id: number;
+	userId: number;
+	storeId: number;
+  cardId: string;
+	totalPoints: number;
+	usedPoints: number;
+	availablePoints: number;
+  pointsValue: number;
+  storePointValue: number;
+}
+
+export class Errors {
+  code: string;
+  message: string;
 }

@@ -18,6 +18,10 @@
     [routerLink]="['/account/sales-dashboard']"><i
       class="material-icons mr-1">storefront</i><span>{{'COMMON.SELLER_SPACE' | translate }}</span></button>
 
+  <button color="accent" *ngIf="appService.tokenStorage.hasToken() " mat-menu-item
+    [routerLink]="['/account/wallets']"><i
+      class="material-icons mr-1">account_balance_wallet</i><span>{{'COMMON.MY_WALLETS' | translate }}</span></button>
+
   <button *ngIf="appService.tokenStorage.hasToken() && appService.tokenStorage.getRole()==='3'" mat-menu-item
     [routerLink]="['/admin']"><i class="material-icons mr-1"
       color="accent">admin_panel_settings</i><span>{{'COMMON.ADMIN_SPACE' | translate }}</span></button>

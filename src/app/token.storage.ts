@@ -22,6 +22,9 @@ export class TokenStorage {
   public static USER = 'user';
   public static DAY_START_TIME = 'day_start_time';
 
+  public walletMap = {};
+  public pointsMap = {};
+
 
   constructor() { }
 

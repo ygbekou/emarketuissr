@@ -996,7 +996,11 @@
 		"MY_WALLETS": "My Wallets",
 		"MAKE_TRANSFER": "Make Transfer",
 		"ADD_CASH_TO_WALLET": "Add Cash To Wallet",
-		"WALLET": "Wallet"
+		"WALLET": "Wallet",
+		"WALLET_BALANCE": "Wallet Balance",
+		"APPLY_STORE_POINTS": "Apply Store Points",
+		"APPLY": "Apply",
+		"POINTS_APPLIED": "Points Applied"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -1099,7 +1103,13 @@
 		"PAYMENT_METHOD_REQUIRED": "Payment Method Required",
 		"ALREADY_EXISTS": "Already exists",
 		"OBJECT_HAS_CHILD": "This product has being sold in the system. It cannot be deleted.",
-		"PRODUCTS_IMPORT_COMPLETED": "The products import has completed. Please check the downloaded file for the result"
+		"PRODUCTS_IMPORT_COMPLETED": "The products import has completed. Please check the downloaded file for the result",
+		"POINTS_GREATHER_THAN_ORDER_TOTAL": "Points are greater than the order total",
+		"POINTS_GREATHER_THAN_AVAILABLE": "Points are greater than the available points",
+		"INSUFFICIENT_POINTS": "Points applied are greather than the points available in the system.",
+		"UNAVAILABLE_POINTS": "No discount card available for you in this store.",
+		"INSUFFICIENT_WALLET": "Wallet amount applied are greather than the available balance in the system.",
+		"UNAVAILABLE_WALLET": "No wallet available for you in this store."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

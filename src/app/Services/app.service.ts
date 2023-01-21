@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -70,7 +70,19 @@ export class AppService {
    navbarCartTotal = 0;
    navbarCartTotalMap = {};
 
+   navbarCartWalletMap = {};
+
+   navbarCartOrderTotalMap = {};
+
    navbarCartCurrencyMap = {};
+
+   navbarCartPointsMap = {};
+
+   navbarCartPointsValueMap = {};
+
+   usedPointsValueMap = {};
+
+   usedPointsMap = {};
 
    hasOrderSucceedMap = {};
 
@@ -354,6 +366,7 @@ export class AppService {
       this.navbarCartTotalBeforeTaxMap = {};
       this.navbarCartEstimatedTaxMap = {};
       this.navbarCartTotalMap = {};
+      this.navbarCartOrderTotalMap = {};
       this.localStorageCartProducts.forEach(cartItem => {
          this.navbarCartPrice += this.calculateCartItemTotal(cartItem);
          if (!this.navbarCartPriceMap[cartItem.storeId]) {
@@ -364,6 +377,7 @@ export class AppService {
             this.navbarCartTotalBeforeTaxMap[cartItem.storeId] = 0;
             this.navbarCartEstimatedTaxMap[cartItem.storeId] = 0;
             this.navbarCartTotalMap[cartItem.storeId] = 0;
+            this.navbarCartOrderTotalMap[cartItem.storeId] = 0;
             this.hasOrderSucceedMap[cartItem.storeId] = false;
 
             this.navbarCartCurrencyMap[cartItem.storeId] = {
@@ -435,7 +449,12 @@ export class AppService {
             + this.navbarCartShippingMap[storeId]);
          this.navbarCartTotalMap[storeId] = this.roundingValue(this.navbarCartTotalBeforeTaxMap[storeId]
             + this.navbarCartEstimatedTaxMap[storeId]);
+         this.navbarCartOrderTotalMap[storeId] = this.navbarCartTotalMap[storeId];
       }
+
+      this.getUserWallets();
+      this.getUserPoints();
+
    }
 
    calculateCartItemTotal(cartItem: CartItem) {
@@ -476,6 +495,53 @@ export class AppService {
 
    }
 
+   applyPointsChecked(storeId: number) {
+      this.navbarCartOrderTotalMap[storeId]
+         = this.navbarCartTotalMap[storeId] - this.navbarCartWalletMap[storeId];
+      this.navbarCartPointsValueMap[storeId] = undefined;
+      if (this.tokenStorage.pointsMap[storeId]) {
+         if (this.navbarCartOrderTotalMap[storeId] > this.tokenStorage.pointsMap[storeId].pointsValue) {
+            this.usedPointsValueMap[storeId] = this.tokenStorage.pointsMap[storeId].pointsValue;
+         } else {
+            if (this.navbarCartOrderTotalMap[storeId] > 0) {
+               this.usedPointsValueMap[storeId] = this.navbarCartOrderTotalMap[storeId];
+            }
+         }
+         this.usedPointsMap[storeId] = this.usedPointsValueMap[storeId] / this.tokenStorage.pointsMap[storeId].storePointValue;
+      }
+   }
+
+   pointsChanged(storeId: number) {
+      this.navbarCartOrderTotalMap[storeId]
+         = this.navbarCartTotalMap[storeId] - this.navbarCartWalletMap[storeId];
+      this.navbarCartPointsValueMap[storeId] = undefined;
+      this.usedPointsMap[storeId] = this.usedPointsValueMap[storeId] ?
+         this.usedPointsValueMap[storeId] / this.tokenStorage.pointsMap[storeId].storePointValue
+         : undefined;
+   }
+
+   applyPoints(storeId: number) {
+      let pointsError: string;
+      this.navbarCartOrderTotalMap[storeId]
+         = this.navbarCartTotalMap[storeId] - this.navbarCartWalletMap[storeId];
+      this.navbarCartPointsValueMap[storeId] = undefined;
+      if (this.usedPointsValueMap[storeId] <= this.tokenStorage.pointsMap[storeId].pointsValue) {
+         if (this.usedPointsValueMap[storeId] <= this.navbarCartOrderTotalMap[storeId]) {
+            this.navbarCartPointsValueMap[storeId] = this.usedPointsValueMap[storeId];
+            this.navbarCartOrderTotalMap[storeId] -= this.usedPointsValueMap[storeId];
+         } else {
+            this.translate.get('MESSAGE.POINTS_GREATHER_THAN_ORDER_TOTAL').subscribe((res) => {
+               pointsError = res;
+            });
+         }
+      } else {
+         this.translate.get('MESSAGE.POINTS_GREATHER_THAN_AVAILABLE').subscribe((res) => {
+            pointsError = res;
+         });
+      }
+
+      return pointsError;
+   }
 
    // Removing cart from local
    public removeLocalCartProduct(product: any) {
@@ -1228,6 +1294,67 @@ export class AppService {
 
       return timePeriod;
    }
+
+   getUserWallets() {
+      if (+this.tokenStorage.getUserId() > 0) {
+         const parameters: string[] = [];
+         parameters.push('e.user.id = |userId|' + this.tokenStorage.getUserId() + '|Integer');
+         parameters.push('e.status = |wStatus|1|Integer');
+         this.getAllByCriteria('Wallet', parameters)
+            .subscribe((data: Wallet[]) => {
+               data.forEach((w) => {
+                  w.availableBalance = w.balance;
+                  this.tokenStorage.walletMap[w.currency.code] = w;
+               });
+
+               for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
+
+                  if (this.tokenStorage.walletMap[this.navbarCartCurrencyMap[storeId].currencyCode].availableBalance >
+                     this.navbarCartTotalMap[storeId]) {
+                     this.navbarCartWalletMap[storeId] = this.navbarCartTotalMap[storeId];
+                     this.navbarCartOrderTotalMap[storeId] = 0;
+                  } else {
+                     this.navbarCartWalletMap[storeId] = this.tokenStorage.
+                        walletMap[this.navbarCartCurrencyMap[storeId].currencyCode].availableBalance;
+                     this.navbarCartOrderTotalMap[storeId] = this.navbarCartTotalMap[storeId] - this.navbarCartWalletMap[storeId];
+                  }
+
+                  this.tokenStorage.walletMap[this.navbarCartCurrencyMap[storeId].currencyCode].availableBalance
+                        -= this.navbarCartWalletMap[storeId];
+               }
+            },
+               error => console.log(error),
+               () => console.log('Get all GeoZone complete'));
+      }
+   }
+
+   getUserPoints() {
+      if (+this.tokenStorage.getUserId() > 0) {
+         let storeIds = '';
+         let i = 0;
+         for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
+            if (i > 0) {
+               storeIds = storeIds + ',';
+            }
+            storeIds = storeIds + storeId;
+            i++;
+         }
+
+         const parameters: string[] = [];
+         parameters.push('e.userId = |uId|' + this.tokenStorage.getUserId() + '|Integer');
+         parameters.push('e.storeId IN |sId|' + storeIds + '|List<Integer>');
+         this.getAllByCriteria('DiscountCard', parameters)
+            .subscribe((data: DiscountCard[]) => {
+               data.forEach((dc) => {
+                  this.tokenStorage.pointsMap[dc.storeId] = dc;
+                  this.applyPointsChecked(dc.storeId);
+               });
+            },
+               error => console.log(error),
+               () => console.log('Get all GeoZone complete'));
+      }
+   }
+
 
    // Error handling
    handleError(error) {

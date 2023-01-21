@@ -991,7 +991,16 @@
     "IS_LIVE": "En Production",
     "FLAT_RATE_LIMIT": "Limite de distance forfaitaire",
 		"TOTAL_DELIV_COST": "Cout total livraison.",
-		"DELIVERY_COUNT": "Nombre de livraisons"
+    "DELIVERY_COUNT": "Nombre de livraisons",
+    "ADD_CASH": "Add Cash",
+		"MY_WALLETS": "Mes Portefeuilles",
+		"MAKE_TRANSFER": "Faire un transfert",
+		"ADD_CASH_TO_WALLET": "Ajouter au portefeuille",
+		"WALLET": "Portefeuille",
+		"WALLET_BALANCE": "Solde portefeuille",
+		"APPLY_STORE_POINTS": "Apply Store Points",
+		"APPLY": "Appliquer",
+		"POINTS_APPLIED": "Points Appliqués"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1093,7 +1102,13 @@
 		"PAYMENT_METHOD_REQUIRED": "Méthode de payement requis",
 		"ALREADY_EXISTS": "Existe déjà",
     "OBJECT_HAS_CHILD": "Ce produit a été vendu dans le système. Il ne peut pas être supprimé.",
-    "PRODUCTS_IMPORT_COMPLETED": "L'importation du produit est terminée. Veuillez vérifier le fichier téléchargé pour le resultat"
+    "PRODUCTS_IMPORT_COMPLETED": "L'importation du produit est terminée. Veuillez vérifier le fichier téléchargé pour le resultat",
+		"POINTS_GREATHER_THAN_ORDER_TOTAL": "Les points sont supérieurs au total de la commande",
+		"POINTS_GREATHER_THAN_AVAILABLE": "Les points sont supérieurs au total des points disponibles",
+		"INSUFFICIENT_POINTS": "Les points appliqués sont supérieurs aux points disponibles dans le système.",
+		"UNAVAILABLE_POINTS": "Aucune carte de réduction disponible pour vous dans ce magasin.",
+		"INSUFFICIENT_WALLET": "Le montant du portefeuille appliqué est supérieur au solde disponible dans le système.",
+		"UNAVAILABLE_WALLET": "Aucun portefeuille disponible pour vous dans ce magasin."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
