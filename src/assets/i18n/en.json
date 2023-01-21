@@ -2,6 +2,9 @@
 	"COMMON": {
 		"SHOP": "Shop",
 		"FEES": "Fees",
+		"MAX_SHIPPER_WAIT":"Max. wait minutes for shipper",
+		"MAX_SHIPPER_DIST":"Max. distance for eligible shipper",
+		"POINT_VALUE":"Point value",
 		"PO_ACCOUNTING":"Purchases - Accounting",
 		"SALES_SUMMARY_ACCOUNTING":"Sales summary - Accounting",
 		"RECEIPTS":"Sales Receipts",

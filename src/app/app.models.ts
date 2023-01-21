@@ -839,7 +839,9 @@ export class Store extends BaseModel {
   catUrl: string;
   isHotel: number;
   isLive: number;
-
+  maxShipperWait: number;
+  maxShipperDistance: number;
+  pointValue: number;
   type = 'Store';
   constructor() {
     super();
@@ -1364,8 +1366,6 @@ export class CartItem {
 export class ProductListVO {
   categories: string[];
   productDescVOs: ProductDescVO[];
-  //storeCats: StoreCategoryDesc[];
-  //viewType: string;
 }
 
 export class ProductVO {
@@ -2015,8 +2015,6 @@ export class StoreCategoryDesc {
   storeCat: StoreCategory;
   language: Language;
   name: string;
-
-  //stores: Store[];
 }
 
 export class EmailVerification {
