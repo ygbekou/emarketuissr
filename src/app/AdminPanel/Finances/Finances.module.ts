@@ -54,6 +54,11 @@ import { StoreServiceComponent } from './StoreServices/StoreService.component';
 import { StoreServicesComponent } from './StoreServices/StoreServices.component';
 import { UserBillComponent } from './Billings/UserBill.component';
 import { BillPaymentComponent } from './Billings/BillPayment.component';
+import { AdminWalletsComponent } from './Wallets/AdminWallets.component';
+import { AdminWalletComponent } from './Wallets/AdminWallet.component';
+import { AdminDiscountCardsComponent } from './DiscountCards/AdminDiscountCards.component';
+import { AdminDiscountCardComponent } from './DiscountCards/AdminDiscountCard.component';
+import { AdminDCDetailsComponent } from './DiscountCards/AdminDCDetails.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +76,12 @@ import { BillPaymentComponent } from './Billings/BillPayment.component';
     ServiceComponent,
     ServicesComponent,
     StoreServiceComponent,
-    StoreServicesComponent
+    StoreServicesComponent,
+    AdminWalletsComponent,
+    AdminWalletComponent,
+    AdminDiscountCardsComponent,
+    AdminDiscountCardComponent,
+    AdminDCDetailsComponent
   ],
   imports: [
     CommonModule,

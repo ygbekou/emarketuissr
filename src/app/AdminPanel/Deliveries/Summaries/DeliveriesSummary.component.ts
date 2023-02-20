@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { Payout, Store, SalesSummarySearchCriteria, PayoutVO, DeliveriesSummary, Order, OrderSearchCriteria } from 'src/app/app.models';
+import { Payout, Store, SalesSummarySearchCriteria, PayoutVO, DeliveriesSummary, Order, OrderSearchCriteria, User } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
@@ -134,10 +134,11 @@ export class DeliveriesSummaryComponent extends BaseComponent implements OnInit 
 
   acknowledgeDeliveriesSummary() {
     this.messages = '';
+    this.deliveriesSummary.acknowledger = new User();
     this.deliveriesSummary.acknowledger.id = +this.appService.tokenStorage.getUserId();
     this.deliveriesSummary.modifiedBy = +this.appService.tokenStorage.getUserId();
 
-    this.appService.saveWithUrl('/service/order/acknowledgeSalesSummary/', this.deliveriesSummary)
+    this.appService.saveWithUrl('/service/order/acknowledgeDeliveriesSummary/', this.deliveriesSummary)
       .subscribe((data: Payout) => {
         this.processResult(data, this.deliveriesSummary, null);
         this.getDeliveriesSummary(data.id);

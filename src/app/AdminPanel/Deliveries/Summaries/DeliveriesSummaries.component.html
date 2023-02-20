@@ -1,8 +1,6 @@
 <a mat-button [routerLink]="['/admin/deliveries/summaries']">{{'COMMON.DELIVERIES_SUMMARIES' | translate}}
   <mat-icon>navigate_next</mat-icon>
 </a>
-<button *ngIf="!stores || stores.length===0" mat-raised-button color="accent" [routerLink]="['/account/profile/edit']"
-  [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
 
 <div fxLayout="row wrap">
 

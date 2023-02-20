@@ -6,21 +6,12 @@
 
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" *ngFor="let wallet of wallets">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngFor="let wallet of wallets">
       <div class="tile tile-primary">
         <div class="tile-heading">{{'COMMON.CURRENCY'|translate}} : {{wallet.currency.code}} <span
             class="pull-right"></span>
 
-          <div class="tile-body">
-            <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
-              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                <h4> {{'COMMON.BALANCE'|translate}}: </h4>
-              </div>
-              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-                <h4> {{wallet.balance}} </h4>
-              </div>
-            </div>
-          </div>
+          <app-wallet [wallet]="wallet"></app-wallet>
 
           <div class="tile-footer">
             <div fxLayout="row wrap" class="col-gap">
@@ -166,7 +157,7 @@
                 </div>
 
               </div>
-              
+
             </mat-card>
           </div>
         </div>

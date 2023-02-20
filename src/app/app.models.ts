@@ -3546,6 +3546,7 @@ export class Wallet {
   modBy: number;
 
   availableBalance: number;
+  walletTransList: WalletTransDTO[];
 
   type = 'Wallet';
 }
@@ -3555,7 +3556,7 @@ export class WalletTrans {
   wallet: Wallet;
   currency: Currency;
   amount: number;
-  walletTransType: WalletTransType;
+  walletTransType: string;
   paymentMethodCode: string;
   paymentIntentId: string;
   stripePaymentMethodId: string;
@@ -3573,8 +3574,8 @@ export class WalletTrans {
 
 export class DiscountCard {
   id: number;
-	userId: number;
-	storeId: number;
+	user: User;
+	store: Store;
   cardId: string;
 	totalPoints: number;
 	usedPoints: number;
@@ -3586,4 +3587,102 @@ export class DiscountCard {
 export class Errors {
   code: string;
   message: string;
+}
+
+export class WalletTransDTO {
+  id: number;
+	walletTransType: string;
+	amount: number;
+	wallet: WalletDTO;
+	storeId: number;
+	storeName: string;
+	paymentMethodCode: string;
+	failureReason: string;
+	phone: string;
+	status: number;
+	createBy: number;
+}
+
+export class WalletDTO {
+  id: number;
+	balance: number;
+	currencyId: number;
+  currencySymbolLeft: string;
+  currencySymbolRight: string;
+  currencyDecimalPlace: number;
+	currencyCode: string;
+	userId: number;
+	userFirstName: string;
+	userLastName: string;
+  createBy: number;
+  createDate: Date;
+	status: number;
+}
+
+export class WalletSearchCriteria {
+  id: number;
+  currencyId: number;
+  currencyCode: string;
+  storeId: number;
+  storeName: string;
+  userId: number;
+  userName: string;
+  userFirstName: string;
+  userLastName: string;
+  status: number;
+  totalDueGreaterThan: number;
+  beginDate: Date;
+  endDate: Date;
+}
+
+
+export class DiscountCardTransDTO {
+  id: number;
+	dcTransType: string;
+	amount: number;
+	discountCard: DiscountCardDTO;
+  orderId: number;
+  reservationId: number;
+  tblHdrId: number;
+	status: number;
+	createBy: number;
+}
+
+export class DiscountCardDTO {
+  id: number;
+  availablePoints: number;
+  pointsValue: number;
+	storeId: number;
+  storeName: string;
+  currencySymbolLeft: string;
+  currencySymbolRight: string;
+  currencyDecimalPlace: number;
+	currencyCode: string;
+	userId: number;
+	userFirstName: string;
+	userLastName: string;
+  createDate: Date;
+	status: number;
+}
+
+export class DiscountCardSearchCriteria {
+  id: number;
+  storeId: number;
+  storeName: string;
+  userId: number;
+  userName: string;
+  userFirstName: string;
+  userLastName: string;
+  status: number;
+  totalDueGreaterThan: number;
+  beginDate: Date;
+  endDate: Date;
+}
+
+export class DCDetail {
+  id: number;
+  name: string;
+  qty: number;
+  fraction: number;
+  earnedPoints: number;
 }

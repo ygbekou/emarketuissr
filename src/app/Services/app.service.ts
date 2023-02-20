@@ -21,6 +21,7 @@ import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
+import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.component';
 
 interface Response {
    data: any;
@@ -249,6 +250,21 @@ export class AppService {
       dialogConfig.height = '500px';
 
       popup = this.dialog.open(ShipperSearchComponent, dialogConfig);
+      popup.componentInstance.searchCriteria = searchCriteria;
+
+      return popup.afterClosed();
+   }
+
+   public userSearch(searchCriteria: any) {
+      let popup: MatDialogRef<UserSearchComponent>;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.direction = this.isDirectionRtl ? 'rtl' : 'ltr';
+      dialogConfig.maxWidth = '300vw';
+      dialogConfig.maxHeight = '300vh';
+      dialogConfig.width = '800px';
+      dialogConfig.height = '500px';
+
+      popup = this.dialog.open(UserSearchComponent, dialogConfig);
       popup.componentInstance.searchCriteria = searchCriteria;
 
       return popup.afterClosed();
@@ -1307,7 +1323,7 @@ export class AppService {
                   this.tokenStorage.walletMap[w.currency.code] = w;
                });
 
-               for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
+               for (const [storeId, total] of Object.entries(this.navbarCartTotalMap)) {
 
                   if (this.tokenStorage.walletMap[this.navbarCartCurrencyMap[storeId].currencyCode].availableBalance >
                      this.navbarCartTotalMap[storeId]) {
@@ -1320,7 +1336,7 @@ export class AppService {
                   }
 
                   this.tokenStorage.walletMap[this.navbarCartCurrencyMap[storeId].currencyCode].availableBalance
-                        -= this.navbarCartWalletMap[storeId];
+                     -= this.navbarCartWalletMap[storeId];
                }
             },
                error => console.log(error),
@@ -1340,18 +1356,20 @@ export class AppService {
             i++;
          }
 
-         const parameters: string[] = [];
-         parameters.push('e.userId = |uId|' + this.tokenStorage.getUserId() + '|Integer');
-         parameters.push('e.storeId IN |sId|' + storeIds + '|List<Integer>');
-         this.getAllByCriteria('DiscountCard', parameters)
-            .subscribe((data: DiscountCard[]) => {
-               data.forEach((dc) => {
-                  this.tokenStorage.pointsMap[dc.storeId] = dc;
-                  this.applyPointsChecked(dc.storeId);
-               });
-            },
-               error => console.log(error),
-               () => console.log('Get all GeoZone complete'));
+         if (storeIds.length > 0) {
+            const parameters: string[] = [];
+            parameters.push('e.user.id = |uId|' + this.tokenStorage.getUserId() + '|Integer');
+            parameters.push('e.store.id IN |sId|' + storeIds + '|List<Integer>');
+            this.getAllByCriteria('DiscountCard', parameters)
+               .subscribe((data: DiscountCard[]) => {
+                  data.forEach((dc) => {
+                     this.tokenStorage.pointsMap[dc.store.id] = dc;
+                     this.applyPointsChecked(dc.store.id);
+                  });
+               },
+                  error => console.log(error),
+                  () => console.log('Get all GeoZone complete'));
+         }
       }
    }
 

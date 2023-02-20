@@ -10,6 +10,8 @@ import { ServicesComponent } from './Services/Services.component';
 import { ServiceComponent } from './Service/Service.component';
 import { FundTypesComponent } from './FundTypes/FundTypes.component';
 import { FundTypeComponent } from './FundType/FundType.component';
+import { AdminWalletsComponent } from './Wallets/AdminWallets.component';
+import { AdminDiscountCardsComponent } from './DiscountCards/AdminDiscountCards.component';
 
 export const FinancesRoutes: Routes = [
    {
@@ -87,6 +89,22 @@ export const FinancesRoutes: Routes = [
          {
             path: 'service/:id',
             component: ServiceComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'admin-wallets',
+            component: AdminWalletsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Administrator']
+            }
+         },
+         {
+            path: 'admin-rewards',
+            component: AdminDiscountCardsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Administrator']

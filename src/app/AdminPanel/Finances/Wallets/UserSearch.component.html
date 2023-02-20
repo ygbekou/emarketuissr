@@ -1,0 +1,138 @@
+<ng-container>
+  <div fxLayout="row wrap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="45">
+        <h6 class="primary-color">{{'COMMON.USER_NAME'|translate}}: {{searchCriteria.userName}}</h6>
+      </div>
+      <div fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"></div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="45" fxFlex.lg="45" fxFlex.xl="45">
+        <h6 class="primary-color">{{'COMMON.NAME'|translate}}: {{searchCriteria.firstName}} {{searchCriteria.lastName}}</h6>
+      </div>
+    </div>
+  </div>
+
+
+  <mat-dialog-content class="mat-typography" style>
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+        <div fxFlex.xs="50" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+          <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
+            <div fxLayout="row wrap">
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.NAME' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="userNameM" [(ngModel)]="userName" name="model"
+                  #userNameM="ngModel">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                style="align-items: right">
+                <mat-error *ngIf="error" severity="error">
+                  {{ error }}
+                </mat-error>
+                <button (click)="search()" mat-raised-button color="accent" class="w-50" cdkFocusInitial>Go</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div fxFlex.sm="20" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+          <div class="text-center mt-2">
+            <div color="accent" class="w-100">
+              <h2>OR</h2>
+            </div>
+          </div>
+        </div>
+        <div fxFlex.xs="50" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+          <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" validate>
+            <div fxLayout="row wrap">
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.LAST_NAME' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="lastName" [(ngModel)]="userLastName"
+                  name="lastName" #lastName="ngModel">
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <mat-label> {{'COMMON.FIRST_NAME' | translate}}</mat-label>
+                <input matInput type="text" class="form-control" id="firstName" [(ngModel)]="userFirstName"
+                  name="firstName" #firstName="ngModel">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row wrap">
+              <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                style="align-items: right">
+                <mat-error *ngIf="error" severity="error">
+                  {{ error }}
+                </mat-error>
+                <button (click)="search()" mat-raised-button color="accent" class="w-50" cdkFocusInitial>Go</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+              <td mat-cell *matCellDef="let user"> {{user.id}} </td>
+            </ng-container>
+
+            <!-- Image Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.USER_NAME' | translate}} </th>
+              <td mat-cell *matCellDef="let user"> {{user.userName}}
+              </td>
+            </ng-container>
+
+            <!-- Image Column 'phone', 'status', 'sortOrder'-->
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.PHONE' | translate}} </th>
+              <td mat-cell *matCellDef="let user"> {{user.phone}}
+              </td>
+            </ng-container>
+
+            <!-- Image Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'COMMON.STATUS' | translate}} </th>
+              <td mat-cell *matCellDef="let user">
+                {{user.status===0?('COMMON.ACTIVE'| translate):('COMMON.INACTIVE'| translate)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let user">
+                <button mat-icon-button color="primary" (click)="select(user)"
+                  matTooltip="{{'COMMON.SELECT' | translate}}" class="remove">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let user; columns: displayedColumns;">
+            </tr>
+          </table>
+          <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+      </div>
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions style="min-height: 80px;">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
+      <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+        <button mat-button mat-dialog-close color="primary">{{'COMMON.CLOSE'|translate}}</button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</ng-container>

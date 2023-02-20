@@ -1,0 +1,68 @@
+<div class="tile-body">
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+      <h4> {{'COMMON.BALANCE'|translate}}: </h4>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40">
+      <h4>
+        {{wallet?.currency?.symbolLeft}}
+        {{wallet.balance | number: '1.' + wallet?.currency?.decimalPlace + '-'  
+                  + wallet?.currency?.decimalPlace:appService?.appInfoStorage.language.locale}}
+        {{wallet?.currency?.symbolRight}}
+      </h4>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="!wltDS">
+      <a href="javascript:void(0)" (click)="getWalletTransList(wallet.id)">{{'COMMON.SHOW_TRANSACTIONS'|translate}}</a>
+    </div>
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" *ngIf="wltDS">
+      <a href="javascript:void(0)" (click)="wltDS = undefined;">{{'COMMON.HIDE_TRANSACTIONS'|translate}}</a>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" [hidden]="!wltDS">
+      <table mat-table [dataSource]="wltDS" matSort class="w-100">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.DATE' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let wlt"> {{wlt.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.TYPE' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let wlt"> 
+            <span *ngIf="wlt.walletTransType === 'CD'">{{'COMMON.CASH_DEPOSIT' | translate}}</span>
+            <span *ngIf="wlt.walletTransType === 'OO'">{{'COMMON.ONLINE_ORDER' | translate}}</span>
+            <span *ngIf="wlt.walletTransType === 'SO'">{{'COMMON.STORE_ORDER' | translate}}</span>
+            <span *ngIf="wlt.walletTransType === 'OR'">{{'COMMON.ONLINE_RESERVATION' | translate}}</span>
+            <span *ngIf="wlt.walletTransType === 'SR'">{{'COMMON.STORE_RESERVATION' | translate}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header>
+            {{'COMMON.AMOUNT' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let wlt"> {{wlt.amount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="store">
+          <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header>
+            {{'COMMON.STORE' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let wlt"> {{wlt.storeName}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="wltCols"></tr>
+        <tr mat-row *matRowDef="let wlt; columns: wltCols;"></tr>
+      </table>
+      <p *ngIf="wltDS && (!wltDS?.data || wltDS?.data.length === 0)"
+        class="py-5 mb-0 text-center">
+        {{'MESSAGE.NO_DATA' | translate}}</p>
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+
+  </div>
+</div>

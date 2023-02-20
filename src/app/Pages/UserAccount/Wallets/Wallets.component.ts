@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Wallet, WalletTrans, User, Language } from 'src/app/app.models';
+import { Component, OnInit, Input, ViewChild, QueryList } from '@angular/core';
+import { Wallet, WalletTrans, User, Language, WalletTransDTO } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 declare var Stripe: any;
 
 @Component({
@@ -56,7 +57,7 @@ export class WalletsComponent extends BaseComponent implements OnInit {
         this.wallets = data;
       },
         error => console.log(error),
-        () => console.log('Get all Shipper complete'));
+        () => console.log('Get all wallet complete'));
   }
 
 
@@ -66,6 +67,7 @@ export class WalletsComponent extends BaseComponent implements OnInit {
     this.walletTrans = new WalletTrans();
     this.walletTrans.currency = wallet.currency;
     this.walletTrans.wallet = wallet;
+    this.walletTrans.walletTransType = 'CD';
 
   }
 
@@ -78,6 +80,7 @@ export class WalletsComponent extends BaseComponent implements OnInit {
     this.sWallet.modBy = +this.appService.tokenStorage.getUserId();
     this.walletTrans = new WalletTrans();
     this.walletTrans.wallet = this.sWallet;
+    this.walletTrans.walletTransType = 'CD';
 
   }
 

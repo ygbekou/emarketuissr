@@ -80,7 +80,9 @@ const MENUITEMS = [
       { state: 'transactionTypes', name: 'Transaction Types', type: 'link' },
       { state: 'services', name: 'Services', type: 'link' },
       { state: 'suppliers', name: 'Suppliers', type: 'link' },
-      { state: 'bills', name: 'Billing', type: 'link' }
+      { state: 'bills', name: 'Billing', type: 'link' },
+      { state: 'admin-wallets', name: 'Wallets', type: 'link' },
+      { state: 'admin-rewards', name: 'Rewards', type: 'link' }
     ]
   },
   {
@@ -193,10 +195,12 @@ const MENUITEMS_FR = [
       { state: 'transactionTypes', name: 'Types de Transaction', type: 'link' },
       { state: 'services', name: 'Services', type: 'link' },
       { state: 'suppliers', name: 'Fournisseurs', type: 'link' },
-      { state: 'bills', name: 'Facturation', type: 'link' }
+      { state: 'bills', name: 'Facturation', type: 'link' },
+      { state: 'admin-wallets', name: 'Portefeuilles', type: 'link' },
+      { state: 'admin-rewards', name: 'Récompenses', type: 'link' }
     ]
   },
-  {
+  { 
     state: 'admin/hospitalities',
     name: 'Hotelleries',
     type: 'sub',

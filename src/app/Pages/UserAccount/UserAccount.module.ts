@@ -106,6 +106,7 @@ import { CancelReservationsComponent } from './Open-reservations/Cancel-reservat
 import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/ComboProduct.component';
 import { DeliveriesModule } from 'src/app/AdminPanel/Deliveries/Deliveries.module';
 import { WalletsComponent } from './Wallets/Wallets.component';
+import { WalletComponent } from './Wallets/Wallet.component';
 
 @NgModule({
   imports: [
@@ -184,6 +185,7 @@ import { WalletsComponent } from './Wallets/Wallets.component';
     ProfileComponent,
     EditProfileComponent,
     StoresComponent,
+    WalletComponent,
     WalletsComponent,
     OrderHistoryComponent,
     GridProductComponent,
@@ -240,6 +242,7 @@ import { WalletsComponent } from './Wallets/Wallets.component';
   ],
   exports: [
     StoresComponent,
+    WalletComponent,
     WalletsComponent,
     EditProfileComponent
   ]
