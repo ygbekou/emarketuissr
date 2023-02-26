@@ -1,0 +1,41 @@
+<mat-card>
+  <div fxLayoutAlign="space-between" *ngIf="!fromAdmin">
+    <h4>{{'COMMON.REWARDS'|translate}}</h4>
+
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap">
+    <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+      *ngFor="let discountCard of discountCards">
+      <div class="tile tile-primary">
+        <div class="tile-heading">{{'COMMON.STORE'|translate}} : {{discountCard.storeName}} <span
+            class="pull-right"></span>
+          <br />
+          <div fxLayout="row wrap">
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+              <h5>{{'COMMON.EARNED_POINTS'|translate}} : {{discountCard.earnedPoints}}</h5>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+              <h5>{{'COMMON.USED_POINTS'|translate}} : {{discountCard.usedPoints}}</h5>
+            </div>
+            <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33">
+              <h5>{{'COMMON.AVAILABLE_POINTS'|translate}} : {{discountCard.availablePoints}}</h5>
+            </div>
+
+          </div>
+
+          <app-admin-discountcard [isAdmin]="false" [discountCard]="discountCard"></app-admin-discountcard>
+
+          <div class="tile-footer">
+            <div fxLayout="row wrap" class="col-gap">
+              <div fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                <span class="pull-right">
+
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

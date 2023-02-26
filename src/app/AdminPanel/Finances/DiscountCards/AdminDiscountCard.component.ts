@@ -34,7 +34,8 @@ export class AdminDiscountCardComponent {
   @ViewChild(MatPaginator, { static: false }) dtlPaginator;
   @ViewChild(MatSort, { static: true }) dtlSort;
 
-
+  @Input()
+  isAdmin = true;
 
   expandedElement: DiscountCardTransDTO | null;
 
@@ -55,15 +56,10 @@ export class AdminDiscountCardComponent {
       })
       .subscribe((data: DiscountCardTransDTO[]) => {
 
-        let i = 0;
-        for (const wl of data) {
+        this.dataSource = new MatTableDataSource<DiscountCardTransDTO>(data);
+        this.dataSource.paginator = this.dctPaginator;
+        this.dataSource.sort = this.dctSort;
 
-          this.dataSource = new MatTableDataSource<DiscountCardTransDTO>(data);
-          this.dataSource.paginator = this.dctPaginator;
-          this.dataSource.sort = this.dctSort;
-
-          i++;
-        }
       },
         error => console.log(error),
         () => console.log('Get dicount card trans list complete'));

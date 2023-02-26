@@ -26,7 +26,8 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Addresses', url: '/account/addresses', icon: 'location_on' },
       { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' },
-      { name: 'My Wallets', url: '/account/wallets', icon: 'account_balance_wallet' }
+      { name: 'My Wallets', url: '/account/wallets', icon: 'account_balance_wallet' },
+      { name: 'My Rewards', url: '/account/rewards', icon: 'stars' }
     ]
   },
   {
@@ -112,8 +113,8 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
       { name: 'Cartes enregistr√©es', url: '/account/cards', icon: 'credit_card' },
-      { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' }
-
+      { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' },
+      { name: 'RÈcompenses', url: '/account/rewards', icon: 'stars' }
     ]
   },
   {

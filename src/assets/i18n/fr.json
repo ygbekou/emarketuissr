@@ -1017,7 +1017,9 @@
 		"AVAILABLE_POINTS": "Points disponible",
 		"POINTS_VALUE": "Value des points",
     "REWARDS": "Récompenses",
-		"TOTAL_POINTS": "Total des Points"
+		"TOTAL_POINTS": "Total des Points",
+		"EARNED_POINTS": "Points Gagnés",
+		"USED_POINTS": "Points Utilisés"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

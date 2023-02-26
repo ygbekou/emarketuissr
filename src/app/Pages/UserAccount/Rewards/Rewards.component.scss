@@ -7,7 +7,7 @@
 }
 
 .mat-row:hover {
-    background-color: #ff5722;
+    background-color: #0066c0;
     cursor: pointer;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .tile .tile-body i {
-    font-size: 50px;
+    // font-size: 50px;
     opacity: 0.3;
     transition: all 1s;
 }
@@ -70,57 +70,41 @@
 }
 
 .tile:hover .tile-body i {
-    color: #FFFFFF;
+    // color: #FFFFFF;
     opacity: 1;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
+h1,h2,h3,h4,h5,
+h6,.h1,.h2,.h3,
+.h4,.h5,.h6 {
     font-family: inherit;
     font-weight: 500;
     line-height: 1.1;
     color: inherit;
 }
 
-input:focus { 
-    outline: none !important;
-    border-color: #1b80c2;
-    // box-shadow: 0 0 10px #1b80c2;
-}
-textarea:focus { 
+input:focus {
     outline: none !important;
     border-color: #1b80c2;
     box-shadow: 0 0 10px #1b80c2;
 }
-textarea{ 
+
+textarea:focus {
+    outline: none !important;
+    border-color: #1b80c2;
+    box-shadow: 0 0 10px #1b80c2;
+}
+
+textarea {
     outline: none !important;
     border-color: #719ECE;
     box-shadow: 0 0 10px #719ECE;
 }
 
-.mat-cell {
-  padding: 0px 0px 0px 0;
-}
- 
-.mat-sort-header-container {
-    justify-content: center !important;
-}
-
-
-.example-element-detail {
-  overflow: hidden;
-}
-
-tr.example-detail-row {
-  height: 0;
+.col-gap>div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
 }

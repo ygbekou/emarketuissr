@@ -34,7 +34,6 @@ import { BuildingsComponent } from './Buildings/Buildings.component';
 import { RoomTypesComponent } from './roomTypes/RoomTypes.component';
 import { SalesReservationsComponent } from './Sales-reservations/Sales-reservations.component';
 import { ReservationDetailComponent } from './Reservation-detail/Reservation-detail.component';
-import { ProductTransferComponent } from './SellerTransfers/ProductTransfer.component';
 import { TransfersComponent } from './SellerTransfers/Transfers.component';
 import { TransferHistoriesComponent } from './SellerTransferHistories/TransferHistories.component';
 import { FundsComponent } from './SellerFunds/Funds.component';
@@ -43,6 +42,7 @@ import { OpenReservationsComponent } from './Open-reservations/Open-reservations
 import { CancelReservationsComponent } from './Open-reservations/Cancel-reservations.component';
 import { SellerDeliveriesSummariesComponent } from './Deliveries-summaries/SellerDeliveriesSummaries.component';
 import { WalletsComponent } from './Wallets/Wallets.component';
+import { RewardsComponent } from './Rewards/Rewards.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -116,6 +116,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'wallets',
             component: WalletsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'rewards',
+            component: RewardsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

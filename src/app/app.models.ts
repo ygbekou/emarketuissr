@@ -3650,6 +3650,8 @@ export class DiscountCardTransDTO {
 
 export class DiscountCardDTO {
   id: number;
+  earnedPoints: number;
+  usedPoints: number;
   availablePoints: number;
   pointsValue: number;
 	storeId: number;

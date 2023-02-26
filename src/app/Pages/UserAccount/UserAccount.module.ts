@@ -107,6 +107,7 @@ import { ComboProductComponent } from 'src/app/AdminPanel/Products/ProductLink/C
 import { DeliveriesModule } from 'src/app/AdminPanel/Deliveries/Deliveries.module';
 import { WalletsComponent } from './Wallets/Wallets.component';
 import { WalletComponent } from './Wallets/Wallet.component';
+import { RewardsComponent } from './Rewards/Rewards.component';
 
 @NgModule({
   imports: [
@@ -239,6 +240,7 @@ import { WalletComponent } from './Wallets/Wallet.component';
     OpenReservationsComponent,
     CancelReservationsComponent,
     ComboProductComponent,
+    RewardsComponent
   ],
   exports: [
     StoresComponent,

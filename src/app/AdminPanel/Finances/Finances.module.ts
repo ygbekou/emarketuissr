@@ -149,7 +149,8 @@ import { AdminDCDetailsComponent } from './DiscountCards/AdminDCDetails.componen
 
   exports: [
     BillsComponent,
-    StoreServicesComponent
+    StoreServicesComponent,
+    AdminDiscountCardComponent
   ]
 })
 export class FinancesModule { }

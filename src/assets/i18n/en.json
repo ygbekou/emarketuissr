@@ -1016,7 +1016,9 @@
 		"AVAILABLE_POINTS": "Available Points",
 		"POINTS_VALUE": "Points Value",
 		"REWARDS": "Rewards",
-		"TOTAL_POINTS": "Total Points"
+		"TOTAL_POINTS": "Total Points",
+		"EARNED_POINTS": "Earned Points",
+		"USED_POINTS": "Used Points"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",

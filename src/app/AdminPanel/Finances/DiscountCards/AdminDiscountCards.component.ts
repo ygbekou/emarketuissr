@@ -8,10 +8,9 @@ import { BaseComponent } from '../../baseComponent';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from "@angular/common";
-import { WalletDTO, Store, User, WalletSearchCriteria, Wallet, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
+import { Store, User, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { AdminDiscountCardComponent } from './AdminDiscountCard.component';
-import { TableExpandableRowsExample } from './table';
 
 export interface SearchResponse {
   document: string;
@@ -31,7 +30,6 @@ export class AdminDiscountCardsComponent extends BaseComponent implements OnInit
   @ViewChild(MatSort, { static: true }) dcSort: MatSort;
 
   @ViewChild(AdminDiscountCardComponent, { static: false }) discountCardComponent: AdminDiscountCardComponent;
-  @ViewChild(TableExpandableRowsExample, { static: false }) tableExpandableRowsExample: TableExpandableRowsExample;
   expandedElement: SearchResponse | null;
   messages = '';
   button = 'filter';
