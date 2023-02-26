@@ -25,14 +25,7 @@ const TREE_DATA_EN: MenuNode[] = [
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Addresses', url: '/account/addresses', icon: 'location_on' },
-      { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' }
-    ]
-  },
-  {
-    name: 'Wallets',
-    url: '/account/wallets',
-    icon: 'account_balance_wallet',
-    children: [
+      { name: 'Saved cards', url: '/account/cards', icon: 'credit_card' },
       { name: 'My Wallets', url: '/account/wallets', icon: 'account_balance_wallet' }
     ]
   },
@@ -118,7 +111,9 @@ const TREE_DATA_FR: MenuNode[] = [
     children: [
       { name: 'Profile', url: '/account/profile', icon: 'account_circle' },
       { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
-      { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' }
+      { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' },
+      { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' }
+
     ]
   },
   {
@@ -129,15 +124,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Tableau de bord', url: '/account/client-dashboard', icon: 'dashboard' },
       { name: 'Détails Achats', url: '/account/open-orders', icon: 'shopping_cart' },
     ]
-  }, {
-    name: 'Portefeuilles',
-    url: '/account/wallets',
-    icon: 'money',
-    children: [
-      { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' }
-
-    ]
-  }, {
+  },  {
     name: 'Ventes',
     url: '/account/selling',
     icon: 'account_circle',
