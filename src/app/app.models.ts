@@ -217,6 +217,7 @@ export class ProductDescription {
   metaTitle: string;
   metaDescription: string;
   metaKeyword: string;
+  category: string;
   type = 'ProductDescription';
 }
 
