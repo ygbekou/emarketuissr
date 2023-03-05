@@ -332,6 +332,7 @@ export class MyProductsComponent extends BaseComponent implements OnInit {
         this.comboProductView.productToStore = this.productStore;
         this.comboProductView.storeId = this.productStore.store.id;
         this.comboProductView.getProductParentDescriptions();
+        this.comboProductView.getMenus();
 
       },
         error => console.log(error),

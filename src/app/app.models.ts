@@ -287,6 +287,7 @@ export class ProductToParent {
   product: Product;
   parent: Product;
   category: Category;
+  menu: ProductMenu;
   quantity: number;
   store: Store;
   required: number;
@@ -296,6 +297,10 @@ export class ProductToParent {
   categoryDescription: CategoryDescription = new CategoryDescription();
   categoryOptions: CategoryDescription[] = [];
   filteredCategoryOptions: CategoryDescription[] = [];
+
+  menuDescription: MenuDescription = new MenuDescription();
+  menuOptions: MenuDescription[] = [];
+  filteredMenuOptions: MenuDescription[] = [];
 
   parentProductDescription: ProductDescription = new ProductDescription();
   parentOptions: ProductDescription[] = [];
