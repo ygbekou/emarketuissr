@@ -49,6 +49,8 @@ export class RewardsComponent extends BaseComponent implements OnInit {
 
   private getRewards() {
 
+    this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
+
     this.appService.saveWithUrl('/service/finance/discountCards', this.searchCriteria)
       .subscribe((data: any[]) => {
         this.discountCards = data;

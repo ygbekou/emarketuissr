@@ -72,6 +72,14 @@
                   routerLinkActive="tab-active">
                   {{prd.product.storeName}}</a>
             </font>
+            <div *ngIf="fromPage==='sell'">
+               <font style="font-style: italic;font-size: 10px;" >
+                  {{'COMMON.CATEGORY'|translate}}:
+               </font>
+               <font style="font-style: italic;font-size: 10px;font-weight: bold;" >
+                  {{prd.category}}
+               </font>
+            </div>
             <div>
                <div fxFlex fxLayoutAlign="space-between">
                   <h6 class="secondary-color" style="text-decoration: line-through;"
@@ -124,7 +132,7 @@
                      </i></button>
                </ng-container>
             </div>
-            
+
             <div class="m-icon" *ngIf="fromPage==='marketing'">
                <ng-container *ngIf="prd">
                   <button mat-fab (click)="removeProductFromList(prd)"><i class="material-icons"> delete_sweep
@@ -136,7 +144,7 @@
                <ng-container *ngIf="prd">
                   <mat-slide-toggle (click)="toggleAvailableOnline(prd)" name="availableOnline"
                      [(ngModel)]="prd.product.availableOnline" class="my-2">
-                    {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
+                     {{ 'COMMON.AVAILABLE_ONLINE' | translate }}
                   </mat-slide-toggle>
                </ng-container>
             </div>

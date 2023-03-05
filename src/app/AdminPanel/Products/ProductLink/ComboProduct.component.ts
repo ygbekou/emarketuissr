@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Product, ProductDescription, ProductToParent, CategoryDescription, ProductToStore, Store } from 'src/app/app.models';
+import { Product, ProductDescription, ProductToParent, CategoryDescription, ProductToStore, Store, MenuDescription } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from '../../baseComponent';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
@@ -25,8 +25,11 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
   messages: string;
   errors: string;
 
+  groupType = 1;
+
   initialParentProductOptions: ProductDescription[];
   initialCategoryOptions: CategoryDescription[];
+  initialMenuOptions: MenuDescription[];
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -52,13 +55,29 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
         () => console.log('Get all CategoryDescription complete'));
   }
 
+  getMenus() {
+    console.log('Getting menus');
+    this.initialMenuOptions = [];
+    this.appService.saveWithUrl('/service/catalog/getStoreMenuDescs', {
+      userId: +this.appService.tokenStorage.getUserId(),
+      languageId: +this.appService.appInfoStorage.language.id,
+      storeId: this.storeId
+    })
+      .subscribe((data: any[]) => {
+        this.initialMenuOptions = data;
+      },
+        error => console.log(error),
+        () => console.log('Get store menus complete'));
+
+  }
+
+
   getProductParentDescriptions() {
     this.appService.getObjects('/service/catalog/assignedproductparentdescriptions/'
       + this.storeId + '/'
       + this.productToStore.product.id + '/'
       + this.appService.appInfoStorage.language.id)
       .subscribe((data: ProductToParent[]) => {
-        console.log(data);
         this.productToParentDatasource = new MatTableDataSource<ProductToParent>(data);
         this.productToParentDatasource.paginator = this.paginator;
         this.productToParentDatasource.sort = this.sort;
@@ -72,6 +91,21 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
       this.appService.getObjects('/service/catalog/unassignedproductparentdescriptions/'
         + this.appService.appInfoStorage.language.id
         + '/' + productToParent.category.id + '/' + this.storeId + '/' + this.productToStore.product.id)
+        .subscribe((data: ProductDescription[]) => {
+          this.initialParentProductOptions = data;
+          console.log(data);
+          productToParent.filteredParentOptions = data;
+        },
+          error => console.log(error),
+          () => console.log('Get all non related product complete'));
+    }
+  }
+
+  getUnassignedMenuParentProducts(productToParent: ProductToParent) {
+    if (productToParent.menu && productToParent.menu.id) {
+      this.appService.getObjects('/service/catalog/unassignedMenuProducts/'
+        + this.appService.appInfoStorage.language.id
+        + '/' + productToParent.menu.id + '/' + this.storeId + '/' + this.productToStore.product.id)
         .subscribe((data: ProductDescription[]) => {
           this.initialParentProductOptions = data;
           console.log(data);
@@ -96,6 +130,10 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
     newProductToParent.required = 1;
     newProductToParent.filteredCategoryOptions = this.initialCategoryOptions;
     newProductToParent.categoryOptions = this.initialCategoryOptions;
+
+    newProductToParent.filteredMenuOptions = this.initialMenuOptions;
+    newProductToParent.menuOptions = this.initialMenuOptions;
+
     this.updateDatasourceData(this.productToParentDatasource, this.paginator, this.sort, newProductToParent);
   }
 
@@ -108,6 +146,13 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
     productToParent.categoryDescription = selectedCatDesc;
     productToParent.category = selectedCatDesc.category;
     this.getUnassignedParentProducts(productToParent);
+
+  }
+
+  menuSelected(productToParent: ProductToParent, selectedMenuDesc: MenuDescription) {
+    productToParent.menuDescription = selectedMenuDesc;
+    productToParent.menu = selectedMenuDesc.menu;
+    this.getUnassignedMenuParentProducts(productToParent);
 
   }
 
@@ -233,4 +278,26 @@ export class ComboProductComponent extends BaseComponent implements OnInit {
     return productParent.categoryOptions;
   }
 
+  filterMenuOptions(productParent: ProductToParent) {
+    if (!productParent.menuOptions) {
+      productParent.menuOptions = this.initialMenuOptions;
+    }
+    if (productParent.menuDescription.name) {
+      const filterValue = productParent.menuDescription.name;
+      productParent.filteredMenuOptions = productParent.menuOptions.filter(menuDesc =>
+        menuDesc.name.toLowerCase().startsWith(filterValue));
+      return productParent.menuOptions.filter(menuDesc => menuDesc.name.toLowerCase().startsWith(filterValue));
+    }
+
+    productParent.filteredMenuOptions = productParent.menuOptions;
+    return productParent.menuOptions;
+  }
+
+  groupTypeChange(event) {
+    if (event.value === 1) {
+      this.displayedColumns = ['id', 'category', 'parent', 'quantity', 'required', 'actions'];
+    } else if (event.value === 2) {
+      this.displayedColumns = ['id', 'menu', 'parent', 'quantity', 'required', 'actions'];
+    }
+  }
 }

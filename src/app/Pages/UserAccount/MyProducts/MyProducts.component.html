@@ -112,10 +112,24 @@
           </div>
           <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
             <div class="product-detail-content">
-              <h3>{{productDesc?.name}}</h3>
-              <div class="product-detail-price">
-                {{'COMMON.SUGESTED_PRICE'|translate}} : <h4 class="accent-color">
-                  {{productDesc.product.price}} </h4>
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                  <h3>{{productDesc?.name}}</h3>
+                </div>
+              </div>
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                  <div class="product-detail-price">
+                    {{'COMMON.SUGESTED_PRICE'|translate}} : <h4 class="accent-color">
+                      {{productDesc.product.price}} </h4>
+                  </div>
+                </div>
+                <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-3">
+                  <div class="product-detail-price">
+                    {{'COMMON.CATEGORY'|translate}} : <h4 class="accent-color">
+                      {{productDesc.category}} </h4>
+                  </div>
+                </div>
               </div>
               <div class="short-des" [innerHTML]="productDesc?.shortDescription"></div>
               <div fxLayout="row wrap">

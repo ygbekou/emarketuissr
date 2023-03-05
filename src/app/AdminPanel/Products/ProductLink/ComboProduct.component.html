@@ -7,13 +7,25 @@
   </div>
   <br />
 </div>
+<div fxLayout="row wrap">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="groupType"
+      (change)="groupTypeChange($event);">
+      <mat-button-toggle [value]="1">
+        {{'COMMON.CATEGORY' | translate}}
+      </mat-button-toggle>
+      <mat-button-toggle [value]="2">
+        {{'COMMON.MENU' | translate}}
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
 <div class="table-wrapper">
-
   <table mat-table [dataSource]="productToParentDatasource" matSort class="w-100">
     <!-- ID Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell style="width: 10% !important;"  *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell style="width: 10% !important;"  *matCellDef="let productToParent"> {{productToParent.id}} </td>
+      <th mat-header-cell style="width: 10% !important;" *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell style="width: 10% !important;" *matCellDef="let productToParent"> {{productToParent.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="category">
@@ -29,6 +41,26 @@
           <mat-autocomplete id="category" #auto1="matAutocomplete">
             <mat-option *ngFor="let option of productToParent.filteredCategoryOptions"
               (onSelectionChange)="categorySelected(productToParent, option)" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="menu">
+      <th style="width: 25% !important;" mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{'COMMON.MENU' | translate}} </th>
+      <td style="width: 25% !important;" mat-cell *matCellDef="let productToParent">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{'COMMON.SELECT_ONE' | translate }}</mat-label>
+          <input type="text" placeholder="" aria-label="Number" name="menuOption" matInput
+            [(ngModel)]="productToParent.menuDescription.name" [matAutocomplete]="auto2"
+            (ngModelChange)="filterMenuOptions(productToParent)">
+          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+          <mat-autocomplete id="menu" #auto2="matAutocomplete">
+            <mat-option *ngFor="let option of productToParent.filteredMenuOptions"
+              (onSelectionChange)="menuSelected(productToParent, option)" [value]="option.name">
               {{option.name}}
             </mat-option>
           </mat-autocomplete>
@@ -56,8 +88,9 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell style="width: 10% !important;" *matHeaderCellDef mat-sort-header> {{'COMMON.QUANTITY' | translate}} </th>
-      <td mat-cell style="width: 10% !important;"  *matCellDef="let productToParent">
+      <th mat-header-cell style="width: 10% !important;" *matHeaderCellDef mat-sort-header>
+        {{'COMMON.QUANTITY' | translate}} </th>
+      <td mat-cell style="width: 10% !important;" *matCellDef="let productToParent">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{'COMMON.QUANTITY' | translate}}</mat-label>
           <input matInput type="text" id="quantity" [(ngModel)]="productToParent.quantity" name="quantity"
@@ -67,8 +100,9 @@
     </ng-container>
 
     <ng-container matColumnDef="required">
-      <th mat-header-cell style="width: 10% !important;" *matHeaderCellDef mat-sort-header> {{'COMMON.REQUIRED' | translate}} </th>
-      <td mat-cell style="width: 10% !important;"  *matCellDef="let productToParent">
+      <th mat-header-cell style="width: 10% !important;" *matHeaderCellDef mat-sort-header>
+        {{'COMMON.REQUIRED' | translate}} </th>
+      <td mat-cell style="width: 10% !important;" *matCellDef="let productToParent">
         <mat-slide-toggle [(ngModel)]="productToParent.required" name="required" #required="ngModel" class="my-2">
           <!-- {{ 'COMMON.REQUIRED' | translate }} -->
         </mat-slide-toggle>
@@ -77,12 +111,12 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th style="width: 20% !important;"  mat-header-cell *matHeaderCellDef> Actions
+      <th style="width: 20% !important;" mat-header-cell *matHeaderCellDef> Actions
         <a (click)="addNewProductToParent()" mat-icon-button color="primary" matTooltip="{{'COMMON.ADD' | translate}}">
           <mat-icon color="primary" class="mat-icon-xlg">add_circle</mat-icon>
         </a>
       </th>
-      <td style="width: 20% !important;"  mat-cell *matCellDef="let productToParent">
+      <td style="width: 20% !important;" mat-cell *matCellDef="let productToParent">
         <a (click)="saveProductToParent(productToParent)" mat-icon-button color="primary"
           matTooltip="{{'COMMON.ADD' | translate}}">
           <mat-icon>save</mat-icon>
