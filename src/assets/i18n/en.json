@@ -326,6 +326,7 @@
 		"COMMENTS": "Comments",
 		"COMPANY": "Company",
 		"CONFIRM": "Confirm",
+		"CONFIRMATION": "Confirmation",
 		"CONFIRM_PASSWORD": "Confirm Password",
 		"CONFIRMED": "Confirmed",
 		"CHECKEDIN": "Arrived",
@@ -1018,7 +1019,12 @@
 		"REWARDS": "Rewards",
 		"TOTAL_POINTS": "Total Points",
 		"EARNED_POINTS": "Earned Points",
-		"USED_POINTS": "Used Points"
+		"USED_POINTS": "Used Points",
+		"PAY_IN_FULL": "Pay in Full",
+		"OTHER_AMOUNT": "Other Amount",
+		"ENTERED_AMOUNT": "Entered Amount",
+		"MAKE_PAYMENT": "Make Payment",
+		"BILL_DETAILS": "Bill Details"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
@@ -1127,7 +1133,8 @@
 		"INSUFFICIENT_POINTS": "Points applied are greather than the points available in the system.",
 		"UNAVAILABLE_POINTS": "No discount card available for you in this store.",
 		"INSUFFICIENT_WALLET": "Wallet amount applied are greather than the available balance in the system.",
-		"UNAVAILABLE_WALLET": "No wallet available for you in this store."
+		"UNAVAILABLE_WALLET": "No wallet available for you in this store.",
+		"PAYMENT_SUCCESS": "Your payment of the amount of {{pay_amount}} has being successful."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",
@@ -1163,7 +1170,8 @@
 		"PLEASE_SELECT_FROM_DROPDOWN": "Field is required - Please select from the list",
 		"UNKNOWN_TRANSFER_PRODUCT": "Product to transfer is not available in the destination store",
 		"UNKNOWN_TRANSFER_INGREDIENT": "Ingredient to transfer is not available in the destination store",
-		"NUMERIC_FIELD": "Field format ####.##"
+		"NUMERIC_FIELD": "Field format ####.##",
+		"AMOUNT_CANNOT_BE_GREATER_THAN_DUE": "Amount cannot be greater than Amount Due"
 	},
 	"DATE": {
 		"1": "Jan",

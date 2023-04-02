@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors, Currency
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -1572,4 +1572,7 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+   public formatAmount(amount: number, ccy: Currency) {
+      return ccy.symbolLeft ? (ccy.symbolLeft + ' ' + amount) : (amount + ' ' + ccy.symbolRight);
+   }
 }

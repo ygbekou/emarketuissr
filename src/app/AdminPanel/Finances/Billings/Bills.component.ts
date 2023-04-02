@@ -6,12 +6,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from "@angular/common";
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { BillComponent } from './Bill.component';
 import { UserBillComponent } from './UserBill.component';
 import { BillPaymentComponent } from './BillPayment.component';
+import { UserBillPaymentComponent } from './UserBillPayment.component';
 
 export interface SearchResponse {
   document: string;
@@ -35,6 +34,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
   @ViewChild(BillComponent, { static: false }) billComponent: BillComponent;
   @ViewChild(UserBillComponent, { static: false }) userBillComponent: UserBillComponent;
   @ViewChild(BillPaymentComponent, { static: false }) billPaymentComponent: BillPaymentComponent;
+  @ViewChild(UserBillPaymentComponent, { static: false }) userBillPaymentComponent: UserBillPaymentComponent;
   messages = '';
   button = 'filter';
 
@@ -52,28 +52,23 @@ export class BillsComponent extends BaseComponent implements OnInit {
   storeEmployees: StoreEmployee[] = [];
   suppliers: Supplier[] = [];
 
+  totalDue = 0;
+  unpaidBillIds = [];
+  action = 'details';
+
   constructor(public appService: AppService,
-    public translate: TranslateService,
-    private activatedRoute: ActivatedRoute,
-    private location: Location) {
+    public translate: TranslateService) {
     super(translate);
   }
 
   ngOnInit() {
     this.clear();
     this.getStores();
- /*    this.activatedRoute.data.subscribe(value => {
-      this.isAdminPage = (value && value.expectedRole && value.expectedRole[0] === 'Administrator')
-        && (this.location.path().startsWith('/admin/'));
-    }); */
   }
 
   ngAfterViewInit() {
     this.searchCriteria.storeId = 0;
-  /*   if (this.isAdminPage) {
-      this.searchCriteria.status = 1;
-    } */
-    this.search();
+    this.search(false);
   }
 
   private clear() {
@@ -111,14 +106,30 @@ export class BillsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  search() {
+  getTotalDue(data: any[], showPaymentPage: boolean) {
+    this.totalDue = 0;
+    this.unpaidBillIds = [];
+    data.forEach(b => {
+      if (b.amountDue) {
+        this.totalDue += b.amountDue;
+        this.unpaidBillIds.push(b.id);
+      }
+    });
+
+    if (showPaymentPage) {
+      this.showPayment();
+    }
+  }
+
+  search(showPaymentPage: boolean) {
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
       this.searchCriteria.userId =  this.userId;
-      console.log('User Id = '+ this.userId);
+      console.log('User Id = ' + this.userId);
       this.appService.saveWithUrl('/service/finance/getBills', this.searchCriteria)
         .subscribe((data: any[]) => {
+          this.getTotalDue(data, showPaymentPage);
           this.billsDatasource = new MatTableDataSource(data);
           this.billsDatasource.paginator = this.billsPaginator;
           this.billsDatasource.sort = this.billsSort;
@@ -141,6 +152,8 @@ export class BillsComponent extends BaseComponent implements OnInit {
     this.selected.setValue(1);
     if (this.userId) {
       this.userBillComponent.newBillSelected(bill);
+      this.userBillPaymentComponent.bill = bill;
+      this.userBillPaymentComponent.billPayment.amount = bill.amountDue;
     } else {
       this.billComponent.getBill(bill);
       this.billPaymentComponent.newBillSelected(bill);
@@ -152,7 +165,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
     setTimeout(() => {
       this.searchCriteria.storeId = this.selectedStore.id;
-      this.search();
+      this.search(false);
       this.selected.setValue(0);
       this.getMyStoreEmployees();
 
@@ -178,5 +191,16 @@ export class BillsComponent extends BaseComponent implements OnInit {
   updateDataTableFromPayment(bill: Bill) {
     this.updateDatasourceData(this.billsDatasource, this.billsPaginator, this.billsSort, bill);
     this.billComponent.getBill(bill);
+  }
+
+  showPayment() {
+    this.action = 'payment';
+    this.userBillPaymentComponent.totalDue = this.totalDue;
+    this.userBillPaymentComponent.billPayment.amount = this.totalDue;
+    this.userBillPaymentComponent.billPayment.unpaidBillIds = this.unpaidBillIds;
+  }
+
+  showDetails() {
+    this.action = 'details';
   }
 }

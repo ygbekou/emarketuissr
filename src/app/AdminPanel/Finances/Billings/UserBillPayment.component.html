@@ -1,0 +1,114 @@
+<form name="form" (ngSubmit)="f1.form.valid && pay()" #f1="ngForm" validate>
+  <mat-card style="background-color: #ebf3ff;">
+
+    <div fxLayout="row wrap" class="text-center" *ngIf="errors">
+        <mat-error severity="error">{{errors}}</mat-error>
+    </div>
+
+    <div class="text-center" *ngIf="messages">
+      <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
+    </div>
+
+    <br />
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label> {{'COMMON.AMOUNT' | translate}}
+          </mat-label>
+          <input matInput type="text" class="form-control" id="amount" [(ngModel)]="billPayment.amount" name="amount"
+            #amount="ngModel" [maxBillAmount]="totalDue" required>
+          <mat-error *ngIf="amount.invalid && amount.errors?.required" severity="error">
+            {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="amount.invalid && billPayment.amount > totalDue" severity="error">
+            {{ 'VALIDATION.AMOUNT_CANNOT_BE_GREATER_THAN_DUE' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+        <mat-form-field class="w-100">
+          <mat-label> {{'COMMON.DATE' | translate}}</mat-label><br />
+          <input matInput [matDatepicker]="paymentDatePicker" class="form-control" id="paymentDate" disabled="true"
+            [(ngModel)]="billPayment.paymentDate" name="paymentDate" #paymentDate="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="paymentDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #paymentDatePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <h5 style="color: #283593!important;">{{'COMMON.PAYMENT_METHOD'|translate}}</h5>
+    <div fxLayout="row wrap">
+      <mat-button-toggle-group color="primary" name="fontStyle" aria-label="Font Style"
+        (change)="onTogglePmntMethodChange($event)">
+        <mat-button-toggle [value]="'CREDIT_CARD'">
+          {{'COMMON.CREDIT_CARD' | translate}}
+        </mat-button-toggle>
+        <mat-button-toggle [value]="'TMONEY'">
+          TMONEY
+        </mat-button-toggle>
+        <mat-button-toggle [value]="'FLOOZ'">
+          FLOOZ
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+
+    <div fxLayout="row wrap">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="50" fxFlex.xl="50"
+        *ngIf="billPayment.paymentMethodCode === 'CREDIT_CARD'">
+        <div class=" sr-root">
+          <div class="sr-main">
+            <form id="payment-form" class="sr-payment-form">
+              <div class="sr-combo-inputs-row">
+                <div>
+                  <mat-form-field class="w-100">
+                    <input matInput placeholder="{{'COMMON.NAME_ON_CARD'|translate}}" id="name" name="name"
+                      [(ngModel)]="billPayment.nameOnCard" #name="ngModel" required>
+                  </mat-form-field>
+                </div>
+                <br />
+                <div class="sr-input sr-card-element" id="card-element"></div>
+              </div>
+              <div class="sr-field-error" id="card-errors" role="alert"></div>
+              <br />
+              <div fxLayout="row wrap">
+                <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+                  <button id="submit" mat-raised-button color="primary">
+                    <div class="spinner hidden" id="spinner"></div>
+                    <span id="button-text">{{'COMMON.PAY'|translate}} {{store.currency.symbolLeft}}
+                      {{billPayment.amount| number:'1.0-2'}}
+                      {{store.currency.symbolRight}}</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+        *ngIf="billPayment.paymentMethodCode === 'TMONEY' || billPayment.paymentMethodCode === 'FLOOZ'">
+        <div fxLayout="row wrap" class="col-gap">
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="70" fxFlex.xl="70">
+            <mat-form-field class="w-100 mb-3">
+              <input matInput placeholder="{{'COMMON.PHONE_NUMBER'|translate}}" id="phoneNumber" name="phoneNumber"
+                [(ngModel)]="billPayment.phone" #phoneNumber="ngModel" required>
+              <mat-error *ngIf="f1.submitted && phoneNumber.invalid" severity="error">
+                {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+            <button type="submit" mat-raised-button color="primary">
+              <span id="button-text">{{'COMMON.NEXT'|translate}}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</form>
