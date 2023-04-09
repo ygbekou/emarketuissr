@@ -316,6 +316,7 @@
     "COMMENTS": "Commentaires",
     "COMPANY": "Compagnie",
     "CONFIRM": "Confirmer",
+		"CONFIRMATION": "Confirmation",
     "CONFIRM_PASSWORD": "Confirmer mot de passe",
     "CONFIRMED": "Confirmé",
     "CHECKEDIN": "Enregistré",
@@ -1019,7 +1020,12 @@
     "REWARDS": "Récompenses",
 		"TOTAL_POINTS": "Total des Points",
 		"EARNED_POINTS": "Points Gagnés",
-		"USED_POINTS": "Points Utilisés"
+		"USED_POINTS": "Points Utilisés",
+		"PAY_IN_FULL": "Tout payer",
+		"OTHER_AMOUNT": "Autre montant",
+		"ENTERED_AMOUNT": "Montant entré",
+		"MAKE_PAYMENT": "Effectuer le paiement",
+		"BILL_DETAILS": "Détails des factures"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",
@@ -1127,7 +1133,8 @@
 		"INSUFFICIENT_POINTS": "Les points appliqués sont supérieurs aux points disponibles dans le système.",
 		"UNAVAILABLE_POINTS": "Aucune carte de réduction disponible pour vous dans ce magasin.",
 		"INSUFFICIENT_WALLET": "Le montant du portefeuille appliqué est supérieur au solde disponible dans le système.",
-		"UNAVAILABLE_WALLET": "Aucun portefeuille disponible pour vous dans ce magasin."
+    "UNAVAILABLE_WALLET": "Aucun portefeuille disponible pour vous dans ce magasin.",
+    "PAYMENT_SUCCESS": "Votre paiement du montant de {{pay_amount}} a été effectué avec succès."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",
@@ -1163,7 +1170,8 @@
     "PLEASE_SELECT_FROM_DROPDOWN": "Le champ est obligatoire - Veuillez sélectionner dans la liste",
     "UNKNOWN_TRANSFER_PRODUCT": "Le produit � transférer n'est pas disponible dans la boutique de destination",
 		"UNKNOWN_TRANSFER_INGREDIENT": "Le composant � transférer n'est pas disponible dans la boutique de destination",
-		"NUMERIC_FIELD": "Format du champ ####.##"
+		"NUMERIC_FIELD": "Format du champ ####.##",
+		"AMOUNT_CANNOT_BE_GREATER_THAN_DUE": "Le montant ne peut pas être supérieur au montant dû"
   },
   "DATE": {
     "1": "Jan",

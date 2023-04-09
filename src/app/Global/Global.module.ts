@@ -103,6 +103,7 @@ import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/goog
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
 import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.component';
+import { MaxAmountDirective } from './Validation/max-bill-amount.directive';
 @NgModule({
    imports: [
       CommonModule,
@@ -208,7 +209,8 @@ import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.c
       StoreCatsComponent,
       TopStoresComponent,
       ShipperSearchComponent,
-      UserSearchComponent
+      UserSearchComponent,
+      MaxAmountDirective
    ],
    exports: [
       BrandslogoComponent,
@@ -269,7 +271,8 @@ import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.c
       StoreCatsComponent,
       TopStoresComponent,
       ShipperSearchComponent,
-      UserSearchComponent
+      UserSearchComponent,
+      MaxAmountDirective
    ],
    entryComponents: [
       ReviewPopupComponent,

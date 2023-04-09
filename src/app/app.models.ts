@@ -2656,6 +2656,8 @@ export class Bill {
   storeName: string;
   modifiedBy: number;
   type = 'Bill';
+
+
   constructor() {
     this.store = new Store();
     this.billDate = new Date();
@@ -2791,6 +2793,21 @@ export class BillPayment {
   receivedBy: User;
   isTouched = false;
   modifiedBy: number;
+  language: Language;
+
+  paymentMethodCode: string;
+  paymentMethodName: string;
+  paymentIntentId: string;
+  stripePaymentMethodId: string;
+  nameOnCard: string;
+  phone: string;
+
+  currencyId: number;
+  currencyCode: string;
+  currencyDecimalPlace: number;
+
+  unpaidBillIds: number[] = [];
+  errors: string[];
 
   type = 'BillPayment';
 

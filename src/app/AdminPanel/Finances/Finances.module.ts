@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { QuillModule } from 'ngx-quill';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, MaxLengthValidator } from '@angular/forms';
 import { InputFileModule } from 'ngx-input-file';
 import {
   MatSidenavModule,
@@ -54,11 +54,13 @@ import { StoreServiceComponent } from './StoreServices/StoreService.component';
 import { StoreServicesComponent } from './StoreServices/StoreServices.component';
 import { UserBillComponent } from './Billings/UserBill.component';
 import { BillPaymentComponent } from './Billings/BillPayment.component';
+import { UserBillPaymentComponent } from './Billings/UserBillPayment.component';
 import { AdminWalletsComponent } from './Wallets/AdminWallets.component';
 import { AdminWalletComponent } from './Wallets/AdminWallet.component';
 import { AdminDiscountCardsComponent } from './DiscountCards/AdminDiscountCards.component';
 import { AdminDiscountCardComponent } from './DiscountCards/AdminDiscountCard.component';
 import { AdminDCDetailsComponent } from './DiscountCards/AdminDCDetails.component';
+import { MaxAmountDirective } from 'src/app/Global/Validation/max-bill-amount.directive';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,7 @@ import { AdminDCDetailsComponent } from './DiscountCards/AdminDCDetails.componen
     BillComponent,
     BillDetailsComponent,
     BillPaymentComponent,
+    UserBillPaymentComponent,
     BillsComponent,
     UserBillComponent,
     ServiceComponent,
@@ -150,7 +153,8 @@ import { AdminDCDetailsComponent } from './DiscountCards/AdminDCDetails.componen
   exports: [
     BillsComponent,
     StoreServicesComponent,
-    AdminDiscountCardComponent
+    AdminDiscountCardComponent,
+    MaxAmountDirective
   ]
 })
 export class FinancesModule { }
