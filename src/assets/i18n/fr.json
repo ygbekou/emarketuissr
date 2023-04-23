@@ -1025,7 +1025,9 @@
 		"OTHER_AMOUNT": "Autre montant",
 		"ENTERED_AMOUNT": "Montant entré",
 		"MAKE_PAYMENT": "Effectuer le paiement",
-		"BILL_DETAILS": "Détails des factures"
+		"BILL_DETAILS": "Détails des factures",
+		"GO_LIVE_DATE": "Date de mise en production",
+		"RENEWAL_DATE": "Date de renouvellement"
   },
   "MESSAGE": {
     "ALREADY_SUSCRIBED": "Vous avez déjà souscrit à nortre blogs",

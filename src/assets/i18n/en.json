@@ -1024,7 +1024,9 @@
 		"OTHER_AMOUNT": "Other Amount",
 		"ENTERED_AMOUNT": "Entered Amount",
 		"MAKE_PAYMENT": "Make Payment",
-		"BILL_DETAILS": "Bill Details"
+		"BILL_DETAILS": "Bill Details",
+		"GO_LIVE_DATE": "Go Live Date",
+		"RENEWAL_DATE": "Renewal Date"
 	},
 	"MESSAGE": {
 		"ALREADY_SUSCRIBED": "You have already suscribed to our blogs",
