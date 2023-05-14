@@ -848,6 +848,9 @@ export class Store extends BaseModel {
   maxShipperWait: number;
   maxShipperDistance: number;
   pointValue: number;
+  goLiveDate: Date;
+  renewalDate: Date;
+  
   type = 'Store';
   constructor() {
     super();
