@@ -1,8 +1,9 @@
 <div fxLayout="row wrap">
 
-  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" *ngIf="selectedStore && selectedStore.id > 0">
-    <mat-tab-group class="table-tab-list" color="accent"
-      [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event); tabChanged(selectedStore)">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+    *ngIf="selectedStore && selectedStore.id > 0">
+    <mat-tab-group class="table-tab-list" color="accent" [selectedIndex]="selected.value"
+      (selectedIndexChange)="selected.setValue($event); tabChanged(selectedStore)">
       <mat-tab label="{{'COMMON.LIST' | translate}}">
 
         <div fxLayout="row wrap">
@@ -28,16 +29,36 @@
             <div class="table-wrapper">
               <table mat-table [dataSource]="ssDatasource" matSort class="w-100">
 
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.NAME' | translate}}</th>
+                  <td mat-cell *matCellDef="let storeService"> {{storeService.service.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="renewalDate">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header>
+                    {{'COMMON.RENEWAL_DATE' | translate}}</th>
+                  <td mat-cell *matCellDef="let storeService">
+                    {{storeService.renewalDate | date:'mediumDate' : '' : translate.currentLang}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.AMOUNT' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let storeService"> {{storeService.amount}} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="startDate">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.START_DATE' | translate}}
                   </th>
-                  <td mat-cell *matCellDef="let storeService"> {{storeService.startDate | date:'mediumDate' : '' : translate.currentLang}} </td>
+                  <td mat-cell *matCellDef="let storeService">
+                    {{storeService.startDate | date:'mediumDate' : '' : translate.currentLang}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="endDate">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.END_DATE' | translate}}
                   </th>
-                  <td mat-cell *matCellDef="let storeService"> {{storeService.endDate | date:'mediumDate' : '' : translate.currentLang}} </td>
+                  <td mat-cell *matCellDef="let storeService">
+                    {{storeService.endDate | date:'mediumDate' : '' : translate.currentLang}} </td>
                 </ng-container>
 
                 <!-- <ng-container matColumnDef="subTotal">
@@ -58,55 +79,59 @@
                   <td mat-cell *matCellDef="let storeService"> {{storeService.discount}} </td>
                 </ng-container> -->
 
-                <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.AMOUNT' | translate}}
-                  </th>
-                  <td mat-cell *matCellDef="let storeService"> {{storeService.amount}} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="billRecur">
-                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>{{'COMMON.BILL_RECUR' | translate}}</th>
-                  <td mat-cell *matCellDef="let storeService"> 
-                    <span *ngIf="storeService.billRecur === 1" style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
-                    <span *ngIf="storeService.billRecur === 2" style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
-                    <span *ngIf="storeService.billRecur === 3" style="color: #0000FF">{{'COMMON.BIANNUAL' | translate}}</span>
-                    <span *ngIf="storeService.billRecur === 4" style="color: #00FF41">{{'COMMON.YEARLY' | translate}}</span>
+                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>{{'COMMON.BILL_RECUR' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let storeService">
+                    <span *ngIf="storeService.billRecur === 1"
+                      style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
+                    <span *ngIf="storeService.billRecur === 2"
+                      style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
+                    <span *ngIf="storeService.billRecur === 3"
+                      style="color: #0000FF">{{'COMMON.BIANNUAL' | translate}}</span>
+                    <span *ngIf="storeService.billRecur === 4"
+                      style="color: #00FF41">{{'COMMON.YEARLY' | translate}}</span>
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="renewalRecur">
-                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>{{'COMMON.RENEWAL_RECUR' | translate}}</th>
-                  <td mat-cell *matCellDef="let storeService"> 
-                    <span *ngIf="storeService.renewalRecur === 1" style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
-                    <span *ngIf="storeService.renewalRecur === 2" style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
-                    <span *ngIf="storeService.renewalRecur === 3" style="color: #0000FF">{{'COMMON.BIANNUAL' | translate}}</span>
-                    <span *ngIf="storeService.renewalRecur === 4" style="color: #00FF41">{{'COMMON.YEARLY' | translate}}</span>
+                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>
+                    {{'COMMON.RENEWAL_RECUR' | translate}}</th>
+                  <td mat-cell *matCellDef="let storeService">
+                    <span *ngIf="storeService.renewalRecur === 1"
+                      style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
+                    <span *ngIf="storeService.renewalRecur === 2"
+                      style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
+                    <span *ngIf="storeService.renewalRecur === 3"
+                      style="color: #0000FF">{{'COMMON.BIANNUAL' | translate}}</span>
+                    <span *ngIf="storeService.renewalRecur === 4"
+                      style="color: #00FF41">{{'COMMON.YEARLY' | translate}}</span>
                   </td>
                 </ng-container>
 
-
                 <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
-                  <td mat-cell *matCellDef="let storeService"> 
-                    <a  mat-icon-button (click)="getStoreServiceDetails(storeService)"
-                      color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
+                  <td mat-cell *matCellDef="let storeService">
+                    <a mat-icon-button (click)="getStoreServiceDetails(storeService)" color="secondary"
+                      matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
                       <mat-icon>info</mat-icon>
                     </a>
                     &nbsp;&nbsp;
                   </td>
                 </ng-container>
 
-              
                 <tr mat-header-row *matHeaderRowDef="ssColumns"></tr>
                 <tr mat-row *matRowDef="let storeService; columns: ssColumns;"></tr>
               </table>
-              <p *ngIf="ssDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}</p>
+              <p *ngIf="ssDatasource?.data.length === 0" class="py-5 mb-0 text-center">{{'MESSAGE.NO_DATA' | translate}}
+              </p>
             </div>
-            <mat-paginator #MatPaginatorBills [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-          
-        </div>
-     
-        <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <mat-paginator #MatPaginatorBills [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator>
+
+          </div>
+
+          <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
             <mat-card>
               <form name="form" (ngSubmit)="f.form.valid && search()" #f="ngForm" validate>
 
@@ -123,7 +148,7 @@
                     <mat-label> {{'COMMON.STATUS' | translate}}</mat-label>
                     <mat-select [(ngModel)]="searchCriteria.status" name="status">
                       <mat-option [value]="1">
-                          {{'COMMON.ACTIVE'|translate}}
+                        {{'COMMON.ACTIVE'|translate}}
                       </mat-option>
                       <mat-option [value]="0">
                         {{'COMMON.INACTIVE'|translate}}
@@ -185,5 +210,5 @@
   </div>
 
 
-  
+
 </div>

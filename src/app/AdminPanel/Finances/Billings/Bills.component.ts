@@ -39,7 +39,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
   button = 'filter';
 
   @Input() userId: number;
-  @Input() isAdminPage = false;
+  @Input() isAdminPage = true;
 
   searchCriteria: BillSearchCriteria = new BillSearchCriteria();
   storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();

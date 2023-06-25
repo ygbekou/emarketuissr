@@ -84,7 +84,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
-            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"
+            <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"  [compareWith]="compareObjects"
               [(ngModel)]="returnReason.language.id" #language="ngModel">
               <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang.id">
                 {{lang.name}}

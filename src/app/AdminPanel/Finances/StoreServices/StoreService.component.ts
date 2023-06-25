@@ -91,6 +91,15 @@ export class StoreServiceComponent extends BaseComponent implements OnInit, Afte
         .subscribe(result => {
           if (result.id > 0) {
             this.storeService = result;
+            if (this.storeService.renewalDate) {
+              this.storeService.renewalDate = new Date(this.storeService.renewalDate);
+            }
+            if (this.storeService.startDate) {
+              this.storeService.startDate = new Date(this.storeService.startDate);
+            }
+            if (this.storeService.endDate) {
+              this.storeService.endDate = new Date(this.storeService.endDate);
+            }
 
             const images: any[] = [];
             const image = {

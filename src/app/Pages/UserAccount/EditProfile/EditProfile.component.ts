@@ -389,7 +389,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
                if (result.id > 0) {
                   this.store = result;
                   this.store.goLiveDate = new Date(this.store.goLiveDate);
-                  this.store.renewalDate = new Date(this.store.renewalDate);
                   console.log(this.store);
                   const images: any[] = [];
                   const image = {

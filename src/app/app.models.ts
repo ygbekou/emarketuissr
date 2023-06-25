@@ -785,6 +785,7 @@ export class Store extends BaseModel {
   sslUrl: string;
   url: string;
   currency: Currency;
+  language: Language;
   code: string;
   displayWeb: number;
   displayMb: number;
@@ -849,7 +850,6 @@ export class Store extends BaseModel {
   maxShipperDistance: number;
   pointValue: number;
   goLiveDate: Date;
-  renewalDate: Date;
   
   type = 'Store';
   constructor() {
@@ -2757,6 +2757,7 @@ export class StoreService {
   status = 1;
   billRecur: number;
   renewalRecur: number;
+  renewalDate: Date;
 
   storeName: string;
   modifiedBy: number;

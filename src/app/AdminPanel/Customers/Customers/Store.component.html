@@ -12,8 +12,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
           <div class="example-container">
             <mat-form-field class="w-100 mb-3">
-              <mat-label> {{'COMMON.NAME' | translate}}
-              </mat-label>
+              <mat-label> {{'COMMON.NAME' | translate}}</mat-label>
               <input matInput type="text" class="form-control" id="name" [(ngModel)]="store.name" name="name"
                 #name="ngModel" required>
               <mat-error *ngIf="f4.submitted && name.invalid" severity="error">
@@ -82,7 +81,17 @@
               </mat-select>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>{{'COMMON.LANGUAGE' | translate}}</mat-label>
+              <mat-select placeholder="{{'COMMON.LANGUAGE' | translate}}" id="lang" name="lang"
+                [compareWith]="compareObjects" [(ngModel)]="store.language" #language="ngModel">
+                <mat-option *ngFor="let lang of appService.appInfoStorage.languages" [value]="lang">
+                  {{lang.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
+
         </div>
 
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
@@ -115,10 +124,18 @@
               </mat-error>
 
             </mat-form-field>
+
             <button mat-fab color="warn" (click)="generateStoreCode()">
               <mat-icon>cached</mat-icon>
             </button>
-
+          </div>
+          <div fxLayout="row wrap">
+            <mat-form-field class="w-50 mb-3">
+              <input matInput [matDatepicker]="goLiveDatePicker" placeholder="{{'COMMON.GO_LIVE_DATE'|translate}}"
+                [(ngModel)]="store.goLiveDate" name="goLiveDate" #goLiveDate="ngModel">
+              <mat-datepicker-toggle matSuffix [for]="goLiveDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #goLiveDatePicker></mat-datepicker>
+            </mat-form-field>
           </div>
         </div>
 
@@ -171,7 +188,7 @@
             <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" type="submit">
               <span class="mx-1 uppercase">{{'COMMON.COPY_PRODUCTS' | translate}}</span>
               <mat-icon>copy</mat-icon>
-            </button> 
+            </button>
           </div>
           <div class="text-left mt-2" fxFlex.gt-sm="75" *ngIf="messages">
             <p><a mat-button color="primary" class="w-100">{{messages}}</a></p>
