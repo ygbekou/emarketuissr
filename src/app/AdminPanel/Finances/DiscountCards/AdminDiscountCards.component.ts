@@ -61,8 +61,8 @@ export class AdminDiscountCardsComponent extends BaseComponent implements OnInit
 
     if (!this.isAdminPage) {
       this.dcColumns = ['userName', 'currency', 'totalPoints', 'usedPoints', 'availablePoints', 'pointsValue', 'actions'];
-      this.getStores();
     }
+    this.getStores();
   }
 
   private getStores() {
