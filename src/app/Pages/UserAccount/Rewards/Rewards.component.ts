@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, QueryList } from '@angular/core';
-import { Wallet, WalletTrans, User, Language, WalletTransDTO, DiscountCard, DiscountCardTransDTO, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
+import { Wallet, WalletTrans, User, Language, WalletTransDTO, DiscountCard, 
+  DiscountCardTransDTO, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';

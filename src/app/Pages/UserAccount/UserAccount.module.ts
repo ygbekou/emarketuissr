@@ -108,6 +108,7 @@ import { DeliveriesModule } from 'src/app/AdminPanel/Deliveries/Deliveries.modul
 import { WalletsComponent } from './Wallets/Wallets.component';
 import { WalletComponent } from './Wallets/Wallet.component';
 import { RewardsComponent } from './Rewards/Rewards.component';
+import { StoresRewardsComponent } from './Store-Rewards/Stores-rewards.component';
 
 @NgModule({
   imports: [
@@ -240,7 +241,8 @@ import { RewardsComponent } from './Rewards/Rewards.component';
     OpenReservationsComponent,
     CancelReservationsComponent,
     ComboProductComponent,
-    RewardsComponent
+    RewardsComponent,
+    StoresRewardsComponent
   ],
   exports: [
     StoresComponent,

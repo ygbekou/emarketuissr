@@ -1,14 +1,22 @@
-<div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="isAdmin">
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="isAdmin">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-    <h4> {{'COMMON.AVAILABLE_POINTS'|translate}}: {{discountCard.availablePoints }} </h4>
+    <h6> {{'COMMON.TOTAL_POINTS'|translate}}: {{discountCard.earnedPoints }} </h6>
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
-    <h4> {{'COMMON.POINTS_VALUE'|translate}}:
+    <h6> {{'COMMON.USED_POINTS'|translate}}: {{discountCard.usedPoints }} </h6>
+  </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="isAdmin">
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <h6 style="color:green"> {{'COMMON.AVAILABLE_POINTS'|translate}}: {{discountCard.availablePoints }} </h6>
+  </div>
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+    <h6 style="color:green"> {{'COMMON.POINTS_VALUE'|translate}}:
       {{discountCard?.currencySymbolLeft}}
       {{discountCard.pointsValue | number: '1.' + discountCard?.currencyDecimalPlace + '-'  
                   + discountCard?.currencyDecimalPlace:appService?.appInfoStorage.language.locale}}
       {{discountCard?.currencySymbolRight}}
-    </h4>
+    </h6>
   </div>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="none" class="col-gap" *ngIf="!isAdmin">
@@ -25,7 +33,7 @@
   *ngIf="dataSource && dataSource?.data && dataSource?.data.length > 0">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="w-100">
 
-    <ng-container matColumnDef="date">
+    <ng-container matColumnDef="createDate">
       <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header> {{'COMMON.DATE' | translate}}
       </th>
       <td mat-cell *matCellDef="let dct"> {{dct.createDate | date: 'dd/MM/yyyy hh:mm:ss'}}</td>

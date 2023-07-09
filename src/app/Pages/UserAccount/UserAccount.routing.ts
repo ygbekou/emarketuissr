@@ -43,6 +43,7 @@ import { CancelReservationsComponent } from './Open-reservations/Cancel-reservat
 import { SellerDeliveriesSummariesComponent } from './Deliveries-summaries/SellerDeliveriesSummaries.component';
 import { WalletsComponent } from './Wallets/Wallets.component';
 import { RewardsComponent } from './Rewards/Rewards.component';
+import { StoresRewardsComponent } from './Store-Rewards/Stores-rewards.component';
 
 export const UserAccountRoutes: Routes = [
    {
@@ -372,6 +373,14 @@ export const UserAccountRoutes: Routes = [
          {
             path: 'reservation-cancel/:reservationId',
             component: CancelReservationsComponent,
+            canActivate: [AuthGuardService, RoleGuardService],
+            data: {
+               expectedRole: ['Buyer', 'Seller', 'Administrator']
+            }
+         },
+         {
+            path: 'stores-rewards',
+            component: StoresRewardsComponent,
             canActivate: [AuthGuardService, RoleGuardService],
             data: {
                expectedRole: ['Buyer', 'Seller', 'Administrator']

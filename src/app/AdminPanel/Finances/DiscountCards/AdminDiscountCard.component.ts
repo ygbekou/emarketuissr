@@ -21,7 +21,7 @@ import { TranslateService } from '@ngx-translate/core';
   ],
 })
 export class AdminDiscountCardComponent {
-  columnsToDisplay = ['date', 'type', 'amount', 'store'];
+  columnsToDisplay = ['createDate', 'type', 'amount', 'store'];
   dataSource: MatTableDataSource<DiscountCardTransDTO>;
   @ViewChild(MatPaginator, { static: false }) dctPaginator;
   @ViewChild(MatSort, { static: true }) dctSort;
@@ -50,6 +50,7 @@ export class AdminDiscountCardComponent {
 
 
   getDiscountCardTransList(discountCardId: number) {
+    this.dataSource = new MatTableDataSource<DiscountCardTransDTO>([]);
     this.appService.saveWithUrl('/service/finance/getDiscountCardTransList/',
       {
         discountCardId: discountCardId
