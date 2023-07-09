@@ -3689,7 +3689,9 @@ export class DiscountCardDTO {
 	currencyCode: string;
 	userId: number;
 	userFirstName: string;
-	userLastName: string;
+  userLastName: string;
+  phone: string;
+  email: string;
   createDate: Date;
 	status: number;
 }
