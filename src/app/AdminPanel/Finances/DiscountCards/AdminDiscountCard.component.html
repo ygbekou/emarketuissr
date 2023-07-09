@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="isAdmin">
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="discountCard && discountCard.id">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <h6> {{'COMMON.TOTAL_POINTS'|translate}}: {{discountCard.earnedPoints }} </h6>
   </div>
@@ -6,7 +6,7 @@
     <h6> {{'COMMON.USED_POINTS'|translate}}: {{discountCard.usedPoints }} </h6>
   </div>
 </div>
-<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="isAdmin">
+<div fxLayout="row wrap" fxLayoutAlign="none" class="col-3" *ngIf="discountCard && discountCard.id">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
     <h6 style="color:green"> {{'COMMON.AVAILABLE_POINTS'|translate}}: {{discountCard.availablePoints }} </h6>
   </div>
