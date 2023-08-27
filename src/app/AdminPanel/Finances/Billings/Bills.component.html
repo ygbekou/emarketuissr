@@ -28,7 +28,7 @@
     </div>
   </div>
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-    *ngIf="selectedStore && selectedStore.id > 0 && totalDue > 0 && action === 'details'">
+    *ngIf="selectedStore && selectedStore.id > 0 && totalDue > 0 && action === 'details' && !isAdminPage">
     <button mat-raised-button (click)="showPayment()" color="primary" fxLayout="row" fxLayoutAlign="center center"
       type="button">
       <span class="mx-1 uppercase">{{'COMMON.MAKE_PAYMENT' | translate}}</span>

@@ -8,7 +8,7 @@ import { BaseComponent } from '../../baseComponent';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from "@angular/common";
-import { Store, User, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
+import { Store, User, DiscountCardDTO, DiscountCardSearchCriteria, StoreSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { AdminDiscountCardComponent } from './AdminDiscountCard.component';
 
@@ -24,7 +24,7 @@ export interface SearchResponse {
   styleUrls: ['./AdminDiscountCards.component.scss']
 })
 export class AdminDiscountCardsComponent extends BaseComponent implements OnInit {
-  dcColumns: string[] = ['userName', 'currency', 'store', 'availablePoints', 'pointsValue', 'actions'];
+  dcColumns: string[] = ['userName', 'currency', 'store', 'totalPoints', 'usedPoints', 'availablePoints', 'pointsValue', 'actions'];
   dcDatasource: MatTableDataSource<DiscountCardDTO>;
   @ViewChild('MatPaginatorDiscountCards', { static: true }) dcPaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) dcSort: MatSort;
@@ -36,15 +36,18 @@ export class AdminDiscountCardsComponent extends BaseComponent implements OnInit
 
   @Input()
   userId: number;
-  @Input() isAdminPage = false;
+  @Input()
+  isAdminPage = true;
 
   searchCriteria: DiscountCardSearchCriteria = new DiscountCardSearchCriteria();
   stores: Store[] = [];
   users: User[] = [];
   colors = ['primary', 'secondary'];
 
-  allStore = new Store();
   selected = new FormControl(0);
+
+  selectedStore: Store;
+  storeSearchCriteria: StoreSearchCriteria = new StoreSearchCriteria();
 
   constructor(public appService: AppService,
     public translate: TranslateService,
@@ -55,19 +58,34 @@ export class AdminDiscountCardsComponent extends BaseComponent implements OnInit
 
   ngOnInit() {
     this.clear();
-    this.isAdminPage = !this.userId
+
+    if (!this.isAdminPage) {
+      this.dcColumns = ['userName', 'currency', 'totalPoints', 'usedPoints', 'availablePoints', 'pointsValue', 'actions'];
+    }
+    this.getStores();
+  }
+
+  private getStores() {
+    this.storeSearchCriteria.status = 1;
+    this.storeSearchCriteria.userId = this.userId;
+    this.appService.saveWithUrl('/service/catalog/stores', this.storeSearchCriteria)
+      .subscribe((data: Store[]) => {
+        this.stores = data;
+        if (this.stores.length === 1) {
+          this.selectedStore = this.stores[0];
+          this.searchCriteria.storeId = this.selectedStore.id;
+          this.search();
+        }
+      },
+        error => console.log(error),
+        () => console.log('Get all Stores complete'));
   }
 
   ngAfterViewInit() {
-    this.searchCriteria.storeId = 0;
     this.searchCriteria.endDate = new Date();
     const beginDate = new Date();
     beginDate.setFullYear(this.searchCriteria.endDate.getFullYear() - 1);
     this.searchCriteria.beginDate = beginDate;
-    if (this.isAdminPage) {
-      //this.searchCriteria.status = 1;
-    }
-    this.search();
   }
 
   private clear() {
@@ -77,10 +95,20 @@ export class AdminDiscountCardsComponent extends BaseComponent implements OnInit
   changeOrderType(event) {
   }
 
+  storeSelected(event) {
+    setTimeout(() => {
+      this.searchCriteria.storeId = this.selectedStore.id;
+      this.search();
+    }, 500);
+  }
+
   search() {
     if (this.button.endsWith('clear')) {
       this.clear();
     } else {
+      if (this.selectedStore) {
+        this.searchCriteria.storeId = this.selectedStore.id;
+      }
       this.appService.saveWithUrl('/service/finance/discountCards', this.searchCriteria)
         .subscribe((data: any[]) => {
           this.dcDatasource = new MatTableDataSource(data);

@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { DiscountCardTransDTO, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
+import { Component, OnInit, Input, ViewChild, QueryList } from '@angular/core';
+import { Wallet, WalletTrans, User, Language, WalletTransDTO, DiscountCard, 
+  DiscountCardTransDTO, DiscountCardDTO, DiscountCardSearchCriteria } from 'src/app/app.models';
 import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
 import { AdminDiscountCardComponent } from 'src/app/AdminPanel/Finances/DiscountCards/AdminDiscountCard.component';
+declare var Stripe: any;
 
 @Component({
   selector: 'app-rewards',
@@ -46,6 +48,9 @@ export class RewardsComponent extends BaseComponent implements OnInit {
     this.searchCriteria.userId = Number(this.appService.tokenStorage.getUserId());
   }
 
+  private clear() {
+    this.searchCriteria = new DiscountCardSearchCriteria();
+  }
 
   private getRewards() {
 

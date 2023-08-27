@@ -116,6 +116,12 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
         .subscribe(result => {
           if (result.id > 0) {
             this.bill = result;
+            if (this.bill.billDate) {
+              this.bill.billDate = new Date(this.bill.billDate);
+            }
+            if (this.bill.dueDate) {
+              this.bill.dueDate = new Date(this.bill.dueDate);
+            }
             this.getBillDtls();
 
             const images: any[] = [];

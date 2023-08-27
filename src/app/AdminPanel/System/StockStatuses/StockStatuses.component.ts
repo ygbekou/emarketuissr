@@ -5,13 +5,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
+import { BaseComponent } from '../../baseComponent';
 
 @Component({
   selector: 'app-stock-statuses',
   templateUrl: './StockStatuses.component.html',
   styleUrls: ['./StockStatuses.component.scss']
 })
-export class StockStatusesComponent implements OnInit {
+export class StockStatusesComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'language', 'actions'];
   dataSource: MatTableDataSource<StockStatus>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -21,7 +22,9 @@ export class StockStatusesComponent implements OnInit {
   errors = '';
   selectedTab = 0;
   constructor(public appService: AppService,
-    private translate: TranslateService) { }
+    public translate: TranslateService) {
+      super(translate);
+    }
 
   ngOnInit() {
     this.getAll();

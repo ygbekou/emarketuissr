@@ -532,22 +532,9 @@
           <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
             <mat-form-field class="w-100 mb-3">
               <input matInput [matDatepicker]="goLiveDatePicker" placeholder="{{'COMMON.GO_LIVE_DATE'|translate}}"
-                [(ngModel)]="store.goLiveDate" name="goLiveDate" #goLiveDate="ngModel" [disabled]="isAdminPage">
+                [(ngModel)]="store.goLiveDate" name="goLiveDate" #goLiveDate="ngModel" [disabled]="true">
               <mat-datepicker-toggle matSuffix [for]="goLiveDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #goLiveDatePicker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-        <div fxLayout="row wrap">
-          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-    
-          </div>
-          <div fxFlex="100" fxFlex.gt-sm="50" class="p-3">
-            <mat-form-field class="w-100 mb-3">
-              <input matInput [matDatepicker]="goRenewalDatePicker" placeholder="{{'COMMON.RENEWAL_DATE'|translate}}"
-                [(ngModel)]="store.renewalDate" name="renewalDate" #renewalDate="ngModel" [disabled]="isAdminPage">
-              <mat-datepicker-toggle matSuffix [for]="goRenewalDatePicker"></mat-datepicker-toggle>
-              <mat-datepicker #goRenewalDatePicker></mat-datepicker>
             </mat-form-field>
           </div>
         </div>

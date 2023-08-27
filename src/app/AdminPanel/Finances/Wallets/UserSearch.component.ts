@@ -72,6 +72,7 @@ export class UserSearchComponent implements OnInit {
     this.searchCriteria.userName = user.userName;
     this.searchCriteria.lastName = user.lastName;
     this.searchCriteria.firstName = user.firstName;
+    this.dialogRef.close(this.searchCriteria);
   }
 
   clearDatasource() {

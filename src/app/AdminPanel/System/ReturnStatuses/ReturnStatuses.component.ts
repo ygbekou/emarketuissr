@@ -5,13 +5,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
+import { BaseComponent } from '../../baseComponent';
 
 @Component({
   selector: 'app-return-statuses',
   templateUrl: './ReturnStatuses.component.html',
   styleUrls: ['./ReturnStatuses.component.scss']
 })
-export class ReturnStatusesComponent implements OnInit {
+export class ReturnStatusesComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<ReturnStatus>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -21,7 +22,9 @@ export class ReturnStatusesComponent implements OnInit {
   errors = '';
   selectedTab = 0;
   constructor(public appService: AppService,
-    private translate: TranslateService) { }
+    public translate: TranslateService) {
+      super(translate);
+    }
 
   ngOnInit() {
     this.getAll();

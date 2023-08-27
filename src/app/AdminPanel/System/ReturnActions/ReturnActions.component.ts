@@ -5,13 +5,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
+import { BaseComponent } from '../../baseComponent';
 
 @Component({
   selector: 'app-return-action',
   templateUrl: './ReturnActions.component.html',
   styleUrls: ['./ReturnActions.component.scss']
 })
-export class ReturnActionsComponent implements OnInit {
+export class ReturnActionsComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'language', 'description', 'actions'];
   dataSource: MatTableDataSource<ReturnAction>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -21,7 +22,9 @@ export class ReturnActionsComponent implements OnInit {
   errors = '';
   selectedTab = 0;
   constructor(public appService: AppService,
-    private translate: TranslateService) { }
+    public translate: TranslateService) {
+      super(translate);
+    }
 
   ngOnInit() {
     this.getAll();

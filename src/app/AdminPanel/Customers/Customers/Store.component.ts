@@ -63,6 +63,9 @@ export class StoreComponent extends BaseComponent implements OnInit {
         .subscribe(result => {
           if (result.id > 0) {
             this.store = result;
+            if (this.store.goLiveDate) {
+              this.store.goLiveDate = new Date(this.store.goLiveDate);
+            }
             this.storeServiceComponent.setStore(this.store);
             this.store.fileNames.forEach(item => {
               if (item === this.store.image) {

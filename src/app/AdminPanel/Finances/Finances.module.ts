@@ -154,7 +154,8 @@ import { MaxAmountDirective } from 'src/app/Global/Validation/max-bill-amount.di
     BillsComponent,
     StoreServicesComponent,
     AdminDiscountCardComponent,
-    MaxAmountDirective
+    MaxAmountDirective,
+    AdminDiscountCardsComponent
   ]
 })
 export class FinancesModule { }

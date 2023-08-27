@@ -24,7 +24,7 @@ export interface SearchResponse {
 })
 export class StoreServicesComponent extends BaseComponent implements OnInit {
 
-  ssColumns: string[] = [ 'service', 'amount', 'billRecur', 'renewalRecur', 'actions'];
+  ssColumns: string[] = ['name', 'renewalDate', 'startDate', 'endDate', 'amount', 'billRecur', 'renewalRecur', 'actions'];
   ssDatasource: MatTableDataSource<StoreService>;
   @ViewChild('MatPaginatorSs', { static: false }) ssPaginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) ssSort: MatSort;
@@ -83,6 +83,7 @@ export class StoreServicesComponent extends BaseComponent implements OnInit {
 
       this.appService.saveWithUrl('/service/finance/getStoreServices', this.searchCriteria)
         .subscribe((data: any[]) => {
+
           this.ssDatasource = new MatTableDataSource(data);
           this.ssDatasource.paginator = this.ssPaginator;
           this.ssDatasource.sort = this.ssSort;

@@ -46,8 +46,9 @@ const TREE_DATA_EN: MenuNode[] = [
       { name: 'Stores', url: '/account/stores', icon: 'store' },
       { name: 'Sales dashboard', url: '/account/sales-dashboard', icon: 'dashboard' },
       { name: 'Sales summary', url: '/account/sales-summaries', icon: 'summarize' },
-      { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },      
+      { name: 'Sales details', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Sales audit', url: '/account/sales-audit', icon: 'content_copy' },
+      { name: 'Rewards', url: '/account/stores-rewards', icon: 'stars' },
     ]
   }, {
     name: 'Products',
@@ -114,7 +115,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Adresses', url: '/account/addresses', icon: 'location_on' },
       { name: 'Cartes enregistrées', url: '/account/cards', icon: 'credit_card' },
       { name: 'Portefeuilles', url: '/account/wallets', icon: 'account_balance_wallet' },
-      { name: 'R�compenses', url: '/account/rewards', icon: 'stars' }
+      { name: 'Mes Points gagnés', url: '/account/rewards', icon: 'stars' }
     ]
   },
   {
@@ -135,6 +136,7 @@ const TREE_DATA_FR: MenuNode[] = [
       { name: 'Détails ventes', url: '/account/sales-orders', icon: 'shopping_cart' },
       { name: 'Payements', url: '/account/sales-summaries', icon: 'summarize' },
       { name: 'Audit des ventes', url: '/account/sales-audit', icon: 'content_copy' },
+      { name: 'Points gagnés', url: '/account/stores-rewards', icon: 'stars' },
 
     ]
   }, {
