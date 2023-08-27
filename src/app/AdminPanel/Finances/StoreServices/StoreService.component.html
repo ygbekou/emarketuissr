@@ -115,7 +115,7 @@
           <mat-label> {{'COMMON.AMOUNT' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="amount" [(ngModel)]="storeService.amount" name="amount"
-            #amount="ngModel">
+            #amount="ngModel" required>
           <mat-error *ngIf="f.submitted && amount.invalid" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
           </mat-error>
@@ -153,7 +153,7 @@
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.BILL_RECUR' | translate}} <font color="red">*</font>
+          <mat-label> {{'COMMON.BILL_RECUR' | translate}}
           </mat-label>
           <mat-select [(ngModel)]="storeService.billRecur" appearance="outline" name="billRecur" #billRecur="ngModel">
             <mat-option [value]="1">
@@ -177,7 +177,7 @@
 
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="33" fxFlex.lg="33" fxFlex.xl="33" class="p-1">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.RENEWAL_RECUR' | translate}} <font color="red">*</font>
+          <mat-label> {{'COMMON.RENEWAL_RECUR' | translate}}
           </mat-label>
           <mat-select [(ngModel)]="storeService.renewalRecur" appearance="outline" name="renewalRecur"
             #renewalRecur="ngModel">

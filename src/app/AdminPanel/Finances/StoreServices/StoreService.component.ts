@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreEmployee, User, Supplier, BillDtl, Bill, StoreService } from 'src/app/app.models';
+import { Store, StoreEmployee, User, Supplier, BillDtl, Bill, StoreService, ServiceDescription } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -144,8 +144,9 @@ export class StoreServiceComponent extends BaseComponent implements OnInit, Afte
         this.processResult(data, this.storeService, null);
         this.storeService = data;
         this.storeService.storeName = this.store.name;
+        this.storeService.service.name = this.appService.getServiceDesc(this.storeService.service).name;
         this.storeServiceSaveEvent.emit(this.storeService);
-        this.saving = false;
+        this.saving = false; 
       },
         error => console.log(error),
         () => console.log('Save Store Service complete'));

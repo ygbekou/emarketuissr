@@ -10,7 +10,7 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors, Currency
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors, Currency, Service, ServiceDescription
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
@@ -1564,6 +1564,17 @@ export class AppService {
          });
 
       return bldgTypeStr;
+   }
+
+   getServiceDesc(service: Service) {
+      let match: ServiceDescription;
+      for (const servDesc of this.appInfoStorage.services) {
+         if (servDesc.service.id === service.id) {
+            match = servDesc;
+         }
+      }
+
+      return match;
    }
 
    public updateObject = (url: string): Observable<GenericResponse> => {
