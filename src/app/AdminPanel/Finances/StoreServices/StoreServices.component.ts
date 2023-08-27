@@ -24,7 +24,7 @@ export interface SearchResponse {
 })
 export class StoreServicesComponent extends BaseComponent implements OnInit {
 
-  ssColumns: string[] = ['startDate', 'endDate', 'amount', 'billRecur', 'renewalRecur', 'actions'];
+  ssColumns: string[] = [ 'service', 'amount', 'billRecur', 'renewalRecur', 'actions'];
   ssDatasource: MatTableDataSource<StoreService>;
   @ViewChild('MatPaginatorSs', { static: false }) ssPaginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) ssSort: MatSort;

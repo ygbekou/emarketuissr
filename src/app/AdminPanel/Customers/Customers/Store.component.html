@@ -95,8 +95,8 @@
             {{'COMMON.STORE_ADDRESS' | translate}}:
             <address class="mb-4" *ngIf="store.address">
               {{store.address.address1}} {{store.address.address2}}<br>
-              {{store.address.city}}, {{store.address.zone.name}} {{store.address.postCode}}<br>
-              {{store.address.country.name}}
+              {{store.address.city}}, {{store.address?.zone?.name}} {{store.address.postCode}}<br>
+              {{store.address.country?.name}}
             </address>
 
             <h4 class="text-muted text-left fw-600 mb-3"></h4>

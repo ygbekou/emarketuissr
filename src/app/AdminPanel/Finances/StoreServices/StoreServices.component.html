@@ -28,7 +28,7 @@
             <div class="table-wrapper">
               <table mat-table [dataSource]="ssDatasource" matSort class="w-100">
 
-                <ng-container matColumnDef="startDate">
+       <!--          <ng-container matColumnDef="startDate">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.START_DATE' | translate}}
                   </th>
                   <td mat-cell *matCellDef="let storeService"> {{storeService.startDate | date:'mediumDate' : '' : translate.currentLang}} </td>
@@ -38,7 +38,7 @@
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.END_DATE' | translate}}
                   </th>
                   <td mat-cell *matCellDef="let storeService"> {{storeService.endDate | date:'mediumDate' : '' : translate.currentLang}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- <ng-container matColumnDef="subTotal">
                   <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.SUB_TOTAL' | translate}}
@@ -58,14 +58,21 @@
                   <td mat-cell *matCellDef="let storeService"> {{storeService.discount}} </td>
                 </ng-container> -->
 
+                  <ng-container matColumnDef="service">
+                  <th mat-header-cell *matHeaderCellDef width="30%" mat-sort-header> {{'COMMON.SERVICE' | translate}}
+                  </th>
+                  <td mat-cell *matCellDef="let storeService"> {{storeService.service.name}} </td>
+                </ng-container>
+
+
                 <ng-container matColumnDef="amount">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> {{'COMMON.AMOUNT' | translate}}
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> {{'COMMON.AMOUNT' | translate}}
                   </th>
                   <td mat-cell *matCellDef="let storeService"> {{storeService.amount}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="billRecur">
-                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>{{'COMMON.BILL_RECUR' | translate}}</th>
+                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header>{{'COMMON.BILL_RECUR' | translate}}</th>
                   <td mat-cell *matCellDef="let storeService"> 
                     <span *ngIf="storeService.billRecur === 1" style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
                     <span *ngIf="storeService.billRecur === 2" style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
@@ -75,7 +82,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="renewalRecur">
-                  <th mat-header-cell *matHeaderCellDef width="2%" mat-sort-header>{{'COMMON.RENEWAL_RECUR' | translate}}</th>
+                  <th mat-header-cell *matHeaderCellDef width="20%" mat-sort-header>{{'COMMON.RENEWAL_RECUR' | translate}}</th>
                   <td mat-cell *matCellDef="let storeService"> 
                     <span *ngIf="storeService.renewalRecur === 1" style="color: #0000FF">{{'COMMON.MONTHLY' | translate}}</span>
                     <span *ngIf="storeService.renewalRecur === 2" style="color: #00FF41">{{'COMMON.QUATERLY' | translate}}</span>
@@ -86,7 +93,7 @@
 
 
                 <ng-container matColumnDef="actions">
-                  <th mat-header-cell *matHeaderCellDef width="10%" mat-sort-header> Actions</th>
+                  <th mat-header-cell *matHeaderCellDef width="15%" mat-sort-header> Actions</th>
                   <td mat-cell *matCellDef="let storeService"> 
                     <a  mat-icon-button (click)="getStoreServiceDetails(storeService)"
                       color="secondary" matTooltip="{{'COMMON.VIEW_DETAILS' | translate}}">
