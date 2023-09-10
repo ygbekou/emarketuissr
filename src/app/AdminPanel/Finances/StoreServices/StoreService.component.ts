@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Store, StoreEmployee, User, Supplier, BillDtl, Bill, StoreService } from 'src/app/app.models';
+import { Store, StoreEmployee, User, Supplier, BillDtl, Bill, StoreService, ServiceDescription } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { ActivatedRoute } from '@angular/router';
@@ -91,14 +91,22 @@ export class StoreServiceComponent extends BaseComponent implements OnInit, Afte
         .subscribe(result => {
           if (result.id > 0) {
             this.storeService = result;
-            if (this.storeService.renewalDate) {
+            console.log(this.storeService);
+
+            if (this.storeService.renewalDate !== null && this.storeService.renewalDate !== undefined) {
+              console.log('Renewal Date is not null before: ' + this.storeService.renewalDate);
               this.storeService.renewalDate = new Date(this.storeService.renewalDate);
+              console.log('Renewal Date is not null after: ' + this.storeService.renewalDate);
             }
-            if (this.storeService.startDate) {
+            if (this.storeService.startDate !== null && this.storeService.startDate !== undefined) {
+              console.log('Start Date is not null before: ' + this.storeService.startDate);
               this.storeService.startDate = new Date(this.storeService.startDate);
+              console.log('Start Date is not null after: ' + this.storeService.startDate);
             }
-            if (this.storeService.endDate) {
+            if (this.storeService.endDate !== null && this.storeService.endDate !== undefined) {
+              console.log('End Date is not null before: ' + this.storeService.endDate);
               this.storeService.endDate = new Date(this.storeService.endDate);
+              console.log('End Date is not null after: ' + this.storeService.endDate);
             }
 
             const images: any[] = [];
@@ -144,8 +152,9 @@ export class StoreServiceComponent extends BaseComponent implements OnInit, Afte
         this.processResult(data, this.storeService, null);
         this.storeService = data;
         this.storeService.storeName = this.store.name;
+        this.storeService.service.name = this.appService.getServiceDesc(this.storeService.service).name;
         this.storeServiceSaveEvent.emit(this.storeService);
-        this.saving = false;
+        this.saving = false; 
       },
         error => console.log(error),
         () => console.log('Save Store Service complete'));
