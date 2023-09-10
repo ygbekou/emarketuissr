@@ -33,6 +33,7 @@ export class BaseComponent {
   }
 
   protected processResult(result, entityObject, pictureUrl) {
+    console.log('Processing Result...');
     if (result.errors === null || result.errors.length === 0) {
       this.hasError = false;
       entityObject = result;
@@ -48,11 +49,25 @@ export class BaseComponent {
       }
     } else {
       this.hasError = true;
-      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR', 'MESSAGE.ALREADY_EXISTS']).subscribe(res => {
-          this.messages = res['MESSAGE.SAVE_UNSUCCESS'] + '\n' + (result.errors[0] === 'SYSTEM_ERROR'
-          ?  res['MESSAGE.SYSTEM_ERROR'] :
-          (result.errors[0] === 'ALREADY_EXISTS' ? res['MESSAGE.ALREADY_EXISTS'] : result.errors[0])
-          );
+      this.translate.get(['COMMON.SAVE', 'MESSAGE.SAVE_UNSUCCESS', 'MESSAGE.SYSTEM_ERROR',
+        'MESSAGE.ALREADY_EXISTS', 'MESSAGE.PAYMENT_PROCESSING_FAILED']).subscribe(res => {
+          this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
+          const error = result.errors[0];
+
+          switch (error) {
+            case 'SYSTEM_ERROR':
+              this.errors += res['MESSAGE.SYSTEM_ERROR'];
+              break;
+            case 'ALREADY_EXISTS':
+              this.errors += res['MESSAGE.ALREADY_EXISTS'];
+              break;
+            case 'PAYMENT_PROCESSING_FAILED':
+              this.errors += res['MESSAGE.PAYMENT_PROCESSING_FAILED'];
+              break;
+            default :
+              this.errors += res['MESSAGE.SYSTEM_ERROR'];
+              break;
+          }
       });
     }
   }

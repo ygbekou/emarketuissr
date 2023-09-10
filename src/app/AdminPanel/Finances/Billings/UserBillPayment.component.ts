@@ -15,6 +15,7 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
 
    @Input() store = new Store();
    @Output() payEvent = new EventEmitter<any>();
+   @Output() savingEvent = new EventEmitter<any>();
    messages = '';
 
    bill: Bill = new Bill();
@@ -47,6 +48,7 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
 
    clear(data) {
       this.messages = '';
+      this.errors = '';
       this.billPayment = new BillPayment();
       this.billPayment.paymentDate = new Date();
    }
@@ -64,9 +66,13 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
 
    pay(result: any) {
       this.errors = '';
-      this.messages = '';
+      this.translate.get(['MESSAGE.PAYMENT_PROCESSING']).subscribe(res => {
+         this.errors = res['MESSAGE.PAYMENT_PROCESSING'];
+      });
 
       this.setBillPaymentInfo(result);
+
+      this.savingEvent.emit(true);
 
       this.appService.saveWithUrl('/service/finance/payBillOnline',
          this.billPayment)
@@ -79,8 +85,8 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
                   });
                } else {
                   this.translate.get('MESSAGE.PAYMENT_SUCCESS', {
-                  pay_amount: this.appService.formatAmount(savedBillPayment.amount, this.store.currency)
-               }).subscribe(res => {
+                     pay_amount: this.appService.formatAmount(savedBillPayment.amount, this.store.currency)
+                  }).subscribe(res => {
                      this.messages = res;
                   });
 
@@ -92,10 +98,9 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
                   this.payEvent.emit(true);
                }
             } else {
-               this.translate.get(['MESSAGE.SAVE_UNSUCCESS', 'COMMON.ERROR']).subscribe(res => {
-                  this.errors = res['MESSAGE.SAVE_UNSUCCESS'];
-               });
+               this.processResult(savedBillPayment, this.billPayment, '');
             }
+            this.savingEvent.emit(false);
          });
 
    }

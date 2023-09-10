@@ -1136,7 +1136,9 @@
 		"UNAVAILABLE_POINTS": "No discount card available for you in this store.",
 		"INSUFFICIENT_WALLET": "Wallet amount applied are greather than the available balance in the system.",
 		"UNAVAILABLE_WALLET": "No wallet available for you in this store.",
-		"PAYMENT_SUCCESS": "Your payment of the amount of {{pay_amount}} has being successful."
+		"PAYMENT_SUCCESS": "Your payment of the amount of {{pay_amount}} has being successful.",
+		"PAYMENT_PROCESSING_FAILED": "L'opération a échoué car le paiement a échoué.",
+		"PAYMENT_PROCESSING": "Your payment is process. Please wait..."
 	},
 	"VALIDATION": {
 		"IS_INVALID": "is invalid",

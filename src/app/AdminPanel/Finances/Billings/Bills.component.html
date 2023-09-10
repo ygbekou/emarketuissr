@@ -1,3 +1,8 @@
+<div class="overlay" *ngIf="saving">
+  <div class="center">
+    <mat-progress-spinner diameter="50" mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+</div>
 <div fxLayout="row wrap">
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
     <mat-form-field appearance="outline" class="w-100" *ngIf="stores && stores.length>0">
@@ -44,7 +49,7 @@
 
 
   <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-    <app-userbill-payment [store]="selectedStore" (payEvent)="search($event)"
+    <app-userbill-payment [store]="selectedStore" (payEvent)="search($event)" (savingEvent)="setSaving($event)"
       [hidden]="!selectedStore || action === 'details'"></app-userbill-payment>
   </div>
 

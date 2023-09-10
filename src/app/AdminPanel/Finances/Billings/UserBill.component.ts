@@ -75,6 +75,7 @@ export class UserBillComponent extends BaseComponent implements OnInit {
 
   getBill(bill: Bill) {
     this.messages = '';
+    this.errors = '';
     if (bill && bill.id > 0) {
       this.appService.getOneWithChildsAndFiles(bill.id, 'Bill')
         .subscribe(result => {

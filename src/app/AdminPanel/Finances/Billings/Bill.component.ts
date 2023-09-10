@@ -69,6 +69,7 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
 
   clear(data) {
     this.messages = '';
+    this.errors = '';
     this.bill = new Bill();
     this.setDatasource([]);
     this.picture = [];
@@ -111,6 +112,7 @@ export class BillComponent extends BaseComponent implements OnInit, AfterViewIni
 
   getBill(bill: Bill) {
     this.messages = '';
+    this.errors = '';
     if (bill && bill.id > 0) {
       this.appService.getOneWithChildsAndFiles(bill.id, 'Bill')
         .subscribe(result => {

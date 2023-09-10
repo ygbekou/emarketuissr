@@ -1136,7 +1136,9 @@
 		"UNAVAILABLE_POINTS": "Aucune carte de réduction disponible pour vous dans ce magasin.",
 		"INSUFFICIENT_WALLET": "Le montant du portefeuille appliqué est supérieur au solde disponible dans le système.",
     "UNAVAILABLE_WALLET": "Aucun portefeuille disponible pour vous dans ce magasin.",
-    "PAYMENT_SUCCESS": "Votre paiement du montant de {{pay_amount}} a été effectué avec succès."
+    "PAYMENT_SUCCESS": "Votre paiement du montant de {{pay_amount}} a été effectué avec succès.",
+		"PAYMENT_PROCESSING_FAILED": "The operation was unsuccesful because the payment processing failed.",
+		"PAYMENT_PROCESSING": "Votre paiement est en cours. S'il vous plaît, patientez..."
   },
   "VALIDATION": {
     "IS_INVALID": "est invalide",

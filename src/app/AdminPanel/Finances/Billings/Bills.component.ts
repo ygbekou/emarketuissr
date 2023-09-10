@@ -55,6 +55,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
   totalDue = 0;
   unpaidBillIds = [];
   action = 'details';
+  saving = false;
 
   constructor(public appService: AppService,
     public translate: TranslateService) {
@@ -163,6 +164,8 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   storeSelected(event) {
 
+    this.messages = '';
+    this.errors = '';
     setTimeout(() => {
       this.searchCriteria.storeId = this.selectedStore.id;
       this.search(false);
@@ -202,5 +205,9 @@ export class BillsComponent extends BaseComponent implements OnInit {
 
   showDetails() {
     this.action = 'details';
+  }
+
+  setSaving(value: boolean) {
+    this.saving = value;
   }
 }

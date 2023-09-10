@@ -187,6 +187,7 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
 
   getBill() {
     this.messages = '';
+    this.errors = '';
     if (this.bill && this.bill.id > 0) {
       this.appService.getOneWithChildsAndFiles(this.bill.id, 'Bill')
         .subscribe(result => {
@@ -208,6 +209,7 @@ export class BillPaymentComponent extends BaseComponent implements OnInit, After
 
   getBillPayment(billPayment: BillPayment) {
     this.messages = '';
+    this.errors = '';
     if (billPayment && billPayment.id > 0) {
       this.appService.getOneWithChildsAndFiles(billPayment.id, 'BillPayment')
         .subscribe(result => {
