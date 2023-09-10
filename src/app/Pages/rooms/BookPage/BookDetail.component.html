@@ -522,7 +522,7 @@
                 <div fxLayout="row wrap" fxLayoutAlign="right right">
                   <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxLayoutAlign="right right">
-                    <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center"
+                    <button mat-raised-button [disabled] ="booking" color="primary" fxLayout="row" fxLayoutAlign="center center"
                       type="submit">
                       <span class="mx-1 uppercase">{{'COMMON.CONFIRM' | translate}}</span>
                     </button>
