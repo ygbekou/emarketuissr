@@ -42,8 +42,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    continueAsGuest = false;
    forgotPassword = false;
    needToRegister = false;
-
-
+   booking = false;
 
    constructor(public appService: AppService,
       public router: Router,
@@ -54,6 +53,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    }
 
    ngOnInit() {
+       this.booking = false;
       this.appService.getCountries();
       this.copyUserInfo();
       this.activatedRoute.queryParams.subscribe(params => {
@@ -159,10 +159,6 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       this.roomsDatasource.sort = this.roomsSort;
    }
 
-
-   ngAfterViewInit() {
-   }
-
    initPaymentMethod() {
       this.appService.getObject('/service/order/stripe-key').toPromise()
          .then(result => {
@@ -237,7 +233,6 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
                this.reserv.pymtMethodName = 'Credit Card';
                this.reserv.stripePaymentMethodId = result.paymentMethod.id;
                this.step = 3;
-               //this.book(result);
             }
          })
          .then(function (result) {
@@ -260,16 +255,25 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
 
    book(result: any) {
+      this.booking = true;
       console.log(result);
       this.setReserv();
       if (result) {
          this.reserv.stripePaymentMethodId = result.paymentMethod.id;
       }
-
+      this.reserv.source = 1;
+      this.reserv.rebate = this.reserv.rebate ? this.reserv.rebate : 0.0;
+      this.reserv.taxFees = this.reserv.taxFees ? this.reserv.taxFees : 0.0;
+      this.reserv.origBeginDate = this.reserv.beginDate;
+      this.reserv.origEndDate = this.reserv.endDate;
+      this.reserv.offline = 0;
+      this.reserv.storeDay = new Date();
+      this.reserv.hours = this.reserv.hours ? this.reserv.hours : 0;
       this.appService.saveWithUrl('/service/hospitality/reserve',
          this.reserv)
          .subscribe((savedRes: Reservation) => {
             console.log(savedRes);
+             this.booking = false;
             if (savedRes.errors === null || savedRes.errors.length === 0) {
                if (savedRes.status === 5) {
                   this.translate.get(['MESSAGE.PAYMENT_UNSUCCESS']).subscribe(res => {
@@ -294,7 +298,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
       this.step = 2;
 
       if (this.reserv.pymtMethodCode === 'CREDIT_CARD') {
-         this.initPaymentMethod()
+         this.initPaymentMethod();
       }
    }
 
@@ -320,7 +324,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
    payAtRegister() {
       this.step = 3;
       this.reserv.pymtMethodCode = 'PAY_AT_REGISTER';
-      this.reserv.phone = '';
+      // this.reserv.phone = '';
    }
 
    editUserInfo() {
@@ -329,7 +333,7 @@ export class BookDetailComponent extends BaseComponent implements OnInit {
 
    editPymtInfo() {
       this.step = 2;
-      this.initPaymentMethod()
+      this.initPaymentMethod();
    }
 
    gotoConfirmation() {

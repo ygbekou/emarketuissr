@@ -850,7 +850,7 @@ export class Store extends BaseModel {
   maxShipperDistance: number;
   pointValue: number;
   goLiveDate: Date;
-  
+
   type = 'Store';
   constructor() {
     super();
@@ -2832,6 +2832,8 @@ export class Reservation {
   language: Language;
   beginDate: Date;
   endDate: Date;
+  origBeginDate: Date;
+  origEndDate: Date;
   checkinDate: Date;
   checkoutDate: Date;
   rebate: number;
@@ -2910,7 +2912,8 @@ export class Reservation {
   roomTypeIds: number[];
   roomTypes: RoomTypeVO[];
   errors: string[];
-
+  hours: number;
+  source: number;
   type = 'Reservation';
 }
 
@@ -3601,12 +3604,12 @@ export class WalletTrans {
 
 export class DiscountCard {
   id: number;
-	user: User;
-	store: Store;
+  user: User;
+  store: Store;
   cardId: string;
-	totalPoints: number;
-	usedPoints: number;
-	availablePoints: number;
+  totalPoints: number;
+  usedPoints: number;
+  availablePoints: number;
   pointsValue: number;
   storePointValue: number;
 }
@@ -3618,32 +3621,32 @@ export class Errors {
 
 export class WalletTransDTO {
   id: number;
-	walletTransType: string;
-	amount: number;
-	wallet: WalletDTO;
-	storeId: number;
-	storeName: string;
-	paymentMethodCode: string;
-	failureReason: string;
-	phone: string;
-	status: number;
-	createBy: number;
+  walletTransType: string;
+  amount: number;
+  wallet: WalletDTO;
+  storeId: number;
+  storeName: string;
+  paymentMethodCode: string;
+  failureReason: string;
+  phone: string;
+  status: number;
+  createBy: number;
 }
 
 export class WalletDTO {
   id: number;
-	balance: number;
-	currencyId: number;
+  balance: number;
+  currencyId: number;
   currencySymbolLeft: string;
   currencySymbolRight: string;
   currencyDecimalPlace: number;
-	currencyCode: string;
-	userId: number;
-	userFirstName: string;
-	userLastName: string;
+  currencyCode: string;
+  userId: number;
+  userFirstName: string;
+  userLastName: string;
   createBy: number;
   createDate: Date;
-	status: number;
+  status: number;
 }
 
 export class WalletSearchCriteria {
@@ -3665,14 +3668,14 @@ export class WalletSearchCriteria {
 
 export class DiscountCardTransDTO {
   id: number;
-	dcTransType: string;
-	amount: number;
-	discountCard: DiscountCardDTO;
+  dcTransType: string;
+  amount: number;
+  discountCard: DiscountCardDTO;
   orderId: number;
   reservationId: number;
   tblHdrId: number;
-	status: number;
-	createBy: number;
+  status: number;
+  createBy: number;
 }
 
 export class DiscountCardDTO {
@@ -3681,19 +3684,19 @@ export class DiscountCardDTO {
   usedPoints: number;
   availablePoints: number;
   pointsValue: number;
-	storeId: number;
+  storeId: number;
   storeName: string;
   currencySymbolLeft: string;
   currencySymbolRight: string;
   currencyDecimalPlace: number;
-	currencyCode: string;
-	userId: number;
-	userFirstName: string;
+  currencyCode: string;
+  userId: number;
+  userFirstName: string;
   userLastName: string;
   phone: string;
   email: string;
   createDate: Date;
-	status: number;
+  status: number;
 }
 
 export class DiscountCardSearchCriteria {
