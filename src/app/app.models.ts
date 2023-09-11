@@ -2792,6 +2792,9 @@ export class BillPayment {
   paymentDate: Date;
   dueDate: Date;
   amount: number;
+  totalPaid: number;
+  processingFee: number;
+  processingPerc: number;
   image: string;
   status: number;
   receivedBy: User;

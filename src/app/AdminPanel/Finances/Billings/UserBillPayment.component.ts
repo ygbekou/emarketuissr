@@ -3,6 +3,7 @@ import { Bill, BillPayment, StoreEmployee, User, Store } from 'src/app/app.model
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { BaseComponent } from 'src/app/AdminPanel/baseComponent';
+import { Constants } from 'src/app/app.constants';
 declare var Stripe: any;
 
 @Component({
@@ -47,10 +48,14 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
    }
 
    clear(data) {
-      this.messages = '';
-      this.errors = '';
+      this.clearMessages();
       this.billPayment = new BillPayment();
       this.billPayment.paymentDate = new Date();
+   }
+
+   clearMessages() {
+      this.messages = '';
+      this.errors = '';
    }
 
    setBillPaymentInfo(result: any) {
@@ -65,9 +70,10 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
    }
 
    pay(result: any) {
-      this.errors = '';
+      this.clearMessages();
+
       this.translate.get(['MESSAGE.PAYMENT_PROCESSING']).subscribe(res => {
-         this.errors = res['MESSAGE.PAYMENT_PROCESSING'];
+         this.messages = res['MESSAGE.PAYMENT_PROCESSING'];
       });
 
       this.setBillPaymentInfo(result);
@@ -78,6 +84,7 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
          this.billPayment)
          .subscribe((savedBillPayment: BillPayment) => {
             console.log(savedBillPayment);
+            this.clearMessages();
             if (savedBillPayment.errors === null || savedBillPayment.errors.length === 0) {
                if (savedBillPayment.status === 1) {
                   this.translate.get(['MESSAGE.PAYMENT_UNSUCCESS']).subscribe(res => {
@@ -202,5 +209,11 @@ export class UserBillPaymentComponent extends BaseComponent implements OnInit, A
                // orderComplete(response.clientSecret);
             }
          });
+   }
+
+   updateAmounts(amount: number) {
+      this.billPayment.amount = amount;
+      this.billPayment.processingFee = this.billPayment.amount * Constants.PROCESSING_FEE_PERC;
+      this.billPayment.totalPaid = Number(this.billPayment.amount) + Number(this.billPayment.processingFee);
    }
 }

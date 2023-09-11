@@ -154,7 +154,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
     if (this.userId) {
       this.userBillComponent.newBillSelected(bill);
       this.userBillPaymentComponent.bill = bill;
-      this.userBillPaymentComponent.billPayment.amount = bill.amountDue;
+      this.userBillPaymentComponent.updateAmounts(bill.amountDue);
     } else {
       this.billComponent.getBill(bill);
       this.billPaymentComponent.newBillSelected(bill);
@@ -168,6 +168,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
     this.errors = '';
     setTimeout(() => {
       this.searchCriteria.storeId = this.selectedStore.id;
+      this.userBillPaymentComponent.store = this.selectedStore;
       this.search(false);
       this.selected.setValue(0);
       this.getMyStoreEmployees();
@@ -199,7 +200,7 @@ export class BillsComponent extends BaseComponent implements OnInit {
   showPayment() {
     this.action = 'payment';
     this.userBillPaymentComponent.totalDue = this.totalDue;
-    this.userBillPaymentComponent.billPayment.amount = this.totalDue;
+    this.userBillPaymentComponent.updateAmounts(this.totalDue);
     this.userBillPaymentComponent.billPayment.unpaidBillIds = this.unpaidBillIds;
   }
 

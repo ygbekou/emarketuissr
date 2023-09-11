@@ -2,7 +2,7 @@
   <mat-card style="background-color: #ebf3ff;">
 
     <div fxLayout="row wrap" class="text-center" *ngIf="errors">
-        <mat-error severity="error">{{errors}}</mat-error>
+      <mat-error severity="error">{{errors}}</mat-error>
     </div>
 
     <div class="text-center" *ngIf="messages">
@@ -11,12 +11,13 @@
 
     <br />
     <div fxLayout="row wrap">
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label> {{'COMMON.AMOUNT' | translate}}
+          <mat-label> {{'COMMON.TOTAL_DUE' | translate}}
           </mat-label>
           <input matInput type="text" class="form-control" id="amount" [(ngModel)]="billPayment.amount" name="amount"
-            #amount="ngModel" [maxBillAmount]="totalDue" required>
+            (ngModelChange)="updateAmounts(billPayment.amount)" #amount="ngModel" [maxBillAmount]="totalDue"
+            required>
           <mat-error *ngIf="amount.invalid && amount.errors?.required" severity="error">
             {{ 'VALIDATION.FIELD_REQUIRED' | translate }}
           </mat-error>
@@ -27,7 +28,32 @@
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
       </div>
-      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="25" fxFlex.lg="25" fxFlex.xl="25" class="p-1">
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+        <mat-label> {{'COMMON.PROCESSING_FEES' | translate}}</mat-label><br />
+        <mat-label> 
+          {{store?.currency?.symbolLeft}}
+          {{billPayment.processingFee| number:'1.0-2'}}
+          {{store?.currency?.symbolRight}}
+        </mat-label>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
+        <span
+          style="color: #686e74; font-size: 14px; letter-spacing: .47px; line-height: 14px;">{{'COMMON.TOTAL' | translate }}</span>
+        <br />
+        <span style="font-size: 30px; letter-spacing: -1.8px; line-height: 38px;">
+          {{store?.currency?.symbolLeft}}
+          {{billPayment.totalPaid| number:'1.0-2'}}
+          {{store?.currency?.symbolRight}}
+        </span>
+      </div>
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
+      </div>
+
+      <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" class="p-1">
         <mat-form-field class="w-100">
           <mat-label> {{'COMMON.DATE' | translate}}</mat-label><br />
           <input matInput [matDatepicker]="paymentDatePicker" class="form-control" id="paymentDate" disabled="true"
