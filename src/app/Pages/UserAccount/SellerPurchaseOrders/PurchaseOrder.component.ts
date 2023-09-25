@@ -71,12 +71,11 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   }
 
   ngAfterViewInit() {
-
+    console.log('Loading Purchase Order completed.');
   }
 
   clear(data) {
     this.messages = '';
-    //this.currentOption = '';
     this.poHdr = new PoHdr();
     this.setDatasource([]);
     this.picture = [];
@@ -364,5 +363,13 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit, Aft
   cancelSupplier() {
     this.addNew = false;
     this.supplier = new Supplier();
+  }
+
+  uploadFile() {
+    console.log('File uploding ...');
+
+    if (this.poHdr.id) {
+      this.save();
+    }
   }
 }

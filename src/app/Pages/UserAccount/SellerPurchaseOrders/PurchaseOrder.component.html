@@ -177,8 +177,11 @@
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" class="p-1">
         <mat-label> {{'COMMON.ATTACH_DOC' | translate}}</mat-label>
         <input-file [(ngModel)]="picture" name="gallery" #gallery="ngModel" fileLimit="1" fileAccept="image/*"
-          [linkEnabled]="true">
+          [linkEnabled]="true" (change)="uploadFile($event)" [disabled]="poHdr.status === 6 || poHdr.status === 9">
         </input-file>
+        <div *ngIf="poHdr.image">
+          <a href="assets/images/pohdrs/{{poHdr.id}}/{{poHdr.image}}" target="_blank">{{'COMMON.CLICK_TO_DOWNLOAD' | translate}}</a>
+        </div>
       </div>
       <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="5" fxFlex.lg="5" fxFlex.xl="5" class="p-1">
 
