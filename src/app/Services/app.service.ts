@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
@@ -10,18 +10,20 @@ import { TokenStorage } from '../token.storage';
 import { catchError } from 'rxjs/operators';
 import {
    GenericResponse, User, AuthToken, SearchAttribute, Language, GenericVO,
-   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc, Ingredient, RoomStoreVO, SalesSummarySearchCriteria, Wallet, DiscountCard, Errors, Currency, Service, ServiceDescription
+   CategoryDescription, Menu, Company, Country, Zone, CartItem, Product, Order, StoreCategoryDesc,
+   Ingredient, RoomStoreVO, Wallet, DiscountCard, Currency, Service, ServiceDescription
 } from '../app.models';
 import { Constants } from '../app.constants';
 import { AppInfoStorage } from '../app.info.storage';
 import { TranslateService } from '@ngx-translate/core';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TimerCountDownComponent } from '../Global/TimerCountDown/TimerCountDown.component';
 import { ProductOptionPopupComponent } from '../Pages/Products/ProductsList/ProductOptionPopup.component';
 import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPopup.component';
 import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
 import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.component';
+import { LocaleService } from './locale.service';
+
 
 interface Response {
    data: any;
@@ -104,6 +106,9 @@ export class AppService {
    appService: any;
    reservation: any;
 
+   lang: any;
+   navigator: any;
+
    constructor(private http: HttpClient,
       private dialog: MatDialog,
       private db: AngularFireDatabase,
@@ -111,12 +116,14 @@ export class AppService {
       private deviceService: DeviceDetectorService,
       private toastyConfig: ToastaConfig,
       public tokenStorage: TokenStorage,
-      private translate: TranslateService
+      private translate: TranslateService,
+      private localeService: LocaleService
    ) {
 
       this.toastyConfig.position = 'top-right';
       this.toastyConfig.theme = 'material';
       this.calculateLocalWishlistProdCounts();
+      this.navigator = navigator;
 
       // Custom
       this.headers = new HttpHeaders();
@@ -131,6 +138,9 @@ export class AppService {
       this.appInfoStorage = new AppInfoStorage(this.translate);
 
       this.refreshReferenceData('UserGroup', 'ORDER BY e.name');
+
+      console.log('*******    App Service constructor called      **********');
+      this.getCacheData();
    }
 
    getUserAgent(): string {
@@ -150,13 +160,13 @@ export class AppService {
       let products: any;
       products = JSON.parse(localStorage.getItem('cart_item')) || [];
       const found = products.some(function (el, index) {
-         if (el.name == setCartItemDefaultValue.name) {
+         if (el.name === setCartItemDefaultValue.name) {
             return true;
          }
       });
       if (!found) { products.push(setCartItemDefaultValue); }
 
-      window.localStorage.setItem('cart_item', JSON.stringify(products));
+      localStorage.setItem('cart_item', JSON.stringify(products));
       console.log('Called from setCartItemDefaultValue');
       this.recalculateCart(true);
    }
@@ -326,7 +336,7 @@ export class AppService {
 
       this.toastyService.wait(toastOption);
       setTimeout(() => {
-         window.localStorage.setItem('cart_item', JSON.stringify(cartItems));
+         localStorage.setItem('cart_item', JSON.stringify(cartItems));
          console.log('Called from setCartItemDefaultValue');
          this.recalculateCart(true);
       }, 500);
@@ -346,13 +356,13 @@ export class AppService {
       if (!found) {
          products.push(data);
       }
-      window.localStorage.setItem('cart_item', JSON.stringify(products));
+      localStorage.setItem('cart_item', JSON.stringify(products));
       this.recalculateCart(true);
    }
 
    public updateAllLocalCartProduct(products: any) {
-      window.localStorage.removeItem('cart_item');
-      window.localStorage.setItem('cart_item', JSON.stringify(products));
+      localStorage.removeItem('cart_item');
+      localStorage.setItem('cart_item', JSON.stringify(products));
    }
 
    public recalculateCart(needParse: boolean) {
@@ -431,8 +441,8 @@ export class AppService {
       });
 
       for (const [storeId, storeOrderShippingWeight] of Object.entries(this.navbarCartShippingWeightMap)) {
-         const pickUp = window.localStorage.getItem('deliveryMode')
-            && window.localStorage.getItem('deliveryMode') === '1' ? true : false;
+         const pickUp = localStorage.getItem('deliveryMode')
+            && localStorage.getItem('deliveryMode') === '1' ? true : false;
          if (!pickUp) {
             if (this.navbarCartShippingGeoZoneMap[storeId]) {
                if (this.navbarCartShippingGeoZoneMap[storeId].geoZone.shippingMode === 0) {
@@ -591,14 +601,14 @@ export class AppService {
       setTimeout(() => {
          // ReAdding the products after remove
          console.log('Called from removeLocalCartProduct');
-         window.localStorage.setItem('cart_item', JSON.stringify(products));
+         localStorage.setItem('cart_item', JSON.stringify(products));
          this.recalculateCart(true);
       }, 500);
    }
 
    public completeOrder(storeId: number) {
       console.log('Completing order ...');
-      const products: any = JSON.parse(window.localStorage.getItem('cart_item'));
+      const products: any = JSON.parse(localStorage.getItem('cart_item'));
       this.hasOrderSucceedMap[storeId] = true;
 
       const filteredProducts = products.filter(p => {
@@ -609,7 +619,7 @@ export class AppService {
       setTimeout(() => {
          // ReAdding the products after remove
          console.log('Called from completeOrder');
-         window.localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
+         localStorage.setItem('cart_item', JSON.stringify(filteredProducts));
          this.recalculateCart(true);
       }, 500);
    }
@@ -655,7 +665,7 @@ export class AppService {
          wishItems.push(data);
          this.toastyService.wait(toastOption);
          setTimeout(() => {
-            window.localStorage.setItem('wishlist_item', JSON.stringify(wishItems));
+            localStorage.setItem('wishlist_item', JSON.stringify(wishItems));
             this.calculateLocalWishlistProdCounts();
          }, 500);
       } else {
@@ -707,7 +717,7 @@ export class AppService {
       this.toastyService.wait(toastOption);
       setTimeout(() => {
          // ReAdding the products after remove
-         window.localStorage.setItem('wishlist_item', JSON.stringify(products));
+         localStorage.setItem('wishlist_item', JSON.stringify(products));
          this.calculateLocalWishlistProdCounts();
       }, 500);
 
@@ -755,8 +765,8 @@ export class AppService {
 
       this.toastyService.wait(toastOption);
       setTimeout(() => {
-         window.localStorage.removeItem('wishlist_item');
-         window.localStorage.setItem('cart_item', JSON.stringify(cartItems));
+         localStorage.removeItem('wishlist_item');
+         localStorage.setItem('cart_item', JSON.stringify(cartItems));
          this.recalculateCart(true);
          this.calculateLocalWishlistProdCounts();
       }, 500);
@@ -832,33 +842,33 @@ export class AppService {
     * Buy Product functions
     */
    public addBuyUserDetails(formdata) {
-      window.localStorage.setItem('user', JSON.stringify(formdata));
-      const product = JSON.parse(window.localStorage.getItem('cart_item'));
-      window.localStorage.setItem('byProductDetails', JSON.stringify(product));
-      this.buyUserCartProducts = JSON.parse(window.localStorage.getItem('byProductDetails'));
-      window.localStorage.removeItem('cart_item');
+      localStorage.setItem('user', JSON.stringify(formdata));
+      const product = JSON.parse(localStorage.getItem('cart_item'));
+      localStorage.setItem('byProductDetails', JSON.stringify(product));
+      this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
+      localStorage.removeItem('cart_item');
       console.log('Called from addBuyUserDetails');
       this.recalculateCart(true);
    }
 
    public removeBuyProducts() {
-      window.localStorage.removeItem('byProductDetails');
-      this.buyUserCartProducts = JSON.parse(window.localStorage.getItem('byProductDetails'));
+      localStorage.removeItem('byProductDetails');
+      this.buyUserCartProducts = JSON.parse(localStorage.getItem('byProductDetails'));
    }
 
 
    public storeOrderId(order: Order) {
 
-      window.localStorage.setItem('order_id', order.id + '');
+      localStorage.setItem('order_id', order.id + '');
    }
 
    public clearOrderId() {
-      window.localStorage.removeItem('order_id');
+      localStorage.removeItem('order_id');
    }
 
 
    public getStoredOrderId() {
-      return +window.localStorage.getItem('order_id');
+      return +localStorage.getItem('order_id');
    }
 
    /**
@@ -1096,27 +1106,35 @@ export class AppService {
          .pipe(catchError(this.handleError));
    }
 
+   // public getLang() {
+   //    let lang = localStorage.getItem('lang');
+   //    if (lang) {
+   //       console.log('Using storage lang' + lang);
+   //    } else {
+   //       if (!lang) {
+   //          lang = navigator.language;
+   //          if (lang) {
+   //             console.log('Using browser lang=' + lang);
+   //          } else {
+   //             lang = 'fr';
+   //             console.log('Using default lang=' + lang);
+   //          }
+   //       }
+   //    }
+
+   //    return lang;
+   // }
+
+
    public getCacheData() {
       let parameters: string[] = [];
 
       this.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
          .subscribe((data: Language[]) => {
             this.appInfoStorage.languages = data;
-            let lang = navigator.language;
 
-            if (lang) {
-               lang = lang.substring(0, 2);
-            }
-            if (Cookie.get('lang')) {
-               lang = Cookie.get('lang');
-               console.log('Using cookie lang=' + Cookie.get('lang'));
-            } else if (lang) {
-               console.log('Using browser lang=' + lang);
-               // this.translate.use(lang);
-            } else {
-               lang = 'fr';
-               console.log('Using default lang=fr');
-            }
+            const lang = this.localeService.getLocale();
+
             data.forEach(language => {
                this.translate.addLangs([language.code]);
                if (language.code === lang) {
@@ -1128,6 +1146,7 @@ export class AppService {
             });
             console.log('Using language :' + lang);
             this.translate.use(lang);
+            this.lang = lang;
             this.getDropDownCategories();
             this.getStoreCategories();
             this.getMenus(this.appInfoStorage.language.id, 1)
@@ -1377,7 +1396,7 @@ export class AppService {
    // Error handling
    handleError(error) {
       let errorMessage = '';
-      if (error.error instanceof ErrorEvent) {
+      if (error.error instanceof HttpErrorResponse) {
          // Get client-side error
          errorMessage = error.error.message;
       } else {
@@ -1586,4 +1605,5 @@ export class AppService {
    public formatAmount(amount: number, ccy: Currency) {
       return ccy.symbolLeft ? (ccy.symbolLeft + ' ' + amount) : (amount + ' ' + ccy.symbolRight);
    }
+
 }

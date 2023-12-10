@@ -77,7 +77,7 @@ export class PaymentDeliveryStepper implements OnInit, AfterViewInit {
    }
 
    deliveryOptionChange(event) {
-      window.localStorage.setItem('deliveryMode', this.pickUp);
+      localStorage.setItem('deliveryMode', this.pickUp);
       if (this.pickUp === '1') {
          if (this.hasAllPickupInfoSet()) {
             this.setAllStepDone.emit({status: true, deliveryMode: this.pickUp});

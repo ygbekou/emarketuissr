@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatDialogRef, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { AppService } from 'src/app/Services/app.service';
+import { AppService } from '../../../Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 import { User} from 'src/app/app.models';
 

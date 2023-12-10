@@ -1,6 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CookieModule } from 'ngx-cookie';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -79,12 +80,14 @@ import { TokenStorage } from './token.storage';
 import { InputFileConfig, InputFileModule } from 'ngx-input-file';
 import { FooterComponent } from './Layouts/Footer/Footer/Footer.component';
 import { CartModule } from './Pages/Cart/Cart.module';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
 import { LangComponent } from './Layouts/lang/lang.component';
 import { AuthGuardService } from './Services/auth-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { RoleGuardService } from './Services/role-guard.service';
-import { StoreCatsComponent } from './Global/StoreCats/StoreCats.component';
+import { LocaleService } from './Services/locale.service';
+import { AppInterceptor } from './Global/utils/app-interceptor';
+
 const config: InputFileConfig = {
    fileAccept: '*'
 };
@@ -99,7 +102,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 export function tokenGetter() {
-  return window.localStorage.getItem('access_token');
+   return localStorage.getItem('access_token');
 }
 
 @NgModule({
@@ -123,9 +126,10 @@ export function tokenGetter() {
       FooterComponent
    ],
    imports: [
-      BrowserModule.withServerTransition({ appId: 'embryo-seo-pre' }),
+      BrowserTransferStateModule,
+      BrowserModule.withServerTransition({ appId: 'angssr' }),
       BrowserAnimationsModule,
-      RouterModule.forRoot(AppRoutes, { onSameUrlNavigation: 'reload', anchorScrolling: 'enabled' }),
+      RouterModule.forRoot(AppRoutes, { useHash: false, onSameUrlNavigation: 'reload', anchorScrolling: 'enabled' }),
       GlobalModule,
       TemplatesModule,
       MatButtonModule,
@@ -182,7 +186,8 @@ export function tokenGetter() {
          config: {
             tokenGetter: tokenGetter
          },
-        })
+      }),
+      CookieModule.forRoot()
 
    ],
    providers: [
@@ -192,11 +197,20 @@ export function tokenGetter() {
       AppService,
       AuthGuardService,
       RoleGuardService,
+      { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
       {
          provide: PERFECT_SCROLLBAR_CONFIG,
          useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
       },
-      { provide: LocationStrategy, useClass: HashLocationStrategy }
+      {
+         provide: LocationStrategy,
+         useClass:  PathLocationStrategy
+      },
+      {
+         provide: LOCALE_ID,
+         useFactory: (localeService: LocaleService) => localeService.getLocale(),
+         deps: [LocaleService]
+      }
    ],
    exports: [
       RouterModule,

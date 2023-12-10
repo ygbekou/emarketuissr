@@ -6,24 +6,28 @@
 
 
 <embryo-CtaGroup></embryo-CtaGroup>
+
+
+
+
 <div class="container">
    <a class="btn btn-block transparent-btn" [routerLink]="['/products/viewAll']" [queryParams]="{id:2}">
    {{'COMMON.SHOW_ALL'|translate}}</a>
 </div>
 
-<!-- <embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
-</embryo-lightening-deals> -->
+<embryo-lightening-deals *ngIf="marketings" [lighteningDeals]="marketings">
+</embryo-lightening-deals>
 
 <app-store-cats *ngIf="storeCats" [storeCats]="storeCats">
 </app-store-cats>
 
-<!-- <embryo-TopProducts *ngIf="topProducts" [products]="topProducts" [currency]="appService?.currency"
-   (addToCart)="addToCart($event)"></embryo-TopProducts> -->
+<embryo-TopProducts *ngIf="topProducts" [products]="topProducts" [currency]="appService?.currency"
+   (addToCart)="addToCart($event)"></embryo-TopProducts>
 
 <app-top-stores [isRTL]="appService.isDirectionRtl">
 </app-top-stores>
 
-<!-- <div class="section-gap pt-0">
+<div class="section-gap pt-0">
    <div class="container">
       <div fxLayoutAlign="space-between" class="w-100">
          <div class="block-title mb-4">
@@ -32,6 +36,6 @@
       </div>
       <embryo-BrandsLogo [isRTL]="appService.isDirectionRtl"></embryo-BrandsLogo>
    </div>
-</div> -->
+</div>
 <div class="section-gap pb-0"> 
 </div>

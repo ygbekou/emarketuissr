@@ -75,6 +75,12 @@
         <app-Reviews [reviewType]="'product'" [details]="product.product"></app-Reviews>
       </div>
 
+      <div fxLayoutAlign="start center">
+            <div class="mr-3"> <span>{{'COMMON.SHARE_NOW'|translate}}</span></div>
+            <div class="detail-product-share">
+              <embryo-SocialShare [url]="url"></embryo-SocialShare>
+            </div>
+          </div>
     </div>
   </div>
 </ng-container>

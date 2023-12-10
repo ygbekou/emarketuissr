@@ -3,7 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { CompanyLocation, Menu, Language } from 'src/app/app.models';
 import { TokenStorage } from 'src/app/token.storage';
 import { AppService } from 'src/app/Services/app.service';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
     selector: 'app-footer',
@@ -31,20 +30,20 @@ export class FooterComponent implements OnInit {
         this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters,
             ' order by e.sortOrder ')
             .subscribe((data: Language[]) => {
-                let lang = navigator.language;
+                let lang = this.appService.navigator.language;
                 if (lang) {
                     lang = lang.substring(0, 2);
                 }
-                if (Cookie.get('lang')) {
-                    lang = Cookie.get('lang');
-                    console.log('Using cookie lang=' + Cookie.get('lang'));
-                } else if (lang) {
-                    console.log('Using browser lang=' + lang);
-                    // this.translate.use(lang);
-                } else {
-                    lang = 'fr';
-                    console.log('Using default lang=fr');
-                }
+                // if (this.cookieService.get('lang')) {
+                //     lang = this.cookieService.get('lang');
+                //     console.log('Using cookie lang=' + this.cookieService.get('lang'));
+                // } else if (lang) {
+                //     console.log('Using browser lang=' + lang);
+                //     // this.translate.use(lang);
+                // } else {
+                //     lang = 'fr';
+                //     console.log('Using default lang=fr');
+                // }
                 data.forEach(language => {
                     if (language.code === lang) {
                         this.appService.getMenus(language.id, 2)

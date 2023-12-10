@@ -142,7 +142,7 @@ export class CartComponent implements OnInit, AfterViewChecked {
          cartProducts.push(...<[]>value);
       }
       setTimeout(() => {
-         window.localStorage.setItem('cart_item', JSON.stringify(cartProducts));
+         localStorage.setItem('cart_item', JSON.stringify(cartProducts));
       }, 500);
 
    }

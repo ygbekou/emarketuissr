@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppService } from 'src/app/Services/app.service';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { LocaleService } from 'src/app/Services/locale.service';
 
 @Component({
    selector: 'app-lang',
@@ -18,23 +19,27 @@ export class LanguageDropDownComponent implements OnInit {
       { name: 'English', code: 'en' }
    ];
    public flag: any;
-   constructor(public translate: TranslateService, public appService: AppService) { }
+   constructor(
+      public translate: TranslateService,
+      public appService: AppService,
+      public localeService: LocaleService
+      ) { }
 
    ngOnInit() {
-      let lang = navigator.language;
+      let lang = this.appService.navigator.language;
       if (lang) {
          lang = lang.substring(0, 2);
       }
-      if (Cookie.get('lang')) {
-         lang = Cookie.get('lang');
-         console.log('Using cookie lang=' + Cookie.get('lang'));
-      } else if (lang) {
-         console.log('Using browser lang=' + lang);
-         // this.translate.use(lang);
-      } else {
-         lang = 'fr';
-         console.log('Using default lang=fr');
-      }
+      // if (this.cookieService.get('lang')) {
+      //    lang = this.cookieService.get('lang');
+      //    console.log('Using cookie lang=' + this.cookieService.get('lang'));
+      // } else if (lang) {
+      //    console.log('Using browser lang=' + lang);
+      //    // this.translate.use(lang);
+      // } else {
+      //    lang = 'fr';
+      //    console.log('Using default lang=fr');
+      // }
       if (lang === 'fr') {
          this.flag = this.flags[0];
       } else {
@@ -50,7 +55,8 @@ export class LanguageDropDownComponent implements OnInit {
       // }
       this.flag = data;
       this.translate.use(data.code);
-      Cookie.set('lang', data.code);
+      this.localeService.setLocale(data.code);
+      //this.cookieService.set('lang', data.code);
       console.log(data);
       for (const aLang of this.appService.appInfoStorage.languages) {
          if (aLang.code === data.code) {
@@ -59,7 +65,7 @@ export class LanguageDropDownComponent implements OnInit {
             break;
          }
       }
-      //window.location.reload();
+      window.location.reload();
 
    }
 

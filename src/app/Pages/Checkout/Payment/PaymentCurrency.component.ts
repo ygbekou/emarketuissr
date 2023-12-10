@@ -90,7 +90,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
          this.order = new Order();
       }
 
-      this.appService.navbarCartDeliveryMap[this.storeId] = window.localStorage.getItem('deliveryMode');
+      this.appService.navbarCartDeliveryMap[this.storeId] = localStorage.getItem('deliveryMode');
       this.getStore();
    }
 
@@ -668,7 +668,7 @@ export class PaymentCurrencyComponent implements OnInit, AfterViewInit {
       console.log(this.store);
       this.appService.navbarCartDeliveryMap[this.storeId] = this.pickUp;
       this.scheduleForLaterChecked(null);
-      window.localStorage.setItem('deliveryMode', this.pickUp);
+      localStorage.setItem('deliveryMode', this.pickUp);
       if (this.pickUp === '1') {
          if (this.store === null || this.store === undefined) {
             this.getStore();

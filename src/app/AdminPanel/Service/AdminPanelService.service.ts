@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/Rx';
 import * as screenfull from 'screenfull';
@@ -280,7 +280,7 @@ export class AdminPanelServiceService {
   // Error handling
   handleError(error) {
     let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
+    if (error.error instanceof HttpErrorResponse) {
       // Get client-side error
       errorMessage = error.error.message;
     } else {

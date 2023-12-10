@@ -104,6 +104,8 @@ import { CommentPopupComponent } from '../Pages/UserAccount/MyProducts/CommentPo
 import { ShipperSearchComponent } from '../AdminPanel/Deliveries/Summaries/ShipperSearch.component';
 import { UserSearchComponent } from '../AdminPanel/Finances/Wallets/UserSearch.component';
 import { MaxAmountDirective } from './Validation/max-bill-amount.directive';
+import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+
 @NgModule({
    imports: [
       CommonModule,
@@ -148,6 +150,7 @@ import { MaxAmountDirective } from './Validation/max-bill-amount.directive';
       FormsModule,
       ReactiveFormsModule,
       SlickCarouselModule,
+      JwSocialButtonsModule
    ],
    declarations: [
       BrandslogoComponent,

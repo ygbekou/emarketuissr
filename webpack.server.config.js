@@ -33,6 +33,10 @@ module.exports = {
        {
          from: './src/assets/i18n/en.json',
          to: './assets/i18n/en.json'
+       },
+	   {
+         from: './src/assets/i18n/fr.json',
+         to: './assets/i18n/fr.json'
        }
      ])
   ]

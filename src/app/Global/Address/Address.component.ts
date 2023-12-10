@@ -253,7 +253,7 @@ export class AddressComponent implements OnInit {
    public loadMap() {
       // FIRST GET THE LOCATION FROM THE DEVICE.
       console.log('Calling load map');
-      navigator.geolocation.getCurrentPosition((resp) => {
+      this.appService.navigator.geolocation.getCurrentPosition((resp) => {
          const latLng = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
          this.map = new google.maps.Map(document.getElementById('map'), {
             center: latLng,
@@ -455,7 +455,7 @@ export class AddressComponent implements OnInit {
 
    public getLongLat() {
       console.log('get long lat called');
-      if (navigator.geolocation) {
+      if (this.appService.navigator.geolocation) {
          console.log('navigator.geolocation = true');
          navigator.geolocation.getCurrentPosition(
             (position: Position) => {
@@ -506,7 +506,7 @@ export class AddressComponent implements OnInit {
    public setLongLat(addr: Address) {
       console.log('set long lat called: this.latitude =' + addr.latitude + ', this.longitude = ' + addr.longitude);
       this.paceDescription = addr.name ? addr.name : addr.address1;
-      if (navigator.geolocation && addr.longitude && addr.latitude) {
+      if (this.appService.navigator.geolocation && addr.longitude && addr.latitude) {
          this.map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: addr.latitude, lng: addr.longitude },
             zoom: 15,

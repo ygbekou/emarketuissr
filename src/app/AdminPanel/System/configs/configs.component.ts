@@ -60,25 +60,6 @@ export class ConfigsComponent implements OnInit {
   }
 
   ngOnInit() {
-    let lang = navigator.language;
-    if (lang) {
-      lang = lang.substring(0, 2);
-    }
-    if (Cookie.get('lang')) {
-      lang = Cookie.get('lang');
-      console.log('Using cookie lang=' + Cookie.get('lang'));
-    } else if (lang) {
-      console.log('Using browser lang=' + lang);
-      // this.translate.use(lang);
-    } else {
-      lang = 'fr';
-      console.log('Using default lang=fr');
-    }
-    if (lang === 'fr') {
-      this.flag = this.flags[0];
-    } else {
-      this.flag = this.flags[1];
-    }
 
     this.dataSource = new MatTableDataSource();
     this.dataSource.paginator = this.paginator;
@@ -91,7 +72,7 @@ export class ConfigsComponent implements OnInit {
         let found = false;
         if (this.companies.length > 0) {
           this.companies.forEach(aCompany => {
-            if (lang === aCompany.language) {
+            if (this.appService.lang === aCompany.language) {
               this.company = aCompany;
               found = true;
             }
@@ -99,7 +80,7 @@ export class ConfigsComponent implements OnInit {
         }
         if (!found) {
           this.company = new Company();
-          this.company.language = lang;
+          this.company.language = this.appService.lang;
         }
       },
         error => console.log(error),

@@ -12,7 +12,7 @@ import localeFrFRExtra from '@angular/common/locales/extra/fr';
 export class AppComponent {
    constructor(private appService: AppService) {
       console.log('In appComponent');
-      this.appService.getCacheData();
+      //this.appService.getCacheData();
 
       registerLocaleData(localeFrFR, localeFrFRExtra);
    }

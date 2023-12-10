@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit {
     this.message = '';
     this.error = '';
     values.type = 'EmailVerification';
-    let lang = navigator.language;
+    let lang = this.appService.navigator.language;
     if (lang) {
       lang = lang.substring(0, 2);
     }
@@ -162,7 +162,7 @@ export class RegisterComponent implements OnInit {
   verifyCode(values: EmailVerification) {
     this.message = '';
     this.error = '';
-    let lang = navigator.language;
+    let lang = this.appService.navigator.language;
     if (lang) {
       lang = lang.substring(0, 2);
     }

@@ -67,37 +67,41 @@ export class ShopDetailsComponent implements OnInit, OnChanges {
          console.log(this.detailData);
       }
 
-      this.titleService.setTitle(this.detailData.name);
+      // this.titleService.setTitle(this.detailData.name);
 
-      this.url = Constants.webServer + '/#/products/dtl/'
-         + this.detailData.product.id + '/' + this.detailData.product.ptsId;
-      const descTag = { property: 'og:description', content: this.detailData.description };
-      const descSel = 'property="og:description"';
-      this.metaService.removeTag(descSel);
-      this.metaService.addTag(descTag, false);
+      // this.url = 'http://100.24.25.220:4000' + '/#/products/dtl/'
+      //    + this.detailData.product.id + '/' + this.detailData.product.ptsId;
 
-      const imgTag = {
-         property: 'og:image', content: Constants.webServer
-            + '/assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image
-      };
-      const imgSel = 'property="og:image"';
-      this.metaService.removeTag(imgSel);
-      this.metaService.addTag(imgTag, false);
+      //    //  this.url = 'https://www.amazon.com/Lenovo-Tab-M10-Plus-Tablet/dp/B09TPY1PZZ/?_encoding=UTF8&pd_rd_w=Fm934&content-id=amzn1.sym.5d6183d9-1130-430c-a422-12838648d677&pf_rd_p=5d6183d9-1130-430c-a422-12838648d677&pf_rd_r=EATMSA4QQX97AGVV25S9&pd_rd_wg=olZSg&pd_rd_r=da195456-3508-48d5-b292-d90f8416f63e&ref_=pd_gw_dealz_rd';
+      // const descTag = { property: 'og:description', content: this.detailData.description };
+      // const descSel = 'property="og:description"';
+      // this.metaService.removeTag(descSel);
+      // this.metaService.addTag(descTag, false);
 
-      const urlTag = { property: 'og:url', content: this.url };
-      const urlSel = 'property="og:url"';
-      this.metaService.removeTag(urlSel);
-      this.metaService.addTag(urlTag, false);
+      // const imgTag = {
+      //    property: 'og:image', content: 'http://100.24.25.220:4000'
+      //       + '/assets/images/products/' + this.detailData.product.id + '/' + this.detailData.product.image
 
-      const titleTag = { property: 'og:title', content: this.detailData.name };
-      const titleSel = 'property="og:title"';
-      this.metaService.removeTag(titleSel);
-      this.metaService.addTag(titleTag, false);
+      // //   property: 'og:image', content: 'https://m.media-amazon.com/images/I/31m6g30vWtL._AC_US40_.jpg'
+      // };
+      // const imgSel = 'property="og:image"';
+      // this.metaService.removeTag(imgSel);
+      // this.metaService.addTag(imgTag, false);
 
-      const typeTag = { property: 'og:type', content: 'Article' };
-      const typeSel = 'property="og:type"';
-      this.metaService.removeTag(typeSel);
-      this.metaService.addTag(typeTag, false);
+      // const urlTag = { property: 'og:url', content: this.url };
+      // const urlSel = 'property="og:url"';
+      // this.metaService.removeTag(urlSel);
+      // this.metaService.addTag(urlTag, false);
+
+      // const titleTag = { property: 'og:title', content: this.detailData.name };
+      // const titleSel = 'property="og:title"';
+      // this.metaService.removeTag(titleSel);
+      // this.metaService.addTag(titleTag, false);
+
+      // const typeTag = { property: 'og:type', content: 'Article' };
+      // const typeSel = 'property="og:type"';
+      // this.metaService.removeTag(typeSel);
+      // this.metaService.addTag(typeTag, false);
    }
 
    ngOnChanges() {

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { AppService } from 'src/app/Services/app.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -16,8 +15,7 @@ export class CommentPopupComponent implements OnInit {
   qty = 1;
   error = '';
 
-  constructor(public appService: AppService,
-    public translate: TranslateService,
+  constructor(public translate: TranslateService,
     public dialogRef: MatDialogRef<CommentPopupComponent>) {
 
     }

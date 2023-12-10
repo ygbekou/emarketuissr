@@ -3,7 +3,6 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { AppService } from '../../Services/app.service';
 import { Store, Language, StoreCategoryDesc } from 'src/app/app.models';
 import { TranslateService } from '@ngx-translate/core';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @Component({
    selector: 'embryo-BrandsLogo',
@@ -92,7 +91,8 @@ export class BrandslogoComponent implements OnInit, OnChanges {
       ]
    };
 
-   constructor(public appService: AppService, public translate: TranslateService) {
+   constructor(public appService: AppService, 
+      public translate: TranslateService) {
    }
 
    ngOnInit() {
@@ -103,20 +103,20 @@ export class BrandslogoComponent implements OnInit, OnChanges {
       const parameters: string[] = [];
       this.appService.getAllByCriteria('com.softenza.emarket.model.Language', parameters, ' order by e.sortOrder ')
          .subscribe((data: Language[]) => {
-            let lang = navigator.language;
+            let lang = this.appService.navigator.language;
             if (lang) {
                lang = lang.substring(0, 2);
             }
-            if (Cookie.get('lang')) {
-               lang = Cookie.get('lang');
-               console.log('Using cookie lang=' + Cookie.get('lang'));
-            } else if (lang) {
-               console.log('Using browser lang=' + lang);
-               // this.translate.use(lang);
-            } else {
-               lang = 'fr';
-               console.log('Using default lang=fr');
-            }
+            // if (this.cookieService.get('lang')) {
+            //    lang = this.cookieService.get('lang');
+            //    console.log('Using cookie lang=' + this.cookieService.get('lang'));
+            // } else if (lang) {
+            //    console.log('Using browser lang=' + lang);
+            //    // this.translate.use(lang);
+            // } else {
+            //    lang = 'fr';
+            //    console.log('Using default lang=fr');
+            // }
             data.forEach(language => {
                if (language.code === lang) {
                   this.getStoreCategories(language.id);
