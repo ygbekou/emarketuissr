@@ -121,7 +121,20 @@
             </strong>
           </div>
         </div>
-
+        <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2"
+          *ngIf="appService?.navbarCartWalletMap[storeId] > 0">
+          <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
+            <strong>{{'COMMON.WALLET' | translate}}:</strong>
+          </div>
+          <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
+            <strong>
+              {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
+              ({{appService?.navbarCartWalletMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}})
+              {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
+            </strong>
+          </div>
+        </div>
         <br />
         <div fxLayout="row wrap" fxLayoutAlign="none">
           <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
@@ -130,12 +143,29 @@
           <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" style="text-align: right;">
             <h6 style="color: #ff5722">
               {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
-              {{appService?.navbarCartTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+              {{appService?.navbarCartOrderTotalMap[storeId] | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
                 + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
               {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
             </h6>
           </div>
         </div>
+        
+        <div fxLayout="row wrap"
+          *ngIf="appService?.tokenStorage.walletMap[appService?.navbarCartCurrencyMap[storeId].currencyCode]?.availableBalance > 0">
+          <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60" style="color: green;">
+            <strong>{{'COMMON.WALLET_BALANCE' | translate}}:</strong>
+          </div>
+          <div fxFlex.xs="40" fxFlex.sm="40" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
+            style="text-align: right; color: green;">
+            <strong>
+              {{appService?.navbarCartCurrencyMap[storeId].symbolLeft}}
+              {{appService?.tokenStorage.walletMap[appService?.navbarCartCurrencyMap[storeId].currencyCode].availableBalance | number: '1.' + appService?.navbarCartCurrencyMap[storeId].decimalPlace + '-'  
+            + appService?.navbarCartCurrencyMap[storeId].decimalPlace:appService?.appInfoStorage.language.locale}}
+              {{appService?.navbarCartCurrencyMap[storeId].symbolRight}}
+            </strong>
+          </div>
+        </div>
+
         <div> <button mat-raised-button color="primary" fxLayout="row" fxLayoutAlign="center center" [disabled]="(appService.hasOrderSucceedMap[storeId] === true 
           || (appService.navbarCartDeliveryMap[storeId] === '0' && !appService.navbarCartShippingGeoZoneMap[storeId]))
           || appService.navbarCartStoreAllowOrderMap[storeId]

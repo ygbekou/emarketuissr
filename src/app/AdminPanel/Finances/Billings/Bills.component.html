@@ -20,6 +20,23 @@
       [queryParams]="{type:'store', sId:0}">{{'COMMON.ADD_STORE'|translate}}</button>
   </div>
   <br />
+
+  <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+    *ngIf="stores && stores.length>0">
+    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <button mat-raised-button (click)="sendSms()" color="primary" fxLayout="row" fxLayoutAlign="center center"
+        type="button">
+        <span class="mx-1 uppercase">{{'COMMON.SEND_SMS' | translate}}</span>
+      </button>
+    </div>
+    <div fxFlex.xs="50" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
+      <font color="green">
+        {{messages}}
+      </font>
+    </div>
+  </div>
+  <br />
+  
   <div fxLayout="row wrap" *ngIf="selectedStore && selectedStore.id > 0">
     <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-1">
       <span

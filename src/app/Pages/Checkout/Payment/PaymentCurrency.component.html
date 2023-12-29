@@ -22,7 +22,7 @@
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="35" fxFlex.lg="35" fxFlex.xl="35">
           <div fxLayout="row wrap" fxLayoutGap="10px grid">
             <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="75" fxFlex.lg="75" fxFlex.xl="75"
-              *ngIf="appService?.navbarCartOrderTotalMap[storeId] > 0 || appService.usedPointsValueMap[storeId] > 0">
+              *ngIf="appService?.navbarCartOrderTotalMap[storeId] > 0 && appService?.tokenStorage.pointsMap[storeId]?.pointsValue > 0">
               <mat-checkbox class="mb-2 d-block" [(ngModel)]="applyPoint" id="applyPoint" name="applyPoint"
                 (change)="appService.applyPointsChecked(storeId);">
 
@@ -292,7 +292,8 @@
         </div>
       </div>
 
-      <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2">
+      <div fxLayout="row wrap" fxLayoutAlign="none" style="border-bottom: 1px solid #0052C2"
+        *ngIf="appService?.navbarCartWalletMap[storeId] > 0">
         <div fxFlex.xs="60" fxFlex.sm="60" fxFlex.md="60" fxFlex.lg="60" fxFlex.xl="60">
           <strong>{{'COMMON.WALLET' | translate}}:</strong>
         </div>
@@ -342,13 +343,13 @@
     <mat-card>
       <div fxLayout="row wrap" fxLayoutAlign="none">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
-          <h6 class="primary-color">{{'COMMON.NOTE_FOR_STORE' | translate}}</h6>
+          <h6 class="primary-color">{{'COMMON.NOTE_FOR_STORE' | translate}} ( {{'COMMON.OPTIONAL' | translate}} )</h6>
           <textarea rows="5" cols="28" id="comments" appearance="outline" [(ngModel)]="order.comment" name="comments"
             #comments="ngModel">
         </textarea>
         </div>
       </div>
-      <div fxLayout="row wrap" fxLayoutAlign="none">
+      <!-- <div fxLayout="row wrap" fxLayoutAlign="none">
         <div fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100">
           <br />
           <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
@@ -365,7 +366,7 @@
 
         </div>
 
-      </div>
+      </div> -->
       <!-- <div fxLayout="row wrap" class="w-100">       
         
       </div> -->

@@ -2719,6 +2719,7 @@ export class BillSearchCriteria {
   userId: number;
   minAmount: number;
   maxAmount: number;
+  msgType: string;
 }
 
 

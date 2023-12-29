@@ -211,4 +211,17 @@ export class BillsComponent extends BaseComponent implements OnInit {
   setSaving(value: boolean) {
     this.saving = value;
   }
+
+  
+  sendSms() {
+    this.searchCriteria.msgType = 'SMS';
+
+    this.appService.saveWithUrl('/service/finance/sendBillsReminder', this.searchCriteria)
+      .subscribe((data: any[]) => {
+        this.processResult(data, null, null);
+      },
+        error => console.log(error),
+        () => console.log('Send SMS complete'));
+  }
+  
 }
